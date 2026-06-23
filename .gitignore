@@ -1,0 +1,10 @@
+node_modules
+dist
+.vite
+npm-debug.log*
+*.tsbuildinfo
+Madia
+analysis
+reference
+.npm-cache
+.playwright-browsers

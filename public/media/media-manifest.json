@@ -1,0 +1,350 @@
+[
+  {
+    "name": "hero-kolobok",
+    "source": "D:\\Protagonist_Dev\\Колобочная\\Madia\\4. КОЛОБКИ\\Дизайн\\колобочная\\Веб\\Колобочная1922 1.jpg",
+    "sourceWidth": 2048,
+    "sourceHeight": 1366,
+    "outputs": [
+      {
+        "width": 768,
+        "file": "/media/hero-kolobok-768.webp"
+      },
+      {
+        "width": 1200,
+        "file": "/media/hero-kolobok-1200.webp"
+      },
+      {
+        "width": 1440,
+        "file": "/media/hero-kolobok-1440.webp"
+      }
+    ]
+  },
+  {
+    "name": "hero-dessert",
+    "source": "D:\\Protagonist_Dev\\Колобочная\\Madia\\4. КОЛОБКИ\\Дизайн\\колобочная\\Веб\\Колобочная1958.jpg",
+    "sourceWidth": 2048,
+    "sourceHeight": 1366,
+    "outputs": [
+      {
+        "width": 720,
+        "file": "/media/hero-dessert-720.webp"
+      },
+      {
+        "width": 1080,
+        "file": "/media/hero-dessert-1080.webp"
+      }
+    ]
+  },
+  {
+    "name": "product-classic",
+    "source": "D:\\Protagonist_Dev\\Колобочная\\Madia\\4. КОЛОБКИ\\Дизайн\\колобочная\\Веб\\Колобочная0008.jpg",
+    "sourceWidth": 2048,
+    "sourceHeight": 1366,
+    "outputs": [
+      {
+        "width": 420,
+        "file": "/media/product-classic-420.webp"
+      },
+      {
+        "width": 720,
+        "file": "/media/product-classic-720.webp"
+      },
+      {
+        "width": 960,
+        "file": "/media/product-classic-960.webp"
+      }
+    ]
+  },
+  {
+    "name": "product-greens",
+    "source": "D:\\Protagonist_Dev\\Колобочная\\Madia\\4. КОЛОБКИ\\Дизайн\\колобочная\\Веб\\Колобочная1928.jpg",
+    "sourceWidth": 2048,
+    "sourceHeight": 1366,
+    "outputs": [
+      {
+        "width": 420,
+        "file": "/media/product-greens-420.webp"
+      },
+      {
+        "width": 720,
+        "file": "/media/product-greens-720.webp"
+      },
+      {
+        "width": 960,
+        "file": "/media/product-greens-960.webp"
+      }
+    ]
+  },
+  {
+    "name": "product-warm",
+    "source": "D:\\Protagonist_Dev\\Колобочная\\Madia\\4. КОЛОБКИ\\Дизайн\\колобочная\\Веб\\Колобочная1946.jpg",
+    "sourceWidth": 2048,
+    "sourceHeight": 1366,
+    "outputs": [
+      {
+        "width": 420,
+        "file": "/media/product-warm-420.webp"
+      },
+      {
+        "width": 720,
+        "file": "/media/product-warm-720.webp"
+      },
+      {
+        "width": 960,
+        "file": "/media/product-warm-960.webp"
+      }
+    ]
+  },
+  {
+    "name": "product-dessert",
+    "source": "D:\\Protagonist_Dev\\Колобочная\\Madia\\4. КОЛОБКИ\\Дизайн\\колобочная\\Веб\\Колобочная1958.jpg",
+    "sourceWidth": 2048,
+    "sourceHeight": 1366,
+    "outputs": [
+      {
+        "width": 420,
+        "file": "/media/product-dessert-420.webp"
+      },
+      {
+        "width": 720,
+        "file": "/media/product-dessert-720.webp"
+      },
+      {
+        "width": 960,
+        "file": "/media/product-dessert-960.webp"
+      }
+    ]
+  },
+  {
+    "name": "drink-tea",
+    "source": "D:\\Protagonist_Dev\\Колобочная\\Madia\\4. КОЛОБКИ\\Дизайн\\колобочная\\Веб\\Колобочная0012.jpg",
+    "sourceWidth": 2048,
+    "sourceHeight": 1366,
+    "outputs": [
+      {
+        "width": 420,
+        "file": "/media/drink-tea-420.webp"
+      },
+      {
+        "width": 720,
+        "file": "/media/drink-tea-720.webp"
+      },
+      {
+        "width": 960,
+        "file": "/media/drink-tea-960.webp"
+      }
+    ]
+  },
+  {
+    "name": "drink-dark",
+    "source": "D:\\Protagonist_Dev\\Колобочная\\Madia\\4. КОЛОБКИ\\Дизайн\\колобочная\\Веб\\Колобочная0273.jpg",
+    "sourceWidth": 2048,
+    "sourceHeight": 1366,
+    "outputs": [
+      {
+        "width": 420,
+        "file": "/media/drink-dark-420.webp"
+      },
+      {
+        "width": 720,
+        "file": "/media/drink-dark-720.webp"
+      },
+      {
+        "width": 960,
+        "file": "/media/drink-dark-960.webp"
+      }
+    ]
+  },
+  {
+    "name": "cutaway-01",
+    "source": "D:\\Protagonist_Dev\\Колобочная\\Madia\\2024\\IMG_0954.JPG",
+    "sourceWidth": 4032,
+    "sourceHeight": 2268,
+    "outputs": [
+      {
+        "width": 420,
+        "file": "/media/cutaway-01-420.webp"
+      },
+      {
+        "width": 760,
+        "file": "/media/cutaway-01-760.webp"
+      }
+    ]
+  },
+  {
+    "name": "cutaway-02",
+    "source": "D:\\Protagonist_Dev\\Колобочная\\Madia\\2024\\IMG_0963.JPG",
+    "sourceWidth": 6912,
+    "sourceHeight": 3888,
+    "outputs": [
+      {
+        "width": 420,
+        "file": "/media/cutaway-02-420.webp"
+      },
+      {
+        "width": 760,
+        "file": "/media/cutaway-02-760.webp"
+      }
+    ]
+  },
+  {
+    "name": "cutaway-03",
+    "source": "D:\\Protagonist_Dev\\Колобочная\\Madia\\2024\\IMG_0969_jpg.JPG",
+    "sourceWidth": 4032,
+    "sourceHeight": 2268,
+    "outputs": [
+      {
+        "width": 420,
+        "file": "/media/cutaway-03-420.webp"
+      },
+      {
+        "width": 760,
+        "file": "/media/cutaway-03-760.webp"
+      }
+    ]
+  },
+  {
+    "name": "point-facade",
+    "source": "D:\\Protagonist_Dev\\Колобочная\\Madia\\4. КОЛОБКИ\\Фото\\Обработ\\IMG_20230904_193733.jpg",
+    "sourceWidth": 2985,
+    "sourceHeight": 3528,
+    "outputs": [
+      {
+        "width": 480,
+        "file": "/media/point-facade-480.webp"
+      },
+      {
+        "width": 840,
+        "file": "/media/point-facade-840.webp"
+      }
+    ]
+  },
+  {
+    "name": "point-interior",
+    "source": "D:\\Protagonist_Dev\\Колобочная\\Madia\\4. КОЛОБКИ\\Фото\\Обработ\\IMG_20230904_193745.jpg",
+    "sourceWidth": 3000,
+    "sourceHeight": 4000,
+    "outputs": [
+      {
+        "width": 480,
+        "file": "/media/point-interior-480.webp"
+      },
+      {
+        "width": 840,
+        "file": "/media/point-interior-840.webp"
+      }
+    ]
+  },
+  {
+    "name": "point-street",
+    "source": "D:\\Protagonist_Dev\\Колобочная\\Madia\\4. КОЛОБКИ\\Фото\\Обработ\\IMG_20230905_165711.jpg",
+    "sourceWidth": 1800,
+    "sourceHeight": 4000,
+    "outputs": [
+      {
+        "width": 480,
+        "file": "/media/point-street-480.webp"
+      },
+      {
+        "width": 840,
+        "file": "/media/point-street-840.webp"
+      }
+    ]
+  },
+  {
+    "name": "point-guests",
+    "source": "D:\\Protagonist_Dev\\Колобочная\\Madia\\4. КОЛОБКИ\\Фото\\Обработ\\IMG_4479.JPG",
+    "sourceWidth": 3540,
+    "sourceHeight": 3024,
+    "outputs": [
+      {
+        "width": 480,
+        "file": "/media/point-guests-480.webp"
+      },
+      {
+        "width": 840,
+        "file": "/media/point-guests-840.webp"
+      }
+    ]
+  },
+  {
+    "name": "festival-product",
+    "source": "D:\\Protagonist_Dev\\Колобочная\\Madia\\сист 2024\\IMG_6652.JPG",
+    "sourceWidth": 4032,
+    "sourceHeight": 3024,
+    "outputs": [
+      {
+        "width": 480,
+        "file": "/media/festival-product-480.webp"
+      },
+      {
+        "width": 840,
+        "file": "/media/festival-product-840.webp"
+      }
+    ]
+  },
+  {
+    "name": "festival-window",
+    "source": "D:\\Protagonist_Dev\\Колобочная\\Madia\\сист 2024\\IMG_6769.JPG",
+    "sourceWidth": 5712,
+    "sourceHeight": 4284,
+    "outputs": [
+      {
+        "width": 480,
+        "file": "/media/festival-window-480.webp"
+      },
+      {
+        "width": 840,
+        "file": "/media/festival-window-840.webp"
+      }
+    ]
+  },
+  {
+    "name": "festival-truck",
+    "source": "D:\\Protagonist_Dev\\Колобочная\\Madia\\сист 2024\\IMG_6772.JPG",
+    "sourceWidth": 5712,
+    "sourceHeight": 3213,
+    "outputs": [
+      {
+        "width": 480,
+        "file": "/media/festival-truck-480.webp"
+      },
+      {
+        "width": 840,
+        "file": "/media/festival-truck-840.webp"
+      }
+    ]
+  },
+  {
+    "name": "festival-sea",
+    "source": "D:\\Protagonist_Dev\\Колобочная\\Madia\\сист 2024\\IMG_6913.JPG",
+    "sourceWidth": 3213,
+    "sourceHeight": 5712,
+    "outputs": [
+      {
+        "width": 480,
+        "file": "/media/festival-sea-480.webp"
+      },
+      {
+        "width": 840,
+        "file": "/media/festival-sea-840.webp"
+      }
+    ]
+  },
+  {
+    "name": "person-placeholder",
+    "source": "D:\\Protagonist_Dev\\Колобочная\\Madia\\4. КОЛОБКИ\\Фото\\Обработ\\IMG_0716.JPG",
+    "sourceWidth": 2758,
+    "sourceHeight": 1800,
+    "outputs": [
+      {
+        "width": 360,
+        "file": "/media/person-placeholder-360.webp"
+      },
+      {
+        "width": 640,
+        "file": "/media/person-placeholder-640.webp"
+      }
+    ]
+  }
+]

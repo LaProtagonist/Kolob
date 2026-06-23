@@ -1,0 +1,30 @@
+{
+  "name": "kolobochnaya-investor-landing",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "npm run build:spa && npm run prerender",
+    "build:spa": "tsc -b && vite build",
+    "prerender": "node scripts/prerender-dist.cjs",
+    "serve:dist": "node scripts/serve-dist.cjs",
+    "preview": "node scripts/serve-dist.cjs",
+    "prepare:media": "node scripts/prepare-media.mjs",
+    "audit:content": "node scripts/audit-content.mjs",
+    "test": "node scripts/test-site.cjs"
+  },
+  "dependencies": {
+    "react": "^19.2.1",
+    "react-dom": "^19.2.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.1",
+    "playwright": "^1.61.0",
+    "sharp": "^0.34.5",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.0"
+  }
+}
