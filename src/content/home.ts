@@ -1,27 +1,14 @@
 import type { ProductItem, VideoItem } from "../types";
 import { approvedCopy } from "./approved-copy";
+import { heroVideo, mediaMap } from "./media-map";
 
 export const homeHero = {
-  eyebrow: approvedCopy.brand,
-  title: approvedCopy.tagline,
+  title: approvedCopy.brand,
+  taglineParts: ["Еда в пути.", "Всё внутри."],
   lead: approvedCopy.heroSubtitle,
   text: null,
-  image: {
-    base: "hero-kolobok",
-    widths: [768, 1200, 1440],
-    sizes: "(max-width: 860px) 100vw, 56vw",
-    alt: "Колобки с начинкой, зеленью и разрезом на тёмном фоне"
-  },
-  video: {
-    mp4: null,
-    webm: null,
-    poster: {
-      base: "hero-kolobok",
-      widths: [768, 1200, 1440],
-      sizes: "(max-width: 860px) 100vw, 56vw",
-      alt: "Колобки с начинкой, зеленью и разрезом на тёмном фоне"
-    }
-  }
+  image: mediaMap.hero.imageCurrent,
+  video: heroVideo
 };
 
 export const homeAbout = {
@@ -42,80 +29,61 @@ export const founderQuote = {
 
 export const overviewVideos: VideoItem[] = [
   {
-    title: "Продукт в городской точке",
-    meta: "Обзорный материал",
-    year: "2023–2024",
-    place: "Санкт-Петербург",
-    description: "Кадры городской точки, выдачи продукта и живого контакта с гостями.",
-    originalPublicationUrl: null,
-    reach: null,
-    poster: {
-      base: "point-facade",
-      widths: [480, 840],
-      sizes: "(max-width: 720px) 84vw, 43vw",
-      alt: "Фасад городской точки Колобочной"
-    }
+    title: mediaMap.homeVideos.video1.title,
+    meta: "Видео",
+    year: mediaMap.homeVideos.video1.year,
+    platform: mediaMap.homeVideos.video1.platform,
+    description: mediaMap.homeVideos.video1.description ?? undefined,
+    originalPublicationUrl: mediaMap.homeVideos.video1.originalUrl,
+    viewsLabel: mediaMap.homeVideos.video1.viewsLabel,
+    viewsNote: mediaMap.homeVideos.video1.viewsNote,
+    videoMp4: mediaMap.homeVideos.video1.videoMp4,
+    videoWebm: mediaMap.homeVideos.video1.videoWebm,
+    poster: mediaMap.homeVideos.video1.poster ?? mediaMap.hero.poster
   },
   {
-    title: "Событийный формат",
-    meta: "Обзорный материал",
-    year: "2024",
-    place: "Solar Systo Togathering",
-    description: "Фестивальная площадка, рабочие процессы, очередь и реакция гостей на продукт.",
-    originalPublicationUrl: null,
-    reach: null,
-    poster: {
-      base: "festival-truck",
-      widths: [480, 840],
-      sizes: "(max-width: 720px) 84vw, 38vw",
-      alt: "Фестивальная точка с графикой Колобочной"
-    }
+    title: mediaMap.homeVideos.video2.title,
+    meta: "Видео",
+    year: mediaMap.homeVideos.video2.year,
+    platform: mediaMap.homeVideos.video2.platform,
+    description: mediaMap.homeVideos.video2.description ?? undefined,
+    originalPublicationUrl: mediaMap.homeVideos.video2.originalUrl,
+    viewsLabel: mediaMap.homeVideos.video2.viewsLabel,
+    viewsNote: mediaMap.homeVideos.video2.viewsNote,
+    videoMp4: mediaMap.homeVideos.video2.videoMp4,
+    videoWebm: mediaMap.homeVideos.video2.videoWebm,
+    poster: mediaMap.homeVideos.video2.poster ?? mediaMap.hero.poster
   }
 ];
 
 export const homeQuality = {
-  title: approvedCopy.fastFormat,
-  text: approvedCopy.fastFormatText,
-  items: ["Качественное сырьё", "Собственная технология", "Удобная форма"],
+  title: approvedCopy.qualityFormula,
+  text: approvedCopy.qualityLead,
+  items: ["фермерское и региональное сырьё", "собственная технология", "открытая кухня"],
   link: { href: "/quality", label: "Подробнее о качестве" }
 };
 
 export const homeScale = {
-  title: "Производственная модель",
+  title: "Полный цикл. Единое качество.",
   text: approvedCopy.productionFormula,
-  steps: ["производство", "поставки", "городские точки"],
+  steps: ["сырьё", "производство", "поставки", "открытая кухня", "готовая порция"],
   link: { href: "/investment", label: "Инвестиционная модель" }
 };
 
 export const homeTeasers: ProductItem[] = [
   {
-    title: "Одна форма",
-    text: "Узнаваемая форма помогает быстро понять продукт и удерживает единый визуальный стандарт.",
-    image: {
-      base: "product-classic",
-      widths: [420, 720, 960],
-      sizes: "(max-width: 720px) 100vw, 31vw",
-      alt: "Студийное фото колобков на тёмном фоне"
-    }
+    title: "Продукт",
+    text: "Колобок — полноценная еда, собранная в удобную форму.",
+    image: mediaMap.aboutCircles.product ?? undefined
   },
   {
-    title: "Множество вкусов",
-    text: "Внутри формы раскрываются мясные, морские, вегетарианские и сладкие направления.",
-    image: {
-      base: "hero-dessert",
-      widths: [720, 1080],
-      sizes: "(max-width: 720px) 100vw, 31vw",
-      alt: "Десертный вариант продукта Колобочной"
-    }
+    title: "Технология",
+    text: "Полный цикл производства и централизованные поставки обеспечивают стабильное качество каждой порции.",
+    image: mediaMap.aboutCircles.technology ?? undefined
   },
   {
-    title: "Еда в пути",
-    text: "Формат рассчитан на быструю выдачу, удобное потребление и полноценную начинку внутри.",
-    image: {
-      base: "cutaway-02",
-      widths: [420, 760],
-      sizes: "(max-width: 720px) 100vw, 31vw",
-      alt: "Разрез колобка с начинкой"
-    }
+    title: "Масштаб",
+    text: "Формат рассчитан на развитие сети городских точек в разных регионах.",
+    image: mediaMap.aboutCircles.scale ?? undefined
   }
 ];

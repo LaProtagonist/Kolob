@@ -77,7 +77,7 @@ export const productFormats: ProductItem[] = [
   },
   {
     title: approvedCopy.productFormats.ufo,
-    text: "Отдельное направление формы, не связанное с типом начинки.",
+    text: "Отдельное направление формы, которое расширяет сценарии продукта.",
     tag: "формат",
     image: {
       base: "hero-dessert",

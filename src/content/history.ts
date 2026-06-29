@@ -1,6 +1,34 @@
 import type { TimelineItem } from "../types";
 import { approvedCopy } from "./approved-copy";
 
+function historyCover(base: string, alt: string) {
+  return {
+    mp4: `/media/${base}.mp4`,
+    webm: `/media/${base}.webm`,
+    poster: {
+      base: `${base}-poster`,
+      widths: [480, 840],
+      sizes: "(max-width: 720px) 100vw, 38vw",
+      alt
+    }
+  };
+}
+
+const crimea2021Cover = historyCover(
+  "history-crimea-2021-cover",
+  "Архивное видео Колобочной в Крыму"
+);
+
+const fligel2023Cover = historyCover(
+  "history-fligel-2023-cover",
+  "Видео открытия стационарной точки Колобочной во Флигеле"
+);
+
+const solar2024Cover = historyCover(
+  "history-solar-2024-cover",
+  "Видео Колобочной на Solar Systo Togathering"
+);
+
 export const historyHero = {
   eyebrow: "История проекта",
   title: approvedCopy.history.h1,
@@ -19,12 +47,8 @@ export const timeline: TimelineItem[] = [
     period: "2021",
     title: "Крым",
     text: approvedCopy.history.crimea2021,
-    image: {
-      base: "festival-product",
-      widths: [480, 840],
-      sizes: "(max-width: 720px) 100vw, 38vw",
-      alt: "Колобки на фестивальной площадке"
-    }
+    image: crimea2021Cover.poster,
+    coverVideo: crimea2021Cover
   },
   {
     period: "2022",
@@ -52,22 +76,14 @@ export const timeline: TimelineItem[] = [
     period: "2023",
     title: "Санкт-Петербург",
     text: approvedCopy.history.spb2023,
-    image: {
-      base: "point-interior",
-      widths: [480, 840],
-      sizes: "(max-width: 720px) 100vw, 38vw",
-      alt: "Интерьер городской точки Колобочной"
-    }
+    image: fligel2023Cover.poster,
+    coverVideo: fligel2023Cover
   },
   {
     period: "2024",
     title: "Solar Systo Togathering",
     text: approvedCopy.history.solar2024,
-    image: {
-      base: "festival-truck",
-      widths: [480, 840],
-      sizes: "(max-width: 720px) 100vw, 38vw",
-      alt: "Фестивальная точка Колобочной"
-    }
+    image: solar2024Cover.poster,
+    coverVideo: solar2024Cover
   }
 ];

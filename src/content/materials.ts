@@ -1,5 +1,6 @@
-import type { DocumentItem, ProductItem, VideoItem } from "../types";
+import type { DocumentItem, VideoItem } from "../types";
 import { overviewVideos } from "./home";
+import { mediaMap } from "./media-map";
 
 export const materialsHero = {
   eyebrow: "Материалы",
@@ -18,68 +19,7 @@ export const materialsHero = {
 
 export const materialVideos: VideoItem[] = overviewVideos;
 
-export const photoGroups: ProductItem[] = [
-  {
-    title: "Продукт",
-    text: "Студийные кадры продукта и разрезов для объяснения формы, начинки и визуального стандарта.",
-    image: {
-      base: "hero-kolobok",
-      widths: [768, 1200, 1440],
-      sizes: "(max-width: 720px) 100vw, 31vw",
-      alt: "Основной продуктовый кадр Колобочной"
-    }
-  },
-  {
-    title: "Разрезы",
-    text: "Фотографии, которые показывают внутреннее устройство продукта и работу начинки внутри формы.",
-    image: {
-      base: "cutaway-01",
-      widths: [420, 760],
-      sizes: "(max-width: 720px) 100vw, 31vw",
-      alt: "Разрез продукта Колобочной"
-    }
-  },
-  {
-    title: "Точки",
-    text: "Городские материалы: фасад, интерьер, выдача и контакт с гостями.",
-    image: {
-      base: "point-facade",
-      widths: [480, 840],
-      sizes: "(max-width: 720px) 100vw, 31vw",
-      alt: "Фасад точки Колобочной"
-    }
-  },
-  {
-    title: "Фестивали",
-    text: "Событийные кадры, подтверждающие работу продукта вне стационарной точки.",
-    image: {
-      base: "festival-window",
-      widths: [480, 840],
-      sizes: "(max-width: 720px) 100vw, 31vw",
-      alt: "Фестивальный материал Колобочной"
-    }
-  },
-  {
-    title: "Напитки",
-    text: "Пуэр, пуэр с кокосовыми сливками, натуральные лимонады и сезонные сочетания.",
-    image: {
-      base: "drink-tea",
-      widths: [420, 720, 960],
-      sizes: "(max-width: 720px) 100vw, 31vw",
-      alt: "Напиточная линия Колобочной"
-    }
-  },
-  {
-    title: "Открытая кухня",
-    text: "Кадры точки и процесса показывают финальное приготовление перед выдачей гостю.",
-    image: {
-      base: "point-interior",
-      widths: [480, 840],
-      sizes: "(max-width: 720px) 100vw, 31vw",
-      alt: "Открытая кухня как часть процесса"
-    }
-  }
-];
+export const moments = mediaMap.moments;
 
 export const documents: DocumentItem[] = [
   {

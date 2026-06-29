@@ -1,7 +1,6 @@
 import { MouseEvent, useEffect, useMemo, useState } from "react";
 import {
   Breadcrumbs,
-  ClusterDiagram,
   ContactForm,
   CTASection,
   DocumentCard,
@@ -17,6 +16,8 @@ import {
   SiteHeader,
   Timeline
 } from "./components/ui";
+import { MomentsMosaic } from "./components/MomentsMosaic";
+import { ProcessRoute } from "./components/ProcessRoute";
 import { approvedCopy } from "./content/approved-copy";
 import { conceptDefinition, conceptHero, identityPoints, movementPoints, productFamilies, productFormats } from "./content/concept";
 import { historyHero, timeline } from "./content/history";
@@ -32,13 +33,13 @@ import {
 import { investorQuestionsHero } from "./content/investorQuestions";
 import {
   clusterDetails,
-  investmentDisclaimer,
   investmentHero,
   investmentUses,
   participationModels,
   pointFormats
 } from "./content/investment";
-import { documents, materialVideos, materialsHero, photoGroups } from "./content/materials";
+import { documents, materialVideos, materialsHero, moments } from "./content/materials";
+import { productionRoute } from "./content/production-route";
 import { drinkItems, processSteps, qualityBlocks, qualityDirections, qualityHero, urbanFarmItems } from "./content/quality";
 import { pageByPath } from "./content/site";
 import type { PageMeta } from "./types";
@@ -109,8 +110,12 @@ function HomePage() {
     <>
       <section className="home-hero" aria-labelledby="home-title">
         <div className="home-hero-copy">
-          <p className="eyebrow">{homeHero.eyebrow}</p>
           <h1 id="home-title">{homeHero.title}</h1>
+          <p className="hero-tagline" aria-label={approvedCopy.tagline}>
+            {homeHero.taglineParts.map((line) => (
+              <span key={line}>{line}</span>
+            ))}
+          </p>
           <p className="lead">{homeHero.lead}</p>
           {homeHero.text ? <p>{homeHero.text}</p> : null}
           <div className="hero-actions">
@@ -148,8 +153,8 @@ function HomePage() {
       </section>
 
       <MediaCarousel
-        title="Продукт уже встретился с аудиторией."
-        text={approvedCopy.practicalProof}
+        title="Видео проекта уже собрали миллионы просмотров."
+        text="Идея получила внимание аудитории ещё на этапе первых запусков."
         videos={overviewVideos}
       />
 
@@ -158,7 +163,8 @@ function HomePage() {
       <section className="section section-yellow">
         <div className="section-inner statement-grid">
           <div>
-            <SectionIntro title={approvedCopy.conceptDefinition} text={conceptDefinition} />
+            <SectionIntro title={approvedCopy.conceptDefinition} text={approvedCopy.productVariety} />
+            <p className="category-line">Мясные · Морские · Вегетарианские · Сладкие</p>
             <a className="text-link" href="/concept">
               Подробнее о концепции
             </a>
@@ -198,7 +204,7 @@ function HomePage() {
 
       <section className="section section-dark">
         <div className="section-inner scale-layout">
-          <ClusterDiagram compact />
+          <ProcessRoute route={productionRoute} />
           <div>
             <SectionIntro title={homeScale.title} text={homeScale.text} />
             <ol className="inline-flow">
@@ -214,10 +220,12 @@ function HomePage() {
       </section>
 
       <CTASection
-        title="Обсудим участие в проекте"
-        text={approvedCopy.investorContactText}
+        title="Рассматриваем партнёров для следующего этапа развития."
+        text="Проект готовится к масштабированию через производственную систему, городские точки и единый стандарт качества."
         primaryLabel={approvedCopy.cta.discuss}
+        primaryHref="/investor-questions"
         secondaryLabel={approvedCopy.cta.requestProjectMaterials}
+        secondaryHref="/materials"
       />
     </>
   );
@@ -234,12 +242,12 @@ function ConceptPage() {
       </section>
       <ProductCarousel
         title={approvedCopy.productVariety}
-        text="Мясо, море, вегетарианские и сладкие направления показывают принцип развития ассортимента без перегрузки формата."
+        text="Мясные, морские, вегетарианские и сладкие направления показывают принцип развития ассортимента без перегрузки формата."
         items={productFamilies}
       />
       <ProductCarousel
-        title="Дополнительные форматы продукта"
-        text="Формат продукта и тип начинки разделены: основные категории описывают содержание, а дополнительные форматы — способ подачи."
+        title="Форма может развиваться."
+        text="Классические колобки, UFO-линейка, десертные форматы и напитки расширяют продуктовую систему, сохраняя общий принцип: удобно, быстро, всё внутри."
         items={productFormats}
       />
       <section className="section section-paper">
@@ -281,7 +289,15 @@ function HistoryPage() {
   return (
     <>
       <PageHero hero={historyHero} current="История проекта" />
-      <Timeline items={timeline} text={approvedCopy.history.timelineIntro} />
+      <Timeline
+        items={timeline}
+        title="Проверка в реальной среде"
+        text={approvedCopy.history.timelineIntro}
+        cta={{
+          href: "/materials#moments",
+          label: "Больше моментов с Колобочной"
+        }}
+      />
       <CTASection
         title="Перейти к модели масштабирования"
         text="Опыт точек и событийных площадок переводится в технологию, бренд и региональную производственную систему."
@@ -361,7 +377,7 @@ function InvestmentPage() {
       <PageHero hero={investmentHero} current="Инвестиционное предложение" />
       <section className="section section-light">
         <div className="section-inner investment-grid">
-          <ClusterDiagram />
+          <ProcessRoute route={productionRoute} tone="light" />
           <div>
             <SectionIntro title="Производственная модель" text={approvedCopy.productionExplanation} />
             <ul className="feature-list">
@@ -380,7 +396,7 @@ function InvestmentPage() {
       <section className="section section-paper">
         <div className="section-inner two-column">
           <div>
-            <SectionIntro title="Форматы участия" text={investmentDisclaimer} />
+            <SectionIntro title="Форматы участия" text="Публичная страница показывает направления участия без раскрытия условий сделки." />
             <ul className="feature-list">
               {participationModels.map((item) => (
                 <li key={item}>{item}</li>
@@ -389,7 +405,7 @@ function InvestmentPage() {
           </div>
           <div>
             <SectionIntro
-              title="Направления развития"
+              title="Что раскрывается в закрытых материалах"
               text="Закрытые материалы раскрывают состав работ, последовательность запуска и параметры финансовой модели."
             />
             <ul className="feature-list">
@@ -421,10 +437,11 @@ function MaterialsPage() {
         text={approvedCopy.practicalProof}
         videos={materialVideos}
       />
-      <ProductCarousel
-        title="Фотографии"
-        text="Галерея собрана по типам материалов: продукт, разрезы, точки, фестивали, напитки и открытая кухня."
-        items={photoGroups}
+      <MomentsMosaic
+        id="moments"
+        title="Яркие моменты с Колобочной"
+        description="Живые фото и видео проекта: продукт, точки, фестивали, процесс и гости."
+        items={moments}
       />
       {documents.length ? (
         <section className="section section-paper">
@@ -462,7 +479,7 @@ function InvestorQuestionsPage() {
           <div>
             <SectionIntro
               title="Канал для предметного разговора"
-              text="Расскажите о формате интереса, компании и удобном способе связи. Запрос поможет подготовить релевантный комплект материалов."
+              text="Оставьте контакт — мы отправим материалы и обсудим подходящий формат участия."
             />
           </div>
           <ContactForm />
@@ -526,15 +543,41 @@ export default function App() {
     return () => window.removeEventListener("popstate", handlePopState);
   }, []);
 
+  useEffect(() => {
+    if (window.location.hash) {
+      window.setTimeout(() => scrollToAnchor(window.location.hash), 0);
+    }
+  }, [path]);
+
+  function scrollToAnchor(hash: string) {
+    const id = decodeURIComponent(hash.replace(/^#/, ""));
+    const target = document.getElementById(id);
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
+
   function navigate(href: string) {
-    const nextPath = normalizePath(href);
+    const nextUrl = new URL(href, window.location.origin);
+    const nextPath = normalizePath(nextUrl.pathname);
+    const nextHref = `${nextPath}${nextUrl.hash}`;
     if (nextPath === path) {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      if (nextUrl.hash) {
+        scrollToAnchor(nextUrl.hash);
+      } else {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
       return;
     }
-    window.history.pushState({}, "", nextPath);
+    window.history.pushState({}, "", nextHref);
     setPath(nextPath);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.setTimeout(() => {
+      if (nextUrl.hash) {
+        scrollToAnchor(nextUrl.hash);
+      } else {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    }, 0);
   }
 
   function handleInternalNavigation(event: MouseEvent<HTMLDivElement>) {
@@ -548,7 +591,7 @@ export default function App() {
       return;
     }
     event.preventDefault();
-    navigate(url.pathname);
+    navigate(`${url.pathname}${url.hash}`);
   }
 
   return (

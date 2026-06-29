@@ -8,7 +8,7 @@ const outDir = path.join(projectRoot, "public", "media");
 const media = {
   logoBlack: "D:\\Protagonist_Dev\\Колобочная\\Madia\\4. КОЛОБКИ\\Дизайн\\Логотип-02.png",
   logoYellow: "D:\\Protagonist_Dev\\Колобочная\\Madia\\4. КОЛОБКИ\\Дизайн\\Логотип_Монтажная область 1.png",
-  hero: "D:\\Protagonist_Dev\\Колобочная\\Madia\\4. КОЛОБКИ\\Дизайн\\колобочная\\Веб\\Колобочная1922 1.jpg",
+  hero: "D:\\Protagonist_Dev\\Колобочная\\Madia\\IMG_6914.JPG",
   heroAlt: "D:\\Protagonist_Dev\\Колобочная\\Madia\\4. КОЛОБКИ\\Дизайн\\колобочная\\Веб\\Колобочная1958.jpg",
   products: [
     ["product-classic", "D:\\Protagonist_Dev\\Колобочная\\Madia\\4. КОЛОБКИ\\Дизайн\\колобочная\\Веб\\Колобочная0008.jpg"],

@@ -54,11 +54,37 @@ export type VideoItem = {
   meta: string;
   author?: string | null;
   year?: string | null;
+  platform?: string | null;
   place?: string | null;
   reach?: string | null;
+  viewsLabel?: string | null;
+  viewsNote?: string | null;
   originalPublicationUrl?: string | null;
+  videoMp4?: string | null;
+  videoWebm?: string | null;
   description?: string;
   status?: string | null;
+  poster: ImageSpec;
+};
+
+export type MomentItem = {
+  id: string;
+  type: "image" | "video";
+  src: string;
+  poster: string | null;
+  webm?: string | null;
+  alt: string;
+  width?: number;
+  height?: number;
+  caption?: string;
+  year?: string;
+  location?: string;
+  sourceUrl?: string;
+};
+
+export type TimelineCoverVideo = {
+  mp4?: string | null;
+  webm?: string | null;
   poster: ImageSpec;
 };
 
@@ -67,6 +93,7 @@ export type ProductItem = {
   text: string;
   image?: ImageSpec;
   tag?: string;
+  category?: string;
 };
 
 export type TimelineItem = {
@@ -74,6 +101,7 @@ export type TimelineItem = {
   title: string;
   text: string;
   image: ImageSpec;
+  coverVideo?: TimelineCoverVideo;
 };
 
 export type DocumentItem = {

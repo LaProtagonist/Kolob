@@ -138,8 +138,72 @@ export function SiteHeader({ activePath }: HeaderProps) {
 }
 
 function DesktopNavigation({ activePath }: HeaderProps) {
+  const [openGroup, setOpenGroup] = useState<string | null>(null);
+  const [pinnedGroup, setPinnedGroup] = useState<string | null>(null);
+  const closeTimer = useRef<ReturnType<typeof window.setTimeout> | null>(null);
+  const navRef = useRef<HTMLElement>(null);
+
+  function clearCloseTimer() {
+    if (closeTimer.current) {
+      window.clearTimeout(closeTimer.current);
+      closeTimer.current = null;
+    }
+  }
+
+  function open(label: string) {
+    clearCloseTimer();
+    setOpenGroup(label);
+  }
+
+  function scheduleClose() {
+    clearCloseTimer();
+    closeTimer.current = window.setTimeout(() => {
+      if (!pinnedGroup) {
+        setOpenGroup(null);
+      }
+    }, 240);
+  }
+
+  function togglePinned(label: string) {
+    clearCloseTimer();
+    setPinnedGroup((current) => {
+      const next = current === label ? null : label;
+      setOpenGroup(next);
+      return next;
+    });
+  }
+
+  useEffect(() => {
+    function handlePointerDown(event: globalThis.MouseEvent) {
+      if (!navRef.current?.contains(event.target as Node)) {
+        setOpenGroup(null);
+        setPinnedGroup(null);
+      }
+    }
+
+    function handleKeyDown(event: globalThis.KeyboardEvent) {
+      if (event.key === "Escape") {
+        setOpenGroup(null);
+        setPinnedGroup(null);
+      }
+    }
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("pointerdown", handlePointerDown);
+      document.removeEventListener("keydown", handleKeyDown);
+      clearCloseTimer();
+    };
+  }, [pinnedGroup]);
+
+  useEffect(() => {
+    setOpenGroup(null);
+    setPinnedGroup(null);
+  }, [activePath]);
+
   return (
-    <nav className="desktop-nav" aria-label="Основная навигация">
+    <nav className="desktop-nav" aria-label="Основная навигация" ref={navRef}>
       {primaryNav.map((item) => (
         <a className={isActive(activePath, item.href) ? "is-active" : ""} href={item.href} key={item.href}>
           {item.label}
@@ -147,12 +211,34 @@ function DesktopNavigation({ activePath }: HeaderProps) {
       ))}
       {navGroups.map((group) => {
         const groupActive = group.items.some((item) => isActive(activePath, item.href));
+        const groupOpen = openGroup === group.label;
         return (
-          <div className={`nav-dropdown ${groupActive ? "is-active" : ""}`} key={group.label}>
-            <button type="button" aria-haspopup="true">
+          <div
+            className={`nav-dropdown ${groupActive ? "is-active" : ""} ${groupOpen ? "is-open" : ""}`}
+            key={group.label}
+            onMouseEnter={() => open(group.label)}
+            onMouseLeave={scheduleClose}
+            onFocus={() => open(group.label)}
+          >
+            <button
+              type="button"
+              aria-haspopup="true"
+              aria-expanded={groupOpen}
+              onClick={() => togglePinned(group.label)}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  togglePinned(group.label);
+                }
+                if (event.key === "Escape") {
+                  setOpenGroup(null);
+                  setPinnedGroup(null);
+                }
+              }}
+            >
               {group.label}
             </button>
-            <div className="nav-dropdown-panel">
+            <div className="nav-dropdown-panel" onMouseEnter={() => open(group.label)} onMouseLeave={scheduleClose}>
               {group.items.map((item) => (
                 <a className={isActive(activePath, item.href) ? "is-active" : ""} href={item.href} key={item.href}>
                   {item.label}
@@ -167,6 +253,22 @@ function DesktopNavigation({ activePath }: HeaderProps) {
 }
 
 function MobileNavigation({ activePath, open }: HeaderProps & { open: boolean }) {
+  const [openGroups, setOpenGroups] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (!open) {
+      setOpenGroups([]);
+    }
+  }, [open]);
+
+  useEffect(() => {
+    setOpenGroups([]);
+  }, [activePath]);
+
+  function toggleGroup(label: string) {
+    setOpenGroups((current) => (current.includes(label) ? current.filter((item) => item !== label) : [...current, label]));
+  }
+
   return (
     <nav className={`mobile-nav ${open ? "is-open" : ""}`} id="mobile-menu" aria-label="Мобильная навигация">
       {primaryNav.map((item) => (
@@ -174,16 +276,23 @@ function MobileNavigation({ activePath, open }: HeaderProps & { open: boolean })
           {item.label}
         </a>
       ))}
-      {navGroups.map((group) => (
-        <div className="mobile-nav-group" key={group.label}>
-          <strong>{group.label}</strong>
-          {group.items.map((item) => (
-            <a className={isActive(activePath, item.href) ? "is-active" : ""} href={item.href} key={item.href}>
-              {item.label}
-            </a>
-          ))}
-        </div>
-      ))}
+      {navGroups.map((group) => {
+        const groupOpen = openGroups.includes(group.label);
+        return (
+          <div className={`mobile-nav-group ${groupOpen ? "is-open" : ""}`} key={group.label}>
+            <button type="button" aria-expanded={groupOpen} onClick={() => toggleGroup(group.label)}>
+              {group.label}
+            </button>
+            <div className="mobile-nav-submenu">
+              {group.items.map((item) => (
+                <a className={isActive(activePath, item.href) ? "is-active" : ""} href={item.href} key={item.href}>
+                  {item.label}
+                </a>
+              ))}
+            </div>
+          </div>
+        );
+      })}
       <a className="mobile-nav-cta" href={site.ctaHref}>
         {site.ctaLabel}
       </a>
@@ -355,7 +464,7 @@ export function MediaCarousel({ title, text, videos }: { title: string; text?: s
           aria-label="Обзорные ролики"
         >
           {videos.map((video, index) => (
-            <VideoCard featured={index === 0} item={video} key={video.title} />
+            <VideoCard featured={false} item={video} key={`${video.title}-${index}`} />
           ))}
         </div>
       </div>
@@ -367,15 +476,33 @@ export function VideoCard({ item, featured = false }: { item: VideoItem; feature
   const facts = [
     item.author ? { label: "Автор", value: item.author } : null,
     item.year ? { label: "Дата", value: item.year } : null,
+    item.platform ? { label: "Платформа", value: item.platform } : null,
     item.place ? { label: "Место", value: item.place } : null,
+    item.viewsLabel ? { label: null, value: item.viewsLabel, full: true } : null,
+    item.viewsNote ? { label: null, value: item.viewsNote, full: true } : null,
     item.reach ? { label: "Охват", value: item.reach } : null
-  ].filter(Boolean) as { label: string; value: string }[];
+  ].filter(Boolean) as { label: string | null; value: string; full?: boolean }[];
+  const hasVideo = Boolean(item.videoMp4 || item.videoWebm);
 
   return (
     <article className={`video-card ${featured ? "is-featured" : ""}`}>
       <div className="video-poster">
-        <ResponsiveImage {...item.poster} />
-        <span className="play-mark" aria-hidden="true" />
+        {hasVideo ? (
+          <video
+            poster={`/media/${item.poster.base}-${item.poster.widths[item.poster.widths.length - 1]}.webp`}
+            controls
+            preload="metadata"
+            playsInline
+          >
+            {item.videoWebm ? <source src={item.videoWebm} type="video/webm" /> : null}
+            {item.videoMp4 ? <source src={item.videoMp4} type="video/mp4" /> : null}
+          </video>
+        ) : (
+          <>
+            <ResponsiveImage {...item.poster} />
+            <span className="play-mark" aria-hidden="true" />
+          </>
+        )}
       </div>
       <div className="video-card-body">
         <p className="card-meta">{item.meta}</p>
@@ -384,8 +511,8 @@ export function VideoCard({ item, featured = false }: { item: VideoItem; feature
         {facts.length ? (
           <dl>
             {facts.map((fact) => (
-              <div key={fact.label}>
-                <dt>{fact.label}</dt>
+              <div className={fact.full ? "is-full" : ""} key={`${fact.label ?? "fact"}-${fact.value}`}>
+                {fact.label ? <dt>{fact.label}</dt> : null}
                 <dd>{fact.value}</dd>
               </div>
             ))}
@@ -402,13 +529,23 @@ export function VideoCard({ item, featured = false }: { item: VideoItem; feature
   );
 }
 
-export function ProductCarousel({ items, title, text }: { items: ProductItem[]; title?: string; text?: string }) {
+export function ProductCarousel({
+  id,
+  items,
+  title,
+  text
+}: {
+  id?: string;
+  items: ProductItem[];
+  title?: string;
+  text?: string;
+}) {
   if (!items.length) {
     return null;
   }
 
   return (
-    <section className="section section-light">
+    <section className="section section-light" id={id}>
       <div className="section-inner">
         {title ? <SectionIntro eyebrow="Продукт" title={title} text={text} /> : null}
         <div className="product-carousel">
@@ -430,12 +567,17 @@ export function ProductCarousel({ items, title, text }: { items: ProductItem[]; 
 
 export function Timeline({
   items,
-  title = "Проект существовал в реальной среде",
-  text
+  title = "Проверка в реальной среде",
+  text,
+  cta
 }: {
   items: TimelineItem[];
   title?: string;
   text?: string;
+  cta?: {
+    href: string;
+    label: string;
+  };
 }) {
   return (
     <section className="section section-paper">
@@ -450,7 +592,7 @@ export function Timeline({
             <article className="timeline-item" key={`${item.period}-${item.title}`}>
               <div className="timeline-year">{item.period}</div>
               <div className="timeline-card">
-                <ResponsiveImage {...item.image} />
+                <TimelineMedia item={item} />
                 <div>
                   <h3>{item.title}</h3>
                   <p>{item.text}</p>
@@ -458,9 +600,42 @@ export function Timeline({
               </div>
             </article>
           ))}
+          {cta ? (
+            <div className="timeline-more">
+              <a className="timeline-more-link" href={cta.href}>
+                {cta.label}
+              </a>
+            </div>
+          ) : null}
         </div>
       </div>
     </section>
+  );
+}
+
+function TimelineMedia({ item }: { item: TimelineItem }) {
+  const reducedMotion = usePrefersReducedMotion();
+  const video = item.coverVideo;
+  const hasVideo = Boolean(video?.mp4 || video?.webm);
+
+  if (!hasVideo || reducedMotion) {
+    return <ResponsiveImage {...(video?.poster ?? item.image)} />;
+  }
+
+  return (
+    <video
+      className="timeline-cover-video"
+      poster={`/media/${video?.poster.base}-${video?.poster.widths[video.poster.widths.length - 1]}.webp`}
+      muted
+      autoPlay
+      loop
+      playsInline
+      preload="metadata"
+      aria-label={video?.poster.alt ?? item.image.alt}
+    >
+      {video?.webm ? <source src={video.webm} type="video/webm" /> : null}
+      {video?.mp4 ? <source src={video.mp4} type="video/mp4" /> : null}
+    </video>
   );
 }
 
