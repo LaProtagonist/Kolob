@@ -1,4 +1,4 @@
-import { FocusEvent, FormEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
+import { FocusEvent, FormEvent, KeyboardEvent, useCallback, useEffect, useRef, useState } from "react";
 import type {
   DocumentItem,
   HeroContent,
@@ -64,6 +64,24 @@ function usePrefersReducedMotion() {
   return reduced;
 }
 
+function prepareInlineAutoplayVideo(element: HTMLVideoElement) {
+  element.defaultMuted = true;
+  element.muted = true;
+  element.autoplay = true;
+  element.loop = true;
+  element.playsInline = true;
+  element.setAttribute("muted", "");
+  element.setAttribute("autoplay", "");
+  element.setAttribute("loop", "");
+  element.setAttribute("playsinline", "");
+  element.setAttribute("webkit-playsinline", "");
+}
+
+function isNearViewport(element: HTMLElement) {
+  const rect = element.getBoundingClientRect();
+  return rect.top < window.innerHeight + 220 && rect.bottom > -120;
+}
+
 export function HeroMedia({ image, video }: { image: ImageSpec; video?: HeroVideo }) {
   const reducedMotion = usePrefersReducedMotion();
   const hasVideo = Boolean(video?.mp4 || video?.webm);
@@ -102,16 +120,97 @@ export function LoopMedia({
 }) {
   const reducedMotion = usePrefersReducedMotion();
   const videoRef = useRef<HTMLVideoElement>(null);
+  const retryTimer = useRef<ReturnType<typeof window.setTimeout> | null>(null);
+  const verifyTimer = useRef<ReturnType<typeof window.setTimeout> | null>(null);
+  const autoplayAttempts = useRef(0);
   const [autoplayBlocked, setAutoplayBlocked] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const hasVideo = Boolean(video?.mp4 || video?.webm);
   const poster = video?.poster ?? image;
   const posterSrc = `/media/${poster.base}-${poster.widths[poster.widths.length - 1]}.webp`;
 
+  const clearPlaybackTimers = useCallback(() => {
+    if (retryTimer.current) {
+      window.clearTimeout(retryTimer.current);
+      retryTimer.current = null;
+    }
+
+    if (verifyTimer.current) {
+      window.clearTimeout(verifyTimer.current);
+      verifyTimer.current = null;
+    }
+  }, []);
+
+  const attemptAutoplay = useCallback(
+    (force = false) => {
+      if (!hasVideo || reducedMotion || (!force && autoplayBlocked)) {
+        return;
+      }
+
+      const element = videoRef.current;
+      if (!element) {
+        return;
+      }
+
+      if (!isVisible && !isNearViewport(element)) {
+        return;
+      }
+
+      prepareInlineAutoplayVideo(element);
+      clearPlaybackTimers();
+      autoplayAttempts.current += 1;
+
+      const scheduleRetry = () => {
+        if (autoplayAttempts.current >= 4) {
+          if (element.paused) {
+            setAutoplayBlocked(true);
+          }
+          return;
+        }
+
+        retryTimer.current = window.setTimeout(() => attemptAutoplay(force), 420);
+      };
+
+      const playAttempt = element.play();
+
+      verifyTimer.current = window.setTimeout(() => {
+        if (!element.paused) {
+          autoplayAttempts.current = 0;
+          setAutoplayBlocked(false);
+          return;
+        }
+
+        scheduleRetry();
+      }, 900);
+
+      if (playAttempt) {
+        playAttempt
+          .then(() => {
+            autoplayAttempts.current = 0;
+            setAutoplayBlocked(false);
+          })
+          .catch(() => {
+            if (verifyTimer.current) {
+              window.clearTimeout(verifyTimer.current);
+              verifyTimer.current = null;
+            }
+            scheduleRetry();
+          });
+      }
+    },
+    [autoplayBlocked, clearPlaybackTimers, hasVideo, isVisible, reducedMotion]
+  );
+
   useEffect(() => {
     setAutoplayBlocked(false);
     setIsVisible(false);
-  }, [video?.mp4, video?.webm]);
+    autoplayAttempts.current = 0;
+    clearPlaybackTimers();
+  }, [clearPlaybackTimers, video?.mp4, video?.webm]);
+
+  useEffect(() => {
+    return () => clearPlaybackTimers();
+  }, [clearPlaybackTimers]);
 
   useEffect(() => {
     if (!hasVideo || reducedMotion) {
@@ -123,14 +222,13 @@ export function LoopMedia({
       return;
     }
 
-    element.defaultMuted = true;
-    element.muted = true;
+    prepareInlineAutoplayVideo(element);
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         setIsVisible(entry.isIntersecting);
       },
-      { threshold: 0.28 }
+      { rootMargin: "220px 0px", threshold: 0.06 }
     );
 
     observer.observe(element);
@@ -138,31 +236,53 @@ export function LoopMedia({
   }, [hasVideo, reducedMotion, video?.mp4, video?.webm]);
 
   useEffect(() => {
-    if (!hasVideo || reducedMotion || autoplayBlocked || !isVisible) {
+    attemptAutoplay();
+  }, [attemptAutoplay]);
+
+  useEffect(() => {
+    if (!hasVideo || reducedMotion) {
       return;
     }
 
-    const element = videoRef.current;
-    if (!element) {
-      return;
-    }
+    let animationFrame = 0;
 
-    element.defaultMuted = true;
-    element.muted = true;
-
-    const playAttempt = element.play();
-    const fallbackTimer = window.setTimeout(() => {
-      if (element.paused) {
-        setAutoplayBlocked(true);
+    function retryWhenNearViewport() {
+      if (animationFrame) {
+        return;
       }
-    }, 1400);
 
-    if (playAttempt) {
-      playAttempt.catch(() => setAutoplayBlocked(true));
+      animationFrame = window.requestAnimationFrame(() => {
+        animationFrame = 0;
+        const element = videoRef.current;
+        if (element && element.paused && isNearViewport(element)) {
+          attemptAutoplay(true);
+        }
+      });
     }
 
-    return () => window.clearTimeout(fallbackTimer);
-  }, [autoplayBlocked, hasVideo, isVisible, reducedMotion, video?.mp4, video?.webm]);
+    function retryWhenPageIsActive() {
+      if (document.visibilityState === "visible") {
+        attemptAutoplay(true);
+      }
+    }
+
+    retryWhenNearViewport();
+    window.addEventListener("scroll", retryWhenNearViewport, { passive: true });
+    window.addEventListener("resize", retryWhenNearViewport);
+    window.addEventListener("touchend", retryWhenNearViewport, { passive: true });
+    window.addEventListener("pageshow", retryWhenPageIsActive);
+    document.addEventListener("visibilitychange", retryWhenPageIsActive);
+    return () => {
+      if (animationFrame) {
+        window.cancelAnimationFrame(animationFrame);
+      }
+      window.removeEventListener("scroll", retryWhenNearViewport);
+      window.removeEventListener("resize", retryWhenNearViewport);
+      window.removeEventListener("touchend", retryWhenNearViewport);
+      window.removeEventListener("pageshow", retryWhenPageIsActive);
+      document.removeEventListener("visibilitychange", retryWhenPageIsActive);
+    };
+  }, [attemptAutoplay, hasVideo, reducedMotion]);
 
   async function handleManualPlay() {
     const element = videoRef.current;
@@ -170,8 +290,9 @@ export function LoopMedia({
       return;
     }
 
-    element.defaultMuted = true;
-    element.muted = true;
+    clearPlaybackTimers();
+    prepareInlineAutoplayVideo(element);
+    autoplayAttempts.current = 0;
 
     try {
       await element.play();
@@ -197,10 +318,17 @@ export function LoopMedia({
         playsInline
         preload="auto"
         aria-label={image.alt}
+        onLoadedMetadata={() => attemptAutoplay()}
         onCanPlay={() => {
-          if (isVisible && !autoplayBlocked) {
-            videoRef.current?.play().catch(() => setAutoplayBlocked(true));
-          }
+          attemptAutoplay();
+        }}
+        onCanPlayThrough={() => {
+          attemptAutoplay();
+        }}
+        onPlaying={() => {
+          clearPlaybackTimers();
+          autoplayAttempts.current = 0;
+          setAutoplayBlocked(false);
         }}
         onError={() => setAutoplayBlocked(true)}
       >

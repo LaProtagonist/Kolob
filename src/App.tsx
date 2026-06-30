@@ -113,6 +113,10 @@ function usePageMeta(page: PageMeta) {
   }, [page]);
 }
 
+function QualityPillarIcon({ icon }: { icon: string }) {
+  return <img src={`/media/quality-icons/${icon}.png`} alt="" loading="lazy" decoding="async" aria-hidden="true" />;
+}
+
 function HomePage() {
   return (
     <>
@@ -193,10 +197,8 @@ function HomePage() {
             </a>
           </div>
           <ResponsiveImage
-            base="product-warm"
-            widths={[420, 720, 960]}
+            {...homeHero.image}
             sizes="(max-width: 720px) 100vw, 42vw"
-            alt="Тёплый продуктовый кадр Колобочной"
             className="statement-photo"
           />
         </div>
@@ -204,13 +206,23 @@ function HomePage() {
 
       <section className="section section-light">
         <div className="section-inner statement-grid">
-          <div>
+          <div className="quality-teaser-copy">
             <SectionIntro title={homeQuality.title} text={homeQuality.text} />
-            <ul className="pill-list">
-              {homeQuality.items.map((item) => (
-                <li key={item}>{item}</li>
+            <div className="quality-pillars-label">{homeQuality.label}</div>
+            <ol className="quality-pillars" aria-label={homeQuality.label}>
+              {homeQuality.pillars.map((item) => (
+                <li className="quality-pillar" key={item.number}>
+                  <span className="quality-pillar-number">{item.number}</span>
+                  <span className="quality-pillar-icon">
+                    <QualityPillarIcon icon={item.icon} />
+                  </span>
+                  <span className="quality-pillar-text">
+                    <strong>{item.title}</strong>
+                    <span>{item.text}</span>
+                  </span>
+                </li>
               ))}
-            </ul>
+            </ol>
             <a className="text-link" href={homeQuality.link.href}>
               {homeQuality.link.label}
             </a>

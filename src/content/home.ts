@@ -59,7 +59,27 @@ export const overviewVideos: VideoItem[] = [
 export const homeQuality = {
   title: approvedCopy.qualityFormula,
   text: approvedCopy.qualityLead,
-  items: ["фермерское и региональное сырьё", "собственная технология", "открытая кухня"],
+  label: "ТРИ ОПОРЫ КАЧЕСТВА",
+  pillars: [
+    {
+      number: "01",
+      title: "Фермерское и региональное сырьё",
+      text: "Продукты с выраженным вкусом и понятным происхождением.",
+      icon: "farm"
+    },
+    {
+      number: "02",
+      title: "Авторская технология",
+      text: "Собственный способ приготовления, созданный под формат колобка.",
+      icon: "technology"
+    },
+    {
+      number: "03",
+      title: "Собственное производство",
+      text: "Централизованная подготовка компонентов для стабильного качества в каждой точке.",
+      icon: "production"
+    }
+  ],
   link: { href: "/quality", label: "Подробнее о качестве" },
   media: {
     image: mediaMap.homeQualityLoop.poster,
