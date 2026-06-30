@@ -1,5 +1,5 @@
-import type { ProductItem } from "../types";
 import { approvedCopy } from "./approved-copy";
+import { mediaMap } from "./media-map";
 
 export const conceptHero = {
   eyebrow: "Концепция",
@@ -16,99 +16,44 @@ export const conceptHero = {
 
 export const conceptDefinition = approvedCopy.fastFormatAdditional;
 
-export const productFamilies: ProductItem[] = [
-  {
-    title: approvedCopy.productCategories.meat,
-    text: "Мясные и гастрономические сочетания.",
-    tag: "категория",
-    image: {
-      base: "product-classic",
-      widths: [420, 720, 960],
-      sizes: "(max-width: 720px) 84vw, 28vw",
-      alt: "Мясная продуктовая категория Колобочной"
-    }
+export const conceptTasteBlock = {
+  title: "Одна форма. Множество вкусов.",
+  text: "Форма остаётся узнаваемой, а внутри меняется содержание.",
+  tags: "Мясное · Морское · Вегетарианское · Сладкое",
+  fox: {
+    png: "/media/characters/fox-reaction-transparent.png",
+    webp: "/media/characters/fox-reaction-transparent.webp",
+    alt: "Лиса смотрит на разнообразие колобков"
   },
-  {
-    title: approvedCopy.productCategories.sea,
-    text: "Рыба, креветки, краб, гребешок и другие морские продукты.",
-    tag: "категория",
-    image: {
-      base: "product-greens",
-      widths: [420, 720, 960],
-      sizes: "(max-width: 720px) 84vw, 28vw",
-      alt: "Морская продуктовая категория Колобочной"
-    }
-  },
-  {
-    title: approvedCopy.productCategories.vegetarian,
-    text: "Овощи, грибы, сыр и растительные начинки.",
-    tag: "категория",
-    image: {
-      base: "cutaway-03",
-      widths: [420, 760],
-      sizes: "(max-width: 720px) 84vw, 28vw",
-      alt: "Вегетарианская категория продукта Колобочной"
-    }
-  },
-  {
-    title: approvedCopy.productCategories.sweet,
-    text: "Ягоды, фрукты, шоколадные, сливочные и десертные сочетания.",
-    tag: "категория",
-    image: {
-      base: "product-dessert",
-      widths: [420, 720, 960],
-      sizes: "(max-width: 720px) 84vw, 28vw",
-      alt: "Сладкий вариант продукта Колобочной"
-    }
-  }
-];
+  collage: mediaMap.conceptTasteCollage
+};
 
-export const productFormats: ProductItem[] = [
-  {
-    title: approvedCopy.productFormats.classic,
-    text: "Базовая форма продукта для основной линейки.",
-    tag: "формат",
-    image: {
-      base: "product-classic",
-      widths: [420, 720, 960],
-      sizes: "(max-width: 720px) 84vw, 28vw",
-      alt: "Классический колобок Колобочной"
+export const conceptMenuFormats = {
+  title: "Форматы меню",
+  text: "Классические колобки, UFO-линейка, десерты и напитки развивают систему, сохраняя общий принцип: удобно, быстро, всё внутри.",
+  items: [
+    {
+      title: "Классический колобок",
+      text: "Основная форма продукта для повседневного сценария еды в пути.",
+      image: mediaMap.conceptFormats.classic
+    },
+    {
+      title: "UFO-линейка",
+      text: "Отдельный формат формы для новых сочетаний и сценариев подачи.",
+      image: mediaMap.conceptFormats.ufo
+    },
+    {
+      title: "Десертные форматы",
+      text: "Сладкое направление внутри той же продуктовой системы.",
+      image: mediaMap.conceptFormats.dessert
+    },
+    {
+      title: "Напитки",
+      text: "Собственная напиточная линия как часть полного формата.",
+      image: mediaMap.conceptFormats.drinks
     }
-  },
-  {
-    title: approvedCopy.productFormats.ufo,
-    text: "Отдельное направление формы, которое расширяет сценарии продукта.",
-    tag: "формат",
-    image: {
-      base: "hero-dessert",
-      widths: [720, 1080],
-      sizes: "(max-width: 720px) 84vw, 28vw",
-      alt: "UFO-линейка Колобочной"
-    }
-  },
-  {
-    title: approvedCopy.productFormats.dessert,
-    text: "Сладкие сценарии продукта и подачи.",
-    tag: "формат",
-    image: {
-      base: "product-dessert",
-      widths: [420, 720, 960],
-      sizes: "(max-width: 720px) 84vw, 28vw",
-      alt: "Десертный формат Колобочной"
-    }
-  },
-  {
-    title: approvedCopy.productFormats.drinks,
-    text: "Собственная напиточная линия для еды в пути.",
-    tag: "формат",
-    image: {
-      base: "drink-tea",
-      widths: [420, 720, 960],
-      sizes: "(max-width: 720px) 84vw, 28vw",
-      alt: "Напитки Колобочной"
-    }
-  }
-];
+  ]
+};
 
 export const movementPoints = [
   "удобно взять с собой",

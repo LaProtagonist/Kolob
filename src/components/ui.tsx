@@ -1,4 +1,4 @@
-import { FormEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
+import { FocusEvent, FormEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
 import type {
   DocumentItem,
   HeroContent,
@@ -89,6 +89,133 @@ export function HeroMedia({ image, video }: { image: ImageSpec; video?: HeroVide
   );
 }
 
+export function LoopMedia({
+  image,
+  video,
+  className,
+  loading = "lazy"
+}: {
+  image: ImageSpec;
+  video?: HeroVideo;
+  className?: string;
+  loading?: "eager" | "lazy";
+}) {
+  const reducedMotion = usePrefersReducedMotion();
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [autoplayBlocked, setAutoplayBlocked] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const hasVideo = Boolean(video?.mp4 || video?.webm);
+  const poster = video?.poster ?? image;
+  const posterSrc = `/media/${poster.base}-${poster.widths[poster.widths.length - 1]}.webp`;
+
+  useEffect(() => {
+    setAutoplayBlocked(false);
+    setIsVisible(false);
+  }, [video?.mp4, video?.webm]);
+
+  useEffect(() => {
+    if (!hasVideo || reducedMotion) {
+      return;
+    }
+
+    const element = videoRef.current;
+    if (!element) {
+      return;
+    }
+
+    element.defaultMuted = true;
+    element.muted = true;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { threshold: 0.28 }
+    );
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [hasVideo, reducedMotion, video?.mp4, video?.webm]);
+
+  useEffect(() => {
+    if (!hasVideo || reducedMotion || autoplayBlocked || !isVisible) {
+      return;
+    }
+
+    const element = videoRef.current;
+    if (!element) {
+      return;
+    }
+
+    element.defaultMuted = true;
+    element.muted = true;
+
+    const playAttempt = element.play();
+    const fallbackTimer = window.setTimeout(() => {
+      if (element.paused) {
+        setAutoplayBlocked(true);
+      }
+    }, 1400);
+
+    if (playAttempt) {
+      playAttempt.catch(() => setAutoplayBlocked(true));
+    }
+
+    return () => window.clearTimeout(fallbackTimer);
+  }, [autoplayBlocked, hasVideo, isVisible, reducedMotion, video?.mp4, video?.webm]);
+
+  async function handleManualPlay() {
+    const element = videoRef.current;
+    if (!element) {
+      return;
+    }
+
+    element.defaultMuted = true;
+    element.muted = true;
+
+    try {
+      await element.play();
+      setAutoplayBlocked(false);
+    } catch {
+      setAutoplayBlocked(true);
+    }
+  }
+
+  if (!hasVideo || reducedMotion) {
+    return <ResponsiveImage {...poster} className={className} loading={loading} />;
+  }
+
+  return (
+    <div className={`loop-media-frame ${className ?? ""} ${autoplayBlocked ? "is-manual-start" : ""}`}>
+      <video
+        ref={videoRef}
+        className="loop-media-video"
+        poster={posterSrc}
+        muted
+        autoPlay
+        loop
+        playsInline
+        preload="auto"
+        aria-label={image.alt}
+        onCanPlay={() => {
+          if (isVisible && !autoplayBlocked) {
+            videoRef.current?.play().catch(() => setAutoplayBlocked(true));
+          }
+        }}
+        onError={() => setAutoplayBlocked(true)}
+      >
+        {video?.mp4 ? <source src={video.mp4} type="video/mp4" /> : null}
+        {video?.webm ? <source src={video.webm} type="video/webm" /> : null}
+      </video>
+      {autoplayBlocked ? (
+        <button className="loop-media-play" type="button" onClick={handleManualPlay} aria-label="Запустить видео">
+          <span aria-hidden="true" />
+        </button>
+      ) : null}
+    </div>
+  );
+}
+
 function isActive(activePath: string, href: string) {
   return href === "/" ? activePath === "/" : activePath.startsWith(href);
 }
@@ -139,7 +266,6 @@ export function SiteHeader({ activePath }: HeaderProps) {
 
 function DesktopNavigation({ activePath }: HeaderProps) {
   const [openGroup, setOpenGroup] = useState<string | null>(null);
-  const [pinnedGroup, setPinnedGroup] = useState<string | null>(null);
   const closeTimer = useRef<ReturnType<typeof window.setTimeout> | null>(null);
   const navRef = useRef<HTMLElement>(null);
 
@@ -158,33 +284,32 @@ function DesktopNavigation({ activePath }: HeaderProps) {
   function scheduleClose() {
     clearCloseTimer();
     closeTimer.current = window.setTimeout(() => {
-      if (!pinnedGroup) {
-        setOpenGroup(null);
-      }
+      setOpenGroup(null);
     }, 240);
   }
 
-  function togglePinned(label: string) {
+  function toggleOpen(label: string) {
     clearCloseTimer();
-    setPinnedGroup((current) => {
-      const next = current === label ? null : label;
-      setOpenGroup(next);
-      return next;
-    });
+    setOpenGroup((current) => (current === label ? null : label));
+  }
+
+  function handleDropdownBlur(event: FocusEvent<HTMLDivElement>) {
+    const nextFocus = event.relatedTarget;
+    if (!nextFocus || !event.currentTarget.contains(nextFocus as Node)) {
+      scheduleClose();
+    }
   }
 
   useEffect(() => {
     function handlePointerDown(event: globalThis.MouseEvent) {
       if (!navRef.current?.contains(event.target as Node)) {
         setOpenGroup(null);
-        setPinnedGroup(null);
       }
     }
 
     function handleKeyDown(event: globalThis.KeyboardEvent) {
       if (event.key === "Escape") {
         setOpenGroup(null);
-        setPinnedGroup(null);
       }
     }
 
@@ -195,11 +320,10 @@ function DesktopNavigation({ activePath }: HeaderProps) {
       document.removeEventListener("keydown", handleKeyDown);
       clearCloseTimer();
     };
-  }, [pinnedGroup]);
+  }, []);
 
   useEffect(() => {
     setOpenGroup(null);
-    setPinnedGroup(null);
   }, [activePath]);
 
   return (
@@ -219,20 +343,20 @@ function DesktopNavigation({ activePath }: HeaderProps) {
             onMouseEnter={() => open(group.label)}
             onMouseLeave={scheduleClose}
             onFocus={() => open(group.label)}
+            onBlur={handleDropdownBlur}
           >
             <button
               type="button"
               aria-haspopup="true"
               aria-expanded={groupOpen}
-              onClick={() => togglePinned(group.label)}
+              onClick={() => open(group.label)}
               onKeyDown={(event) => {
                 if (event.key === "Enter" || event.key === " ") {
                   event.preventDefault();
-                  togglePinned(group.label);
+                  toggleOpen(group.label);
                 }
                 if (event.key === "Escape") {
                   setOpenGroup(null);
-                  setPinnedGroup(null);
                 }
               }}
             >
@@ -240,7 +364,12 @@ function DesktopNavigation({ activePath }: HeaderProps) {
             </button>
             <div className="nav-dropdown-panel" onMouseEnter={() => open(group.label)} onMouseLeave={scheduleClose}>
               {group.items.map((item) => (
-                <a className={isActive(activePath, item.href) ? "is-active" : ""} href={item.href} key={item.href}>
+                <a
+                  className={isActive(activePath, item.href) ? "is-active" : ""}
+                  href={item.href}
+                  key={item.href}
+                  onClick={() => setOpenGroup(null)}
+                >
                   {item.label}
                 </a>
               ))}

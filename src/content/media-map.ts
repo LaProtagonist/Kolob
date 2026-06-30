@@ -24,16 +24,38 @@ export const mediaMap: {
     video1: VideoSlot;
     video2: VideoSlot;
   };
+  homeQualityLoop: HeroVideo;
   aboutCircles: {
     product: ImageSpec | null;
     technology: ImageSpec | null;
     scale: ImageSpec | null;
+  };
+  aboutProject: {
+    authorProduct: {
+      image: ImageSpec | null;
+      fallback: "product-shape";
+    };
+    culturalCode: {
+      image: ImageSpec | null;
+      fallback: "fox-mark";
+    };
+    provenInterest: {
+      image: ImageSpec | null;
+      fallback: "play-mark";
+    };
   };
   concept: {
     meat: ImageSpec | null;
     sea: ImageSpec | null;
     vegetarian: ImageSpec | null;
     sweet: ImageSpec | null;
+  };
+  conceptTasteCollage: ImageSpec[];
+  conceptFormats: {
+    classic: ImageSpec | null;
+    ufo: ImageSpec | null;
+    dessert: ImageSpec | null;
+    drinks: ImageSpec | null;
   };
   quality: {
     product: ImageSpec | null;
@@ -110,6 +132,16 @@ export const mediaMap: {
       description: "Второй рекламный материал с большим охватом и быстрым первым контактом с аудиторией."
     }
   },
+  homeQualityLoop: {
+    mp4: "/media/quality-product-loop.mp4",
+    webm: "/media/quality-product-loop.webm",
+    poster: {
+      base: "quality-product-loop-poster",
+      widths: [420, 720],
+      sizes: "(max-width: 720px) 100vw, 42vw",
+      alt: "Процесс приготовления продукта Колобочной"
+    }
+  },
   aboutCircles: {
     product: {
       base: "product-classic",
@@ -130,11 +162,88 @@ export const mediaMap: {
       alt: "Разрез колобка с начинкой"
     }
   },
+  aboutProject: {
+    authorProduct: {
+      image: {
+        base: "about-author-product-card",
+        widths: [720, 1080, 1440],
+        sizes: "(max-width: 720px) 100vw, 48vw",
+        alt: "Тарелка с продуктом Колобочной для карточки авторского продукта"
+      },
+      fallback: "product-shape"
+    },
+    culturalCode: {
+      image: null,
+      fallback: "fox-mark"
+    },
+    provenInterest: {
+      image: null,
+      fallback: "play-mark"
+    }
+  },
   concept: {
     meat: null,
     sea: null,
     vegetarian: null,
     sweet: null
+  },
+  conceptTasteCollage: [
+    {
+      base: "product-classic",
+      widths: [420, 720, 960],
+      sizes: "(max-width: 720px) 48vw, 18vw",
+      alt: "Колобочная: классический колобок"
+    },
+    {
+      base: "cutaway-01",
+      widths: [420, 760],
+      sizes: "(max-width: 720px) 48vw, 18vw",
+      alt: "Колобочная: разрез колобка"
+    },
+    {
+      base: "product-greens",
+      widths: [420, 720, 960],
+      sizes: "(max-width: 720px) 48vw, 18vw",
+      alt: "Колобочная: колобок с зеленью"
+    },
+    {
+      base: "product-dessert",
+      widths: [420, 720, 960],
+      sizes: "(max-width: 720px) 48vw, 18vw",
+      alt: "Колобочная: сладкий формат"
+    },
+    {
+      base: "cutaway-03",
+      widths: [420, 760],
+      sizes: "(max-width: 720px) 48vw, 18vw",
+      alt: "Колобочная: начинка внутри формы"
+    }
+  ],
+  conceptFormats: {
+    classic: {
+      base: "product-classic",
+      widths: [420, 720, 960],
+      sizes: "(max-width: 720px) 100vw, 40vw",
+      alt: "Классический колобок Колобочной"
+    },
+    ufo: {
+      base: "hero-dessert",
+      widths: [720, 1080],
+      sizes: "(max-width: 720px) 100vw, 40vw",
+      alt: "UFO-линейка Колобочной"
+    },
+    dessert: {
+      base: "product-dessert",
+      widths: [420, 720, 960],
+      sizes: "(max-width: 720px) 100vw, 40vw",
+      alt: "Десертный формат Колобочной"
+    },
+    drinks: {
+      base: "drink-tea",
+      widths: [420, 720, 960],
+      sizes: "(max-width: 720px) 100vw, 40vw",
+      alt: "Напитки Колобочной"
+    }
   },
   quality: {
     product: null,

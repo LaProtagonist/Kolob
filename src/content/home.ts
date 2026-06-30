@@ -1,4 +1,4 @@
-import type { ProductItem, VideoItem } from "../types";
+import type { VideoItem } from "../types";
 import { approvedCopy } from "./approved-copy";
 import { heroVideo, mediaMap } from "./media-map";
 
@@ -13,7 +13,7 @@ export const homeHero = {
 
 export const homeAbout = {
   title: "О проекте",
-  text: approvedCopy.projectDescription,
+  text: "«Колобочная» — проект создания национальной сети качественной еды в пути. В основе — авторский продукт, собственная технология и узнаваемый русский культурный образ, который можно масштабировать как современный городской формат.",
   link: { href: "/concept", label: "Подробнее о концепции" }
 };
 
@@ -60,7 +60,11 @@ export const homeQuality = {
   title: approvedCopy.qualityFormula,
   text: approvedCopy.qualityLead,
   items: ["фермерское и региональное сырьё", "собственная технология", "открытая кухня"],
-  link: { href: "/quality", label: "Подробнее о качестве" }
+  link: { href: "/quality", label: "Подробнее о качестве" },
+  media: {
+    image: mediaMap.homeQualityLoop.poster,
+    video: mediaMap.homeQualityLoop
+  }
 };
 
 export const homeScale = {
@@ -70,20 +74,29 @@ export const homeScale = {
   link: { href: "/investment", label: "Инвестиционная модель" }
 };
 
-export const homeTeasers: ProductItem[] = [
+export const homeTeasers = [
   {
-    title: "Продукт",
-    text: "Колобок — полноценная еда, собранная в удобную форму.",
-    image: mediaMap.aboutCircles.product ?? undefined
+    number: "01",
+    title: "Авторский продукт",
+    text: "Форма, рецептура и технология разработаны внутри проекта. Это не копия существующей кухни, а собственный формат еды в пути.",
+    visual: mediaMap.aboutProject.authorProduct.fallback,
+    image: mediaMap.aboutProject.authorProduct.image,
+    featured: true
   },
   {
-    title: "Технология",
-    text: "Полный цикл производства и централизованные поставки обеспечивают стабильное качество каждой порции.",
-    image: mediaMap.aboutCircles.technology ?? undefined
+    number: "02",
+    title: "Русский культурный код",
+    text: "Колобок — знакомый образ, превращённый в современную городскую еду без фольклорной стилизации.",
+    visual: mediaMap.aboutProject.culturalCode.fallback,
+    image: mediaMap.aboutProject.culturalCode.image,
+    featured: false
   },
   {
-    title: "Масштаб",
-    text: "Формат рассчитан на развитие сети городских точек в разных регионах.",
-    image: mediaMap.aboutCircles.scale ?? undefined
+    number: "03",
+    title: "Проверенный интерес",
+    text: "Проект уже работал в городских и фестивальных форматах, а ролики «Колобочной» собрали миллионы просмотров.",
+    visual: mediaMap.aboutProject.provenInterest.fallback,
+    image: mediaMap.aboutProject.provenInterest.image,
+    featured: false
   }
 ];

@@ -5,6 +5,7 @@ import {
   CTASection,
   DocumentCard,
   HeroMedia,
+  LoopMedia,
   MediaCarousel,
   PageHero,
   ProcessFlow,
@@ -19,7 +20,14 @@ import {
 import { MomentsMosaic } from "./components/MomentsMosaic";
 import { ProcessRoute } from "./components/ProcessRoute";
 import { approvedCopy } from "./content/approved-copy";
-import { conceptDefinition, conceptHero, identityPoints, movementPoints, productFamilies, productFormats } from "./content/concept";
+import {
+  conceptDefinition,
+  conceptHero,
+  conceptMenuFormats,
+  conceptTasteBlock,
+  identityPoints,
+  movementPoints
+} from "./content/concept";
 import { historyHero, timeline } from "./content/history";
 import {
   founderQuote,
@@ -132,18 +140,33 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="section section-light">
-        <div className="section-inner intro-grid">
-          <div>
+      <section className="section section-light about-project-section">
+        <div className="section-inner about-project-grid">
+          <div className="about-project-copy">
             <SectionIntro eyebrow="О проекте" title={homeAbout.title} text={homeAbout.text} />
             <a className="text-link" href={homeAbout.link.href}>
               {homeAbout.link.label}
             </a>
           </div>
-          <div className="mini-cards">
+          <div className="about-project-cards" aria-label="Ключевые основания проекта">
             {homeTeasers.map((item) => (
-              <article className="mini-card" key={item.title}>
-                {item.image ? <ResponsiveImage {...item.image} /> : null}
+              <article
+                className={`about-project-card ${item.featured ? "is-featured" : ""} ${
+                  item.visual === "fox-mark" ? "culturalCodeCard" : ""
+                } ${
+                  item.visual === "play-mark" ? "provenInterestCard" : ""
+                }`}
+                key={item.title}
+              >
+                {item.image ? (
+                  <div className="about-project-card-media" aria-hidden="true">
+                    <ResponsiveImage {...item.image} />
+                  </div>
+                ) : null}
+                <span className="about-project-card-number">{item.number}</span>
+                {item.visual !== "fox-mark" ? (
+                  <span className={`about-project-card-mark about-project-card-mark-${item.visual}`} aria-hidden="true" />
+                ) : null}
                 <h3>{item.title}</h3>
                 <p>{item.text}</p>
               </article>
@@ -192,11 +215,9 @@ function HomePage() {
               {homeQuality.link.label}
             </a>
           </div>
-          <ResponsiveImage
-            base="product-greens"
-            widths={[420, 720, 960]}
-            sizes="(max-width: 720px) 100vw, 42vw"
-            alt="Продукт Колобочной с зеленью и начинкой"
+          <LoopMedia
+            image={homeQuality.media.image}
+            video={homeQuality.media.video}
             className="statement-photo"
           />
         </div>
@@ -207,11 +228,6 @@ function HomePage() {
           <ProcessRoute route={productionRoute} />
           <div>
             <SectionIntro title={homeScale.title} text={homeScale.text} />
-            <ol className="inline-flow">
-              {homeScale.steps.map((step) => (
-                <li key={step}>{step}</li>
-              ))}
-            </ol>
             <a className="text-link text-link-light" href={homeScale.link.href}>
               {homeScale.link.label}
             </a>
@@ -240,16 +256,51 @@ function ConceptPage() {
           <p>{conceptDefinition}</p>
         </div>
       </section>
-      <ProductCarousel
-        title={approvedCopy.productVariety}
-        text="Мясные, морские, вегетарианские и сладкие направления показывают принцип развития ассортимента без перегрузки формата."
-        items={productFamilies}
-      />
-      <ProductCarousel
-        title="Форма может развиваться."
-        text="Классические колобки, UFO-линейка, десертные форматы и напитки расширяют продуктовую систему, сохраняя общий принцип: удобно, быстро, всё внутри."
-        items={productFormats}
-      />
+      <section className="section section-light concept-taste-section">
+        <div className="section-inner concept-taste-block">
+          <div className="concept-taste-copy">
+            <SectionIntro title={conceptTasteBlock.title} text={conceptTasteBlock.text} />
+            <picture className="concept-fox">
+              <source srcSet={conceptTasteBlock.fox.webp} type="image/webp" />
+              <img src={conceptTasteBlock.fox.png} alt={conceptTasteBlock.fox.alt} loading="lazy" decoding="async" />
+            </picture>
+          </div>
+          <div className="concept-taste-visual">
+            <p className="concept-tags">{conceptTasteBlock.tags}</p>
+            {conceptTasteBlock.collage.length > 0 ? (
+              <div className="concept-collage" aria-label="Разные вкусы и разрезы Колобочной">
+                {conceptTasteBlock.collage.map((image, index) => (
+                  <div className={`concept-collage-item concept-collage-item-${index + 1}`} key={`${image.base}-${index}`}>
+                    <ResponsiveImage {...image} />
+                  </div>
+                ))}
+              </div>
+            ) : null}
+          </div>
+        </div>
+      </section>
+      <section className="section section-paper">
+        <div className="section-inner">
+          <SectionIntro title={conceptMenuFormats.title} text={conceptMenuFormats.text} />
+          <div className="concept-format-grid">
+            {conceptMenuFormats.items.map((item, index) => (
+              <article className="concept-format-card" key={item.title}>
+                {item.image ? (
+                  <div className="concept-format-media">
+                    <ResponsiveImage {...item.image} />
+                  </div>
+                ) : (
+                  <div className="concept-format-icon" aria-hidden="true">
+                    {String(index + 1).padStart(2, "0")}
+                  </div>
+                )}
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
       <section className="section section-paper">
         <div className="section-inner two-column">
           <div>
