@@ -84,7 +84,22 @@ function isNearViewport(element: HTMLElement) {
 
 export function HeroMedia({ image, video }: { image: ImageSpec; video?: HeroVideo }) {
   const reducedMotion = usePrefersReducedMotion();
+  const videoRef = useRef<HTMLVideoElement>(null);
   const hasVideo = Boolean(video?.mp4 || video?.webm);
+
+  useEffect(() => {
+    if (!hasVideo || reducedMotion) {
+      return;
+    }
+
+    const element = videoRef.current;
+    if (!element) {
+      return;
+    }
+
+    prepareInlineAutoplayVideo(element);
+    void element.play().catch(() => undefined);
+  }, [hasVideo, reducedMotion, video?.mp4, video?.webm]);
 
   if (!hasVideo || reducedMotion) {
     return <ResponsiveImage {...(video?.poster ?? image)} loading="eager" fetchPriority="high" />;
@@ -92,6 +107,7 @@ export function HeroMedia({ image, video }: { image: ImageSpec; video?: HeroVide
 
   return (
     <video
+      ref={videoRef}
       className="hero-video"
       poster={`/media/${video?.poster.base}-${video?.poster.widths[video.poster.widths.length - 1]}.webp`}
       muted
@@ -120,8 +136,8 @@ export function LoopMedia({
 }) {
   const reducedMotion = usePrefersReducedMotion();
   const videoRef = useRef<HTMLVideoElement>(null);
-  const retryTimer = useRef<ReturnType<typeof window.setTimeout> | null>(null);
-  const verifyTimer = useRef<ReturnType<typeof window.setTimeout> | null>(null);
+  const retryTimer = useRef<number | null>(null);
+  const verifyTimer = useRef<number | null>(null);
   const autoplayAttempts = useRef(0);
   const [autoplayBlocked, setAutoplayBlocked] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -394,7 +410,7 @@ export function SiteHeader({ activePath }: HeaderProps) {
 
 function DesktopNavigation({ activePath }: HeaderProps) {
   const [openGroup, setOpenGroup] = useState<string | null>(null);
-  const closeTimer = useRef<ReturnType<typeof window.setTimeout> | null>(null);
+  const closeTimer = useRef<number | null>(null);
   const navRef = useRef<HTMLElement>(null);
 
   function clearCloseTimer() {
@@ -607,8 +623,12 @@ export function Breadcrumbs({ current }: { current: string }) {
 }
 
 export function PageHero({ hero, current }: { hero: HeroContent; current: string }) {
+  const className = ["page-hero", hero.mediaShape === "circle" ? "page-hero-circle" : "", hero.heroClassName ?? ""]
+    .filter(Boolean)
+    .join(" ");
+
   return (
-    <section className={`page-hero ${hero.mediaShape === "circle" ? "page-hero-circle" : ""}`}>
+    <section className={className}>
       <div className="page-hero-copy">
         <Breadcrumbs current={current} />
         {hero.eyebrow ? <p className="eyebrow">{hero.eyebrow}</p> : null}

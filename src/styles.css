@@ -510,6 +510,27 @@ main {
   clip-path: circle(45% at 52% 50%);
 }
 
+.quality-page-hero .page-hero-media {
+  align-self: center;
+  justify-self: center;
+  width: min(82.6%, 614px);
+  aspect-ratio: 1 / 1;
+  min-height: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--color-black);
+}
+
+.quality-page-hero .page-hero-media img,
+.quality-page-hero .page-hero-media video {
+  height: 100%;
+  min-height: 0;
+  object-fit: cover;
+  object-position: center;
+  clip-path: none;
+  animation: none;
+}
+
 .hero-video {
   background: var(--color-black);
 }
@@ -1788,6 +1809,110 @@ main {
   margin-top: 4px;
 }
 
+.quality-story {
+  display: grid;
+  grid-template-columns: minmax(0, 0.96fr) minmax(320px, 0.74fr);
+  gap: clamp(34px, 5vw, 72px);
+  align-items: center;
+}
+
+.quality-story.is-reversed {
+  grid-template-columns: minmax(320px, 0.74fr) minmax(0, 0.96fr);
+}
+
+.quality-story.is-reversed .quality-story-copy {
+  order: 2;
+}
+
+.quality-story.is-reversed .quality-story-media {
+  order: 1;
+}
+
+.quality-story-copy .section-intro {
+  margin-bottom: 18px;
+}
+
+.quality-story-text {
+  max-width: 720px;
+  color: var(--color-text-muted);
+  font-size: 1.08rem;
+}
+
+.quality-story-text p:last-child {
+  margin-bottom: 0;
+}
+
+.section-dark .quality-story-text {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.quality-story-media {
+  width: min(100%, 520px);
+  justify-self: center;
+}
+
+.quality-story-media img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: var(--shadow-soft);
+}
+
+.quality-drinks-section .section-intro {
+  max-width: 820px;
+}
+
+.quality-drink-lines {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.quality-drink-line {
+  display: grid;
+  grid-template-columns: minmax(118px, 0.38fr) minmax(0, 0.62fr);
+  gap: 20px;
+  align-items: center;
+  min-height: 210px;
+  padding: 16px;
+  border-radius: var(--radius);
+  background: var(--color-paper);
+}
+
+.quality-drink-line h3 {
+  margin-bottom: 10px;
+  font-size: 1.38rem;
+}
+
+.quality-drink-line p {
+  margin-bottom: 0;
+  color: var(--color-text-muted);
+}
+
+.quality-drink-media img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius);
+  object-fit: cover;
+}
+
+.quality-repeat {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(360px, 0.78fr);
+  gap: clamp(34px, 5vw, 70px);
+  align-items: center;
+}
+
+.quality-repeat-text-only {
+  grid-template-columns: minmax(0, 900px);
+}
+
+.quality-repeat .section-intro {
+  margin-bottom: 18px;
+}
+
 .statement-photo {
   width: min(100%, 520px);
   aspect-ratio: 1 / 1;
@@ -2611,6 +2736,17 @@ main {
     min-height: 440px;
   }
 
+  .quality-page-hero .page-hero-media {
+    width: min(82.6%, 614px);
+    min-height: 0;
+    margin: 0 auto;
+  }
+
+  .quality-page-hero .page-hero-media img,
+  .quality-page-hero .page-hero-media video {
+    min-height: 0;
+  }
+
   h1 {
     font-size: 3.6rem;
   }
@@ -2746,6 +2882,17 @@ main {
     min-height: 360px;
   }
 
+  .quality-page-hero .page-hero-media {
+    width: min(82.6%, 430px);
+    min-height: 0;
+    margin: 4px auto 0;
+  }
+
+  .quality-page-hero .page-hero-media img,
+  .quality-page-hero .page-hero-media video {
+    min-height: 0;
+  }
+
   h1 {
     font-size: 2.65rem;
   }
@@ -2845,6 +2992,33 @@ main {
   .quality-pillar-text span {
     font-size: 0.9rem;
     line-height: 1.38;
+  }
+
+  .quality-story,
+  .quality-story.is-reversed,
+  .quality-repeat {
+    grid-template-columns: 1fr;
+  }
+
+  .quality-story.is-reversed .quality-story-copy,
+  .quality-story.is-reversed .quality-story-media {
+    order: initial;
+  }
+
+  .quality-story-text {
+    font-size: 1rem;
+  }
+
+  .quality-story-media {
+    max-width: 430px;
+  }
+
+  .quality-drink-lines {
+    grid-template-columns: 1fr;
+  }
+
+  .quality-drink-line {
+    min-height: 0;
   }
 
   .lead {
@@ -3141,6 +3315,21 @@ main {
     height: 52px;
   }
 
+  .quality-drink-line {
+    grid-template-columns: 96px minmax(0, 1fr);
+    gap: 14px;
+    padding: 12px;
+  }
+
+  .quality-drink-line h3 {
+    font-size: 1.12rem;
+  }
+
+  .quality-drink-line p {
+    font-size: 0.92rem;
+    line-height: 1.42;
+  }
+
   .home-hero-media,
   .page-hero-media,
   .home-hero-media img,
@@ -3148,6 +3337,12 @@ main {
   .page-hero-media img,
   .page-hero-media video {
     min-height: 310px;
+  }
+
+  .quality-page-hero .page-hero-media,
+  .quality-page-hero .page-hero-media img,
+  .quality-page-hero .page-hero-media video {
+    min-height: 0;
   }
 
   .media-carousel,

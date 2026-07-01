@@ -48,6 +48,7 @@ export type HeroContent = {
   image: ImageSpec;
   video?: HeroVideo;
   mediaShape?: "circle" | "full";
+  heroClassName?: string;
 };
 
 export type VideoItem = {

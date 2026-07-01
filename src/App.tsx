@@ -8,7 +8,6 @@ import {
   LoopMedia,
   MediaCarousel,
   PageHero,
-  ProcessFlow,
   ProductCarousel,
   QuoteBlock,
   ResponsiveImage,
@@ -47,7 +46,7 @@ import {
 } from "./content/investment";
 import { documents, materialVideos, materialsHero, moments } from "./content/materials";
 import { productionRoute } from "./content/production-route";
-import { drinkItems, processSteps, qualityBlocks, qualityDirections, qualityHero, urbanFarmItems } from "./content/quality";
+import { qualityCta, qualityDrinks, qualityHero, qualitySections, repeatableQuality } from "./content/quality";
 import { pageByPath } from "./content/site";
 import type { PageMeta } from "./types";
 
@@ -387,62 +386,102 @@ function HistoryPage() {
   );
 }
 
+function QualityStorySection({
+  section,
+  index
+}: {
+  section: (typeof qualitySections)[number];
+  index: number;
+}) {
+  const isReversed = index % 2 === 1;
+
+  return (
+    <section className={`section ${section.tone === "paper" ? "section-paper" : "section-light"} quality-story-section`} id={section.id}>
+      <div className={`section-inner quality-story ${isReversed ? "is-reversed" : ""}`}>
+        <div className="quality-story-copy">
+          <SectionIntro title={section.title} />
+          <div className="quality-story-text">
+            {section.text.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+          </div>
+        </div>
+        {section.video && section.image ? (
+          <LoopMedia
+            image={section.image}
+            video={section.video}
+            className="statement-photo quality-story-media"
+          />
+        ) : section.image ? (
+          <div className="quality-story-media">
+            <ResponsiveImage {...section.image} />
+          </div>
+        ) : null}
+      </div>
+    </section>
+  );
+}
+
+function QualityDrinksSection() {
+  return (
+    <section className="section section-light quality-drinks-section">
+      <div className="section-inner">
+        <SectionIntro eyebrow="Напитки" title={qualityDrinks.title} text={qualityDrinks.text} />
+        <div className="quality-drink-lines">
+          {qualityDrinks.lines.map((item) => (
+            <article className="quality-drink-line" key={item.title}>
+              {item.image ? (
+                <div className="quality-drink-media">
+                  <ResponsiveImage {...item.image} />
+                </div>
+              ) : null}
+              <div>
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function RepeatableQualitySection() {
+  return (
+    <section className="section section-dark quality-repeat-section">
+      <div className="section-inner quality-repeat quality-repeat-text-only">
+        <div>
+          <SectionIntro title={repeatableQuality.title} />
+          <div className="quality-story-text">
+            <p>{repeatableQuality.text}</p>
+            <p>{repeatableQuality.note}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function QualityPage() {
   return (
     <>
       <PageHero hero={qualityHero} current="Качество и подход" />
-      <ProductCarousel
-        items={qualityBlocks}
-        title="Качество продукта"
-        text="Опорные направления: сырьё, собственная технология, современные методы обработки, открытая кухня и централизованный контроль рецептур."
-      />
-      <section className="section section-light">
-        <div className="section-inner two-column">
-          <SectionIntro title="Опорные направления качества" text="Страница раскрывает продуктовый, технологический и производственный подход «Колобочной»." />
-          <ul className="feature-list">
-            {qualityDirections.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </div>
-      </section>
-      <section className="section section-paper">
-        <div className="section-inner">
-          <SectionIntro
-            eyebrow="Напитки"
-            title="Собственная культура напитков в пути."
-            text="Пуэр, пуэр с кокосовыми сливками, натуральные лимонады и сезонные сочетания работают как отдельная продуктовая линия."
-          />
-          <div className="card-grid four">
-            {drinkItems.map((item) => (
-              <article className="product-card" key={item.title}>
-                {item.image ? <ResponsiveImage {...item.image} /> : null}
-                <div>
-                  <h3>{item.title}</h3>
-                  <p>{item.text}</p>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-      <ProductCarousel
-        items={urbanFarmItems}
-        title="Городская ферма"
-        text={approvedCopy.farmFormula}
-      />
-      <ProcessFlow
-        steps={processSteps}
-        title="Производственная цепочка"
-        text={approvedCopy.fullPathControl}
-      />
+      {qualitySections.slice(0, 3).map((section, index) => (
+        <QualityStorySection section={section} index={index} key={section.id} />
+      ))}
+      <QualityDrinksSection />
+      {qualitySections.slice(3).map((section, index) => (
+        <QualityStorySection section={section} index={index + 3} key={section.id} />
+      ))}
+      <RepeatableQualitySection />
       <CTASection
-        title="Посмотреть инвестиционную модель"
-        text="Производственная система позволяет воспроизводить рецептуру независимо от города и формата заведения."
-        primaryLabel="К инвестициям"
-        primaryHref="/investment"
-        secondaryLabel="К материалам"
-        secondaryHref="/materials"
+        title={qualityCta.title}
+        text={qualityCta.text}
+        primaryLabel={qualityCta.primaryLabel}
+        primaryHref={qualityCta.primaryHref}
+        secondaryLabel={qualityCta.secondaryLabel}
+        secondaryHref={qualityCta.secondaryHref}
       />
     </>
   );

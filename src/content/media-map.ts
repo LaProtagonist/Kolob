@@ -63,6 +63,16 @@ export const mediaMap: {
     drinks: ImageSpec | null;
     microgreens: ImageSpec | null;
   };
+  qualityPage: {
+    hero: ImageSpec | null;
+    portion: ImageSpec | null;
+    productTaste: ImageSpec | null;
+    technology: ImageSpec | null;
+    drinksHot: ImageSpec | null;
+    drinksCold: ImageSpec | null;
+    freshDetails: ImageSpec | null;
+    repeatableQuality: ImageSpec | null;
+  };
   history: {
     artkovcheg2021: ImageSpec | null;
     sevastopol2022: ImageSpec | null;
@@ -268,6 +278,36 @@ export const mediaMap: {
     process: null,
     drinks: null,
     microgreens: null
+  },
+  qualityPage: {
+    hero: {
+      base: "quality-hero-main",
+      widths: [768, 1200, 1440],
+      sizes: "(max-width: 860px) 100vw, 48vw",
+      alt: "Гость с порцией Колобочной в городском ритме"
+    },
+    portion: {
+      base: "quality-portion",
+      widths: [420, 720, 960],
+      sizes: "(max-width: 860px) 100vw, 42vw",
+      alt: "Готовая порция Колобочной с колобками, соусом и свежими дополнениями"
+    },
+    productTaste: {
+      base: "quality-product-taste",
+      widths: [420, 590],
+      sizes: "(max-width: 860px) 100vw, 42vw",
+      alt: "Ингредиенты с ярким собственным вкусом"
+    },
+    technology: null,
+    drinksHot: null,
+    drinksCold: null,
+    freshDetails: {
+      base: "quality-fresh-details",
+      widths: [420, 591],
+      sizes: "(max-width: 860px) 100vw, 42vw",
+      alt: "Микрозелень и свежие травы для порции Колобочной"
+    },
+    repeatableQuality: null
   },
   history: {
     artkovcheg2021: null,

@@ -1,149 +1,137 @@
-import type { ProductItem } from "../types";
+import type { HeroVideo, ImageSpec } from "../types";
 import { approvedCopy } from "./approved-copy";
+import { mediaMap } from "./media-map";
+
+type QualitySection = {
+  id: string;
+  title: string;
+  text: string[];
+  image?: ImageSpec | null;
+  video?: HeroVideo | null;
+  tone?: "light" | "paper";
+};
+
+type QualityDrinkLine = {
+  title: string;
+  text: string;
+  image?: ImageSpec | null;
+};
+
+const productVisual: ImageSpec = {
+  base: "hero-kolobok",
+  widths: [768, 1200, 1440],
+  sizes: "(max-width: 860px) 100vw, 48vw",
+  alt: "Готовая порция Колобочной"
+};
+
+const greensVisual: ImageSpec = {
+  base: "product-greens",
+  widths: [420, 720, 960],
+  sizes: "(max-width: 860px) 100vw, 42vw",
+  alt: "Колобки со свежей зеленью и дополнениями"
+};
+
+const cutawayVisual: ImageSpec = {
+  base: "cutaway-02",
+  widths: [420, 760],
+  sizes: "(max-width: 860px) 100vw, 42vw",
+  alt: "Разрез продукта Колобочной"
+};
+
+const hotDrinkVisual: ImageSpec = {
+  base: "drink-dark",
+  widths: [420, 720, 960],
+  sizes: "(max-width: 720px) 100vw, 32vw",
+  alt: "Горячий напиток Колобочной"
+};
+
+const coldDrinkVisual: ImageSpec = {
+  base: "drink-tea",
+  widths: [420, 720, 960],
+  sizes: "(max-width: 720px) 100vw, 32vw",
+  alt: "Холодный напиток Колобочной"
+};
 
 export const qualityHero = {
   eyebrow: "Качество и подход",
   title: approvedCopy.qualityFormula,
   lead: approvedCopy.qualityLead,
-  text:
-    "Вкус создаётся выбором самого продукта, собственной технологией и способом приготовления.",
-  image: {
-    base: "product-greens",
-    widths: [420, 720, 960],
-    sizes: "(max-width: 860px) 100vw, 48vw",
-    alt: "Продукт Колобочной с зеленью и начинкой"
-  }
+  text: "Вкус создаётся выбором продукта, авторской технологией и контролем приготовления на каждом этапе.",
+  image: mediaMap.qualityPage.hero ?? productVisual,
+  heroClassName: "quality-page-hero"
 };
 
-export const qualityBlocks: ProductItem[] = [
+export const qualitySections: QualitySection[] = [
   {
-    title: "Фермерское и региональное сырьё",
-    text:
-      "Фермерское и региональное сырьё, морепродукты и деликатесные ингредиенты формируют гастрономическую основу продукта.",
-    image: {
-      base: "product-classic",
-      widths: [420, 720, 960],
-      sizes: "(max-width: 720px) 100vw, 31vw",
-      alt: "Студийный продуктовый кадр Колобочной"
-    }
+    id: "portion",
+    title: "Качество в каждой порции",
+    text: [
+      "Колобочная собирает продукт как цельную подачу: колобки, соус, свежие дополнения, микрозелень, сыр и топпинги работают вместе. Это ресторанная логика подачи, перенесённая в формат еды в пути."
+    ],
+    image: mediaMap.qualityPage.portion ?? productVisual,
+    tone: "light"
   },
   {
-    title: "Собственная технология и современные методы приготовления",
-    text:
-      "Собственная технология и современные методы приготовления помогают стабилизировать рецептуру, температуру и финальное качество.",
-    image: {
-      base: "point-interior",
-      widths: [480, 840],
-      sizes: "(max-width: 720px) 100vw, 31vw",
-      alt: "Открытая кухня городской точки"
-    }
+    id: "product-taste",
+    title: "Продукты с собственным вкусом",
+    text: [
+      "Мы выбираем ингредиенты, у которых уже есть яркий вкус: фермерское и региональное сырьё, морепродукты, деликатесные позиции, свежие дополнения и сезонные продукты. Рецептура строится так, чтобы не перекрыть продукт, а раскрыть его.",
+      "Вкус готовой порции начинается с качества исходного продукта."
+    ],
+    image: mediaMap.qualityPage.productTaste ?? cutawayVisual,
+    tone: "paper"
   },
   {
-    title: "Открытая кухня",
-    text:
-      "На точке остаётся финальное приготовление и контакт с гостем, а сложные подготовительные процессы вынесены в производственную систему.",
-    image: {
-      base: "cutaway-02",
-      widths: [420, 760],
-      sizes: "(max-width: 720px) 100vw, 31vw",
-      alt: "Разрез продукта с начинкой"
-    }
+    id: "technology",
+    title: "Технология создана под продукт",
+    text: [
+      "Форма, рецептура и способ приготовления разработаны внутри проекта. Мы не адаптируем чужую кухню, а создаём собственный формат еды в пути с повторяемым вкусом и стабильной подачей."
+    ],
+    image: mediaMap.homeQualityLoop.poster,
+    video: mediaMap.homeQualityLoop,
+    tone: "light"
+  },
+  {
+    id: "fresh-details",
+    title: "Свежесть в деталях",
+    text: [
+      "Микрозелень, мята и свежие травы — небольшие элементы, которые заметно влияют на вкус, вид и ощущение порции. Часть этих ингредиентов выращивается внутри собственной городской фермы.",
+      "Это даёт контроль свежести и возможность развивать направление дальше — от зелени к новым растительным позициям."
+    ],
+    image: mediaMap.qualityPage.freshDetails ?? greensVisual,
+    tone: "paper"
   }
 ];
 
-export const qualityDirections = [
-  "фермерское и региональное сырьё",
-  "морепродукты и деликатесные ингредиенты",
-  "собственная технология приготовления",
-  "современные методы обработки",
-  "открытая кухня",
-  "централизованный контроль рецептур",
-  "собственная напиточная линия",
-  "городская ферма"
-];
+export const qualityDrinks = {
+  title: "Напитки как часть формата",
+  text: "Напиточная линия дополняет продукт и не повторяет стандартную кофейную карту. В основе — горячие чайные напитки и холодные натуральные сочетания.",
+  lines: [
+    {
+      title: "Горячие напитки",
+      text: "Пуэры и другие чайные позиции в формате стакана с собой: насыщенный вкус, бодрящий характер и городская подача. Альтернатива большому количеству кофейных точек.",
+      image: mediaMap.qualityPage.drinksHot ?? hotDrinkVisual
+    },
+    {
+      title: "Холодные лимонады",
+      text: "Неожиданные сочетания вкусов. Только органические ингредиенты.",
+      image: mediaMap.qualityPage.drinksCold ?? coldDrinkVisual
+    }
+  ] satisfies QualityDrinkLine[]
+};
 
-export const drinkItems: ProductItem[] = [
-  {
-    title: "Пуэр",
-    text: "Плотный напиток для формата еды в пути и отдельная часть продуктовой культуры.",
-    image: {
-      base: "drink-dark",
-      widths: [420, 720, 960],
-      sizes: "(max-width: 720px) 100vw, 42vw",
-      alt: "Тёмный напиток в стакане"
-    }
-  },
-  {
-    title: "Пуэр с кокосовыми сливками",
-    text: "Мягкая насыщенная версия напитка, которая работает как самостоятельный продукт заказа.",
-    image: {
-      base: "drink-tea",
-      widths: [420, 720, 960],
-      sizes: "(max-width: 720px) 100vw, 42vw",
-      alt: "Напиток Колобочной на светлом фоне"
-    }
-  },
-  {
-    title: "Натуральные лимонады",
-    text: approvedCopy.lemonadeFormula,
-    image: {
-      base: "festival-sea",
-      widths: [480, 840],
-      sizes: "(max-width: 720px) 100vw, 42vw",
-      alt: "Фестивальный кадр у моря"
-    }
-  },
-  {
-    title: "Сезонные сочетания",
-    text: "Напиточная линия меняется вместе с сезоном и поддерживает продуктовую матрицу.",
-    image: {
-      base: "drink-tea",
-      widths: [420, 720, 960],
-      sizes: "(max-width: 720px) 100vw, 42vw",
-      alt: "Сезонный напиток Колобочной"
-    }
-  }
-];
+export const repeatableQuality = {
+  title: "Качество должно повторяться",
+  text: "Для сети важно не только создать вкусный продукт, но и повторять его в разных точках. Поэтому ключевые компоненты готовятся внутри собственной производственной системы, а на точке сохраняется финальная подача и единый стандарт.",
+  note: "Производственная система позволяет воспроизводить качество независимо от города и формата заведения.",
+  image: mediaMap.qualityPage.repeatableQuality
+};
 
-export const urbanFarmItems: ProductItem[] = [
-  {
-    title: "Микрозелень",
-    text: "Свежий ингредиент, который добавляет вкус, фактуру и визуальный акцент в каждую порцию.",
-    image: {
-      base: "product-greens",
-      widths: [420, 720, 960],
-      sizes: "(max-width: 720px) 100vw, 31vw",
-      alt: "Свежая зелень в продукте Колобочной"
-    }
-  },
-  {
-    title: "Мята и свежие травы",
-    text: approvedCopy.farmExplanation,
-    image: {
-      base: "cutaway-03",
-      widths: [420, 760],
-      sizes: "(max-width: 720px) 100vw, 31vw",
-      alt: "Свежие травы и начинка продукта"
-    }
-  },
-  {
-    title: "Расширение фермы",
-    text: "Томаты, клубника и другие растительные ингредиенты расширяют возможности компактной городской фермы.",
-    image: {
-      base: "product-dessert",
-      widths: [420, 720, 960],
-      sizes: "(max-width: 720px) 100vw, 31vw",
-      alt: "Растительные ингредиенты и десертная продуктовая линия"
-    }
-  }
-];
-
-export const processSteps = [
-  "Выбор сырья",
-  "Подготовка ингредиентов",
-  "Полный производственный цикл",
-  "Централизованные поставки",
-  "Открытая кухня",
-  "Финальное приготовление",
-  "Готовая порция в руках гостя"
-];
+export const qualityCta = {
+  title: "Качество как основа масштабирования",
+  text: "Подход к продукту, напиткам, свежим ингредиентам и производственной системе формирует базу для развития сети с единым стандартом качества.",
+  primaryLabel: "К инвестиционной модели",
+  primaryHref: "/investment",
+  secondaryLabel: "К материалам",
+  secondaryHref: "/materials"
+};

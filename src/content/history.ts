@@ -24,17 +24,25 @@ const fligel2023Cover = historyCover(
   "Видео открытия стационарной точки Колобочной во Флигеле"
 );
 
+const historyOriginPoster = {
+  base: "history-origin-loop-poster",
+  widths: [480, 840],
+  sizes: "(max-width: 860px) 100vw, 48vw",
+  alt: "С чего начиналась Колобочная: кормление ворона колобками"
+};
+
 export const historyHero = {
   eyebrow: "История проекта",
   title: approvedCopy.history.h1,
   lead: approvedCopy.history.intro,
   text: approvedCopy.history.nextStage,
-  image: {
-    base: "festival-window",
-    widths: [480, 840],
-    sizes: "(max-width: 860px) 100vw, 48vw",
-    alt: "Фестивальная площадка Колобочной"
-  }
+  image: historyOriginPoster,
+  video: {
+    mp4: "/media/history-origin-loop.mp4",
+    webm: "/media/history-origin-loop.webm",
+    poster: historyOriginPoster
+  },
+  mediaShape: "circle" as const
 };
 
 export const timeline: TimelineItem[] = [
