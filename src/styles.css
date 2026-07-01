@@ -1060,6 +1060,16 @@ main {
   object-fit: cover;
 }
 
+.video-poster video:fullscreen,
+.video-poster video:-webkit-full-screen {
+  width: 100vw;
+  height: 100vh;
+  max-width: 100vw;
+  max-height: 100vh;
+  object-fit: contain;
+  background: var(--color-black);
+}
+
 .play-mark {
   position: absolute;
   left: 18px;
