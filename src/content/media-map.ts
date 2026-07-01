@@ -189,34 +189,52 @@ export const mediaMap: {
   },
   conceptTasteCollage: [
     {
-      base: "product-classic",
-      widths: [420, 720, 960],
+      base: "concept-collage-01",
+      widths: [420, 720],
       sizes: "(max-width: 720px) 48vw, 18vw",
-      alt: "Колобочная: классический колобок"
+      alt: "Колобочная: порция для коллажа вкусов"
     },
     {
-      base: "cutaway-01",
-      widths: [420, 760],
+      base: "concept-collage-02",
+      widths: [420, 720],
       sizes: "(max-width: 720px) 48vw, 18vw",
-      alt: "Колобочная: разрез колобка"
+      alt: "Колобочная: порция для коллажа вкусов"
     },
     {
-      base: "product-greens",
-      widths: [420, 720, 960],
+      base: "concept-collage-03",
+      widths: [420, 720],
       sizes: "(max-width: 720px) 48vw, 18vw",
-      alt: "Колобочная: колобок с зеленью"
+      alt: "Колобочная: порция для коллажа вкусов"
     },
     {
-      base: "product-dessert",
-      widths: [420, 720, 960],
+      base: "concept-collage-04",
+      widths: [420, 720],
       sizes: "(max-width: 720px) 48vw, 18vw",
-      alt: "Колобочная: сладкий формат"
+      alt: "Колобочная: порция для коллажа вкусов"
     },
     {
-      base: "cutaway-03",
-      widths: [420, 760],
+      base: "concept-collage-05",
+      widths: [420, 720],
       sizes: "(max-width: 720px) 48vw, 18vw",
-      alt: "Колобочная: начинка внутри формы"
+      alt: "Колобочная: порция для коллажа вкусов"
+    },
+    {
+      base: "concept-collage-06",
+      widths: [420, 720],
+      sizes: "(max-width: 720px) 48vw, 18vw",
+      alt: "Колобочная: порция для коллажа вкусов"
+    },
+    {
+      base: "concept-collage-07",
+      widths: [420, 720],
+      sizes: "(max-width: 720px) 48vw, 18vw",
+      alt: "Колобочная: порция для коллажа вкусов"
+    },
+    {
+      base: "concept-collage-08",
+      widths: [420, 720],
+      sizes: "(max-width: 720px) 48vw, 18vw",
+      alt: "Колобочная: порция для коллажа вкусов"
     }
   ],
   conceptFormats: {
@@ -224,13 +242,13 @@ export const mediaMap: {
       base: "product-classic",
       widths: [420, 720, 960],
       sizes: "(max-width: 720px) 100vw, 40vw",
-      alt: "Классический колобок Колобочной"
+      alt: "Классические колобки Колобочной"
     },
     ufo: {
-      base: "hero-dessert",
-      widths: [720, 1080],
+      base: "concept-manches",
+      widths: [420, 720, 960],
       sizes: "(max-width: 720px) 100vw, 40vw",
-      alt: "UFO-линейка Колобочной"
+      alt: "Манчесы Колобочной"
     },
     dessert: {
       base: "product-dessert",

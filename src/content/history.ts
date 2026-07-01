@@ -24,11 +24,6 @@ const fligel2023Cover = historyCover(
   "Видео открытия стационарной точки Колобочной во Флигеле"
 );
 
-const solar2024Cover = historyCover(
-  "history-solar-2024-cover",
-  "Видео Колобочной на Solar Systo Togathering"
-);
-
 export const historyHero = {
   eyebrow: "История проекта",
   title: approvedCopy.history.h1,
@@ -45,36 +40,36 @@ export const historyHero = {
 export const timeline: TimelineItem[] = [
   {
     period: "2021",
-    title: "Крым",
+    title: "Резидент творческого пространства «Арт-Ковчег».",
     text: approvedCopy.history.crimea2021,
     image: crimea2021Cover.poster,
     coverVideo: crimea2021Cover
   },
   {
     period: "2022",
-    title: "Севастополь",
+    title: "Альтернативная кухня фестиваля AsanaFest.",
     text: approvedCopy.history.sevastopol2022,
     image: {
-      base: "point-street",
+      base: "history-asana-fest-2022",
       widths: [480, 840],
       sizes: "(max-width: 720px) 100vw, 38vw",
-      alt: "Городская точка Колобочной"
+      alt: "Колобочная на AsanaFest в Крыму"
     }
   },
   {
     period: "2022",
-    title: "Судак",
+    title: "Участник главного фуд-корта молодежного форума «Таврида.Арт».",
     text: approvedCopy.history.sudak2022,
     image: {
-      base: "festival-window",
-      widths: [480, 840],
+      base: "history-tavrida-art-2022",
+      widths: [480, 686],
       sizes: "(max-width: 720px) 100vw, 38vw",
-      alt: "Фестивальная витрина Колобочной"
+      alt: "Площадка форума Таврида.Арт в Судаке"
     }
   },
   {
     period: "2023",
-    title: "Санкт-Петербург",
+    title: "Открытие стационарной точки в креативном пространстве «Флигель».",
     text: approvedCopy.history.spb2023,
     image: fligel2023Cover.poster,
     coverVideo: fligel2023Cover
@@ -83,7 +78,11 @@ export const timeline: TimelineItem[] = [
     period: "2024",
     title: "Solar Systo Togathering",
     text: approvedCopy.history.solar2024,
-    image: solar2024Cover.poster,
-    coverVideo: solar2024Cover
+    image: {
+      base: "history-solar-static-2024",
+      widths: [480, 840],
+      sizes: "(max-width: 720px) 100vw, 38vw",
+      alt: "Фестиваль Solar Systo Togathering"
+    }
   }
 ];

@@ -505,6 +505,11 @@ main {
   clip-path: inset(0 round 0);
 }
 
+.page-hero-circle .page-hero-media img,
+.page-hero-circle .page-hero-media video {
+  clip-path: circle(45% at 52% 50%);
+}
+
 .hero-video {
   background: var(--color-black);
 }
@@ -1130,18 +1135,23 @@ main {
 .concept-taste-block {
   display: grid;
   grid-template-columns: minmax(280px, 0.92fr) minmax(0, 1.08fr);
+  grid-template-areas:
+    "copy visual"
+    "fox visual";
   gap: clamp(34px, 5vw, 72px);
   align-items: start;
 }
 
 .concept-taste-copy {
+  grid-area: copy;
   display: grid;
   align-content: start;
   justify-items: start;
-  min-height: 560px;
+  min-height: 0;
 }
 
 .concept-fox {
+  grid-area: fox;
   display: block;
   width: min(100%, 430px);
   margin-top: clamp(24px, 4vw, 54px);
@@ -1160,6 +1170,7 @@ main {
 }
 
 .concept-taste-visual {
+  grid-area: visual;
   display: grid;
   align-content: start;
   justify-items: center;
@@ -1180,14 +1191,16 @@ main {
 
 .concept-collage {
   position: relative;
-  min-height: 470px;
+  min-height: 520px;
   width: 100%;
   margin-top: 0;
 }
 
 .concept-collage-item {
   position: absolute;
+  aspect-ratio: 1 / 1;
   overflow: hidden;
+  border-radius: 50%;
   background: var(--color-muted);
   box-shadow: var(--shadow-soft);
 }
@@ -1199,44 +1212,59 @@ main {
 }
 
 .concept-collage-item-1 {
-  top: 4%;
-  left: 4%;
-  width: 40%;
-  aspect-ratio: 1 / 1;
-  border-radius: 50%;
+  top: 6%;
+  left: 8%;
+  z-index: 3;
+  width: 34%;
 }
 
 .concept-collage-item-2 {
   top: 0;
-  right: 4%;
-  width: 42%;
-  aspect-ratio: 1.08 / 1;
-  border-radius: 32px;
+  left: 45%;
+  z-index: 4;
+  width: 28%;
 }
 
 .concept-collage-item-3 {
-  top: 36%;
-  left: 30%;
+  top: 17%;
+  right: 0;
   z-index: 2;
-  width: 38%;
-  aspect-ratio: 1 / 1;
-  border-radius: 50%;
+  width: 31%;
 }
 
 .concept-collage-item-4 {
-  right: 0;
-  bottom: 2%;
-  width: 45%;
-  aspect-ratio: 1.25 / 1;
-  border-radius: 999px;
+  top: 36%;
+  left: 27%;
+  z-index: 5;
+  width: 38%;
 }
 
 .concept-collage-item-5 {
-  bottom: 0;
-  left: 0;
-  width: 34%;
-  aspect-ratio: 0.95 / 1;
-  border-radius: 26px;
+  bottom: 2%;
+  left: 1%;
+  z-index: 2;
+  width: 29%;
+}
+
+.concept-collage-item-6 {
+  right: 12%;
+  bottom: 8%;
+  z-index: 4;
+  width: 30%;
+}
+
+.concept-collage-item-7 {
+  top: 58%;
+  left: 59%;
+  z-index: 1;
+  width: 23%;
+}
+
+.concept-collage-item-8 {
+  top: 31%;
+  left: 4%;
+  z-index: 6;
+  width: 26%;
 }
 
 .concept-format-grid {
@@ -1548,6 +1576,84 @@ main {
   font-family: "Arial Black", "Segoe UI", Arial, sans-serif;
   font-size: 3.1rem;
   line-height: 1.08;
+}
+
+.concept-meaning {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(56px, 8vw, 112px);
+  align-items: stretch;
+}
+
+.concept-meaning-column {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+.concept-meaning-column .section-intro {
+  max-width: 640px;
+  margin-bottom: 28px;
+}
+
+.concept-meaning-column .section-intro h2 {
+  font-size: clamp(2.35rem, 3vw, 2.8rem);
+  line-height: 1;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+.concept-meaning-text {
+  display: grid;
+  gap: 24px;
+  max-width: 620px;
+  margin-bottom: 0;
+}
+
+.concept-meaning-text p {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 1.08rem;
+  line-height: 1.58;
+}
+
+.concept-meaning-list {
+  display: grid;
+  padding: 0;
+  margin: clamp(42px, 5vw, 62px) 0 0;
+  list-style: none;
+}
+
+.concept-meaning-list li {
+  display: grid;
+  grid-template-columns: 64px 1px minmax(0, 1fr);
+  column-gap: 28px;
+  align-items: center;
+  min-height: 86px;
+  padding: 22px 0;
+}
+
+.concept-meaning-list li:not(:last-child) {
+  border-bottom: 1px solid rgba(23, 23, 23, 0.1);
+}
+
+.concept-meaning-number {
+  color: var(--color-kolobok);
+  font-size: clamp(1.65rem, 2.2vw, 2.15rem);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.concept-meaning-divider {
+  width: 1px;
+  height: 38px;
+  background: rgba(184, 106, 36, 0.35);
+}
+
+.concept-meaning-item-text {
+  color: var(--color-ink);
+  font-size: clamp(1.05rem, 1.25vw, 1.18rem);
+  font-weight: 800;
+  line-height: 1.22;
 }
 
 .feature-list,
@@ -2656,6 +2762,44 @@ main {
     font-size: 2.08rem;
   }
 
+  .concept-meaning {
+    grid-template-columns: 1fr;
+    gap: 64px;
+  }
+
+  .concept-meaning-column .section-intro {
+    margin-bottom: 22px;
+  }
+
+  .concept-meaning-column .section-intro h2 {
+    font-size: clamp(2.15rem, 5.7vw, 2.7rem);
+  }
+
+  .concept-meaning-text {
+    max-width: 720px;
+    gap: 18px;
+  }
+
+  .concept-meaning-text p {
+    font-size: 1rem;
+    line-height: 1.58;
+  }
+
+  .concept-meaning-list {
+    margin-top: 34px;
+  }
+
+  .concept-meaning-list li {
+    grid-template-columns: 52px 1px minmax(0, 1fr);
+    column-gap: 20px;
+    min-height: 72px;
+    padding: 18px 0;
+  }
+
+  .concept-meaning-divider {
+    height: 32px;
+  }
+
   .quality-teaser-copy .section-intro {
     margin-bottom: 28px;
   }
@@ -2812,6 +2956,10 @@ main {
 
   .concept-taste-block {
     grid-template-columns: 1fr;
+    grid-template-areas:
+      "copy"
+      "visual"
+      "fox";
   }
 
   .concept-taste-copy {
@@ -2819,9 +2967,10 @@ main {
   }
 
   .concept-fox {
-    width: min(84vw, 370px);
+    justify-self: start;
+    width: min(88vw, 390px);
     margin-top: 24px;
-    transform: none;
+    transform: translateX(-22px);
   }
 
   .concept-taste-copy .section-intro {
@@ -2832,12 +2981,35 @@ main {
     display: flex;
     width: fit-content;
     max-width: 100%;
-    white-space: normal;
+    padding: 8px 10px;
+    white-space: nowrap;
+    font-size: clamp(0.68rem, 2.75vw, 0.82rem);
   }
 
   .concept-collage {
     min-height: clamp(330px, 86vw, 520px);
     margin-top: 0;
+  }
+
+  .concept-collage-item-3 {
+    top: 18%;
+    right: -1%;
+  }
+
+  .concept-collage-item-4 {
+    top: 34%;
+    left: 24%;
+  }
+
+  .concept-collage-item-6 {
+    right: 7%;
+    bottom: 2%;
+  }
+
+  .concept-collage-item-7 {
+    top: 62%;
+    left: 66%;
+    width: 24%;
   }
 
   .concept-format-grid {
@@ -2929,6 +3101,29 @@ main {
 
   h2 {
     font-size: 1.9rem;
+  }
+
+  .concept-meaning {
+    gap: 56px;
+  }
+
+  .concept-meaning-column .section-intro h2 {
+    font-size: clamp(1.72rem, 7.1vw, 2.15rem);
+  }
+
+  .concept-meaning-list li {
+    grid-template-columns: 44px 1px minmax(0, 1fr);
+    column-gap: 16px;
+    min-height: 66px;
+    padding: 16px 0;
+  }
+
+  .concept-meaning-number {
+    font-size: 1.55rem;
+  }
+
+  .concept-meaning-item-text {
+    font-size: 1rem;
   }
 
   .quality-pillar {
@@ -3039,6 +3234,67 @@ main {
     max-width: 260px;
     font-size: 0.965rem;
     line-height: 1.36;
+  }
+
+  .concept-fox {
+    width: min(92vw, 400px);
+    margin-top: -52px;
+    transform: translateX(-28px);
+  }
+
+  .concept-collage {
+    min-height: clamp(340px, 88vw, 385px);
+    margin-top: 8px;
+    margin-bottom: -86px;
+  }
+
+  .concept-collage-item-1 {
+    top: 0;
+    left: -2%;
+    width: 30%;
+  }
+
+  .concept-collage-item-2 {
+    top: 3%;
+    left: 36%;
+    width: 26%;
+  }
+
+  .concept-collage-item-3 {
+    top: 7%;
+    right: -7%;
+    width: 32%;
+  }
+
+  .concept-collage-item-4 {
+    top: 32%;
+    left: 24%;
+    width: 35%;
+  }
+
+  .concept-collage-item-5 {
+    top: 58%;
+    left: -4%;
+    width: 28%;
+  }
+
+  .concept-collage-item-6 {
+    right: -16%;
+    bottom: auto;
+    top: 118%;
+    width: 34%;
+  }
+
+  .concept-collage-item-7 {
+    top: 45%;
+    left: 82%;
+    width: 22%;
+  }
+
+  .concept-collage-item-8 {
+    top: 24%;
+    left: 5%;
+    width: 24%;
   }
 
   .about-project-card-mark {

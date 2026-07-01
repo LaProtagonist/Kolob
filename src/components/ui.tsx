@@ -608,7 +608,7 @@ export function Breadcrumbs({ current }: { current: string }) {
 
 export function PageHero({ hero, current }: { hero: HeroContent; current: string }) {
   return (
-    <section className="page-hero">
+    <section className={`page-hero ${hero.mediaShape === "circle" ? "page-hero-circle" : ""}`}>
       <div className="page-hero-copy">
         <Breadcrumbs current={current} />
         {hero.eyebrow ? <p className="eyebrow">{hero.eyebrow}</p> : null}

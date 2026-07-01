@@ -23,10 +23,9 @@ import { approvedCopy } from "./content/approved-copy";
 import {
   conceptDefinition,
   conceptHero,
+  conceptMeaningBlock,
   conceptMenuFormats,
-  conceptTasteBlock,
-  identityPoints,
-  movementPoints
+  conceptTasteBlock
 } from "./content/concept";
 import { historyHero, timeline } from "./content/history";
 import {
@@ -272,10 +271,6 @@ function ConceptPage() {
         <div className="section-inner concept-taste-block">
           <div className="concept-taste-copy">
             <SectionIntro title={conceptTasteBlock.title} text={conceptTasteBlock.text} />
-            <picture className="concept-fox">
-              <source srcSet={conceptTasteBlock.fox.webp} type="image/webp" />
-              <img src={conceptTasteBlock.fox.png} alt={conceptTasteBlock.fox.alt} loading="lazy" decoding="async" />
-            </picture>
           </div>
           <div className="concept-taste-visual">
             <p className="concept-tags">{conceptTasteBlock.tags}</p>
@@ -289,6 +284,10 @@ function ConceptPage() {
               </div>
             ) : null}
           </div>
+          <picture className="concept-fox">
+            <source srcSet={conceptTasteBlock.fox.webp} type="image/webp" />
+            <img src={conceptTasteBlock.fox.png} alt={conceptTasteBlock.fox.alt} loading="lazy" decoding="async" />
+          </picture>
         </div>
       </section>
       <section className="section section-paper">
@@ -313,31 +312,46 @@ function ConceptPage() {
           </div>
         </div>
       </section>
-      <section className="section section-paper">
-        <div className="section-inner two-column">
-          <div>
-            <SectionIntro
-              title="Еда в пути"
-              text="Формат создан для движения: продукт удобно взять с собой, съесть без полноценной сервировки и сохранить насыщенную начинку внутри."
-            />
-            <ul className="feature-list">
-              {movementPoints.map((item) => (
-                <li key={item}>{item}</li>
+      <section className="section section-paper concept-meaning-section">
+        <div className="section-inner concept-meaning">
+          <div className="concept-meaning-column">
+            <SectionIntro title={conceptMeaningBlock.left.title} />
+            <div className="concept-meaning-text">
+              {conceptMeaningBlock.left.text.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
+            <ul className="concept-meaning-list">
+              {conceptMeaningBlock.left.tags.map((item, index) => (
+                <li key={item}>
+                  <span className="concept-meaning-number">{String(index + 1).padStart(2, "0")}</span>
+                  <span className="concept-meaning-divider" aria-hidden="true" />
+                  <span className="concept-meaning-item-text">{item}</span>
+                </li>
               ))}
             </ul>
           </div>
-          <div>
-            <SectionIntro title="Русская идентичность" text="Мы не воспроизводим традицию. Мы продолжаем её." />
-            <ul className="feature-list">
-              {identityPoints.map((item) => (
-                <li key={item}>{item}</li>
+          <div className="concept-meaning-column">
+            <SectionIntro title={conceptMeaningBlock.right.title} />
+            <div className="concept-meaning-text">
+              {conceptMeaningBlock.right.text.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
+            <ul className="concept-meaning-list">
+              {conceptMeaningBlock.right.tags.map((item, index) => (
+                <li key={item}>
+                  <span className="concept-meaning-number">{String(index + 1).padStart(2, "0")}</span>
+                  <span className="concept-meaning-divider" aria-hidden="true" />
+                  <span className="concept-meaning-item-text">{item}</span>
+                </li>
               ))}
             </ul>
           </div>
         </div>
       </section>
       <CTASection
-        title="Как создаётся качество"
+        title="Так создаётся качество"
         text="Следующий слой проекта — сырьё, технология, напитки, городская ферма и производственная цепочка."
         primaryLabel="К качеству"
         primaryHref="/quality"
@@ -354,7 +368,7 @@ function HistoryPage() {
       <PageHero hero={historyHero} current="История проекта" />
       <Timeline
         items={timeline}
-        title="Проверка в реальной среде"
+        title="От первых точек — к масштабируемой системе"
         text={approvedCopy.history.timelineIntro}
         cta={{
           href: "/materials#moments",
@@ -362,8 +376,8 @@ function HistoryPage() {
         }}
       />
       <CTASection
-        title="Перейти к модели масштабирования"
-        text="Опыт точек и событийных площадок переводится в технологию, бренд и региональную производственную систему."
+        title="Проверенный продукт становится системой"
+        text="История «Колобочной» — это не набор отдельных запусков, а практическая проверка формата: от событийных площадок до стационарной городской точки. Следующий шаг — превратить этот опыт в масштабируемую производственную модель с единым стандартом качества."
         primaryLabel="Инвестиционная модель"
         primaryHref="/investment"
         secondaryLabel="Материалы"
