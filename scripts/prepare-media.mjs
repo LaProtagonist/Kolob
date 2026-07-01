@@ -21,19 +21,15 @@ const media = {
     ["drink-dark", "D:\\Protagonist_Dev\\Колобочная\\Madia\\4. КОЛОБКИ\\Дизайн\\колобочная\\Веб\\Колобочная0273.jpg"]
   ],
   cutaways: [
-    ["cutaway-01", "D:\\Protagonist_Dev\\Колобочная\\Madia\\2024\\IMG_0954.JPG"],
     ["cutaway-02", "D:\\Protagonist_Dev\\Колобочная\\Madia\\2024\\IMG_0963.JPG"],
     ["cutaway-03", "D:\\Protagonist_Dev\\Колобочная\\Madia\\2024\\IMG_0969_jpg.JPG"]
   ],
   history: [
-    ["point-facade", "D:\\Protagonist_Dev\\Колобочная\\Madia\\4. КОЛОБКИ\\Фото\\Обработ\\IMG_20230904_193733.jpg"],
     ["point-interior", "D:\\Protagonist_Dev\\Колобочная\\Madia\\4. КОЛОБКИ\\Фото\\Обработ\\IMG_20230904_193745.jpg"],
     ["point-street", "D:\\Protagonist_Dev\\Колобочная\\Madia\\4. КОЛОБКИ\\Фото\\Обработ\\IMG_20230905_165711.jpg"],
     ["point-guests", "D:\\Protagonist_Dev\\Колобочная\\Madia\\4. КОЛОБКИ\\Фото\\Обработ\\IMG_4479.JPG"],
     ["festival-product", "D:\\Protagonist_Dev\\Колобочная\\Madia\\сист 2024\\IMG_6652.JPG"],
-    ["festival-window", "D:\\Protagonist_Dev\\Колобочная\\Madia\\сист 2024\\IMG_6769.JPG"],
-    ["festival-truck", "D:\\Protagonist_Dev\\Колобочная\\Madia\\сист 2024\\IMG_6772.JPG"],
-    ["festival-sea", "D:\\Protagonist_Dev\\Колобочная\\Madia\\сист 2024\\IMG_6913.JPG"]
+    ["festival-truck", "D:\\Protagonist_Dev\\Колобочная\\Madia\\сист 2024\\IMG_6772.JPG"]
   ],
   people: [
     ["person-placeholder", "D:\\Protagonist_Dev\\Колобочная\\Madia\\4. КОЛОБКИ\\Фото\\Обработ\\IMG_0716.JPG"]

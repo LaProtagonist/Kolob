@@ -85,6 +85,15 @@ export const mediaMap: {
     openKitchen: ImageSpec | null;
     logistics: ImageSpec | null;
   };
+  investmentPage: {
+    hero: ImageSpec | null;
+    whatScales: ImageSpec | null;
+    qualityStandard: ImageSpec | null;
+    formats: ImageSpec | null;
+    whyNow: ImageSpec | null;
+    participation: ImageSpec | null;
+    dialogue: ImageSpec | null;
+  };
   contact: {
     finalImage: ImageSpec | null;
   };
@@ -321,165 +330,203 @@ export const mediaMap: {
     openKitchen: null,
     logistics: null
   },
+  investmentPage: {
+    hero: null,
+    whatScales: null,
+    qualityStandard: null,
+    formats: null,
+    whyNow: null,
+    participation: null,
+    dialogue: null
+  },
   contact: {
     finalImage: null
   },
   moments: [
     {
-      id: "moment-001",
+      id: "gallery-001",
       type: "image",
-      src: "/media/hero-kolobok-768.webp",
+      src: "/media/moments-gallery/gallery-001.webp",
       poster: null,
-      alt: "Колобочная: продуктовый кадр с колобками",
-      width: 768,
+      alt: "Kolobochnaya gallery photo 001",
+      width: 1080,
+      height: 1440,
+      caption: "Gallery 001"
+    },
+    {
+      id: "gallery-002",
+      type: "image",
+      src: "/media/moments-gallery/gallery-002.webp",
+      poster: null,
+      alt: "Kolobochnaya gallery photo 002",
+      width: 1080,
+      height: 1440,
+      caption: "Gallery 002"
+    },
+    {
+      id: "gallery-003",
+      type: "image",
+      src: "/media/moments-gallery/gallery-003.webp",
+      poster: null,
+      alt: "Kolobochnaya gallery photo 003",
+      width: 1080,
+      height: 1440,
+      caption: "Gallery 003"
+    },
+    {
+      id: "gallery-004",
+      type: "image",
+      src: "/media/moments-gallery/gallery-004.webp",
+      poster: null,
+      alt: "Kolobochnaya gallery photo 004",
+      width: 810,
+      height: 1440,
+      caption: "Gallery 004"
+    },
+    {
+      id: "gallery-005",
+      type: "video",
+      src: "/media/moments-gallery/gallery-005.mp4",
+      poster: "/media/moments-gallery/gallery-005-poster.webp",
+      webm: null,
+      alt: "Kolobochnaya gallery video 005",
+      width: 714,
+      height: 1280,
+      caption: "Gallery 005"
+    },
+    {
+      id: "gallery-006",
+      type: "image",
+      src: "/media/moments-gallery/gallery-006.webp",
+      poster: null,
+      alt: "Kolobochnaya gallery photo 006",
+      width: 1024,
       height: 768,
-      caption: "Продукт"
+      caption: "Gallery 006"
     },
     {
-      id: "moment-002",
+      id: "gallery-007",
+      type: "video",
+      src: "/media/moments-gallery/gallery-007.mp4",
+      poster: "/media/moments-gallery/gallery-007-poster.webp",
+      webm: null,
+      alt: "Kolobochnaya gallery video 007",
+      width: 960,
+      height: 1280,
+      caption: "Gallery 007"
+    },
+    {
+      id: "gallery-008",
+      type: "video",
+      src: "/media/moments-gallery/gallery-008.mp4",
+      poster: "/media/moments-gallery/gallery-008-poster.webp",
+      webm: null,
+      alt: "Kolobochnaya gallery video 008",
+      width: 1280,
+      height: 714,
+      caption: "Gallery 008"
+    },
+    {
+      id: "gallery-009",
+      type: "video",
+      src: "/media/moments-gallery/gallery-009.mp4",
+      poster: "/media/moments-gallery/gallery-009-poster.webp",
+      webm: null,
+      alt: "Kolobochnaya gallery video 009",
+      width: 1280,
+      height: 714,
+      caption: "Gallery 009"
+    },
+    {
+      id: "gallery-010",
       type: "image",
-      src: "/media/product-classic-720.webp",
+      src: "/media/moments-gallery/gallery-010.webp",
       poster: null,
-      alt: "Колобочная: студийный кадр продукта",
+      alt: "Kolobochnaya gallery photo 010",
+      width: 1280,
+      height: 960,
+      caption: "Gallery 010"
+    },
+    {
+      id: "gallery-011",
+      type: "image",
+      src: "/media/moments-gallery/gallery-011.webp",
+      poster: null,
+      alt: "Kolobochnaya gallery photo 011",
+      width: 1218,
+      height: 1440,
+      caption: "Gallery 011"
+    },
+    {
+      id: "gallery-012",
+      type: "image",
+      src: "/media/moments-gallery/gallery-012.webp",
+      poster: null,
+      alt: "Kolobochnaya gallery photo 012",
+      width: 1080,
+      height: 1440,
+      caption: "Gallery 012"
+    },
+    {
+      id: "gallery-013",
+      type: "image",
+      src: "/media/moments-gallery/gallery-013.webp",
+      poster: null,
+      alt: "Kolobochnaya gallery photo 013",
+      width: 1215,
+      height: 1440,
+      caption: "Gallery 013"
+    },
+    {
+      id: "gallery-014",
+      type: "image",
+      src: "/media/moments-gallery/gallery-014.webp",
+      poster: null,
+      alt: "Kolobochnaya gallery photo 014",
+      width: 1225,
+      height: 1280,
+      caption: "Gallery 014"
+    },
+    {
+      id: "gallery-015",
+      type: "image",
+      src: "/media/moments-gallery/gallery-015.webp",
+      poster: null,
+      alt: "Kolobochnaya gallery photo 015",
+      width: 1440,
+      height: 810,
+      caption: "Gallery 015"
+    },
+    {
+      id: "gallery-016",
+      type: "image",
+      src: "/media/moments-gallery/gallery-016.webp",
+      poster: null,
+      alt: "Kolobochnaya gallery photo 016",
+      width: 1080,
+      height: 1440,
+      caption: "Gallery 016"
+    },
+    {
+      id: "gallery-017",
+      type: "video",
+      src: "/media/moments-gallery/gallery-017.mp4",
+      poster: "/media/moments-gallery/gallery-017-poster.webp",
+      webm: null,
+      alt: "Kolobochnaya gallery video 017",
       width: 720,
-      height: 610,
-      caption: "Продукт"
+      height: 1280,
+      caption: "Gallery 017"
     },
     {
-      id: "moment-003",
+      id: "gallery-018",
       type: "image",
-      src: "/media/cutaway-01-760.webp",
+      src: "/media/moments-gallery/gallery-018.webp",
       poster: null,
-      alt: "Колобочная: разрез продукта",
-      width: 760,
-      height: 563,
-      caption: "Разрез"
-    },
-    {
-      id: "moment-004",
-      type: "video",
-      src: "/media/history-crimea-2021-cover.mp4",
-      poster: "/media/history-crimea-2021-cover-poster-840.webp",
-      webm: "/media/history-crimea-2021-cover.webm",
-      alt: "Колобочная: видео проекта в Крыму",
-      width: 640,
-      height: 512,
-      year: "2021",
-      location: "Крым"
-    },
-    {
-      id: "moment-005",
-      type: "image",
-      src: "/media/point-facade-840.webp",
-      poster: null,
-      alt: "Колобочная: фасад городской точки",
-      width: 840,
-      height: 672,
-      caption: "Точка"
-    },
-    {
-      id: "moment-006",
-      type: "image",
-      src: "/media/point-interior-840.webp",
-      poster: null,
-      alt: "Колобочная: интерьер точки и открытая кухня",
-      width: 840,
-      height: 672,
-      caption: "Открытая кухня"
-    },
-    {
-      id: "moment-007",
-      type: "video",
-      src: "/media/history-fligel-2023-cover.mp4",
-      poster: "/media/history-fligel-2023-cover-poster-840.webp",
-      webm: "/media/history-fligel-2023-cover.webm",
-      alt: "Колобочная: видео стационарной точки во Флигеле",
-      width: 640,
-      height: 512,
-      year: "2023",
-      location: "Санкт-Петербург"
-    },
-    {
-      id: "moment-008",
-      type: "image",
-      src: "/media/festival-window-840.webp",
-      poster: null,
-      alt: "Колобочная: фестивальная витрина",
-      width: 840,
-      height: 672,
-      caption: "Фестиваль"
-    },
-    {
-      id: "moment-009",
-      type: "image",
-      src: "/media/point-guests-840.webp",
-      poster: null,
-      alt: "Колобочная: гости у точки",
-      width: 840,
-      height: 672,
-      caption: "Гости"
-    },
-    {
-      id: "moment-010",
-      type: "video",
-      src: "/media/history-solar-2024-cover.mp4",
-      poster: "/media/history-solar-2024-cover-poster-840.webp",
-      webm: "/media/history-solar-2024-cover.webm",
-      alt: "Колобочная: видео на Solar Systo Togathering",
-      width: 640,
-      height: 512,
-      year: "2024",
-      location: "Solar Systo Togathering"
-    },
-    {
-      id: "moment-011",
-      type: "image",
-      src: "/media/festival-truck-840.webp",
-      poster: null,
-      alt: "Колобочная: фестивальная точка",
-      width: 840,
-      height: 672,
-      caption: "Фестиваль"
-    },
-    {
-      id: "moment-012",
-      type: "image",
-      src: "/media/festival-sea-840.webp",
-      poster: null,
-      alt: "Колобочная: фестивальный кадр проекта",
-      width: 840,
-      height: 672,
-      caption: "Фестиваль"
-    },
-    {
-      id: "moment-013",
-      type: "image",
-      src: "/media/drink-tea-720.webp",
-      poster: null,
-      alt: "Колобочная: напиточная линия",
-      width: 720,
-      height: 610,
-      caption: "Напитки"
-    },
-    {
-      id: "moment-014",
-      type: "video",
-      src: "/media/ad-video-01.mp4",
-      poster: "/media/ad-video-01-poster-840.webp",
-      webm: "/media/ad-video-01.webm",
-      alt: "Колобочная: рекламный ролик проекта",
-      width: 640,
-      height: 512
-    },
-    {
-      id: "moment-015",
-      type: "video",
-      src: "/media/ad-video-02.mp4",
-      poster: "/media/ad-video-02-poster-840.webp",
-      webm: "/media/ad-video-02.webm",
-      alt: "Колобочная: рекламный ролик проекта с охватом",
-      width: 640,
-      height: 512
+      alt: "Kolobochnaya gallery photo 018",
+      width: 810,
+      height: 1440,
+      caption: "Gallery 018"
     }
   ]
 };

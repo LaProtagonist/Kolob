@@ -8,7 +8,6 @@ import {
   LoopMedia,
   MediaCarousel,
   PageHero,
-  ProductCarousel,
   QuoteBlock,
   ResponsiveImage,
   SectionIntro,
@@ -36,13 +35,16 @@ import {
   homeTeasers,
   overviewVideos
 } from "./content/home";
-import { investorQuestionsHero } from "./content/investorQuestions";
+import { investorQuestionsHero, investorQuestionsIntro } from "./content/investorQuestions";
 import {
-  clusterDetails,
+  investmentCta,
+  investmentDialogue,
   investmentHero,
-  investmentUses,
-  participationModels,
-  pointFormats
+  investmentParticipation,
+  investmentPointFormats,
+  investmentQualityStandard,
+  investmentWhatScales,
+  investmentWhyNow
 } from "./content/investment";
 import { documents, materialVideos, materialsHero, moments } from "./content/materials";
 import { productionRoute } from "./content/production-route";
@@ -250,7 +252,7 @@ function HomePage() {
         text="Проект готовится к масштабированию через производственную систему, городские точки и единый стандарт качества."
         primaryLabel={approvedCopy.cta.discuss}
         primaryHref="/investor-questions"
-        secondaryLabel={approvedCopy.cta.requestProjectMaterials}
+        secondaryLabel={approvedCopy.cta.viewMaterials}
         secondaryHref="/materials"
       />
     </>
@@ -352,10 +354,10 @@ function ConceptPage() {
       <CTASection
         title="Так создаётся качество"
         text="Следующий слой проекта — сырьё, технология, напитки, городская ферма и производственная цепочка."
-        primaryLabel="К качеству"
-        primaryHref="/quality"
-        secondaryLabel="История проекта"
-        secondaryHref="/history"
+        primaryLabel={approvedCopy.cta.discuss}
+        primaryHref="/investor-questions"
+        secondaryLabel="К качеству"
+        secondaryHref="/quality"
       />
     </>
   );
@@ -377,10 +379,10 @@ function HistoryPage() {
       <CTASection
         title="Проверенный продукт становится системой"
         text="История «Колобочной» — это не набор отдельных запусков, а практическая проверка формата: от событийных площадок до стационарной городской точки. Следующий шаг — превратить этот опыт в масштабируемую производственную модель с единым стандартом качества."
-        primaryLabel="Инвестиционная модель"
-        primaryHref="/investment"
-        secondaryLabel="Материалы"
-        secondaryHref="/materials"
+        primaryLabel={approvedCopy.cta.discuss}
+        primaryHref="/investor-questions"
+        secondaryLabel="Инвестиционная модель"
+        secondaryHref="/investment"
       />
     </>
   );
@@ -491,54 +493,99 @@ function InvestmentPage() {
   return (
     <>
       <PageHero hero={investmentHero} current="Инвестиционное предложение" />
-      <section className="section section-light">
+
+      <section className="section section-light investment-section">
+        <div className="section-inner investment-two-column">
+          <SectionIntro title={investmentWhatScales.title} text={investmentWhatScales.text} />
+          <ul className="investment-editorial-list">
+            {investmentWhatScales.items.map((item) => (
+              <li key={item.number}>
+                <span>{item.number}</span>
+                <div>
+                  <strong>{item.title}</strong>
+                  <p>{item.text}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section className="section section-dark investment-section">
         <div className="section-inner investment-grid">
-          <ProcessRoute route={productionRoute} tone="light" />
+          <ProcessRoute route={productionRoute} tone="dark" />
           <div>
-            <SectionIntro title="Производственная модель" text={approvedCopy.productionExplanation} />
-            <ul className="feature-list">
-              {clusterDetails.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
+            <SectionIntro title={investmentQualityStandard.title} text={investmentQualityStandard.text} />
           </div>
         </div>
       </section>
-      <ProductCarousel
-        items={pointFormats}
-        title="Форматы заведений"
-        text="Модель поддерживает разные городские и событийные форматы без изменения базовой технологии продукта."
-      />
-      <section className="section section-paper">
-        <div className="section-inner two-column">
-          <div>
-            <SectionIntro title="Форматы участия" text="Публичная страница показывает направления участия без раскрытия условий сделки." />
-            <ul className="feature-list">
-              {participationModels.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <SectionIntro
-              title="Что раскрывается в закрытых материалах"
-              text="Закрытые материалы раскрывают состав работ, последовательность запуска и параметры финансовой модели."
-            />
-            <ul className="feature-list">
-              {investmentUses.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
+
+      <section className="section section-paper investment-section">
+        <div className="section-inner">
+          <SectionIntro title={investmentPointFormats.title} text={investmentPointFormats.text} />
+          <div className="investment-card-grid investment-card-grid-4">
+            {investmentPointFormats.items.map((item) => (
+              <article className="investment-card is-soft" key={item.title}>
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+              </article>
+            ))}
           </div>
         </div>
       </section>
+
+      <section className="section section-light investment-section">
+        <div className="section-inner investment-two-column">
+          <SectionIntro title={investmentWhyNow.title} text={investmentWhyNow.text} />
+          <ul className="investment-editorial-list">
+            {investmentWhyNow.items.map((item, index) => (
+              <li key={item}>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <strong>{item}</strong>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section className="section section-paper investment-section">
+        <div className="section-inner">
+          <SectionIntro title={investmentParticipation.title} text={investmentParticipation.text} />
+          <div className="investment-card-grid investment-card-grid-3">
+            {investmentParticipation.items.map((item) => (
+              <article className="investment-card" key={item.title}>
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section section-light investment-section" id="dialogue">
+        <div className="section-inner investment-dialogue-layout">
+          <SectionIntro title={investmentDialogue.title} text={investmentDialogue.text} />
+          <ol className="investment-dialogue-steps">
+            {investmentDialogue.steps.map((step) => (
+              <li key={step.number}>
+                <span>{step.number}</span>
+                <div>
+                  <h3>{step.title}</h3>
+                  <p>{step.text}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
       <CTASection
-        title={approvedCopy.cta.requestProjectMaterials}
-        text={approvedCopy.financialModelRequest}
-        primaryLabel={approvedCopy.cta.requestProjectMaterials}
-        primaryHref="/investor-questions"
-        secondaryLabel="Материалы"
-        secondaryHref="/materials"
+        title={investmentCta.title}
+        text={investmentCta.text}
+        primaryLabel={investmentCta.primaryLabel}
+        primaryHref={investmentCta.primaryHref}
+        secondaryLabel={investmentCta.secondaryLabel}
+        secondaryHref={investmentCta.secondaryHref}
       />
     </>
   );
@@ -575,9 +622,9 @@ function MaterialsPage() {
         </section>
       ) : null}
       <CTASection
-        title={approvedCopy.cta.requestFullMaterials}
-        text="Оставьте запрос, и команда проекта предоставит актуальный комплект материалов для предметного разговора."
-        primaryLabel={approvedCopy.cta.requestFullMaterials}
+        title="Материалы для предметного разговора"
+        text="Оставьте удобный контакт. Мы свяжемся, уточним формат интереса и обсудим, какие материалы будут полезны для следующего шага."
+        primaryLabel={approvedCopy.cta.discuss}
         primaryHref="/investor-questions"
         secondaryLabel="Инвестиционная модель"
         secondaryHref="/investment"
@@ -594,8 +641,8 @@ function InvestorQuestionsPage() {
         <div className="section-inner form-layout" id="form">
           <div>
             <SectionIntro
-              title="Канал для предметного разговора"
-              text="Оставьте контакт — мы отправим материалы и обсудим подходящий формат участия."
+              title={investorQuestionsIntro.title}
+              text={investorQuestionsIntro.text}
             />
           </div>
           <ContactForm />

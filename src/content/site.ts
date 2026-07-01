@@ -59,7 +59,7 @@ export const pages: PageMeta[] = [
     label: "Инвестиционное предложение",
     title: approvedCopy.seo.investment.title,
     description: approvedCopy.seo.investment.description,
-    ogImage: "/media/point-facade-840.webp"
+    ogImage: "/media/investment-hero-main-840.webp"
   },
   {
     id: "materials",

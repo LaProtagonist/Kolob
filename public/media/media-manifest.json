@@ -156,22 +156,6 @@
     ]
   },
   {
-    "name": "cutaway-01",
-    "source": "D:\\Protagonist_Dev\\Колобочная\\Madia\\2024\\IMG_0954.JPG",
-    "sourceWidth": 4032,
-    "sourceHeight": 2268,
-    "outputs": [
-      {
-        "width": 420,
-        "file": "/media/cutaway-01-420.webp"
-      },
-      {
-        "width": 760,
-        "file": "/media/cutaway-01-760.webp"
-      }
-    ]
-  },
-  {
     "name": "cutaway-02",
     "source": "D:\\Protagonist_Dev\\Колобочная\\Madia\\2024\\IMG_0963.JPG",
     "sourceWidth": 6912,
@@ -200,22 +184,6 @@
       {
         "width": 760,
         "file": "/media/cutaway-03-760.webp"
-      }
-    ]
-  },
-  {
-    "name": "point-facade",
-    "source": "D:\\Protagonist_Dev\\Колобочная\\Madia\\4. КОЛОБКИ\\Фото\\Обработ\\IMG_20230904_193733.jpg",
-    "sourceWidth": 2985,
-    "sourceHeight": 3528,
-    "outputs": [
-      {
-        "width": 480,
-        "file": "/media/point-facade-480.webp"
-      },
-      {
-        "width": 840,
-        "file": "/media/point-facade-840.webp"
       }
     ]
   },
@@ -284,22 +252,6 @@
     ]
   },
   {
-    "name": "festival-window",
-    "source": "D:\\Protagonist_Dev\\Колобочная\\Madia\\сист 2024\\IMG_6769.JPG",
-    "sourceWidth": 5712,
-    "sourceHeight": 4284,
-    "outputs": [
-      {
-        "width": 480,
-        "file": "/media/festival-window-480.webp"
-      },
-      {
-        "width": 840,
-        "file": "/media/festival-window-840.webp"
-      }
-    ]
-  },
-  {
     "name": "festival-truck",
     "source": "D:\\Protagonist_Dev\\Колобочная\\Madia\\сист 2024\\IMG_6772.JPG",
     "sourceWidth": 5712,
@@ -312,22 +264,6 @@
       {
         "width": 840,
         "file": "/media/festival-truck-840.webp"
-      }
-    ]
-  },
-  {
-    "name": "festival-sea",
-    "source": "D:\\Protagonist_Dev\\Колобочная\\Madia\\сист 2024\\IMG_6913.JPG",
-    "sourceWidth": 3213,
-    "sourceHeight": 5712,
-    "outputs": [
-      {
-        "width": 480,
-        "file": "/media/festival-sea-480.webp"
-      },
-      {
-        "width": 840,
-        "file": "/media/festival-sea-840.webp"
       }
     ]
   },

@@ -27,8 +27,8 @@ export const documents: DocumentItem[] = [
     description:
       "Закрытый документ первого касания с описанием продукта, модели развития и вопросов для обсуждения.",
     status: "по запросу",
-    actionLabel: "Запросить",
-    href: "/investor-questions",
+    actionLabel: null,
+    href: null,
     documentUrl: null
   }
 ];

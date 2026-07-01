@@ -953,16 +953,20 @@ export function CTASection({
   text,
   primaryLabel = "Обсудить участие",
   primaryHref = "/investor-questions",
-  secondaryLabel = "Запросить материалы",
+  secondaryLabel = "Смотреть материалы",
   secondaryHref = "/materials"
 }: {
   title: string;
   text: string;
   primaryLabel?: string;
   primaryHref?: string;
-  secondaryLabel?: string;
-  secondaryHref?: string;
+  secondaryLabel?: string | null;
+  secondaryHref?: string | null;
 }) {
+  const normalizeHref = (href: string) => href.replace(/#.*$/, "").replace(/\/$/, "") || "/";
+  const showSecondary =
+    Boolean(secondaryLabel && secondaryHref) && normalizeHref(secondaryHref ?? "") !== normalizeHref(primaryHref);
+
   return (
     <section className="cta-section">
       <div>
@@ -973,15 +977,19 @@ export function CTASection({
         <a className="button button-primary" href={primaryHref}>
           {primaryLabel}
         </a>
-        <a className="button button-secondary" href={secondaryHref}>
-          {secondaryLabel}
-        </a>
+        {showSecondary ? (
+          <a className="button button-secondary" href={secondaryHref ?? undefined}>
+            {secondaryLabel}
+          </a>
+        ) : null}
       </div>
     </section>
   );
 }
 
 export function DocumentCard({ item }: { item: DocumentItem }) {
+  const actionHref = item.documentUrl ?? item.href;
+
   return (
     <article className="document-card">
       <div>
@@ -989,7 +997,7 @@ export function DocumentCard({ item }: { item: DocumentItem }) {
         <h3>{item.title}</h3>
         <p>{item.description}</p>
       </div>
-      <a href={item.documentUrl ?? item.href}>{item.actionLabel}</a>
+      {item.actionLabel && actionHref ? <a href={actionHref}>{item.actionLabel}</a> : null}
     </article>
   );
 }

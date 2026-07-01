@@ -110,7 +110,7 @@ export type DocumentItem = {
   title: string;
   description: string;
   status?: string | null;
-  actionLabel: string;
-  href: string;
+  actionLabel?: string | null;
+  href?: string | null;
   documentUrl?: string | null;
 };

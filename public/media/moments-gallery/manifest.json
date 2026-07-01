@@ -1,0 +1,174 @@
+[
+  {
+    "index": 1,
+    "original": "001.HEIC",
+    "type": "image",
+    "file": "gallery-001.webp",
+    "width": 1080,
+    "height": 1440,
+    "bytes": 126774
+  },
+  {
+    "index": 2,
+    "original": "002.HEIC",
+    "type": "image",
+    "file": "gallery-002.webp",
+    "width": 1080,
+    "height": 1440,
+    "bytes": 118434
+  },
+  {
+    "index": 3,
+    "original": "003.HEIC",
+    "type": "image",
+    "file": "gallery-003.webp",
+    "width": 1080,
+    "height": 1440,
+    "bytes": 198030
+  },
+  {
+    "index": 4,
+    "original": "004.JPG",
+    "type": "image",
+    "file": "gallery-004.webp",
+    "width": 810,
+    "height": 1440,
+    "bytes": 248174
+  },
+  {
+    "index": 5,
+    "original": "005.MOV",
+    "type": "video",
+    "file": "gallery-005.mp4",
+    "poster": "gallery-005-poster.webp",
+    "width": 714,
+    "height": 1280,
+    "bytes": 3790989,
+    "posterBytes": 63774
+  },
+  {
+    "index": 6,
+    "original": "006.jpg",
+    "type": "image",
+    "file": "gallery-006.webp",
+    "width": 1024,
+    "height": 768,
+    "bytes": 70350
+  },
+  {
+    "index": 7,
+    "original": "007.MOV",
+    "type": "video",
+    "file": "gallery-007.mp4",
+    "poster": "gallery-007-poster.webp",
+    "width": 960,
+    "height": 1280,
+    "bytes": 9240824,
+    "posterBytes": 35520
+  },
+  {
+    "index": 8,
+    "original": "008.MOV",
+    "type": "video",
+    "file": "gallery-008.mp4",
+    "poster": "gallery-008-poster.webp",
+    "width": 1280,
+    "height": 714,
+    "bytes": 8148206,
+    "posterBytes": 61946
+  },
+  {
+    "index": 9,
+    "original": "009.MP4",
+    "type": "video",
+    "file": "gallery-009.mp4",
+    "poster": "gallery-009-poster.webp",
+    "width": 1280,
+    "height": 714,
+    "bytes": 10099394,
+    "posterBytes": 76892
+  },
+  {
+    "index": 10,
+    "original": "010.jpg",
+    "type": "image",
+    "file": "gallery-010.webp",
+    "width": 1280,
+    "height": 960,
+    "bytes": 202056
+  },
+  {
+    "index": 11,
+    "original": "011.jpg",
+    "type": "image",
+    "file": "gallery-011.webp",
+    "width": 1218,
+    "height": 1440,
+    "bytes": 366908
+  },
+  {
+    "index": 12,
+    "original": "012.jpg",
+    "type": "image",
+    "file": "gallery-012.webp",
+    "width": 1080,
+    "height": 1440,
+    "bytes": 149220
+  },
+  {
+    "index": 13,
+    "original": "013.jpg",
+    "type": "image",
+    "file": "gallery-013.webp",
+    "width": 1215,
+    "height": 1440,
+    "bytes": 103508
+  },
+  {
+    "index": 14,
+    "original": "014.JPG",
+    "type": "image",
+    "file": "gallery-014.webp",
+    "width": 1225,
+    "height": 1280,
+    "bytes": 309116
+  },
+  {
+    "index": 15,
+    "original": "015.JPG",
+    "type": "image",
+    "file": "gallery-015.webp",
+    "width": 1440,
+    "height": 810,
+    "bytes": 345450
+  },
+  {
+    "index": 16,
+    "original": "016.JPG",
+    "type": "image",
+    "file": "gallery-016.webp",
+    "width": 1080,
+    "height": 1440,
+    "bytes": 325000
+  },
+  {
+    "index": 17,
+    "original": "017.mov",
+    "type": "video",
+    "file": "gallery-017.mp4",
+    "poster": "gallery-017-poster.webp",
+    "width": 720,
+    "height": 1280,
+    "bytes": 16688432,
+    "posterBytes": 64084
+  },
+  {
+    "index": 18,
+    "original": "018.JPG",
+    "type": "image",
+    "file": "gallery-018.webp",
+    "width": 810,
+    "height": 1440,
+    "bytes": 151366
+  }
+]

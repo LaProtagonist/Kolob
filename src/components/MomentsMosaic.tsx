@@ -70,6 +70,18 @@ export function MomentsMosaic({ id, title, description, items }: MomentsMosaicPr
   }, [activeIndex]);
 
   useEffect(() => {
+    if (activeIndex === null) {
+      return undefined;
+    }
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [activeIndex]);
+
+  useEffect(() => {
     const video = videoRef.current;
     if (video && activeItem?.type === "video") {
       if (videoStartedInGesture.current) {
@@ -144,18 +156,16 @@ export function MomentsMosaic({ id, title, description, items }: MomentsMosaicPr
 
   function getOriginBounds(index: number): OriginBounds | null {
     const tile = tileRefs.current[index];
-    const stage = stageRef.current;
-    if (!tile || !stage) {
+    if (!tile) {
       return null;
     }
 
     const tileRect = tile.getBoundingClientRect();
-    const stageRect = stage.getBoundingClientRect();
     return {
-      left: tileRect.left - stageRect.left,
-      top: tileRect.top - stageRect.top,
-      scaleX: tileRect.width / stageRect.width,
-      scaleY: tileRect.height / stageRect.height
+      left: tileRect.left,
+      top: tileRect.top,
+      scaleX: tileRect.width / window.innerWidth,
+      scaleY: tileRect.height / window.innerHeight
     };
   }
 

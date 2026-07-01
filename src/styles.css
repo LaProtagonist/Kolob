@@ -510,6 +510,23 @@ main {
   clip-path: circle(45% at 52% 50%);
 }
 
+.investment-page-hero .page-hero-media img,
+.investment-page-hero .page-hero-media video {
+  width: min(62%, 460px);
+  height: auto;
+  min-height: 0;
+  object-fit: contain;
+  clip-path: none;
+  animation: investment-logo-in 680ms ease-out both;
+}
+
+.investment-page-hero .page-hero-media {
+  display: grid;
+  place-items: center;
+  align-self: center;
+  min-height: 520px;
+}
+
 .quality-page-hero .page-hero-media {
   align-self: center;
   justify-self: center;
@@ -638,6 +655,133 @@ main {
 .mini-card p {
   min-height: 7.4rem;
   margin-bottom: 0;
+  color: var(--color-text-muted);
+}
+
+.investment-section .section-intro {
+  max-width: 860px;
+}
+
+.investment-card-grid {
+  display: grid;
+  gap: 18px;
+}
+
+.investment-card-grid-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.investment-card-grid-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.investment-card {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+  min-height: 210px;
+  padding: clamp(22px, 2.2vw, 32px);
+  border-radius: var(--radius);
+  background: var(--color-white);
+  box-shadow: var(--shadow-soft);
+}
+
+.investment-card.is-soft {
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.investment-card-number {
+  color: var(--color-crust);
+  font-size: 0.86rem;
+  font-weight: 950;
+  letter-spacing: 0.04em;
+}
+
+.investment-card h3 {
+  margin: 0;
+  font-size: clamp(1.25rem, 1.7vw, 1.8rem);
+  line-height: 1.02;
+}
+
+.investment-card p {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.investment-two-column,
+.investment-dialogue-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  gap: clamp(40px, 6vw, 84px);
+  align-items: start;
+}
+
+.investment-two-column .section-intro,
+.investment-dialogue-layout .section-intro {
+  margin-bottom: 0;
+}
+
+.investment-editorial-list,
+.investment-dialogue-steps {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.investment-editorial-list li {
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr);
+  gap: 22px;
+  align-items: center;
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(23, 23, 23, 0.1);
+}
+
+.investment-editorial-list li:first-child {
+  border-top: 1px solid rgba(23, 23, 23, 0.1);
+}
+
+.investment-editorial-list span,
+.investment-dialogue-steps > li > span {
+  color: var(--color-crust);
+  font-weight: 950;
+}
+
+.investment-editorial-list strong {
+  display: block;
+  font-size: clamp(1.08rem, 1.45vw, 1.35rem);
+  line-height: 1.18;
+}
+
+.investment-editorial-list p {
+  margin: 7px 0 0;
+  color: var(--color-text-muted);
+}
+
+.investment-dialogue-steps {
+  gap: 14px;
+  counter-reset: dialogue;
+}
+
+.investment-dialogue-steps li {
+  display: grid;
+  grid-template-columns: 54px minmax(0, 1fr);
+  gap: 20px;
+  padding: 20px;
+  border-radius: var(--radius);
+  background: var(--color-white);
+  box-shadow: var(--shadow-soft);
+}
+
+.investment-dialogue-steps h3 {
+  margin-bottom: 6px;
+  font-size: 1.18rem;
+}
+
+.investment-dialogue-steps p {
+  margin: 0;
   color: var(--color-text-muted);
 }
 
@@ -1462,9 +1606,9 @@ main {
 }
 
 .moments-expanded {
-  position: absolute;
+  position: fixed;
   inset: 0;
-  z-index: 2;
+  z-index: 90;
   overflow: hidden;
   background: var(--color-ink);
   outline: none;
@@ -1490,6 +1634,8 @@ main {
 
 .moments-expanded-frame img,
 .moments-expanded-frame video {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100%;
   height: 100%;
@@ -2710,6 +2856,17 @@ main {
   }
 }
 
+@keyframes investment-logo-in {
+  from {
+    opacity: 0;
+    transform: scale(0.86);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 @media (max-width: 1120px) {
   .site-header {
     padding: 10px 24px;
@@ -2773,6 +2930,8 @@ main {
   .statement-grid,
   .scale-layout,
   .investment-grid,
+  .investment-two-column,
+  .investment-dialogue-layout,
   .form-layout,
   .process-layout,
   .two-column,
@@ -2788,6 +2947,14 @@ main {
 
   .quality-teaser-copy .section-intro h2 {
     max-width: 680px;
+  }
+
+  .investment-card-grid-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .investment-card-grid-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .about-project-grid {
@@ -2895,7 +3062,7 @@ main {
   .quality-page-hero .page-hero-media {
     width: min(82.6%, 430px);
     min-height: 0;
-    margin: 4px auto 0;
+    margin: clamp(18px, 6vw, 34px) auto clamp(34px, 10vw, 58px);
   }
 
   .quality-page-hero .page-hero-media img,
@@ -2917,6 +3084,28 @@ main {
 
   h2 {
     font-size: 2.08rem;
+  }
+
+  .investment-card-grid-4,
+  .investment-card-grid-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .investment-card {
+    min-height: 0;
+    padding: 22px;
+  }
+
+  .investment-editorial-list li {
+    grid-template-columns: 44px minmax(0, 1fr);
+    gap: 16px;
+    padding: 18px 0;
+  }
+
+  .investment-dialogue-steps li {
+    grid-template-columns: 42px minmax(0, 1fr);
+    gap: 16px;
+    padding: 18px;
   }
 
   .concept-meaning {

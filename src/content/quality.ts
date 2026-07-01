@@ -130,8 +130,8 @@ export const repeatableQuality = {
 export const qualityCta = {
   title: "Качество как основа масштабирования",
   text: "Подход к продукту, напиткам, свежим ингредиентам и производственной системе формирует базу для развития сети с единым стандартом качества.",
-  primaryLabel: "К инвестиционной модели",
-  primaryHref: "/investment",
-  secondaryLabel: "К материалам",
-  secondaryHref: "/materials"
+  primaryLabel: "Обсудить участие",
+  primaryHref: "/investor-questions",
+  secondaryLabel: "К инвестиционной модели",
+  secondaryHref: "/investment"
 };
