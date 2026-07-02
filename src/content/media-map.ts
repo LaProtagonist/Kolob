@@ -101,16 +101,16 @@ export const mediaMap: {
 } = {
   hero: {
     imageCurrent: {
-      base: "hero-kolobok",
-      widths: [768, 1200, 1440],
+      base: "hero-main-loop-poster",
+      widths: [720, 1080],
       sizes: "(max-width: 860px) 100vw, 56vw",
       alt: "Колобки с начинкой, зеленью и разрезом на тёмном фоне"
     },
-    videoLoopMp4: null,
+    videoLoopMp4: "/media/hero-main-loop.mp4",
     videoLoopWebm: null,
     poster: {
-      base: "hero-kolobok",
-      widths: [768, 1200, 1440],
+      base: "hero-main-loop-poster",
+      widths: [720, 1080],
       sizes: "(max-width: 860px) 100vw, 56vw",
       alt: "Колобки с начинкой, зеленью и разрезом на тёмном фоне"
     }

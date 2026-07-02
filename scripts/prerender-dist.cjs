@@ -130,7 +130,10 @@ async function settlePage(page) {
       new Promise((resolve) => setTimeout(resolve, 3000))
     ]);
 
-    await Promise.all(Array.from(document.images).map((img) => img.decode().catch(() => undefined)));
+    await Promise.race([
+      Promise.all(Array.from(document.images).map((img) => img.decode().catch(() => undefined))),
+      new Promise((resolve) => setTimeout(resolve, 3000))
+    ]);
   });
 }
 
@@ -243,7 +246,7 @@ function writeReviewPage(manifest) {
   try {
     for (const route of routes) {
       const page = await browser.newPage({ viewport: { width: 1440, height: 1200 }, deviceScaleFactor: 1 });
-      await page.goto(`${baseUrl}${route.path}`, { waitUntil: "networkidle" });
+      await page.goto(`${baseUrl}${route.path}`, { waitUntil: "domcontentloaded", timeout: 15000 });
       await settlePage(page);
       const html = rewriteLocalOrigin(await page.content(), baseUrl);
       writeRouteHtml(route, html);
@@ -257,7 +260,7 @@ function writeReviewPage(manifest) {
 
       for (const viewport of screenshotViewports) {
         await page.setViewportSize({ width: viewport.width, height: viewport.height });
-        await page.goto(`${baseUrl}${route.path}`, { waitUntil: "networkidle" });
+        await page.goto(`${baseUrl}${route.path}`, { waitUntil: "domcontentloaded", timeout: 15000 });
         await settlePage(page);
         const fileName = `${route.name}-${viewport.name}.jpg`;
         const filePath = path.join(reviewShotsDir, fileName);

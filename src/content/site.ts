@@ -56,7 +56,7 @@ export const pages: PageMeta[] = [
   {
     id: "investment",
     path: "/investment",
-    label: "Инвестиционное предложение",
+    label: "Модель развития",
     title: approvedCopy.seo.investment.title,
     description: approvedCopy.seo.investment.description,
     ogImage: "/media/investment-hero-main-840.webp"
@@ -72,7 +72,7 @@ export const pages: PageMeta[] = [
   {
     id: "investorQuestions",
     path: "/investor-questions",
-    label: "Вопросы инвестора",
+    label: "Обсудить участие",
     title: approvedCopy.seo.investorQuestions.title,
     description: approvedCopy.seo.investorQuestions.description,
     ogImage: "/media/hero-kolobok-1200.webp"

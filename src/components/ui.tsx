@@ -1017,19 +1017,24 @@ export function ContactForm() {
     const form = event.currentTarget;
     const data = new FormData(form);
     const name = String(data.get("name") || "").trim();
-    const company = String(data.get("company") || "").trim();
     const contact = String(data.get("contact") || "").trim();
     const email = String(data.get("email") || "").trim();
     const consent = data.get("consent");
-    const endpoint = import.meta.env.VITE_CONTACT_FORM_ENDPOINT as string | undefined;
+    const endpoint = (import.meta.env.VITE_CONTACT_FORM_ENDPOINT as string | undefined) || "/api/contact";
 
-    if (!name || !company || !contact || !email) {
-      setError("Заполните имя, компанию, email и телефон или Telegram.");
+    if (!name) {
+      setError("Укажите имя.");
       setSent(false);
       return;
     }
 
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    if (!contact && !email) {
+      setError("Укажите телефон, Telegram или email.");
+      setSent(false);
+      return;
+    }
+
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       setError("Укажите корректный email.");
       setSent(false);
       return;
@@ -1037,12 +1042,6 @@ export function ContactForm() {
 
     if (!consent) {
       setError("Подтвердите согласие на обработку данных.");
-      setSent(false);
-      return;
-    }
-
-    if (!endpoint) {
-      setError("Не удалось отправить запрос. Попробуйте позже.");
       setSent(false);
       return;
     }
@@ -1057,15 +1056,16 @@ export function ContactForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(serializeForm(form))
       });
+      const result = (await response.json().catch(() => null)) as { error?: string } | null;
 
       if (!response.ok) {
-        throw new Error("Request failed");
+        throw new Error(result?.error || "Не удалось отправить запрос. Попробуйте позже.");
       }
 
       setSent(true);
       form.reset();
-    } catch {
-      setError("Не удалось отправить запрос. Попробуйте позже.");
+    } catch (submitError) {
+      setError(submitError instanceof Error ? submitError.message : "Не удалось отправить запрос. Попробуйте позже.");
     } finally {
       setSubmitting(false);
     }
@@ -1080,7 +1080,7 @@ export function ContactForm() {
         </label>
         <label>
           Компания
-          <input name="company" autoComplete="organization" required />
+          <input name="company" autoComplete="organization" />
         </label>
         <label>
           Должность
@@ -1088,11 +1088,11 @@ export function ContactForm() {
         </label>
         <label>
           Телефон или Telegram
-          <input name="contact" autoComplete="tel" required />
+          <input name="contact" autoComplete="tel" />
         </label>
         <label>
           Email
-          <input name="email" type="email" autoComplete="email" required />
+          <input name="email" type="email" autoComplete="email" />
         </label>
         <label>
           Формат интереса
@@ -1114,7 +1114,7 @@ export function ContactForm() {
         <span>Согласен на обработку персональных данных.</span>
       </label>
       <button className="button button-primary" type="submit" disabled={submitting}>
-        {submitting ? "Отправляем..." : "Обсудить участие"}
+        {submitting ? "Отправляем..." : "Оставить контакт"}
       </button>
       {error || sent ? (
         <p className={`form-status ${error ? "is-error" : ""}`} role="status">

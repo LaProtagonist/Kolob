@@ -1,12 +1,19 @@
 import { approvedCopy } from "./approved-copy";
 import { mediaMap } from "./media-map";
 
+const conceptHeroImage = {
+  base: "hero-kolobok",
+  widths: [768, 1200, 1440],
+  sizes: "(max-width: 860px) 100vw, 56vw",
+  alt: "Колобки с начинкой, зеленью и разрезом на тёмном фоне"
+};
+
 export const conceptHero = {
   eyebrow: "Концепция",
   title: approvedCopy.conceptDefinition,
   lead: approvedCopy.productVariety,
   text: approvedCopy.conceptExplanation,
-  image: mediaMap.hero.imageCurrent,
+  image: conceptHeroImage,
   mediaShape: "circle" as const
 };
 

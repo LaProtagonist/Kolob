@@ -8,3 +8,4 @@ analysis
 reference
 .npm-cache
 .playwright-browsers
+runtime-data

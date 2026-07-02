@@ -11,6 +11,15 @@ export const homeHero = {
   video: heroVideo
 };
 
+export const homeStatementMedia = {
+  image: {
+    base: "hero-kolobok",
+    widths: [768, 1200, 1440],
+    sizes: "(max-width: 720px) 100vw, 42vw",
+    alt: "Готовая порция Колобочной в круглой маске"
+  }
+};
+
 export const homeAbout = {
   title: "О проекте",
   text: "«Колобочная» — проект создания национальной сети качественной еды в пути. В основе — авторский продукт, собственная технология и узнаваемый русский культурный образ, который можно масштабировать как современный городской формат.",
@@ -91,7 +100,7 @@ export const homeScale = {
   title: "Полный цикл. Единое качество.",
   text: approvedCopy.productionFormula,
   steps: ["сырьё", "производство", "поставки", "открытая кухня", "готовая порция"],
-  link: { href: "/investment", label: "Инвестиционная модель" }
+  link: { href: "/investment", label: "Модель развития" }
 };
 
 export const homeTeasers = [

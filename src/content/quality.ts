@@ -132,6 +132,6 @@ export const qualityCta = {
   text: "Подход к продукту, напиткам, свежим ингредиентам и производственной системе формирует базу для развития сети с единым стандартом качества.",
   primaryLabel: "Обсудить участие",
   primaryHref: "/investor-questions",
-  secondaryLabel: "К инвестиционной модели",
+  secondaryLabel: "К модели развития",
   secondaryHref: "/investment"
 };

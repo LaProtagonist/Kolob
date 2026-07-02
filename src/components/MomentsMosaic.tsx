@@ -140,7 +140,9 @@ export function MomentsMosaic({ id, title, description, items }: MomentsMosaicPr
       return false;
     }
 
-    video.muted = true;
+    video.defaultMuted = false;
+    video.muted = false;
+    video.removeAttribute("muted");
     video.playsInline = true;
     video.setAttribute("playsinline", "");
     video.setAttribute("webkit-playsinline", "");
@@ -394,7 +396,6 @@ export function MomentsMosaic({ id, title, description, items }: MomentsMosaicPr
                     autoPlay
                     controls
                     key={activeItem.id}
-                    muted
                     playsInline
                     poster={activeItem.poster ?? undefined}
                     preload="metadata"

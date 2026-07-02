@@ -6,7 +6,11 @@ export default defineConfig({
   server: {
     host: "127.0.0.1",
     port: 5173,
-    allowedHosts: true
+    allowedHosts: true,
+    proxy: {
+      "/api": "http://127.0.0.1:8787",
+      "/leads": "http://127.0.0.1:8787"
+    }
   },
   preview: {
     host: "127.0.0.1",

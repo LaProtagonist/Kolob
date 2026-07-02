@@ -32,6 +32,7 @@ import {
   homeHero,
   homeQuality,
   homeScale,
+  homeStatementMedia,
   homeTeasers,
   overviewVideos
 } from "./content/home";
@@ -197,7 +198,7 @@ function HomePage() {
             </a>
           </div>
           <ResponsiveImage
-            {...homeHero.image}
+            {...homeStatementMedia.image}
             sizes="(max-width: 720px) 100vw, 42vw"
             className="statement-photo"
           />
@@ -381,7 +382,7 @@ function HistoryPage() {
         text="История «Колобочной» — это не набор отдельных запусков, а практическая проверка формата: от событийных площадок до стационарной городской точки. Следующий шаг — превратить этот опыт в масштабируемую производственную модель с единым стандартом качества."
         primaryLabel={approvedCopy.cta.discuss}
         primaryHref="/investor-questions"
-        secondaryLabel="Инвестиционная модель"
+        secondaryLabel="Модель развития"
         secondaryHref="/investment"
       />
     </>
@@ -492,7 +493,7 @@ function QualityPage() {
 function InvestmentPage() {
   return (
     <>
-      <PageHero hero={investmentHero} current="Инвестиционное предложение" />
+      <PageHero hero={investmentHero} current="Модель развития" />
 
       <section className="section section-light investment-section">
         <div className="section-inner investment-two-column">
@@ -524,8 +525,8 @@ function InvestmentPage() {
         <div className="section-inner">
           <SectionIntro title={investmentPointFormats.title} text={investmentPointFormats.text} />
           <div className="investment-card-grid investment-card-grid-4">
-            {investmentPointFormats.items.map((item) => (
-              <article className="investment-card is-soft" key={item.title}>
+            {investmentPointFormats.items.map((item, index) => (
+              <article className={`investment-card is-soft investment-format-card investment-format-card-${index + 1}`} key={item.title}>
                 <h3>{item.title}</h3>
                 <p>{item.text}</p>
               </article>
@@ -626,7 +627,7 @@ function MaterialsPage() {
         text="Оставьте удобный контакт. Мы свяжемся, уточним формат интереса и обсудим, какие материалы будут полезны для следующего шага."
         primaryLabel={approvedCopy.cta.discuss}
         primaryHref="/investor-questions"
-        secondaryLabel="Инвестиционная модель"
+        secondaryLabel="Модель развития"
         secondaryHref="/investment"
       />
     </>
@@ -636,7 +637,7 @@ function MaterialsPage() {
 function InvestorQuestionsPage() {
   return (
     <>
-      <PageHero hero={investorQuestionsHero} current="Вопросы инвестора" />
+      <PageHero hero={investorQuestionsHero} current="Обсудить участие" />
       <section className="section section-light">
         <div className="section-inner form-layout" id="form">
           <div>

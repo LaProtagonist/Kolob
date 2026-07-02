@@ -12,7 +12,8 @@
     "preview": "node scripts/serve-dist.cjs",
     "prepare:media": "node scripts/prepare-media.mjs",
     "audit:content": "node scripts/audit-content.mjs",
-    "test": "node scripts/test-site.cjs"
+    "test": "node scripts/test-site.cjs",
+    "contact:server": "node server/contact-server.mjs"
   },
   "dependencies": {
     "react": "^19.2.1",

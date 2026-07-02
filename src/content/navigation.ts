@@ -16,9 +16,9 @@ export const navGroups: NavGroup[] = [
   {
     label: "Инвесторам",
     items: [
-      { href: "/investment", label: "Инвестиционное предложение" },
+      { href: "/investment", label: "Модель развития" },
       { href: "/materials", label: "Материалы" },
-      { href: "/investor-questions", label: "Вопросы инвестора" }
+      { href: "/investor-questions", label: "Обсудить участие" }
     ]
   }
 ];
@@ -35,9 +35,9 @@ export const footerGroups: NavGroup[] = [
   {
     label: "Инвесторам",
     items: [
-      { href: "/investment", label: "Инвестиционная модель" },
+      { href: "/investment", label: "Модель развития" },
       { href: "/materials", label: "Материалы" },
-      { href: "/investor-questions", label: "Вопросы инвестора" }
+      { href: "/investor-questions", label: "Обсудить участие" }
     ]
   },
   {
