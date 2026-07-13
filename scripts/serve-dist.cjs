@@ -30,9 +30,9 @@ function getArg(name, fallback) {
   return fallback;
 }
 
-function sendFile(res, filePath) {
+function sendFile(res, filePath, status = 200) {
   const ext = path.extname(filePath).toLowerCase();
-  res.writeHead(200, {
+  res.writeHead(status, {
     "Content-Type": mimeTypes.get(ext) || "application/octet-stream",
     "Cache-Control": ext === ".html" ? "no-cache" : "public, max-age=3600"
   });
@@ -51,7 +51,6 @@ function resolveRequestPath(requestPathname) {
   const basePath = path.normalize(path.join(distDir, pathname));
   candidates.push(basePath);
   candidates.push(path.join(basePath, "index.html"));
-  candidates.push(path.join(distDir, "index.html"));
 
   for (const candidate of candidates) {
     const normalized = path.normalize(candidate);
@@ -72,6 +71,11 @@ function resolveRequestPath(requestPathname) {
   return null;
 }
 
+function resolveNotFoundPath() {
+  const notFoundPath = path.join(distDir, "404", "index.html");
+  return fs.existsSync(notFoundPath) ? notFoundPath : null;
+}
+
 if (!fs.existsSync(path.join(distDir, "index.html"))) {
   console.error(`Missing ${path.join(distDir, "index.html")}. Run npm run build first.`);
   process.exit(1);
@@ -84,6 +88,11 @@ const server = http.createServer((req, res) => {
   const url = new URL(req.url || "/", `http://${host}:${port}`);
   const filePath = resolveRequestPath(url.pathname);
   if (!filePath) {
+    const notFoundPath = resolveNotFoundPath();
+    if (notFoundPath) {
+      sendFile(res, notFoundPath, 404);
+      return;
+    }
     res.writeHead(404, { "Content-Type": "text/plain; charset=utf-8" });
     res.end("Not found");
     return;

@@ -6,7 +6,8 @@ export type RouteId =
   | "investment"
   | "materials"
   | "investorQuestions"
-  | "privacy";
+  | "privacy"
+  | "notFound";
 
 export type PageMeta = {
   id: RouteId;
@@ -15,6 +16,7 @@ export type PageMeta = {
   title: string;
   description: string;
   ogImage?: string;
+  noindex?: boolean;
 };
 
 export type ImageSpec = {

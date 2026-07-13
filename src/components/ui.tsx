@@ -1111,14 +1111,16 @@ export function ContactForm() {
       </label>
       <label className="consent-field">
         <input name="consent" type="checkbox" />
-        <span>Согласен на обработку персональных данных.</span>
+        <span>
+          Согласен на <a href="/privacy">обработку персональных данных</a>.
+        </span>
       </label>
       <button className="button button-primary" type="submit" disabled={submitting}>
         {submitting ? "Отправляем..." : "Оставить контакт"}
       </button>
       {error || sent ? (
         <p className={`form-status ${error ? "is-error" : ""}`} role="status">
-          {error || "Спасибо. Мы свяжемся с вами и предоставим материалы проекта."}
+          {error || "Спасибо. Мы свяжемся с вами, уточним формат интереса и обсудим следующий шаг."}
         </p>
       ) : null}
     </form>

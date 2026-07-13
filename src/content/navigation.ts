@@ -9,7 +9,7 @@ export const navGroups: NavGroup[] = [
     label: "О проекте",
     items: [
       { href: "/concept", label: "Концепция" },
-      { href: "/history", label: "История" },
+      { href: "/history", label: "История проекта" },
       { href: "/quality", label: "Качество и подход" }
     ]
   },

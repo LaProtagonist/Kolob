@@ -111,7 +111,24 @@ colob.spi.ski {
 
 \thandle {
 \t\troot * /srv/static/colob.spi.ski
-\t\timport static_site
+\t\tencode zstd gzip
+\t\ttry_files {path} {path}/index.html =404
+\t\tfile_server
+\t}
+
+\thandle_errors {
+\t\troot * /srv/static/colob.spi.ski
+\t\trewrite * /404/index.html
+\t\tfile_server
+\t}
+
+\t@immutable {
+\t\tpath_regexp static \.(?:css|js|mjs|png|jpg|jpeg|gif|webp|svg|ico|woff|woff2|ttf|eot)$
+\t}
+\theader @immutable Cache-Control "public, max-age=31536000, immutable"
+\theader {
+\t\tX-Content-Type-Options "nosniff"
+\t\tReferrer-Policy "strict-origin-when-cross-origin"
 \t}
 }
 """

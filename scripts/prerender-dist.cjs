@@ -18,7 +18,8 @@ const routes = [
   { name: "investment", label: "Investment", path: "/investment" },
   { name: "materials", label: "Materials", path: "/materials" },
   { name: "investor-questions", label: "Investor questions", path: "/investor-questions" },
-  { name: "privacy", label: "Privacy", path: "/privacy" }
+  { name: "privacy", label: "Privacy", path: "/privacy" },
+  { name: "not-found", label: "Not found", path: "/404" }
 ];
 
 const screenshotViewports = [
@@ -105,6 +106,13 @@ async function settlePage(page) {
   await page.evaluate(async () => {
     Array.from(document.images).forEach((img) => {
       img.loading = "eager";
+    });
+    Array.from(document.querySelectorAll("video[autoplay]")).forEach((video) => {
+      video.muted = true;
+      video.defaultMuted = true;
+      video.setAttribute("muted", "");
+      video.setAttribute("playsinline", "");
+      video.setAttribute("webkit-playsinline", "");
     });
 
     const step = Math.max(360, Math.floor(window.innerHeight * 0.75));

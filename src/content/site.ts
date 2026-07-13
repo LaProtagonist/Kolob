@@ -4,7 +4,7 @@ import { approvedCopy } from "./approved-copy";
 export const site = {
   name: approvedCopy.brand,
   tagline: approvedCopy.tagline,
-  origin: "http://127.0.0.1:5173",
+  origin: "https://colob.spi.ski",
   ctaLabel: approvedCopy.cta.discuss,
   ctaHref: "/investor-questions",
   materialHref: "/materials",
@@ -40,7 +40,7 @@ export const pages: PageMeta[] = [
   {
     id: "history",
     path: "/history",
-    label: "История",
+    label: "История проекта",
     title: approvedCopy.seo.history.title,
     description: approvedCopy.seo.history.description,
     ogImage: "/media/festival-truck-840.webp"
@@ -87,7 +87,17 @@ export const pages: PageMeta[] = [
   }
 ];
 
+export const notFoundPage: PageMeta = {
+  id: "notFound",
+  path: "/404",
+  label: "Страница не найдена",
+  title: "Страница не найдена — Колобочная",
+  description: "Запрошенная страница сайта проекта “Колобочная” не найдена.",
+  ogImage: "/media/hero-kolobok-1200.webp",
+  noindex: true
+};
+
 export function pageByPath(pathname: string) {
   const normalized = pathname === "" ? "/" : pathname.replace(/\/+$/, "") || "/";
-  return pages.find((page) => page.path === normalized) ?? pages[0];
+  return pages.find((page) => page.path === normalized) ?? notFoundPage;
 }

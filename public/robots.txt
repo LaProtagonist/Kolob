@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://colob.spi.ski/sitemap.xml

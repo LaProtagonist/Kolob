@@ -50,7 +50,7 @@ import {
 import { documents, materialVideos, materialsHero, moments } from "./content/materials";
 import { productionRoute } from "./content/production-route";
 import { qualityCta, qualityDrinks, qualityHero, qualitySections, repeatableQuality } from "./content/quality";
-import { pageByPath } from "./content/site";
+import { pageByPath, site } from "./content/site";
 import type { PageMeta } from "./types";
 
 function normalizePath(pathname: string) {
@@ -68,6 +68,9 @@ function ensureMeta(selector: string, create: () => HTMLMetaElement | HTMLLinkEl
 
 function usePageMeta(page: PageMeta) {
   useEffect(() => {
+    const absolutePageUrl = `${window.location.origin}${page.path}`;
+    const absoluteImageUrl = new URL(page.ogImage ?? "/media/hero-kolobok-1200.webp", window.location.origin).href;
+
     document.title = page.title;
 
     const description = ensureMeta('meta[name="description"]', () => {
@@ -82,7 +85,14 @@ function usePageMeta(page: PageMeta) {
       link.setAttribute("rel", "canonical");
       return link;
     }) as HTMLLinkElement;
-    canonical.href = `${window.location.origin}${page.path}`;
+    canonical.href = absolutePageUrl;
+
+    const robots = ensureMeta('meta[name="robots"]', () => {
+      const meta = document.createElement("meta");
+      meta.setAttribute("name", "robots");
+      return meta;
+    }) as HTMLMetaElement;
+    robots.content = page.noindex ? "noindex, nofollow" : "index, follow";
 
     const ogTitle = ensureMeta('meta[property="og:title"]', () => {
       const meta = document.createElement("meta");
@@ -98,19 +108,68 @@ function usePageMeta(page: PageMeta) {
     }) as HTMLMetaElement;
     ogDescription.content = page.description;
 
+    const ogType = ensureMeta('meta[property="og:type"]', () => {
+      const meta = document.createElement("meta");
+      meta.setAttribute("property", "og:type");
+      return meta;
+    }) as HTMLMetaElement;
+    ogType.content = "website";
+
+    const ogSiteName = ensureMeta('meta[property="og:site_name"]', () => {
+      const meta = document.createElement("meta");
+      meta.setAttribute("property", "og:site_name");
+      return meta;
+    }) as HTMLMetaElement;
+    ogSiteName.content = site.name;
+
+    const ogLocale = ensureMeta('meta[property="og:locale"]', () => {
+      const meta = document.createElement("meta");
+      meta.setAttribute("property", "og:locale");
+      return meta;
+    }) as HTMLMetaElement;
+    ogLocale.content = "ru_RU";
+
     const ogUrl = ensureMeta('meta[property="og:url"]', () => {
       const meta = document.createElement("meta");
       meta.setAttribute("property", "og:url");
       return meta;
     }) as HTMLMetaElement;
-    ogUrl.content = `${window.location.origin}${page.path}`;
+    ogUrl.content = absolutePageUrl;
 
     const ogImage = ensureMeta('meta[property="og:image"]', () => {
       const meta = document.createElement("meta");
       meta.setAttribute("property", "og:image");
       return meta;
     }) as HTMLMetaElement;
-    ogImage.content = page.ogImage ?? "/media/hero-kolobok-1200.webp";
+    ogImage.content = absoluteImageUrl;
+
+    const twitterCard = ensureMeta('meta[name="twitter:card"]', () => {
+      const meta = document.createElement("meta");
+      meta.setAttribute("name", "twitter:card");
+      return meta;
+    }) as HTMLMetaElement;
+    twitterCard.content = "summary_large_image";
+
+    const twitterTitle = ensureMeta('meta[name="twitter:title"]', () => {
+      const meta = document.createElement("meta");
+      meta.setAttribute("name", "twitter:title");
+      return meta;
+    }) as HTMLMetaElement;
+    twitterTitle.content = page.title;
+
+    const twitterDescription = ensureMeta('meta[name="twitter:description"]', () => {
+      const meta = document.createElement("meta");
+      meta.setAttribute("name", "twitter:description");
+      return meta;
+    }) as HTMLMetaElement;
+    twitterDescription.content = page.description;
+
+    const twitterImage = ensureMeta('meta[name="twitter:image"]', () => {
+      const meta = document.createElement("meta");
+      meta.setAttribute("name", "twitter:image");
+      return meta;
+    }) as HTMLMetaElement;
+    twitterImage.content = absoluteImageUrl;
   }, [page]);
 }
 
@@ -658,7 +717,7 @@ function PrivacyPage() {
     <section className="plain-page">
       <div className="section-inner">
         <Breadcrumbs current="Политика конфиденциальности" />
-        <h1>Политика конфиденциальности</h1>
+        <h1>Политика обработки персональных данных</h1>
         <p>
           Сайт «Колобочная» использует форму заявки для связи с потенциальными партнёрами. Переданные данные применяются
           для обработки запроса, подготовки ответа и предоставления материалов проекта.
@@ -675,8 +734,25 @@ function PrivacyPage() {
   );
 }
 
+function NotFoundPage() {
+  return (
+    <section className="plain-page">
+      <div className="section-inner">
+        <Breadcrumbs current="Страница не найдена" />
+        <h1>Страница не найдена</h1>
+        <p>Такой страницы на сайте нет. Вернитесь на главную или выберите нужный раздел в меню.</p>
+        <a className="button button-primary" href="/">
+          На главную
+        </a>
+      </div>
+    </section>
+  );
+}
+
 function renderPage(path: string) {
   switch (path) {
+    case "/":
+      return <HomePage />;
     case "/concept":
       return <ConceptPage />;
     case "/history":
@@ -691,8 +767,10 @@ function renderPage(path: string) {
       return <InvestorQuestionsPage />;
     case "/privacy":
       return <PrivacyPage />;
+    case "/404":
+      return <NotFoundPage />;
     default:
-      return <HomePage />;
+      return <NotFoundPage />;
   }
 }
 

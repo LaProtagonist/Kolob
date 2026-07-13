@@ -11,14 +11,31 @@ const distDir = path.join(projectRoot, "dist");
 const routes = [
   { path: "/", must: ["Еда в пути. Всё внутри."] },
   { path: "/concept", must: ["Колобок — полноценная еда, собранная в удобную форму."] },
-  { path: "/history", must: ["Крым", "Севастополь", "Судак", "Санкт-Петербург", "Solar Systo Togathering"] },
+  { path: "/history", must: ["Из реального продукта — в масштабируемую систему."] },
   { path: "/quality", must: ["Вкус начинается с продукта."] },
-  { path: "/investment", must: ["Масштабируемая производственная модель."] },
-  { path: "/materials", must: ["Медиа и документы первого касания"] },
-  { path: "/investor-questions", must: ["Обсудить участие"] }
+  { path: "/investment", must: ["От авторского продукта — к национальной сети."] },
+  { path: "/materials", must: ["Материалы проекта"] },
+  { path: "/investor-questions", must: ["Обсудить участие"] },
+  { path: "/privacy", must: ["Политика обработки персональных данных"] },
+  { path: "/404", must: ["Страница не найдена"] }
 ];
 
-const forbidden = ["Колобовщина", "Колобочное", "Клабочный", "10 точек", "100 чеков", "средний чек", "EBITDA", "окупаемость"];
+const forbidden = [
+  "Инвестиционное предложение",
+  "Инвестиционная модель",
+  "Вопросы инвестора",
+  "Запросить материалы проекта",
+  "Колобовщина",
+  "Колобочное",
+  "Клабочный",
+  "street food",
+  "10 точек",
+  "100 чеков",
+  "средний чек",
+  "CAPEX",
+  "EBITDA",
+  "окупаемость"
+];
 
 const mimeTypes = new Map([
   [".css", "text/css; charset=utf-8"],
@@ -34,6 +51,12 @@ const mimeTypes = new Map([
 
 function createServer() {
   return http.createServer((req, res) => {
+    if (req.method !== "GET" && req.method !== "HEAD") {
+      res.writeHead(404, { "Content-Type": "application/json; charset=utf-8" });
+      res.end(JSON.stringify({ error: "Not found" }));
+      return;
+    }
+
     const url = new URL(req.url || "/", "http://127.0.0.1");
     let pathname = decodeURIComponent(url.pathname);
     let filePath = path.normalize(path.join(distDir, pathname));
@@ -49,7 +72,16 @@ function createServer() {
     }
 
     if (!fs.existsSync(filePath) || !fs.statSync(filePath).isFile()) {
-      filePath = path.join(distDir, "index.html");
+      const notFoundPath = path.join(distDir, "404", "index.html");
+      if (fs.existsSync(notFoundPath)) {
+        const ext = path.extname(notFoundPath).toLowerCase();
+        res.writeHead(404, { "Content-Type": mimeTypes.get(ext) || "application/octet-stream" });
+        fs.createReadStream(notFoundPath).pipe(res);
+        return;
+      }
+      res.writeHead(404, { "Content-Type": "text/plain; charset=utf-8" });
+      res.end("Not found");
+      return;
     }
 
     const ext = path.extname(filePath).toLowerCase();
