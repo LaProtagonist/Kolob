@@ -1,35 +1,43 @@
 schema_version: 1
 assumptions:
   - id: ASM-PURCHASE
-    title: "Сценарий покупки помещения"
+    title: Сценарий покупки помещения
     value: null
     unit: null
     status: research
-    rationale: "Требует сравнения в финансовой модели; покупка конкретного помещения не утверждена."
+    rationale: Сценарий покупки исследуется наравне с арендой и долгосрочной арендой
+      с возможностью субаренды; решение о выборе помещения или сценария не
+      принято.
     scenario: PURCHASE
-    applies_to: [DOC-INVESTMENT-MEMO]
-    source_ids: [SRC-USER-BRIEF]
+    applies_to:
+      - DOC-INVESTMENT-MEMO
+    source_ids:
+      - SRC-USER-BRIEF
     decision_id: DEC-002
     updated_at: 2026-07-21
   - id: ASM-RENT
-    title: "Сценарий обычной аренды"
+    title: Сценарий обычной аренды
     value: null
     unit: null
     status: research
-    rationale: "Требует сравнения в финансовой модели."
+    rationale: Требует сравнения в финансовой модели.
     scenario: RENT
-    applies_to: [DOC-INVESTMENT-MEMO]
-    source_ids: [SRC-USER-BRIEF]
+    applies_to:
+      - DOC-INVESTMENT-MEMO
+    source_ids:
+      - SRC-USER-BRIEF
     decision_id: DEC-002
     updated_at: 2026-07-21
   - id: ASM-MASTER-LEASE
-    title: "Сценарий долгосрочной аренды с возможностью субаренды"
+    title: Сценарий долгосрочной аренды с возможностью субаренды
     value: null
     unit: null
     status: research
-    rationale: "Требует сравнения в финансовой модели."
+    rationale: Требует сравнения в финансовой модели.
     scenario: MASTER_LEASE
-    applies_to: [DOC-INVESTMENT-MEMO]
-    source_ids: [SRC-USER-BRIEF]
+    applies_to:
+      - DOC-INVESTMENT-MEMO
+    source_ids:
+      - SRC-USER-BRIEF
     decision_id: DEC-002
     updated_at: 2026-07-21

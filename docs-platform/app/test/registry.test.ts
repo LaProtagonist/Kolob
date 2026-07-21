@@ -12,6 +12,8 @@ function run(...args: string[]) { return execFileSync(process.execPath, [...cli,
 function mutate(file: string, edit: (value: string) => string) { const target = path.join(registry, file); const before = fs.readFileSync(target, "utf8"); try { fs.writeFileSync(target, edit(before)); } finally { return () => fs.writeFileSync(target, before); } }
 
 test("valid registry", () => assert.match(run("registry:validate"), /OK/));
+test("empty metrics registry and sources without lifecycle status are valid", () => assert.match(run("registry:validate"), /OK/));
+test("malformed YAML fails without accepting patch markers", () => { const restore = mutate("facts.yaml", x => x + "\n*** accidental patch marker\n"); try { assert.throws(() => run("registry:validate")); } finally { restore(); } });
 test("duplicate ID fails", () => { const restore = mutate("facts.yaml", x => x + x.match(/  - id:[\s\S]*?(?=\n  - id:|$)/)![0]); try { assert.throws(() => run("registry:validate")); } finally { restore(); } });
 test("missing source fails", () => { const restore = mutate("facts.yaml", x => x.replace("SRC-APPROVED-COPY", "SRC-MISSING")); try { assert.throws(() => run("registry:validate")); } finally { restore(); } });
 test("approved fact without source fails", () => { const restore = mutate("facts.yaml", x => x.replace("source_ids: [SRC-APPROVED-COPY, SRC-RULES]", "source_ids: []")); try { assert.throws(() => run("registry:validate")); } finally { restore(); } });

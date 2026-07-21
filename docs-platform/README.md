@@ -47,3 +47,14 @@ npm run change:preview -- ../changes/example-change.yaml
 Жизненный цикл: создать исследование → оформить decision record → получить approved decision → подготовить change set → preview → apply → проверить changelog и связанные документы.
 
 Текущие ограничения: нет Google API, OAuth, токенов, базы данных или веб-интерфейса; CLI изменяет только `registry/*.yaml`.
+
+## Verified local execution
+
+Проверено 2026-07-21 на Windows.
+
+- Node.js `v24.14.1`, npm `11.11.0`.
+- Выполнены `npm install`, `npm test`, `npm run registry:validate`, list-команды и сценарии `change:preview`/`change:apply`.
+- Тесты: 10 passed, 0 failed. Registry validation: OK.
+- Proposed change set корректно отклоняется до записи; approved CHG-002 создаёт backup и журнал с before/after, затем проходит validation.
+
+Известные ограничения: Google API, OAuth, MCP и внешние документы по-прежнему не подключены.
