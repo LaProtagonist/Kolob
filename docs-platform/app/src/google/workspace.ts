@@ -14,7 +14,8 @@ import { createTestSpreadsheet, readTestSpreadsheet } from "./sheets.js";
 import { GOOGLE_SCOPES, type TestManifest } from "./types.js";
 import { requireApprovedApply } from "./sandbox.js";
 
-function services() { return getAuthorizedClient().then(auth => ({ drive: google.drive({ version: "v3", auth }), docs: google.docs({ version: "v1", auth }), sheets: google.sheets({ version: "v4", auth }) })); }
+export function getGoogleServices() { return getAuthorizedClient().then(auth => ({ drive: google.drive({ version: "v3", auth }), docs: google.docs({ version: "v1", auth }), sheets: google.sheets({ version: "v4", auth }) })); }
+const services = getGoogleServices;
 async function confirm(phrase: string) { if (!input.isTTY) throw new Error("Interactive terminal confirmation is required."); const rl = readline.createInterface({ input, output }); try { return (await rl.question(`Type ${phrase} to continue: `)).trim() === phrase; } finally { rl.close(); } }
 function approvedDecision(id: string) { const decisions = YAML.parse(fs.readFileSync(`${platformRoot}/registry/decisions.yaml`, "utf8")).decisions as Array<{ id: string; status: string }>; return decisions.some(x => x.id === id && x.status === "approved"); }
 function writePendingRegistryChange(manifest: TestManifest) { const today = new Date().toISOString().slice(0, 10); const change = { change_id: "CHG-GOOGLE-TEST-DOCUMENTS", title: "Register Google Workspace sandbox test documents", status: "proposed", created_at: today, decision_id: "DEC-002", operations: [

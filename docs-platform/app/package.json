@@ -1,1 +1,37 @@
-{"name":"kolobochnaya-docs-platform","private":true,"version":"0.1.0","type":"module","scripts":{"registry:validate":"tsx src/cli.ts registry:validate","registry:list":"tsx src/cli.ts registry:list","documents:list":"tsx src/cli.ts documents:list","decisions:list":"tsx src/cli.ts decisions:list","change:preview":"tsx src/cli.ts change:preview","change:apply":"tsx src/cli.ts change:apply","google:doctor":"tsx src/cli.ts google:doctor","google:auth":"tsx src/cli.ts google:auth","google:folder:inspect":"tsx src/cli.ts google:folder:inspect","google:test:create":"tsx src/cli.ts google:test:create","google:test:read":"tsx src/cli.ts google:test:read","google:test:update":"tsx src/cli.ts google:test:update","google:test:cleanup":"tsx src/cli.ts google:test:cleanup","test":"tsx --test test/**/*.test.ts"},"dependencies":{"@google-cloud/local-auth":"^3.0.1","ajv":"^8.17.1","googleapis":"^171.4.0","yaml":"^2.6.1"},"devDependencies":{"@types/node":"^22.10.1","tsx":"^4.19.2","typescript":"^5.7.2"}}
+{
+  "name": "kolobochnaya-docs-platform",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "registry:validate": "tsx src/cli.ts registry:validate",
+    "registry:list": "tsx src/cli.ts registry:list",
+    "documents:list": "tsx src/cli.ts documents:list",
+    "decisions:list": "tsx src/cli.ts decisions:list",
+    "change:preview": "tsx src/cli.ts change:preview",
+    "change:apply": "tsx src/cli.ts change:apply",
+    "google:doctor": "tsx src/cli.ts google:doctor",
+    "google:auth": "tsx src/cli.ts google:auth",
+    "google:folder:inspect": "tsx src/cli.ts google:folder:inspect",
+    "google:test:create": "tsx src/cli.ts google:test:create",
+    "google:test:read": "tsx src/cli.ts google:test:read",
+    "google:test:update": "tsx src/cli.ts google:test:update",
+    "google:test:cleanup": "tsx src/cli.ts google:test:cleanup",
+    "mcp:dev": "npm --prefix ../mcp run dev",
+    "mcp:inspect": "npm --prefix ../mcp run inspect",
+    "mcp:test": "npm --prefix ../mcp run test",
+    "mcp:smoke": "npm --prefix ../mcp run smoke",
+    "test": "tsx --test test/**/*.test.ts"
+  },
+  "dependencies": {
+    "@google-cloud/local-auth": "^3.0.1",
+    "ajv": "^8.17.1",
+    "googleapis": "^171.4.0",
+    "yaml": "^2.6.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}
