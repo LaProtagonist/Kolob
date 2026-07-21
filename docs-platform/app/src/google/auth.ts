@@ -4,7 +4,7 @@ import { google } from "googleapis";
 import { credentialsPath, tokenPath, writeSecretJson } from "./config.js";
 import { GOOGLE_SCOPES, type StructuredEvent } from "./types.js";
 
-const secretKeys = /token|secret|credential|authorization/i;
+const secretKeys = /^(accessToken|access_token|refreshToken|refresh_token|clientSecret|client_secret|authorization)$/i;
 export function log(event: StructuredEvent) { const safe = Object.fromEntries(Object.entries(event).map(([key, value]) => [key, secretKeys.test(key) ? "[REDACTED]" : value])); console.log(JSON.stringify(safe)); }
 export function credentialState() { return { credentials: fs.existsSync(credentialsPath), token: fs.existsSync(tokenPath) }; }
 export async function getAuthorizedClient() {
