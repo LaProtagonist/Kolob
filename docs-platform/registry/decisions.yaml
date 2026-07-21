@@ -1,0 +1,24 @@
+schema_version: 1
+decisions:
+  - id: DEC-001
+    title: "Создать локальную платформу управления инвестиционными документами"
+    status: approved
+    decision: "Платформа ведёт registry локально; Google Docs и Sheets будут производными представлениями."
+    rationale: "Нужен проверяемый фундамент до подключения Google Workspace."
+    affected_documents: [DOC-README, DOC-AGENTS, DOC-AUDIT]
+    approved_by: "project owner"
+    approved_at: 2026-07-21
+    supersedes: null
+    source_ids: [SRC-USER-BRIEF]
+    updated_at: 2026-07-21
+  - id: DEC-002
+    title: "Сравнить сценарии использования помещения"
+    status: approved
+    decision: "Для финансовой модели сравнивать покупку, обычную аренду и долгосрочную аренду с возможностью субаренды."
+    rationale: "Решение определяет состав исследования, но не выбирает конкретное помещение или сценарий."
+    affected_documents: [DOC-INVESTMENT-MEMO]
+    approved_by: "project owner"
+    approved_at: 2026-07-21
+    supersedes: null
+    source_ids: [SRC-USER-BRIEF]
+    updated_at: 2026-07-21

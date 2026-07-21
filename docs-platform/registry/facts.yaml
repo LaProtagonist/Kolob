@@ -1,0 +1,24 @@
+schema_version: 1
+facts:
+  - id: FACT-001
+    title: "Название проекта"
+    value: "Колобочная"
+    status: approved
+    source_ids: [SRC-APPROVED-COPY, SRC-RULES]
+    applies_to: [DOC-INVESTMENT-MEMO]
+    updated_at: 2026-07-21
+  - id: FACT-002
+    title: "Базовая категория"
+    value: "еда в пути"
+    status: approved
+    source_ids: [SRC-APPROVED-COPY, SRC-SITE-STRATEGY]
+    applies_to: [DOC-INVESTMENT-MEMO]
+    updated_at: 2026-07-21
+  - id: FACT-003
+    title: "Растительные ингредиенты"
+    value: "Часть растительных ингредиентов выращивается самостоятельно."
+    status: approved
+    source_ids: [SRC-QUALITY]
+    applies_to: [DOC-INVESTMENT-MEMO]
+    updated_at: 2026-07-21
+*** Delete File: D:\Protagonist_DEV\Колобочная\docs-platform\registry\assumptions.yaml

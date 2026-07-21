@@ -1,0 +1,10 @@
+app/node_modules/
+app/dist/
+.credentials/
+.tokens/
+runtime/
+changelog/backups/
+client_secret*.json
+credentials*.json
+token*.json
+*.pem

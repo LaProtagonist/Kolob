@@ -1,0 +1,47 @@
+schema_version: 1
+sources:
+  - id: SRC-USER-BRIEF
+    title: "Задание пользователя"
+    type: instruction
+    location: "User brief, 2026-07-21"
+    publisher: "project owner"
+    publication_date: 2026-07-21
+    accessed_at: 2026-07-21
+    reliability: primary
+    notes: "Первичный источник правил текущего этапа."
+  - id: SRC-APPROVED-COPY
+    title: "Утверждённые тексты"
+    type: approved_copy
+    location: src/content/approved-copy.ts
+    publisher: "Колобочная"
+    publication_date: null
+    accessed_at: 2026-07-21
+    reliability: high
+    notes: "Источник утверждённого публичного текста."
+  - id: SRC-RULES
+    title: "Правила проекта"
+    type: project_rule
+    location: rules-project.md
+    publisher: "Колобочная"
+    publication_date: null
+    accessed_at: 2026-07-21
+    reliability: high
+    notes: "Ограничения публикации и разработки."
+  - id: SRC-SITE-STRATEGY
+    title: "Стратегия сайта"
+    type: strategy
+    location: analysis/site-strategy.md
+    publisher: "Колобочная"
+    publication_date: null
+    accessed_at: 2026-07-21
+    reliability: medium
+    notes: "Стратегический материал; не заменяет решение."
+  - id: SRC-QUALITY
+    title: "Контент о качестве"
+    type: published_content
+    location: src/content/quality.ts
+    publisher: "Колобочная"
+    publication_date: null
+    accessed_at: 2026-07-21
+    reliability: medium
+    notes: "Опубликованный контент, требующий первичного подтверждения для инвестматериалов."
