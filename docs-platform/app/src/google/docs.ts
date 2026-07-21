@@ -1,0 +1,8 @@
+import type { docs_v1, drive_v3 } from "googleapis";
+import { DOC_MIME } from "./types.js";
+import { TEST_DOC_BODY, TEST_DOC_UPDATED_BODY } from "./test-content.js";
+export function documentText(document: docs_v1.Schema$Document) { return (document.body?.content ?? []).map(x => x.paragraph?.elements?.map(e => e.textRun?.content ?? "").join("") ?? "").join(""); }
+export async function createTestDocument(drive: drive_v3.Drive, docs: docs_v1.Docs, folderId: string) { const created = await drive.files.create({ requestBody: { name: "TEST — Docs Platform", mimeType: DOC_MIME, parents: [folderId] }, fields: "id" }); const id = created.data.id; if (!id) throw new Error("Drive API did not return test document ID."); await docs.documents.batchUpdate({ documentId: id, requestBody: { requests: [{ insertText: { location: { index: 1 }, text: TEST_DOC_BODY } }] } }); return id; }
+export async function readDocument(docs: docs_v1.Docs, id: string) { const result = await docs.documents.get({ documentId: id }); return { document: result.data, text: documentText(result.data) }; }
+export function testUpdatePreview(text: string) { const before = "Платформа подключена к выделенной папке проекта."; if (!text.includes(before)) throw new Error("[TEST-01] source block not found; refusing update."); return { blockId: "TEST-01", before, after: TEST_DOC_UPDATED_BODY }; }
+export async function applyTestUpdate(docs: docs_v1.Docs, id: string) { await docs.documents.batchUpdate({ documentId: id, requestBody: { requests: [{ replaceAllText: { containsText: { text: "Платформа подключена к выделенной папке проекта.", matchCase: true }, replaceText: TEST_DOC_UPDATED_BODY } }] } }); }

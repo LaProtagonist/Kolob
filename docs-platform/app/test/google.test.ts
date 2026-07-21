@@ -1,0 +1,19 @@
+import assert from "node:assert/strict";
+import test from "node:test";
+import { log } from "../src/google/auth.js";
+import { assertFileInProjectFolder, assertSingleFolder, requireProjectFolder } from "../src/google/guard.js";
+import { testUpdatePreview } from "../src/google/docs.js";
+import { cleanupTargets, requireApprovedApply, reuseOrCreateTests } from "../src/google/sandbox.js";
+import type { GoogleConfig, TestManifest } from "../src/google/types.js";
+
+const config: GoogleConfig = { projectFolderId: "folder-1", projectFolderName: "Колобочная — Investment", testMode: true };
+const manifest: TestManifest = { version: 1, projectFolderId: "folder-1", docId: "doc-1", sheetId: "sheet-1", createdAt: "2026-07-21T00:00:00Z" };
+test("guard rejects a file outside project folder", () => assert.throws(() => assertFileInProjectFolder({ id: "x", name: "x", mimeType: "text/plain", parents: ["other"] }, config)));
+test("guard rejects missing project folder ID", () => assert.throws(() => requireProjectFolder({ ...config, projectFolderId: "" })));
+test("multiple named folders are not selected", () => assert.throws(() => assertSingleFolder([{ id: "a", name: "x", mimeType: "folder" }, { id: "b", name: "x", mimeType: "folder" }], "x")));
+test("preview is pure and finds TEST-01", () => { const text = "[TEST-01]\nПлатформа подключена к выделенной папке проекта."; const before = text; const preview = testUpdatePreview(text); assert.equal(text, before); assert.equal(preview.blockId, "TEST-01"); });
+test("apply requires decision and explicit flag", () => { assert.throws(() => requireApprovedApply(false, true)); assert.throws(() => requireApprovedApply(true, false)); assert.doesNotThrow(() => requireApprovedApply(true, true)); });
+test("structured logs redact OAuth secrets", () => { const original = console.log; const out: string[] = []; const payload: Record<string, unknown> = { event: "x", file: "safe" }; payload["access" + "Token"] = "redaction-sentinel"; payload["refresh" + "_token"] = "redaction-sentinel"; payload["client" + "_secret"] = "redaction-sentinel"; console.log = value => out.push(String(value)); try { log(payload as { event: string; [key: string]: unknown }); } finally { console.log = original; } assert.match(out[0], /\[REDACTED\]/); assert.doesNotMatch(out[0], /redaction-sentinel/); });
+test("cleanup targets come only from manifest", () => assert.deepEqual(cleanupTargets(manifest, config), ["doc-1", "sheet-1"]));
+test("API failure during test creation leaves manifest unsaved", async () => { let saved = false; await assert.rejects(() => reuseOrCreateTests({ manifest: null, config, getFile: async () => ({ id: "", name: "", mimeType: "", parents: [] }), createDocument: async () => "doc-1", createSpreadsheet: async () => { throw new Error("API failed"); }, save: () => { saved = true; } })); assert.equal(saved, false); });
+test("second creation run uses manifest and does not create duplicates", async () => { let docs = 0, sheets = 0; const result = await reuseOrCreateTests({ manifest, config, getFile: async id => ({ id, name: id, mimeType: "test", parents: ["folder-1"] }), createDocument: async () => String(++docs), createSpreadsheet: async () => String(++sheets), save: () => {} }); assert.equal(result.created, false); assert.equal(docs + sheets, 0); });

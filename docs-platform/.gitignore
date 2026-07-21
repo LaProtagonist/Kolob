@@ -2,9 +2,14 @@ app/node_modules/
 app/dist/
 .credentials/
 .tokens/
+.secrets/
+config/google.json
 runtime/
 changelog/backups/
 client_secret*.json
 credentials*.json
 token*.json
+.env
+.env.*
+!.env.example
 *.pem

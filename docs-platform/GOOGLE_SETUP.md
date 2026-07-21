@@ -8,11 +8,11 @@
 
 Для локального запуска TypeScript/Node.js использовать OAuth client типа **Desktop app** с Authorization Code + PKCE; redirect URI и client configuration фиксируются в проектной документации, но не коммитятся. Для будущего локального web-интерфейса можно завести отдельный client типа Web application — не переиспользовать один client для обоих сценариев.
 
-Минимальные scopes:
+Для текущего sandbox достаточно одного scope: `https://www.googleapis.com/auth/drive.file`. Официальные методы Google Docs `documents.get` и `documents.create`, а также Google Sheets `spreadsheets.get` и `spreadsheets.create` допускают этот scope; он даёт доступ только к файлам, созданным приложением или явно открытым/переданным ему. Поэтому `documents` и `spreadsheets` сейчас не запрашиваются: они не нужны для минимального сценария и шире по охвату данных.
 
-- `https://www.googleapis.com/auth/drive.file` — доступ к файлам, которые приложение создало или которые пользователь явно открыл/выбрал;
-- `https://www.googleapis.com/auth/documents` — чтение и запись разрешённых Google Docs;
-- `https://www.googleapis.com/auth/spreadsheets` — чтение и запись разрешённых Google Sheets.
+`drive.file` не является ограничением одной папкой. Программа дополнительно проверяет `projectFolderId`, MIME-тип и прямого родителя каждого файла перед чтением, записью или удалением. Выбор и listing ограничены точным именем папки либо её непосредственными дочерними объектами.
+
+Официальные источники: [выбор Drive scopes](https://developers.google.com/workspace/drive/api/guides/api-specific-auth), [Docs documents.get](https://developers.google.com/workspace/docs/api/reference/rest/v1/documents/get), [Sheets spreadsheets.create](https://developers.google.com/workspace/sheets/api/reference/rest/v4/spreadsheets/create), [OAuth для desktop apps](https://developers.google.com/identity/protocols/oauth2/native-app).
 
 Не запрашивать широкий `drive` scope без отдельного решения. При чтении дерева папок, если `drive.file` недостаточен для выбранного сценария, сначала пересмотреть UX выбора папки и оформить decision record, а не повышать scope автоматически.
 
@@ -24,9 +24,13 @@
 docs-platform/.credentials/
 docs-platform/.tokens/
 docs-platform/runtime/
+docs-platform/.secrets/
+docs-platform/config/google.json
 client_secret*.json
 credentials*.json
 token*.json
+.env
+.env.*
 *.pem
 ```
 
@@ -34,9 +38,13 @@ token*.json
 
 ## Минимизация доступа
 
-1. Пользователь вручную создаёт или выбирает папку `Колобочная / Investment` в Google Drive.
+1. Пользователь вручную создаёт или выбирает папку `Колобочная — Investment` в Google Drive.
 2. Приложение получает доступ только через явный picker/открытие этой папки и сохраняет её ID в локальном защищённом runtime-конфиге.
 3. Каждый вызов валидирует, что document/spreadsheet является дочерним объектом разрешённой папки или имеет разрешённый registry ID.
 4. Любые операции list/search ограничиваются этим корнем; запретить рекурсивные операции за его пределами.
 5. В `preview` показывать целевой ID, имя и родителя; `apply` отклонять при несовпадении allowlist.
 6. Не использовать service account с доступом к личному Drive; при будущем shared drive — отдельная минимальная группа и отдельное решение.
+
+## Локальный sandbox
+
+Локальные credentials и token лежат в `.secrets/`; `config/google.json` хранит только ID выбранной папки, её имя и `testMode`. Локальный manifest с ID тестовых файлов и подготовленный change set тоже лежат в `.secrets/` и не попадают в Git. Созданные тестовые файлы проверяются по manifest и folder guard; cleanup никогда не ищет их по всему Drive.

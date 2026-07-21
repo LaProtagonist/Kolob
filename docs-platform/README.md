@@ -57,4 +57,21 @@ npm run change:preview -- ../changes/example-change.yaml
 - Тесты: 10 passed, 0 failed. Registry validation: OK.
 - Proposed change set корректно отклоняется до записи; approved CHG-002 создаёт backup и журнал с before/after, затем проходит validation.
 
-Известные ограничения: Google API, OAuth, MCP и внешние документы по-прежнему не подключены.
+Известные ограничения: MCP и реальные инвестиционные материалы не подключены.
+
+## Guarded Google Workspace sandbox
+
+Реализован локальный CLI для OAuth Desktop Application, Drive, Docs и Sheets. Он использует только `drive.file`: официальные Docs и Sheets methods в используемом сценарии допускают этот минимальный scope. Внешний доступ дополнительно ограничен local `projectFolderId` и проверкой родителя каждого файла.
+
+```powershell
+npm run google:doctor
+npm run google:auth
+npm run google:folder:inspect
+npm run google:test:create
+npm run google:test:read
+npm run google:test:update -- --preview
+```
+
+`google:test:update -- --apply` требует approved DEC-002, успешного внутреннего preview, project-folder guard и интерактивного ввода `APPLY_TEST_UPDATE`. `google:test:cleanup` требует `DELETE_TEST_FILES`, работает исключительно по локальному manifest и не меняет registry. После создания файлов CLI готовит локальный proposed change set для `TEST-DOC-001` и `TEST-SHEET-001`; registry напрямую не редактируется.
+
+До ручной OAuth-авторизации не запускать команды создания, чтения, update или cleanup. Инструкция подготовки находится в `GOOGLE_SETUP.md`.
