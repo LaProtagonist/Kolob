@@ -3,7 +3,10 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import test from "node:test";
+import { Client } from "@modelcontextprotocol/sdk/client/index.js";
+import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
 import { AuditLog, PreviewStore, sha256 } from "../src/runtime.js";
+import { createMcpServer, resolveCapabilityMode } from "../src/server.js";
 import { GovernedTools } from "../src/service.js";
 import type { ChangeRecord, DocumentSnapshot, PlatformAdapter, ValidationResult } from "../src/types.js";
 
@@ -49,3 +52,85 @@ test("MCP responses redact OAuth secrets", async () => { const { tools } = setup
 test("audit log does not contain OAuth secrets", async () => { const { tools, root } = setup(); await assert.rejects(() => tools.documentRead("access_token=secret-value")); const files = fs.readdirSync(path.join(root, "audit")); const content = files.map(file => fs.readFileSync(path.join(root, "audit", file), "utf8")).join("\n"); assert.doesNotMatch(content, /secret-value/); assert.match(content, /\[REDACTED\]/); });
 test("spreadsheet reads require a limited explicit range", async () => { const { tools } = setup(); await assert.doesNotReject(() => tools.spreadsheetRead("TEST-SHEET-001", "README", "A1:B4")); await assert.rejects(() => tools.spreadsheetRead("TEST-SHEET-001", "README", "A1:ZZ9999"), /500-cell/); await assert.rejects(() => tools.spreadsheetRead("TEST-SHEET-001", "README", "README"), /explicit A1 rectangle/); });
 test("registry apply uses the existing governed workflow", async () => { const { tools, platform } = setup(); const preview = await tools.registryChangePreview("CHG-001"); assert.equal(platform.registryWrites, 0); const applied = await tools.registryChangeApply(String(preview.previewId)); assert.equal(applied.applied, true); assert.equal(platform.registryWrites, 1); });
+
+async function connectMcp(tools: GovernedTools, environment: Record<string, string | undefined> = {}) {
+  const server = createMcpServer(tools, environment);
+  const client = new Client({ name: "mcp-test-client", version: "0.1.0" });
+  const [clientTransport, serverTransport] = InMemoryTransport.createLinkedPair();
+  await server.connect(serverTransport);
+  await client.connect(clientTransport);
+  return { client, server };
+}
+
+test("MCP defaults to review mode", () => {
+  assert.equal(resolveCapabilityMode({}), "review");
+});
+
+test("review mode publishes exactly nine safe tools and no apply tools", async () => {
+  const { tools } = setup();
+  const { client, server } = await connectMcp(tools, { MCP_CAPABILITY_MODE: "review" });
+  try {
+    const listed = await client.listTools();
+    const names = listed.tools.map(tool => tool.name).sort();
+    assert.deepEqual(names, [
+      "change_get",
+      "decision_get",
+      "document_read",
+      "document_update_preview",
+      "documents_list",
+      "project_status",
+      "registry_change_preview",
+      "registry_validate",
+      "spreadsheet_read"
+    ]);
+    assert.equal(names.length, 9);
+    assert.ok(!names.includes("document_update_apply"));
+    assert.ok(!names.includes("registry_change_apply"));
+  } finally {
+    await client.close();
+    await server.close();
+  }
+});
+
+test("review-mode preview is callable and does not write Google or registry state", async () => {
+  const { tools, platform } = setup();
+  const { client, server } = await connectMcp(tools);
+  try {
+    const response = await client.callTool({
+      name: "document_update_preview",
+      arguments: {
+        document_id: "TEST-DOC-001",
+        block_id: "TEST-01",
+        replacement_text: "Preview-only replacement",
+        decision_id: "DEC-002"
+      }
+    });
+    assert.equal(response.isError, undefined);
+    assert.equal(platform.writes, 0);
+    assert.equal(platform.registryWrites, 0);
+  } finally {
+    await client.close();
+    await server.close();
+  }
+});
+
+test("write mode refuses to start without the exact acknowledgement", () => {
+  const { tools } = setup();
+  assert.throws(() => createMcpServer(tools, { MCP_CAPABILITY_MODE: "write" }), /MCP_WRITE_ACK=I_UNDERSTAND/);
+  assert.throws(() => createMcpServer(tools, { MCP_CAPABILITY_MODE: "write", MCP_WRITE_ACK: "yes" }), /MCP_WRITE_ACK=I_UNDERSTAND/);
+});
+
+test("review tool metadata and responses do not disclose OAuth secrets", async () => {
+  const { tools } = setup();
+  const { client, server } = await connectMcp(tools, { OAUTH_CLIENT_SECRET: "secret-value", MCP_CAPABILITY_MODE: "review" });
+  try {
+    const listed = await client.listTools();
+    assert.doesNotMatch(JSON.stringify(listed), /secret-value/);
+    const response = await client.callTool({ name: "project_status", arguments: {} });
+    assert.doesNotMatch(JSON.stringify(response), /secret-value/);
+    assert.match(JSON.stringify(response), /\[REDACTED\]/);
+  } finally {
+    await client.close();
+    await server.close();
+  }
+});

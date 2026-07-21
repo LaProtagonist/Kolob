@@ -1,94 +1,121 @@
-# MCP: безопасное подключение к ChatGPT
+# MCP и Secure MCP Tunnel
 
-## Использованные официальные источники OpenAI
+## Официальные источники OpenAI
 
-- [Build your MCP server](https://developers.openai.com/apps-sdk/build/mcp-server) — Node SDK, server instructions, tool annotations и запрет секретов в ответах.
-- [MCP Apps compatibility in ChatGPT](https://developers.openai.com/apps-sdk/mcp-apps-in-chatgpt) — совместимость MCP-инструментов с ChatGPT.
-- [Connect from ChatGPT](https://developers.openai.com/apps-sdk/deploy/connect-chatgpt) — developer mode, создание developer-mode app и пользовательские подтверждения.
-- [Secure MCP Tunnel](https://developers.openai.com/api/docs/guides/secure-mcp-tunnels) — private transport без входящего публичного listener.
+- [Build your MCP server](https://developers.openai.com/apps-sdk/build/mcp-server) — сервер MCP, схемы инструментов и annotations.
+- [Connect from ChatGPT](https://developers.openai.com/apps-sdk/deploy/connect-chatgpt) — developer-mode app в ChatGPT.
+- [Secure MCP Tunnel](https://developers.openai.com/api/docs/guides/secure-mcp-tunnels) — private tunnel, права, профиль `tunnel-client`, health и readiness.
+- [Platform Tunnel Settings](https://platform.openai.com/settings/organization/tunnels) — создание tunnel, связка с организациями и загрузка клиента.
+- [openai/tunnel-client releases](https://github.com/openai/tunnel-client/releases/latest) — официальный запасной источник актуального бинарного файла.
 
-MCP Server использует официальный пакет `@modelcontextprotocol/sdk`. Apps SDK не требует UI: на этом этапе сервер предоставляет только tools.
+## Границы доступа
 
-## Локальная архитектура
-
-`docs-platform/mcp/` — отдельный TypeScript-пакет. Он повторно использует registry и Google Workspace-модули из `docs-platform/app/`; OAuth, токены и Google-клиенты не дублируются.
+`docs-platform/mcp/` — отдельный TypeScript-пакет. Он повторно использует Google Workspace и registry-модули из `docs-platform/app/`; OAuth-логику, токены и Google-клиенты он не дублирует.
 
 ```text
-ChatGPT / Inspector
-        │ MCP
-docs-platform/mcp (stable registry IDs only)
-        ├── registry + governed CLI workflow
-        ├── .runtime/previews (TTL 24 h, ignored)
-        ├── .runtime/audit (redacted JSONL, ignored)
-        └── existing Google folder guard + OAuth token
+ChatGPT
+   │ OpenAI-hosted tunnel endpoint
+tunnel-client (outbound HTTPS only)
+   │ stdio
+review-only MCP server
+   ├── registry/document IDs only
+   ├── project-folder guard
+   ├── .runtime/previews (TTL 24 h, ignored)
+   └── .runtime/audit (redacted JSONL, ignored)
 ```
 
-Инструменты не принимают Google file ID, URL, путь к файлу или произвольный диапазон без sheet name. Доступ к Google Drive ограничен зарегистрированными `document_id` и проверкой прямой принадлежности выделенной проектной папке.
+Инструменты не принимают произвольные Google file ID, URL и пути. Чтение возможно только для `document_id` из `registry/documents.yaml` после проверки принадлежности проектной папке.
 
-## Annotations и изменения
+## Capability modes
 
-Все read-tools и preview-tools имеют `readOnlyHint: true`, `openWorldHint: false`, `destructiveHint: false`. Preview создаёт только локальный TTL-record и audit event; Google Docs, Sheets и registry не меняются.
+`MCP_CAPABILITY_MODE` принимает только `review` или `write`. Значение по умолчанию и production-default — `review`.
 
-Apply-tools имеют `readOnlyHint: false`, `openWorldHint: false`, `destructiveHint: true`, `idempotentHint: false`. Они не принимают `confirmed: true`: требуется существующий неистёкший preview ID, hash исходного состояния, approved decision и повторная folder/registry validation. Один preview применяется не более одного раза.
+В `review` MCP регистрирует ровно девять инструментов:
 
-## Локальный запуск
+1. `project_status`
+2. `registry_validate`
+3. `documents_list`
+4. `document_read`
+5. `spreadsheet_read`
+6. `decision_get`
+7. `change_get`
+8. `document_update_preview`
+9. `registry_change_preview`
+
+В этом режиме `document_update_apply` и `registry_change_apply` отсутствуют из `tools/list`; они не скрываются ошибкой, а вообще не регистрируются. Read- и preview-инструменты имеют `readOnlyHint: true`. Preview создаёт только локальную TTL-запись и audit event, не меняя Google Docs, Google Sheets или registry.
+
+`write` предназначен только для отдельного локального обслуживающего сценария и запускается лишь при точном сочетании:
+
+```powershell
+$env:MCP_CAPABILITY_MODE = "write"
+$env:MCP_WRITE_ACK = "I_UNDERSTAND"
+```
+
+Без acknowledgement процесс завершается до регистрации инструментов. На текущем этапе `write` не запускается, не проверяется через tunnel и не подключается к ChatGPT.
+
+## Локальные проверки
 
 Из `docs-platform/app/`:
 
 ```powershell
-npm run mcp:dev
-npm run mcp:inspect
+npm test
+npx tsc --noEmit
+npm run registry:validate
 npm run mcp:test
 npm run mcp:smoke
 ```
 
-`mcp:dev` запускает stdio MCP server. `mcp:inspect` запускает локальный официальный MCP Inspector. `mcp:smoke` выполняет только `project_status`, `documents_list`, `document_read(TEST-DOC-001)`, `spreadsheet_read(TEST-SHEET-001, README, A1:B4)` и `registry_validate`.
+`mcp:smoke` сам проверяет, что режим — `review`, и выполняет только `project_status`, `documents_list`, `document_read(TEST-DOC-001)`, `spreadsheet_read(TEST-SHEET-001, README, A1:B4)` и `registry_validate`.
 
-Если Windows использует локальный HTTP proxy, перед smoke или server process следует задать `HTTP_PROXY` и `HTTPS_PROXY` только в текущей PowerShell-сессии. Не сохранять эти переменные в репозитории.
+`npm run mcp:dev` запускает stdio MCP. `npm run mcp:inspect` запускает локальный MCP Inspector; он не публикует сервер в ChatGPT.
 
-## Рекомендуемое подключение: Secure MCP Tunnel
+## Подготовка Secure MCP Tunnel на Windows
 
-Secure MCP Tunnel сохраняет MCP server внутри локальной сети: `tunnel-client` инициирует только исходящий HTTPS к OpenAI и пересылает MCP JSON-RPC в локальный stdio-process. Не открывайте входящий порт и не используйте случайный публичный tunnel.
+Не используйте ngrok, Cloudflare Tunnel или другие публичные туннели. Secure MCP Tunnel требует только исходящий HTTPS к OpenAI; входящий порт для MCP не открывается.
 
-Ручные действия владельца:
+### Ручные действия владельца
 
-1. В Platform tunnel settings создать tunnel и получить `tunnel_id`; потребуются права **Tunnels Read + Manage** для создания и **Tunnels Read + Use** для запуска/выбора.
-2. Ассоциировать tunnel с целевым ChatGPT workspace и Platform organization.
-3. Скачать актуальный `tunnel-client` по ссылке из Platform tunnel settings.
-4. В новой PowerShell-сессии задать runtime key только в окружении, затем создать профиль:
+1. Откройте [Platform Tunnel Settings](https://platform.openai.com/settings/organization/tunnels).
+2. Создайте tunnel с именем `kolobochnaya-docs-dev`.
+3. Свяжите его с текущей Platform organization и с ChatGPT workspace/account, где будет использоваться этот разговор.
+4. Создайте runtime API key. Не отправляйте ключ в чат и не сохраняйте его в Git.
+5. Скачайте `tunnel-client` только по ссылке из Tunnel Settings или с официального latest release `openai/tunnel-client`; добавьте бинарный файл в `PATH`.
 
-```powershell
-$env:CONTROL_PLANE_API_KEY = '<runtime API key>'
-tunnel-client init --sample sample_mcp_stdio_local --profile kolobochnaya-mcp --tunnel-id '<tunnel_id>' --mcp-command "npm --prefix D:\Protagonist_Dev\Колобочная\docs-platform\mcp run dev"
-tunnel-client doctor --profile kolobochnaya-mcp --explain
-tunnel-client run --profile kolobochnaya-mcp
-```
+Для создания или изменения tunnel нужны права **Tunnels Read + Manage**. Для запуска клиента и выбора tunnel в ChatGPT нужны **Tunnels Read + Use**. Если страница сообщает `Tunnels access required`, требуется назначение роли владельцем Platform organization или RBAC-администратором; публичный tunnel как замена не допускается.
 
-5. В ChatGPT включить **Settings → Security and login → Developer mode** (если это разрешено workspace admin).
-6. В **Settings → Plugins** создать developer-mode app, выбрать **Tunnel** и указать созданный tunnel. Сначала разрешить только read/preview tools.
+### Локальная конфигурация и запуск
 
-Не записывать `CONTROL_PLANE_API_KEY`, `tunnel_id`, runtime profile, OAuth credentials или token в Git. Не запускать эти команды автоматически.
-
-## Временный вариант для разработки
-
-Использовать только локальный inspector:
+Только после создания tunnel скопируйте пример в игнорируемый файл и внесите `tunnelId`:
 
 ```powershell
-cd D:\Protagonist_Dev\Колобочная\docs-platform\app
-npm run mcp:inspect
+Copy-Item .\config\tunnel.example.json .\.secrets\tunnel.json
 ```
 
-Inspector не подключает server к ChatGPT и не публикует endpoint.
+`.secrets/tunnel.json` содержит только `tunnelId` и профиль `kolobochnaya-review`; он игнорируется Git. В файл нельзя добавлять runtime API key.
 
-## Первые безопасные запросы в ChatGPT
+Запустите в отдельном локальном PowerShell-окне из `docs-platform/`:
 
-После ручного подключения и проверки metadata доступны запросы:
-
-```text
-Покажи статус проекта «Колобочная».
-Перечисли зарегистрированные документы.
-Прочитай блок TEST-01.
-Сформируй preview замены блока TEST-01.
+```powershell
+.\scripts\start-mcp-tunnel.ps1
 ```
 
-Не тестировать apply из ChatGPT на текущем этапе.
+Скрипт принудительно устанавливает `MCP_CAPABILITY_MODE=review`, удаляет наследованный `MCP_WRITE_ACK`, запускает `tunnel-client help quickstart`, создаёт/обновляет профиль `kolobochnaya-review`, запускает `doctor --explain`, затем `run`. Профиль передаёт stdio-команду в `scripts/run-mcp-review.ps1`; та явно выбирает `docs-platform/` как рабочий каталог и снова принудительно устанавливает `review`. Поэтому дочерний процесс наследует локальную OAuth-конфигурацию Google, но не получает write-режим.
+
+Runtime API key запрашивается через скрытый prompt (`Read-Host -AsSecureString`), передаётся только в `CONTROL_PLANE_API_KEY` текущего процесса и очищается после завершения. Скрипт не принимает ключ аргументом командной строки, не выводит его и не записывает на диск.
+
+`doctor` обязан завершиться успешно перед `run`. Пока `run` активен, проверяйте loopback-only `/healthz`, `/readyz` или `/ui` по адресу, который показывает установленный `tunnel-client`. Остановить tunnel можно `Ctrl+C`; launcher восстановит переменные окружения.
+
+## Перед подключением к ChatGPT
+
+1. Убедитесь локально, что `tools/list` содержит ровно девять инструментов из списка review выше.
+2. Убедитесь, что в списке нет `document_update_apply` и `registry_change_apply`.
+3. Проверьте `tunnel-client doctor --profile kolobochnaya-review --explain`, health и readiness активного клиента.
+4. Вручную создайте или обновите metadata developer-mode app в ChatGPT: **Settings → Plugins → + → Tunnel**. Выберите созданный tunnel и обновите metadata, только когда steps 1–3 пройдены.
+
+На текущем этапе ChatGPT App не создаётся и tunnel к ChatGPT не подключается автоматически. Apply-инструменты публиковать запрещено.
+
+## Известная зависимость
+
+`npm audit --omit=dev` у `docs-platform/mcp` сообщает две moderate advisory в транзитивном `@hono/node-server` через MCP SDK. Уязвимость относится к HTTP Node adapter на Windows; используемый путь — private stdio MCP без HTTP/static-file listener, поэтому этот path не задействован. Не применять `npm audit fix --force` и не понижать MCP SDK без отдельной совместимой проверки.
+
+Отдельный `npm audit --omit=dev` в `docs-platform/app` также сообщает одну high advisory в `fast-uri` и одну moderate advisory в `uuid` через `gaxios`. Автоматическое исправление не запускалось: это требует отдельной проверки совместимых обновлений Google/API-зависимостей. Эти зависимости не изменяют review-only набор MCP tools, но остаются открытым security follow-up.

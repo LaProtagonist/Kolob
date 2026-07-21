@@ -1,5 +1,8 @@
-import { createGovernedService } from "./server.js";
+import { createGovernedService, resolveCapabilityMode } from "./server.js";
 
+if (resolveCapabilityMode() !== "review") {
+  throw new Error("mcp:smoke is review-only. Set MCP_CAPABILITY_MODE=review or remove it.");
+}
 const service = createGovernedService();
 const output = {
   project_status: await service.projectStatus(),
