@@ -36,3 +36,24 @@ documents:
     sections: ["Продукт", "Активы", "Масштабирование", "Финансовая модель"]
     local_path: docs-platform/templates/investment-memorandum.md
     updated_at: 2026-07-21
+  - id: TEST-DOC-001
+    title: TEST — Docs Platform
+    type: test_document
+    status: research
+    google_file_id: 12V1Le5BD47XYrQP4eIycxKi1JLeZZZWSHV-8Gwc48nk
+    template: null
+    sections:
+      - TEST-01
+    local_path: null
+    updated_at: 2026-07-21
+  - id: TEST-SHEET-001
+    title: TEST — Financial Model
+    type: test_spreadsheet
+    status: research
+    google_file_id: 1b6zVNwY0C1jsATZEDgiAH3mx5dOcjgsNWZJMq32nnGU
+    template: null
+    sections:
+      - README
+      - ASSUMPTIONS_TEST
+    local_path: null
+    updated_at: 2026-07-21
