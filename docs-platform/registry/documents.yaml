@@ -1,39 +1,50 @@
 schema_version: 1
 documents:
   - id: DOC-README
-    title: "Платформа инвестиционных документов"
+    title: Платформа инвестиционных документов
     type: guide
     status: approved
     google_file_id: null
     template: null
-    sections: ["Вариант A", "Вариант B", "Границы ответственности"]
+    sections:
+      - Вариант A
+      - Вариант B
+      - Границы ответственности
     local_path: docs-platform/README.md
     updated_at: 2026-07-21
   - id: DOC-AGENTS
-    title: "Правила работы с инвестиционными документами"
+    title: Правила работы с инвестиционными документами
     type: policy
     status: approved
     google_file_id: null
     template: null
-    sections: ["Правила"]
+    sections:
+      - Правила
     local_path: docs-platform/AGENTS.md
     updated_at: 2026-07-21
   - id: DOC-AUDIT
-    title: "Аудит существующих материалов"
+    title: Аудит существующих материалов
     type: audit
     status: approved
     google_file_id: null
     template: null
-    sections: ["Источники истины", "Противоречия", "Пробелы"]
+    sections:
+      - Источники истины
+      - Противоречия
+      - Пробелы
     local_path: docs-platform/AUDIT.md
     updated_at: 2026-07-21
   - id: DOC-INVESTMENT-MEMO
-    title: "Шаблон инвестиционного меморандума"
+    title: Шаблон инвестиционного меморандума
     type: template
     status: proposed
     google_file_id: null
     template: docs-platform/templates/investment-memorandum.md
-    sections: ["Продукт", "Активы", "Масштабирование", "Финансовая модель"]
+    sections:
+      - Продукт
+      - Активы
+      - Масштабирование
+      - Финансовая модель
     local_path: docs-platform/templates/investment-memorandum.md
     updated_at: 2026-07-21
   - id: TEST-DOC-001
@@ -57,3 +68,21 @@ documents:
       - ASSUMPTIONS_TEST
     local_path: null
     updated_at: 2026-07-21
+  - id: DOC-FOUNDATION
+    title: Foundation
+    type: internal_governing_document
+    status: approved
+    google_file_id: null
+    template: null
+    sections:
+      - PRP-FND-001
+      - PRP-FND-002
+      - PRP-FND-003
+      - PRP-FND-004
+      - PRP-FND-005
+      - PRP-FND-006
+      - PRP-FND-007
+    version: "1.0"
+    governance_level: governing
+    local_path: docs-platform/00-foundation.md
+    updated_at: 2026-07-23

@@ -1,0 +1,32 @@
+change_id: CHG-003
+title: "Зафиксировать решение о регистрации Foundation v1.0"
+status: approved
+created_at: 2026-07-23
+decision_id: DEC-001
+operations:
+  - type: add
+    entity: sources
+    value:
+      id: SRC-FOUNDATION-V1-APPROVAL
+      title: "Утверждённое задание Foundation v1.0"
+      type: instruction
+      location: "User instruction, 2026-07-23"
+      publisher: "project owner"
+      publication_date: 2026-07-23
+      accessed_at: 2026-07-23
+      reliability: primary
+      notes: "Первичный источник статуса и канонических текстов Foundation v1.0."
+  - type: add
+    entity: decisions
+    value:
+      id: DEC-003
+      title: "Зарегистрировать Foundation v1.0 как управляющий документ"
+      status: approved
+      decision: "Создать и зарегистрировать Foundation v1.0 как внутренний управляющий документ проекта с семью утверждёнными неизменяемыми положениями PRP-FND-001—PRP-FND-007."
+      rationale: "Прямое утверждённое задание владельца проекта от 2026-07-23."
+      affected_documents: []
+      approved_by: "project owner"
+      approved_at: 2026-07-23
+      supersedes: null
+      source_ids: [SRC-FOUNDATION-V1-APPROVAL]
+      updated_at: 2026-07-23

@@ -7,7 +7,7 @@ import { authorizeInteractively } from "./google/auth.js";
 import { cleanupTests, createTests, doctor, inspectFolder, readTests, updateTests } from "./google/workspace.js";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
-const kinds = ["facts", "assumptions", "decisions", "metrics", "documents", "sources"] as const;
+const kinds = ["facts", "assumptions", "decisions", "metrics", "documents", "principles", "dependencies", "sources"] as const;
 type Kind = typeof kinds[number];
 type Registry = Record<Kind, any[]>;
 const statuses = new Set(["idea", "research", "proposed", "approved", "superseded", "rejected"]);
@@ -30,6 +30,8 @@ export function validateRegistry(registry = load()): string[] {
   for (const item of registry.assumptions) { refs(item, "source_ids", sourceIds); refs(item, "applies_to", documentIds); if (item.decision_id && !decisionIds.has(item.decision_id)) errors.push(`${item.id}: missing decision ${item.decision_id}`); }
   for (const item of registry.decisions) { refs(item, "source_ids", sourceIds); refs(item, "affected_documents", documentIds); if (item.status === "approved" && (!item.approved_by || !item.approved_at)) errors.push(`${item.id}: approved decision requires approver and date`); if (item.supersedes && !decisionIds.has(item.supersedes)) errors.push(`${item.id}: missing superseded decision ${item.supersedes}`); }
   for (const item of registry.metrics) { refs(item, "source_ids", sourceIds); refs(item, "assumption_ids", assumptionIds); if (typeof item.value === "number" && (!item.formula && item.source_ids.length === 0 && item.assumption_ids.length === 0)) errors.push(`${item.id}: numeric metric requires formula, source_ids or assumption_ids`); }
+  for (const item of registry.principles) { refs(item, "source_ids", sourceIds); if (!documentIds.has(item.document)) errors.push(`${item.id}: missing document reference ${item.document}`); if (item.decision_id && !decisionIds.has(item.decision_id)) errors.push(`${item.id}: missing decision ${item.decision_id}`); }
+  for (const item of registry.dependencies) { if (!documentIds.has(item.source_document_id)) errors.push(`${item.id}: missing source document reference ${item.source_document_id}`); for (const target of item.target_documents) if (target.document_id && !documentIds.has(target.document_id)) errors.push(`${item.id}: missing target document reference ${target.document_id}`); }
   return errors;
 }
 function requireChange(file?: string) { if (!file) throw new Error("Specify a change-file after --"); return readYaml(path.resolve(process.cwd(), file)); }

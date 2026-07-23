@@ -1,24 +1,48 @@
 schema_version: 1
 decisions:
   - id: DEC-001
-    title: "Создать локальную платформу управления инвестиционными документами"
+    title: Создать локальную платформу управления инвестиционными документами
     status: approved
-    decision: "Платформа ведёт registry локально; Google Docs и Sheets будут производными представлениями."
-    rationale: "Нужен проверяемый фундамент до подключения Google Workspace."
-    affected_documents: [DOC-README, DOC-AGENTS, DOC-AUDIT]
-    approved_by: "project owner"
+    decision: Платформа ведёт registry локально; Google Docs и Sheets будут
+      производными представлениями.
+    rationale: Нужен проверяемый фундамент до подключения Google Workspace.
+    affected_documents:
+      - DOC-README
+      - DOC-AGENTS
+      - DOC-AUDIT
+    approved_by: project owner
     approved_at: 2026-07-21
     supersedes: null
-    source_ids: [SRC-USER-BRIEF]
+    source_ids:
+      - SRC-USER-BRIEF
     updated_at: 2026-07-21
   - id: DEC-002
-    title: "Сравнить сценарии использования помещения"
+    title: Сравнить сценарии использования помещения
     status: approved
-    decision: "Для финансовой модели сравнивать покупку, обычную аренду и долгосрочную аренду с возможностью субаренды."
-    rationale: "Решение определяет состав исследования, но не выбирает конкретное помещение или сценарий."
-    affected_documents: [DOC-INVESTMENT-MEMO]
-    approved_by: "project owner"
+    decision: Для финансовой модели сравнивать покупку, обычную аренду и
+      долгосрочную аренду с возможностью субаренды.
+    rationale: Решение определяет состав исследования, но не выбирает конкретное
+      помещение или сценарий.
+    affected_documents:
+      - DOC-INVESTMENT-MEMO
+    approved_by: project owner
     approved_at: 2026-07-21
     supersedes: null
-    source_ids: [SRC-USER-BRIEF]
+    source_ids:
+      - SRC-USER-BRIEF
     updated_at: 2026-07-21
+  - id: DEC-003
+    title: Зарегистрировать Foundation v1.0 как управляющий документ
+    status: approved
+    decision: Создать и зарегистрировать Foundation v1.0 как внутренний управляющий
+      документ проекта с семью утверждёнными неизменяемыми положениями
+      PRP-FND-001—PRP-FND-007.
+    rationale: Прямое утверждённое задание владельца проекта от 2026-07-23.
+    affected_documents:
+      - DOC-FOUNDATION
+    approved_by: project owner
+    approved_at: 2026-07-23
+    supersedes: null
+    source_ids:
+      - SRC-FOUNDATION-V1-APPROVAL
+    updated_at: 2026-07-23

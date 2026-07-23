@@ -1,0 +1,161 @@
+change_id: CHG-004
+title: "Зарегистрировать Foundation v1.0 и утверждённые PRP-блоки"
+status: approved
+created_at: 2026-07-23
+decision_id: DEC-003
+operations:
+  - type: add
+    entity: documents
+    value:
+      id: DOC-FOUNDATION
+      title: Foundation
+      type: internal_governing_document
+      status: approved
+      google_file_id: null
+      template: null
+      sections:
+        - PRP-FND-001
+        - PRP-FND-002
+        - PRP-FND-003
+        - PRP-FND-004
+        - PRP-FND-005
+        - PRP-FND-006
+        - PRP-FND-007
+      version: "1.0"
+      governance_level: governing
+      local_path: docs-platform/00-foundation.md
+      updated_at: 2026-07-23
+  - type: add
+    entity: principles
+    value:
+      id: PRP-FND-001
+      title: "Назначение проекта"
+      document: DOC-FOUNDATION
+      status: approved
+      version: "1.0"
+      canonical_text: |-
+        Проект «Колобочная» является основой для создания и развития компании, способной масштабировать новый формат общественного питания федерального уровня.
+        Все стратегические решения внутри проекта принимаются с позиции их влияния на долгосрочное развитие компании, её устойчивость, потенциал масштабирования и способность создавать самостоятельную ценность на каждом этапе своего развития.
+      priority: governing
+      source_ids: [SRC-FOUNDATION-V1-APPROVAL]
+      decision_id: DEC-003
+      updated_at: 2026-07-23
+  - type: add
+    entity: principles
+    value:
+      id: PRP-FND-002
+      title: "Главный актив проекта"
+      document: DOC-FOUNDATION
+      status: approved
+      version: "1.0"
+      canonical_text: |-
+        Главным активом проекта является не отдельный продукт, технология или объект инфраструктуры, а компания, её способность к развитию, масштабированию и долгосрочному созданию ценности.
+        Любые материальные и нематериальные активы рассматриваются как инструменты усиления компании, а не как самостоятельная цель её существования.
+      priority: governing
+      source_ids: [SRC-FOUNDATION-V1-APPROVAL]
+      decision_id: DEC-003
+      updated_at: 2026-07-23
+  - type: add
+    entity: principles
+    value:
+      id: PRP-FND-003
+      title: "Главная цель проекта"
+      document: DOC-FOUNDATION
+      status: approved
+      version: "1.0"
+      canonical_text: |-
+        Главной целью проекта является последовательное увеличение долгосрочной ценности компании.
+        Рост выручки, прибыли, количества объектов, производственных мощностей, инфраструктуры и иных показателей рассматривается как средство достижения этой цели, а не как самостоятельная цель развития.
+      priority: governing
+      source_ids: [SRC-FOUNDATION-V1-APPROVAL]
+      decision_id: DEC-003
+      updated_at: 2026-07-23
+  - type: add
+    entity: principles
+    value:
+      id: PRP-FND-004
+      title: "Принцип развития"
+      document: DOC-FOUNDATION
+      status: approved
+      version: "1.0"
+      canonical_text: |-
+        Развитие компании осуществляется через последовательное усиление её конкурентных преимуществ, устойчивости и способности к масштабированию.
+        Каждый новый этап развития должен не только решать текущие задачи, но и создавать основу для реализации последующих этапов, увеличивая общую ценность компании.
+      priority: governing
+      source_ids: [SRC-FOUNDATION-V1-APPROVAL]
+      decision_id: DEC-003
+      updated_at: 2026-07-23
+  - type: add
+    entity: principles
+    value:
+      id: PRP-FND-005
+      title: "Развитие инфраструктуры"
+      document: DOC-FOUNDATION
+      status: approved
+      version: "1.0"
+      canonical_text: |-
+        Развитие собственной инфраструктуры рассматривается как естественный этап эволюции компании по мере её роста и масштабирования.
+        Создание производственных мощностей, логистической системы, собственных объектов, сельскохозяйственных проектов и других элементов инфраструктуры осуществляется только тогда, когда это повышает эффективность, устойчивость и долгосрочную ценность компании.
+      priority: governing
+      source_ids: [SRC-FOUNDATION-V1-APPROVAL]
+      decision_id: DEC-003
+      updated_at: 2026-07-23
+  - type: add
+    entity: principles
+    value:
+      id: PRP-FND-006
+      title: "Принцип принятия решений"
+      document: DOC-FOUNDATION
+      status: approved
+      version: "1.0"
+      canonical_text: |-
+        Все стратегические решения принимаются на основе объективных данных, практического опыта, проверки гипотез и их влияния на долгосрочную ценность компании.
+        Ни одно решение не считается верным только потому, что оно соответствует первоначальному замыслу. Любая гипотеза может быть пересмотрена, если накопленные данные подтверждают необходимость такого изменения.
+      priority: governing
+      source_ids: [SRC-FOUNDATION-V1-APPROVAL]
+      decision_id: DEC-003
+      updated_at: 2026-07-23
+  - type: add
+    entity: principles
+    value:
+      id: PRP-FND-007
+      title: "Приоритет Foundation"
+      document: DOC-FOUNDATION
+      status: approved
+      version: "1.0"
+      canonical_text: |-
+        Foundation определяет базовые принципы проекта и является исходной точкой для разработки всех остальных документов.
+        При возникновении противоречий между Foundation и производными документами в первую очередь проводится анализ причин расхождения. Изменение Foundation допускается только при осознанном пересмотре базовых принципов проекта. Во всех остальных случаях в соответствие с Foundation приводятся производные документы.
+      priority: governing
+      source_ids: [SRC-FOUNDATION-V1-APPROVAL]
+      decision_id: DEC-003
+      updated_at: 2026-07-23
+  - type: add
+    entity: dependencies
+    value:
+      id: DEP-FOUNDATION-DERIVED-DOCUMENTS
+      source_document_id: DOC-FOUNDATION
+      priority: governing_source
+      status: approved
+      version: "1.0"
+      target_documents:
+        - title: "Шаблон инвестиционного меморандума"
+          document_id: DOC-INVESTMENT-MEMO
+        - title: "Business Model Architecture"
+          document_id: null
+        - title: "Financial Model"
+          document_id: null
+        - title: "Infrastructure Strategy"
+          document_id: null
+        - title: "Investor Presentation"
+          document_id: null
+        - title: "Website Content"
+          document_id: null
+        - title: "Data Room materials"
+          document_id: null
+      updated_at: 2026-07-23
+  - type: update
+    entity: decisions
+    id: DEC-003
+    value:
+      affected_documents: [DOC-FOUNDATION]
