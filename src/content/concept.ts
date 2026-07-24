@@ -22,7 +22,7 @@ export const conceptDefinition = approvedCopy.fastFormatAdditional;
 export const conceptTasteBlock = {
   title: "Одна форма. Множество вкусов.",
   text: "Форма остаётся узнаваемой, а внутри меняется содержание.",
-  tags: "Мясное · Морское · Вегетарианское · Сладкое",
+  tags: "Мясные · Морские · Вегетарианские · Сладкие",
   fox: {
     png: "/media/characters/fox-reaction-transparent.png",
     webp: "/media/characters/fox-reaction-transparent.webp",

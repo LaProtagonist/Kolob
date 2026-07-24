@@ -184,9 +184,10 @@ function HomePage() {
         <div className="home-hero-copy">
           <h1 id="home-title">{homeHero.title}</h1>
           <p className="hero-tagline" aria-label={approvedCopy.tagline}>
-            {homeHero.taglineParts.map((line) => (
-              <span key={line}>{line}</span>
-            ))}
+            {homeHero.taglineParts.map((line, index) => [
+              <span key={line}>{line}</span>,
+              index < homeHero.taglineParts.length - 1 ? "\n" : null
+            ])}
           </p>
           <p className="lead">{homeHero.lead}</p>
           {homeHero.text ? <p>{homeHero.text}</p> : null}
@@ -723,8 +724,7 @@ function PrivacyPage() {
           для обработки запроса, подготовки ответа и предоставления материалов проекта.
         </p>
         <p>
-          Данные не публикуются на сайте и не используются для массовых рассылок без отдельного согласия. Финальная
-          юридическая редакция политики утверждается перед публичным запуском проекта.
+          Данные не публикуются на сайте и не используются для массовых рассылок без отдельного согласия.
         </p>
         <a className="button button-primary" href="/investor-questions">
           Вернуться к форме

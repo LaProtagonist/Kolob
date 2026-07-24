@@ -9,11 +9,11 @@ const { chromium } = require("playwright");
 
 const distDir = path.join(projectRoot, "dist");
 const routes = [
-  { path: "/", must: ["Еда в пути. Всё внутри."] },
+  { path: "/", must: ["Еда в пути.", "Всё внутри."] },
   { path: "/concept", must: ["Колобок — полноценная еда, собранная в удобную форму."] },
   { path: "/history", must: ["Из реального продукта — в масштабируемую систему."] },
   { path: "/quality", must: ["Вкус начинается с продукта."] },
-  { path: "/investment", must: ["От авторского продукта — к национальной сети."] },
+  { path: "/investment", must: ["От авторского продукта — к федеральной сети национального формата."] },
   { path: "/materials", must: ["Материалы проекта"] },
   { path: "/investor-questions", must: ["Обсудить участие"] },
   { path: "/privacy", must: ["Политика обработки персональных данных"] },

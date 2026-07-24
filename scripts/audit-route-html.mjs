@@ -11,7 +11,7 @@ const checks = [
   { route: "/concept", expectedStatus: 200, mustInclude: "Колобок — полноценная еда, собранная в удобную форму." },
   { route: "/history", expectedStatus: 200, mustInclude: "Из реального продукта — в масштабируемую систему." },
   { route: "/quality", expectedStatus: 200, mustInclude: "Вкус начинается с продукта." },
-  { route: "/investment", expectedStatus: 200, mustInclude: "От авторского продукта — к национальной сети." },
+  { route: "/investment", expectedStatus: 200, mustInclude: "От авторского продукта — к федеральной сети национального формата." },
   { route: "/materials", expectedStatus: 200, mustInclude: "Материалы проекта" },
   { route: "/investor-questions", expectedStatus: 200, mustInclude: "Обсудить участие" },
   { route: "/privacy", expectedStatus: 200, mustInclude: "Политика обработки персональных данных" },
