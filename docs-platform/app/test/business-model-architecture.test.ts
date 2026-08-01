@@ -136,7 +136,7 @@ test("Business Model Architecture decision, source and approved change sets are 
   assert.equal(documentChange.decision_id, "DEC-004");
 });
 
-test("Foundation governs Business Model Architecture and BMA governs only declared future documents", () => {
+test("Foundation governs Business Model Architecture and BMA governs only declared dependent documents", () => {
   const dependencies = readYaml<{ dependencies: Array<Record<string, unknown>> }>("registry/dependencies.yaml").dependencies;
   const foundation = dependencies.find(item => item.id === "DEP-FOUNDATION-DERIVED-DOCUMENTS") as { target_documents: Array<Record<string, unknown>>; updated_at: string };
   const bma = dependencies.find(item => item.id === "DEP-BMA-DERIVED-DOCUMENTS");
@@ -153,6 +153,7 @@ test("Foundation governs Business Model Architecture and BMA governs only declar
     status: "approved",
     version: "1.0",
     target_documents: [
+      { title: "CAPEX — Equipment Specification", document_id: "DOC-CAPEX-EQUIPMENT-SPECIFICATION" },
       { title: "Financial Model", document_id: null },
       { title: "Investment Memorandum", document_id: "DOC-INVESTMENT-MEMO" },
       { title: "Infrastructure Strategy", document_id: null },

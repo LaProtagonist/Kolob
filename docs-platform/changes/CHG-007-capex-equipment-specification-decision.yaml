@@ -1,0 +1,32 @@
+change_id: CHG-007
+title: "Зафиксировать решение о регистрации рабочей CAPEX-спецификации v0.1"
+status: approved
+created_at: 2026-08-01
+decision_id: DEC-001
+operations:
+  - type: add
+    entity: sources
+    value:
+      id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
+      title: "Рабочая спецификация оснащения пилотного объекта v0.1"
+      type: instruction
+      location: "User instruction, 2026-08-01"
+      publisher: "project owner"
+      publication_date: 2026-08-01
+      accessed_at: 2026-08-01
+      reliability: primary
+      notes: "Первичный источник рабочего состава оборудования; содержание имеет статус research и не включает цены, выбранные модели или итоговый CAPEX."
+  - type: add
+    entity: decisions
+    value:
+      id: DEC-005
+      title: "Зарегистрировать рабочую CAPEX-спецификацию v0.1 со статусом research"
+      status: approved
+      decision: "Создать и зарегистрировать CAPEX — Equipment Specification v0.1 как рабочий документ со статусом research, не утверждая перечисленное оборудование, цены, модели, финансовые показатели или итоговый CAPEX."
+      rationale: "Прямое задание владельца проекта от 2026-08-01 сохранить полную рабочую спецификацию без самостоятельного завершения отсутствующих разделов."
+      affected_documents: []
+      approved_by: "project owner"
+      approved_at: 2026-08-01
+      supersedes: null
+      source_ids: [SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF]
+      updated_at: 2026-08-01

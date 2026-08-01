@@ -4,9 +4,9 @@
 
 Дата проверки: 2026-08-01
 
-Базовый Git commit перед регистрацией Business Model Architecture: `9f627217a6086b257ab5d33d0447efe86230d965` (`docs(docs-platform): add codex project handoff`)
+Базовый Git commit перед регистрацией рабочей CAPEX-спецификации: `827261bcd48ed1274a5a67eab6bf15c565133dc8` (`feat(docs-platform): add business model architecture`)
 
-Проверенная ветка: `master`; на момент начала BMA-задачи ahead/behind относительно `origin/master`: `2/0`
+Проверенная ветка: `master`; на момент начала CAPEX-задачи ahead/behind относительно `origin/master`: `3/0`
 
 > При начале нового Codex-чата сначала прочитать AGENTS.md и docs-platform/context/CODEX_HANDOFF.md, затем проверить git status и актуальность registry.
 
@@ -26,6 +26,7 @@
 - `server/` — backend формы контакта.
 - `rules-project.md` — правила архитектуры, контента, визуальной системы, тестирования и публикации сайта.
 - `docs-platform/` — governed document system: registry, schemas, standards, templates, change sets, changelog, Google Workspace CLI и MCP.
+- `docs-platform/working/` — зарегистрированные рабочие материалы со статусами ниже `approved`; не являются каноническими документами.
 - `docs-platform/app/` — локальный CLI registry и guarded Google Workspace integration.
 - `docs-platform/mcp/` — отдельный MCP-пакет с review-only режимом по умолчанию.
 
@@ -44,6 +45,7 @@
 Практическая карта:
 
 - Управляющие документы проекта: `docs-platform/00-foundation.md`, `docs-platform/01-business-model-architecture.md` и точные тексты их PRP-блоков в `docs-platform/registry/principles.yaml`.
+- Рабочая CAPEX-спецификация: `docs-platform/working/capex-equipment-specification.md`; статус `research`, не является финансовой моделью или утверждённым перечнем активов.
 - Факты, допущения, решения, документы, источники и зависимости: `docs-platform/registry/*.yaml`.
 - Утверждённый публичный текст: `src/content/approved-copy.ts`; не перефразировать без отдельного согласования.
 - Текущее опубликованное содержание: остальные файлы `src/content/*.ts`.
@@ -104,6 +106,16 @@
 
 Других утверждённых канонических бизнес-документов в registry нет. `DOC-README`, `DOC-AGENTS` и `DOC-AUDIT` имеют статус `approved`, но являются техническим руководством, политикой и аудитом. `DOC-INVESTMENT-MEMO` остаётся только `proposed` template.
 
+### CAPEX — Equipment Specification v0.1
+
+- Файл: `docs-platform/working/capex-equipment-specification.md`.
+- Registry ID: `DOC-CAPEX-EQUIPMENT-SPECIFICATION`.
+- Статус: `research`; это working draft, а не approved canonical document.
+- Decision регистрации: `DEC-005`; решение утверждает регистрацию, но не оборудование, цены, модели, финансовые показатели или итоговый CAPEX.
+- Change sets: `CHG-007`, `CHG-008`.
+- Основания: Foundation v1.0 и Business Model Architecture v1.0.
+- Состав: 124 рабочие позиции в четырёх модулях; цены и итоговый CAPEX отсутствуют.
+
 ## 6. Последние approved decisions и change sets
 
 Approved decisions:
@@ -112,6 +124,7 @@ Approved decisions:
 - `DEC-002` — финансовая модель должна сравнивать `PURCHASE`, `RENT` и `MASTER_LEASE`; это не выбор конкретного помещения.
 - `DEC-003` — регистрация Foundation v1.0 и семи неизменяемых PRP-блоков.
 - `DEC-004` — регистрация Business Model Architecture v1.0 и десяти неизменяемых PRP-блоков.
+- `DEC-005` — регистрация CAPEX — Equipment Specification v0.1 со статусом `research` без утверждения её содержания как закупки или бюджета.
 
 Approved change sets:
 
@@ -120,6 +133,8 @@ Approved change sets:
 - `CHG-004` — зарегистрированы Foundation, семь principles и карта зависимостей.
 - `CHG-005` — добавлены источник утверждения Business Model Architecture и `DEC-004`.
 - `CHG-006` — зарегистрированы Business Model Architecture, десять principles и карты зависимостей.
+- `CHG-007` — добавлены источник рабочей CAPEX-спецификации и `DEC-005`.
+- `CHG-008` — зарегистрирован research-документ и его зависимости от Foundation и Business Model Architecture.
 
 `example-change.yaml` имеет статус `proposed` и не должен применяться. Не применять существующие change sets повторно во время onboarding.
 
@@ -131,10 +146,10 @@ Approved change sets:
 |---|---:|---|
 | facts | 3 | все `approved` |
 | assumptions | 3 | все `research`; сценарии помещения |
-| decisions | 4 | все `approved` |
+| decisions | 5 | все `approved`; `DEC-005` утверждает только research-регистрацию |
 | metrics | 0 | финансовые метрики отсутствуют |
-| documents | 8 | 5 `approved`, 1 `proposed`, 2 `research` test records |
-| sources | 7 | lifecycle status схемой не предусмотрен |
+| documents | 9 | 5 `approved`, 1 `proposed`, 3 `research`, включая CAPEX working draft |
+| sources | 8 | lifecycle status схемой не предусмотрен |
 | principles | 17 | 7 Foundation и 10 Business Model Architecture, все `approved` |
 | dependencies | 2 | Foundation и Business Model Architecture как governing sources |
 
@@ -198,7 +213,7 @@ npm run check
 
 - сайт: 9 маршрутов, mobile menu и form fallback — без failures;
 - root TypeScript — OK;
-- docs-platform: 28/28 тестов, TypeScript — OK;
+- docs-platform: 32/32 тестов, TypeScript — OK;
 - registry validation — OK;
 - MCP: 21/21 тест, TypeScript — OK.
 
@@ -216,17 +231,20 @@ Foundation v1.0, Business Model Architecture v1.0 и `src/content/approved-copy.
 
 ## 12. Текущая стадия работы
 
-Репозиторий содержит рабочий инвесторский сайт, governed registry, guarded Google Workspace CLI, review-only MCP, Foundation v1.0 и Business Model Architecture v1.0. Финансовая модель не создана: `metrics` пуст, числовых финансовых assumptions нет, а три текущих assumptions фиксируют только исследуемые сценарии помещения.
+Репозиторий содержит рабочий инвесторский сайт, governed registry, guarded Google Workspace CLI, review-only MCP, Foundation v1.0, Business Model Architecture v1.0 и рабочую CAPEX — Equipment Specification v0.1. Финансовая модель не создана: `metrics` пуст, числовых финансовых assumptions нет, а три текущих assumptions фиксируют только исследуемые сценарии помещения.
 
 Business Model Architecture зафиксировала требования к будущим Financial Model, Investment Memorandum, Infrastructure Strategy и Network Development Model, но содержание этих производных документов в рамках BMA-задачи не создавалось.
 
+CAPEX working draft фиксирует без цен и моделей четыре модуля пилотного объекта: заготовочный цех; торговую кухню, бар и выдачу; выращивание зелени и микрозелени; кассу, учёт и управление заказами. Остальные CAPEX-разделы только перечислены как несформированные.
+
 ## 13. Следующая рабочая задача
 
-Отдельным заданием сформировать реестр исходных данных для финансовой модели и сравнения трёх сценариев помещения. Рабочая спецификация оборудования и CAPEX должна передаваться точным заданием: конкретные параметры, количества, цены и финансовые допущения не восстанавливать по догадкам и не регистрировать без approved change set.
+Продолжать CAPEX-документ только по отдельному точному заданию: уточнять открытые параметры, помещение, производительность и инженерные требования, а затем отдельно собирать подтверждённые цены. Не выбирать модели, не рассчитывать итоговый CAPEX и не заполнять несформированные разделы автоматически.
 
 ## 14. Известные открытые вопросы
 
 - Нет финансовой модели, метрик, числовых assumptions, единиц, периодов и владельцев показателей.
+- В CAPEX working draft остаются открытыми конкретные модели, производительность, часть количеств, инженерные параметры, сценарии комплектации и 27 ещё не описанных разделов.
 - Не определены первичные источники для истории, медийных охватов, состава продукта и операционных данных.
 - Не указан именованный владелец/утверждающий будущих решений, кроме общей роли `project owner`.
 - Локальная Google/MCP-конфигурация на этом компьютере не восстановлена.
@@ -238,8 +256,8 @@ Business Model Architecture зафиксировала требования к �
 
 - Рабочее дерево до актуализации handoff было чистым.
 - Ветка: `master`.
-- Upstream на момент начала BMA-задачи: `origin/master`, ahead/behind `2/0`.
-- Базовый commit перед регистрацией BMA: `9f627217a6086b257ab5d33d0447efe86230d965`, 2026-08-01, `docs(docs-platform): add codex project handoff`.
+- Upstream на момент начала CAPEX-задачи: `origin/master`, ahead/behind `3/0`.
+- Базовый commit перед регистрацией CAPEX working draft: `827261bcd48ed1274a5a67eab6bf15c565133dc8`, 2026-08-01, `feat(docs-platform): add business model architecture`.
 - Последний содержательный commit сайта: `ed6d00607a5cd8cc635f5fdc79877ccf467baabd`, 2026-07-24, `Last web fix`; он относится к сайту и `src/content/`.
-- Последний содержательный commit docs-platform до BMA-задачи: `6da1821cad295d7cee2dfabd7837eb9438be91b7`, 2026-07-23, `feat(docs-platform): add Foundation v1.0`.
+- Последний содержательный commit docs-platform до CAPEX-задачи: `827261bcd48ed1274a5a67eab6bf15c565133dc8`, 2026-08-01, `feat(docs-platform): add business model architecture`.
 - Дата проверки: 2026-08-01.

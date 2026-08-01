@@ -107,3 +107,18 @@ documents:
     governance_level: governing
     local_path: docs-platform/01-business-model-architecture.md
     updated_at: 2026-08-01
+  - id: DOC-CAPEX-EQUIPMENT-SPECIFICATION
+    title: CAPEX — Equipment Specification
+    type: working_capex_equipment_specification
+    status: research
+    google_file_id: null
+    template: null
+    sections:
+      - CAPEX-01
+      - CAPEX-02
+      - CAPEX-03
+      - CAPEX-04
+      - Что ещё не сформировано
+    version: "0.1"
+    local_path: docs-platform/working/capex-equipment-specification.md
+    updated_at: 2026-08-01

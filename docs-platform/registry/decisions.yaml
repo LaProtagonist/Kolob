@@ -61,3 +61,20 @@ decisions:
     source_ids:
       - SRC-BMA-V1-APPROVAL
     updated_at: 2026-08-01
+  - id: DEC-005
+    title: Зарегистрировать рабочую CAPEX-спецификацию v0.1 со статусом research
+    status: approved
+    decision: Создать и зарегистрировать CAPEX — Equipment Specification v0.1 как
+      рабочий документ со статусом research, не утверждая перечисленное
+      оборудование, цены, модели, финансовые показатели или итоговый CAPEX.
+    rationale: Прямое задание владельца проекта от 2026-08-01 сохранить полную
+      рабочую спецификацию без самостоятельного завершения отсутствующих
+      разделов.
+    affected_documents:
+      - DOC-CAPEX-EQUIPMENT-SPECIFICATION
+    approved_by: project owner
+    approved_at: 2026-08-01
+    supersedes: null
+    source_ids:
+      - SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
+    updated_at: 2026-08-01

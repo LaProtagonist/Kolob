@@ -10,6 +10,8 @@ dependencies:
         document_id: DOC-INVESTMENT-MEMO
       - title: Business Model Architecture
         document_id: DOC-BUSINESS-MODEL-ARCHITECTURE
+      - title: CAPEX — Equipment Specification
+        document_id: DOC-CAPEX-EQUIPMENT-SPECIFICATION
       - title: Financial Model
         document_id: null
       - title: Infrastructure Strategy
@@ -27,6 +29,8 @@ dependencies:
     status: approved
     version: "1.0"
     target_documents:
+      - title: CAPEX — Equipment Specification
+        document_id: DOC-CAPEX-EQUIPMENT-SPECIFICATION
       - title: Financial Model
         document_id: null
       - title: Investment Memorandum

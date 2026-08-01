@@ -77,6 +77,7 @@ test("Foundation dependency map has governing priority and does not invent unreg
     target_documents: [
       { title: "Шаблон инвестиционного меморандума", document_id: "DOC-INVESTMENT-MEMO" },
       { title: "Business Model Architecture", document_id: "DOC-BUSINESS-MODEL-ARCHITECTURE" },
+      { title: "CAPEX — Equipment Specification", document_id: "DOC-CAPEX-EQUIPMENT-SPECIFICATION" },
       { title: "Financial Model", document_id: null },
       { title: "Infrastructure Strategy", document_id: null },
       { title: "Investor Presentation", document_id: null },

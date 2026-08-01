@@ -1,0 +1,67 @@
+change_id: CHG-008
+title: "Зарегистрировать рабочую CAPEX — Equipment Specification v0.1"
+status: approved
+created_at: 2026-08-01
+decision_id: DEC-005
+operations:
+  - type: add
+    entity: documents
+    value:
+      id: DOC-CAPEX-EQUIPMENT-SPECIFICATION
+      title: CAPEX — Equipment Specification
+      type: working_capex_equipment_specification
+      status: research
+      google_file_id: null
+      template: null
+      sections:
+        - CAPEX-01
+        - CAPEX-02
+        - CAPEX-03
+        - CAPEX-04
+        - Что ещё не сформировано
+      version: "0.1"
+      local_path: docs-platform/working/capex-equipment-specification.md
+      updated_at: 2026-08-01
+  - type: update
+    entity: dependencies
+    id: DEP-FOUNDATION-DERIVED-DOCUMENTS
+    value:
+      target_documents:
+        - title: "Шаблон инвестиционного меморандума"
+          document_id: DOC-INVESTMENT-MEMO
+        - title: "Business Model Architecture"
+          document_id: DOC-BUSINESS-MODEL-ARCHITECTURE
+        - title: "CAPEX — Equipment Specification"
+          document_id: DOC-CAPEX-EQUIPMENT-SPECIFICATION
+        - title: "Financial Model"
+          document_id: null
+        - title: "Infrastructure Strategy"
+          document_id: null
+        - title: "Investor Presentation"
+          document_id: null
+        - title: "Website Content"
+          document_id: null
+        - title: "Data Room materials"
+          document_id: null
+      updated_at: 2026-08-01
+  - type: update
+    entity: dependencies
+    id: DEP-BMA-DERIVED-DOCUMENTS
+    value:
+      target_documents:
+        - title: "CAPEX — Equipment Specification"
+          document_id: DOC-CAPEX-EQUIPMENT-SPECIFICATION
+        - title: "Financial Model"
+          document_id: null
+        - title: "Investment Memorandum"
+          document_id: DOC-INVESTMENT-MEMO
+        - title: "Infrastructure Strategy"
+          document_id: null
+        - title: "Network Development Model"
+          document_id: null
+      updated_at: 2026-08-01
+  - type: update
+    entity: decisions
+    id: DEC-005
+    value:
+      affected_documents: [DOC-CAPEX-EQUIPMENT-SPECIFICATION]
