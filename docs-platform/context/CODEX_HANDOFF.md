@@ -4,9 +4,9 @@
 
 Дата проверки: 2026-08-01
 
-Последний проверенный Git commit до текущей CAPEX Register итерации: `bfd26cce14efcd57b05a9ec6f8dae9c16b9bcbcb` (`docs(docs-platform): add working capex equipment specification`)
+Последний проверенный Git commit до текущей модульной CAPEX-итерации: `c228f8b69bbeed67b647f678d05ffe84daf15cf0` (`feat(docs-platform): add structured CAPEX equipment register`)
 
-Проверенная ветка: `master`; на момент начала CAPEX-задачи ahead/behind относительно `origin/master`: `3/0`
+Проверенная ветка: `master`; на момент начала модульной CAPEX-задачи ahead/behind относительно `origin/master`: `5/0`
 
 > При начале нового Codex-чата сначала прочитать доступный корневой AGENTS.md, docs-platform/AGENTS.md и docs-platform/context/CODEX_HANDOFF.md; затем прочитать актуальный docs-platform/changelog/TIMELINE.md, последние approved decisions и applied change sets; после этого проверить git status и актуальность registry.
 
@@ -48,6 +48,7 @@
 - Управляющие документы проекта: `docs-platform/00-foundation.md`, `docs-platform/01-business-model-architecture.md` и точные тексты их PRP-блоков в `docs-platform/registry/principles.yaml`.
 - Исходная рабочая CAPEX-спецификация: `docs-platform/working/capex-equipment-specification.md`; неизменённый research-источник 124 записей.
 - Канонический структурированный источник для будущих CAPEX-итераций: `docs-platform/working/capex-equipment-register.yaml`; статус `research`. CSV и Google Sheet генерируются из YAML и не заменяют его.
+- Модульный CAPEX хранится раздельно: `capex-modules.yaml` ссылается на Equipment Register через `capex-module-items.yaml`; `capex-point-formats.yaml` ссылается на модули; `capex-configurations.yaml` и `capex-configuration-overrides.yaml` задают конкретный объект; BOM генерируется в `working/configurations/<configuration-id>/`.
 - Факты, допущения, решения, документы, источники и зависимости: `docs-platform/registry/*.yaml`.
 - Утверждённый публичный текст: `src/content/approved-copy.ts`; не перефразировать без отдельного согласования.
 - Текущее опубликованное содержание: остальные файлы `src/content/*.ts`.
@@ -77,9 +78,11 @@
 - применять содержательные изменения только через approved change set с preview, validation, журналом и rollback;
 - применять только exact approved payload с тем же SHA-256; жизненный цикл — `proposed → approved → applied → verified`;
 - выполнять rollback новым approved reverse change set без удаления истории и без `git reset`;
+- хранить переносимые before-payloads файловых CAPEX-итераций в `docs-platform/changelog/rollback-payloads/`; игнорируемый локальный backup используется только для аварийного восстановления незавершённого apply;
 - не считать выбор или покупку конкретного помещения утверждёнными;
 - не менять Google Docs/Sheets без folder guard, preview/diff, approved decision и явного подтверждения;
 - не заменять формулы Google Sheets статическими числами и не удалять ручные комментарии Google Docs.
+- не дублировать оборудование в модулях, форматах или конфигурациях; отличия конкретной точки хранить только как overrides, а финансовую модель строить по сгенерированному BOM.
 
 ## 5. Утверждённые канонические документы
 
@@ -126,10 +129,11 @@
 - Генерируемое представление: `docs-platform/working/capex-equipment-register.csv`.
 - Registry ID: `DOC-CAPEX-EQUIPMENT-REGISTER`.
 - Статус: `research`; это структурированное представление исходного working draft, а не утверждённый бюджет или закупочный перечень.
-- Decision: `DEC-007`; change sets: `CHG-011`, `CHG-012`; iteration: `ITR-CAPEX-REGISTER-2026-08-01-01`.
-- Зависимость: `DEP-CAPEX-SPEC-EQUIPMENT-REGISTER`; будущая Financial Model должна использовать Register через `DEP-CAPEX-REGISTER-DERIVED-DOCUMENTS` и не парсить Markdown напрямую.
-- Покрытие: source `124`, mapped `124`, unmapped `0`; цены, поставщики и итоговый CAPEX отсутствуют.
-- Google Sheet: `03 — CAPEX — Реестр оснащения пилотного объекта`; пять листов `README`, `EQUIPMENT`, `OPEN_PARAMETERS`, `MISSING_SECTIONS`, `DICTIONARIES`; API readback passed.
+- Исходное создание: `DEC-007`, `CHG-011`, `CHG-012`, iteration `ITR-CAPEX-REGISTER-2026-08-01-01`. Модульное расширение: `DEC-008`, `CHG-013`, `CHG-014`, iteration `ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01`.
+- Зависимость от текстового источника: `DEP-CAPEX-SPEC-EQUIPMENT-REGISTER`. Цепочка будущей Financial Model теперь проходит Equipment Register → Modules → Point Formats → Configuration → Generated Equipment BOM.
+- Покрытие: 124 исходные записи сохранены структурно идентично, добавлены 27 research-записей `CAPEX-05-001`—`CAPEX-05-027`; всего equipment `151`, mapped `151`, unmapped `0`. Цены, поставщики и итоговый CAPEX отсутствуют.
+- Модули: 12; форматы точек: 7; пустая шаблонная конфигурация: `CFG-TEMPLATE-001` (`FMT-CUSTOM`); её BOM содержит 0 строк и не является реальным объектом.
+- Google Sheet: `03 — CAPEX — Реестр оснащения пилотного объекта`; одиннадцать листов: `Описание`, `Конфигуратор`, `Комплектация`, `Переопределения`, `Оснащение`, `Модули`, `Форматы точек`, `Состав форматов`, `Открытые параметры`, `Недостающие разделы`, `Справочники`; API readback passed.
 
 ## 6. Последние approved decisions и change sets
 
@@ -142,6 +146,7 @@ Approved decisions:
 - `DEC-005` — регистрация CAPEX — Equipment Specification v0.1 со статусом `research` без утверждения её содержания как закупки или бюджета.
 - `DEC-006` — техническая публикация ровно трёх существующих документов в Google Drive без переутверждения или изменения их содержания и статусов.
 - `DEC-007` — структурное преобразование 124 research-записей в CAPEX Equipment Register, публикация Sheet и обязательный lifecycle journal; не утверждает модели, цены, поставщиков, окончательные количества, новый состав или итоговый CAPEX.
+- `DEC-008` — добавление 27 research-записей CAPEX-05, модульной архитектуры, семи профилей форматов, шаблонной конфигурации и обновление существующей Sheet; смысл первых 124 записей не изменён, реальные параметры, цены и итоговый CAPEX не утверждены.
 
 Approved change sets:
 
@@ -156,6 +161,8 @@ Approved change sets:
 - `CHG-010` — зарегистрированы Google file IDs трёх опубликованных документов без изменения их содержательных полей и статусов.
 - `CHG-011` — добавлены первичный источник задания и approved `DEC-007`.
 - `CHG-012` — зарегистрированы research-реестр, его Google Sheet ID, зависимости и расширенная область `DEC-007`.
+- `CHG-013` — добавлены первичный источник модульного задания и approved `DEC-008`.
+- `CHG-014` — зарегистрированы Modules, Point Formats, Configurations, Generated BOM и новая цепочка зависимостей; предыдущая прямая зависимость Register→Financial Model помечена `superseded`, история не удалена.
 
 `example-change.yaml` имеет статус `proposed` и не должен применяться. Не применять существующие change sets повторно во время onboarding.
 
@@ -167,12 +174,12 @@ Approved change sets:
 |---|---:|---|
 | facts | 3 | все `approved` |
 | assumptions | 3 | все `research`; сценарии помещения |
-| decisions | 7 | все `approved`; `DEC-007` утверждает структуру и governance, но не оборудование или бюджет |
+| decisions | 8 | все `approved`; `DEC-008` утверждает только research-структуру и публикацию, но не реальные параметры, цены или бюджет |
 | metrics | 0 | финансовые метрики отсутствуют |
-| documents | 10 | 5 `approved`, 1 `proposed`, 4 `research`, включая CAPEX source draft и Register |
-| sources | 10 | lifecycle status схемой не предусмотрен |
+| documents | 14 | 5 `approved`, 1 `proposed`, 8 `research`, включая CAPEX source draft, Register, Modules, Point Formats, Configurations и Generated BOM |
+| sources | 11 | lifecycle status схемой не предусмотрен |
 | principles | 17 | 7 Foundation и 10 Business Model Architecture, все `approved` |
-| dependencies | 4 | Foundation, BMA, CAPEX source→Register и Register→будущая Financial Model |
+| dependencies | 10 | 9 `approved`, 1 `superseded`; CAPEX dependency chain заканчивается Generated BOM→будущая Financial Model |
 
 Approved facts: правильное название «Колобочная», базовая категория «еда в пути» и самостоятельное выращивание части растительных ингредиентов. Исторические, медийные и операционные утверждения сайта требуют первичной доказательной привязки для инвестиционного пакета.
 
@@ -190,7 +197,7 @@ Approved facts: правильное название «Колобочная», 
 
 Все три Google file IDs зарегистрированы в `registry/documents.yaml`. Audit receipts находятся в `docs-platform/changelog/google-sync/`; они фиксируют SHA-256 локального источника, действие `create`, MIME type, время синхронизации и успешное повторное чтение. Publisher жёстко ограничен этими тремя registry IDs, отказывается выбирать дубликаты и не перезаписывает документ с ручными комментариями.
 
-Через `DEC-007` и `CHG-012` опубликована отдельная нативная Google Sheet `03 — CAPEX — Реестр оснащения пилотного объекта`. Она зарегистрирована как `DOC-CAPEX-EQUIPMENT-REGISTER`, сохраняет статус `research`, содержит ровно пять заданных листов и прошла повторное чтение Sheets API. Первый сетевой apply успел создать пустой файл до обрыва; повторный preview нашёл единственный файл по точному имени, безопасно выполнил `update` без дубликата и создал успешный sync receipt.
+Через `DEC-007` и `CHG-012` опубликована отдельная нативная Google Sheet `03 — CAPEX — Реестр оснащения пилотного объекта`. Итерация `DEC-008`/`CHG-014` обновила тот же зарегистрированный файл без создания дубликата: пять старых вкладок переименованы, добавлены вкладки конфигуратора, итоговый порядок содержит ровно одиннадцать русских вкладок. API readback подтвердил 151 запись, стабильный порядок, отсутствие старых английских вкладок, цен и итогового CAPEX. Receipt: `docs-platform/changelog/google-sync/2026-08-01-DOC-CAPEX-EQUIPMENT-REGISTER-MODULAR-CONFIGURATOR.yaml`.
 
 ## 9. MCP integration
 
@@ -222,6 +229,13 @@ npm test
 npm exec -- tsc --noEmit
 npm run registry:validate
 npm run capex:register:validate
+npm run capex:modules:list
+npm run capex:formats:list
+npm run capex:configuration:validate
+npm run capex:configuration:preview -- CFG-TEMPLATE-001
+npm run capex:configuration:build -- CFG-TEMPLATE-001
+npm run capex:modular:reverse:preview -- ../changelog/iteration-receipts/ITR-XXX.yaml --change-id CHG-ROLLBACK-XXX --decision DEC-ROLLBACK-XXX
+npm run capex:modular:reverse:prepare -- ../changelog/iteration-receipts/ITR-XXX.yaml --change-id CHG-ROLLBACK-XXX --decision DEC-ROLLBACK-XXX
 npm run timeline:validate
 npm run timeline:generate
 npm run google:doctor
@@ -229,7 +243,8 @@ npm run google:folder:authorize
 npm run google:publish:preview
 npm run google:publish:apply -- --apply --decision DEC-006
 npm run capex:sheet:preview
-npm run capex:sheet:apply -- --apply --decision DEC-007
+npm run capex:sheet:apply -- --apply --decision DEC-008
+npm run google:capex:overrides:import -- --preview
 npm run google:folder:inspect
 npm run mcp:test
 ```
@@ -246,10 +261,11 @@ npm run check
 
 - сайт: 9 маршрутов, mobile menu и form fallback — без failures;
 - root TypeScript — OK;
-- docs-platform: 56/56 тестов, включая register, Sheet publisher, timeline, rollback, точные canonical checks и registry — OK;
+- docs-platform: 74/74 теста, включая register, modular configurator, Sheet publisher, timeline, rollback, точные canonical checks и registry — OK;
 - registry validation — OK;
-- CAPEX register: `124/124/0`, JSON Schema и reference validation — OK;
-- Google Sheet: folder guard, native MIME, пять листов, stable order, numeric types и API readback — OK;
+- CAPEX register: `151/151/0`, при сохранённом source coverage `124/124`; JSON Schema и reference validation — OK;
+- CAPEX configurator: 12 modules, 7 formats, 1 пустая template configuration, 153 module→item links — OK;
+- Google Sheet: folder guard, native MIME, 11 русских листов, отсутствие legacy-вкладок, stable IDs, numeric types и API readback — OK;
 - MCP: 21/21 тест, TypeScript — OK.
 
 ## 11. Правила содержательных изменений
@@ -263,6 +279,8 @@ npm run check
 7. Добавить события `proposed`, `approved`, `applied`, `verified` в append-only `events.ndjson` и сгенерировать `TIMELINE.md`.
 8. Для отката создать новый reverse change set, отдельное rollback decision и receipt; старые события не удалять, `git reset` не использовать.
 
+Для текущей модульной итерации reverse preview восстанавливает исходный composite hash `3f685e…` из отслеживаемого `changelog/rollback-payloads/`; registry reverse preview отдельно восстанавливает hash до `CHG-014`. Reverse apply не выполняет Google-изменения молча: для Sheet требуется отдельный guarded preview/apply и только затем событие `rolled_back`.
+
 Foundation v1.0, Business Model Architecture v1.0 и `src/content/approved-copy.ts` нельзя редактировать как обычный текст. Шаблоны и аналитические материалы не повышать до `approved` без решения владельца.
 
 ## 12. Текущая стадия работы
@@ -273,19 +291,21 @@ Business Model Architecture зафиксировала требования к �
 
 CAPEX working draft фиксирует без цен и моделей четыре модуля пилотного объекта: заготовочный цех; торговую кухню, бар и выдачу; выращивание зелени и микрозелени; кассу, учёт и управление заказами. Остальные CAPEX-разделы только перечислены как несформированные.
 
-Register переносит все 124 source records в стабильные IDs `CAPEX-01-001`—`CAPEX-04-003`, классифицирует systems/components/inventory/engineering/open questions и отделяет 158 открытых параметров и 27 несформированных разделов. Число 124 не является числом самостоятельных закупочных единиц.
+Register сохраняет все 124 source records в стабильных IDs `CAPEX-01-001`—`CAPEX-04-003` и добавляет 27 research-записей `CAPEX-05-001`—`CAPEX-05-027` для гостевой зоны и обслуживания. Всего 151 запись, 185 открытых параметров и 27 исторически сохранённых missing-section записей; CAPEX-05 и связанная стойка/выдача переведены в статус `structured`, остальные остаются `not_started`. Ни 124, ни 151 не являются числом самостоятельных закупочных единиц.
+
+Модульная архитектура разделяет единый реестр оборудования, 12 функциональных модулей, 7 профилей форматов и отдельные конфигурации объектов. Форматы не являются оборудованием. Итоговая комплектация строится с дедупликацией и правилами `once`/`sum`/`max`/`manual`; неизвестные количества остаются пустыми со статусом уточнения, а `included_in_parent` не считается отдельной закупкой.
 
 Три локальных источника опубликованы как нативные Google Docs и прошли повторное чтение через Google Docs API. Foundation подтверждён по PRP-FND-001—007; Business Model Architecture — по PRP-BMA-001—010, шести таблицам и утверждённой формулировке с `фудкортах`; CAPEX — по CAPEX-01—04, разделу «Что ещё не сформировано», 124 позициям и отсутствию цен/итогового CAPEX.
 
 ## 13. Следующая рабочая задача
 
-Следующая разрешаемая задача только по отдельному точному заданию владельца — добавить `CAPEX-05 — гостевой зал и мебель` непосредственно в структурированный YAML-реестр через новый governed lifecycle. До такого задания не искать модели/цены, не рассчитывать итоговый CAPEX и не начинать другие категории.
+Следующий шаг — ручная проверка владельцем структуры строк CAPEX-05, вкладок конфигуратора и timeline. Не создавать конфигурацию реального помещения, не добавлять следующую CAPEX-категорию, не искать модели/цены и не рассчитывать итоговый CAPEX без отдельного точного задания и нового governed lifecycle.
 
 ## 14. Известные открытые вопросы
 
 - Нет финансовой модели, метрик, числовых assumptions, единиц, периодов и владельцев показателей.
 - В CAPEX working draft остаются открытыми конкретные модели, производительность, часть количеств, инженерные параметры, сценарии комплектации и 27 ещё не описанных разделов.
-- У 77 записей `inclusion_status` остаётся `tbd`, у 99 не определено `quantity_base`; это сохранённая неопределённость, а не validation error.
+- У 104 записей `inclusion_status` остаётся `tbd`, у 126 не определено `quantity_base`; это сохранённая неопределённость, а не validation error.
 - Не определены первичные источники для истории, медийных охватов, состава продукта и операционных данных.
 - Не указан именованный владелец/утверждающий будущих решений, кроме общей роли `project owner`.
 - Локальная Google-конфигурация восстановлена; MCP tunnel, runtime API key и tunnel profile по-прежнему не настроены.
@@ -295,10 +315,10 @@ Register переносит все 124 source records в стабильные ID
 
 ## 15. Git-состояние на дату проверки
 
-- До текущего итогового commit в рабочем дереве находились только связанные изменения docs-platform текущей и непосредственно предшествующей Google-публикации; изменения сайта в эту итерацию не вносились.
+- До текущего итогового commit в рабочем дереве находятся только связанные изменения `docs-platform/` текущей модульной CAPEX-итерации; изменения сайта не вносились.
 - Ветка: `master`.
-- Upstream на момент начала CAPEX-задачи: `origin/master`, ahead/behind `3/0`.
-- Последний проверенный commit перед Google-публикацией: `bfd26cce14efcd57b05a9ec6f8dae9c16b9bcbcb`, 2026-08-01, `docs(docs-platform): add working capex equipment specification`.
+- Upstream на момент начала модульной CAPEX-задачи: `origin/master`, ahead/behind `5/0`.
+- Последний проверенный commit перед текущей итерацией: `c228f8b69bbeed67b647f678d05ffe84daf15cf0`, 2026-08-01, `feat(docs-platform): add structured CAPEX equipment register`.
 - Последний содержательный commit сайта: `ed6d00607a5cd8cc635f5fdc79877ccf467baabd`, 2026-07-24, `Last web fix`; он относится к сайту и `src/content/`.
-- Последний содержательный commit docs-platform до Google-публикации: `bfd26cce14efcd57b05a9ec6f8dae9c16b9bcbcb`, 2026-08-01, `docs(docs-platform): add working capex equipment specification`.
+- Последний содержательный commit docs-platform до текущей итерации: `c228f8b69bbeed67b647f678d05ffe84daf15cf0`, 2026-08-01, `feat(docs-platform): add structured CAPEX equipment register`.
 - Дата проверки: 2026-08-01.

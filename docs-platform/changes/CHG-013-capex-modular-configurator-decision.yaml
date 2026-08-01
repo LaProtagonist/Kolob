@@ -1,0 +1,36 @@
+change_id: CHG-013
+title: "Зафиксировать решение о CAPEX-05 и модульном конфигураторе"
+status: approved
+created_at: 2026-08-01
+decision_id: DEC-001
+iteration_id: ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01
+proposal_id: PROP-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01
+operations:
+  - type: add
+    entity: sources
+    value:
+      id: SRC-CAPEX-MODULAR-CONFIGURATOR-BRIEF
+      title: "Задание на CAPEX-05 и модульный конфигуратор форматов"
+      type: instruction
+      location: "User instruction, 2026-08-01"
+      publisher: project owner
+      publication_date: 2026-08-01
+      accessed_at: 2026-08-01
+      reliability: primary
+      notes: "Первичный источник разрешения добавить 27 research-позиций CAPEX-05, функциональные модули, семь профилей форматов, конфигурации, overrides, generated BOM и русские вкладки существующей Google Sheet. Не утверждает цены, модели, поставщиков, реальные параметры объекта, окончательные количества или итоговый CAPEX."
+  - type: add
+    entity: decisions
+    value:
+      id: DEC-008
+      title: "Добавить CAPEX-05 и модульный конфигуратор форматов точек"
+      status: approved
+      decision: "Добавить CAPEX-05-001—CAPEX-05-027 со статусом research; сохранить без смысловых изменений 124 записи CAPEX v0.1; ввести единый Equipment Register, библиотеку функциональных модулей, семь профилей форматов, отдельные конфигурации и configuration overrides; формировать equipment BOM конкретного объекта; обновить только существующую Google Sheet и переименовать её вкладки на русский язык."
+      rationale: "Прямое утверждение владельца проекта от 2026-08-01. Решение утверждает архитектуру и 27 research-записей, но не утверждает цены, модели, поставщиков, коэффициенты, точные параметры или конфигурацию реального объекта и итоговый CAPEX."
+      affected_documents:
+        - DOC-CAPEX-EQUIPMENT-REGISTER
+      approved_by: project owner
+      approved_at: 2026-08-01
+      supersedes: null
+      source_ids:
+        - SRC-CAPEX-MODULAR-CONFIGURATOR-BRIEF
+      updated_at: 2026-08-01

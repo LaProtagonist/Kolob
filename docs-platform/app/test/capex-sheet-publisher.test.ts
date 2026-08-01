@@ -4,27 +4,33 @@ import path from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 import { readRegister } from "../src/capex/register.js";
+import { readModularSources } from "../src/capex/modular.js";
 import {
   CAPEX_REGISTER_GOOGLE_TITLE,
   CAPEX_REGISTER_SHEET_NAMES,
+  LEGACY_SHEET_RENAMES,
   chooseSpreadsheetTarget,
   sheetDatasets,
   sheetPreviewForLog,
 } from "../src/google/capex-register-publisher.js";
 
 const platform = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
+const register = readRegister();
+const sources = readModularSources();
 
-test("Google Sheet contract contains exactly the five requested sheets", () => {
+test("Google Sheet contract has the exact eleven localized tabs in stable order", () => {
   assert.equal(CAPEX_REGISTER_GOOGLE_TITLE, "03 — CAPEX — Реестр оснащения пилотного объекта");
-  assert.deepEqual(CAPEX_REGISTER_SHEET_NAMES, ["README", "EQUIPMENT", "OPEN_PARAMETERS", "MISSING_SECTIONS", "DICTIONARIES"]);
-  const datasets = sheetDatasets(readRegister(), "2026-08-01T00:00:00.000Z");
+  assert.deepEqual(CAPEX_REGISTER_SHEET_NAMES, ["Описание", "Конфигуратор", "Комплектация", "Переопределения", "Оснащение", "Модули", "Форматы точек", "Состав форматов", "Открытые параметры", "Недостающие разделы", "Справочники"]);
+  const datasets = sheetDatasets(register, sources, "2026-08-01T00:00:00.000Z");
   assert.deepEqual(datasets.map(dataset => dataset.name), [...CAPEX_REGISTER_SHEET_NAMES]);
-  assert.equal(datasets.find(dataset => dataset.name === "EQUIPMENT")?.values.length, 125);
+  assert.equal(datasets.find(dataset => dataset.name === "Оснащение")?.values.length, 152);
+  assert.equal(datasets.find(dataset => dataset.name === "Форматы точек")?.values.length, 8);
+  assert.equal(datasets.find(dataset => dataset.name === "Комплектация")?.values.length, 154);
+  for (const legacy of Object.keys(LEGACY_SHEET_RENAMES)) assert.equal(datasets.some(dataset => dataset.name === legacy), false);
 });
 
-test("Sheet datasets keep numeric columns numeric or blank, never tbd", () => {
-  const datasets = sheetDatasets(readRegister(), "2026-08-01T00:00:00.000Z");
-  const equipment = datasets.find(dataset => dataset.name === "EQUIPMENT")!;
+test("Sheet datasets keep numerical equipment fields numeric or blank, never tbd", () => {
+  const equipment = sheetDatasets(register, sources, "2026-08-01T00:00:00.000Z").find(dataset => dataset.name === "Оснащение")!;
   const headers = equipment.values[0] as string[];
   for (const field of ["quantity_min", "quantity_base", "quantity_scale_ready", "power_kw", "voltage", "price_min", "price_base", "price_max"]) {
     const column = headers.indexOf(field);
@@ -33,28 +39,60 @@ test("Sheet datasets keep numeric columns numeric or blank, never tbd", () => {
   }
 });
 
-test("exact-folder resolver is deterministic and refuses duplicate names", () => {
+test("configurator and BOM contain formulas, validation-ready IDs and no invented template values", () => {
+  const datasets = sheetDatasets(register, sources, "2026-08-01T00:00:00.000Z");
+  const configurator = datasets.find(dataset => dataset.name === "Конфигуратор")!;
+  assert.equal(configurator.values[1][0], "CFG-TEMPLATE-001");
+  assert.equal(configurator.values[1][2], "FMT-CUSTOM");
+  for (let column = 3; column <= 22; column += 1) assert.equal(configurator.values[1][column], "", `configurator column ${column}`);
+  assert.match(String(configurator.values[1].at(-1)), /^=IF\(/);
+  const bom = datasets.find(dataset => dataset.name === "Комплектация")!;
+  assert.equal(bom.values[0][1], "CFG-TEMPLATE-001");
+  assert.match(String(bom.values[3][4]), /^=IF\(/);
+  assert.match(String(bom.values[3][13]), /^=IFERROR\(/);
+});
+
+test("manual override and configurator draft rows survive deterministic dataset regeneration", () => {
+  const preserved = {
+    configurator: [["CFG-TEMPLATE-001", "Google draft", "FMT-CUSTOM", 10, "", "", "", "", "", "", "", "", "", true]],
+    overrides: [["CFG-TEMPLATE-001", "CAPEX-05-001", "include", "", "", "conditional", "manual test", "research", "keep"]],
+  };
+  const datasets = sheetDatasets(register, sources, "2026-08-01T00:00:00.000Z", preserved);
+  const configurator = datasets.find(dataset => dataset.name === "Конфигуратор")!;
+  const overrides = datasets.find(dataset => dataset.name === "Переопределения")!;
+  assert.equal(configurator.values[1][1], "Google draft");
+  assert.equal(configurator.values[1][3], 10);
+  assert.match(String(configurator.values[1].at(-1)), /^=IF\(/);
+  assert.deepEqual(overrides.values[1].slice(0, 3), ["CFG-TEMPLATE-001", "CAPEX-05-001", "include"]);
+  assert.equal(overrides.values[1][8], "keep");
+});
+
+test("exact-folder resolver updates one existing Sheet and refuses zero or duplicate targets", () => {
   const file = { id: "sheet-id", name: CAPEX_REGISTER_GOOGLE_TITLE, mimeType: "application/vnd.google-apps.spreadsheet", parents: ["folder"], trashed: false };
-  assert.deepEqual(chooseSpreadsheetTarget([]), { action: "create", file: null });
+  assert.throws(() => chooseSpreadsheetTarget([]), /not found/);
   assert.deepEqual(chooseSpreadsheetTarget([file]), { action: "update", file });
   assert.throws(() => chooseSpreadsheetTarget([file, { ...file, id: "second" }]), /Multiple spreadsheets/);
 });
 
-test("preview logging masks the Google file ID", () => {
+test("preview logging masks the Google file ID and binds DEC-008", () => {
   const logged = sheetPreviewForLog({
     preview_id: "p", created_at: "2026-08-01T00:00:00.000Z", registry_id: "DOC-CAPEX-EQUIPMENT-REGISTER",
-    google_title: CAPEX_REGISTER_GOOGLE_TITLE, folder_name: "Колобочная — Investment", folder_check: "passed",
-    action: "update", google_file_id: "1234567890abcdef", google_file_id_masked: "1234…cdef", decision_id: "DEC-007",
-    iteration_id: "ITR-CAPEX-REGISTER-2026-08-01-01", source_yaml_path: "docs-platform/working/capex-equipment-register.yaml",
-    source_yaml_sha256: "a".repeat(64), source_record_count: 124, mapped_record_count: 124, unmapped_record_count: 0,
-    sheets: CAPEX_REGISTER_SHEET_NAMES, warnings: [],
+    google_title: CAPEX_REGISTER_GOOGLE_TITLE, folder_name: "Колобочная — Investment", folder_check: "passed", action: "update",
+    google_file_id: "1234567890abcdef", google_file_id_masked: "1234…cdef", decision_id: "DEC-008",
+    iteration_id: "ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01", source_yaml_path: "docs-platform/working/capex-equipment-register.yaml",
+    source_yaml_sha256: "a".repeat(64), source_record_count: 124, equipment_record_count: 151, mapped_record_count: 124,
+    unmapped_record_count: 0, sheets: CAPEX_REGISTER_SHEET_NAMES, legacy_sheet_renames: LEGACY_SHEET_RENAMES, warnings: [],
   });
   assert.equal("google_file_id" in logged, false);
   assert.equal(logged.google_file_id_masked, "1234…cdef");
+  assert.equal(logged.decision_id, "DEC-008");
 });
 
-test("Google preview path contains no Drive or Sheets write operation", () => {
+test("Google preview and override preview contain no write path", () => {
   const publisher = fs.readFileSync(path.join(platform, "app", "src", "google", "capex-register-publisher.ts"), "utf8");
-  const previewBody = publisher.slice(publisher.indexOf("export async function previewCapexRegisterSheet"), publisher.indexOf("async function createSpreadsheet"));
+  const previewBody = publisher.slice(publisher.indexOf("export async function previewCapexRegisterSheet"), publisher.indexOf("async function readRangeIfPresent"));
   assert.doesNotMatch(previewBody, /files\.create|values\.batch(?:Update|Clear)|spreadsheets\.batchUpdate/);
+  const importBody = publisher.slice(publisher.indexOf("export async function importCapexOverrides"));
+  assert.match(importBody, /Use --preview/);
+  assert.doesNotMatch(importBody, /values\.batchUpdate|spreadsheets\.batchUpdate/);
 });

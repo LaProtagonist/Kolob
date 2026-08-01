@@ -52,6 +52,60 @@ dependencies:
   - id: DEP-CAPEX-REGISTER-DERIVED-DOCUMENTS
     source_document_id: DOC-CAPEX-EQUIPMENT-REGISTER
     priority: governing_source
+    status: superseded
+    version: "0.1"
+    target_documents:
+      - title: Financial Model
+        document_id: null
+    updated_at: 2026-08-01
+  - id: DEP-CAPEX-REGISTER-MODULES
+    source_document_id: DOC-CAPEX-EQUIPMENT-REGISTER
+    priority: governing_source
+    status: approved
+    version: "0.1"
+    target_documents:
+      - title: CAPEX Modules
+        document_id: DOC-CAPEX-MODULES
+    updated_at: 2026-08-01
+  - id: DEP-CAPEX-MODULES-POINT-FORMATS
+    source_document_id: DOC-CAPEX-MODULES
+    priority: governing_source
+    status: approved
+    version: "0.1"
+    target_documents:
+      - title: CAPEX Point Formats
+        document_id: DOC-CAPEX-POINT-FORMATS
+    updated_at: 2026-08-01
+  - id: DEP-CAPEX-POINT-FORMATS-CONFIGURATIONS
+    source_document_id: DOC-CAPEX-POINT-FORMATS
+    priority: governing_source
+    status: approved
+    version: "0.1"
+    target_documents:
+      - title: CAPEX Configurations
+        document_id: DOC-CAPEX-CONFIGURATIONS
+    updated_at: 2026-08-01
+  - id: DEP-CAPEX-REGISTER-CONFIGURATIONS
+    source_document_id: DOC-CAPEX-EQUIPMENT-REGISTER
+    priority: governing_source
+    status: approved
+    version: "0.1"
+    target_documents:
+      - title: CAPEX Configurations
+        document_id: DOC-CAPEX-CONFIGURATIONS
+    updated_at: 2026-08-01
+  - id: DEP-CAPEX-CONFIGURATIONS-GENERATED-BOM
+    source_document_id: DOC-CAPEX-CONFIGURATIONS
+    priority: governing_source
+    status: approved
+    version: "0.1"
+    target_documents:
+      - title: CAPEX Generated Equipment BOM
+        document_id: DOC-CAPEX-GENERATED-EQUIPMENT-BOM
+    updated_at: 2026-08-01
+  - id: DEP-CAPEX-BOM-FUTURE-FINANCIAL-MODEL
+    source_document_id: DOC-CAPEX-GENERATED-EQUIPMENT-BOM
+    priority: governing_source
     status: approved
     version: "0.1"
     target_documents:

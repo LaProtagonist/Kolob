@@ -6,14 +6,18 @@ import YAML from "yaml";
 import { platformRoot } from "../google/config.js";
 
 export const CAPEX_REGISTER_DOCUMENT_ID = "DOC-CAPEX-EQUIPMENT-REGISTER";
-export const CAPEX_REGISTER_DECISION_ID = "DEC-007";
-export const CAPEX_REGISTER_ITERATION_ID = "ITR-CAPEX-REGISTER-2026-08-01-01";
-export const CAPEX_REGISTER_PROPOSAL_ID = "PROP-CAPEX-REGISTER-2026-08-01-01";
+export const CAPEX_REGISTER_DECISION_ID = "DEC-008";
+export const CAPEX_REGISTER_ITERATION_ID = "ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01";
+export const CAPEX_REGISTER_PROPOSAL_ID = "PROP-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01";
 export const CAPEX_REGISTER_SOURCE_PATH = "docs-platform/working/capex-equipment-specification.md";
 export const CAPEX_REGISTER_YAML_PATH = "docs-platform/working/capex-equipment-register.yaml";
 export const CAPEX_REGISTER_CSV_PATH = "docs-platform/working/capex-equipment-register.csv";
 export const CAPEX_REGISTER_SOURCE_SHA256 = "2157364e09699173fecfbfe861edf4e6fac85a0437e23aebe100caebeab599d6";
 export const CAPEX_REGISTER_SOURCE_ID = "SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF";
+export const CAPEX_MODULAR_SOURCE_ID = "SRC-CAPEX-MODULAR-CONFIGURATOR-BRIEF";
+export const SOURCE_RECORD_COUNT = 124;
+export const ADDED_RESEARCH_RECORD_COUNT = 27;
+export const EQUIPMENT_RECORD_COUNT = SOURCE_RECORD_COUNT + ADDED_RESEARCH_RECORD_COUNT;
 
 export const RECORD_TYPES = ["equipment", "system", "component", "accessory", "inventory", "furniture", "engineering_connection", "installation_service", "consumable", "software", "open_question"] as const;
 export const INCLUSION_STATUSES = ["standalone", "included_in_parent", "purchased_separately", "tbd"] as const;
@@ -95,7 +99,7 @@ export type OpenParameter = {
 export type MissingSection = {
   section_id: string;
   name: string;
-  status: "not_started";
+  status: "not_started" | "structured";
   dependencies: string[];
   notes: string;
 };
@@ -120,11 +124,13 @@ export type CapexRegister = {
     source_sha256: typeof CAPEX_REGISTER_SOURCE_SHA256;
     source_record_count: 124;
     mapped_record_count: 124;
+    added_research_record_count: 27;
+    equipment_record_count: 151;
     unmapped_record_count: 0;
     csv_generated_from_yaml: true;
     warning: string;
   };
-  modules: Array<{ module_id: string; module_name: string; source_record_count: number }>;
+  modules: Array<{ module_id: string; module_name: string; source_record_count: number; record_count: number }>;
   equipment: EquipmentRecord[];
   open_parameters: OpenParameter[];
   missing_sections: MissingSection[];
@@ -343,6 +349,94 @@ function toEquipmentRecord(record: SourceRecord): EquipmentRecord {
   };
 }
 
+type AddedEquipmentDefinition = {
+  name: string;
+  subcategory: string;
+  record_type: RecordType;
+  unit: string;
+  calculation_basis: string;
+};
+
+const capex05Definitions: AddedEquipmentDefinition[] = [
+  { name: "Столы гостевой зоны", subcategory: "Гостевая мебель", record_type: "furniture", unit: "посадочное место", calculation_basis: "посадочное место" },
+  { name: "Стулья", subcategory: "Гостевая мебель", record_type: "furniture", unit: "посадочное место", calculation_basis: "посадочное место" },
+  { name: "Диваны и банкетки", subcategory: "Гостевая мебель", record_type: "furniture", unit: "пог. м", calculation_basis: "погонный метр / посадочное место" },
+  { name: "Барная стойка", subcategory: "Гостевая мебель", record_type: "furniture", unit: "пог. м", calculation_basis: "посадочное место / погонный метр" },
+  { name: "Барные стулья", subcategory: "Гостевая мебель", record_type: "furniture", unit: "посадочное место", calculation_basis: "посадочное место / погонный метр" },
+  { name: "Детские стулья", subcategory: "Гостевая мебель", record_type: "furniture", unit: "посадочное место", calculation_basis: "посадочное место" },
+  { name: "Мебель зоны ожидания", subcategory: "Гостевая мебель", record_type: "furniture", unit: "м²", calculation_basis: "м² / человек пиковой очереди" },
+  { name: "Кассовая стойка", subcategory: "Заказ и выдача", record_type: "furniture", unit: "пог. м", calculation_basis: "рабочее место / погонный метр" },
+  { name: "Рабочее место кассира", subcategory: "Заказ и выдача", record_type: "system", unit: "рабочее место", calculation_basis: "рабочее место" },
+  { name: "Стойка выдачи", subcategory: "Заказ и выдача", record_type: "furniture", unit: "пог. м", calculation_basis: "пост выдачи / погонный метр" },
+  { name: "Поверхность комплектации заказов", subcategory: "Заказ и выдача", record_type: "furniture", unit: "пост выдачи", calculation_basis: "пост выдачи" },
+  { name: "Полки, шкафы и хранение в зоне выдачи", subcategory: "Заказ и выдача", record_type: "furniture", unit: "пост выдачи", calculation_basis: "пост выдачи" },
+  { name: "Кабельные и технологические каналы стойки", subcategory: "Заказ и выдача", record_type: "accessory", unit: "рабочее место", calculation_basis: "рабочее место / погонный метр" },
+  { name: "Места под терминалы, принтеры и кассовое оборудование", subcategory: "Заказ и выдача", record_type: "accessory", unit: "рабочее место", calculation_basis: "рабочее место" },
+  { name: "Станция самообслуживания", subcategory: "Самообслуживание", record_type: "system", unit: "станция", calculation_basis: "станция" },
+  { name: "Станция приборов и салфеток", subcategory: "Самообслуживание", record_type: "system", unit: "станция", calculation_basis: "станция" },
+  { name: "Станция соусов и дополнительных ингредиентов", subcategory: "Самообслуживание", record_type: "system", unit: "станция", calculation_basis: "станция" },
+  { name: "Место для подносов", subcategory: "Самообслуживание", record_type: "accessory", unit: "станция", calculation_basis: "станция" },
+  { name: "Станция питьевой воды", subcategory: "Самообслуживание", record_type: "system", unit: "станция", calculation_basis: "станция" },
+  { name: "Урны и сортировка отходов", subcategory: "Самообслуживание", record_type: "accessory", unit: "станция", calculation_basis: "станция / м² гостевой площади" },
+  { name: "Возврат многоразовой посуды", subcategory: "Самообслуживание", record_type: "system", unit: "станция", calculation_basis: "станция" },
+  { name: "Гардероб", subcategory: "Дополнительное оснащение", record_type: "furniture", unit: "пог. м", calculation_basis: "посетитель / погонный метр" },
+  { name: "Напольные и настенные вешалки", subcategory: "Дополнительное оснащение", record_type: "accessory", unit: "шт.", calculation_basis: "м² гостевой площади" },
+  { name: "Декоративные и функциональные стеллажи", subcategory: "Дополнительное оснащение", record_type: "furniture", unit: "м²", calculation_basis: "м² гостевой площади" },
+  { name: "Меню и навигация", subcategory: "Дополнительное оснащение", record_type: "system", unit: "точка размещения", calculation_basis: "точка размещения / функциональная зона" },
+  { name: "Разделители очереди", subcategory: "Дополнительное оснащение", record_type: "accessory", unit: "шт.", calculation_basis: "человек пиковой очереди" },
+  { name: "Мебель и оборудование доступной среды", subcategory: "Дополнительное оснащение", record_type: "furniture", unit: "комплект", calculation_basis: "формат точки и параметры доступной среды" },
+];
+
+function capex05Equipment(): EquipmentRecord[] {
+  return capex05Definitions.map((definition, index) => {
+    const number = index + 1;
+    const itemId = `CAPEX-05-${String(number).padStart(3, "0")}`;
+    return {
+      item_id: itemId,
+      module_id: "CAPEX-05",
+      module_name: "Гостевая зона и обслуживание",
+      category: "Гостевая зона и обслуживание",
+      subcategory: definition.subcategory,
+      name: definition.name,
+      record_type: definition.record_type,
+      parent_item_id: null,
+      inclusion_status: "tbd",
+      requirement: "conditional",
+      lifecycle_status: "research",
+      quantity_min: null,
+      quantity_base: null,
+      quantity_scale_ready: null,
+      unit: definition.unit,
+      source_quantity: null,
+      specification: null,
+      open_parameters: "количество, конфигурация и характеристики — tbd",
+      premises_dependency: "зависит от выбранного формата точки и параметров конкретной локации",
+      procurement_mode: "tbd",
+      existing_condition: "tbd",
+      power_kw: null,
+      voltage: null,
+      water_required: null,
+      drainage_required: null,
+      gas_required: null,
+      extraction_required: null,
+      dimensions: null,
+      service_clearance: null,
+      price_min: null,
+      price_base: null,
+      price_max: null,
+      currency: null,
+      price_date: null,
+      supplier: null,
+      source_id: CAPEX_MODULAR_SOURCE_ID,
+      quote_status: "not_requested",
+      notes: `Правило будущего расчёта: ${definition.calculation_basis}. Коэффициент не определён.`,
+      source_section: `CAPEX-05 / ${definition.subcategory}`,
+      source_item_number: number,
+      source_record_sha256: sha256(JSON.stringify({ item_id: itemId, ...definition, requirement: "conditional", lifecycle_status: "research" })),
+    };
+  });
+}
+
 const extraOpenParameters: Array<[string, string, string]> = [
   ["CAPEX-01-045", "Выбор между ледяным охлаждением и шоковым охлаждением", "Открытый вопрос CAPEX-01"],
   ["CAPEX-03-005", "точное сечение каналов", "Открытые инженерные параметры CAPEX-03"],
@@ -452,7 +546,19 @@ const missingSectionNames = [
 ];
 
 function missingSections(): MissingSection[] {
-  return missingSectionNames.map((name, index) => ({ section_id: `CAPEX-${String(index + 5).padStart(2, "0")}`, name, status: "not_started", dependencies: [], notes: "Раздел перечислен, но не описан в CAPEX — Equipment Specification v0.1." }));
+  return missingSectionNames.map((name, index) => {
+    const sectionId = `CAPEX-${String(index + 5).padStart(2, "0")}`;
+    const structured = sectionId === "CAPEX-05" || sectionId === "CAPEX-06";
+    return {
+      section_id: sectionId,
+      name,
+      status: structured ? "structured" : "not_started",
+      dependencies: structured ? ["CAPEX-05"] : [],
+      notes: structured
+        ? "Историческая запись сохранена; категория перенесена из not_started в структурированный research-модуль CAPEX-05 — Гостевая зона и обслуживание решением DEC-008."
+        : "Раздел перечислен, но не описан в CAPEX — Equipment Specification v0.1.",
+    };
+  });
 }
 
 function dictionaries(): DictionaryEntry[] {
@@ -465,16 +571,22 @@ function dictionaries(): DictionaryEntry[] {
   add("lifecycle_status", LIFECYCLE_STATUSES, "Содержательный статус записи.");
   add("quote_status", ["not_requested", "requested", "received", "expired", "rejected", "tbd"], "Статус коммерческого предложения.");
   add("open_parameter_status", ["open", "resolved", "superseded"], "Статус открытого параметра.");
-  add("missing_section_status", ["not_started"], "Статус ещё не сформированного раздела.");
-  add("unit", ["шт.", "комплект", "ряд", "м", "пог. м", "tbd"], "Допустимая единица количества текущей версии.");
+  add("missing_section_status", ["not_started", "structured"], "Статус ещё не сформированного или перенесённого в структурированный модуль раздела.");
+  add("unit", ["шт.", "комплект", "ряд", "м", "м²", "пог. м", "посадочное место", "рабочее место", "пост выдачи", "станция", "точка размещения", "tbd"], "Допустимая единица количества текущей версии.");
   return entries;
 }
 
 export function buildRegister(source: string): CapexRegister {
   if (sha256(source) !== CAPEX_REGISTER_SOURCE_SHA256) throw new Error("Source CAPEX Markdown hash changed; structured migration requires a new governed iteration.");
   const sourceRecords = extractSourceRecords(source);
-  const equipment = sourceRecords.map(toEquipmentRecord);
-  const modules = [...new Set(equipment.map(item => item.module_id))].map(id => ({ module_id: id, module_name: equipment.find(item => item.module_id === id)!.module_name, source_record_count: equipment.filter(item => item.module_id === id).length }));
+  const sourceEquipment = sourceRecords.map(toEquipmentRecord);
+  const equipment = [...sourceEquipment, ...capex05Equipment()];
+  const modules = [...new Set(equipment.map(item => item.module_id))].map(id => ({
+    module_id: id,
+    module_name: equipment.find(item => item.module_id === id)!.module_name,
+    source_record_count: sourceEquipment.filter(item => item.module_id === id).length,
+    record_count: equipment.filter(item => item.module_id === id).length,
+  }));
   return {
     schema_version: 1,
     document: {
@@ -493,9 +605,11 @@ export function buildRegister(source: string): CapexRegister {
       source_sha256: CAPEX_REGISTER_SOURCE_SHA256,
       source_record_count: 124,
       mapped_record_count: 124,
+      added_research_record_count: 27,
+      equipment_record_count: 151,
       unmapped_record_count: 0,
       csv_generated_from_yaml: true,
-      warning: "Цены, конкретные модели, поставщики и итоговый CAPEX не определены. 124 — количество исходных записей, а не самостоятельных закупочных единиц.",
+      warning: "Цены, конкретные модели, поставщики и итоговый CAPEX не определены. 124 — количество исходных записей CAPEX v0.1; 27 research-записей CAPEX-05 добавлены отдельной governed-итерацией; 151 не является числом самостоятельных закупочных единиц.",
     },
     modules,
     equipment,
@@ -522,6 +636,8 @@ export function registerStatistics(register: CapexRegister) {
   return {
     source_record_count: register.document.source_record_count,
     mapped_record_count: register.document.mapped_record_count,
+    added_research_record_count: register.document.added_research_record_count,
+    equipment_record_count: register.document.equipment_record_count,
     unmapped_record_count: register.document.unmapped_record_count,
     main_procurement_records: mainProcurementRecords,
     by_record_type: byRecordType,
@@ -537,7 +653,8 @@ export function validateRegister(register: CapexRegister, source?: string) {
   const schema = JSON.parse(fs.readFileSync(path.join(platformRoot, "schemas", "capex-equipment-register.schema.json"), "utf8"));
   const validateSchema = new Ajv2020({ allErrors: true, strict: false }).compile(schema);
   if (!validateSchema(register)) errors.push(...(validateSchema.errors ?? []).map(error => `schema ${error.instancePath || "/"} ${error.message}`));
-  if (register.document.source_record_count !== 124 || register.equipment.length !== 124) errors.push("CAPEX register must contain exactly 124 mapped source records.");
+  if (register.document.source_record_count !== SOURCE_RECORD_COUNT || register.document.mapped_record_count !== SOURCE_RECORD_COUNT) errors.push("CAPEX source coverage must remain exactly 124/124.");
+  if (register.document.added_research_record_count !== ADDED_RESEARCH_RECORD_COUNT || register.document.equipment_record_count !== EQUIPMENT_RECORD_COUNT || register.equipment.length !== EQUIPMENT_RECORD_COUNT) errors.push("CAPEX register must contain exactly 151 records: 124 source records plus 27 governed CAPEX-05 research records.");
   const ids = register.equipment.map(item => item.item_id);
   if (new Set(ids).size !== ids.length) errors.push("CAPEX register contains duplicate item IDs.");
   for (const item of register.equipment) {
@@ -545,13 +662,16 @@ export function validateRegister(register: CapexRegister, source?: string) {
     if (item.inclusion_status === "included_in_parent" && !item.parent_item_id) errors.push(`${item.item_id}: included_in_parent requires parent_item_id.`);
     for (const field of ["quantity_min", "quantity_base", "quantity_scale_ready", "power_kw", "voltage", "price_min", "price_base", "price_max"] as const) if (typeof item[field] === "string") errors.push(`${item.item_id}: numeric field ${field} contains text.`);
     if ([item.price_min, item.price_base, item.price_max].some(value => value !== null) && (!item.source_id || !item.price_date)) errors.push(`${item.item_id}: price requires source_id and price_date.`);
-    if (item.lifecycle_status !== "research") errors.push(`${item.item_id}: migrated lifecycle status must remain research.`);
+    if (item.lifecycle_status !== "research") errors.push(`${item.item_id}: lifecycle status must remain research.`);
   }
   for (const parameter of register.open_parameters) if (parameter.item_id && !ids.includes(parameter.item_id)) errors.push(`${parameter.parameter_id}: missing item reference ${parameter.item_id}.`);
   if (source) {
     if (sha256(source) !== register.document.source_sha256) errors.push("Source Markdown SHA-256 differs from register metadata.");
     const sourceIds = new Set(extractSourceRecords(source).map(record => record.itemId));
-    for (const id of ids) if (!sourceIds.has(id)) errors.push(`${id}: not present in source Markdown.`);
+    for (const id of ids.slice(0, SOURCE_RECORD_COUNT)) if (!sourceIds.has(id)) errors.push(`${id}: not present in source Markdown.`);
+    const newIds = ids.slice(SOURCE_RECORD_COUNT);
+    const expectedNewIds = Array.from({ length: ADDED_RESEARCH_RECORD_COUNT }, (_, index) => `CAPEX-05-${String(index + 1).padStart(3, "0")}`);
+    if (JSON.stringify(newIds) !== JSON.stringify(expectedNewIds)) errors.push("CAPEX-05 stable ID sequence differs from CAPEX-05-001—CAPEX-05-027.");
   }
   return errors;
 }

@@ -1,0 +1,39 @@
+schema_version: 1
+document:
+  project: Колобочная
+  document_id: DOC-CAPEX-CONFIGURATIONS
+  title: CAPEX Configurations
+  russian_title: CAPEX — Конфигурации объектов
+  version: "0.1"
+  status: research
+  document_type: Working CAPEX object configurations
+  decision_id: DEC-008
+  iteration_id: ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01
+  proposal_id: PROP-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01
+configurations:
+  - configuration_id: CFG-TEMPLATE-001
+    name: Пустая шаблонная конфигурация
+    format_id: FMT-CUSTOM
+    lifecycle_status: research
+    total_area_m2: null
+    guest_area_m2: null
+    hall_count: null
+    seat_count: null
+    cashier_post_count: null
+    hot_kitchen_post_count: null
+    filling_count: null
+    service_station_count: null
+    peak_orders_per_hour: null
+    daily_orders: null
+    bar_enabled: null
+    alcohol_enabled: null
+    prep_enabled: null
+    grow_enabled: null
+    central_supply_enabled: null
+    self_service_enabled: null
+    reusable_tableware_enabled: null
+    shared_seating: null
+    mobile_format: null
+    selected_modules: []
+    excluded_modules: []
+    notes: Шаблон структуры; не является конфигурацией реального объекта.

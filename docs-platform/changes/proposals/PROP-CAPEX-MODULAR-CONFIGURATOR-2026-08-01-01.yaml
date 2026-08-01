@@ -1,0 +1,33 @@
+proposal_id: PROP-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01
+iteration_id: ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01
+status: proposed
+created_at: 2026-08-01
+actor: project owner
+source_id: SRC-CAPEX-MODULAR-CONFIGURATOR-BRIEF
+scope: "Добавить 27 research-записей CAPEX-05, ввести четырёхуровневую модульную архитектуру CAPEX, семь профилей форматов, шаблон конфигурации и overrides, обновить существующую Google Sheet с русскими вкладками и сохранить неизменными 124 исходные записи CAPEX v0.1."
+affected_document_ids:
+  - DOC-CAPEX-EQUIPMENT-REGISTER
+  - DOC-CAPEX-MODULES
+  - DOC-CAPEX-POINT-FORMATS
+  - DOC-CAPEX-CONFIGURATIONS
+  - DOC-CAPEX-GENERATED-EQUIPMENT-BOM
+affected_item_range: CAPEX-05-001—CAPEX-05-027
+approved_payload_path: docs-platform/changelog/payloads/ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01-approved.yaml
+approved_payload_sha256: 73f5a811214f548ba3c8e1cde8e16317e5bbc3b98cf3f5ecc67c4c12ffdb6453
+source_path: User instruction, 2026-08-01
+source_sha256: null
+boundaries:
+  approved:
+    - 27 research records CAPEX-05-001—CAPEX-05-027
+    - functional module library and module-to-item links
+    - seven point format profiles
+    - configuration and configuration override mechanisms
+    - generated equipment BOM
+    - Russian Google Sheet tabs and deterministic update of the existing Sheet
+  not_approved:
+    - prices or total CAPEX
+    - suppliers, manufacturers or models
+    - a real object configuration
+    - exact area, hall count or seat count
+    - final quantities or coefficients
+    - changes to Foundation, Business Model Architecture or CAPEX Equipment Specification v0.1

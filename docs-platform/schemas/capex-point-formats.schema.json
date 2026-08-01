@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["schema_version", "document", "formats"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "document": { "type": "object" },
+    "formats": {
+      "type": "array", "minItems": 7, "maxItems": 7,
+      "items": {
+        "type": "object",
+        "required": ["format_id", "name", "purpose", "lifecycle_status", "required_modules", "optional_modules", "conditional_modules", "excluded_modules", "exclusion_mode", "manual_selection", "notes"],
+        "properties": {
+          "format_id": { "type": "string", "pattern": "^FMT-[A-Z-]+$" },
+          "name": { "type": "string", "minLength": 1 },
+          "purpose": { "type": "string", "minLength": 1 },
+          "lifecycle_status": { "const": "research" },
+          "required_modules": { "$ref": "#/$defs/modules" },
+          "optional_modules": { "$ref": "#/$defs/modules" },
+          "conditional_modules": { "$ref": "#/$defs/modules" },
+          "excluded_modules": { "$ref": "#/$defs/modules" },
+          "exclusion_mode": { "enum": ["excluded", "excluded_by_default", "none"] },
+          "manual_selection": { "type": "boolean" },
+          "notes": { "type": ["string", "null"] }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "$defs": { "modules": { "type": "array", "items": { "type": "string", "pattern": "^MOD-[A-Z-]+$" }, "uniqueItems": true } },
+  "additionalProperties": false
+}

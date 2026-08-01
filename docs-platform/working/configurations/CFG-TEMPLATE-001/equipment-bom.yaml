@@ -1,0 +1,12 @@
+schema_version: 1
+document:
+  project: Колобочная
+  title: Generated Equipment BOM
+  russian_title: Сформированная комплектация объекта
+  version: "0.1"
+  status: research
+  configuration_id: CFG-TEMPLATE-001
+  format_id: FMT-CUSTOM
+  warning: Цены и итоговый CAPEX не определены. Пустые количества требуют уточнения и не заменяются нулём.
+active_modules: []
+equipment: []

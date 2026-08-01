@@ -1,0 +1,402 @@
+receipt_version: 2
+change_id: CHG-014
+iteration_id: ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01
+proposal_id: PROP-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01
+decision_id: DEC-008
+source_change_set: docs-platform/changes/CHG-014-capex-modular-configurator.yaml
+status: applied
+applied_at: 2026-08-01T20:19:45.583Z
+actor: Codex
+tool: docs-platform change:apply
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01-approved.yaml
+  sha256: 73f5a811214f548ba3c8e1cde8e16317e5bbc3b98cf3f5ecc67c4c12ffdb6453
+before_hash: ab9321f87be585be6ad7b8d2bc6e863c3d2c49fb572bc0746a3cc74f4acb71f9
+after_hash: 77df85d14f7c6216d9f2c28302c0d9c069cc6691e760903f5a6afdbefc54cb07
+touched_registry_files:
+  - path: docs-platform/registry/documents.yaml
+    backup_path: docs-platform/changelog/backups/2026-08-01T20-19-45-583Z-CHG-014/documents.yaml
+  - path: docs-platform/registry/dependencies.yaml
+    backup_path: docs-platform/changelog/backups/2026-08-01T20-19-45-583Z-CHG-014/dependencies.yaml
+  - path: docs-platform/registry/decisions.yaml
+    backup_path: docs-platform/changelog/backups/2026-08-01T20-19-45-583Z-CHG-014/decisions.yaml
+operations:
+  - type: update
+    entity: documents
+    id: DOC-CAPEX-EQUIPMENT-REGISTER
+    before: &a1
+      id: DOC-CAPEX-EQUIPMENT-REGISTER
+      title: CAPEX Equipment Register
+      type: working_capex_equipment_register
+      status: research
+      google_file_id: 1J7sHM8P2IoMfHVLEHfY-UJLIZ-HBid89G6n6BS4BSJA
+      template: null
+      sections:
+        - README
+        - EQUIPMENT
+        - OPEN_PARAMETERS
+        - MISSING_SECTIONS
+        - DICTIONARIES
+      version: "0.1"
+      local_path: docs-platform/working/capex-equipment-register.yaml
+      updated_at: 2026-08-01
+    after:
+      id: DOC-CAPEX-EQUIPMENT-REGISTER
+      title: CAPEX Equipment Register
+      type: working_capex_equipment_register
+      status: research
+      google_file_id: 1J7sHM8P2IoMfHVLEHfY-UJLIZ-HBid89G6n6BS4BSJA
+      template: null
+      sections:
+        - Описание
+        - Конфигуратор
+        - Комплектация
+        - Переопределения
+        - Оснащение
+        - Модули
+        - Форматы точек
+        - Состав форматов
+        - Открытые параметры
+        - Недостающие разделы
+        - Справочники
+      version: "0.1"
+      local_path: docs-platform/working/capex-equipment-register.yaml
+      updated_at: 2026-08-01
+    before_index: 9
+    after_index: 9
+    before_sha256: a8a8c31a73728095fdec5eee6cf09c7bfa8ac083e2446ff948bfd181ca4f74d9
+    after_sha256: e4e4fae2b6270a3f62c38e6ad436159754c2fd0c7f17099473a5617a3a51d401
+    reverse_operation:
+      type: replace
+      entity: documents
+      id: DOC-CAPEX-EQUIPMENT-REGISTER
+      value: *a1
+  - type: add
+    entity: documents
+    id: DOC-CAPEX-MODULES
+    before: null
+    after:
+      id: DOC-CAPEX-MODULES
+      title: CAPEX Modules
+      type: working_capex_functional_modules
+      status: research
+      google_file_id: null
+      template: null
+      sections:
+        - MOD-PREP
+        - MOD-RETAIL-HOT
+        - MOD-BAR
+        - MOD-GROW
+        - MOD-POS
+        - MOD-KDS
+        - MOD-GUEST
+        - MOD-TAKEAWAY
+        - MOD-STORAGE
+        - MOD-WASH
+        - MOD-STAFF
+        - MOD-ENGINEERING
+      version: "0.1"
+      local_path: docs-platform/working/capex-modules.yaml
+      updated_at: 2026-08-01
+    before_index: null
+    after_index: 10
+    before_sha256: null
+    after_sha256: c304a777026a6757bf7291269a81e213f7c7ff3b50a0086488f714fdc829a517
+    reverse_operation:
+      type: remove
+      entity: documents
+      id: DOC-CAPEX-MODULES
+  - type: add
+    entity: documents
+    id: DOC-CAPEX-POINT-FORMATS
+    before: null
+    after:
+      id: DOC-CAPEX-POINT-FORMATS
+      title: CAPEX Point Formats
+      type: working_capex_point_formats
+      status: research
+      google_file_id: null
+      template: null
+      sections:
+        - FMT-PREP-CENTER
+        - FMT-INTEGRATED
+        - FMT-RESTAURANT-SEATING
+        - FMT-FOOD-COURT
+        - FMT-STREET-PICKUP
+        - FMT-FOODTRUCK
+        - FMT-CUSTOM
+      version: "0.1"
+      local_path: docs-platform/working/capex-point-formats.yaml
+      updated_at: 2026-08-01
+    before_index: null
+    after_index: 11
+    before_sha256: null
+    after_sha256: bba8229c026ead17252e87b0b83aeb0dd49fbe8b7ce234fe7f339ca3db678729
+    reverse_operation:
+      type: remove
+      entity: documents
+      id: DOC-CAPEX-POINT-FORMATS
+  - type: add
+    entity: documents
+    id: DOC-CAPEX-CONFIGURATIONS
+    before: null
+    after:
+      id: DOC-CAPEX-CONFIGURATIONS
+      title: CAPEX Configurations
+      type: working_capex_object_configurations
+      status: research
+      google_file_id: null
+      template: null
+      sections:
+        - CFG-TEMPLATE-001
+        - Configuration overrides
+      version: "0.1"
+      local_path: docs-platform/working/capex-configurations.yaml
+      updated_at: 2026-08-01
+    before_index: null
+    after_index: 12
+    before_sha256: null
+    after_sha256: 3781a0015c5a753a3e45f500f1c8b40a64609c8a8b0495ea2c9d9cfbe7c8888f
+    reverse_operation:
+      type: remove
+      entity: documents
+      id: DOC-CAPEX-CONFIGURATIONS
+  - type: add
+    entity: documents
+    id: DOC-CAPEX-GENERATED-EQUIPMENT-BOM
+    before: null
+    after:
+      id: DOC-CAPEX-GENERATED-EQUIPMENT-BOM
+      title: CAPEX Generated Equipment BOM
+      type: generated_capex_equipment_bom
+      status: research
+      google_file_id: null
+      template: null
+      sections:
+        - Active modules
+        - Equipment
+      version: "0.1"
+      local_path: docs-platform/working/configurations/CFG-TEMPLATE-001/equipment-bom.yaml
+      updated_at: 2026-08-01
+    before_index: null
+    after_index: 13
+    before_sha256: null
+    after_sha256: 479feb093f5907669cc670eacf2682ab78fa62d16a75efe89397761da8b72363
+    reverse_operation:
+      type: remove
+      entity: documents
+      id: DOC-CAPEX-GENERATED-EQUIPMENT-BOM
+  - type: add
+    entity: dependencies
+    id: DEP-CAPEX-REGISTER-MODULES
+    before: null
+    after:
+      id: DEP-CAPEX-REGISTER-MODULES
+      source_document_id: DOC-CAPEX-EQUIPMENT-REGISTER
+      priority: governing_source
+      status: approved
+      version: "0.1"
+      target_documents:
+        - title: CAPEX Modules
+          document_id: DOC-CAPEX-MODULES
+      updated_at: 2026-08-01
+    before_index: null
+    after_index: 4
+    before_sha256: null
+    after_sha256: f193949741bbbf325cd5066fc8b32f7114719be982efccce29b18f8780c26b79
+    reverse_operation:
+      type: remove
+      entity: dependencies
+      id: DEP-CAPEX-REGISTER-MODULES
+  - type: add
+    entity: dependencies
+    id: DEP-CAPEX-MODULES-POINT-FORMATS
+    before: null
+    after:
+      id: DEP-CAPEX-MODULES-POINT-FORMATS
+      source_document_id: DOC-CAPEX-MODULES
+      priority: governing_source
+      status: approved
+      version: "0.1"
+      target_documents:
+        - title: CAPEX Point Formats
+          document_id: DOC-CAPEX-POINT-FORMATS
+      updated_at: 2026-08-01
+    before_index: null
+    after_index: 5
+    before_sha256: null
+    after_sha256: 2fb8cadc6440f6f751167a0e9bf098f2eda4ba554186e65da75ae5b12742a95f
+    reverse_operation:
+      type: remove
+      entity: dependencies
+      id: DEP-CAPEX-MODULES-POINT-FORMATS
+  - type: add
+    entity: dependencies
+    id: DEP-CAPEX-POINT-FORMATS-CONFIGURATIONS
+    before: null
+    after:
+      id: DEP-CAPEX-POINT-FORMATS-CONFIGURATIONS
+      source_document_id: DOC-CAPEX-POINT-FORMATS
+      priority: governing_source
+      status: approved
+      version: "0.1"
+      target_documents:
+        - title: CAPEX Configurations
+          document_id: DOC-CAPEX-CONFIGURATIONS
+      updated_at: 2026-08-01
+    before_index: null
+    after_index: 6
+    before_sha256: null
+    after_sha256: 7b4aa3b1d94dd378015bb203282d55be03e14451ecdaa8c8f4c8d26cdef7cce3
+    reverse_operation:
+      type: remove
+      entity: dependencies
+      id: DEP-CAPEX-POINT-FORMATS-CONFIGURATIONS
+  - type: add
+    entity: dependencies
+    id: DEP-CAPEX-REGISTER-CONFIGURATIONS
+    before: null
+    after:
+      id: DEP-CAPEX-REGISTER-CONFIGURATIONS
+      source_document_id: DOC-CAPEX-EQUIPMENT-REGISTER
+      priority: governing_source
+      status: approved
+      version: "0.1"
+      target_documents:
+        - title: CAPEX Configurations
+          document_id: DOC-CAPEX-CONFIGURATIONS
+      updated_at: 2026-08-01
+    before_index: null
+    after_index: 7
+    before_sha256: null
+    after_sha256: d3b011eaf9b9679a08c914b2249e72be8553004c9961610ff294500faf6bc959
+    reverse_operation:
+      type: remove
+      entity: dependencies
+      id: DEP-CAPEX-REGISTER-CONFIGURATIONS
+  - type: add
+    entity: dependencies
+    id: DEP-CAPEX-CONFIGURATIONS-GENERATED-BOM
+    before: null
+    after:
+      id: DEP-CAPEX-CONFIGURATIONS-GENERATED-BOM
+      source_document_id: DOC-CAPEX-CONFIGURATIONS
+      priority: governing_source
+      status: approved
+      version: "0.1"
+      target_documents:
+        - title: CAPEX Generated Equipment BOM
+          document_id: DOC-CAPEX-GENERATED-EQUIPMENT-BOM
+      updated_at: 2026-08-01
+    before_index: null
+    after_index: 8
+    before_sha256: null
+    after_sha256: 4824b01486fd2a6172eab02e72aafa8abd0a97795e0df293343b2d2524b84c4b
+    reverse_operation:
+      type: remove
+      entity: dependencies
+      id: DEP-CAPEX-CONFIGURATIONS-GENERATED-BOM
+  - type: add
+    entity: dependencies
+    id: DEP-CAPEX-BOM-FUTURE-FINANCIAL-MODEL
+    before: null
+    after:
+      id: DEP-CAPEX-BOM-FUTURE-FINANCIAL-MODEL
+      source_document_id: DOC-CAPEX-GENERATED-EQUIPMENT-BOM
+      priority: governing_source
+      status: approved
+      version: "0.1"
+      target_documents:
+        - title: Financial Model
+          document_id: null
+      updated_at: 2026-08-01
+    before_index: null
+    after_index: 9
+    before_sha256: null
+    after_sha256: 12fc83efef7006af1031e664325d38418df96ac29fbbfc501dc7234df63fb937
+    reverse_operation:
+      type: remove
+      entity: dependencies
+      id: DEP-CAPEX-BOM-FUTURE-FINANCIAL-MODEL
+  - type: supersede
+    entity: dependencies
+    id: DEP-CAPEX-REGISTER-DERIVED-DOCUMENTS
+    before: &a2
+      id: DEP-CAPEX-REGISTER-DERIVED-DOCUMENTS
+      source_document_id: DOC-CAPEX-EQUIPMENT-REGISTER
+      priority: governing_source
+      status: approved
+      version: "0.1"
+      target_documents:
+        - title: Financial Model
+          document_id: null
+      updated_at: 2026-08-01
+    after:
+      id: DEP-CAPEX-REGISTER-DERIVED-DOCUMENTS
+      source_document_id: DOC-CAPEX-EQUIPMENT-REGISTER
+      priority: governing_source
+      status: superseded
+      version: "0.1"
+      target_documents:
+        - title: Financial Model
+          document_id: null
+      updated_at: 2026-08-01
+    before_index: 3
+    after_index: 3
+    before_sha256: eea020b6128cc6c8cbbfccde6912c049f47590c28ead79df951d50c2e8bbb75a
+    after_sha256: cc9f0cf7cc7fefca9c8a2f934e5f23fcab5866d70a3c825902b19e10de0c4f6d
+    reverse_operation:
+      type: replace
+      entity: dependencies
+      id: DEP-CAPEX-REGISTER-DERIVED-DOCUMENTS
+      value: *a2
+  - type: update
+    entity: decisions
+    id: DEC-008
+    before: &a3
+      id: DEC-008
+      title: Добавить CAPEX-05 и модульный конфигуратор форматов точек
+      status: approved
+      decision: Добавить CAPEX-05-001—CAPEX-05-027 со статусом research; сохранить без смысловых изменений 124 записи CAPEX v0.1; ввести единый Equipment Register, библиотеку функциональных модулей, семь профилей форматов, отдельные конфигурации и configuration overrides; формировать equipment BOM конкретного объекта; обновить только существующую Google Sheet и переименовать её вкладки на русский язык.
+      rationale: Прямое утверждение владельца проекта от 2026-08-01. Решение утверждает архитектуру и 27 research-записей, но не утверждает цены, модели, поставщиков, коэффициенты, точные параметры или конфигурацию реального объекта и итоговый CAPEX.
+      affected_documents:
+        - DOC-CAPEX-EQUIPMENT-REGISTER
+      approved_by: project owner
+      approved_at: 2026-08-01
+      supersedes: null
+      source_ids:
+        - SRC-CAPEX-MODULAR-CONFIGURATOR-BRIEF
+      updated_at: 2026-08-01
+    after:
+      id: DEC-008
+      title: Добавить CAPEX-05 и модульный конфигуратор форматов точек
+      status: approved
+      decision: Добавить CAPEX-05-001—CAPEX-05-027 со статусом research; сохранить без смысловых изменений 124 записи CAPEX v0.1; ввести единый Equipment Register, библиотеку функциональных модулей, семь профилей форматов, отдельные конфигурации и configuration overrides; формировать equipment BOM конкретного объекта; обновить только существующую Google Sheet и переименовать её вкладки на русский язык.
+      rationale: Прямое утверждение владельца проекта от 2026-08-01. Решение утверждает архитектуру и 27 research-записей, но не утверждает цены, модели, поставщиков, коэффициенты, точные параметры или конфигурацию реального объекта и итоговый CAPEX.
+      affected_documents:
+        - DOC-CAPEX-EQUIPMENT-REGISTER
+        - DOC-CAPEX-MODULES
+        - DOC-CAPEX-POINT-FORMATS
+        - DOC-CAPEX-CONFIGURATIONS
+        - DOC-CAPEX-GENERATED-EQUIPMENT-BOM
+      approved_by: project owner
+      approved_at: 2026-08-01
+      supersedes: null
+      source_ids:
+        - SRC-CAPEX-MODULAR-CONFIGURATOR-BRIEF
+      updated_at: 2026-08-01
+    before_index: 7
+    after_index: 7
+    before_sha256: 045a9dc9e06fc7b1ee8847edebd1a231eaa4c337b3c7331125d3b73e151080fd
+    after_sha256: 79ee73680aad31db92e6034d44652b6da9b0ba6877446d39cb3c01be83430e13
+    reverse_operation:
+      type: replace
+      entity: decisions
+      id: DEC-008
+      value: *a3
+validation_result: passed
+git_commit_hash: null
+rollback:
+  source_receipt: docs-platform/changelog/change-receipts/CHG-014.yaml
+  command: npm run change:reverse:preview -- ../changelog/change-receipts/CHG-014.yaml --change-id CHG-ROLLBACK-XXX --decision DEC-ROLLBACK-XXX
+  rollback_of: CHG-014

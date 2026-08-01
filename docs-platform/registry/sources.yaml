@@ -90,3 +90,12 @@ sources:
     accessed_at: 2026-08-01
     reliability: primary
     notes: Первичный источник разрешения структурно преобразовать ровно 124 существующие research-записи CAPEX v0.1 без изменения смысла, опубликовать производную Google Sheet и внедрить обязательный хронологический журнал и governed rollback. Модели, цены, поставщики, окончательные количества, общий CAPEX и новые позиции не утверждаются.
+  - id: SRC-CAPEX-MODULAR-CONFIGURATOR-BRIEF
+    title: Задание на CAPEX-05 и модульный конфигуратор форматов
+    type: instruction
+    location: User instruction, 2026-08-01
+    publisher: project owner
+    publication_date: 2026-08-01
+    accessed_at: 2026-08-01
+    reliability: primary
+    notes: Первичный источник разрешения добавить 27 research-позиций CAPEX-05, функциональные модули, семь профилей форматов, конфигурации, overrides, generated BOM и русские вкладки существующей Google Sheet. Не утверждает цены, модели, поставщиков, реальные параметры объекта, окончательные количества или итоговый CAPEX.

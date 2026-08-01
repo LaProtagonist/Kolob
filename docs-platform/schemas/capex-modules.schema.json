@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["schema_version", "document", "modules"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "document": { "type": "object", "required": ["project", "document_id", "title", "version", "status", "decision_id", "iteration_id"], "properties": { "project": { "const": "Колобочная" }, "document_id": { "const": "DOC-CAPEX-MODULES" }, "title": { "const": "CAPEX Modules" }, "version": { "const": "0.1" }, "status": { "const": "research" }, "decision_id": { "const": "DEC-008" }, "iteration_id": { "type": "string" } }, "additionalProperties": true },
+    "modules": {
+      "type": "array", "minItems": 12, "maxItems": 12,
+      "items": {
+        "type": "object", "required": ["module_id", "name", "purpose", "lifecycle_status", "notes"],
+        "properties": {
+          "module_id": { "type": "string", "pattern": "^MOD-[A-Z-]+$" },
+          "name": { "type": "string", "minLength": 1 },
+          "purpose": { "type": "string", "minLength": 1 },
+          "lifecycle_status": { "enum": ["research", "not_started"] },
+          "notes": { "type": ["string", "null"] }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,73 @@
+receipt_version: 2
+change_id: CHG-013
+iteration_id: ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01
+proposal_id: PROP-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01
+decision_id: DEC-001
+source_change_set: docs-platform/changes/CHG-013-capex-modular-configurator-decision.yaml
+status: applied
+applied_at: 2026-08-01T20:17:24.160Z
+actor: Codex
+tool: docs-platform change:apply
+approved_payload: null
+before_hash: 5218ea9c5d4b3f2187a0a79d8e496c1e0ad243bedb3aae4e1b8e2a55d6b2e4c6
+after_hash: ab9321f87be585be6ad7b8d2bc6e863c3d2c49fb572bc0746a3cc74f4acb71f9
+touched_registry_files:
+  - path: docs-platform/registry/sources.yaml
+    backup_path: docs-platform/changelog/backups/2026-08-01T20-17-24-160Z-CHG-013/sources.yaml
+  - path: docs-platform/registry/decisions.yaml
+    backup_path: docs-platform/changelog/backups/2026-08-01T20-17-24-160Z-CHG-013/decisions.yaml
+operations:
+  - type: add
+    entity: sources
+    id: SRC-CAPEX-MODULAR-CONFIGURATOR-BRIEF
+    before: null
+    after:
+      id: SRC-CAPEX-MODULAR-CONFIGURATOR-BRIEF
+      title: Задание на CAPEX-05 и модульный конфигуратор форматов
+      type: instruction
+      location: User instruction, 2026-08-01
+      publisher: project owner
+      publication_date: 2026-08-01
+      accessed_at: 2026-08-01
+      reliability: primary
+      notes: Первичный источник разрешения добавить 27 research-позиций CAPEX-05, функциональные модули, семь профилей форматов, конфигурации, overrides, generated BOM и русские вкладки существующей Google Sheet. Не утверждает цены, модели, поставщиков, реальные параметры объекта, окончательные количества или итоговый CAPEX.
+    before_index: null
+    after_index: 10
+    before_sha256: null
+    after_sha256: 69e53aae88ac61ca97f5da81a0b5b1951fc6e21a2ccca635183196158f0d3f6f
+    reverse_operation:
+      type: remove
+      entity: sources
+      id: SRC-CAPEX-MODULAR-CONFIGURATOR-BRIEF
+  - type: add
+    entity: decisions
+    id: DEC-008
+    before: null
+    after:
+      id: DEC-008
+      title: Добавить CAPEX-05 и модульный конфигуратор форматов точек
+      status: approved
+      decision: Добавить CAPEX-05-001—CAPEX-05-027 со статусом research; сохранить без смысловых изменений 124 записи CAPEX v0.1; ввести единый Equipment Register, библиотеку функциональных модулей, семь профилей форматов, отдельные конфигурации и configuration overrides; формировать equipment BOM конкретного объекта; обновить только существующую Google Sheet и переименовать её вкладки на русский язык.
+      rationale: Прямое утверждение владельца проекта от 2026-08-01. Решение утверждает архитектуру и 27 research-записей, но не утверждает цены, модели, поставщиков, коэффициенты, точные параметры или конфигурацию реального объекта и итоговый CAPEX.
+      affected_documents:
+        - DOC-CAPEX-EQUIPMENT-REGISTER
+      approved_by: project owner
+      approved_at: 2026-08-01
+      supersedes: null
+      source_ids:
+        - SRC-CAPEX-MODULAR-CONFIGURATOR-BRIEF
+      updated_at: 2026-08-01
+    before_index: null
+    after_index: 7
+    before_sha256: null
+    after_sha256: 045a9dc9e06fc7b1ee8847edebd1a231eaa4c337b3c7331125d3b73e151080fd
+    reverse_operation:
+      type: remove
+      entity: decisions
+      id: DEC-008
+validation_result: passed
+git_commit_hash: null
+rollback:
+  source_receipt: docs-platform/changelog/change-receipts/CHG-013.yaml
+  command: npm run change:reverse:preview -- ../changelog/change-receipts/CHG-013.yaml --change-id CHG-ROLLBACK-XXX --decision DEC-ROLLBACK-XXX
+  rollback_of: CHG-013

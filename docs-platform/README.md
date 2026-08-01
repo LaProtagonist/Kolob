@@ -44,11 +44,20 @@ npm run change:reverse:preview -- ../changelog/change-receipts/CHG-XXX.yaml --ch
 npm run timeline:validate
 npm run timeline:generate
 npm run capex:register:validate
+npm run capex:modules:list
+npm run capex:formats:list
+npm run capex:configuration:validate
+npm run capex:configuration:preview -- CFG-TEMPLATE-001
+npm run capex:configuration:build -- CFG-TEMPLATE-001
+npm run capex:modular:reverse:preview -- ../changelog/iteration-receipts/ITR-XXX.yaml --change-id CHG-ROLLBACK-XXX --decision DEC-ROLLBACK-XXX
+npm run capex:modular:reverse:prepare -- ../changelog/iteration-receipts/ITR-XXX.yaml --change-id CHG-ROLLBACK-XXX --decision DEC-ROLLBACK-XXX
 ```
 
 `change:preview` не пишет в registry: показывает затронутые сущности, before/after и ошибки validation. `change:apply` принимает только change set со статусом `approved`, ссылающийся на существующее approved decision; он создаёт backup, повторно валидирует результат и делает rollback при ошибке.
 
 Обязательный жизненный цикл содержательной итерации: proposal → approved decision → approved change set → preview → apply того же payload/SHA-256 → validation → verification receipt → append-only timeline. Rollback создаётся как новый reverse change set и не удаляет историю.
+
+Для файловых CAPEX-итераций переносимые before-payloads хранятся в `changelog/rollback-payloads/`, а не только в локальном игнорируемом backup. `reverse:prepare` создаёт новый proposed reverse change set; его apply разрешён только после отдельного approved rollback decision и требует последующей guarded Google-reversal и события `rolled_back`.
 
 Локальный OAuth, folder guard и Google API подключены. Секреты, token, folder ID и runtime-файлы не входят в Git.
 
@@ -68,7 +77,8 @@ npm run google:folder:inspect
 npm run google:publish:preview
 npm run google:publish:apply -- --apply --decision DEC-006
 npm run capex:sheet:preview
-npm run capex:sheet:apply -- --apply --decision DEC-007
+npm run capex:sheet:apply -- --apply --decision DEC-008
+npm run google:capex:overrides:import -- --preview
 npm run google:test:create
 npm run google:test:read
 npm run google:test:update -- --preview
@@ -76,6 +86,8 @@ npm run google:test:update -- --preview
 
 `google:test:update -- --apply` требует approved DEC-002, успешного внутреннего preview, project-folder guard и интерактивного ввода `APPLY_TEST_UPDATE`. `google:test:cleanup` требует `DELETE_TEST_FILES`, работает исключительно по локальному manifest и не меняет registry. После создания файлов CLI готовит локальный proposed change set для `TEST-DOC-001` и `TEST-SHEET-001`; registry напрямую не редактируется.
 
-`google:folder:authorize` использует Google Picker с единственным scope `drive.file`. Google Docs publisher ограничен тремя зарегистрированными документами и `DEC-006`. CAPEX Sheet publisher ограничен `DOC-CAPEX-EQUIPMENT-REGISTER`, точным именем файла, пятью листами и `DEC-007`; повторный запуск обновляет единственный файл и отказывается выбирать дубликаты. Оба publisher выполняют API readback и сохраняют безопасные receipts. Registry обновляется отдельно через governed change set.
+`google:folder:authorize` использует Google Picker с единственным scope `drive.file`. Google Docs publisher ограничен тремя зарегистрированными документами и `DEC-006`. CAPEX Sheet publisher ограничен `DOC-CAPEX-EQUIPMENT-REGISTER`, точным именем существующего файла, одиннадцатью русскоязычными листами и `DEC-008`; он не создаёт новый файл, обновляет единственное точное совпадение и отказывается выбирать дубликаты. Повторный запуск сохраняет стабильные ID, черновые поля конфигуратора и разрешённые ручные строки переопределений. Оба publisher выполняют API readback и сохраняют безопасные receipts. Registry обновляется отдельно через governed change set.
+
+CAPEX имеет четыре независимых уровня: Equipment Register, функциональные модули, профили форматов и конфигурации объектов. Модули и форматы содержат только ссылки, а конкретные отличия точки живут в overrides. Генерируемый BOM является входом будущей финансовой модели.
 
 До ручной OAuth-авторизации не запускать команды создания, чтения, update или cleanup. Инструкция подготовки находится в `GOOGLE_SETUP.md`.

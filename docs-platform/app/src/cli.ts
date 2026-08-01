@@ -3,10 +3,11 @@ import path from "node:path";
 import YAML from "yaml";
 import { applyRegister, generateCsv, previewRegister } from "./capex/workflow.js";
 import { readRegister, registerStatistics, sourceMarkdownPath, validateRegister } from "./capex/register.js";
+import { applyModularIteration, applyModularReverse, buildConfiguration, listFormats, listModules, materializeModularRollbackPayload, prepareModularReverse, previewConfiguration, previewModularIteration, previewModularReverse, validateConfigurations, writeApprovedModularPayload } from "./capex/modular-workflow.js";
 import { applyChange, loadRegistry, previewReverseChange, printChangePreview, readYaml, registryKinds, requireChange, validateRegistry, writeReverseChange } from "./governance/registry.js";
 import { appendTimelineEvent, generateTimeline, readTimelineEvents, renderTimeline, validateTimeline, type TimelineEventInput } from "./governance/timeline.js";
 import { authorizeInteractively, authorizeProjectFolderInteractively } from "./google/auth.js";
-import { applyCapexRegisterSheet, previewCapexRegisterSheet } from "./google/capex-register-publisher.js";
+import { applyCapexRegisterSheet, importCapexOverrides, previewCapexRegisterSheet } from "./google/capex-register-publisher.js";
 import { applyPublication, buildPublicationPreview } from "./google/publisher.js";
 import { cleanupTests, createTests, doctor, inspectFolder, readTests, updateTests } from "./google/workspace.js";
 
@@ -60,10 +61,37 @@ try {
     const errors = validateRegister(register, source);
     if (errors.length) throw new Error(errors.join("\n"));
     console.log(JSON.stringify({ validation: "OK", ...registerStatistics(register) }, null, 2));
+  } else if (command === "capex:modular:payload") {
+    writeApprovedModularPayload();
+  } else if (command === "capex:modular:preview") {
+    previewModularIteration();
+  } else if (command === "capex:modular:apply") {
+    applyModularIteration(applyOptions(args));
+  } else if (command === "capex:modular:reverse:preview") {
+    const receipt = path.resolve(requireArgument(args, "a modular iteration receipt"));
+    console.log(YAML.stringify(previewModularReverse(receipt, flag(args, "--change-id"), flag(args, "--decision")), { lineWidth: 0 }));
+  } else if (command === "capex:modular:reverse:prepare") {
+    prepareModularReverse(path.resolve(requireArgument(args, "a modular iteration receipt")), flag(args, "--change-id"), flag(args, "--decision"));
+  } else if (command === "capex:modular:reverse:apply") {
+    applyModularReverse(path.resolve(requireArgument(args, "an approved modular reverse change set")), applyOptions(args));
+  } else if (command === "capex:modular:rollback:materialize") {
+    materializeModularRollbackPayload(args[0] ? path.resolve(args[0]) : undefined);
+  } else if (command === "capex:formats:list") {
+    listFormats();
+  } else if (command === "capex:modules:list") {
+    listModules();
+  } else if (command === "capex:configuration:validate") {
+    validateConfigurations();
+  } else if (command === "capex:configuration:preview") {
+    previewConfiguration(requireArgument(args, "a configuration ID"));
+  } else if (command === "capex:configuration:build") {
+    buildConfiguration(requireArgument(args, "a configuration ID"));
   } else if (command === "capex:sheet:preview") {
     await previewCapexRegisterSheet();
   } else if (command === "capex:sheet:apply") {
     await applyCapexRegisterSheet(applyOptions(args));
+  } else if (command === "google:capex:overrides:import") {
+    await importCapexOverrides({ preview: args.includes("--preview"), apply: args.includes("--apply") });
   } else if (command === "google:doctor") await doctor();
   else if (command === "google:auth") await authorizeInteractively();
   else if (command === "google:folder:authorize") await authorizeProjectFolderInteractively();
@@ -74,7 +102,7 @@ try {
   else if (command === "google:test:read") await readTests();
   else if (command === "google:test:update") await updateTests(args);
   else if (command === "google:test:cleanup") await cleanupTests();
-  else throw new Error("commands: registry:*|change:*|timeline:*|capex:register:*|capex:sheet:*|google:*|documents:list|decisions:list");
+  else throw new Error("commands: registry:*|change:*|timeline:*|capex:register:*|capex:modular:*|capex:configuration:*|capex:formats:list|capex:modules:list|capex:sheet:*|google:*|documents:list|decisions:list");
 } catch (error) {
   console.error(`ERROR: ${(error as Error).message}`);
   process.exitCode = 1;

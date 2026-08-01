@@ -10,3 +10,5 @@
 2026-08-01T14:33:12.272Z CHG-010 decision=DEC-006 touched=documents
 2026-08-01T17:20:24.488Z CHG-011 decision=DEC-001 touched=sources,decisions before=97b40d809c9737c75569ecdde3c852328b5277140847f599dfc74fb88342023f after=84270f1dcbe6a999d67f8296e05a4b3eeded2c64e6afeaa6dbad1757339c51d9
 2026-08-01T17:40:48.611Z CHG-012 decision=DEC-007 touched=documents,dependencies,decisions before=84270f1dcbe6a999d67f8296e05a4b3eeded2c64e6afeaa6dbad1757339c51d9 after=5218ea9c5d4b3f2187a0a79d8e496c1e0ad243bedb3aae4e1b8e2a55d6b2e4c6
+2026-08-01T20:17:24.160Z CHG-013 decision=DEC-001 touched=sources,decisions before=5218ea9c5d4b3f2187a0a79d8e496c1e0ad243bedb3aae4e1b8e2a55d6b2e4c6 after=ab9321f87be585be6ad7b8d2bc6e863c3d2c49fb572bc0746a3cc74f4acb71f9
+2026-08-01T20:19:45.583Z CHG-014 decision=DEC-008 touched=documents,dependencies,decisions before=ab9321f87be585be6ad7b8d2bc6e863c3d2c49fb572bc0746a3cc74f4acb71f9 after=77df85d14f7c6216d9f2c28302c0d9c069cc6691e760903f5a6afdbefc54cb07

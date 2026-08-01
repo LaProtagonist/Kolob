@@ -1,0 +1,33 @@
+schema_version: 1
+iteration_id: ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01
+proposal_id: PROP-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01
+decision_id: DEC-008
+change_set_id: CHG-014
+status: approved
+approved_by: project owner
+approved_at: 2026-08-01
+actor: project owner
+scope: "CAPEX-05 и модульный конфигуратор без цен, моделей, реального помещения и смыслового изменения существующих 124 research-записей."
+approved_payload_path: docs-platform/changelog/payloads/ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01-approved.yaml
+approved_payload_sha256: 73f5a811214f548ba3c8e1cde8e16317e5bbc3b98cf3f5ecc67c4c12ffdb6453
+source_path: docs-platform/working/capex-equipment-specification.md
+source_sha256: 2157364e09699173fecfbfe861edf4e6fac85a0437e23aebe100caebeab599d6
+source_record_count: 124
+added_research_record_count: 27
+equipment_record_count: 151
+mapped_equipment_record_count: 151
+unmapped_record_count: 0
+apply_contract:
+  payload_identity: structurally_identical_yaml
+  hash_algorithm: SHA-256
+  canonical_targets:
+    - docs-platform/working/capex-equipment-register.yaml
+    - docs-platform/working/capex-modules.yaml
+    - docs-platform/working/capex-module-items.yaml
+    - docs-platform/working/capex-point-formats.yaml
+    - docs-platform/working/capex-configurations.yaml
+    - docs-platform/working/capex-configuration-overrides.yaml
+rollback_contract:
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true

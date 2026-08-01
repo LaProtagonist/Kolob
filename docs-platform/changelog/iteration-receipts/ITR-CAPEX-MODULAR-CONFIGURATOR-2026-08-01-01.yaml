@@ -1,0 +1,95 @@
+receipt_version: 1
+iteration_id: ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01
+proposal_id: PROP-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01
+decision_id: DEC-008
+change_set_id: CHG-014
+status: applied
+applied_at: 2026-08-01T20:19:31.938Z
+actor: Codex
+tool: docs-platform capex:modular:apply
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01-approved.yaml
+  sha256: 73f5a811214f548ba3c8e1cde8e16317e5bbc3b98cf3f5ecc67c4c12ffdb6453
+before_composite_hash: 3f685e309f39983385ca8a11a896798f1b4cf381f7533ab6df9dcd15d1ff3fae
+after_composite_hash: 338fab6a4b8d48d9002ff4748678ac06c059e33f8999e63f6d651f0340c5a806
+before_files:
+  - path: docs-platform/working/capex-equipment-register.yaml
+    existed: true
+    sha256: 75698b54ff3819449239a62d535bf84c3ddb30a64b7b6a92076ee2f706775dec
+    backup_path: docs-platform/changelog/backups/ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01/working/capex-equipment-register.yaml
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01/working/capex-equipment-register.yaml
+  - path: docs-platform/working/capex-equipment-register.csv
+    existed: true
+    sha256: 4d0bb9ff95e68ce5c6a41ff84887a51c4388e1a8b8208c719b276bae92148d90
+    backup_path: docs-platform/changelog/backups/ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01/working/capex-equipment-register.csv
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01/working/capex-equipment-register.csv
+  - path: docs-platform/working/capex-modules.yaml
+    existed: false
+    sha256: null
+    backup_path: null
+    rollback_payload_path: null
+  - path: docs-platform/working/capex-module-items.yaml
+    existed: false
+    sha256: null
+    backup_path: null
+    rollback_payload_path: null
+  - path: docs-platform/working/capex-point-formats.yaml
+    existed: false
+    sha256: null
+    backup_path: null
+    rollback_payload_path: null
+  - path: docs-platform/working/capex-configurations.yaml
+    existed: false
+    sha256: null
+    backup_path: null
+    rollback_payload_path: null
+  - path: docs-platform/working/capex-configuration-overrides.yaml
+    existed: false
+    sha256: null
+    backup_path: null
+    rollback_payload_path: null
+  - path: docs-platform/working/configurations/CFG-TEMPLATE-001/equipment-bom.yaml
+    existed: false
+    sha256: null
+    backup_path: null
+    rollback_payload_path: null
+  - path: docs-platform/working/configurations/CFG-TEMPLATE-001/equipment-bom.csv
+    existed: false
+    sha256: null
+    backup_path: null
+    rollback_payload_path: null
+after_files:
+  - path: docs-platform/working/capex-equipment-register.yaml
+    sha256: 8491d105566ce22909f67a679db46f401d1aa54cfe12878c78abc52c4779acb0
+  - path: docs-platform/working/capex-equipment-register.csv
+    sha256: 0e62de7f83d87db0b6598fc993f19bb201e9eacd6e3cb9bd0d3599f0f9c3a383
+  - path: docs-platform/working/capex-modules.yaml
+    sha256: f6596a417019d440bc30653c183ba1b8f79e538a78b4cf4d1354996f0eb0477f
+  - path: docs-platform/working/capex-module-items.yaml
+    sha256: ef6412eca819dfac4e54c4c00bfbfd11e9c8101ee1bc517201ecf010feba33c5
+  - path: docs-platform/working/capex-point-formats.yaml
+    sha256: 4b6d5a8806f696f499dbbab8fa061020c7ba77b670eb2a1f7d3ccdcc78b2e523
+  - path: docs-platform/working/capex-configurations.yaml
+    sha256: 35fe08382f012a1b3a1dfbbaea86251a5bf910bdb35d3ca9886f67b7b688ca8a
+  - path: docs-platform/working/capex-configuration-overrides.yaml
+    sha256: de97265a2e2a0bdb5ae67fcf74ffd368f1fa7f4243c4d1b78a6ecad8e12b1df4
+  - path: docs-platform/working/configurations/CFG-TEMPLATE-001/equipment-bom.yaml
+    sha256: d01ba75f3b0a081c3e885c64d19fdaaa9e54bb8a8121128f28e6ea5c4e1f7d6b
+  - path: docs-platform/working/configurations/CFG-TEMPLATE-001/equipment-bom.csv
+    sha256: 1f72933d8e8f39596332c3ca6e74e9f61b9d78c27bacecb8c799265a5876315e
+statistics:
+  equipment_record_count: 151
+  module_count: 12
+  point_format_count: 7
+  configuration_count: 1
+  module_item_link_count: 153
+  mapped_equipment_record_count: 151
+  unmapped_record_count: 0
+validation_result: passed
+git_commit_hash: null
+rollback:
+  mode: governed_reverse_change_set
+  source_receipt: docs-platform/changelog/iteration-receipts/ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01.yaml
+  preview_command: npm run capex:modular:reverse:preview -- ../changelog/iteration-receipts/ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01.yaml --change-id CHG-ROLLBACK-XXX --decision DEC-ROLLBACK-XXX
+  preserves_history: true
+  git_reset_forbidden: true

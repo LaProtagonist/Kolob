@@ -7,30 +7,40 @@ document:
   version: "0.1"
   status: research
   document_type: Working structured CAPEX equipment register
-  decision_id: DEC-007
-  iteration_id: ITR-CAPEX-REGISTER-2026-08-01-01
-  proposal_id: PROP-CAPEX-REGISTER-2026-08-01-01
+  decision_id: DEC-008
+  iteration_id: ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01
+  proposal_id: PROP-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01
   source_document_id: DOC-CAPEX-EQUIPMENT-SPECIFICATION
   source_path: docs-platform/working/capex-equipment-specification.md
   source_sha256: 2157364e09699173fecfbfe861edf4e6fac85a0437e23aebe100caebeab599d6
   source_record_count: 124
   mapped_record_count: 124
+  added_research_record_count: 27
+  equipment_record_count: 151
   unmapped_record_count: 0
   csv_generated_from_yaml: true
-  warning: Цены, конкретные модели, поставщики и итоговый CAPEX не определены. 124 — количество исходных записей, а не самостоятельных закупочных единиц.
+  warning: Цены, конкретные модели, поставщики и итоговый CAPEX не определены. 124 — количество исходных записей CAPEX v0.1; 27 research-записей CAPEX-05 добавлены отдельной governed-итерацией; 151 не является числом самостоятельных закупочных единиц.
 modules:
   - module_id: CAPEX-01
     module_name: Заготовочный цех
     source_record_count: 47
+    record_count: 47
   - module_id: CAPEX-02
     module_name: Торговая кухня, бар и зона выдачи
     source_record_count: 55
+    record_count: 55
   - module_id: CAPEX-03
     module_name: Модуль выращивания зелени и микрозелени
     source_record_count: 19
+    record_count: 19
   - module_id: CAPEX-04
     module_name: Касса, учёт и управление заказами
     source_record_count: 3
+    record_count: 3
+  - module_id: CAPEX-05
+    module_name: Гостевая зона и обслуживание
+    source_record_count: 0
+    record_count: 27
 equipment:
   - item_id: CAPEX-01-001
     module_id: CAPEX-01
@@ -5116,6 +5126,1113 @@ equipment:
     source_section: "CAPEX-04 / "
     source_item_number: 3
     source_record_sha256: 99298e3fa130b98ce7558676a5db3a3bb56dae0ac89fec48ae2c862fea7d444b
+  - item_id: CAPEX-05-001
+    module_id: CAPEX-05
+    module_name: Гостевая зона и обслуживание
+    category: Гостевая зона и обслуживание
+    subcategory: Гостевая мебель
+    name: Столы гостевой зоны
+    record_type: furniture
+    parent_item_id: null
+    inclusion_status: tbd
+    requirement: conditional
+    lifecycle_status: research
+    quantity_min: null
+    quantity_base: null
+    quantity_scale_ready: null
+    unit: посадочное место
+    source_quantity: null
+    specification: null
+    open_parameters: количество, конфигурация и характеристики — tbd
+    premises_dependency: зависит от выбранного формата точки и параметров конкретной локации
+    procurement_mode: tbd
+    existing_condition: tbd
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: null
+    price_base: null
+    price_max: null
+    currency: null
+    price_date: null
+    supplier: null
+    source_id: SRC-CAPEX-MODULAR-CONFIGURATOR-BRIEF
+    quote_status: not_requested
+    notes: "Правило будущего расчёта: посадочное место. Коэффициент не определён."
+    source_section: CAPEX-05 / Гостевая мебель
+    source_item_number: 1
+    source_record_sha256: 478a970eb2c252b403396dbad635cd0faee4f362736c60a39ce47c02ee972f65
+  - item_id: CAPEX-05-002
+    module_id: CAPEX-05
+    module_name: Гостевая зона и обслуживание
+    category: Гостевая зона и обслуживание
+    subcategory: Гостевая мебель
+    name: Стулья
+    record_type: furniture
+    parent_item_id: null
+    inclusion_status: tbd
+    requirement: conditional
+    lifecycle_status: research
+    quantity_min: null
+    quantity_base: null
+    quantity_scale_ready: null
+    unit: посадочное место
+    source_quantity: null
+    specification: null
+    open_parameters: количество, конфигурация и характеристики — tbd
+    premises_dependency: зависит от выбранного формата точки и параметров конкретной локации
+    procurement_mode: tbd
+    existing_condition: tbd
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: null
+    price_base: null
+    price_max: null
+    currency: null
+    price_date: null
+    supplier: null
+    source_id: SRC-CAPEX-MODULAR-CONFIGURATOR-BRIEF
+    quote_status: not_requested
+    notes: "Правило будущего расчёта: посадочное место. Коэффициент не определён."
+    source_section: CAPEX-05 / Гостевая мебель
+    source_item_number: 2
+    source_record_sha256: e2e2d01e0e6c15b8e42fae11c386f83ca5c943a966165f2360486f33c07c1f73
+  - item_id: CAPEX-05-003
+    module_id: CAPEX-05
+    module_name: Гостевая зона и обслуживание
+    category: Гостевая зона и обслуживание
+    subcategory: Гостевая мебель
+    name: Диваны и банкетки
+    record_type: furniture
+    parent_item_id: null
+    inclusion_status: tbd
+    requirement: conditional
+    lifecycle_status: research
+    quantity_min: null
+    quantity_base: null
+    quantity_scale_ready: null
+    unit: пог. м
+    source_quantity: null
+    specification: null
+    open_parameters: количество, конфигурация и характеристики — tbd
+    premises_dependency: зависит от выбранного формата точки и параметров конкретной локации
+    procurement_mode: tbd
+    existing_condition: tbd
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: null
+    price_base: null
+    price_max: null
+    currency: null
+    price_date: null
+    supplier: null
+    source_id: SRC-CAPEX-MODULAR-CONFIGURATOR-BRIEF
+    quote_status: not_requested
+    notes: "Правило будущего расчёта: погонный метр / посадочное место. Коэффициент не определён."
+    source_section: CAPEX-05 / Гостевая мебель
+    source_item_number: 3
+    source_record_sha256: 88494f628575e25571a1007e4476b11b71dba641e038de72b320b4d0d0ded353
+  - item_id: CAPEX-05-004
+    module_id: CAPEX-05
+    module_name: Гостевая зона и обслуживание
+    category: Гостевая зона и обслуживание
+    subcategory: Гостевая мебель
+    name: Барная стойка
+    record_type: furniture
+    parent_item_id: null
+    inclusion_status: tbd
+    requirement: conditional
+    lifecycle_status: research
+    quantity_min: null
+    quantity_base: null
+    quantity_scale_ready: null
+    unit: пог. м
+    source_quantity: null
+    specification: null
+    open_parameters: количество, конфигурация и характеристики — tbd
+    premises_dependency: зависит от выбранного формата точки и параметров конкретной локации
+    procurement_mode: tbd
+    existing_condition: tbd
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: null
+    price_base: null
+    price_max: null
+    currency: null
+    price_date: null
+    supplier: null
+    source_id: SRC-CAPEX-MODULAR-CONFIGURATOR-BRIEF
+    quote_status: not_requested
+    notes: "Правило будущего расчёта: посадочное место / погонный метр. Коэффициент не определён."
+    source_section: CAPEX-05 / Гостевая мебель
+    source_item_number: 4
+    source_record_sha256: 3bee1f015a5d5a5def9ef1e17e980d8232a6d0a51593bea2b98a414f7d8e48c3
+  - item_id: CAPEX-05-005
+    module_id: CAPEX-05
+    module_name: Гостевая зона и обслуживание
+    category: Гостевая зона и обслуживание
+    subcategory: Гостевая мебель
+    name: Барные стулья
+    record_type: furniture
+    parent_item_id: null
+    inclusion_status: tbd
+    requirement: conditional
+    lifecycle_status: research
+    quantity_min: null
+    quantity_base: null
+    quantity_scale_ready: null
+    unit: посадочное место
+    source_quantity: null
+    specification: null
+    open_parameters: количество, конфигурация и характеристики — tbd
+    premises_dependency: зависит от выбранного формата точки и параметров конкретной локации
+    procurement_mode: tbd
+    existing_condition: tbd
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: null
+    price_base: null
+    price_max: null
+    currency: null
+    price_date: null
+    supplier: null
+    source_id: SRC-CAPEX-MODULAR-CONFIGURATOR-BRIEF
+    quote_status: not_requested
+    notes: "Правило будущего расчёта: посадочное место / погонный метр. Коэффициент не определён."
+    source_section: CAPEX-05 / Гостевая мебель
+    source_item_number: 5
+    source_record_sha256: 6da97ee57159a365b618863c1e23f2131b8a24ff2e7ec16c030e0a250e6f6ac3
+  - item_id: CAPEX-05-006
+    module_id: CAPEX-05
+    module_name: Гостевая зона и обслуживание
+    category: Гостевая зона и обслуживание
+    subcategory: Гостевая мебель
+    name: Детские стулья
+    record_type: furniture
+    parent_item_id: null
+    inclusion_status: tbd
+    requirement: conditional
+    lifecycle_status: research
+    quantity_min: null
+    quantity_base: null
+    quantity_scale_ready: null
+    unit: посадочное место
+    source_quantity: null
+    specification: null
+    open_parameters: количество, конфигурация и характеристики — tbd
+    premises_dependency: зависит от выбранного формата точки и параметров конкретной локации
+    procurement_mode: tbd
+    existing_condition: tbd
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: null
+    price_base: null
+    price_max: null
+    currency: null
+    price_date: null
+    supplier: null
+    source_id: SRC-CAPEX-MODULAR-CONFIGURATOR-BRIEF
+    quote_status: not_requested
+    notes: "Правило будущего расчёта: посадочное место. Коэффициент не определён."
+    source_section: CAPEX-05 / Гостевая мебель
+    source_item_number: 6
+    source_record_sha256: b5fc06db716b4fa45358fecdca8b161439b2d6814dd1d4f2e91befb636c3bbae
+  - item_id: CAPEX-05-007
+    module_id: CAPEX-05
+    module_name: Гостевая зона и обслуживание
+    category: Гостевая зона и обслуживание
+    subcategory: Гостевая мебель
+    name: Мебель зоны ожидания
+    record_type: furniture
+    parent_item_id: null
+    inclusion_status: tbd
+    requirement: conditional
+    lifecycle_status: research
+    quantity_min: null
+    quantity_base: null
+    quantity_scale_ready: null
+    unit: м²
+    source_quantity: null
+    specification: null
+    open_parameters: количество, конфигурация и характеристики — tbd
+    premises_dependency: зависит от выбранного формата точки и параметров конкретной локации
+    procurement_mode: tbd
+    existing_condition: tbd
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: null
+    price_base: null
+    price_max: null
+    currency: null
+    price_date: null
+    supplier: null
+    source_id: SRC-CAPEX-MODULAR-CONFIGURATOR-BRIEF
+    quote_status: not_requested
+    notes: "Правило будущего расчёта: м² / человек пиковой очереди. Коэффициент не определён."
+    source_section: CAPEX-05 / Гостевая мебель
+    source_item_number: 7
+    source_record_sha256: d14838f8e7760ab4dcb2f177429e3bee1dff14d40ccc07890896b65c0be0f752
+  - item_id: CAPEX-05-008
+    module_id: CAPEX-05
+    module_name: Гостевая зона и обслуживание
+    category: Гостевая зона и обслуживание
+    subcategory: Заказ и выдача
+    name: Кассовая стойка
+    record_type: furniture
+    parent_item_id: null
+    inclusion_status: tbd
+    requirement: conditional
+    lifecycle_status: research
+    quantity_min: null
+    quantity_base: null
+    quantity_scale_ready: null
+    unit: пог. м
+    source_quantity: null
+    specification: null
+    open_parameters: количество, конфигурация и характеристики — tbd
+    premises_dependency: зависит от выбранного формата точки и параметров конкретной локации
+    procurement_mode: tbd
+    existing_condition: tbd
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: null
+    price_base: null
+    price_max: null
+    currency: null
+    price_date: null
+    supplier: null
+    source_id: SRC-CAPEX-MODULAR-CONFIGURATOR-BRIEF
+    quote_status: not_requested
+    notes: "Правило будущего расчёта: рабочее место / погонный метр. Коэффициент не определён."
+    source_section: CAPEX-05 / Заказ и выдача
+    source_item_number: 8
+    source_record_sha256: 4e32abb58afa381039cc00492200025534095c1f168d41301b9ceeb44e4479f7
+  - item_id: CAPEX-05-009
+    module_id: CAPEX-05
+    module_name: Гостевая зона и обслуживание
+    category: Гостевая зона и обслуживание
+    subcategory: Заказ и выдача
+    name: Рабочее место кассира
+    record_type: system
+    parent_item_id: null
+    inclusion_status: tbd
+    requirement: conditional
+    lifecycle_status: research
+    quantity_min: null
+    quantity_base: null
+    quantity_scale_ready: null
+    unit: рабочее место
+    source_quantity: null
+    specification: null
+    open_parameters: количество, конфигурация и характеристики — tbd
+    premises_dependency: зависит от выбранного формата точки и параметров конкретной локации
+    procurement_mode: tbd
+    existing_condition: tbd
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: null
+    price_base: null
+    price_max: null
+    currency: null
+    price_date: null
+    supplier: null
+    source_id: SRC-CAPEX-MODULAR-CONFIGURATOR-BRIEF
+    quote_status: not_requested
+    notes: "Правило будущего расчёта: рабочее место. Коэффициент не определён."
+    source_section: CAPEX-05 / Заказ и выдача
+    source_item_number: 9
+    source_record_sha256: 741d7ca022138acce75063544c2beab1934351b12568c782eea26ab78ac65e74
+  - item_id: CAPEX-05-010
+    module_id: CAPEX-05
+    module_name: Гостевая зона и обслуживание
+    category: Гостевая зона и обслуживание
+    subcategory: Заказ и выдача
+    name: Стойка выдачи
+    record_type: furniture
+    parent_item_id: null
+    inclusion_status: tbd
+    requirement: conditional
+    lifecycle_status: research
+    quantity_min: null
+    quantity_base: null
+    quantity_scale_ready: null
+    unit: пог. м
+    source_quantity: null
+    specification: null
+    open_parameters: количество, конфигурация и характеристики — tbd
+    premises_dependency: зависит от выбранного формата точки и параметров конкретной локации
+    procurement_mode: tbd
+    existing_condition: tbd
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: null
+    price_base: null
+    price_max: null
+    currency: null
+    price_date: null
+    supplier: null
+    source_id: SRC-CAPEX-MODULAR-CONFIGURATOR-BRIEF
+    quote_status: not_requested
+    notes: "Правило будущего расчёта: пост выдачи / погонный метр. Коэффициент не определён."
+    source_section: CAPEX-05 / Заказ и выдача
+    source_item_number: 10
+    source_record_sha256: fb0b68cd4b31463a0c1ab1c54eb04de27c5323c6bc2e9a22086b53f1519ed5e2
+  - item_id: CAPEX-05-011
+    module_id: CAPEX-05
+    module_name: Гостевая зона и обслуживание
+    category: Гостевая зона и обслуживание
+    subcategory: Заказ и выдача
+    name: Поверхность комплектации заказов
+    record_type: furniture
+    parent_item_id: null
+    inclusion_status: tbd
+    requirement: conditional
+    lifecycle_status: research
+    quantity_min: null
+    quantity_base: null
+    quantity_scale_ready: null
+    unit: пост выдачи
+    source_quantity: null
+    specification: null
+    open_parameters: количество, конфигурация и характеристики — tbd
+    premises_dependency: зависит от выбранного формата точки и параметров конкретной локации
+    procurement_mode: tbd
+    existing_condition: tbd
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: null
+    price_base: null
+    price_max: null
+    currency: null
+    price_date: null
+    supplier: null
+    source_id: SRC-CAPEX-MODULAR-CONFIGURATOR-BRIEF
+    quote_status: not_requested
+    notes: "Правило будущего расчёта: пост выдачи. Коэффициент не определён."
+    source_section: CAPEX-05 / Заказ и выдача
+    source_item_number: 11
+    source_record_sha256: cf976f5ee67b7338e626b1e5e3fc09bc5c86a5ff7e28e36655fa72a1b62afda9
+  - item_id: CAPEX-05-012
+    module_id: CAPEX-05
+    module_name: Гостевая зона и обслуживание
+    category: Гостевая зона и обслуживание
+    subcategory: Заказ и выдача
+    name: Полки, шкафы и хранение в зоне выдачи
+    record_type: furniture
+    parent_item_id: null
+    inclusion_status: tbd
+    requirement: conditional
+    lifecycle_status: research
+    quantity_min: null
+    quantity_base: null
+    quantity_scale_ready: null
+    unit: пост выдачи
+    source_quantity: null
+    specification: null
+    open_parameters: количество, конфигурация и характеристики — tbd
+    premises_dependency: зависит от выбранного формата точки и параметров конкретной локации
+    procurement_mode: tbd
+    existing_condition: tbd
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: null
+    price_base: null
+    price_max: null
+    currency: null
+    price_date: null
+    supplier: null
+    source_id: SRC-CAPEX-MODULAR-CONFIGURATOR-BRIEF
+    quote_status: not_requested
+    notes: "Правило будущего расчёта: пост выдачи. Коэффициент не определён."
+    source_section: CAPEX-05 / Заказ и выдача
+    source_item_number: 12
+    source_record_sha256: c86bdbc51e0152849368c038a3aa4dcbc24bb3e749f237c8dd5ece981c37844b
+  - item_id: CAPEX-05-013
+    module_id: CAPEX-05
+    module_name: Гостевая зона и обслуживание
+    category: Гостевая зона и обслуживание
+    subcategory: Заказ и выдача
+    name: Кабельные и технологические каналы стойки
+    record_type: accessory
+    parent_item_id: null
+    inclusion_status: tbd
+    requirement: conditional
+    lifecycle_status: research
+    quantity_min: null
+    quantity_base: null
+    quantity_scale_ready: null
+    unit: рабочее место
+    source_quantity: null
+    specification: null
+    open_parameters: количество, конфигурация и характеристики — tbd
+    premises_dependency: зависит от выбранного формата точки и параметров конкретной локации
+    procurement_mode: tbd
+    existing_condition: tbd
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: null
+    price_base: null
+    price_max: null
+    currency: null
+    price_date: null
+    supplier: null
+    source_id: SRC-CAPEX-MODULAR-CONFIGURATOR-BRIEF
+    quote_status: not_requested
+    notes: "Правило будущего расчёта: рабочее место / погонный метр. Коэффициент не определён."
+    source_section: CAPEX-05 / Заказ и выдача
+    source_item_number: 13
+    source_record_sha256: fdec5418dd24e8500795c6bf8350be309e5a2e7447882092791cbf3a8b0187c4
+  - item_id: CAPEX-05-014
+    module_id: CAPEX-05
+    module_name: Гостевая зона и обслуживание
+    category: Гостевая зона и обслуживание
+    subcategory: Заказ и выдача
+    name: Места под терминалы, принтеры и кассовое оборудование
+    record_type: accessory
+    parent_item_id: null
+    inclusion_status: tbd
+    requirement: conditional
+    lifecycle_status: research
+    quantity_min: null
+    quantity_base: null
+    quantity_scale_ready: null
+    unit: рабочее место
+    source_quantity: null
+    specification: null
+    open_parameters: количество, конфигурация и характеристики — tbd
+    premises_dependency: зависит от выбранного формата точки и параметров конкретной локации
+    procurement_mode: tbd
+    existing_condition: tbd
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: null
+    price_base: null
+    price_max: null
+    currency: null
+    price_date: null
+    supplier: null
+    source_id: SRC-CAPEX-MODULAR-CONFIGURATOR-BRIEF
+    quote_status: not_requested
+    notes: "Правило будущего расчёта: рабочее место. Коэффициент не определён."
+    source_section: CAPEX-05 / Заказ и выдача
+    source_item_number: 14
+    source_record_sha256: c398787ac3e3007df499cba1ba5b7d86ae0acb1b38b47197ff961cede0be5167
+  - item_id: CAPEX-05-015
+    module_id: CAPEX-05
+    module_name: Гостевая зона и обслуживание
+    category: Гостевая зона и обслуживание
+    subcategory: Самообслуживание
+    name: Станция самообслуживания
+    record_type: system
+    parent_item_id: null
+    inclusion_status: tbd
+    requirement: conditional
+    lifecycle_status: research
+    quantity_min: null
+    quantity_base: null
+    quantity_scale_ready: null
+    unit: станция
+    source_quantity: null
+    specification: null
+    open_parameters: количество, конфигурация и характеристики — tbd
+    premises_dependency: зависит от выбранного формата точки и параметров конкретной локации
+    procurement_mode: tbd
+    existing_condition: tbd
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: null
+    price_base: null
+    price_max: null
+    currency: null
+    price_date: null
+    supplier: null
+    source_id: SRC-CAPEX-MODULAR-CONFIGURATOR-BRIEF
+    quote_status: not_requested
+    notes: "Правило будущего расчёта: станция. Коэффициент не определён."
+    source_section: CAPEX-05 / Самообслуживание
+    source_item_number: 15
+    source_record_sha256: a8d042837d282f24d4cd0c58851c635e20ac304f15758e1d244d95f10a348d3d
+  - item_id: CAPEX-05-016
+    module_id: CAPEX-05
+    module_name: Гостевая зона и обслуживание
+    category: Гостевая зона и обслуживание
+    subcategory: Самообслуживание
+    name: Станция приборов и салфеток
+    record_type: system
+    parent_item_id: null
+    inclusion_status: tbd
+    requirement: conditional
+    lifecycle_status: research
+    quantity_min: null
+    quantity_base: null
+    quantity_scale_ready: null
+    unit: станция
+    source_quantity: null
+    specification: null
+    open_parameters: количество, конфигурация и характеристики — tbd
+    premises_dependency: зависит от выбранного формата точки и параметров конкретной локации
+    procurement_mode: tbd
+    existing_condition: tbd
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: null
+    price_base: null
+    price_max: null
+    currency: null
+    price_date: null
+    supplier: null
+    source_id: SRC-CAPEX-MODULAR-CONFIGURATOR-BRIEF
+    quote_status: not_requested
+    notes: "Правило будущего расчёта: станция. Коэффициент не определён."
+    source_section: CAPEX-05 / Самообслуживание
+    source_item_number: 16
+    source_record_sha256: 783994174cb12971d2699f0b2612273a9579d0022c234ecc1e1b59f3bf2f2887
+  - item_id: CAPEX-05-017
+    module_id: CAPEX-05
+    module_name: Гостевая зона и обслуживание
+    category: Гостевая зона и обслуживание
+    subcategory: Самообслуживание
+    name: Станция соусов и дополнительных ингредиентов
+    record_type: system
+    parent_item_id: null
+    inclusion_status: tbd
+    requirement: conditional
+    lifecycle_status: research
+    quantity_min: null
+    quantity_base: null
+    quantity_scale_ready: null
+    unit: станция
+    source_quantity: null
+    specification: null
+    open_parameters: количество, конфигурация и характеристики — tbd
+    premises_dependency: зависит от выбранного формата точки и параметров конкретной локации
+    procurement_mode: tbd
+    existing_condition: tbd
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: null
+    price_base: null
+    price_max: null
+    currency: null
+    price_date: null
+    supplier: null
+    source_id: SRC-CAPEX-MODULAR-CONFIGURATOR-BRIEF
+    quote_status: not_requested
+    notes: "Правило будущего расчёта: станция. Коэффициент не определён."
+    source_section: CAPEX-05 / Самообслуживание
+    source_item_number: 17
+    source_record_sha256: 58ecca11ee654af03c9ac8c0e29281139ea76de54f41d66bfccecc010f8ee739
+  - item_id: CAPEX-05-018
+    module_id: CAPEX-05
+    module_name: Гостевая зона и обслуживание
+    category: Гостевая зона и обслуживание
+    subcategory: Самообслуживание
+    name: Место для подносов
+    record_type: accessory
+    parent_item_id: null
+    inclusion_status: tbd
+    requirement: conditional
+    lifecycle_status: research
+    quantity_min: null
+    quantity_base: null
+    quantity_scale_ready: null
+    unit: станция
+    source_quantity: null
+    specification: null
+    open_parameters: количество, конфигурация и характеристики — tbd
+    premises_dependency: зависит от выбранного формата точки и параметров конкретной локации
+    procurement_mode: tbd
+    existing_condition: tbd
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: null
+    price_base: null
+    price_max: null
+    currency: null
+    price_date: null
+    supplier: null
+    source_id: SRC-CAPEX-MODULAR-CONFIGURATOR-BRIEF
+    quote_status: not_requested
+    notes: "Правило будущего расчёта: станция. Коэффициент не определён."
+    source_section: CAPEX-05 / Самообслуживание
+    source_item_number: 18
+    source_record_sha256: aa9c066b6f079b02d5eccc10b814b23dfb2d7de72cb6744704b33e6b57709690
+  - item_id: CAPEX-05-019
+    module_id: CAPEX-05
+    module_name: Гостевая зона и обслуживание
+    category: Гостевая зона и обслуживание
+    subcategory: Самообслуживание
+    name: Станция питьевой воды
+    record_type: system
+    parent_item_id: null
+    inclusion_status: tbd
+    requirement: conditional
+    lifecycle_status: research
+    quantity_min: null
+    quantity_base: null
+    quantity_scale_ready: null
+    unit: станция
+    source_quantity: null
+    specification: null
+    open_parameters: количество, конфигурация и характеристики — tbd
+    premises_dependency: зависит от выбранного формата точки и параметров конкретной локации
+    procurement_mode: tbd
+    existing_condition: tbd
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: null
+    price_base: null
+    price_max: null
+    currency: null
+    price_date: null
+    supplier: null
+    source_id: SRC-CAPEX-MODULAR-CONFIGURATOR-BRIEF
+    quote_status: not_requested
+    notes: "Правило будущего расчёта: станция. Коэффициент не определён."
+    source_section: CAPEX-05 / Самообслуживание
+    source_item_number: 19
+    source_record_sha256: 45345dc1595ef0cc4273f7f47aa72f2229e1d19e9eaba9e2e15967e164f08a3c
+  - item_id: CAPEX-05-020
+    module_id: CAPEX-05
+    module_name: Гостевая зона и обслуживание
+    category: Гостевая зона и обслуживание
+    subcategory: Самообслуживание
+    name: Урны и сортировка отходов
+    record_type: accessory
+    parent_item_id: null
+    inclusion_status: tbd
+    requirement: conditional
+    lifecycle_status: research
+    quantity_min: null
+    quantity_base: null
+    quantity_scale_ready: null
+    unit: станция
+    source_quantity: null
+    specification: null
+    open_parameters: количество, конфигурация и характеристики — tbd
+    premises_dependency: зависит от выбранного формата точки и параметров конкретной локации
+    procurement_mode: tbd
+    existing_condition: tbd
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: null
+    price_base: null
+    price_max: null
+    currency: null
+    price_date: null
+    supplier: null
+    source_id: SRC-CAPEX-MODULAR-CONFIGURATOR-BRIEF
+    quote_status: not_requested
+    notes: "Правило будущего расчёта: станция / м² гостевой площади. Коэффициент не определён."
+    source_section: CAPEX-05 / Самообслуживание
+    source_item_number: 20
+    source_record_sha256: 28fc6e3c5fd3799ff05faf94e44dcc1486db231ba42a3a3e9206c335811d5e7e
+  - item_id: CAPEX-05-021
+    module_id: CAPEX-05
+    module_name: Гостевая зона и обслуживание
+    category: Гостевая зона и обслуживание
+    subcategory: Самообслуживание
+    name: Возврат многоразовой посуды
+    record_type: system
+    parent_item_id: null
+    inclusion_status: tbd
+    requirement: conditional
+    lifecycle_status: research
+    quantity_min: null
+    quantity_base: null
+    quantity_scale_ready: null
+    unit: станция
+    source_quantity: null
+    specification: null
+    open_parameters: количество, конфигурация и характеристики — tbd
+    premises_dependency: зависит от выбранного формата точки и параметров конкретной локации
+    procurement_mode: tbd
+    existing_condition: tbd
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: null
+    price_base: null
+    price_max: null
+    currency: null
+    price_date: null
+    supplier: null
+    source_id: SRC-CAPEX-MODULAR-CONFIGURATOR-BRIEF
+    quote_status: not_requested
+    notes: "Правило будущего расчёта: станция. Коэффициент не определён."
+    source_section: CAPEX-05 / Самообслуживание
+    source_item_number: 21
+    source_record_sha256: 836f5548ba9fec30b3b8ecadb02b5777e574292ea04a188998e6360fcd0f2e3c
+  - item_id: CAPEX-05-022
+    module_id: CAPEX-05
+    module_name: Гостевая зона и обслуживание
+    category: Гостевая зона и обслуживание
+    subcategory: Дополнительное оснащение
+    name: Гардероб
+    record_type: furniture
+    parent_item_id: null
+    inclusion_status: tbd
+    requirement: conditional
+    lifecycle_status: research
+    quantity_min: null
+    quantity_base: null
+    quantity_scale_ready: null
+    unit: пог. м
+    source_quantity: null
+    specification: null
+    open_parameters: количество, конфигурация и характеристики — tbd
+    premises_dependency: зависит от выбранного формата точки и параметров конкретной локации
+    procurement_mode: tbd
+    existing_condition: tbd
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: null
+    price_base: null
+    price_max: null
+    currency: null
+    price_date: null
+    supplier: null
+    source_id: SRC-CAPEX-MODULAR-CONFIGURATOR-BRIEF
+    quote_status: not_requested
+    notes: "Правило будущего расчёта: посетитель / погонный метр. Коэффициент не определён."
+    source_section: CAPEX-05 / Дополнительное оснащение
+    source_item_number: 22
+    source_record_sha256: a275995eebfcc646d58bdefe94bfd2c1d9e67c23a8ce665ac394cfd554827c7d
+  - item_id: CAPEX-05-023
+    module_id: CAPEX-05
+    module_name: Гостевая зона и обслуживание
+    category: Гостевая зона и обслуживание
+    subcategory: Дополнительное оснащение
+    name: Напольные и настенные вешалки
+    record_type: accessory
+    parent_item_id: null
+    inclusion_status: tbd
+    requirement: conditional
+    lifecycle_status: research
+    quantity_min: null
+    quantity_base: null
+    quantity_scale_ready: null
+    unit: шт.
+    source_quantity: null
+    specification: null
+    open_parameters: количество, конфигурация и характеристики — tbd
+    premises_dependency: зависит от выбранного формата точки и параметров конкретной локации
+    procurement_mode: tbd
+    existing_condition: tbd
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: null
+    price_base: null
+    price_max: null
+    currency: null
+    price_date: null
+    supplier: null
+    source_id: SRC-CAPEX-MODULAR-CONFIGURATOR-BRIEF
+    quote_status: not_requested
+    notes: "Правило будущего расчёта: м² гостевой площади. Коэффициент не определён."
+    source_section: CAPEX-05 / Дополнительное оснащение
+    source_item_number: 23
+    source_record_sha256: fa209a8bb1f732cb70970a133fc0652c7c27e53d59a532db9d9444d76e6dd5ab
+  - item_id: CAPEX-05-024
+    module_id: CAPEX-05
+    module_name: Гостевая зона и обслуживание
+    category: Гостевая зона и обслуживание
+    subcategory: Дополнительное оснащение
+    name: Декоративные и функциональные стеллажи
+    record_type: furniture
+    parent_item_id: null
+    inclusion_status: tbd
+    requirement: conditional
+    lifecycle_status: research
+    quantity_min: null
+    quantity_base: null
+    quantity_scale_ready: null
+    unit: м²
+    source_quantity: null
+    specification: null
+    open_parameters: количество, конфигурация и характеристики — tbd
+    premises_dependency: зависит от выбранного формата точки и параметров конкретной локации
+    procurement_mode: tbd
+    existing_condition: tbd
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: null
+    price_base: null
+    price_max: null
+    currency: null
+    price_date: null
+    supplier: null
+    source_id: SRC-CAPEX-MODULAR-CONFIGURATOR-BRIEF
+    quote_status: not_requested
+    notes: "Правило будущего расчёта: м² гостевой площади. Коэффициент не определён."
+    source_section: CAPEX-05 / Дополнительное оснащение
+    source_item_number: 24
+    source_record_sha256: ddded9393335db27a4d48cd38cf984e9d425e02953703b22e4bbedafb8cc436f
+  - item_id: CAPEX-05-025
+    module_id: CAPEX-05
+    module_name: Гостевая зона и обслуживание
+    category: Гостевая зона и обслуживание
+    subcategory: Дополнительное оснащение
+    name: Меню и навигация
+    record_type: system
+    parent_item_id: null
+    inclusion_status: tbd
+    requirement: conditional
+    lifecycle_status: research
+    quantity_min: null
+    quantity_base: null
+    quantity_scale_ready: null
+    unit: точка размещения
+    source_quantity: null
+    specification: null
+    open_parameters: количество, конфигурация и характеристики — tbd
+    premises_dependency: зависит от выбранного формата точки и параметров конкретной локации
+    procurement_mode: tbd
+    existing_condition: tbd
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: null
+    price_base: null
+    price_max: null
+    currency: null
+    price_date: null
+    supplier: null
+    source_id: SRC-CAPEX-MODULAR-CONFIGURATOR-BRIEF
+    quote_status: not_requested
+    notes: "Правило будущего расчёта: точка размещения / функциональная зона. Коэффициент не определён."
+    source_section: CAPEX-05 / Дополнительное оснащение
+    source_item_number: 25
+    source_record_sha256: 305b43c1fc0ed498a266fa629dd6bd5c855f319d6efbfdb589ac757fdc7b61bb
+  - item_id: CAPEX-05-026
+    module_id: CAPEX-05
+    module_name: Гостевая зона и обслуживание
+    category: Гостевая зона и обслуживание
+    subcategory: Дополнительное оснащение
+    name: Разделители очереди
+    record_type: accessory
+    parent_item_id: null
+    inclusion_status: tbd
+    requirement: conditional
+    lifecycle_status: research
+    quantity_min: null
+    quantity_base: null
+    quantity_scale_ready: null
+    unit: шт.
+    source_quantity: null
+    specification: null
+    open_parameters: количество, конфигурация и характеристики — tbd
+    premises_dependency: зависит от выбранного формата точки и параметров конкретной локации
+    procurement_mode: tbd
+    existing_condition: tbd
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: null
+    price_base: null
+    price_max: null
+    currency: null
+    price_date: null
+    supplier: null
+    source_id: SRC-CAPEX-MODULAR-CONFIGURATOR-BRIEF
+    quote_status: not_requested
+    notes: "Правило будущего расчёта: человек пиковой очереди. Коэффициент не определён."
+    source_section: CAPEX-05 / Дополнительное оснащение
+    source_item_number: 26
+    source_record_sha256: 449e7074552d776bfbe168fe2f34b0b8e1b86802f7f468e9ef96dcc8657b190d
+  - item_id: CAPEX-05-027
+    module_id: CAPEX-05
+    module_name: Гостевая зона и обслуживание
+    category: Гостевая зона и обслуживание
+    subcategory: Дополнительное оснащение
+    name: Мебель и оборудование доступной среды
+    record_type: furniture
+    parent_item_id: null
+    inclusion_status: tbd
+    requirement: conditional
+    lifecycle_status: research
+    quantity_min: null
+    quantity_base: null
+    quantity_scale_ready: null
+    unit: комплект
+    source_quantity: null
+    specification: null
+    open_parameters: количество, конфигурация и характеристики — tbd
+    premises_dependency: зависит от выбранного формата точки и параметров конкретной локации
+    procurement_mode: tbd
+    existing_condition: tbd
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: null
+    price_base: null
+    price_max: null
+    currency: null
+    price_date: null
+    supplier: null
+    source_id: SRC-CAPEX-MODULAR-CONFIGURATOR-BRIEF
+    quote_status: not_requested
+    notes: "Правило будущего расчёта: формат точки и параметры доступной среды. Коэффициент не определён."
+    source_section: CAPEX-05 / Дополнительное оснащение
+    source_item_number: 27
+    source_record_sha256: 86ee5b88617361ac9375e0b42b7a3093607abdbef7650e2ea6c00fa8637730e2
 open_parameters:
   - parameter_id: OP-CAPEX-01-001-01
     item_id: CAPEX-01-001
@@ -6069,6 +7186,222 @@ open_parameters:
     required_before: утверждение закупочной спецификации или соответствующего инженерного решения
     status: open
     notes: "CAPEX-04 / "
+  - parameter_id: OP-CAPEX-05-001-01
+    item_id: CAPEX-05-001
+    module_id: CAPEX-05
+    parameter: количество, конфигурация и характеристики — tbd
+    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
+    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
+    status: open
+    notes: CAPEX-05 / Гостевая мебель
+  - parameter_id: OP-CAPEX-05-002-01
+    item_id: CAPEX-05-002
+    module_id: CAPEX-05
+    parameter: количество, конфигурация и характеристики — tbd
+    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
+    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
+    status: open
+    notes: CAPEX-05 / Гостевая мебель
+  - parameter_id: OP-CAPEX-05-003-01
+    item_id: CAPEX-05-003
+    module_id: CAPEX-05
+    parameter: количество, конфигурация и характеристики — tbd
+    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
+    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
+    status: open
+    notes: CAPEX-05 / Гостевая мебель
+  - parameter_id: OP-CAPEX-05-004-01
+    item_id: CAPEX-05-004
+    module_id: CAPEX-05
+    parameter: количество, конфигурация и характеристики — tbd
+    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
+    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
+    status: open
+    notes: CAPEX-05 / Гостевая мебель
+  - parameter_id: OP-CAPEX-05-005-01
+    item_id: CAPEX-05-005
+    module_id: CAPEX-05
+    parameter: количество, конфигурация и характеристики — tbd
+    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
+    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
+    status: open
+    notes: CAPEX-05 / Гостевая мебель
+  - parameter_id: OP-CAPEX-05-006-01
+    item_id: CAPEX-05-006
+    module_id: CAPEX-05
+    parameter: количество, конфигурация и характеристики — tbd
+    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
+    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
+    status: open
+    notes: CAPEX-05 / Гостевая мебель
+  - parameter_id: OP-CAPEX-05-007-01
+    item_id: CAPEX-05-007
+    module_id: CAPEX-05
+    parameter: количество, конфигурация и характеристики — tbd
+    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
+    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
+    status: open
+    notes: CAPEX-05 / Гостевая мебель
+  - parameter_id: OP-CAPEX-05-008-01
+    item_id: CAPEX-05-008
+    module_id: CAPEX-05
+    parameter: количество, конфигурация и характеристики — tbd
+    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
+    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
+    status: open
+    notes: CAPEX-05 / Заказ и выдача
+  - parameter_id: OP-CAPEX-05-009-01
+    item_id: CAPEX-05-009
+    module_id: CAPEX-05
+    parameter: количество, конфигурация и характеристики — tbd
+    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
+    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
+    status: open
+    notes: CAPEX-05 / Заказ и выдача
+  - parameter_id: OP-CAPEX-05-010-01
+    item_id: CAPEX-05-010
+    module_id: CAPEX-05
+    parameter: количество, конфигурация и характеристики — tbd
+    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
+    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
+    status: open
+    notes: CAPEX-05 / Заказ и выдача
+  - parameter_id: OP-CAPEX-05-011-01
+    item_id: CAPEX-05-011
+    module_id: CAPEX-05
+    parameter: количество, конфигурация и характеристики — tbd
+    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
+    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
+    status: open
+    notes: CAPEX-05 / Заказ и выдача
+  - parameter_id: OP-CAPEX-05-012-01
+    item_id: CAPEX-05-012
+    module_id: CAPEX-05
+    parameter: количество, конфигурация и характеристики — tbd
+    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
+    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
+    status: open
+    notes: CAPEX-05 / Заказ и выдача
+  - parameter_id: OP-CAPEX-05-013-01
+    item_id: CAPEX-05-013
+    module_id: CAPEX-05
+    parameter: количество, конфигурация и характеристики — tbd
+    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
+    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
+    status: open
+    notes: CAPEX-05 / Заказ и выдача
+  - parameter_id: OP-CAPEX-05-014-01
+    item_id: CAPEX-05-014
+    module_id: CAPEX-05
+    parameter: количество, конфигурация и характеристики — tbd
+    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
+    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
+    status: open
+    notes: CAPEX-05 / Заказ и выдача
+  - parameter_id: OP-CAPEX-05-015-01
+    item_id: CAPEX-05-015
+    module_id: CAPEX-05
+    parameter: количество, конфигурация и характеристики — tbd
+    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
+    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
+    status: open
+    notes: CAPEX-05 / Самообслуживание
+  - parameter_id: OP-CAPEX-05-016-01
+    item_id: CAPEX-05-016
+    module_id: CAPEX-05
+    parameter: количество, конфигурация и характеристики — tbd
+    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
+    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
+    status: open
+    notes: CAPEX-05 / Самообслуживание
+  - parameter_id: OP-CAPEX-05-017-01
+    item_id: CAPEX-05-017
+    module_id: CAPEX-05
+    parameter: количество, конфигурация и характеристики — tbd
+    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
+    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
+    status: open
+    notes: CAPEX-05 / Самообслуживание
+  - parameter_id: OP-CAPEX-05-018-01
+    item_id: CAPEX-05-018
+    module_id: CAPEX-05
+    parameter: количество, конфигурация и характеристики — tbd
+    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
+    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
+    status: open
+    notes: CAPEX-05 / Самообслуживание
+  - parameter_id: OP-CAPEX-05-019-01
+    item_id: CAPEX-05-019
+    module_id: CAPEX-05
+    parameter: количество, конфигурация и характеристики — tbd
+    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
+    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
+    status: open
+    notes: CAPEX-05 / Самообслуживание
+  - parameter_id: OP-CAPEX-05-020-01
+    item_id: CAPEX-05-020
+    module_id: CAPEX-05
+    parameter: количество, конфигурация и характеристики — tbd
+    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
+    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
+    status: open
+    notes: CAPEX-05 / Самообслуживание
+  - parameter_id: OP-CAPEX-05-021-01
+    item_id: CAPEX-05-021
+    module_id: CAPEX-05
+    parameter: количество, конфигурация и характеристики — tbd
+    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
+    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
+    status: open
+    notes: CAPEX-05 / Самообслуживание
+  - parameter_id: OP-CAPEX-05-022-01
+    item_id: CAPEX-05-022
+    module_id: CAPEX-05
+    parameter: количество, конфигурация и характеристики — tbd
+    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
+    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
+    status: open
+    notes: CAPEX-05 / Дополнительное оснащение
+  - parameter_id: OP-CAPEX-05-023-01
+    item_id: CAPEX-05-023
+    module_id: CAPEX-05
+    parameter: количество, конфигурация и характеристики — tbd
+    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
+    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
+    status: open
+    notes: CAPEX-05 / Дополнительное оснащение
+  - parameter_id: OP-CAPEX-05-024-01
+    item_id: CAPEX-05-024
+    module_id: CAPEX-05
+    parameter: количество, конфигурация и характеристики — tbd
+    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
+    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
+    status: open
+    notes: CAPEX-05 / Дополнительное оснащение
+  - parameter_id: OP-CAPEX-05-025-01
+    item_id: CAPEX-05-025
+    module_id: CAPEX-05
+    parameter: количество, конфигурация и характеристики — tbd
+    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
+    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
+    status: open
+    notes: CAPEX-05 / Дополнительное оснащение
+  - parameter_id: OP-CAPEX-05-026-01
+    item_id: CAPEX-05-026
+    module_id: CAPEX-05
+    parameter: количество, конфигурация и характеристики — tbd
+    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
+    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
+    status: open
+    notes: CAPEX-05 / Дополнительное оснащение
+  - parameter_id: OP-CAPEX-05-027-01
+    item_id: CAPEX-05-027
+    module_id: CAPEX-05
+    parameter: количество, конфигурация и характеристики — tbd
+    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
+    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
+    status: open
+    notes: CAPEX-05 / Дополнительное оснащение
   - parameter_id: OP-CAPEX-01-045-02
     item_id: CAPEX-01-045
     module_id: CAPEX-01
@@ -6384,14 +7717,16 @@ open_parameters:
 missing_sections:
   - section_id: CAPEX-05
     name: Гостевой зал и мебель
-    status: not_started
-    dependencies: []
-    notes: Раздел перечислен, но не описан в CAPEX — Equipment Specification v0.1.
+    status: structured
+    dependencies:
+      - CAPEX-05
+    notes: Историческая запись сохранена; категория перенесена из not_started в структурированный research-модуль CAPEX-05 — Гостевая зона и обслуживание решением DEC-008.
   - section_id: CAPEX-06
     name: Стойка заказа, выдачи и зона самообслуживания
-    status: not_started
-    dependencies: []
-    notes: Раздел перечислен, но не описан в CAPEX — Equipment Specification v0.1.
+    status: structured
+    dependencies:
+      - CAPEX-05
+    notes: Историческая запись сохранена; категория перенесена из not_started в структурированный research-модуль CAPEX-05 — Гостевая зона и обслуживание решением DEC-008.
   - section_id: CAPEX-07
     name: Складское оборудование
     status: not_started
@@ -6640,7 +7975,10 @@ dictionaries:
     description: Статус открытого параметра.
   - dictionary: missing_section_status
     value: not_started
-    description: Статус ещё не сформированного раздела.
+    description: Статус ещё не сформированного или перенесённого в структурированный модуль раздела.
+  - dictionary: missing_section_status
+    value: structured
+    description: Статус ещё не сформированного или перенесённого в структурированный модуль раздела.
   - dictionary: unit
     value: шт.
     description: Допустимая единица количества текущей версии.
@@ -6654,7 +7992,25 @@ dictionaries:
     value: м
     description: Допустимая единица количества текущей версии.
   - dictionary: unit
+    value: м²
+    description: Допустимая единица количества текущей версии.
+  - dictionary: unit
     value: пог. м
+    description: Допустимая единица количества текущей версии.
+  - dictionary: unit
+    value: посадочное место
+    description: Допустимая единица количества текущей версии.
+  - dictionary: unit
+    value: рабочее место
+    description: Допустимая единица количества текущей версии.
+  - dictionary: unit
+    value: пост выдачи
+    description: Допустимая единица количества текущей версии.
+  - dictionary: unit
+    value: станция
+    description: Допустимая единица количества текущей версии.
+  - dictionary: unit
+    value: точка размещения
     description: Допустимая единица количества текущей версии.
   - dictionary: unit
     value: tbd

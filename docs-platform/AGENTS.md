@@ -23,3 +23,7 @@
 21. Rollback выполняется новым governed reverse change set: rollback request → reverse preview → approved rollback decision → reverse apply → validation → verification → rollback receipt. Rollback не удаляет исторические события и никогда не выполняется через `git reset`.
 22. При начале нового Codex-чата сначала прочитать доступный корневой `AGENTS.md`, этот файл, `context/CODEX_HANDOFF.md`, актуальный `changelog/TIMELINE.md`, последние approved decisions, последние applied change sets и затем проверить `git status`.
 23. Git commit текущей итерации не может сам содержать собственный hash. Поле `git_commit_hash` внутри событий этого же commit остаётся `null`; hash фиксируется следующим append-only событием, если это требуется следующей итерацией.
+24. CAPEX строится из четырёх уровней: единый Equipment Register → функциональные модули → профили форматов точек → отдельные конфигурации конкретных объектов.
+25. Конфигурация конкретной точки никогда не изменяет Equipment Register, базовый модуль или профиль формата напрямую. Все отличия хранятся в `capex-configuration-overrides.yaml` и применяются только при генерации BOM.
+26. Функциональные модули ссылаются на оборудование по стабильному `item_id`, форматы — на модули по `module_id`; копии оборудования в модулях, форматах и конфигурациях запрещены.
+27. Финансовая модель должна получать комплектацию конкретного объекта из сгенерированного Equipment BOM, а не из общего реестра оборудования или текстовой CAPEX-спецификации.

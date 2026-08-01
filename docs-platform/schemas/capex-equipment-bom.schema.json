@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["schema_version", "document", "active_modules", "equipment"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "document": { "type": "object", "required": ["project", "title", "status", "configuration_id", "format_id", "warning"], "properties": { "project": { "const": "Колобочная" }, "title": { "const": "Generated Equipment BOM" }, "status": { "const": "research" }, "configuration_id": { "type": "string" }, "format_id": { "type": "string" }, "warning": { "type": "string" } }, "additionalProperties": true },
+    "active_modules": { "type": "array", "items": { "type": "object", "required": ["module_id", "source"], "properties": { "module_id": { "type": "string" }, "source": { "type": "string" } }, "additionalProperties": false } },
+    "equipment": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["item_id", "name", "modules", "inclusion_source", "requirement", "calculated_quantity", "unit", "quantity_rule", "calculation_status", "override", "inclusion_status", "independent_procurement", "open_parameters", "specification", "notes"],
+        "properties": {
+          "item_id": { "type": "string" }, "name": { "type": "string" }, "modules": { "type": "string" }, "inclusion_source": { "type": "string" },
+          "requirement": { "type": "string" }, "calculated_quantity": { "type": ["number", "null"] }, "unit": { "type": "string" },
+          "quantity_rule": { "type": "string" }, "calculation_status": { "enum": ["Рассчитано", "Требует уточнения"] },
+          "override": { "type": ["string", "null"] }, "inclusion_status": { "type": "string" }, "independent_procurement": { "type": "boolean" },
+          "open_parameters": { "type": ["string", "null"] }, "specification": { "type": ["string", "null"] }, "notes": { "type": ["string", "null"] }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

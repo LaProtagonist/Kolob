@@ -96,3 +96,20 @@ decisions:
     source_ids:
       - SRC-CAPEX-EQUIPMENT-REGISTER-BRIEF
     updated_at: 2026-08-01
+  - id: DEC-008
+    title: Добавить CAPEX-05 и модульный конфигуратор форматов точек
+    status: approved
+    decision: Добавить CAPEX-05-001—CAPEX-05-027 со статусом research; сохранить без смысловых изменений 124 записи CAPEX v0.1; ввести единый Equipment Register, библиотеку функциональных модулей, семь профилей форматов, отдельные конфигурации и configuration overrides; формировать equipment BOM конкретного объекта; обновить только существующую Google Sheet и переименовать её вкладки на русский язык.
+    rationale: Прямое утверждение владельца проекта от 2026-08-01. Решение утверждает архитектуру и 27 research-записей, но не утверждает цены, модели, поставщиков, коэффициенты, точные параметры или конфигурацию реального объекта и итоговый CAPEX.
+    affected_documents:
+      - DOC-CAPEX-EQUIPMENT-REGISTER
+      - DOC-CAPEX-MODULES
+      - DOC-CAPEX-POINT-FORMATS
+      - DOC-CAPEX-CONFIGURATIONS
+      - DOC-CAPEX-GENERATED-EQUIPMENT-BOM
+    approved_by: project owner
+    approved_at: 2026-08-01
+    supersedes: null
+    source_ids:
+      - SRC-CAPEX-MODULAR-CONFIGURATOR-BRIEF
+    updated_at: 2026-08-01

@@ -1,0 +1,14 @@
+schema_version: 1
+document:
+  project: Колобочная
+  document_id: DOC-CAPEX-CONFIGURATIONS
+  title: CAPEX Configuration Overrides
+  russian_title: CAPEX — Переопределения конфигураций
+  version: "0.1"
+  status: research
+  document_type: Working CAPEX configuration overrides
+  decision_id: DEC-008
+  iteration_id: ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01
+  proposal_id: PROP-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01
+  key: configuration_id + item_id
+overrides: []

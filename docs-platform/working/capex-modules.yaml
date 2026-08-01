@@ -1,0 +1,73 @@
+schema_version: 1
+document:
+  project: Колобочная
+  document_id: DOC-CAPEX-MODULES
+  title: CAPEX Modules
+  russian_title: CAPEX — Функциональные модули
+  version: "0.1"
+  status: research
+  document_type: Working CAPEX functional module library
+  decision_id: DEC-008
+  iteration_id: ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01
+  proposal_id: PROP-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01
+modules:
+  - module_id: MOD-PREP
+    name: Заготовочный цех
+    purpose: Производство и подготовка компонентов.
+    lifecycle_status: research
+    notes: null
+  - module_id: MOD-RETAIL-HOT
+    name: Торговая кухня и приготовление колобков
+    purpose: Финальное горячее приготовление и рабочий инвентарь торговой кухни.
+    lifecycle_status: research
+    notes: null
+  - module_id: MOD-BAR
+    name: Холодные и горячие напитки
+    purpose: Напитки, лёд и базовый либо опциональный барный инвентарь.
+    lifecycle_status: research
+    notes: Алкогольное направление остаётся отдельным условным решением.
+  - module_id: MOD-GROW
+    name: Выращивание зелени и микрозелени
+    purpose: Исследовательский модуль выращивания ингредиентов.
+    lifecycle_status: research
+    notes: null
+  - module_id: MOD-POS
+    name: Касса, складской и производственный учёт
+    purpose: Кассовые посты и терминал учёта заготовочного цеха.
+    lifecycle_status: research
+    notes: null
+  - module_id: MOD-KDS
+    name: Управление заказами на рабочих постах
+    purpose: KDS-экраны и распределение заказов по рабочим зонам.
+    lifecycle_status: research
+    notes: null
+  - module_id: MOD-GUEST
+    name: Гостевой зал и посадочные места
+    purpose: Гостевая мебель и дополнительное оснащение собственной посадочной зоны.
+    lifecycle_status: research
+    notes: null
+  - module_id: MOD-TAKEAWAY
+    name: Заказ, выдача, ожидание и самообслуживание
+    purpose: Стойки заказа и выдачи, ожидание и станции самообслуживания.
+    lifecycle_status: research
+    notes: null
+  - module_id: MOD-STORAGE
+    name: Складское оснащение
+    purpose: Будущий функциональный модуль складского оснащения.
+    lifecycle_status: not_started
+    notes: Соответствующий CAPEX-раздел ещё не сформирован.
+  - module_id: MOD-WASH
+    name: Посудомоечная и санитарная зона
+    purpose: Будущий функциональный модуль посудомоечного и санитарного оснащения.
+    lifecycle_status: not_started
+    notes: Соответствующие CAPEX-разделы ещё не сформированы.
+  - module_id: MOD-STAFF
+    name: Служебные помещения и оснащение персонала
+    purpose: Будущий функциональный модуль служебных помещений.
+    lifecycle_status: not_started
+    notes: Соответствующий CAPEX-раздел ещё не сформирован.
+  - module_id: MOD-ENGINEERING
+    name: Инженерная инфраструктура
+    purpose: Будущий функциональный модуль инженерной инфраструктуры конкретной локации.
+    lifecycle_status: not_started
+    notes: Инженерные разделы ещё не сформированы и будут зависеть от помещения.

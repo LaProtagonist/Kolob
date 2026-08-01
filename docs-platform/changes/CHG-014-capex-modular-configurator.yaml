@@ -1,0 +1,190 @@
+change_id: CHG-014
+title: "Зарегистрировать модульную архитектуру CAPEX и generated BOM"
+status: approved
+created_at: 2026-08-01
+decision_id: DEC-008
+iteration_id: ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01
+proposal_id: PROP-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01
+approved_payload_path: docs-platform/changelog/payloads/ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01-approved.yaml
+approved_payload_sha256: 73f5a811214f548ba3c8e1cde8e16317e5bbc3b98cf3f5ecc67c4c12ffdb6453
+operations:
+  - type: update
+    entity: documents
+    id: DOC-CAPEX-EQUIPMENT-REGISTER
+    value:
+      sections:
+        - Описание
+        - Конфигуратор
+        - Комплектация
+        - Переопределения
+        - Оснащение
+        - Модули
+        - Форматы точек
+        - Состав форматов
+        - Открытые параметры
+        - Недостающие разделы
+        - Справочники
+      updated_at: 2026-08-01
+  - type: add
+    entity: documents
+    value:
+      id: DOC-CAPEX-MODULES
+      title: CAPEX Modules
+      type: working_capex_functional_modules
+      status: research
+      google_file_id: null
+      template: null
+      sections:
+        - MOD-PREP
+        - MOD-RETAIL-HOT
+        - MOD-BAR
+        - MOD-GROW
+        - MOD-POS
+        - MOD-KDS
+        - MOD-GUEST
+        - MOD-TAKEAWAY
+        - MOD-STORAGE
+        - MOD-WASH
+        - MOD-STAFF
+        - MOD-ENGINEERING
+      version: "0.1"
+      local_path: docs-platform/working/capex-modules.yaml
+      updated_at: 2026-08-01
+  - type: add
+    entity: documents
+    value:
+      id: DOC-CAPEX-POINT-FORMATS
+      title: CAPEX Point Formats
+      type: working_capex_point_formats
+      status: research
+      google_file_id: null
+      template: null
+      sections:
+        - FMT-PREP-CENTER
+        - FMT-INTEGRATED
+        - FMT-RESTAURANT-SEATING
+        - FMT-FOOD-COURT
+        - FMT-STREET-PICKUP
+        - FMT-FOODTRUCK
+        - FMT-CUSTOM
+      version: "0.1"
+      local_path: docs-platform/working/capex-point-formats.yaml
+      updated_at: 2026-08-01
+  - type: add
+    entity: documents
+    value:
+      id: DOC-CAPEX-CONFIGURATIONS
+      title: CAPEX Configurations
+      type: working_capex_object_configurations
+      status: research
+      google_file_id: null
+      template: null
+      sections:
+        - CFG-TEMPLATE-001
+        - Configuration overrides
+      version: "0.1"
+      local_path: docs-platform/working/capex-configurations.yaml
+      updated_at: 2026-08-01
+  - type: add
+    entity: documents
+    value:
+      id: DOC-CAPEX-GENERATED-EQUIPMENT-BOM
+      title: CAPEX Generated Equipment BOM
+      type: generated_capex_equipment_bom
+      status: research
+      google_file_id: null
+      template: null
+      sections:
+        - Active modules
+        - Equipment
+      version: "0.1"
+      local_path: docs-platform/working/configurations/CFG-TEMPLATE-001/equipment-bom.yaml
+      updated_at: 2026-08-01
+  - type: add
+    entity: dependencies
+    value:
+      id: DEP-CAPEX-REGISTER-MODULES
+      source_document_id: DOC-CAPEX-EQUIPMENT-REGISTER
+      priority: governing_source
+      status: approved
+      version: "0.1"
+      target_documents:
+        - title: CAPEX Modules
+          document_id: DOC-CAPEX-MODULES
+      updated_at: 2026-08-01
+  - type: add
+    entity: dependencies
+    value:
+      id: DEP-CAPEX-MODULES-POINT-FORMATS
+      source_document_id: DOC-CAPEX-MODULES
+      priority: governing_source
+      status: approved
+      version: "0.1"
+      target_documents:
+        - title: CAPEX Point Formats
+          document_id: DOC-CAPEX-POINT-FORMATS
+      updated_at: 2026-08-01
+  - type: add
+    entity: dependencies
+    value:
+      id: DEP-CAPEX-POINT-FORMATS-CONFIGURATIONS
+      source_document_id: DOC-CAPEX-POINT-FORMATS
+      priority: governing_source
+      status: approved
+      version: "0.1"
+      target_documents:
+        - title: CAPEX Configurations
+          document_id: DOC-CAPEX-CONFIGURATIONS
+      updated_at: 2026-08-01
+  - type: add
+    entity: dependencies
+    value:
+      id: DEP-CAPEX-REGISTER-CONFIGURATIONS
+      source_document_id: DOC-CAPEX-EQUIPMENT-REGISTER
+      priority: governing_source
+      status: approved
+      version: "0.1"
+      target_documents:
+        - title: CAPEX Configurations
+          document_id: DOC-CAPEX-CONFIGURATIONS
+      updated_at: 2026-08-01
+  - type: add
+    entity: dependencies
+    value:
+      id: DEP-CAPEX-CONFIGURATIONS-GENERATED-BOM
+      source_document_id: DOC-CAPEX-CONFIGURATIONS
+      priority: governing_source
+      status: approved
+      version: "0.1"
+      target_documents:
+        - title: CAPEX Generated Equipment BOM
+          document_id: DOC-CAPEX-GENERATED-EQUIPMENT-BOM
+      updated_at: 2026-08-01
+  - type: add
+    entity: dependencies
+    value:
+      id: DEP-CAPEX-BOM-FUTURE-FINANCIAL-MODEL
+      source_document_id: DOC-CAPEX-GENERATED-EQUIPMENT-BOM
+      priority: governing_source
+      status: approved
+      version: "0.1"
+      target_documents:
+        - title: Financial Model
+          document_id: null
+      updated_at: 2026-08-01
+  - type: supersede
+    entity: dependencies
+    id: DEP-CAPEX-REGISTER-DERIVED-DOCUMENTS
+    value:
+      updated_at: 2026-08-01
+  - type: update
+    entity: decisions
+    id: DEC-008
+    value:
+      affected_documents:
+        - DOC-CAPEX-EQUIPMENT-REGISTER
+        - DOC-CAPEX-MODULES
+        - DOC-CAPEX-POINT-FORMATS
+        - DOC-CAPEX-CONFIGURATIONS
+        - DOC-CAPEX-GENERATED-EQUIPMENT-BOM
+      updated_at: 2026-08-01

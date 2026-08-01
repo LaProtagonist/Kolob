@@ -129,11 +129,80 @@ documents:
     google_file_id: 1J7sHM8P2IoMfHVLEHfY-UJLIZ-HBid89G6n6BS4BSJA
     template: null
     sections:
-      - README
-      - EQUIPMENT
-      - OPEN_PARAMETERS
-      - MISSING_SECTIONS
-      - DICTIONARIES
+      - Описание
+      - Конфигуратор
+      - Комплектация
+      - Переопределения
+      - Оснащение
+      - Модули
+      - Форматы точек
+      - Состав форматов
+      - Открытые параметры
+      - Недостающие разделы
+      - Справочники
     version: "0.1"
     local_path: docs-platform/working/capex-equipment-register.yaml
+    updated_at: 2026-08-01
+  - id: DOC-CAPEX-MODULES
+    title: CAPEX Modules
+    type: working_capex_functional_modules
+    status: research
+    google_file_id: null
+    template: null
+    sections:
+      - MOD-PREP
+      - MOD-RETAIL-HOT
+      - MOD-BAR
+      - MOD-GROW
+      - MOD-POS
+      - MOD-KDS
+      - MOD-GUEST
+      - MOD-TAKEAWAY
+      - MOD-STORAGE
+      - MOD-WASH
+      - MOD-STAFF
+      - MOD-ENGINEERING
+    version: "0.1"
+    local_path: docs-platform/working/capex-modules.yaml
+    updated_at: 2026-08-01
+  - id: DOC-CAPEX-POINT-FORMATS
+    title: CAPEX Point Formats
+    type: working_capex_point_formats
+    status: research
+    google_file_id: null
+    template: null
+    sections:
+      - FMT-PREP-CENTER
+      - FMT-INTEGRATED
+      - FMT-RESTAURANT-SEATING
+      - FMT-FOOD-COURT
+      - FMT-STREET-PICKUP
+      - FMT-FOODTRUCK
+      - FMT-CUSTOM
+    version: "0.1"
+    local_path: docs-platform/working/capex-point-formats.yaml
+    updated_at: 2026-08-01
+  - id: DOC-CAPEX-CONFIGURATIONS
+    title: CAPEX Configurations
+    type: working_capex_object_configurations
+    status: research
+    google_file_id: null
+    template: null
+    sections:
+      - CFG-TEMPLATE-001
+      - Configuration overrides
+    version: "0.1"
+    local_path: docs-platform/working/capex-configurations.yaml
+    updated_at: 2026-08-01
+  - id: DOC-CAPEX-GENERATED-EQUIPMENT-BOM
+    title: CAPEX Generated Equipment BOM
+    type: generated_capex_equipment_bom
+    status: research
+    google_file_id: null
+    template: null
+    sections:
+      - Active modules
+      - Equipment
+    version: "0.1"
+    local_path: docs-platform/working/configurations/CFG-TEMPLATE-001/equipment-bom.yaml
     updated_at: 2026-08-01

@@ -1,0 +1,109 @@
+receipt_version: 1
+iteration_id: ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01
+proposal_id: PROP-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01
+decision_id: DEC-008
+change_set_id: CHG-014
+status: verified
+verified_at: 2026-08-01T20:49:18.835Z
+actor: Codex
+tool: docs-platform modular CAPEX verification workflow
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01-approved.yaml
+  sha256: 73f5a811214f548ba3c8e1cde8e16317e5bbc3b98cf3f5ecc67c4c12ffdb6453
+source:
+  path: docs-platform/working/capex-equipment-specification.md
+  sha256: 2157364e09699173fecfbfe861edf4e6fac85a0437e23aebe100caebeab599d6
+outputs:
+  equipment_register_yaml:
+    path: docs-platform/working/capex-equipment-register.yaml
+    sha256: 8491d105566ce22909f67a679db46f401d1aa54cfe12878c78abc52c4779acb0
+  equipment_register_csv:
+    path: docs-platform/working/capex-equipment-register.csv
+    sha256: 0e62de7f83d87db0b6598fc993f19bb201e9eacd6e3cb9bd0d3599f0f9c3a383
+  modules:
+    path: docs-platform/working/capex-modules.yaml
+    sha256: f6596a417019d440bc30653c183ba1b8f79e538a78b4cf4d1354996f0eb0477f
+  module_items:
+    path: docs-platform/working/capex-module-items.yaml
+    sha256: ef6412eca819dfac4e54c4c00bfbfd11e9c8101ee1bc517201ecf010feba33c5
+  point_formats:
+    path: docs-platform/working/capex-point-formats.yaml
+    sha256: 4b6d5a8806f696f499dbbab8fa061020c7ba77b670eb2a1f7d3ccdcc78b2e523
+  configurations:
+    path: docs-platform/working/capex-configurations.yaml
+    sha256: 35fe08382f012a1b3a1dfbbaea86251a5bf910bdb35d3ca9886f67b7b688ca8a
+  configuration_overrides:
+    path: docs-platform/working/capex-configuration-overrides.yaml
+    sha256: de97265a2e2a0bdb5ae67fcf74ffd368f1fa7f4243c4d1b78a6ecad8e12b1df4
+  template_bom_yaml:
+    path: docs-platform/working/configurations/CFG-TEMPLATE-001/equipment-bom.yaml
+    sha256: d01ba75f3b0a081c3e885c64d19fdaaa9e54bb8a8121128f28e6ea5c4e1f7d6b
+  template_bom_csv:
+    path: docs-platform/working/configurations/CFG-TEMPLATE-001/equipment-bom.csv
+    sha256: 1f72933d8e8f39596332c3ca6e74e9f61b9d78c27bacecb8c799265a5876315e
+coverage:
+  prior_source_record_count: 124
+  added_capex_05_record_count: 27
+  equipment_record_count: 151
+  mapped_equipment_record_count: 151
+  unmapped_record_count: 0
+  module_count: 12
+  point_format_count: 7
+  configuration_count: 1
+  module_item_link_count: 153
+  template_bom_record_count: 0
+google:
+  file_id: 1J7sHM8P2IoMfHVLEHfY-UJLIZ-HBid89G6n6BS4BSJA
+  mime_type: application/vnd.google-apps.spreadsheet
+  receipt: docs-platform/changelog/google-sync/2026-08-01-DOC-CAPEX-EQUIPMENT-REGISTER-MODULAR-CONFIGURATOR.yaml
+  action: update
+  readback_hash: c604177c441ae825da10ae3da9f41d5123a218eba933132e13dadd8e4d59ec73
+  sheets:
+    - Описание
+    - Конфигуратор
+    - Комплектация
+    - Переопределения
+    - Оснащение
+    - Модули
+    - Форматы точек
+    - Состав форматов
+    - Открытые параметры
+    - Недостающие разделы
+    - Справочники
+  folder_guard: passed
+  readback: passed
+  localized_sheet_order: passed
+  legacy_sheets_absent: true
+  duplicate_file_created: false
+  manual_override_rows_preserved: 0
+validation:
+  root_tests: 9 routes passed, 0 failed
+  root_typescript: passed
+  docs_platform_tests: 74 passed, 0 failed
+  docs_platform_typescript: passed
+  mcp_tests: 21 passed, 0 failed
+  mcp_typescript: passed
+  registry: passed
+  schemas_and_references: passed
+  source_markdown_unchanged: passed
+  duplicate_ids_absent: passed
+  prices_absent: passed
+  total_capex_absent: passed
+  numeric_tbd_absent: passed
+  diff_check: passed
+  timeline: passed
+rollback:
+  modular_source_receipt: docs-platform/changelog/iteration-receipts/ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01.yaml
+  registry_source_receipt: docs-platform/changelog/change-receipts/CHG-014.yaml
+  persistent_payload_root: docs-platform/changelog/rollback-payloads/ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01
+  persistent_payload_files: 2
+  reverse_change_set_status: previewed
+  expected_original_modular_hash: 3f685e309f39983385ca8a11a896798f1b4cf381f7533ab6df9dcd15d1ff3fae
+  simulated_restored_modular_hash: 3f685e309f39983385ca8a11a896798f1b4cf381f7533ab6df9dcd15d1ff3fae
+  expected_original_registry_hash: ab9321f87be585be6ad7b8d2bc6e863c3d2c49fb572bc0746a3cc74f4acb71f9
+  simulated_restored_registry_hash: ab9321f87be585be6ad7b8d2bc6e863c3d2c49fb572bc0746a3cc74f4acb71f9
+  restores_original_hash: true
+  requires_new_approved_rollback_decision: true
+  preserves_history: true
+git_commit_hash: null
+git_commit_note: Hash текущего commit невозможно включить в сам commit; при необходимости он фиксируется следующим append-only событием.

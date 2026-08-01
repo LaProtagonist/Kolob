@@ -1,0 +1,154 @@
+schema_version: 1
+document:
+  project: Колобочная
+  document_id: DOC-CAPEX-POINT-FORMATS
+  title: CAPEX Point Formats
+  russian_title: CAPEX — Профили форматов точек
+  version: "0.1"
+  status: research
+  document_type: Working CAPEX point format profiles
+  decision_id: DEC-008
+  iteration_id: ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01
+  proposal_id: PROP-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01
+formats:
+  - format_id: FMT-PREP-CENTER
+    name: Заготовочный цех
+    lifecycle_status: research
+    manual_selection: false
+    purpose: Производство и подготовка компонентов без собственной полноценной розничной точки.
+    required_modules:
+      - MOD-PREP
+      - MOD-POS
+      - MOD-STORAGE
+      - MOD-WASH
+      - MOD-ENGINEERING
+    optional_modules:
+      - MOD-GROW
+      - MOD-STAFF
+    conditional_modules: []
+    excluded_modules:
+      - MOD-GUEST
+      - MOD-TAKEAWAY
+    exclusion_mode: excluded
+    notes: null
+  - format_id: FMT-INTEGRATED
+    name: Совмещённый объект
+    lifecycle_status: research
+    manual_selection: false
+    purpose: Заготовочный цех и торговая точка в одном помещении. Может работать с посадочным залом или без него.
+    required_modules:
+      - MOD-PREP
+      - MOD-RETAIL-HOT
+      - MOD-POS
+      - MOD-KDS
+      - MOD-TAKEAWAY
+      - MOD-STORAGE
+      - MOD-WASH
+      - MOD-ENGINEERING
+    optional_modules:
+      - MOD-BAR
+      - MOD-GUEST
+      - MOD-GROW
+      - MOD-STAFF
+    conditional_modules: []
+    excluded_modules: []
+    exclusion_mode: none
+    notes: null
+  - format_id: FMT-RESTAURANT-SEATING
+    name: Торговая точка с посадочным залом
+    lifecycle_status: research
+    manual_selection: false
+    purpose: Полноценная торговая точка с собственной гостевой зоной, получающая часть компонентов из централизованного производства.
+    required_modules:
+      - MOD-RETAIL-HOT
+      - MOD-POS
+      - MOD-KDS
+      - MOD-GUEST
+      - MOD-TAKEAWAY
+      - MOD-WASH
+      - MOD-ENGINEERING
+    optional_modules:
+      - MOD-BAR
+      - MOD-GROW
+      - MOD-STORAGE
+      - MOD-STAFF
+    conditional_modules:
+      - MOD-PREP
+    excluded_modules: []
+    exclusion_mode: none
+    notes: null
+  - format_id: FMT-FOOD-COURT
+    name: Точка на фудкорте
+    lifecycle_status: research
+    manual_selection: false
+    purpose: Торговая точка, использующая общую посадочную зону фудкорта.
+    required_modules:
+      - MOD-RETAIL-HOT
+      - MOD-POS
+      - MOD-KDS
+      - MOD-TAKEAWAY
+      - MOD-ENGINEERING
+    optional_modules:
+      - MOD-BAR
+      - MOD-STORAGE
+      - MOD-WASH
+    conditional_modules: []
+    excluded_modules:
+      - MOD-GUEST
+      - MOD-GROW
+      - MOD-PREP
+    exclusion_mode: excluded_by_default
+    notes: Собственная гостевая мебель и гардероб по умолчанию не включаются.
+  - format_id: FMT-STREET-PICKUP
+    name: Уличная точка выдачи / павильон
+    lifecycle_status: research
+    manual_selection: false
+    purpose: Точка, ориентированная преимущественно на заказ и выдачу без посадочного зала.
+    required_modules:
+      - MOD-RETAIL-HOT
+      - MOD-POS
+      - MOD-KDS
+      - MOD-TAKEAWAY
+      - MOD-ENGINEERING
+    optional_modules:
+      - MOD-BAR
+      - MOD-STORAGE
+      - MOD-WASH
+    conditional_modules: []
+    excluded_modules:
+      - MOD-GUEST
+      - MOD-GROW
+      - MOD-PREP
+    exclusion_mode: excluded_by_default
+    notes: null
+  - format_id: FMT-FOODTRUCK
+    name: Фудтрак
+    lifecycle_status: research
+    manual_selection: false
+    purpose: Мобильная торговая точка с ограниченной площадью и максимально компактным составом оборудования.
+    required_modules:
+      - MOD-RETAIL-HOT
+      - MOD-POS
+      - MOD-TAKEAWAY
+      - MOD-ENGINEERING
+    optional_modules:
+      - MOD-BAR
+      - MOD-KDS
+    conditional_modules: []
+    excluded_modules:
+      - MOD-GUEST
+      - MOD-GROW
+      - MOD-PREP
+    exclusion_mode: excluded_by_default
+    notes: Тяжёлое производственное оборудование и полноценный заготовочный цикл не включаются без отдельного override.
+  - format_id: FMT-CUSTOM
+    name: Произвольная конфигурация
+    lifecycle_status: research
+    manual_selection: true
+    purpose: Ручная сборка объекта из любых доступных функциональных модулей.
+    required_modules: []
+    optional_modules: []
+    conditional_modules: []
+    excluded_modules: []
+    exclusion_mode: none
+    notes: Все модули выбираются вручную.
