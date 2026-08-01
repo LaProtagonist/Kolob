@@ -2,11 +2,11 @@
 
 Статус: операционный навигационный документ
 
-Дата проверки: 2026-07-31
+Дата проверки: 2026-08-01
 
-Проверенный Git commit: `ed6d00607a5cd8cc635f5fdc79877ccf467baabd` (`Last web fix`)
+Базовый Git commit перед этой актуализацией: `9426e33824d38e241c90a625b121d14e70ea4639` (`docs(docs-platform): add codex project handoff`)
 
-Проверенная ветка: `master`, синхронизирована с `origin/master`
+Проверенная ветка: `master`; на момент начала проверки ahead/behind относительно `origin/master`: `1/0`
 
 > При начале нового Codex-чата сначала прочитать AGENTS.md и docs-platform/context/CODEX_HANDOFF.md, затем проверить git status и актуальность registry.
 
@@ -97,7 +97,7 @@
 - нет `PRP-BMA-001`—`PRP-BMA-010`;
 - нет документа в `registry/documents.yaml`;
 - нет соответствующего decision и change set;
-- Git-история не содержит `PRP-BMA-001`.
+- до первого handoff-коммита Git-история не содержала `PRP-BMA-001`; в текущей истории эта строка встречается только в данном операционном документе как фиксация отсутствия, а не как canonical text.
 
 `registry/dependencies.yaml` содержит только целевую зависимость от Foundation с названием `Business Model Architecture` и пустым `document_id`. Поэтому внешнюю или чат-версию нельзя восстанавливать по памяти: для регистрации нужен точный утверждённый исходный текст и отдельный governed change set.
 
@@ -121,7 +121,7 @@ Approved change sets:
 
 ## 7. Состояние registry
 
-Проверено 2026-07-31 командой `npm run registry:validate`: `OK`.
+Проверено 2026-08-01 командой `npm run registry:validate`: `OK`.
 
 | Registry | Количество | Состояние |
 |---|---:|---|
@@ -163,7 +163,7 @@ Approved facts: правильное название «Колобочная», 
 
 ## 10. Команды проверки
 
-Использовать современный Node.js; проверка 2026-07-31 выполнена на Node `24.14.0`. Системный Node `18.18.2` недостаточен для Vite 7. Если `node_modules` отсутствует, выполнять `npm ci` в соответствующем package, не обновляя зависимости произвольно.
+Использовать современный Node.js; проверка 2026-08-01 выполнена на Node `22.15.1` и npm `10.9.2`. Системный Node `18.18.2` недостаточен для Vite 7. Если `node_modules` отсутствует, выполнять `npm ci` в соответствующем package, не обновляя зависимости произвольно.
 
 Сайт, из корня репозитория:
 
@@ -190,7 +190,7 @@ npm test
 npm run check
 ```
 
-Результаты 2026-07-31:
+Результаты 2026-08-01:
 
 - сайт: 9 маршрутов, mobile menu и form fallback — без failures;
 - root TypeScript — OK;
@@ -229,14 +229,16 @@ Business Model Architecture пока не зарегистрирована. По
 - Не определены первичные источники для истории, медийных охватов, состава продукта и операционных данных.
 - Не указан именованный владелец/утверждающий будущих решений, кроме общей роли `project owner`.
 - Локальная Google/MCP-конфигурация на этом компьютере не восстановлена.
+- В `changes.log` и датированном changelog зафиксировано применение `CHG-GOOGLE-TEST-DOCUMENTS`, но одноимённого change set в `docs-platform/changes/` нет; запись связана с `DEC-002`, хотя это решение относится к сравнению сценариев помещения. Это audit gap, который нельзя исправлять задним числом в onboarding.
 - `docs-platform/AUDIT.md` и `rules-project.md` содержат старый Windows-путь; перечисленные в аудите исходные `analysis/`, `Madia/` и `reference/` не входят в текущий Git clone.
 - `docs-platform/README.md`, `SELF_REVIEW.md` и `changelog/README.md` содержат исторические формулировки, устаревшие относительно уже реализованных тестов, MCP и Foundation. Не исправлять их в onboarding; оформить отдельное техническое изменение.
 
 ## 15. Git-состояние на дату проверки
 
-- Repository HEAD до создания этого handoff был чистым.
+- Рабочее дерево до актуализации handoff было чистым.
 - Ветка: `master`.
-- Upstream: `origin/master`, ahead/behind `0/0`.
-- Последний commit: `ed6d00607a5cd8cc635f5fdc79877ccf467baabd`, 2026-07-24, `Last web fix`; он относится к сайту и `src/content/`.
+- Upstream на момент начала проверки: `origin/master`, ahead/behind `1/0`.
+- Базовый commit проверки: `9426e33824d38e241c90a625b121d14e70ea4639`, 2026-07-31, `docs(docs-platform): add codex project handoff`; он добавил только этот handoff.
+- Последний содержательный commit сайта: `ed6d00607a5cd8cc635f5fdc79877ccf467baabd`, 2026-07-24, `Last web fix`; он относится к сайту и `src/content/`.
 - Последний содержательный commit docs-platform: `6da1821cad295d7cee2dfabd7837eb9438be91b7`, 2026-07-23, `feat(docs-platform): add Foundation v1.0`.
-- Дата проверки: 2026-07-31.
+- Дата проверки: 2026-08-01.
