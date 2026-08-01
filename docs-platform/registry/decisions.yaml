@@ -46,3 +46,18 @@ decisions:
     source_ids:
       - SRC-FOUNDATION-V1-APPROVAL
     updated_at: 2026-07-23
+  - id: DEC-004
+    title: Зарегистрировать Business Model Architecture v1.0 как управляющий документ
+    status: approved
+    decision: Создать и зарегистрировать Business Model Architecture v1.0 как
+      внутренний управляющий документ архитектуры бизнес-модели проекта с
+      десятью утверждёнными неизменяемыми положениями PRP-BMA-001—PRP-BMA-010.
+    rationale: Прямое утверждённое задание владельца проекта от 2026-08-01.
+    affected_documents:
+      - DOC-BUSINESS-MODEL-ARCHITECTURE
+    approved_by: project owner
+    approved_at: 2026-08-01
+    supersedes: null
+    source_ids:
+      - SRC-BMA-V1-APPROVAL
+    updated_at: 2026-08-01

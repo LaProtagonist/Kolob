@@ -4,9 +4,9 @@
 
 Дата проверки: 2026-08-01
 
-Базовый Git commit перед этой актуализацией: `9426e33824d38e241c90a625b121d14e70ea4639` (`docs(docs-platform): add codex project handoff`)
+Базовый Git commit перед регистрацией Business Model Architecture: `9f627217a6086b257ab5d33d0447efe86230d965` (`docs(docs-platform): add codex project handoff`)
 
-Проверенная ветка: `master`; на момент начала проверки ahead/behind относительно `origin/master`: `1/0`
+Проверенная ветка: `master`; на момент начала BMA-задачи ahead/behind относительно `origin/master`: `2/0`
 
 > При начале нового Codex-чата сначала прочитать AGENTS.md и docs-platform/context/CODEX_HANDOFF.md, затем проверить git status и актуальность registry.
 
@@ -43,7 +43,7 @@
 
 Практическая карта:
 
-- Базовые принципы проекта: `docs-platform/00-foundation.md` и точные тексты в `docs-platform/registry/principles.yaml`.
+- Управляющие документы проекта: `docs-platform/00-foundation.md`, `docs-platform/01-business-model-architecture.md` и точные тексты их PRP-блоков в `docs-platform/registry/principles.yaml`.
 - Факты, допущения, решения, документы, источники и зависимости: `docs-platform/registry/*.yaml`.
 - Утверждённый публичный текст: `src/content/approved-copy.ts`; не перефразировать без отдельного согласования.
 - Текущее опубликованное содержание: остальные файлы `src/content/*.ts`.
@@ -91,17 +91,18 @@
 
 ### Business Model Architecture v1.0
 
-В текущем репозитории отсутствует:
+- Файл: `docs-platform/01-business-model-architecture.md`.
+- Registry ID: `DOC-BUSINESS-MODEL-ARCHITECTURE`.
+- Статус: `approved`.
+- Версия: `1.0`.
+- Decision: `DEC-004`.
+- Change sets: `CHG-005`, `CHG-006`.
+- Принципы: `PRP-BMA-001`—`PRP-BMA-010`, все `approved` и `governing`.
+- Основание: Foundation v1.0 через `DEP-FOUNDATION-DERIVED-DOCUMENTS`.
+- Производные документы: Financial Model, Investment Memorandum, Infrastructure Strategy и Network Development Model через `DEP-BMA-DERIVED-DOCUMENTS`.
+- Тест `business-model-architecture.test.ts` проверяет точное совпадение Markdown, change set и registry по фиксированным SHA-256 каждого блока.
 
-- нет канонического Markdown-файла;
-- нет `PRP-BMA-001`—`PRP-BMA-010`;
-- нет документа в `registry/documents.yaml`;
-- нет соответствующего decision и change set;
-- до первого handoff-коммита Git-история не содержала `PRP-BMA-001`; в текущей истории эта строка встречается только в данном операционном документе как фиксация отсутствия, а не как canonical text.
-
-`registry/dependencies.yaml` содержит только целевую зависимость от Foundation с названием `Business Model Architecture` и пустым `document_id`. Поэтому внешнюю или чат-версию нельзя восстанавливать по памяти: для регистрации нужен точный утверждённый исходный текст и отдельный governed change set.
-
-Других утверждённых канонических бизнес-документов в registry нет. `DOC-README`, `DOC-AGENTS` и `DOC-AUDIT` имеют статус `approved`, но являются техническим руководством, политикой и аудитом. `DOC-INVESTMENT-MEMO` — только `proposed` template.
+Других утверждённых канонических бизнес-документов в registry нет. `DOC-README`, `DOC-AGENTS` и `DOC-AUDIT` имеют статус `approved`, но являются техническим руководством, политикой и аудитом. `DOC-INVESTMENT-MEMO` остаётся только `proposed` template.
 
 ## 6. Последние approved decisions и change sets
 
@@ -110,12 +111,15 @@ Approved decisions:
 - `DEC-001` — локальная платформа и registry как структурированный источник; Google Docs/Sheets — производные представления.
 - `DEC-002` — финансовая модель должна сравнивать `PURCHASE`, `RENT` и `MASTER_LEASE`; это не выбор конкретного помещения.
 - `DEC-003` — регистрация Foundation v1.0 и семи неизменяемых PRP-блоков.
+- `DEC-004` — регистрация Business Model Architecture v1.0 и десяти неизменяемых PRP-блоков.
 
 Approved change sets:
 
 - `CHG-002` — уточнён исследовательский статус сценария покупки.
 - `CHG-003` — добавлены источник утверждения Foundation и `DEC-003`.
 - `CHG-004` — зарегистрированы Foundation, семь principles и карта зависимостей.
+- `CHG-005` — добавлены источник утверждения Business Model Architecture и `DEC-004`.
+- `CHG-006` — зарегистрированы Business Model Architecture, десять principles и карты зависимостей.
 
 `example-change.yaml` имеет статус `proposed` и не должен применяться. Не применять существующие change sets повторно во время onboarding.
 
@@ -127,12 +131,12 @@ Approved change sets:
 |---|---:|---|
 | facts | 3 | все `approved` |
 | assumptions | 3 | все `research`; сценарии помещения |
-| decisions | 3 | все `approved` |
+| decisions | 4 | все `approved` |
 | metrics | 0 | финансовые метрики отсутствуют |
-| documents | 7 | 4 `approved`, 1 `proposed`, 2 `research` test records |
-| sources | 6 | lifecycle status схемой не предусмотрен |
-| principles | 7 | все Foundation v1.0, `approved` |
-| dependencies | 1 | Foundation как governing source |
+| documents | 8 | 5 `approved`, 1 `proposed`, 2 `research` test records |
+| sources | 7 | lifecycle status схемой не предусмотрен |
+| principles | 17 | 7 Foundation и 10 Business Model Architecture, все `approved` |
+| dependencies | 2 | Foundation и Business Model Architecture как governing sources |
 
 Approved facts: правильное название «Колобочная», базовая категория «еда в пути» и самостоятельное выращивание части растительных ингредиентов. Исторические, медийные и операционные утверждения сайта требуют первичной доказательной привязки для инвестиционного пакета.
 
@@ -194,7 +198,7 @@ npm run check
 
 - сайт: 9 маршрутов, mobile menu и form fallback — без failures;
 - root TypeScript — OK;
-- docs-platform: 24/24 теста, TypeScript — OK;
+- docs-platform: 28/28 тестов, TypeScript — OK;
 - registry validation — OK;
 - MCP: 21/21 тест, TypeScript — OK.
 
@@ -208,23 +212,20 @@ npm run check
 6. Проверить registry, changelog и все зависимые документы.
 7. Для Google дополнительно проверить folder guard, revision/hash и явное интерактивное подтверждение.
 
-Foundation v1.0 и `src/content/approved-copy.ts` нельзя редактировать как обычный текст. Шаблоны и аналитические материалы не повышать до `approved` без решения владельца.
+Foundation v1.0, Business Model Architecture v1.0 и `src/content/approved-copy.ts` нельзя редактировать как обычный текст. Шаблоны и аналитические материалы не повышать до `approved` без решения владельца.
 
 ## 12. Текущая стадия работы
 
-Репозиторий содержит рабочий инвесторский сайт, governed registry, guarded Google Workspace CLI, review-only MCP и Foundation v1.0. Финансовая модель не создана: `metrics` пуст, числовых финансовых assumptions нет, а три текущих assumptions фиксируют только исследуемые сценарии помещения.
+Репозиторий содержит рабочий инвесторский сайт, governed registry, guarded Google Workspace CLI, review-only MCP, Foundation v1.0 и Business Model Architecture v1.0. Финансовая модель не создана: `metrics` пуст, числовых финансовых assumptions нет, а три текущих assumptions фиксируют только исследуемые сценарии помещения.
 
-Business Model Architecture пока не зарегистрирована. Поэтому детальная архитектура бизнеса, Financial Model, Infrastructure Strategy, Network Development Model и инвестиционный меморандум не имеют утверждённых канонических версий в текущем registry.
+Business Model Architecture зафиксировала требования к будущим Financial Model, Investment Memorandum, Infrastructure Strategy и Network Development Model, но содержание этих производных документов в рамках BMA-задачи не создавалось.
 
 ## 13. Следующая рабочая задача
 
-Сначала устранить разрыв по Business Model Architecture: получить от владельца точный утверждённый исходный текст, не реконструировать его, зарегистрировать документ через decision/change set и добавить автоматическую проверку канонических блоков по образцу Foundation.
-
-После этого — отдельным заданием сформировать реестр исходных данных для финансовой модели и сравнения трёх сценариев помещения. Любая рабочая спецификация оборудования или CAPEX, которой нет в repository/registry, должна передаваться отдельным точным заданием и не должна восстанавливаться по догадкам.
+Отдельным заданием сформировать реестр исходных данных для финансовой модели и сравнения трёх сценариев помещения. Рабочая спецификация оборудования и CAPEX должна передаваться точным заданием: конкретные параметры, количества, цены и финансовые допущения не восстанавливать по догадкам и не регистрировать без approved change set.
 
 ## 14. Известные открытые вопросы
 
-- Нет зарегистрированной Business Model Architecture v1.0.
 - Нет финансовой модели, метрик, числовых assumptions, единиц, периодов и владельцев показателей.
 - Не определены первичные источники для истории, медийных охватов, состава продукта и операционных данных.
 - Не указан именованный владелец/утверждающий будущих решений, кроме общей роли `project owner`.
@@ -237,8 +238,8 @@ Business Model Architecture пока не зарегистрирована. По
 
 - Рабочее дерево до актуализации handoff было чистым.
 - Ветка: `master`.
-- Upstream на момент начала проверки: `origin/master`, ahead/behind `1/0`.
-- Базовый commit проверки: `9426e33824d38e241c90a625b121d14e70ea4639`, 2026-07-31, `docs(docs-platform): add codex project handoff`; он добавил только этот handoff.
+- Upstream на момент начала BMA-задачи: `origin/master`, ahead/behind `2/0`.
+- Базовый commit перед регистрацией BMA: `9f627217a6086b257ab5d33d0447efe86230d965`, 2026-08-01, `docs(docs-platform): add codex project handoff`.
 - Последний содержательный commit сайта: `ed6d00607a5cd8cc635f5fdc79877ccf467baabd`, 2026-07-24, `Last web fix`; он относится к сайту и `src/content/`.
-- Последний содержательный commit docs-platform: `6da1821cad295d7cee2dfabd7837eb9438be91b7`, 2026-07-23, `feat(docs-platform): add Foundation v1.0`.
+- Последний содержательный commit docs-platform до BMA-задачи: `6da1821cad295d7cee2dfabd7837eb9438be91b7`, 2026-07-23, `feat(docs-platform): add Foundation v1.0`.
 - Дата проверки: 2026-08-01.

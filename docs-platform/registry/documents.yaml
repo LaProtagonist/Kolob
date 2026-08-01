@@ -86,3 +86,24 @@ documents:
     governance_level: governing
     local_path: docs-platform/00-foundation.md
     updated_at: 2026-07-23
+  - id: DOC-BUSINESS-MODEL-ARCHITECTURE
+    title: Business Model Architecture
+    type: internal_governing_business_architecture_document
+    status: approved
+    google_file_id: null
+    template: null
+    sections:
+      - PRP-BMA-001
+      - PRP-BMA-002
+      - PRP-BMA-003
+      - PRP-BMA-004
+      - PRP-BMA-005
+      - PRP-BMA-006
+      - PRP-BMA-007
+      - PRP-BMA-008
+      - PRP-BMA-009
+      - PRP-BMA-010
+    version: "1.0"
+    governance_level: governing
+    local_path: docs-platform/01-business-model-architecture.md
+    updated_at: 2026-08-01

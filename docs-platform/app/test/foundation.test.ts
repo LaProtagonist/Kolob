@@ -40,7 +40,7 @@ test("Foundation v1.0 registers the governing document and all canonical PRP blo
     }
   );
 
-  assert.equal(principles.length, 7);
+  assert.equal(principles.filter(item => item.document === "DOC-FOUNDATION").length, 7);
   for (const [id, title, text] of canonical) {
     const principle = principles.find(item => item.id === id);
     assert.deepEqual(principle, {
@@ -66,9 +66,9 @@ test("Foundation v1.0 registers the governing document and all canonical PRP blo
   }
 });
 
-test("Foundation dependency map has governing priority and does not invent derivative documents", () => {
+test("Foundation dependency map has governing priority and does not invent unregistered derivative documents", () => {
   const dependencies = readYaml<{ dependencies: Array<Record<string, unknown>> }>("dependencies.yaml").dependencies;
-  assert.deepEqual(dependencies, [{
+  assert.deepEqual(dependencies.find(item => item.id === "DEP-FOUNDATION-DERIVED-DOCUMENTS"), {
     id: "DEP-FOUNDATION-DERIVED-DOCUMENTS",
     source_document_id: "DOC-FOUNDATION",
     priority: "governing_source",
@@ -76,13 +76,13 @@ test("Foundation dependency map has governing priority and does not invent deriv
     version: "1.0",
     target_documents: [
       { title: "Шаблон инвестиционного меморандума", document_id: "DOC-INVESTMENT-MEMO" },
-      { title: "Business Model Architecture", document_id: null },
+      { title: "Business Model Architecture", document_id: "DOC-BUSINESS-MODEL-ARCHITECTURE" },
       { title: "Financial Model", document_id: null },
       { title: "Infrastructure Strategy", document_id: null },
       { title: "Investor Presentation", document_id: null },
       { title: "Website Content", document_id: null },
       { title: "Data Room materials", document_id: null }
     ],
-    updated_at: "2026-07-23"
-  }]);
+    updated_at: "2026-08-01"
+  });
 });

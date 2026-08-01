@@ -9,7 +9,7 @@ dependencies:
       - title: Шаблон инвестиционного меморандума
         document_id: DOC-INVESTMENT-MEMO
       - title: Business Model Architecture
-        document_id: null
+        document_id: DOC-BUSINESS-MODEL-ARCHITECTURE
       - title: Financial Model
         document_id: null
       - title: Infrastructure Strategy
@@ -20,4 +20,19 @@ dependencies:
         document_id: null
       - title: Data Room materials
         document_id: null
-    updated_at: 2026-07-23
+    updated_at: 2026-08-01
+  - id: DEP-BMA-DERIVED-DOCUMENTS
+    source_document_id: DOC-BUSINESS-MODEL-ARCHITECTURE
+    priority: governing_source
+    status: approved
+    version: "1.0"
+    target_documents:
+      - title: Financial Model
+        document_id: null
+      - title: Investment Memorandum
+        document_id: DOC-INVESTMENT-MEMO
+      - title: Infrastructure Strategy
+        document_id: null
+      - title: Network Development Model
+        document_id: null
+    updated_at: 2026-08-01

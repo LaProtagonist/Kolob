@@ -55,3 +55,13 @@ sources:
     accessed_at: 2026-07-23
     reliability: primary
     notes: Первичный источник статуса и канонических текстов Foundation v1.0.
+  - id: SRC-BMA-V1-APPROVAL
+    title: Утверждённое задание Business Model Architecture v1.0
+    type: instruction
+    location: User instruction, 2026-08-01
+    publisher: project owner
+    publication_date: 2026-08-01
+    accessed_at: 2026-08-01
+    reliability: primary
+    notes: Первичный источник статуса и канонических текстов Business Model
+      Architecture v1.0.
