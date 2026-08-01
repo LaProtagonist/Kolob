@@ -18,6 +18,7 @@ import {
   sourceMarkdownPath,
   validateRegister,
 } from "./register.js";
+import { applyPriceResearchIfPresent } from "./price-research.js";
 import {
   buildEquipmentBom,
   buildModularSources,
@@ -59,7 +60,7 @@ function compositeHash(entries: Array<{ path: string; hash: string | null }>) {
 
 function buildPayload() {
   const source = fs.readFileSync(sourceMarkdownPath(), "utf8");
-  const register = buildRegister(source);
+  const register = applyPriceResearchIfPresent(buildRegister(source));
   const registerErrors = validateRegister(register, source);
   if (registerErrors.length) throw new Error(registerErrors.join("\n"));
   const sources = buildModularSources(register);

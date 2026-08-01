@@ -1,0 +1,148 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["schema_version", "document", "business_capacity", "scope", "items", "summary"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "document": {
+      "type": "object",
+      "required": ["project", "document_id", "title", "russian_title", "version", "status", "decision_id", "iteration_id", "proposal_id", "checked_at", "currency", "source_register_path", "source_register_before_sha256", "warning"],
+      "properties": {
+        "project": { "const": "Колобочная" },
+        "document_id": { "const": "DOC-CAPEX-PRICE-RESEARCH" },
+        "title": { "const": "CAPEX Preliminary Price Research" },
+        "russian_title": { "type": "string" },
+        "version": { "const": "0.1" },
+        "status": { "const": "research" },
+        "decision_id": { "const": "DEC-009" },
+        "iteration_id": { "const": "ITR-CAPEX-PRICE-RESEARCH-2026-08-02-01" },
+        "proposal_id": { "const": "PROP-CAPEX-PRICE-RESEARCH-2026-08-02-01" },
+        "checked_at": { "type": "string" },
+        "currency": { "const": "RUB" },
+        "source_register_path": { "const": "docs-platform/working/capex-equipment-register.yaml" },
+        "source_register_before_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "warning": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "business_capacity": {
+      "type": "object",
+      "required": ["prep_outlet_count", "checks_per_outlet_per_day", "total_checks_per_day", "scale_boundary"],
+      "properties": {
+        "prep_outlet_count": { "const": 5 },
+        "checks_per_outlet_per_day": { "const": 100 },
+        "total_checks_per_day": { "const": 500 },
+        "scale_boundary": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "scope": {
+      "type": "object",
+      "required": ["included_modules", "excluded_modules_and_categories", "eligible_procurement_record_count"],
+      "properties": {
+        "included_modules": { "type": "array", "uniqueItems": true, "items": { "enum": ["MOD-PREP", "MOD-RETAIL-HOT", "MOD-BAR", "MOD-GROW", "MOD-POS", "MOD-KDS"] } },
+        "excluded_modules_and_categories": { "type": "array", "items": { "type": "string" } },
+        "eligible_procurement_record_count": { "const": 47 }
+      },
+      "additionalProperties": false
+    },
+    "items": {
+      "type": "array",
+      "minItems": 47,
+      "maxItems": 47,
+      "items": {
+        "type": "object",
+        "required": ["item_id", "module_id", "valuation_status", "quote_status", "high_risk", "risk_reason", "scenarios", "notes"],
+        "properties": {
+          "item_id": { "type": "string", "pattern": "^CAPEX-0[1-4]-[0-9]{3}$" },
+          "module_id": { "enum": ["MOD-PREP", "MOD-RETAIL-HOT", "MOD-BAR", "MOD-GROW", "MOD-POS", "MOD-KDS"] },
+          "valuation_status": { "enum": ["priced", "quote_required"] },
+          "quote_status": { "enum": ["researched", "quote_required"] },
+          "high_risk": { "type": "boolean" },
+          "risk_reason": { "type": ["string", "null"] },
+          "scenarios": {
+            "type": "object",
+            "required": ["minimum", "base", "scale_ready"],
+            "properties": {
+              "minimum": { "$ref": "#/$defs/scenario" },
+              "base": { "$ref": "#/$defs/scenario" },
+              "scale_ready": { "$ref": "#/$defs/scenario" }
+            },
+            "additionalProperties": false
+          },
+          "notes": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "summary": {
+      "type": "object",
+      "required": ["eligible_procurement_record_count", "priced_record_count", "unpriced_record_count", "quote_required_count", "totals_rub", "module_totals_rub", "top_10_base", "high_risk_item_ids"],
+      "properties": {
+        "eligible_procurement_record_count": { "const": 47 },
+        "priced_record_count": { "type": "integer", "minimum": 1, "maximum": 47 },
+        "unpriced_record_count": { "type": "integer", "minimum": 0, "maximum": 47 },
+        "quote_required_count": { "type": "integer", "minimum": 0, "maximum": 47 },
+        "totals_rub": { "$ref": "#/$defs/scenarioTotals" },
+        "module_totals_rub": { "type": "object", "additionalProperties": { "$ref": "#/$defs/scenarioTotals" } },
+        "top_10_base": {
+          "type": "array",
+          "minItems": 10,
+          "maxItems": 10,
+          "items": {
+            "type": "object",
+            "required": ["item_id", "module_id", "line_total_rub"],
+            "properties": {
+              "item_id": { "type": "string" },
+              "module_id": { "type": "string" },
+              "line_total_rub": { "type": "number", "minimum": 0 }
+            },
+            "additionalProperties": false
+          }
+        },
+        "high_risk_item_ids": { "type": "array", "uniqueItems": true, "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$defs": {
+    "scenario": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "required": ["source_id", "supplier_name", "product_name", "source_url", "additional_urls", "observed_unit_price_rub", "availability_status", "checked_at", "price_includes_vat", "delivery_included", "confidence", "notes", "quantity", "quantity_basis", "line_total_rub"],
+          "properties": {
+            "source_id": { "type": "string" },
+            "supplier_name": { "type": "string" },
+            "product_name": { "type": "string" },
+            "source_url": { "type": "string" },
+            "additional_urls": { "type": "array", "items": { "type": "string" } },
+            "observed_unit_price_rub": { "type": "number", "exclusiveMinimum": 0 },
+            "availability_status": { "type": "string" },
+            "checked_at": { "type": "string" },
+            "price_includes_vat": { "type": ["boolean", "null"] },
+            "delivery_included": { "type": ["boolean", "null"] },
+            "confidence": { "enum": ["high", "medium", "low"] },
+            "notes": { "type": "string" },
+            "quantity": { "type": "number", "minimum": 0 },
+            "quantity_basis": { "enum": ["register", "research_assumption", "conditional_excluded"] },
+            "line_total_rub": { "type": "number", "minimum": 0 }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "scenarioTotals": {
+      "type": "object",
+      "required": ["minimum", "base", "scale_ready"],
+      "properties": {
+        "minimum": { "type": "number", "minimum": 0 },
+        "base": { "type": "number", "minimum": 0 },
+        "scale_ready": { "type": "number", "minimum": 0 }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

@@ -77,8 +77,21 @@ export type EquipmentRecord = {
   currency: string | null;
   price_date: string | null;
   supplier: string | null;
+  supplier_name?: string | null;
+  product_name?: string | null;
+  source_url?: string | null;
+  content_source_id?: string;
+  price_min_source_id?: string | null;
+  price_base_source_id?: string | null;
+  price_max_source_id?: string | null;
+  availability_status?: string | null;
+  checked_at?: string | null;
+  price_includes_vat?: boolean | null;
+  delivery_included?: boolean | null;
+  confidence?: "high" | "medium" | "low" | null;
+  price_notes?: string | null;
   source_id: string;
-  quote_status: "not_requested";
+  quote_status: "not_requested" | "researched" | "quote_required" | "included_in_parent" | "tbd";
   notes: string | null;
   source_section: string;
   source_item_number: number;
@@ -116,9 +129,9 @@ export type CapexRegister = {
     version: "0.1";
     status: "research";
     document_type: "Working structured CAPEX equipment register";
-    decision_id: typeof CAPEX_REGISTER_DECISION_ID;
-    iteration_id: typeof CAPEX_REGISTER_ITERATION_ID;
-    proposal_id: typeof CAPEX_REGISTER_PROPOSAL_ID;
+    decision_id: string;
+    iteration_id: string;
+    proposal_id: string;
     source_document_id: "DOC-CAPEX-EQUIPMENT-SPECIFICATION";
     source_path: typeof CAPEX_REGISTER_SOURCE_PATH;
     source_sha256: typeof CAPEX_REGISTER_SOURCE_SHA256;
@@ -129,6 +142,10 @@ export type CapexRegister = {
     unmapped_record_count: 0;
     csv_generated_from_yaml: true;
     warning: string;
+    price_research_path?: string;
+    price_research_date?: string;
+    priced_record_count?: number;
+    unpriced_procurement_record_count?: number;
   };
   modules: Array<{ module_id: string; module_name: string; source_record_count: number; record_count: number }>;
   equipment: EquipmentRecord[];
@@ -138,7 +155,7 @@ export type CapexRegister = {
 };
 
 export const EQUIPMENT_COLUMNS: Array<keyof EquipmentRecord> = [
-  "item_id", "module_id", "module_name", "category", "subcategory", "name", "record_type", "parent_item_id", "inclusion_status", "requirement", "lifecycle_status", "quantity_min", "quantity_base", "quantity_scale_ready", "unit", "source_quantity", "specification", "open_parameters", "premises_dependency", "procurement_mode", "existing_condition", "power_kw", "voltage", "water_required", "drainage_required", "gas_required", "extraction_required", "dimensions", "service_clearance", "price_min", "price_base", "price_max", "currency", "price_date", "supplier", "source_id", "quote_status", "notes", "source_section", "source_item_number", "source_record_sha256",
+  "item_id", "module_id", "module_name", "category", "subcategory", "name", "record_type", "parent_item_id", "inclusion_status", "requirement", "lifecycle_status", "quantity_min", "quantity_base", "quantity_scale_ready", "unit", "source_quantity", "specification", "open_parameters", "premises_dependency", "procurement_mode", "existing_condition", "power_kw", "voltage", "water_required", "drainage_required", "gas_required", "extraction_required", "dimensions", "service_clearance", "price_min", "price_base", "price_max", "currency", "price_date", "supplier", "supplier_name", "product_name", "source_url", "content_source_id", "price_min_source_id", "price_base_source_id", "price_max_source_id", "availability_status", "checked_at", "price_includes_vat", "delivery_included", "confidence", "price_notes", "source_id", "quote_status", "notes", "source_section", "source_item_number", "source_record_sha256",
 ];
 
 export function sha256(value: string | Buffer) { return crypto.createHash("sha256").update(value).digest("hex"); }
@@ -643,6 +660,9 @@ export function registerStatistics(register: CapexRegister) {
     by_record_type: byRecordType,
     inclusion_status_tbd: register.equipment.filter(item => item.inclusion_status === "tbd").length,
     quantity_base_tbd: register.equipment.filter(item => item.quantity_base === null).length,
+    priced_record_count: register.equipment.filter(item => item.price_base !== null).length,
+    unpriced_eligible_procurement_record_count: register.document.unpriced_procurement_record_count ?? mainProcurementRecords,
+    quote_required_count: register.equipment.filter(item => item.quote_status === "quote_required").length,
     open_parameter_count: register.open_parameters.length,
     missing_section_count: register.missing_sections.length,
   };
@@ -661,8 +681,21 @@ export function validateRegister(register: CapexRegister, source?: string) {
     if (item.parent_item_id && !ids.includes(item.parent_item_id)) errors.push(`${item.item_id}: parent_item_id does not exist.`);
     if (item.inclusion_status === "included_in_parent" && !item.parent_item_id) errors.push(`${item.item_id}: included_in_parent requires parent_item_id.`);
     for (const field of ["quantity_min", "quantity_base", "quantity_scale_ready", "power_kw", "voltage", "price_min", "price_base", "price_max"] as const) if (typeof item[field] === "string") errors.push(`${item.item_id}: numeric field ${field} contains text.`);
-    if ([item.price_min, item.price_base, item.price_max].some(value => value !== null) && (!item.source_id || !item.price_date)) errors.push(`${item.item_id}: price requires source_id and price_date.`);
+    const priceValues = [item.price_min, item.price_base, item.price_max];
+    const hasPrice = priceValues.some(value => value !== null);
+    if (hasPrice && priceValues.some(value => value === null)) errors.push(`${item.item_id}: price research must provide all three unit-price scenarios or none.`);
+    if (hasPrice && (!item.source_id || !item.price_date || !item.source_url || !item.checked_at)) errors.push(`${item.item_id}: price requires source_id, source_url, price_date and checked_at.`);
+    if (hasPrice && (!item.price_min_source_id || !item.price_base_source_id || !item.price_max_source_id)) errors.push(`${item.item_id}: every price scenario requires a source ID.`);
+    if (hasPrice && item.currency !== "RUB") errors.push(`${item.item_id}: preliminary price currency must be RUB.`);
+    if (hasPrice && (item.inclusion_status === "included_in_parent" || ["component", "engineering_connection", "open_question"].includes(item.record_type))) errors.push(`${item.item_id}: non-purchasable/component record must not contain a price.`);
+    if (hasPrice && item.item_id.startsWith("CAPEX-05-")) errors.push(`${item.item_id}: CAPEX-05 is outside the price research scope.`);
+    if (item.quote_status === "included_in_parent" && hasPrice) errors.push(`${item.item_id}: included_in_parent quote status must not contain a price.`);
     if (item.lifecycle_status !== "research") errors.push(`${item.item_id}: lifecycle status must remain research.`);
+  }
+  if (register.document.decision_id === "DEC-009") {
+    const priced = register.equipment.filter(item => item.price_base !== null);
+    if (priced.length !== 39) errors.push(`DEC-009 register must contain 39 preliminary priced records, got ${priced.length}.`);
+    if (register.document.priced_record_count !== 39 || register.document.unpriced_procurement_record_count !== 8) errors.push("DEC-009 price coverage metadata must be 39 priced and 8 unpriced eligible procurement records.");
   }
   for (const parameter of register.open_parameters) if (parameter.item_id && !ids.includes(parameter.item_id)) errors.push(`${parameter.parameter_id}: missing item reference ${parameter.item_id}.`);
   if (source) {

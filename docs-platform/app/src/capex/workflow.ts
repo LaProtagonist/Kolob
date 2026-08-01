@@ -20,6 +20,7 @@ import {
   sourceMarkdownPath,
   validateRegister,
 } from "./register.js";
+import { applyPriceResearchIfPresent } from "./price-research.js";
 
 const projectRoot = path.resolve(platformRoot, "..");
 const runtimePreviewPath = path.join(platformRoot, ".runtime", "capex-register-preview.json");
@@ -32,7 +33,7 @@ function atomicWrite(file: string, content: string) { fs.mkdirSync(path.dirname(
 
 function computePreview() {
   const source = fs.readFileSync(sourceMarkdownPath(), "utf8");
-  const register = buildRegister(source);
+  const register = applyPriceResearchIfPresent(buildRegister(source));
   const errors = validateRegister(register, source);
   if (errors.length) throw new Error(errors.join("\n"));
   const yaml = serializeRegister(register);

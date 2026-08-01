@@ -1,0 +1,36 @@
+change_id: CHG-015
+title: Зафиксировать решение о первичной research-оценке CAPEX
+status: approved
+created_at: 2026-08-02
+decision_id: DEC-001
+iteration_id: ITR-CAPEX-PRICE-RESEARCH-2026-08-02-01
+proposal_id: PROP-CAPEX-PRICE-RESEARCH-2026-08-02-01
+operations:
+  - type: add
+    entity: sources
+    value:
+      id: SRC-CAPEX-PRICE-RESEARCH-BRIEF
+      title: Задание на первичную ценовую оценку пищевого CAPEX
+      type: instruction
+      location: User instruction, 2026-08-02
+      publisher: project owner
+      publication_date: 2026-08-02
+      accessed_at: 2026-08-02
+      reliability: primary
+      notes: Первичный источник разрешения провести research-оценку публичных цен только для существующих самостоятельных закупочных позиций пищевой части. Не утверждает модели, поставщиков, окончательные количества, коммерческие предложения или итоговый CAPEX.
+  - type: add
+    entity: decisions
+    value:
+      id: DEC-009
+      title: Добавить первичную research-оценку цен пищевого CAPEX
+      status: approved
+      decision: Добавить к существующему CAPEX Equipment Register первичную research-оценку публичных цен для самостоятельных закупочных позиций MOD-PREP, MOD-RETAIL-HOT, MOD-BAR, MOD-GROW, MOD-POS и MOD-KDS; сформировать MINIMUM, BASE и SCALE_READY и обновить только существующую Google Sheet.
+      rationale: Прямое утверждение владельца проекта от 2026-08-02. Цены являются ориентирами публичных карточек, а не утверждёнными моделями, поставщиками, количествами, КП или итоговым CAPEX. CAPEX-05 и все прямо исключённые категории не затрагиваются.
+      affected_documents:
+        - DOC-CAPEX-EQUIPMENT-REGISTER
+      approved_by: project owner
+      approved_at: 2026-08-02
+      supersedes: null
+      source_ids:
+        - SRC-CAPEX-PRICE-RESEARCH-BRIEF
+      updated_at: 2026-08-02

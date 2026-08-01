@@ -12,9 +12,13 @@
 | 2026-08-01T20:49:30.001Z | EVT-ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01-002 | ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01 | approved | decision_approved | DEC-008 | CHG-014 | pending | DEC-008 утвердил тот же payload и его SHA-256; смысл первых 124 записей сохранён, новые данные остаются research. |
 | 2026-08-01T20:49:30.002Z | EVT-ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01-003 | ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01 | applied | modular_payload_registry_and_google_sheet_applied | DEC-008 | CHG-014 | passed | Утверждённые YAML/CSV и registry применены; единственная существующая Sheet обновлена до 11 русских вкладок без создания файла-дубликата. |
 | 2026-08-01T20:49:30.003Z | EVT-ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01-004 | ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01 | verified | schemas_tests_google_readback_and_reverse_preview_verified | DEC-008 | CHG-014 | passed | Проверены 151/151/0, 12 modules, 7 formats, пустой template BOM, schema/reference tests, Google API readback, неизменность source Markdown и оба governed reverse preview. |
+| 2026-08-01T23:04:30.000Z | EVT-ITR-CAPEX-PRICE-RESEARCH-2026-08-02-01-001 | ITR-CAPEX-PRICE-RESEARCH-2026-08-02-01 | proposed | proposal_recorded | DEC-009 | CHG-016 | pending | Proposal ограничил оценку 47 существующими самостоятельными food-side позициями и исключил CAPEX-05, инженерные работы, ремонт, запуск и финальный CAPEX. |
+| 2026-08-01T23:04:30.001Z | EVT-ITR-CAPEX-PRICE-RESEARCH-2026-08-02-01-002 | ITR-CAPEX-PRICE-RESEARCH-2026-08-02-01 | approved | decision_approved | DEC-009 | CHG-016 | pending | DEC-009 утвердил только research-ориентиры MINIMUM, BASE и SCALE_READY по exact payload SHA-256; модели, поставщики, КП и финальный CAPEX не утверждены. |
+| 2026-08-01T23:04:30.002Z | EVT-ITR-CAPEX-PRICE-RESEARCH-2026-08-02-01-003 | ITR-CAPEX-PRICE-RESEARCH-2026-08-02-01 | applied | price_payload_registry_and_google_sheet_applied | DEC-009 | CHG-016 | passed | Exact price research payload применён к 39 из 47 eligible позиций; 8 оставлены без цены, существующая Sheet обновлена без дубликата и прошла API readback. |
+| 2026-08-01T23:04:30.003Z | EVT-ITR-CAPEX-PRICE-RESEARCH-2026-08-02-01-004 | ITR-CAPEX-PRICE-RESEARCH-2026-08-02-01 | verified | sources_tests_google_readback_and_reverse_preview_verified | DEC-009 | CHG-016 | passed | Проверены 39 priced, 8 unpriced, 99 доступных public URLs, расчёты трёх сценариев, Google readback, отсутствие double count и оба governed reverse preview с восстановлением исходных hashes. |
 
 ## Проверка цепочки
 
-- Событий: 8.
-- Последний event hash: `df8384675521e5a4e45ac6b37e08840ea1646b075b2b0357e9832bbc3930c366`.
+- Событий: 12.
+- Последний event hash: `4736731416427073de6322858473e340668e82deae3b124c339c3675e86bb493`.
 - Полная машинная запись, approved payload SHA-256, before/after hashes и rollback reference находятся в `events.ndjson`.

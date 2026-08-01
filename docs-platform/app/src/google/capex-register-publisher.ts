@@ -4,9 +4,7 @@ import path from "node:path";
 import { google, type drive_v3, type sheets_v4 } from "googleapis";
 import YAML from "yaml";
 import {
-  CAPEX_REGISTER_DECISION_ID,
   CAPEX_REGISTER_DOCUMENT_ID,
-  CAPEX_REGISTER_ITERATION_ID,
   EQUIPMENT_COLUMNS,
   readRegister,
   registerStatistics,
@@ -15,6 +13,12 @@ import {
   validateRegister,
   type CapexRegister,
 } from "../capex/register.js";
+import {
+  CAPEX_PRICE_CHANGE_ID,
+  CAPEX_PRICE_DECISION_ID,
+  CAPEX_PRICE_ITERATION_ID,
+  readPriceResearch,
+} from "../capex/price-research.js";
 import {
   AGGREGATION_RULES,
   CAPEX_FORMAT_IDS,
@@ -48,7 +52,7 @@ const projectRoot = path.resolve(platformRoot, "..");
 const runtimePreviewPath = path.join(platformRoot, ".runtime", "capex-register-sheet-preview.json");
 const runtimeResultPath = path.join(platformRoot, ".runtime", "capex-register-sheet-result.json");
 const runtimeOverridePreviewPath = path.join(platformRoot, ".runtime", "capex-overrides-import-preview.json");
-export const capexSheetReceiptPath = path.join(platformRoot, "changelog", "google-sync", "2026-08-01-DOC-CAPEX-EQUIPMENT-REGISTER-MODULAR-CONFIGURATOR.yaml");
+export const capexSheetReceiptPath = path.join(platformRoot, "changelog", "google-sync", "2026-08-02-DOC-CAPEX-EQUIPMENT-REGISTER-PRICE-RESEARCH.yaml");
 
 type MatrixValue = string | number | boolean;
 type Matrix = MatrixValue[][];
@@ -64,8 +68,8 @@ type SheetPreview = {
   action: "update";
   google_file_id: string;
   google_file_id_masked: string;
-  decision_id: typeof CAPEX_REGISTER_DECISION_ID;
-  iteration_id: typeof CAPEX_REGISTER_ITERATION_ID;
+  decision_id: typeof CAPEX_PRICE_DECISION_ID;
+  iteration_id: typeof CAPEX_PRICE_ITERATION_ID;
   source_yaml_path: string;
   source_yaml_sha256: string;
   source_record_count: number;
@@ -87,6 +91,21 @@ const CONFIGURATOR_HEADERS = [
 ] as const;
 const OVERRIDE_HEADERS = ["configuration_id", "item_id", "action", "quantity_override", "specification_override", "requirement_override", "reason", "lifecycle_status", "notes"] as const;
 const BOM_HEADERS = ["item_id", "module_id", "наименование", "обязательность", "количество", "единица", "правило расчёта", "источник включения", "входит в комплект другой системы", "переопределение", "открытые параметры", "комментарий", "статус расчёта", "активен"] as const;
+const EQUIPMENT_HEADER_OVERRIDES: Partial<Record<typeof EQUIPMENT_COLUMNS[number], string>> = {
+  price_min: "Цена min",
+  price_base: "Цена base",
+  price_max: "Цена max",
+  currency: "Валюта",
+  supplier: "Поставщик",
+  source_url: "Ссылка",
+  checked_at: "Дата проверки",
+  availability_status: "Наличие",
+  quote_status: "Статус КП",
+  confidence: "Уверенность",
+  price_notes: "Комментарий по цене",
+};
+export const EQUIPMENT_SHEET_HEADERS = EQUIPMENT_COLUMNS.map(column => EQUIPMENT_HEADER_OVERRIDES[column] ?? String(column));
+function equipmentHeader(column: typeof EQUIPMENT_COLUMNS[number]) { return EQUIPMENT_HEADER_OVERRIDES[column] ?? String(column); }
 
 async function services() {
   const auth = await getAuthorizedClient();
@@ -94,7 +113,7 @@ async function services() {
 }
 function mask(id: string) { return `${id.slice(0, 4)}…${id.slice(-4)}`; }
 function documentsRegistry() { return (YAML.parse(fs.readFileSync(path.join(platformRoot, "registry", "documents.yaml"), "utf8"))?.documents ?? []) as Array<{ id: string; google_file_id?: string | null; status: string }> ; }
-function approvedDecision() { return (YAML.parse(fs.readFileSync(path.join(platformRoot, "registry", "decisions.yaml"), "utf8"))?.decisions ?? []).some((item: { id: string; status: string }) => item.id === CAPEX_REGISTER_DECISION_ID && item.status === "approved"); }
+function approvedDecision() { return (YAML.parse(fs.readFileSync(path.join(platformRoot, "registry", "decisions.yaml"), "utf8"))?.decisions ?? []).some((item: { id: string; status: string }) => item.id === CAPEX_PRICE_DECISION_ID && item.status === "approved"); }
 
 async function resolveSpreadsheet(drive: drive_v3.Drive, config: GoogleConfig) {
   const registered = documentsRegistry().find(item => item.id === CAPEX_REGISTER_DOCUMENT_ID)?.google_file_id ?? null;
@@ -226,6 +245,7 @@ function bomRows(register: CapexRegister, sources: ModularSources): Matrix {
 export function sheetDatasets(register: CapexRegister, sources: ModularSources = readModularSources(), syncedAt = "1970-01-01T00:00:00.000Z", preserved: PreservedRows = { configurator: [], overrides: [] }): Dataset[] {
   const yamlHash = sha256(serializeRegister(register));
   const statistics = registerStatistics(register);
+  const priceResearch = register.document.decision_id === CAPEX_PRICE_DECISION_ID ? readPriceResearch() : null;
   const description: Matrix = [
     ["Поле", "Значение"],
     ["Название", "CAPEX Equipment Register / CAPEX — Реестр оснащения пилотного объекта"],
@@ -235,7 +255,12 @@ export function sheetDatasets(register: CapexRegister, sources: ModularSources =
     ["Добавлено research-записей CAPEX-05", register.document.added_research_record_count], ["Всего записей Equipment Register", register.document.equipment_record_count],
     ["Mapped source records", register.document.mapped_record_count], ["Unmapped records", register.document.unmapped_record_count],
     ["Исходная текстовая спецификация", sourceDocLink()],
-    ["Предупреждение", "Цены, конкретные модели, поставщики и итоговый CAPEX пока не определены. 151 — количество записей реестра, а не самостоятельных закупочных единиц."],
+    ["Оценено самостоятельных позиций", priceResearch?.summary.priced_record_count ?? 0],
+    ["Без цены в research-scope", priceResearch?.summary.unpriced_record_count ?? 0],
+    ["MINIMUM, RUB", priceResearch?.summary.totals_rub.minimum ?? ""],
+    ["BASE, RUB", priceResearch?.summary.totals_rub.base ?? ""],
+    ["SCALE_READY, RUB", priceResearch?.summary.totals_rub.scale_ready ?? ""],
+    ["Предупреждение", "Цены — первичная research-оценка публичных карточек, не коммерческое предложение и не утверждённый итоговый CAPEX. Доставка, монтаж, инженерия и другие исключённые расходы не добавлены."],
     ["Архитектура", "Equipment Register → функциональные модули → профили форматов → конфигурация объекта + overrides → generated BOM."],
     ["Правило изменения", "Только proposal → approved decision → preview → apply → verification → append-only timeline. Google Sheet не является самостоятельным источником утверждённых решений."],
   ];
@@ -250,7 +275,7 @@ export function sheetDatasets(register: CapexRegister, sources: ModularSources =
     [...BOM_HEADERS],
     ...bomRows(register, sources),
   ];
-  const equipment: Matrix = [EQUIPMENT_COLUMNS.map(String), ...register.equipment.map(item => EQUIPMENT_COLUMNS.map(column => matrixValue(item[column])))];
+  const equipment: Matrix = [EQUIPMENT_SHEET_HEADERS, ...register.equipment.map(item => EQUIPMENT_COLUMNS.map(column => matrixValue(item[column])))];
   const linksByModule = new Map<string, ModuleItemLink[]>();
   for (const link of sources.module_items.links) linksByModule.set(link.module_id, [...(linksByModule.get(link.module_id) ?? []), link]);
   const moduleHeaders = ["module_id", "module_name", "module_status", "item_id", "default_requirement", "quantity_rule_type", "quantity_rule_value", "minimum_quantity", "aggregation_rule", "condition", "notes"];
@@ -284,7 +309,7 @@ export function sheetDatasets(register: CapexRegister, sources: ModularSources =
   return [
     { name: "Описание", values: description, headerRow: 1 }, { name: "Конфигуратор", headers: [...CONFIGURATOR_HEADERS], values: configurator, headerRow: 1 },
     { name: "Комплектация", headers: [...BOM_HEADERS], values: bom, headerRow: 3 }, { name: "Переопределения", headers: [...OVERRIDE_HEADERS], values: overrides, headerRow: 1 },
-    { name: "Оснащение", headers: EQUIPMENT_COLUMNS.map(String), values: equipment, headerRow: 1 }, { name: "Модули", headers: moduleHeaders, values: modules, headerRow: 1 },
+    { name: "Оснащение", headers: EQUIPMENT_SHEET_HEADERS, values: equipment, headerRow: 1 }, { name: "Модули", headers: moduleHeaders, values: modules, headerRow: 1 },
     { name: "Форматы точек", headers: formatHeaders, values: formats, headerRow: 1 }, { name: "Состав форматов", headers: ["format_id", "module_id", "role"], values: formatComposition, headerRow: 1 },
     { name: "Открытые параметры", headers: openHeaders, values: open, headerRow: 1 }, { name: "Недостающие разделы", headers: missingHeaders, values: missing, headerRow: 1 },
     { name: "Справочники", headers: dictionaryHeaders, values: dictionaries, headerRow: 1 },
@@ -319,12 +344,12 @@ async function computePreview() {
   validateCurrentTitles(titles);
   const base: Omit<SheetPreview, "preview_id" | "created_at" | "google_file_id_masked"> = {
     registry_id: CAPEX_REGISTER_DOCUMENT_ID, google_title: CAPEX_REGISTER_GOOGLE_TITLE, folder_name: config.projectFolderName, folder_check: "passed",
-    action: "update", google_file_id: remote.file.id, decision_id: CAPEX_REGISTER_DECISION_ID, iteration_id: CAPEX_REGISTER_ITERATION_ID,
+    action: "update", google_file_id: remote.file.id, decision_id: CAPEX_PRICE_DECISION_ID, iteration_id: CAPEX_PRICE_ITERATION_ID,
     source_yaml_path: "docs-platform/working/capex-equipment-register.yaml", source_yaml_sha256: sha256(serializeRegister(register)),
     source_record_count: register.document.source_record_count, equipment_record_count: register.document.equipment_record_count,
     mapped_record_count: register.document.mapped_record_count, unmapped_record_count: register.document.unmapped_record_count,
     sheets: CAPEX_REGISTER_SHEET_NAMES, legacy_sheet_renames: LEGACY_SHEET_RENAMES,
-    warnings: ["Register and all new modular sources remain research; publication does not approve prices, models, suppliers, quantities, a real object configuration or total CAPEX.", "Only the existing registered Google Sheet will be updated; no Google Docs or additional files are targeted."],
+    warnings: ["All price values remain research and do not approve models, suppliers, quantities, a commercial quote or final CAPEX.", "Only the existing registered Google Sheet will be updated; no Google Docs or additional files are targeted."],
   };
   const preview: SheetPreview = { ...base, preview_id: previewFingerprint(base), created_at: new Date().toISOString(), google_file_id_masked: mask(base.google_file_id) };
   return { preview, register, sources };
@@ -391,8 +416,10 @@ function formattingRequests(sheetIds: Map<string, number>, datasets: Dataset[]):
   const equipment = datasets.find(item => item.name === "Оснащение")!;
   const equipmentId = sheetIds.get("Оснащение")!;
   for (const name of ["quantity_min", "quantity_base", "quantity_scale_ready", "power_kw", "voltage", "price_min", "price_base", "price_max", "source_item_number"]) {
-    const index = columnIndex(equipment.headers!, name);
-    requests.push({ repeatCell: { range: { sheetId: equipmentId, startRowIndex: 1, endRowIndex: equipment.values.length, startColumnIndex: index, endColumnIndex: index + 1 }, cell: { userEnteredFormat: { numberFormat: { type: "NUMBER", pattern: "0.###" } } }, fields: "userEnteredFormat.numberFormat" } });
+    const typedName = name as typeof EQUIPMENT_COLUMNS[number];
+    const index = columnIndex(equipment.headers!, equipmentHeader(typedName));
+    const money = ["price_min", "price_base", "price_max"].includes(name);
+    requests.push({ repeatCell: { range: { sheetId: equipmentId, startRowIndex: 1, endRowIndex: equipment.values.length, startColumnIndex: index, endColumnIndex: index + 1 }, cell: { userEnteredFormat: { numberFormat: { type: money ? "CURRENCY" : "NUMBER", pattern: money ? "#,##0 [$₽-ru-RU]" : "0.###" } } }, fields: "userEnteredFormat.numberFormat" } });
   }
   const configId = sheetIds.get("Конфигуратор")!;
   for (const index of [3, 4, 5, 6, 7, 8, 9, 10, 11, 12]) requests.push({ repeatCell: { range: { sheetId: configId, startRowIndex: 1, endRowIndex: 1000, startColumnIndex: index, endColumnIndex: index + 1 }, cell: { userEnteredFormat: { numberFormat: { type: "NUMBER", pattern: "0.###" } } }, fields: "userEnteredFormat.numberFormat" } });
@@ -409,6 +436,12 @@ function formattingRequests(sheetIds: Map<string, number>, datasets: Dataset[]):
 function columnLetter(count: number) { let value = count; let result = ""; while (value > 0) { value -= 1; result = String.fromCharCode(65 + (value % 26)) + result; value = Math.floor(value / 26); } return result; }
 function normalizedRows(values: unknown[][] | undefined, expected: Matrix) { return expected.map((row, rowIndex) => row.map((_value, column) => matrixValue(values?.[rowIndex]?.[column]))); }
 function matricesHash(datasets: Dataset[]) { return sha256(JSON.stringify(Object.fromEntries(datasets.map(dataset => [dataset.name, dataset.values])))); }
+function firstMatrixMismatch(expected: Matrix, actual: Matrix) {
+  for (let row = 0; row < expected.length; row += 1) for (let column = 0; column < expected[row].length; column += 1) {
+    if (JSON.stringify(expected[row][column]) !== JSON.stringify(actual[row]?.[column])) return { row: row + 1, column: column + 1, expected: expected[row][column], actual: actual[row]?.[column] };
+  }
+  return null;
+}
 
 async function publishAndReadback(drive: drive_v3.Drive, sheets: sheets_v4.Sheets, file: DriveFile, register: CapexRegister, sources: ModularSources, syncedAt: string) {
   const titlesBefore = await currentSheetTitles(sheets, file.id);
@@ -419,12 +452,19 @@ async function publishAndReadback(drive: drive_v3.Drive, sheets: sheets_v4.Sheet
   const sheetIds = await ensureSheets(sheets, file.id);
   const datasets = sheetDatasets(register, sources, syncedAt, preserved);
   await sheets.spreadsheets.values.batchClear({ spreadsheetId: file.id, requestBody: { ranges: CAPEX_REGISTER_SHEET_NAMES.map(name => `'${name}'!A:AP`) } });
-  await sheets.spreadsheets.values.batchUpdate({ spreadsheetId: file.id, requestBody: { valueInputOption: "USER_ENTERED", data: datasets.map(dataset => ({ range: `'${dataset.name}'!A1`, majorDimension: "ROWS", values: dataset.values })) } });
+  const formulaSheets = new Set<Dataset["name"]>(["Конфигуратор", "Комплектация"]);
+  const staticDatasets = datasets.filter(dataset => !formulaSheets.has(dataset.name));
+  const formulaDatasets = datasets.filter(dataset => formulaSheets.has(dataset.name));
+  await sheets.spreadsheets.values.batchUpdate({ spreadsheetId: file.id, requestBody: { valueInputOption: "RAW", data: staticDatasets.map(dataset => ({ range: `'${dataset.name}'!A1`, majorDimension: "ROWS", values: dataset.values })) } });
+  await sheets.spreadsheets.values.batchUpdate({ spreadsheetId: file.id, requestBody: { valueInputOption: "USER_ENTERED", data: formulaDatasets.map(dataset => ({ range: `'${dataset.name}'!A1`, majorDimension: "ROWS", values: dataset.values })) } });
   await sheets.spreadsheets.batchUpdate({ spreadsheetId: file.id, requestBody: { requests: formattingRequests(sheetIds, datasets) } });
   const ranges = datasets.map(dataset => `'${dataset.name}'!A1:${columnLetter(Math.max(...dataset.values.map(row => row.length)))}${dataset.values.length}`);
   const readback = await sheets.spreadsheets.values.batchGet({ spreadsheetId: file.id, ranges, majorDimension: "ROWS", valueRenderOption: "FORMULA" });
   const actual = datasets.map((dataset, index) => ({ ...dataset, values: normalizedRows(readback.data.valueRanges?.[index]?.values as unknown[][] | undefined, dataset.values) }));
-  for (let index = 0; index < datasets.length; index += 1) if (JSON.stringify(actual[index].values) !== JSON.stringify(datasets[index].values)) throw new Error(`${datasets[index].name} Google Sheets readback differs from the published dataset.`);
+  for (let index = 0; index < datasets.length; index += 1) if (JSON.stringify(actual[index].values) !== JSON.stringify(datasets[index].values)) {
+    const mismatch = firstMatrixMismatch(datasets[index].values, actual[index].values);
+    throw new Error(`${datasets[index].name} Google Sheets readback differs from the published dataset${mismatch ? ` at row ${mismatch.row}, column ${mismatch.column}: expected=${JSON.stringify(mismatch.expected)}, actual=${JSON.stringify(mismatch.actual)}` : ""}.`);
+  }
   const metadata = (await sheets.spreadsheets.get({ spreadsheetId: file.id, fields: "sheets(properties(sheetId,title,index,gridProperties(frozenRowCount)),basicFilter)" })).data;
   const ordered = [...(metadata.sheets ?? [])].sort((a, b) => (a.properties?.index ?? 0) - (b.properties?.index ?? 0));
   const titles = ordered.map(sheet => sheet.properties?.title).filter(Boolean);
@@ -443,8 +483,8 @@ async function commentIds(drive: drive_v3.Drive, fileId: string) {
 }
 
 export async function applyCapexRegisterSheet(options: { apply: boolean; decisionId: string }) {
-  if (!options.apply || options.decisionId !== CAPEX_REGISTER_DECISION_ID) throw new Error(`Apply requires --apply --decision ${CAPEX_REGISTER_DECISION_ID}.`);
-  if (!approvedDecision()) throw new Error(`${CAPEX_REGISTER_DECISION_ID} must be approved before Google apply.`);
+  if (!options.apply || options.decisionId !== CAPEX_PRICE_DECISION_ID) throw new Error(`Apply requires --apply --decision ${CAPEX_PRICE_DECISION_ID}.`);
+  if (!approvedDecision()) throw new Error(`${CAPEX_PRICE_DECISION_ID} must be approved before Google apply.`);
   if (!fs.existsSync(runtimePreviewPath)) throw new Error("Google Sheet preview is missing. Run capex:sheet:preview first.");
   const saved = JSON.parse(fs.readFileSync(runtimePreviewPath, "utf8")) as SheetPreview;
   const { preview, register, sources } = await computePreview();
@@ -460,7 +500,7 @@ export async function applyCapexRegisterSheet(options: { apply: boolean; decisio
   if (JSON.stringify(commentsBefore) !== JSON.stringify(commentsAfter)) throw new Error("Drive comments changed during Google Sheet publication.");
   const statistics = registerStatistics(register);
   const receipt = {
-    receipt_version: 1, registry_id: CAPEX_REGISTER_DOCUMENT_ID, decision_id: CAPEX_REGISTER_DECISION_ID, change_set_id: "CHG-014", iteration_id: CAPEX_REGISTER_ITERATION_ID,
+    receipt_version: 1, registry_id: CAPEX_REGISTER_DOCUMENT_ID, decision_id: CAPEX_PRICE_DECISION_ID, change_set_id: CAPEX_PRICE_CHANGE_ID, iteration_id: CAPEX_PRICE_ITERATION_ID,
     local_path: "docs-platform/working/capex-equipment-register.yaml", local_sha256: sha256(serializeRegister(register)), google_file_id: result.verified.id,
     google_mime_type: result.verified.mimeType, google_title: result.verified.name, web_view_link: result.verified.webViewLink, synced_at: syncedAt,
     action: "update", source_status: "research", source_version: "0.1", sheets: CAPEX_REGISTER_SHEET_NAMES,
@@ -469,7 +509,7 @@ export async function applyCapexRegisterSheet(options: { apply: boolean; decisio
     readback_hash: result.readback_hash, readback: "passed", comments_preserved: true,
     manual_override_rows_preserved: result.preserved_override_rows, manual_configurator_rows_preserved: result.preserved_configurator_rows,
     validation_status: "passed",
-    validation: { folder_guard: "passed", stable_item_order: "passed", native_google_sheet: true, localized_sheet_order: "passed", legacy_sheets_absent: true, numeric_tbd_absent: true, prices_absent: true, total_capex_absent: true },
+    validation: { folder_guard: "passed", stable_item_order: "passed", native_google_sheet: true, localized_sheet_order: "passed", legacy_sheets_absent: true, numeric_tbd_absent: true, preliminary_prices_present: statistics.priced_record_count === 39, price_status_research: true, included_in_parent_unpriced: true, final_capex_not_approved: true },
   };
   if (fs.existsSync(capexSheetReceiptPath)) throw new Error("Google sync receipt for this iteration already exists; refusing to overwrite it.");
   fs.mkdirSync(path.dirname(capexSheetReceiptPath), { recursive: true });

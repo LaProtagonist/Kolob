@@ -1,0 +1,73 @@
+receipt_version: 2
+change_id: CHG-015
+iteration_id: ITR-CAPEX-PRICE-RESEARCH-2026-08-02-01
+proposal_id: PROP-CAPEX-PRICE-RESEARCH-2026-08-02-01
+decision_id: DEC-001
+source_change_set: docs-platform/changes/CHG-015-capex-price-research-decision.yaml
+status: applied
+applied_at: 2026-08-01T22:48:12.072Z
+actor: Codex
+tool: docs-platform change:apply
+approved_payload: null
+before_hash: 77df85d14f7c6216d9f2c28302c0d9c069cc6691e760903f5a6afdbefc54cb07
+after_hash: 60ce78a0c9ecca889338f9bc5c43ed152175281bad3e785235cf576d1a54b966
+touched_registry_files:
+  - path: docs-platform/registry/sources.yaml
+    backup_path: docs-platform/changelog/backups/2026-08-01T22-48-12-072Z-CHG-015/sources.yaml
+  - path: docs-platform/registry/decisions.yaml
+    backup_path: docs-platform/changelog/backups/2026-08-01T22-48-12-072Z-CHG-015/decisions.yaml
+operations:
+  - type: add
+    entity: sources
+    id: SRC-CAPEX-PRICE-RESEARCH-BRIEF
+    before: null
+    after:
+      id: SRC-CAPEX-PRICE-RESEARCH-BRIEF
+      title: Задание на первичную ценовую оценку пищевого CAPEX
+      type: instruction
+      location: User instruction, 2026-08-02
+      publisher: project owner
+      publication_date: 2026-08-02
+      accessed_at: 2026-08-02
+      reliability: primary
+      notes: Первичный источник разрешения провести research-оценку публичных цен только для существующих самостоятельных закупочных позиций пищевой части. Не утверждает модели, поставщиков, окончательные количества, коммерческие предложения или итоговый CAPEX.
+    before_index: null
+    after_index: 11
+    before_sha256: null
+    after_sha256: 9793ec7f979b96df2fd1a21deedbb189add49de0d4240fd736b30ff2d20e2263
+    reverse_operation:
+      type: remove
+      entity: sources
+      id: SRC-CAPEX-PRICE-RESEARCH-BRIEF
+  - type: add
+    entity: decisions
+    id: DEC-009
+    before: null
+    after:
+      id: DEC-009
+      title: Добавить первичную research-оценку цен пищевого CAPEX
+      status: approved
+      decision: Добавить к существующему CAPEX Equipment Register первичную research-оценку публичных цен для самостоятельных закупочных позиций MOD-PREP, MOD-RETAIL-HOT, MOD-BAR, MOD-GROW, MOD-POS и MOD-KDS; сформировать MINIMUM, BASE и SCALE_READY и обновить только существующую Google Sheet.
+      rationale: Прямое утверждение владельца проекта от 2026-08-02. Цены являются ориентирами публичных карточек, а не утверждёнными моделями, поставщиками, количествами, КП или итоговым CAPEX. CAPEX-05 и все прямо исключённые категории не затрагиваются.
+      affected_documents:
+        - DOC-CAPEX-EQUIPMENT-REGISTER
+      approved_by: project owner
+      approved_at: 2026-08-02
+      supersedes: null
+      source_ids:
+        - SRC-CAPEX-PRICE-RESEARCH-BRIEF
+      updated_at: 2026-08-02
+    before_index: null
+    after_index: 8
+    before_sha256: null
+    after_sha256: 27211795d7893b06b9aed176fa5e04b05626ec3c6daad29a06c404d2b2071587
+    reverse_operation:
+      type: remove
+      entity: decisions
+      id: DEC-009
+validation_result: passed
+git_commit_hash: null
+rollback:
+  source_receipt: docs-platform/changelog/change-receipts/CHG-015.yaml
+  command: npm run change:reverse:preview -- ../changelog/change-receipts/CHG-015.yaml --change-id CHG-ROLLBACK-XXX --decision DEC-ROLLBACK-XXX
+  rollback_of: CHG-015

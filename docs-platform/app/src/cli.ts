@@ -4,6 +4,8 @@ import YAML from "yaml";
 import { applyRegister, generateCsv, previewRegister } from "./capex/workflow.js";
 import { readRegister, registerStatistics, sourceMarkdownPath, validateRegister } from "./capex/register.js";
 import { applyModularIteration, applyModularReverse, buildConfiguration, listFormats, listModules, materializeModularRollbackPayload, prepareModularReverse, previewConfiguration, previewModularIteration, previewModularReverse, validateConfigurations, writeApprovedModularPayload } from "./capex/modular-workflow.js";
+import { applyPriceIteration, previewPriceIteration, previewPriceReverse, writeApprovedPriceArtifacts } from "./capex/price-workflow.js";
+import { readPriceResearch, validatePriceResearch } from "./capex/price-research.js";
 import { applyChange, loadRegistry, previewReverseChange, printChangePreview, readYaml, registryKinds, requireChange, validateRegistry, writeReverseChange } from "./governance/registry.js";
 import { appendTimelineEvent, generateTimeline, readTimelineEvents, renderTimeline, validateTimeline, type TimelineEventInput } from "./governance/timeline.js";
 import { authorizeInteractively, authorizeProjectFolderInteractively } from "./google/auth.js";
@@ -76,6 +78,19 @@ try {
     applyModularReverse(path.resolve(requireArgument(args, "an approved modular reverse change set")), applyOptions(args));
   } else if (command === "capex:modular:rollback:materialize") {
     materializeModularRollbackPayload(args[0] ? path.resolve(args[0]) : undefined);
+  } else if (command === "capex:price:artifacts") {
+    writeApprovedPriceArtifacts();
+  } else if (command === "capex:price:preview") {
+    previewPriceIteration();
+  } else if (command === "capex:price:apply") {
+    applyPriceIteration(applyOptions(args));
+  } else if (command === "capex:price:validate") {
+    const research = readPriceResearch();
+    const errors = validatePriceResearch(research, readRegister());
+    if (errors.length) throw new Error(errors.join("\n"));
+    console.log(JSON.stringify({ validation: "OK", ...research.summary }, null, 2));
+  } else if (command === "capex:price:reverse:preview") {
+    previewPriceReverse(args[0] ? path.resolve(args[0]) : undefined, flag(args, "--change-id"), flag(args, "--decision"));
   } else if (command === "capex:formats:list") {
     listFormats();
   } else if (command === "capex:modules:list") {
@@ -102,7 +117,7 @@ try {
   else if (command === "google:test:read") await readTests();
   else if (command === "google:test:update") await updateTests(args);
   else if (command === "google:test:cleanup") await cleanupTests();
-  else throw new Error("commands: registry:*|change:*|timeline:*|capex:register:*|capex:modular:*|capex:configuration:*|capex:formats:list|capex:modules:list|capex:sheet:*|google:*|documents:list|decisions:list");
+  else throw new Error("commands: registry:*|change:*|timeline:*|capex:register:*|capex:modular:*|capex:price:*|capex:configuration:*|capex:formats:list|capex:modules:list|capex:sheet:*|google:*|documents:list|decisions:list");
 } catch (error) {
   console.error(`ERROR: ${(error as Error).message}`);
   process.exitCode = 1;

@@ -141,11 +141,12 @@ test("the empty template configuration produces an empty BOM without fabricated 
   for (const value of [configuration.total_area_m2, configuration.guest_area_m2, configuration.hall_count, configuration.seat_count, configuration.cashier_post_count, configuration.hot_kitchen_post_count, configuration.filling_count, configuration.service_station_count]) assert.equal(value, null);
 });
 
-test("numeric fields contain no tbd, and no prices, suppliers or total CAPEX were introduced", () => {
+test("numeric fields contain no tbd and preliminary prices do not alter CAPEX-05 or approve a final CAPEX", () => {
   for (const item of register.equipment) {
     for (const field of ["quantity_min", "quantity_base", "quantity_scale_ready", "power_kw", "voltage", "price_min", "price_base", "price_max"] as const) assert.equal(typeof item[field] === "string", false, `${item.item_id}.${field}`);
-    assert.equal(item.price_min, null); assert.equal(item.price_base, null); assert.equal(item.price_max, null); assert.equal(item.supplier, null);
   }
+  assert.equal(register.equipment.filter(item => item.price_base !== null).length, 39);
+  assert.equal(register.equipment.filter(item => item.item_id.startsWith("CAPEX-05-")).every(item => item.price_min === null && item.price_base === null && item.price_max === null && item.supplier === null), true);
   assert.doesNotMatch(fs.readFileSync(path.join(platform, "working", "capex-equipment-register.yaml"), "utf8"), /итоговый CAPEX:\s*\d/i);
 });
 
@@ -153,11 +154,13 @@ test("approved payload hash is exact and source CAPEX Markdown remains unchanged
   const payloadPath = path.join(platform, "changelog", "payloads", "ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01-approved.yaml");
   const payloadHash = crypto.createHash("sha256").update(fs.readFileSync(payloadPath)).digest("hex");
   assert.equal(payloadHash, "73f5a811214f548ba3c8e1cde8e16317e5bbc3b98cf3f5ecc67c4c12ffdb6453");
-  assert.equal(modularPayloadHash(register, sources), payloadHash);
   const source = fs.readFileSync(path.join(platform, "working", "capex-equipment-specification.md"));
   assert.equal(crypto.createHash("sha256").update(source).digest("hex"), CAPEX_REGISTER_SOURCE_SHA256);
   const payload = YAML.parse(fs.readFileSync(payloadPath, "utf8"));
-  assert.deepEqual(payload.equipment_register, register);
+  assert.equal(modularPayloadHash(payload.equipment_register, sources), payloadHash);
+  assert.equal(payload.equipment_register.document.decision_id, "DEC-008");
+  assert.equal(payload.equipment_register.equipment.every((item: { price_base: number | null }) => item.price_base === null), true);
+  assert.equal(register.document.decision_id, "DEC-009");
 });
 
 test("governed reverse preview restores the original composite hash without Git reset", () => {

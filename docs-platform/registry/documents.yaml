@@ -142,7 +142,7 @@ documents:
       - Справочники
     version: "0.1"
     local_path: docs-platform/working/capex-equipment-register.yaml
-    updated_at: 2026-08-01
+    updated_at: 2026-08-02
   - id: DOC-CAPEX-MODULES
     title: CAPEX Modules
     type: working_capex_functional_modules
@@ -206,3 +206,20 @@ documents:
     version: "0.1"
     local_path: docs-platform/working/configurations/CFG-TEMPLATE-001/equipment-bom.yaml
     updated_at: 2026-08-01
+  - id: DOC-CAPEX-PRICE-RESEARCH
+    title: CAPEX Preliminary Price Research
+    type: working_capex_price_research
+    status: research
+    google_file_id: null
+    template: null
+    sections:
+      - Scope
+      - MINIMUM
+      - BASE
+      - SCALE_READY
+      - Sources
+      - Risks
+      - Summary
+    version: "0.1"
+    local_path: docs-platform/working/capex-price-research.yaml
+    updated_at: 2026-08-02

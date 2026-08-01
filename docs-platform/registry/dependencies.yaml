@@ -112,3 +112,12 @@ dependencies:
       - title: Financial Model
         document_id: null
     updated_at: 2026-08-01
+  - id: DEP-CAPEX-EQUIPMENT-REGISTER-PRICE-RESEARCH
+    source_document_id: DOC-CAPEX-EQUIPMENT-REGISTER
+    priority: governing_source
+    status: approved
+    version: "0.1"
+    target_documents:
+      - title: CAPEX Preliminary Price Research
+        document_id: DOC-CAPEX-PRICE-RESEARCH
+    updated_at: 2026-08-02

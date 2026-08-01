@@ -113,3 +113,17 @@ decisions:
     source_ids:
       - SRC-CAPEX-MODULAR-CONFIGURATOR-BRIEF
     updated_at: 2026-08-01
+  - id: DEC-009
+    title: Добавить первичную research-оценку цен пищевого CAPEX
+    status: approved
+    decision: Добавить к существующему CAPEX Equipment Register первичную research-оценку публичных цен для самостоятельных закупочных позиций MOD-PREP, MOD-RETAIL-HOT, MOD-BAR, MOD-GROW, MOD-POS и MOD-KDS; сформировать MINIMUM, BASE и SCALE_READY и обновить только существующую Google Sheet.
+    rationale: Прямое утверждение владельца проекта от 2026-08-02. Цены являются ориентирами публичных карточек, а не утверждёнными моделями, поставщиками, количествами, КП или итоговым CAPEX. CAPEX-05 и все прямо исключённые категории не затрагиваются.
+    affected_documents:
+      - DOC-CAPEX-EQUIPMENT-REGISTER
+      - DOC-CAPEX-PRICE-RESEARCH
+    approved_by: project owner
+    approved_at: 2026-08-02
+    supersedes: null
+    source_ids:
+      - SRC-CAPEX-PRICE-RESEARCH-BRIEF
+    updated_at: 2026-08-02

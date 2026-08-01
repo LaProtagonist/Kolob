@@ -1,0 +1,135 @@
+receipt_version: 1
+iteration_id: ITR-CAPEX-PRICE-RESEARCH-2026-08-02-01
+proposal_id: PROP-CAPEX-PRICE-RESEARCH-2026-08-02-01
+decision_id: DEC-009
+change_set_id: CHG-016
+status: applied
+applied_at: 2026-08-01T22:48:37.452Z
+actor: Codex
+tool: docs-platform capex:price:apply
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-CAPEX-PRICE-RESEARCH-2026-08-02-01-approved.yaml
+  sha256: e1fff4414ce1e6769f8822900ba6153efe4e78520854d92f0a30f932237da0ff
+before_composite_hash: 60b26396dd9153d0a85f4f97e6c96d22ac5cab7ca4f36843e6c3544c0b25beac
+after_composite_hash: 134a9a1ebe6b379ced31f7eb01b63600223975dcd7fd9e640aac16d2fa9120f5
+before_files:
+  - path: docs-platform/working/capex-price-research.yaml
+    existed: false
+    sha256: null
+    rollback_payload_path: null
+  - path: docs-platform/working/capex-equipment-register.yaml
+    existed: true
+    sha256: 8491d105566ce22909f67a679db46f401d1aa54cfe12878c78abc52c4779acb0
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-CAPEX-PRICE-RESEARCH-2026-08-02-01/working/capex-equipment-register.yaml
+  - path: docs-platform/working/capex-equipment-register.csv
+    existed: true
+    sha256: 0e62de7f83d87db0b6598fc993f19bb201e9eacd6e3cb9bd0d3599f0f9c3a383
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-CAPEX-PRICE-RESEARCH-2026-08-02-01/working/capex-equipment-register.csv
+after_files:
+  - path: docs-platform/working/capex-price-research.yaml
+    sha256: d1efd3968dc17118f67ce36636c6bd3f17a55be145aceeb18708641331287764
+  - path: docs-platform/working/capex-equipment-register.yaml
+    sha256: f675e12efa69932a49a5ad67ebee33c40459b151cb2aea654e206f6a9b9238b0
+  - path: docs-platform/working/capex-equipment-register.csv
+    sha256: ace656716d386cf85e9248d463110c6bae0cd01bba8643e9ec1bc781543fd783
+summary:
+  eligible_procurement_record_count: 47
+  priced_record_count: 39
+  unpriced_record_count: 8
+  quote_required_count: 23
+  totals_rub:
+    minimum: 2327130
+    base: 3531329
+    scale_ready: 4940051.46
+  module_totals_rub:
+    MOD-PREP:
+      minimum: 1452327
+      base: 2378500
+      scale_ready: 3260891
+    MOD-RETAIL-HOT:
+      minimum: 215756
+      base: 309117
+      scale_ready: 420737
+    MOD-BAR:
+      minimum: 209247
+      base: 300712
+      scale_ready: 467623.46
+    MOD-GROW:
+      minimum: 238000
+      base: 258000
+      scale_ready: 387000
+    MOD-POS:
+      minimum: 105900
+      base: 142500
+      scale_ready: 201900
+    MOD-KDS:
+      minimum: 105900
+      base: 142500
+      scale_ready: 201900
+    POS/KDS:
+      minimum: 211800
+      base: 285000
+      scale_ready: 403800
+  top_10_base:
+    - item_id: CAPEX-01-009
+      module_id: MOD-PREP
+      line_total_rub: 873128
+    - item_id: CAPEX-01-014
+      module_id: MOD-PREP
+      line_total_rub: 472582
+    - item_id: CAPEX-03-001
+      module_id: MOD-GROW
+      line_total_rub: 258000
+    - item_id: CAPEX-01-043
+      module_id: MOD-PREP
+      line_total_rub: 234270
+    - item_id: CAPEX-02-010
+      module_id: MOD-BAR
+      line_total_rub: 199000
+    - item_id: CAPEX-02-004
+      module_id: MOD-RETAIL-HOT
+      line_total_rub: 153287
+    - item_id: CAPEX-04-003
+      module_id: MOD-KDS
+      line_total_rub: 142500
+    - item_id: CAPEX-01-010
+      module_id: MOD-PREP
+      line_total_rub: 121852
+    - item_id: CAPEX-04-001
+      module_id: MOD-POS
+      line_total_rub: 95000
+    - item_id: CAPEX-01-011
+      module_id: MOD-PREP
+      line_total_rub: 84752
+  high_risk_item_ids:
+    - CAPEX-01-001
+    - CAPEX-01-002
+    - CAPEX-01-012
+    - CAPEX-01-014
+    - CAPEX-01-015
+    - CAPEX-01-016
+    - CAPEX-01-021
+    - CAPEX-01-024
+    - CAPEX-01-043
+    - CAPEX-01-045
+    - CAPEX-02-001
+    - CAPEX-02-002
+    - CAPEX-02-003
+    - CAPEX-02-004
+    - CAPEX-02-010
+    - CAPEX-02-011
+    - CAPEX-02-013
+    - CAPEX-02-054
+    - CAPEX-02-055
+    - CAPEX-03-001
+    - CAPEX-04-001
+    - CAPEX-04-002
+    - CAPEX-04-003
+validation_result: passed
+git_commit_hash: null
+rollback:
+  mode: governed_reverse_change_set
+  source_receipt: docs-platform/changelog/iteration-receipts/ITR-CAPEX-PRICE-RESEARCH-2026-08-02-01.yaml
+  preview_command: npm run capex:price:reverse:preview -- ../changelog/iteration-receipts/ITR-CAPEX-PRICE-RESEARCH-2026-08-02-01.yaml --change-id CHG-ROLLBACK-XXX --decision DEC-ROLLBACK-XXX
+  preserves_history: true
+  git_reset_forbidden: true

@@ -8,6 +8,7 @@ import { readModularSources } from "../src/capex/modular.js";
 import {
   CAPEX_REGISTER_GOOGLE_TITLE,
   CAPEX_REGISTER_SHEET_NAMES,
+  EQUIPMENT_SHEET_HEADERS,
   LEGACY_SHEET_RENAMES,
   chooseSpreadsheetTarget,
   sheetDatasets,
@@ -32,11 +33,16 @@ test("Google Sheet contract has the exact eleven localized tabs in stable order"
 test("Sheet datasets keep numerical equipment fields numeric or blank, never tbd", () => {
   const equipment = sheetDatasets(register, sources, "2026-08-01T00:00:00.000Z").find(dataset => dataset.name === "Оснащение")!;
   const headers = equipment.values[0] as string[];
-  for (const field of ["quantity_min", "quantity_base", "quantity_scale_ready", "power_kw", "voltage", "price_min", "price_base", "price_max"]) {
-    const column = headers.indexOf(field);
+  for (const [field, header] of [
+    ["quantity_min", "quantity_min"], ["quantity_base", "quantity_base"], ["quantity_scale_ready", "quantity_scale_ready"],
+    ["power_kw", "power_kw"], ["voltage", "voltage"], ["price_min", "Цена min"], ["price_base", "Цена base"], ["price_max", "Цена max"],
+  ]) {
+    const column = headers.indexOf(header);
     assert.notEqual(column, -1);
     for (const row of equipment.values.slice(1)) assert.equal(row[column] === "" || typeof row[column] === "number", true, `${field}: ${row[column]}`);
   }
+  for (const header of ["Цена min", "Цена base", "Цена max", "Валюта", "Поставщик", "Ссылка", "Дата проверки", "Наличие", "Статус КП", "Уверенность", "Комментарий по цене"]) assert.equal(EQUIPMENT_SHEET_HEADERS.includes(header), true, header);
+  assert.equal(equipment.values.slice(1).filter(row => typeof row[headers.indexOf("Цена base")] === "number").length, 39);
 });
 
 test("configurator and BOM contain formulas, validation-ready IDs and no invented template values", () => {
@@ -74,18 +80,18 @@ test("exact-folder resolver updates one existing Sheet and refuses zero or dupli
   assert.throws(() => chooseSpreadsheetTarget([file, { ...file, id: "second" }]), /Multiple spreadsheets/);
 });
 
-test("preview logging masks the Google file ID and binds DEC-008", () => {
+test("preview logging masks the Google file ID and binds the approved price-research decision", () => {
   const logged = sheetPreviewForLog({
     preview_id: "p", created_at: "2026-08-01T00:00:00.000Z", registry_id: "DOC-CAPEX-EQUIPMENT-REGISTER",
     google_title: CAPEX_REGISTER_GOOGLE_TITLE, folder_name: "Колобочная — Investment", folder_check: "passed", action: "update",
-    google_file_id: "1234567890abcdef", google_file_id_masked: "1234…cdef", decision_id: "DEC-008",
-    iteration_id: "ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01", source_yaml_path: "docs-platform/working/capex-equipment-register.yaml",
+    google_file_id: "1234567890abcdef", google_file_id_masked: "1234…cdef", decision_id: "DEC-009",
+    iteration_id: "ITR-CAPEX-PRICE-RESEARCH-2026-08-02-01", source_yaml_path: "docs-platform/working/capex-equipment-register.yaml",
     source_yaml_sha256: "a".repeat(64), source_record_count: 124, equipment_record_count: 151, mapped_record_count: 124,
     unmapped_record_count: 0, sheets: CAPEX_REGISTER_SHEET_NAMES, legacy_sheet_renames: LEGACY_SHEET_RENAMES, warnings: [],
   });
   assert.equal("google_file_id" in logged, false);
   assert.equal(logged.google_file_id_masked, "1234…cdef");
-  assert.equal(logged.decision_id, "DEC-008");
+  assert.equal(logged.decision_id, "DEC-009");
 });
 
 test("Google preview and override preview contain no write path", () => {

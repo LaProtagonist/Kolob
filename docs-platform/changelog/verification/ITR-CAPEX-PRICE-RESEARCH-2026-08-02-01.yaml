@@ -1,0 +1,116 @@
+receipt_version: 1
+iteration_id: ITR-CAPEX-PRICE-RESEARCH-2026-08-02-01
+proposal_id: PROP-CAPEX-PRICE-RESEARCH-2026-08-02-01
+decision_id: DEC-009
+change_set_id: CHG-016
+status: verified
+verified_at: 2026-08-01T23:04:30.003Z
+actor: Codex
+tool: docs-platform CAPEX price research verification workflow
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-CAPEX-PRICE-RESEARCH-2026-08-02-01-approved.yaml
+  sha256: e1fff4414ce1e6769f8822900ba6153efe4e78520854d92f0a30f932237da0ff
+source:
+  path: docs-platform/working/capex-equipment-specification.md
+  sha256: 2157364e09699173fecfbfe861edf4e6fac85a0437e23aebe100caebeab599d6
+outputs:
+  price_research:
+    path: docs-platform/working/capex-price-research.yaml
+    sha256: d1efd3968dc17118f67ce36636c6bd3f17a55be145aceeb18708641331287764
+  equipment_register_yaml:
+    path: docs-platform/working/capex-equipment-register.yaml
+    sha256: f675e12efa69932a49a5ad67ebee33c40459b151cb2aea654e206f6a9b9238b0
+  equipment_register_csv:
+    path: docs-platform/working/capex-equipment-register.csv
+    sha256: ace656716d386cf85e9248d463110c6bae0cd01bba8643e9ec1bc781543fd783
+coverage:
+  eligible_procurement_record_count: 47
+  priced_record_count: 39
+  unpriced_record_count: 8
+  quote_required_count: 23
+  excluded_capex_05_record_count: 27
+  price_source_record_count: 102
+  unique_public_url_count: 99
+  checked_public_url_count: 99
+  failed_public_url_count: 0
+totals_rub:
+  minimum: 2327130
+  base: 3531329
+  scale_ready: 4940051.46
+module_totals_rub:
+  MOD-PREP:
+    minimum: 1452327
+    base: 2378500
+    scale_ready: 3260891
+  MOD-RETAIL-HOT:
+    minimum: 215756
+    base: 309117
+    scale_ready: 420737
+  MOD-BAR:
+    minimum: 209247
+    base: 300712
+    scale_ready: 467623.46
+  MOD-GROW:
+    minimum: 238000
+    base: 258000
+    scale_ready: 387000
+  MOD-POS:
+    minimum: 105900
+    base: 142500
+    scale_ready: 201900
+  MOD-KDS:
+    minimum: 105900
+    base: 142500
+    scale_ready: 201900
+  POS/KDS:
+    minimum: 211800
+    base: 285000
+    scale_ready: 403800
+google:
+  file_id: 1J7sHM8P2IoMfHVLEHfY-UJLIZ-HBid89G6n6BS4BSJA
+  mime_type: application/vnd.google-apps.spreadsheet
+  receipt: docs-platform/changelog/google-sync/2026-08-02-DOC-CAPEX-EQUIPMENT-REGISTER-PRICE-RESEARCH.yaml
+  action: update
+  readback_hash: e2b92dd2003a64f912a3811c4eb45c8fc57b5026d568eaf4f6dfaed095272abc
+  folder_guard: passed
+  readback: passed
+  duplicate_file_created: false
+  comments_preserved: true
+  manual_override_rows_preserved: 0
+  manual_configurator_rows_preserved: 1
+validation:
+  root_tests: passed
+  root_typescript: passed
+  docs_platform_tests: 80 passed, 0 failed
+  docs_platform_typescript: passed
+  mcp_tests: 21 passed, 0 failed
+  mcp_typescript: passed
+  registry: passed
+  schemas_and_references: passed
+  price_research: passed
+  source_markdown_unchanged: passed
+  independent_procurement_only: passed
+  included_in_parent_unpriced: passed
+  every_price_has_source_and_date: passed
+  public_source_links: 99 passed, 0 failed
+  final_capex_not_approved: passed
+  google_readback: passed
+  google_folder_inspect: passed
+  governance_artifact_paths: passed
+  timeline: 12 events, hash chain passed
+  secrets_absent_from_tracked_artifacts: passed
+  diff_check: passed
+rollback:
+  price_source_receipt: docs-platform/changelog/iteration-receipts/ITR-CAPEX-PRICE-RESEARCH-2026-08-02-01.yaml
+  registry_source_receipt: docs-platform/changelog/change-receipts/CHG-016.yaml
+  persistent_payload_root: docs-platform/changelog/rollback-payloads/ITR-CAPEX-PRICE-RESEARCH-2026-08-02-01
+  reverse_change_set_status: previewed
+  expected_original_price_hash: 60b26396dd9153d0a85f4f97e6c96d22ac5cab7ca4f36843e6c3544c0b25beac
+  simulated_restored_price_hash: 60b26396dd9153d0a85f4f97e6c96d22ac5cab7ca4f36843e6c3544c0b25beac
+  expected_original_registry_hash: 60ce78a0c9ecca889338f9bc5c43ed152175281bad3e785235cf576d1a54b966
+  simulated_restored_registry_hash: 60ce78a0c9ecca889338f9bc5c43ed152175281bad3e785235cf576d1a54b966
+  restores_original_hash: true
+  requires_new_approved_rollback_decision: true
+  preserves_history: true
+git_commit_hash: null
+git_commit_note: Hash текущего commit невозможно включить в сам commit; при необходимости он фиксируется следующим append-only событием.

@@ -1,0 +1,29 @@
+proposal_id: PROP-CAPEX-PRICE-RESEARCH-2026-08-02-01
+iteration_id: ITR-CAPEX-PRICE-RESEARCH-2026-08-02-01
+status: proposed
+created_at: 2026-08-02
+actor: project owner
+source_id: SRC-CAPEX-PRICE-RESEARCH-BRIEF
+scope: Добавить первичную research-оценку публичных цен только для самостоятельных закупочных позиций пищевой части существующего CAPEX Equipment Register при ориентире 5 точек × 100 чеков/день.
+affected_document_ids:
+  - DOC-CAPEX-EQUIPMENT-REGISTER
+  - DOC-CAPEX-PRICE-RESEARCH
+affected_item_count: 47
+approved_payload_path: docs-platform/changelog/payloads/ITR-CAPEX-PRICE-RESEARCH-2026-08-02-01-approved.yaml
+approved_payload_sha256: e1fff4414ce1e6769f8822900ba6153efe4e78520854d92f0a30f932237da0ff
+source_path: User instruction, 2026-08-02
+source_sha256: null
+boundaries:
+  approved:
+    - research price scenarios MINIMUM, BASE and SCALE_READY for existing independent food-side procurement records
+    - source-card metadata and current link checks
+    - deterministic update of the existing registered Google Sheet
+  not_approved:
+    - final models, suppliers, quantities or commercial offers
+    - final CAPEX or financial model
+    - CAPEX-05, guest hall, repair, engineering installation, fire safety, working capital, raw materials or launch consumables
+apply_contract:
+  payload_identity: structurally_identical_yaml
+  hash_algorithm: SHA-256
+  google_target: existing registered Sheet only
+  rollback_mode: governed_reverse_change_set

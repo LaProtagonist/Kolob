@@ -99,3 +99,930 @@ sources:
     accessed_at: 2026-08-01
     reliability: primary
     notes: Первичный источник разрешения добавить 27 research-позиций CAPEX-05, функциональные модули, семь профилей форматов, конфигурации, overrides, generated BOM и русские вкладки существующей Google Sheet. Не утверждает цены, модели, поставщиков, реальные параметры объекта, окончательные количества или итоговый CAPEX.
+  - id: SRC-CAPEX-PRICE-RESEARCH-BRIEF
+    title: Задание на первичную ценовую оценку пищевого CAPEX
+    type: instruction
+    location: User instruction, 2026-08-02
+    publisher: project owner
+    publication_date: 2026-08-02
+    accessed_at: 2026-08-02
+    reliability: primary
+    notes: Первичный источник разрешения провести research-оценку публичных цен только для существующих самостоятельных закупочных позиций пищевой части. Не утверждает модели, поставщиков, окончательные количества, коммерческие предложения или итоговый CAPEX.
+  - id: SRC-PRICE-20260802-BENCH-SCALE-BASE
+    title: CAS DB-II 60 E
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/weighing-and-packaging-equipment/scales-warehouse/scales-cas-db-ii-60-e/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: high
+    notes: "Наблюдаемая цена: 22533 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: high. Профессиональные производственные весы."
+  - id: SRC-PRICE-20260802-BENCH-SCALE-MINIMUM
+    title: CAS DB-II 150 E
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/weighing-and-packaging-equipment/scales-warehouse/scales-cas-db-ii-150-e/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: high
+    notes: "Наблюдаемая цена: 19674 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: high. Профессиональные настольные/складские весы."
+  - id: SRC-PRICE-20260802-BENCH-SCALE-SCALE-READY
+    title: CAS DB-60H
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/weighing-and-packaging-equipment/scales-warehouse/scales-cas-db-1h-60/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: high
+    notes: "Наблюдаемая цена: 25701 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: high. Профессиональные производственные весы с резервом."
+  - id: SRC-PRICE-20260802-COMBI-BASE
+    title: Apach AP7QT
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/the-thermal-equipment/ovens/parokonvektomat-apach-ap7qt/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: high
+    notes: "Наблюдаемая цена: 436564 RUB. Наличие: active_catalog; listed_in_stock. НДС: не указано. Доставка: не указано. Уверенность: high. 7 уровней, пар/комби, автомойка и термощуп; цена за один аппарат."
+  - id: SRC-PRICE-20260802-COMBI-MINIMUM
+    title: Apach AP6M COMPACT
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/the-thermal-equipment/ovens/parokonvektomat-apach-ap6m-compact/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: high
+    notes: "Наблюдаемая цена: 300372 RUB. Наличие: active_catalog; listed_in_stock. НДС: не указано. Доставка: не указано. Уверенность: high. 6×GN1/1, пар/конвекция/комби, требуется подключение воды; цена за один аппарат."
+  - id: SRC-PRICE-20260802-COMBI-SCALE-READY
+    title: Tecnoeka MKF 1111 V TS
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/the-thermal-equipment/ovens/parokonvektomat-tecnoeka-mkf-1111-v-ts/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: high
+    notes: "Наблюдаемая цена: 596030 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: high. 11×GN1/1, профессиональный вариант с резервом; цена за один аппарат."
+  - id: SRC-PRICE-20260802-COMPACT-ICE-BASE
+    title: Viatto VA-IM-25
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/refrigeration-equipment/ice-generators/ldogeneratory-palchikovogo-lda/ldogenerator-va-im-25/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: medium
+    notes: "Наблюдаемая цена: 36050 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: medium. Компактный профессиональный льдогенератор; условен для отдельной торговой точки."
+  - id: SRC-PRICE-20260802-COMPACT-ICE-MINIMUM
+    title: Viatto VA-IM-20B
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/refrigeration-equipment/ice-generators/ldogeneratory-palchikovogo-lda/ldogenerator-va-im-20b/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: medium
+    notes: "Наблюдаемая цена: 15535 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: medium. Компактный профессиональный льдогенератор; условен для отдельной торговой точки."
+  - id: SRC-PRICE-20260802-COMPACT-ICE-SCALE-READY
+    title: ROSSO HZB-45
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/refrigeration-equipment/ice-generators/ice-ice-kubikovogo/ldogenerator-rosso-hzb-45/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: medium
+    notes: "Наблюдаемая цена: 39688 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: medium. Компактный профессиональный льдогенератор с резервом; условен для отдельной торговой точки."
+  - id: SRC-PRICE-20260802-DISPENSER-SET-BASE
+    title: "Комплект: 2 дозатора 1000 мл + PUFF-5135S"
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/inventory/household-goods/oborudovanie-dlia-sanuzlov/dispenser-for-liquid-soap-1000-ml-rgs-3049a/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: medium
+    notes: "Наблюдаемая цена: 6615 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: medium. Расчётный комплект: два дозатора жидкости и один диспенсер полотенец; расходники не включены. Дополнительные карточки комплекта: https://www.klenmarket.ru/shop/inventory/household-goods/oborudovanie-dlia-sanuzlov/dispenser-bumazhnykh-polotenets-puff-5135s-khrom-abs-plastik/."
+  - id: SRC-PRICE-20260802-DISPENSER-SET-MINIMUM
+    title: "Комплект: 2 дозатора 500 мл + PUFF-5110"
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/inventory/household-goods/oborudovanie-dlia-sanuzlov/dispenser-for-liquid-soap-500-ml/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: medium
+    notes: "Наблюдаемая цена: 2892 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: medium. Расчётный комплект: два дозатора жидкости и один диспенсер полотенец; расходники не включены. Дополнительные карточки комплекта: https://www.klenmarket.ru/shop/inventory/household-goods/oborudovanie-dlia-sanuzlov/dispenser-bumazhnykh-polotenets-puff-5110-belyi-abs-plastik/."
+  - id: SRC-PRICE-20260802-DISPENSER-SET-SCALE-READY
+    title: "Комплект: 2 PUFF-8615 + PUFF-5615"
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/inventory/household-goods/oborudovanie-dlia-sanuzlov/dozator-dlia-zhidkogo-myla-iz-nerzhaveiushchei-stali-puff-8615-polirovannyi-1000-ml/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: medium
+    notes: "Наблюдаемая цена: 10618 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: medium. Расчётный комплект из нержавеющих/антивандальных дозаторов; расходники не включены. Дополнительные карточки комплекта: https://www.klenmarket.ru/shop/inventory/household-goods/oborudovanie-dlia-sanuzlov/dispenser-bumazhnykh-polotenets-puff-5615-khrom-mat-antivandalnyi-s-kliuchom/."
+  - id: SRC-PRICE-20260802-DOUBLE-SINK-BASE
+    title: ВМЦ 2/12755 нерж
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/neutral-equipment/vanny-moechnye/bath-two/vanna-moechnaia-vmts-212755-nerzh/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: high
+    notes: "Наблюдаемая цена: 58798 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: high. Цельнотянутая двухсекционная мойка из нержавеющей стали."
+  - id: SRC-PRICE-20260802-DOUBLE-SINK-MINIMUM
+    title: ВМС-П 2/520, 1200×700
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/neutral-equipment/vanny-moechnye/bath-two/vanna-dvukhsektsionnaia-vms-p-2520-1200x700x870-glubina-400mm-s-bortom-otverstie-pod-smesitel-po-tsentru/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: high
+    notes: "Наблюдаемая цена: 43541 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: high. Профессиональная двухсекционная мойка."
+  - id: SRC-PRICE-20260802-DOUBLE-SINK-SCALE-READY
+    title: СКМ-2 1000×600 с тумбой
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/neutral-equipment/vanny-moechnye/baths-with-work-surface/dvukhsektsionnaia-vanna-moechnaia-skm-2-s-tumboi-s-bortom-1000kh600kh870-2-moiki-tseln-vvarnye-400kh400kh250/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: high
+    notes: "Наблюдаемая цена: 59366 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: high. Двухсекционная мойка с тумбой; увеличенный сценарий."
+  - id: SRC-PRICE-20260802-DRYING-RACK-BASE
+    title: Luxstahl СРСП 1800×900×300
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/neutral-equipment/racks/racks-for-drying-dishes/stellazh-dlia-posudy-luxstahl-srsp-1800900300/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: high
+    notes: "Наблюдаемая цена: 25727 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: high. Профессиональный стеллаж для посуды."
+  - id: SRC-PRICE-20260802-DRYING-RACK-MINIMUM
+    title: Luxstahl СРСП 1800×600×300
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/neutral-equipment/racks/racks-for-drying-dishes/stellazh-dlia-posudy-luxstahl-srsp-1800600300/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: high
+    notes: "Наблюдаемая цена: 21612 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: high. Профессиональный стеллаж для посуды."
+  - id: SRC-PRICE-20260802-DRYING-RACK-SCALE-READY
+    title: Luxstahl СРСП 1800×1200×300
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/neutral-equipment/racks/racks-for-drying-dishes/stellazh-dlia-posudy-luxstahl-srsp-18001200300/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: high
+    notes: "Наблюдаемая цена: 30911 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: high. Профессиональный стеллаж для посуды."
+  - id: SRC-PRICE-20260802-FRIDGE-THERMOMETER-BASE
+    title: Термометр −50…+50 °C 04142424
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/aksessuary-dopolnitelnoe-oborudovanie/izmeritelnye-pribory/termometr-30c30c-04142424/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: medium
+    notes: "Наблюдаемая цена: 780 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: medium. Ориентир холодильного термометра."
+  - id: SRC-PRICE-20260802-FRIDGE-THERMOMETER-MINIMUM
+    title: Айсберг ТБ-225 −30…+30 °C
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/aksessuary-dopolnitelnoe-oborudovanie/izmeritelnye-pribory/termometr-dlia-kholodilnika-30s30s-aisberg-tb-225-bez-poverki/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: low
+    notes: "Наблюдаемая цена: 150 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: low. Без поверки; ориентир, не финальный выбор."
+  - id: SRC-PRICE-20260802-FRIDGE-THERMOMETER-SCALE-READY
+    title: Термометр холодильный −30…+50 °C 49955
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/aksessuary-dopolnitelnoe-oborudovanie/izmeritelnye-pribory/termometr-dlia-kholodilnika-3050s-49955-n3121/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: medium
+    notes: "Наблюдаемая цена: 866 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: medium. Ориентир холодильного термометра."
+  - id: SRC-PRICE-20260802-GRINDER-BASE
+    title: Hurakan HKN-22SC
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/technological-equipment/grinder/miasorubka-hurakan-hkn-22sc/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: high
+    notes: "Наблюдаемая цена: 24253 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: high. Профессиональная мясорубка средней производительности; позиция условная."
+  - id: SRC-PRICE-20260802-GRINDER-MINIMUM
+    title: Hurakan HKN-12SC
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/technological-equipment/grinder/miasorubka-hurakan-hkn-12sc/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: high
+    notes: "Наблюдаемая цена: 14548 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: high. Профессиональная мясорубка; позиция условная."
+  - id: SRC-PRICE-20260802-GRINDER-SCALE-READY
+    title: Hurakan HKN-22SP
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/technological-equipment/grinder/miasorubka-hurakan-hkn-22sp/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: high
+    notes: "Наблюдаемая цена: 32505 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: high. Профессиональная мясорубка; включается только если процессор не закрывает требование."
+  - id: SRC-PRICE-20260802-GROW-SYSTEM-BASE
+    title: Гидропонная ферма Full, 4 уровня
+    type: supplier_product_card
+    location: https://www.green-1.ru/index.php?path=11900330_11900332&product_id=839&route=product%2Fproduct
+    publisher: Green-1
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: low
+    notes: "Наблюдаемая цена: 129000 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: low. Аналог опытной установки; точная схема, 10 рядов и туманообразование требуют собственного расчёта."
+  - id: SRC-PRICE-20260802-GROW-SYSTEM-MINIMUM
+    title: Гидропонная ферма Basic, 4 уровня
+    type: supplier_product_card
+    location: https://www.green-1.ru/index.php?path=11900330_11900332&product_id=836&route=product%2Fproduct
+    publisher: Green-1
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: low
+    notes: "Наблюдаемая цена: 119000 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: low. Аналог опытной установки; не является точным аэротуманным змеевиком проекта."
+  - id: SRC-PRICE-20260802-GROW-SYSTEM-SCALE-READY
+    title: Гидропонная ферма Full, 5 уровней
+    type: supplier_product_card
+    location: https://microzelen.ru/catalog/gidroponnye-fermy/
+    publisher: Microzelen.ru
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: low
+    notes: "Наблюдаемая цена: 129000 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: low. Публичный ориентир готовой фермы; не заменяет инженерный расчёт проектного модуля."
+  - id: SRC-PRICE-20260802-HAND-SINK-BASE
+    title: Kamik настенный рукомойник из нержавеющей стали, смеситель в комплекте
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/neutral-equipment/bath-wash/rukomoiniki/rukomoinik-kamik-iz-nerzhaveiushchei-stali-nastennyi-smesitel-v-komplekte-390kh390kh260-mm/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: high
+    notes: "Наблюдаемая цена: 10943 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: high. Один профессиональный рукомойник для персонала."
+  - id: SRC-PRICE-20260802-HAND-SINK-MINIMUM
+    title: Kamik настенный рукомойник из нержавеющей стали, смеситель в комплекте
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/neutral-equipment/bath-wash/rukomoiniki/rukomoinik-kamik-iz-nerzhaveiushchei-stali-nastennyi-smesitel-v-komplekte-390kh390kh260-mm/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: high
+    notes: "Наблюдаемая цена: 10943 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: high. Один профессиональный рукомойник для персонала."
+  - id: SRC-PRICE-20260802-HAND-SINK-SCALE-READY
+    title: Kamik настенный рукомойник из нержавеющей стали, смеситель в комплекте
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/neutral-equipment/bath-wash/rukomoiniki/rukomoinik-kamik-iz-nerzhaveiushchei-stali-nastennyi-smesitel-v-komplekte-390kh390kh260-mm/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: high
+    notes: "Наблюдаемая цена: 10943 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: high. Один профессиональный рукомойник для персонала."
+  - id: SRC-PRICE-20260802-ICE-BATH-BASE
+    title: GN 1/1×200 из поликарбоната + крышка
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/inventory/kitchen-equipment/gastronorm-containers/gastronorm-containers-polycarbonate/gastroemkost-gn-11-530kh325kh200-jw-r118/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: medium
+    notes: "Наблюдаемая цена: 3425 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: medium. Один и тот же публичный комплект используется как единичный ориентир; сценарии различаются количеством."
+  - id: SRC-PRICE-20260802-ICE-BATH-MINIMUM
+    title: GN 1/1×200 из поликарбоната + крышка
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/inventory/kitchen-equipment/gastronorm-containers/gastronorm-containers-polycarbonate/gastroemkost-gn-11-530kh325kh200-jw-r118/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: medium
+    notes: "Наблюдаемая цена: 3425 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: medium. Цена комплекта ёмкости и крышки; для охлаждения после су-вида поставщик рекомендует проверить нержавеющее исполнение."
+  - id: SRC-PRICE-20260802-ICE-BATH-SCALE-READY
+    title: GN 1/1×200 из поликарбоната + крышка
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/inventory/kitchen-equipment/gastronorm-containers/gastronorm-containers-polycarbonate/gastroemkost-gn-11-530kh325kh200-jw-r118/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: medium
+    notes: "Наблюдаемая цена: 3425 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: medium. Один и тот же публичный комплект используется как единичный ориентир; сценарии различаются количеством."
+  - id: SRC-PRICE-20260802-IMMERSION-BLENDER-BASE
+    title: Robot Coupe CMP250 V.V.
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/technological-equipment/hand-mixers-homogenizers/mikser-ruchnoi-robot-coupe-cmp250-vv-art34240b/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: high
+    notes: "Наблюдаемая цена: 62832 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: high. Профессиональный погружной миксер со съёмной рабочей частью."
+  - id: SRC-PRICE-20260802-IMMERSION-BLENDER-MINIMUM
+    title: Robot Coupe MicroMix
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/technological-equipment/hand-mixers-homogenizers/mikser-robot-coupe-micromix-34900/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: medium
+    notes: "Наблюдаемая цена: 31212 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: medium. Профессиональная модель минимального уровня; производительность для заготовочного цеха проверить."
+  - id: SRC-PRICE-20260802-IMMERSION-BLENDER-SCALE-READY
+    title: Robot Coupe MP350 Ultra TP
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/technological-equipment/hand-mixers-homogenizers/mikser-ruchnoi-robot-coupe-mp350-ultra-tp-art-34590l/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: high
+    notes: "Наблюдаемая цена: 76237 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: high. Профессиональная модель с резервом производительности."
+  - id: SRC-PRICE-20260802-INDUCTION-BASE
+    title: Luxstahl ПИ 2-94
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/the-thermal-equipment/plate/plate-induction/plita-induktsionnaia-pi-2-94/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: high
+    notes: "Наблюдаемая цена: 84752 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: high. Профессиональная двухконфорочная индукционная плита."
+  - id: SRC-PRICE-20260802-INDUCTION-MINIMUM
+    title: Luxstahl ПИ 2-700
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/the-thermal-equipment/plate/plate-induction/plita-induktsionnaia-luxstahl-pi-2-700/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: high
+    notes: "Наблюдаемая цена: 83290 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: high. Профессиональная двухконфорочная индукционная плита."
+  - id: SRC-PRICE-20260802-INDUCTION-SCALE-READY
+    title: Luxstahl ПИ 2-ПР
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/the-thermal-equipment/plate/plate-induction/plita-induktsionnaia-luxstahl-pi-2-pr/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: high
+    notes: "Наблюдаемая цена: 107341 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: high. Профессиональная двухконфорочная индукционная плита с повышенным резервом."
+  - id: SRC-PRICE-20260802-JAR-BLENDER-BASE
+    title: Hamilton Beach HBF510-CE
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/technological-equipment/blenders/blender-dlia-produktov-hamilton-beach-hbf510-ce/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: medium
+    notes: "Наблюдаемая цена: 60116 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: medium. Профессиональный блендер; объём чаши сверить с требованием ≥2 л."
+  - id: SRC-PRICE-20260802-JAR-BLENDER-MINIMUM
+    title: Hamilton Beach HBB908R-CE
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/technological-equipment/blenders/blender-hamilton-beach-hbb908r-ce/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: medium
+    notes: "Наблюдаемая цена: 23515 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: medium. Профессиональный барный блендер; объём чаши и режим колки льда сверить с требованием ≥2 л."
+  - id: SRC-PRICE-20260802-JAR-BLENDER-SCALE-READY
+    title: Hamilton Beach HBH650R-CE
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/technological-equipment/blenders/blender-hamilton-beach-hbh650r-se/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: medium
+    notes: "Наблюдаемая цена: 105408 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: medium. Профессиональный высоконагруженный блендер; точную чашу и колку льда подтвердить."
+  - id: SRC-PRICE-20260802-KEG-BASE
+    title: KegLand Cornelius 19 л
+    type: supplier_product_card
+    location: https://www.beermachines.ru/catalog/kegging/cornelius-keg-kegland-19/
+    publisher: BeerMachines
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: medium
+    notes: "Наблюдаемая цена: 10580 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: medium. Цена за один кег; текущую цену и фитинг подтвердить."
+  - id: SRC-PRICE-20260802-KEG-MINIMUM
+    title: Mangrove Jack 19 л
+    type: supplier_product_card
+    location: https://vino-del.ru/index.php?product_id=560&route=product%2Fproduct
+    publisher: Вино-Дел
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: medium
+    notes: "Наблюдаемая цена: 9990 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не включён. Доставка: не указано. Уверенность: medium. Цена за один пищевой Cornelius-кег; НДС на странице указан как не включённый/не применяемый."
+  - id: SRC-PRICE-20260802-KEG-SCALE-READY
+    title: KegLand Cornelius Ball Lock 19 л
+    type: supplier_product_card
+    location: https://russsam.ru/product/keg-kornelius-kegland-s-fitingom-ball-lock-19-l/
+    publisher: Русский Самодел
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: medium
+    notes: "Наблюдаемая цена: 12363 RUB. Наличие: active_catalog; listed_in_stock. НДС: не указано. Доставка: не указано. Уверенность: medium. Цена за один кег; санитарную совместимость и фитинг подтвердить."
+  - id: SRC-PRICE-20260802-LARGE-ICE-BASE
+    title: Brema CB 840A
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/refrigeration-equipment/ice-generators/ice-ice-kubikovogo/ldogenerator-brema-cb-840a/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: high
+    notes: "Наблюдаемая цена: 234270 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: high. 80 кг/сутки, встроенный бункер 40 кг, водопровод обязателен."
+  - id: SRC-PRICE-20260802-LARGE-ICE-MINIMUM
+    title: Viatto VA-IM-50B
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/refrigeration-equipment/ice-generators/ldogeneratory-palchikovogo-lda/ldogenerator-va-im-50v/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: medium
+    notes: "Наблюдаемая цена: 53036 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: medium. Ориентир около 50 кг/сутки; достаточность для су-вида и бара требует расчёта."
+  - id: SRC-PRICE-20260802-LARGE-ICE-SCALE-READY
+    title: Brema CB 1265W
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/refrigeration-equipment/ice-generators/ice-ice-kubikovogo/ldogenerator-brema-cb-1265w/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: high
+    notes: "Наблюдаемая цена: 308957 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: high. 130 кг/сутки, встроенный бункер 65 кг; резерв без промышленной линии."
+  - id: SRC-PRICE-20260802-PLANETARY-BASE
+    title: ROSSO B10S
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/technological-equipment/planetary-mixers/mikser-planetarnyi-rosso-b10s/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: high
+    notes: "Наблюдаемая цена: 44704 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: high. Профессиональный планетарный миксер 10 л."
+  - id: SRC-PRICE-20260802-PLANETARY-MINIMUM
+    title: Hurakan HKN-KS10
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/technological-equipment/planetary-mixers/mikser-planetarnyi-hurakan-hkn-ks10/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: high
+    notes: "Наблюдаемая цена: 28965 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: high. Чаша 10 л, минимальный профессиональный уровень."
+  - id: SRC-PRICE-20260802-PLANETARY-SCALE-READY
+    title: Hurakan HKN-IP20F
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/technological-equipment/planetary-mixers/mikser-planetarnyi-hurakan-hkn-ip20f/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: high
+    notes: "Наблюдаемая цена: 52135 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: high. Профессиональный миксер 20 л с резервом производительности."
+  - id: SRC-PRICE-20260802-PLASTIC-GN-BASE
+    title: GN 1/3×100 из полипропилена + крышка
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/inventory/kitchen-equipment/gastronorm-containers/gastronorm-containers-made-of-polypropylene/gastroemkost-gn-13-325kh176kh100-21011/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: medium
+    notes: "Наблюдаемая цена: 603 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: medium. Ориентир одной ёмкости GN 1/3 с крышкой. Дополнительные карточки комплекта: https://www.klenmarket.ru/shop/inventory/kitchen-equipment/gastronorm-containers/gastronorm-containers-made-of-polypropylene/cap-in-polypropylene-for-gn-13-21013/."
+  - id: SRC-PRICE-20260802-PLASTIC-GN-MINIMUM
+    title: GN 1/3×65 из полипропилена + крышка
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/inventory/kitchen-equipment/gastronorm-containers/gastronorm-containers-made-of-polypropylene/curl/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: medium
+    notes: "Наблюдаемая цена: 546 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: medium. Ориентир одной ёмкости GN 1/3 с крышкой; размеры комплекта требуют уточнения. Дополнительные карточки комплекта: https://www.klenmarket.ru/shop/inventory/kitchen-equipment/gastronorm-containers/gastronorm-containers-made-of-polypropylene/cap-in-polypropylene-for-gn-13-21013/."
+  - id: SRC-PRICE-20260802-PLASTIC-GN-SCALE-READY
+    title: GN 1/3×150 из полипропилена + крышка
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/inventory/kitchen-equipment/gastronorm-containers/gastronorm-containers-made-of-polypropylene/gastroemkost-gn-13-325kh176kh150-21012/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: medium
+    notes: "Наблюдаемая цена: 673 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: medium. Ориентир одной ёмкости GN 1/3 с крышкой. Дополнительные карточки комплекта: https://www.klenmarket.ru/shop/inventory/kitchen-equipment/gastronorm-containers/gastronorm-containers-made-of-polypropylene/cap-in-polypropylene-for-gn-13-21013/."
+  - id: SRC-PRICE-20260802-PORTION-SCALE-BASE
+    title: CAS SWN-3
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/weighing-and-packaging-equipment/libra-a-la-carte/vesy-cas-swn-3/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: high
+    notes: "Наблюдаемая цена: 8224 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: high. Профессиональные порционные весы."
+  - id: SRC-PRICE-20260802-PORTION-SCALE-MINIMUM
+    title: MAS MSC-05
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/weighing-and-packaging-equipment/libra-a-la-carte/vesy-elektronnye-portsionnye-kompaktnye-mas-msc-05/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: high
+    notes: "Наблюдаемая цена: 6638 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: high. Профессиональные порционные весы."
+  - id: SRC-PRICE-20260802-PORTION-SCALE-SCALE-READY
+    title: CAS SW-05W
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/weighing-and-packaging-equipment/libra-a-la-carte/scales-cas-sw-05w/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: high
+    notes: "Наблюдаемая цена: 19453 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: high. Профессиональные влагозащищённые порционные весы."
+  - id: SRC-PRICE-20260802-POS-TERMINAL-BASE
+    title: SP/SKYV2
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/oborudovanie-dlia-avtomatizatsii/pos-sistemy/sensornyi-terminal-spskyv2-15-intel-j4125-ozu-4gbssdbez-msr-windows-10-chernyi/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: medium
+    notes: "Наблюдаемая цена: 47500 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: medium. Аппаратная часть POS; ПО и периферия не включены."
+  - id: SRC-PRICE-20260802-POS-TERMINAL-MINIMUM
+    title: SPACE mini
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/oborudovanie-dlia-avtomatizatsii/pos-sistemy/sensornyi-terminal-space-mini-116-intel-n5095-ddr4-8gbssd128gbwifibtaudiochernyi-win10/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: medium
+    notes: "Наблюдаемая цена: 35300 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: medium. Аппаратная часть POS; фискализация, эквайринг, ПО, лицензии, внедрение и периферия не включены."
+  - id: SRC-PRICE-20260802-POS-TERMINAL-SCALE-READY
+    title: SPACE SUPREME
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/oborudovanie-dlia-avtomatizatsii/pos-sistemy/sensornyi-monoblok-space-supreme/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: medium
+    notes: "Наблюдаемая цена: 67300 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: medium. Аппаратная часть POS с резервом; ПО, фискализация и периферия не включены."
+  - id: SRC-PRICE-20260802-POSTMIX-BASE
+    title: AVIbar Press
+    type: supplier_product_card
+    location: https://avibar.ru/postmiks-avibar-press
+    publisher: AVIbar
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: low
+    notes: "Наблюдаемая цена: 199000 RUB. Наличие: active_catalog; promotional_price; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: low. Публичная акционная цена; точная комплектность и дата действия требуют КП."
+  - id: SRC-PRICE-20260802-POSTMIX-MINIMUM
+    title: Post-mix APSok-4
+    type: supplier_product_card
+    location: https://bargun.ru/product/postmix-dispenser-dlya-rozliva-sokov-j-40sc-t/
+    publisher: BarGun
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: low
+    notes: "Наблюдаемая цена: 155711 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: low. Публичный ориентир системы; комплектность с карбонизатором, CO₂, насосами и фильтрацией требует КП."
+  - id: SRC-PRICE-20260802-POSTMIX-SCALE-READY
+    title: FOODATLAS LEF-4/5
+    type: supplier_product_card
+    location: https://foodatlas.nt-rt.ru/price/product/450702
+    publisher: FoodAtlas
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: low
+    notes: "Наблюдаемая цена: 253500.46 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: low. Публичный ориентир; соответствие полной комплектации проекта требует КП."
+  - id: SRC-PRICE-20260802-PROBE-BASE
+    title: Кухонный термощуп −50…+300 °C
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/aksessuary-dopolnitelnoe-oborudovanie/aksessuary-dlia-teplovogo-oborudovaniia/termoshchup-kukhonnyi-diapazon-ot-50-do-300c/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: low
+    notes: "Наблюдаемая цена: 153 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: low. Публичная карточка даёт лишь базовый ориентир; профессиональная поверка и точность не подтверждены."
+  - id: SRC-PRICE-20260802-PROBE-MINIMUM
+    title: Кухонный термощуп −50…+300 °C
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/aksessuary-dopolnitelnoe-oborudovanie/aksessuary-dlia-teplovogo-oborudovaniia/termoshchup-kukhonnyi-diapazon-ot-50-do-300c/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: low
+    notes: "Наблюдаемая цена: 153 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: low. Публичная карточка даёт лишь базовый ориентир; профессиональная поверка и точность не подтверждены."
+  - id: SRC-PRICE-20260802-PROBE-SCALE-READY
+    title: Кухонный термощуп −50…+300 °C
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/aksessuary-dopolnitelnoe-oborudovanie/aksessuary-dlia-teplovogo-oborudovaniia/termoshchup-kukhonnyi-diapazon-ot-50-do-300c/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: low
+    notes: "Наблюдаемая цена: 153 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: low. Публичная карточка даёт лишь базовый ориентир; профессиональная поверка и точность не подтверждены."
+  - id: SRC-PRICE-20260802-RACK-BASE
+    title: HICOLD НСК-11/6
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/neutral-equipment/racks/racks-with-solid-shelves/stellazh-nerzhaveiushchii-kukhonnyi-hicold-nsk-116-281473/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: high
+    notes: "Наблюдаемая цена: 32451 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: high. Цена за один профессиональный нержавеющий стеллаж."
+  - id: SRC-PRICE-20260802-RACK-MINIMUM
+    title: HICOLD НСК-6/3
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/neutral-equipment/racks/racks-with-solid-shelves/stellazh-nerzhaveiushchii-kukhonnyi-hicold-nsk-63-287543/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: high
+    notes: "Наблюдаемая цена: 16921 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: high. Цена за один профессиональный нержавеющий стеллаж."
+  - id: SRC-PRICE-20260802-RACK-SCALE-READY
+    title: HICOLD НСК-12/7
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/neutral-equipment/racks/racks-with-solid-shelves/stellazh-nerzhaveiushchii-kukhonnyi-hicold-nsk-127-282488/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: high
+    notes: "Наблюдаемая цена: 39683 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: high. Цена за один профессиональный нержавеющий стеллаж."
+  - id: SRC-PRICE-20260802-ROBOT-BASE
+    title: Robot-Coupe R502 + комплект дисков (ценовой ориентир комплекта)
+    type: supplier_product_card
+    location: https://www.robotcoupe.ru/catalog/item/720/
+    publisher: Robot-Coupe Russia
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: low
+    notes: "Наблюдаемая цена: 472582 RUB. Наличие: active_catalog; listed_in_stock; completeness_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: low. Сумма процессора и опубликованного набора дисков; окончательная комплектация и работа с рубленым мясом требуют КП/теста. Дополнительные карточки комплекта: https://www.robotcoupe.ru/catalog/diski/."
+  - id: SRC-PRICE-20260802-ROBOT-MINIMUM
+    title: Robot-Coupe R402 + комплект дисков (ценовой ориентир комплекта)
+    type: supplier_product_card
+    location: https://www.robotcoupe.ru/catalog/kuhonnye-processory/
+    publisher: Robot-Coupe Russia
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: low
+    notes: "Наблюдаемая цена: 340273 RUB. Наличие: active_catalog; completeness_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: low. Сумма процессора и опубликованного набора дисков; мясная текстура и комплектность требуют испытаний и КП. Дополнительные карточки комплекта: https://www.robotcoupe.ru/catalog/diski/."
+  - id: SRC-PRICE-20260802-ROBOT-SCALE-READY
+    title: Robot-Coupe R752 + комплект дисков (ценовой ориентир комплекта)
+    type: supplier_product_card
+    location: https://www.robotcoupe.ru/catalog/kuhonnye-processory/
+    publisher: Robot-Coupe Russia
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: low
+    notes: "Наблюдаемая цена: 547547 RUB. Наличие: active_catalog; completeness_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: low. Ценовой ориентир более производительного процессора и дисков; окончательная комплектация требует КП. Дополнительные карточки комплекта: https://www.robotcoupe.ru/catalog/diski/."
+  - id: SRC-PRICE-20260802-SALADETTE-BASE
+    title: HICOLD СХСб-С-1-2Д, 1390×600
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/refrigeration-equipment/tables-cooled/okhlazhdaemyi-stol-saladetta-skhsb-s-12d-bez-borta-1390kh600kh870/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: medium
+    notes: "Наблюдаемая цена: 153287 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: medium. Двухдверная саладетта; фактическую раскладку GN подтвердить."
+  - id: SRC-PRICE-20260802-SALADETTE-MINIMUM
+    title: HICOLD СХСб-С-1-1Д, 945×700
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/refrigeration-equipment/tables-cooled/okhlazhdaemyi-stol-saladetta-skhsb-s-11d-bez-borta-945kh700kh870/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: medium
+    notes: "Наблюдаемая цена: 122703 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: medium. Компактная саладетта; вместимость верхней зоны под минимум 8 начинок требует проверки."
+  - id: SRC-PRICE-20260802-SALADETTE-SCALE-READY
+    title: HICOLD СХСб-С-2-2Д, 1390×700
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/refrigeration-equipment/tables-cooled/okhlazhdaemyi-stol-saladetta-skhsb-s-22d-s-bortom-1390kh700kh870/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: medium
+    notes: "Наблюдаемая цена: 156056 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: medium. Двухдверная саладетта увеличенной глубины; раскладку минимум на 8 начинок подтвердить."
+  - id: SRC-PRICE-20260802-SOUS-VIDE-BASE
+    title: TATRA TSV2
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/the-thermal-equipment/sous-vide/termostat-pogruzhnoi-tatra-tsv2/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: high
+    notes: "Наблюдаемая цена: 60926 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: high. Профессиональный погружной термостат; ванна учитывается отдельно."
+  - id: SRC-PRICE-20260802-SOUS-VIDE-MINIMUM
+    title: Hurakan HKN-SV40E
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/the-thermal-equipment/sous-vide/termostat-pogruzhnoi-hurakan-hkn-sv40e/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: high
+    notes: "Наблюдаемая цена: 22643 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: high. Профессиональный погружной термостат; ванна учитывается отдельно."
+  - id: SRC-PRICE-20260802-SOUS-VIDE-SCALE-READY
+    title: Apach ASV2 NEW
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/the-thermal-equipment/sous-vide/termostat-pogruzhnoi-apach-asv2-new-378949/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: high
+    notes: "Наблюдаемая цена: 82753 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: high. Профессиональный погружной термостат; ванна учитывается отдельно."
+  - id: SRC-PRICE-20260802-TABLE-1500-BASE
+    title: Luxstahl СПС-15/7, 1500×700
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/neutral-equipment/stoly-proizvodstvennye-i-rabochie/stoly-razdelochnye/stol-proizvodstvennyi-luxstahl-sps-157/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: medium
+    notes: "Наблюдаемая цена: 25896 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: medium. Ближайшая публичная карточка к ориентиру 1400–1500×800 мм; окончательная глубина требует КП."
+  - id: SRC-PRICE-20260802-TABLE-1500-MINIMUM
+    title: Luxstahl СПС-15/6, 1500×600
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/neutral-equipment/stoly-proizvodstvennye-i-rabochie/stoly-razdelochnye/stol-proizvodstvennyi-luxstahl-sps-156/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: medium
+    notes: "Наблюдаемая цена: 23526 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: medium. Профессиональная пищевая нержавеющая столешница; глубина 600 мм меньше рабочего ориентира 800 мм."
+  - id: SRC-PRICE-20260802-TABLE-1500-SCALE-READY
+    title: СДК 1500×800×870, нержавеющая столешница
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/neutral-equipment/tables-production-and-cutting/the-cutting-tables/stol-dlia-obrabotki-ovoshchei-i-korneplodov-sdk-1500kh800kh870/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: medium
+    notes: "Наблюдаемая цена: 39232 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: medium. Размер 1500×800 соответствует ориентиру, но окрашенный/оцинкованный каркас требует проверки против требования усиленной полностью профессиональной конструкции."
+  - id: SRC-PRICE-20260802-TABLE-GENERAL-BASE
+    title: Luxstahl СПС-12/6, 1200×600
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/neutral-equipment/stoly-proizvodstvennye-i-rabochie/stoly-razdelochnye/stol-proizvodstvennyi-luxstahl-sps-126/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: medium
+    notes: "Наблюдаемая цена: 20320 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: medium. Ориентир для базового профессионального стола."
+  - id: SRC-PRICE-20260802-TABLE-GENERAL-MINIMUM
+    title: Luxstahl СПС-10/6, 1000×600
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/neutral-equipment/stoly-proizvodstvennye-i-rabochie/stoly-razdelochnye/stol-proizvodstvennyi-luxstahl-sps-106/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: medium
+    notes: "Наблюдаемая цена: 17941 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: medium. Ориентир для компактного профессионального стола."
+  - id: SRC-PRICE-20260802-TABLE-GENERAL-SCALE-READY
+    title: Luxstahl СПС-15/7, 1500×700
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/neutral-equipment/stoly-proizvodstvennye-i-rabochie/stoly-razdelochnye/stol-proizvodstvennyi-luxstahl-sps-157/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: medium
+    notes: "Наблюдаемая цена: 25896 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: medium. Ориентир увеличенной рабочей поверхности."
+  - id: SRC-PRICE-20260802-THERMOPOT-BASE
+    title: ROSSO WB-20 PRO
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/the-thermal-equipment/boilers/kipiatilnik-rosso-wb-20-pro/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: medium
+    notes: "Наблюдаемая цена: 8536 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: medium. Профессиональный кипятильник 20 л; регулируемую температуру проверить."
+  - id: SRC-PRICE-20260802-THERMOPOT-MINIMUM
+    title: GASTRORAG DK-LX-100
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/the-thermal-equipment/boilers/kipiatilnik-gastrorag-dk-lx-100/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: medium
+    notes: "Наблюдаемая цена: 6788 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: medium. Профессиональный кипятильник/термопот; мойку и режим поддержания пуэра проверить."
+  - id: SRC-PRICE-20260802-THERMOPOT-SCALE-READY
+    title: GASTRORAG DK-LX-200
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/the-thermal-equipment/boilers/kipiatilnik-gastrorag-dk-lx-200/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: medium
+    notes: "Наблюдаемая цена: 8693 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: medium. Увеличенный профессиональный кипятильник; регулируемую температуру проверить."
+  - id: SRC-PRICE-20260802-TIMER-BASE
+    title: Электронный сенсорный кухонный таймер
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/aksessuary-dopolnitelnoe-oborudovanie/izmeritelnye-pribory/taimer-kukhonnyi-na-magnite-elektronnyi-sensornyi/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: medium
+    notes: "Наблюдаемая цена: 634 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: medium. Цена за один таймер."
+  - id: SRC-PRICE-20260802-TIMER-MINIMUM
+    title: Механический кухонный таймер
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/aksessuary-dopolnitelnoe-oborudovanie/izmeritelnye-pribory/taimer-mekhanicheskii-kukhonnyi-75-sm-belyi/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: medium
+    notes: "Наблюдаемая цена: 390 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: medium. Цена за один производственный таймер начального уровня."
+  - id: SRC-PRICE-20260802-TIMER-SCALE-READY
+    title: Кухонный таймер 60 минут 41936
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/aksessuary-dopolnitelnoe-oborudovanie/izmeritelnye-pribory/timer-kitchen-on-60-minutes-41936-46763/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: medium
+    notes: "Наблюдаемая цена: 1155 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: medium. Цена за один таймер; окончательная профессиональная модель не выбрана."
+  - id: SRC-PRICE-20260802-VACUUM-BASE
+    title: Hurakan HKN-VAC400E
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/weighing-and-packaging-equipment/packaging-equipment/upakovshchik-vakuumnyi-hurakan-hkn-vac400e/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: high
+    notes: "Наблюдаемая цена: 69161 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: high. Камерный профессиональный вакууматор увеличенного формата."
+  - id: SRC-PRICE-20260802-VACUUM-MINIMUM
+    title: Hurakan HKN-VAC260E
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/weighing-and-packaging-equipment/packaging-equipment/upakovshchik-vakuumnyi-hurakan-hkn-vac260e/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: high
+    notes: "Наблюдаемая цена: 42844 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: high. Камерный профессиональный вакууматор."
+  - id: SRC-PRICE-20260802-VACUUM-SCALE-READY
+    title: Indokor IVP-430PT/2
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/weighing-and-packaging-equipment/packaging-equipment/apparat-upakovochnyi-vakuumnyi-indokor-ivp-430pt2-dve-planki/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: medium
+    notes: "Наблюдаемая цена: 111250 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: medium. Камерный аппарат с двумя планками; фактическую цену и доступность нужно подтвердить КП."
+  - id: SRC-PRICE-20260802-WALL-SHELF-BASE
+    title: Luxstahl ПНК12/4
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/neutral-equipment/wall-shelves/shelves-solid/polka-nastennaia-sploshnaia-luxstahl-pnk124/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: high
+    notes: "Наблюдаемая цена: 4920 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: high. Цена за одну настенную полку."
+  - id: SRC-PRICE-20260802-WALL-SHELF-MINIMUM
+    title: Luxstahl ПНК6/4
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/neutral-equipment/wall-shelves/shelves-solid/polka-nastennaia-sploshnaia-luxstahl-pnk64/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: high
+    notes: "Наблюдаемая цена: 3131 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: high. Цена за одну настенную полку."
+  - id: SRC-PRICE-20260802-WALL-SHELF-SCALE-READY
+    title: Luxstahl ПНК15/4
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/neutral-equipment/wall-shelves/shelves-solid/polka-nastennaia-sploshnaia-luxstahl-pnk154/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: high
+    notes: "Наблюдаемая цена: 5620 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: high. Цена за одну настенную полку."
+  - id: SRC-PRICE-20260802-WASTE-BIN-BASE
+    title: Контейнер 90 л с крышкой на колёсах
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/inventory/household-goods/bins-trash-bags/konteiner-90l-polipropilen-d425sm-h85sm-s-kryshkoi-na-kolesakh-dlia-pishchevykh-otkhodov-434272913/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: high
+    notes: "Наблюдаемая цена: 3169 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: high. Цена за один закрываемый контейнер."
+  - id: SRC-PRICE-20260802-WASTE-BIN-MINIMUM
+    title: Бак с крышкой 45 л
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/inventory/household-goods/bins-trash-bags/tank-with-lid-for-food-black-45-l-460701681517431253613/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: high
+    notes: "Наблюдаемая цена: 1157 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: high. Цена за один закрываемый контейнер."
+  - id: SRC-PRICE-20260802-WASTE-BIN-SCALE-READY
+    title: Контейнер для пищевых отходов 110 л на колёсах
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/inventory/household-goods/bins-trash-bags/container-for-food-waste-on-wheels-500kh450kh800-rt9957/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: high
+    notes: "Наблюдаемая цена: 3499 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: high. Цена за один закрываемый контейнер."
+  - id: SRC-PRICE-20260802-WASTE-TABLE-BASE
+    title: Luxstahl СО-12/7
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/neutral-equipment/tables-production-and-cutting/tables-for-waste-collection/stol-universalnyi-s-otverstiem-dlia-otkhodov-luxstahl-so-127-obviazka-trekhstoronniaia/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: medium
+    notes: "Наблюдаемая цена: 24187 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: medium. Базовый ориентир стола с отверстием."
+  - id: SRC-PRICE-20260802-WASTE-TABLE-MINIMUM
+    title: Luxstahl СО-6/6
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/neutral-equipment/tables-production-and-cutting/tables-for-waste-collection/stol-universalnyi-s-otverstiem-dlia-otkhodov-luxstahl-so-66-obviazka-trekhstoronniaia/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: medium
+    notes: "Наблюдаемая цена: 17011 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: medium. Стол с отверстием; сменная ёмкость и санитарная конфигурация требуют проверки."
+  - id: SRC-PRICE-20260802-WASTE-TABLE-SCALE-READY
+    title: Luxstahl СО-15/7
+    type: supplier_product_card
+    location: https://www.klenmarket.ru/shop/equipment/neutral-equipment/tables-production-and-cutting/tables-for-waste-collection/stol-universalnyi-s-otverstiem-dlia-otkhodov-luxstahl-so-157-obviazka-trekhstoronniaia/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-01T22:19:05.000Z
+    reliability: medium
+    notes: "Наблюдаемая цена: 26887 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: medium. Увеличенный профессиональный стол с отверстием."

@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "tsx src/server.ts",
     "inspect": "mcp-inspector tsx src/server.ts",
-    "test": "tsx --test test/**/*.test.ts",
+    "test": "tsx --test test/*.test.ts",
     "smoke": "tsx src/smoke.ts",
     "check": "tsc --noEmit"
   },
