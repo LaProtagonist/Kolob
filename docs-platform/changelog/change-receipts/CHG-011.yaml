@@ -1,0 +1,69 @@
+receipt_version: 2
+change_id: CHG-011
+iteration_id: ITR-CAPEX-REGISTER-2026-08-01-01
+proposal_id: PROP-CAPEX-REGISTER-2026-08-01-01
+decision_id: DEC-001
+source_change_set: docs-platform/changes/CHG-011-capex-equipment-register-decision.yaml
+status: applied
+applied_at: 2026-08-01T17:20:24.488Z
+actor: Codex
+tool: docs-platform change:apply
+approved_payload: null
+before_hash: 97b40d809c9737c75569ecdde3c852328b5277140847f599dfc74fb88342023f
+after_hash: 84270f1dcbe6a999d67f8296e05a4b3eeded2c64e6afeaa6dbad1757339c51d9
+touched_registry_files:
+  - path: docs-platform/registry/sources.yaml
+    backup_path: docs-platform/changelog/backups/2026-08-01T17-20-24-488Z-CHG-011/sources.yaml
+  - path: docs-platform/registry/decisions.yaml
+    backup_path: docs-platform/changelog/backups/2026-08-01T17-20-24-488Z-CHG-011/decisions.yaml
+operations:
+  - type: add
+    entity: sources
+    id: SRC-CAPEX-EQUIPMENT-REGISTER-BRIEF
+    before: null
+    after:
+      id: SRC-CAPEX-EQUIPMENT-REGISTER-BRIEF
+      title: Задание на структурированный CAPEX Equipment Register v0.1
+      type: instruction
+      location: User instruction, 2026-08-01
+      publisher: project owner
+      publication_date: 2026-08-01
+      accessed_at: 2026-08-01
+      reliability: primary
+      notes: Первичный источник разрешения структурно преобразовать ровно 124 существующие research-записи CAPEX v0.1 без изменения смысла, опубликовать производную Google Sheet и внедрить обязательный хронологический журнал и governed rollback. Модели, цены, поставщики, окончательные количества, общий CAPEX и новые позиции не утверждаются.
+    before_sha256: null
+    after_sha256: 6a5783ce8fcf9db4ab4cabeb37ade565d6374596e35a735cbb6a2fb84dd8890c
+    reverse_operation:
+      type: remove
+      entity: sources
+      id: SRC-CAPEX-EQUIPMENT-REGISTER-BRIEF
+  - type: add
+    entity: decisions
+    id: DEC-007
+    before: null
+    after:
+      id: DEC-007
+      title: Создать структурированный CAPEX Equipment Register v0.1 и обязательный lifecycle journal
+      status: approved
+      decision: Структурно преобразовать все 124 существующие записи CAPEX — Equipment Specification v0.1 в CAPEX Equipment Register v0.1 со статусом research, не меняя смысл исходных позиций; создать производные CSV и нативную Google Sheet; для последующих содержательных итераций обязательно применять proposal, approved decision, preview, apply, verification, append-only timeline и governed reverse change set.
+      rationale: Прямое утверждение владельца проекта от 2026-08-01. Решение утверждает только структуру, перенос и governance-механизм и не утверждает модели, цены, поставщиков, новые позиции, технические показатели, окончательные количества или итоговый CAPEX.
+      affected_documents:
+        - DOC-CAPEX-EQUIPMENT-SPECIFICATION
+      approved_by: project owner
+      approved_at: 2026-08-01
+      supersedes: null
+      source_ids:
+        - SRC-CAPEX-EQUIPMENT-REGISTER-BRIEF
+      updated_at: 2026-08-01
+    before_sha256: null
+    after_sha256: 4f507cb211fb5ae180f06cf8bd79dd287ac483a78bf443f61a2e54dc485f93fa
+    reverse_operation:
+      type: remove
+      entity: decisions
+      id: DEC-007
+validation_result: passed
+git_commit_hash: null
+rollback:
+  source_receipt: docs-platform/changelog/change-receipts/CHG-011.yaml
+  command: npm run change:reverse:preview -- ../changelog/change-receipts/CHG-011.yaml --change-id CHG-ROLLBACK-XXX --decision DEC-ROLLBACK-XXX
+  rollback_of: CHG-011

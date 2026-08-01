@@ -19,7 +19,7 @@
 - команды `preview`, `apply`, `validate`, `rollback`;
 - журнал изменений, связывающий batchUpdate, document ID, revision ID и decision ID.
 
-Рекомендуется вариант B: он сохраняет проверяемость, предотвращает массовую перезапись и позволяет разделить подготовку, согласование и применение. На текущем этапе не подключаются аккаунт Google, OAuth и секреты.
+Реализован вариант B: он сохраняет проверяемость, предотвращает массовую перезапись и разделяет подготовку, согласование и применение. Google OAuth хранится только в локальных исключённых из Git файлах проекта.
 
 ## Границы ответственности
 
@@ -32,46 +32,50 @@
 
 ## Локальный CLI
 
-```powershell
+```bash
 cd docs-platform/app
-npm install
+npm ci
 npm run registry:validate
 npm run registry:list
 npm run documents:list
 npm run decisions:list
 npm run change:preview -- ../changes/example-change.yaml
+npm run change:reverse:preview -- ../changelog/change-receipts/CHG-XXX.yaml --change-id CHG-ROLLBACK-XXX --decision DEC-ROLLBACK-XXX
+npm run timeline:validate
+npm run timeline:generate
+npm run capex:register:validate
 ```
 
 `change:preview` не пишет в registry: показывает затронутые сущности, before/after и ошибки validation. `change:apply` принимает только change set со статусом `approved`, ссылающийся на существующее approved decision; он создаёт backup, повторно валидирует результат и делает rollback при ошибке.
 
-Жизненный цикл: создать исследование → оформить decision record → получить approved decision → подготовить change set → preview → apply → проверить changelog и связанные документы.
+Обязательный жизненный цикл содержательной итерации: proposal → approved decision → approved change set → preview → apply того же payload/SHA-256 → validation → verification receipt → append-only timeline. Rollback создаётся как новый reverse change set и не удаляет историю.
 
-Текущие ограничения: нет Google API, OAuth, токенов, базы данных или веб-интерфейса; CLI изменяет только `registry/*.yaml`.
+Локальный OAuth, folder guard и Google API подключены. Секреты, token, folder ID и runtime-файлы не входят в Git.
 
 ## Verified local execution
 
-Проверено 2026-07-21 на Windows.
-
-- Node.js `v24.14.1`, npm `11.11.0`.
-- Выполнены `npm install`, `npm test`, `npm run registry:validate`, list-команды и сценарии `change:preview`/`change:apply`.
-- Тесты: 10 passed, 0 failed. Registry validation: OK.
-- Proposed change set корректно отклоняется до записи; approved CHG-002 создаёт backup и журнал с before/after, затем проходит validation.
-
-Известные ограничения: MCP и реальные инвестиционные материалы не подключены.
+Проверено 2026-08-01: docs-platform unit tests, TypeScript, registry validation, CAPEX register schema/reference validation, Google folder guard и Google Sheets readback прошли успешно. Governed apply создаёт backup и receipt с before/after hashes; reverse preview подтверждает восстановление исходного registry hash.
 
 ## Guarded Google Workspace sandbox
 
 Реализован локальный CLI для OAuth Desktop Application, Drive, Docs и Sheets. Он использует только `drive.file`: официальные Docs и Sheets methods в используемом сценарии допускают этот минимальный scope. Внешний доступ дополнительно ограничен local `projectFolderId` и проверкой родителя каждого файла.
 
-```powershell
+```bash
 npm run google:doctor
 npm run google:auth
+npm run google:folder:authorize
 npm run google:folder:inspect
+npm run google:publish:preview
+npm run google:publish:apply -- --apply --decision DEC-006
+npm run capex:sheet:preview
+npm run capex:sheet:apply -- --apply --decision DEC-007
 npm run google:test:create
 npm run google:test:read
 npm run google:test:update -- --preview
 ```
 
 `google:test:update -- --apply` требует approved DEC-002, успешного внутреннего preview, project-folder guard и интерактивного ввода `APPLY_TEST_UPDATE`. `google:test:cleanup` требует `DELETE_TEST_FILES`, работает исключительно по локальному manifest и не меняет registry. После создания файлов CLI готовит локальный proposed change set для `TEST-DOC-001` и `TEST-SHEET-001`; registry напрямую не редактируется.
+
+`google:folder:authorize` использует Google Picker с единственным scope `drive.file`. Google Docs publisher ограничен тремя зарегистрированными документами и `DEC-006`. CAPEX Sheet publisher ограничен `DOC-CAPEX-EQUIPMENT-REGISTER`, точным именем файла, пятью листами и `DEC-007`; повторный запуск обновляет единственный файл и отказывается выбирать дубликаты. Оба publisher выполняют API readback и сохраняют безопасные receipts. Registry обновляется отдельно через governed change set.
 
 До ручной OAuth-авторизации не запускать команды создания, чтения, update или cleanup. Инструкция подготовки находится в `GOOGLE_SETUP.md`.

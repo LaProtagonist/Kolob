@@ -1,0 +1,150 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["schema_version", "document", "modules", "equipment", "open_parameters", "missing_sections", "dictionaries"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "document": {
+      "type": "object",
+      "required": ["project", "document_id", "title", "russian_title", "version", "status", "document_type", "decision_id", "iteration_id", "proposal_id", "source_document_id", "source_path", "source_sha256", "source_record_count", "mapped_record_count", "unmapped_record_count", "csv_generated_from_yaml", "warning"],
+      "properties": {
+        "project": { "const": "Колобочная" },
+        "document_id": { "const": "DOC-CAPEX-EQUIPMENT-REGISTER" },
+        "title": { "const": "CAPEX Equipment Register" },
+        "russian_title": { "type": "string" },
+        "version": { "const": "0.1" },
+        "status": { "const": "research" },
+        "document_type": { "type": "string" },
+        "decision_id": { "const": "DEC-007" },
+        "iteration_id": { "type": "string" },
+        "proposal_id": { "type": "string" },
+        "source_document_id": { "const": "DOC-CAPEX-EQUIPMENT-SPECIFICATION" },
+        "source_path": { "type": "string" },
+        "source_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "source_record_count": { "const": 124 },
+        "mapped_record_count": { "const": 124 },
+        "unmapped_record_count": { "const": 0 },
+        "csv_generated_from_yaml": { "const": true },
+        "warning": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "modules": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "required": ["module_id", "module_name", "source_record_count"],
+        "properties": {
+          "module_id": { "pattern": "^CAPEX-0[1-4]$" },
+          "module_name": { "type": "string" },
+          "source_record_count": { "type": "integer", "minimum": 1 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "equipment": {
+      "type": "array",
+      "minItems": 124,
+      "maxItems": 124,
+      "items": {
+        "type": "object",
+        "required": ["item_id", "module_id", "module_name", "category", "subcategory", "name", "record_type", "parent_item_id", "inclusion_status", "requirement", "lifecycle_status", "quantity_min", "quantity_base", "quantity_scale_ready", "unit", "source_quantity", "specification", "open_parameters", "premises_dependency", "procurement_mode", "existing_condition", "power_kw", "voltage", "water_required", "drainage_required", "gas_required", "extraction_required", "dimensions", "service_clearance", "price_min", "price_base", "price_max", "currency", "price_date", "supplier", "source_id", "quote_status", "notes", "source_section", "source_item_number", "source_record_sha256"],
+        "properties": {
+          "item_id": { "type": "string", "pattern": "^CAPEX-0[1-4]-[0-9]{3}$" },
+          "module_id": { "type": "string", "pattern": "^CAPEX-0[1-4]$" },
+          "module_name": { "type": "string" },
+          "category": { "type": "string" },
+          "subcategory": { "type": "string" },
+          "name": { "type": "string" },
+          "record_type": { "enum": ["equipment", "system", "component", "accessory", "inventory", "furniture", "engineering_connection", "installation_service", "consumable", "software", "open_question"] },
+          "parent_item_id": { "type": ["string", "null"] },
+          "inclusion_status": { "enum": ["standalone", "included_in_parent", "purchased_separately", "tbd"] },
+          "requirement": { "enum": ["required", "optional", "conditional", "tbd"] },
+          "lifecycle_status": { "enum": ["research", "proposed", "approved", "superseded", "rejected"] },
+          "quantity_min": { "type": ["number", "null"] },
+          "quantity_base": { "type": ["number", "null"] },
+          "quantity_scale_ready": { "type": ["number", "null"] },
+          "unit": { "type": "string" },
+          "source_quantity": { "type": ["string", "null"] },
+          "specification": { "type": ["string", "null"] },
+          "open_parameters": { "type": ["string", "null"] },
+          "premises_dependency": { "type": ["string", "null"] },
+          "procurement_mode": { "enum": ["purchase", "existing", "repair", "retrofit", "lease", "supplier_provided", "tbd"] },
+          "existing_condition": { "type": ["string", "null"] },
+          "power_kw": { "type": ["number", "null"] },
+          "voltage": { "type": ["number", "null"] },
+          "water_required": { "type": ["boolean", "null"] },
+          "drainage_required": { "type": ["boolean", "null"] },
+          "gas_required": { "type": ["boolean", "null"] },
+          "extraction_required": { "type": ["boolean", "null"] },
+          "dimensions": { "type": ["string", "null"] },
+          "service_clearance": { "type": ["string", "null"] },
+          "price_min": { "type": ["number", "null"] },
+          "price_base": { "type": ["number", "null"] },
+          "price_max": { "type": ["number", "null"] },
+          "currency": { "type": ["string", "null"] },
+          "price_date": { "type": ["string", "null"] },
+          "supplier": { "type": ["string", "null"] },
+          "source_id": { "const": "SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF" },
+          "quote_status": { "const": "not_requested" },
+          "notes": { "type": ["string", "null"] },
+          "source_section": { "type": "string" },
+          "source_item_number": { "type": "integer", "minimum": 1 },
+          "source_record_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "open_parameters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["parameter_id", "item_id", "module_id", "parameter", "reason", "required_before", "status", "notes"],
+        "properties": {
+          "parameter_id": { "type": "string" },
+          "item_id": { "type": ["string", "null"] },
+          "module_id": { "type": ["string", "null"] },
+          "parameter": { "type": "string" },
+          "reason": { "type": "string" },
+          "required_before": { "type": "string" },
+          "status": { "const": "open" },
+          "notes": { "type": ["string", "null"] }
+        },
+        "additionalProperties": false
+      }
+    },
+    "missing_sections": {
+      "type": "array",
+      "minItems": 27,
+      "maxItems": 27,
+      "items": {
+        "type": "object",
+        "required": ["section_id", "name", "status", "dependencies", "notes"],
+        "properties": {
+          "section_id": { "type": "string" },
+          "name": { "type": "string" },
+          "status": { "const": "not_started" },
+          "dependencies": { "type": "array", "items": { "type": "string" } },
+          "notes": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "dictionaries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["dictionary", "value", "description"],
+        "properties": {
+          "dictionary": { "type": "string" },
+          "value": { "type": "string" },
+          "description": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

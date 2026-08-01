@@ -1,0 +1,35 @@
+receipt_version: 1
+registry_id: DOC-CAPEX-EQUIPMENT-REGISTER
+decision_id: DEC-007
+change_set_id: CHG-012
+iteration_id: ITR-CAPEX-REGISTER-2026-08-01-01
+local_path: docs-platform/working/capex-equipment-register.yaml
+local_sha256: 75698b54ff3819449239a62d535bf84c3ddb30a64b7b6a92076ee2f706775dec
+google_file_id: 1J7sHM8P2IoMfHVLEHfY-UJLIZ-HBid89G6n6BS4BSJA
+google_mime_type: application/vnd.google-apps.spreadsheet
+google_title: 03 — CAPEX — Реестр оснащения пилотного объекта
+web_view_link: https://docs.google.com/spreadsheets/d/1J7sHM8P2IoMfHVLEHfY-UJLIZ-HBid89G6n6BS4BSJA/edit?usp=drivesdk
+synced_at: 2026-08-01T17:39:38.260Z
+action: update
+source_status: research
+source_version: "0.1"
+sheets:
+  - README
+  - EQUIPMENT
+  - OPEN_PARAMETERS
+  - MISSING_SECTIONS
+  - DICTIONARIES
+source_record_count: 124
+mapped_record_count: 124
+unmapped_record_count: 0
+readback_hash: b6e6485482a2bcbc07058a922f60f175965178700a270f499e2589bb2daeb34e
+readback: passed
+comments_preserved: true
+validation_status: passed
+validation:
+  folder_guard: passed
+  stable_item_order: passed
+  native_google_sheet: true
+  numeric_tbd_absent: true
+  prices_absent: true
+  total_capex_absent: true

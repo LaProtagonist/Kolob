@@ -1,0 +1,22 @@
+receipt_version: 1
+registry_id: DOC-FOUNDATION
+decision_id: DEC-006
+change_set_id: CHG-010
+local_path: docs-platform/00-foundation.md
+local_sha256: 5b4d457184c055ba11f8c4d05cc263139d2eb4f623981bcdc198c0114a50c0bb
+google_file_id: 1CY6MWcNk7Kc-QpE1iL6zjWXoBsPZdI2TTt05WEkad8I
+google_mime_type: application/vnd.google-apps.document
+google_title: "00 — Foundation"
+web_view_link: "https://docs.google.com/document/d/1CY6MWcNk7Kc-QpE1iL6zjWXoBsPZdI2TTt05WEkad8I/edit?usp=drivesdk"
+synced_at: 2026-08-01T14:31:04.662Z
+action: create
+source_status: approved
+source_version: "1.0"
+readback: passed
+section_count: 10
+table_count: 0
+validation_status: passed
+validation:
+  semantic_text: exact
+  required_ids: PRP-FND-001—PRP-FND-007
+  folder_guard: passed

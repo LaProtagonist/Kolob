@@ -72,7 +72,7 @@ documents:
     title: Foundation
     type: internal_governing_document
     status: approved
-    google_file_id: null
+    google_file_id: 1CY6MWcNk7Kc-QpE1iL6zjWXoBsPZdI2TTt05WEkad8I
     template: null
     sections:
       - PRP-FND-001
@@ -85,12 +85,12 @@ documents:
     version: "1.0"
     governance_level: governing
     local_path: docs-platform/00-foundation.md
-    updated_at: 2026-07-23
+    updated_at: 2026-08-01
   - id: DOC-BUSINESS-MODEL-ARCHITECTURE
     title: Business Model Architecture
     type: internal_governing_business_architecture_document
     status: approved
-    google_file_id: null
+    google_file_id: 1RLZOlNJEj_WRH4rg6e-TIG76H-2sdHGa9ptVAMVdyMk
     template: null
     sections:
       - PRP-BMA-001
@@ -111,7 +111,7 @@ documents:
     title: CAPEX — Equipment Specification
     type: working_capex_equipment_specification
     status: research
-    google_file_id: null
+    google_file_id: 14qdJnfKHzFkHie6zLK2fTmtwlWnnvEZB2Gy822GfWNs
     template: null
     sections:
       - CAPEX-01
@@ -121,4 +121,19 @@ documents:
       - Что ещё не сформировано
     version: "0.1"
     local_path: docs-platform/working/capex-equipment-specification.md
+    updated_at: 2026-08-01
+  - id: DOC-CAPEX-EQUIPMENT-REGISTER
+    title: CAPEX Equipment Register
+    type: working_capex_equipment_register
+    status: research
+    google_file_id: 1J7sHM8P2IoMfHVLEHfY-UJLIZ-HBid89G6n6BS4BSJA
+    template: null
+    sections:
+      - README
+      - EQUIPMENT
+      - OPEN_PARAMETERS
+      - MISSING_SECTIONS
+      - DICTIONARIES
+    version: "0.1"
+    local_path: docs-platform/working/capex-equipment-register.yaml
     updated_at: 2026-08-01

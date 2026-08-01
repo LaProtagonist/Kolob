@@ -6,3 +6,7 @@
 2026-08-01T12:39:51.955Z CHG-006 decision=DEC-004 touched=documents,principles,dependencies,decisions
 2026-08-01T13:03:12.645Z CHG-007 decision=DEC-001 touched=sources,decisions
 2026-08-01T13:03:25.676Z CHG-008 decision=DEC-005 touched=documents,dependencies,decisions
+2026-08-01T14:29:53.935Z CHG-009 decision=DEC-001 touched=sources,decisions
+2026-08-01T14:33:12.272Z CHG-010 decision=DEC-006 touched=documents
+2026-08-01T17:20:24.488Z CHG-011 decision=DEC-001 touched=sources,decisions before=97b40d809c9737c75569ecdde3c852328b5277140847f599dfc74fb88342023f after=84270f1dcbe6a999d67f8296e05a4b3eeded2c64e6afeaa6dbad1757339c51d9
+2026-08-01T17:40:48.611Z CHG-012 decision=DEC-007 touched=documents,dependencies,decisions before=84270f1dcbe6a999d67f8296e05a4b3eeded2c64e6afeaa6dbad1757339c51d9 after=5218ea9c5d4b3f2187a0a79d8e496c1e0ad243bedb3aae4e1b8e2a55d6b2e4c6

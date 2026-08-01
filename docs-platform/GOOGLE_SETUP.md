@@ -2,7 +2,7 @@
 
 ## API
 
-В отдельном Google Cloud project включить Google Drive API, Google Docs API и Google Sheets API. При необходимости позже — Google Picker API для явного выбора папки пользователем; на этом этапе не требуется.
+В отдельном Google Cloud project включить Google Drive API, Google Docs API и Google Sheets API. Google Picker API требуется для явного выбора уже существующей проектной папки при сохранении минимального scope `drive.file`.
 
 ## OAuth-клиент и scopes
 
@@ -48,3 +48,24 @@ token*.json
 ## Локальный sandbox
 
 Локальные credentials и token лежат в `.secrets/`; `config/google.json` хранит только ID выбранной папки, её имя и `testMode`. Локальный manifest с ID тестовых файлов и подготовленный change set тоже лежат в `.secrets/` и не попадают в Git. Созданные тестовые файлы проверяются по manifest и folder guard; cleanup никогда не ищет их по всему Drive.
+
+После обычного OAuth-входа существующая папка может оставаться невидимой для приложения, потому что `drive.file` выдаёт доступ только к явно выбранным объектам. В этом случае запустить из `docs-platform/app`:
+
+```bash
+npm run google:folder:authorize
+```
+
+Команда выводит URL для Google Picker и ожидает локальный callback. Она не открывает системный браузер, не запрашивает более широкий scope и сохраняет новый token только после выбора ровно настроенного `projectFolderId`.
+
+## CAPEX Equipment Register
+
+Структурированный research-реестр публикуется отдельным детерминированным publisher:
+
+```bash
+npm run capex:sheet:preview
+npm run capex:sheet:apply -- --apply --decision DEC-007
+```
+
+Цель жёстко ограничена нативной Google Sheet `03 — CAPEX — Реестр оснащения пилотного объекта` внутри проверенной проектной папки. При отсутствии registry ID publisher ищет только непосредственных детей папки и только по точному имени; при двух совпадениях останавливается. Повторный запуск обновляет найденный зарегистрированный файл, сохраняет стабильный порядок `item_id`, не записывает `tbd` в числовые колонки, не меняет sharing и проверяет пять листов повторным чтением через Sheets API.
+
+Sheet ID сохраняется только через governed change set. Полный folder ID, OAuth credentials, token и локальный `config/google.json` в Git и journal не сохраняются.

@@ -1,0 +1,59 @@
+receipt_version: 1
+iteration_id: ITR-CAPEX-REGISTER-2026-08-01-01
+proposal_id: PROP-CAPEX-REGISTER-2026-08-01-01
+decision_id: DEC-007
+change_set_id: CHG-012
+status: verified
+verified_at: 2026-08-01T17:56:10.000Z
+actor: Codex
+tool: docs-platform verification workflow
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-CAPEX-REGISTER-2026-08-01-01-approved.yaml
+  sha256: 75698b54ff3819449239a62d535bf84c3ddb30a64b7b6a92076ee2f706775dec
+source:
+  path: docs-platform/working/capex-equipment-specification.md
+  sha256: 2157364e09699173fecfbfe861edf4e6fac85a0437e23aebe100caebeab599d6
+outputs:
+  yaml:
+    path: docs-platform/working/capex-equipment-register.yaml
+    sha256: 75698b54ff3819449239a62d535bf84c3ddb30a64b7b6a92076ee2f706775dec
+  csv:
+    path: docs-platform/working/capex-equipment-register.csv
+    sha256: 4d0bb9ff95e68ce5c6a41ff84887a51c4388e1a8b8208c719b276bae92148d90
+coverage:
+  source_record_count: 124
+  mapped_record_count: 124
+  unmapped_record_count: 0
+google:
+  file_id: 1J7sHM8P2IoMfHVLEHfY-UJLIZ-HBid89G6n6BS4BSJA
+  mime_type: application/vnd.google-apps.spreadsheet
+  receipt: docs-platform/changelog/google-sync/2026-08-01-DOC-CAPEX-EQUIPMENT-REGISTER.yaml
+  sheets:
+    - README
+    - EQUIPMENT
+    - OPEN_PARAMETERS
+    - MISSING_SECTIONS
+    - DICTIONARIES
+  folder_guard: passed
+  readback: passed
+  stable_item_order: passed
+  native_google_sheet: true
+validation:
+  root_tests: passed
+  root_typescript: passed
+  docs_platform_tests: 55 passed, 0 failed
+  docs_platform_typescript: passed
+  registry: passed
+  register_schema_and_references: passed
+  source_markdown_unchanged: passed
+  prices_absent: passed
+  total_capex_absent: passed
+  diff_check: passed
+rollback:
+  source_receipt: docs-platform/changelog/change-receipts/CHG-012.yaml
+  reverse_change_set_status: previewed
+  expected_original_registry_hash: 84270f1dcbe6a999d67f8296e05a4b3eeded2c64e6afeaa6dbad1757339c51d9
+  simulated_restored_registry_hash: 84270f1dcbe6a999d67f8296e05a4b3eeded2c64e6afeaa6dbad1757339c51d9
+  restores_original_hash: true
+git_commit_hash: null
+git_commit_note: "Hash текущего commit невозможно включить в сам commit; при необходимости он фиксируется следующим append-only событием."

@@ -1,0 +1,24 @@
+receipt_version: 1
+registry_id: DOC-BUSINESS-MODEL-ARCHITECTURE
+decision_id: DEC-006
+change_set_id: CHG-010
+local_path: docs-platform/01-business-model-architecture.md
+local_sha256: 1584d836a159f6e3c5859ccf539830248b2cd782ed2c7005c5963ac8730c556b
+google_file_id: 1RLZOlNJEj_WRH4rg6e-TIG76H-2sdHGa9ptVAMVdyMk
+google_mime_type: application/vnd.google-apps.document
+google_title: "01 — Business Model Architecture"
+web_view_link: "https://docs.google.com/document/d/1RLZOlNJEj_WRH4rg6e-TIG76H-2sdHGa9ptVAMVdyMk/edit?usp=drivesdk"
+synced_at: 2026-08-01T14:31:39.085Z
+action: create
+source_status: approved
+source_version: "1.0"
+readback: passed
+section_count: 10
+table_count: 6
+validation_status: passed
+validation:
+  semantic_text: exact
+  required_ids: PRP-BMA-001—PRP-BMA-010
+  approved_wording: "на транспортных маршрутах, фудкортах и в других форматах"
+  rejected_wording_absent: "автозаправочных станциях"
+  folder_guard: passed

@@ -3,9 +3,10 @@ import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import test from "node:test";
+import { fileURLToPath } from "node:url";
 import YAML from "yaml";
 
-const platform = path.resolve(import.meta.dirname, "../..");
+const platform = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 const documentPath = path.join(platform, "working", "capex-equipment-specification.md");
 const expectedDocumentHash = "2157364e09699173fecfbfe861edf4e6fac85a0437e23aebe100caebeab599d6";
 const moduleCounts = new Map([
@@ -71,7 +72,7 @@ test("working CAPEX document is registered as research without assets, metrics o
     title: "CAPEX — Equipment Specification",
     type: "working_capex_equipment_specification",
     status: "research",
-    google_file_id: null,
+    google_file_id: "14qdJnfKHzFkHie6zLK2fTmtwlWnnvEZB2Gy822GfWNs",
     template: null,
     sections: ["CAPEX-01", "CAPEX-02", "CAPEX-03", "CAPEX-04", "Что ещё не сформировано"],
     version: "0.1",

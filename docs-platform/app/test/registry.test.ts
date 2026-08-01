@@ -3,11 +3,12 @@ import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import test from "node:test";
+import { fileURLToPath } from "node:url";
 
-const app = path.resolve(import.meta.dirname, "..");
+const app = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const platform = path.resolve(app, "..");
 const registry = path.join(platform, "registry");
-const cli = ["--import", "tsx", "src/cli.ts"];
+const cli = [path.join(app, "node_modules", "tsx", "dist", "cli.mjs"), "src/cli.ts"];
 function run(...args: string[]) { return execFileSync(process.execPath, [...cli, ...args], { cwd: app, encoding: "utf8", stdio: "pipe" }); }
 function mutate(file: string, edit: (value: string) => string) { const target = path.join(registry, file); const before = fs.readFileSync(target, "utf8"); try { fs.writeFileSync(target, edit(before)); } finally { return () => fs.writeFileSync(target, before); } }
 

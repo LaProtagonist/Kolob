@@ -1,0 +1,49 @@
+receipt_version: 1
+iteration_id: ITR-CAPEX-REGISTER-2026-08-01-01
+proposal_id: PROP-CAPEX-REGISTER-2026-08-01-01
+decision_id: DEC-007
+change_set_id: CHG-012
+status: applied
+applied_at: 2026-08-01T17:29:38.463Z
+actor: Codex
+tool: docs-platform capex:register:apply
+source_path: docs-platform/working/capex-equipment-specification.md
+source_sha256: 2157364e09699173fecfbfe861edf4e6fac85a0437e23aebe100caebeab599d6
+approved_payload_path: docs-platform/changelog/payloads/ITR-CAPEX-REGISTER-2026-08-01-01-approved.yaml
+approved_payload_sha256: 75698b54ff3819449239a62d535bf84c3ddb30a64b7b6a92076ee2f706775dec
+target_yaml: docs-platform/working/capex-equipment-register.yaml
+target_csv: docs-platform/working/capex-equipment-register.csv
+before_payload_path: null
+before_hash: null
+after_hash: 75698b54ff3819449239a62d535bf84c3ddb30a64b7b6a92076ee2f706775dec
+before_csv_hash: null
+after_csv_hash: 4d0bb9ff95e68ce5c6a41ff84887a51c4388e1a8b8208c719b276bae92148d90
+statistics:
+  source_record_count: 124
+  mapped_record_count: 124
+  unmapped_record_count: 0
+  main_procurement_records: 47
+  by_record_type:
+    equipment: 30
+    system: 6
+    component: 14
+    accessory: 4
+    inventory: 56
+    furniture: 11
+    engineering_connection: 1
+    installation_service: 0
+    consumable: 0
+    software: 0
+    open_question: 2
+  inclusion_status_tbd: 77
+  quantity_base_tbd: 99
+  open_parameter_count: 158
+  missing_section_count: 27
+validation_result: passed
+git_commit_hash: null
+rollback:
+  mode: governed_reverse_change_set
+  before_payload_path: null
+  before_hash: null
+  source_iteration: ITR-CAPEX-REGISTER-2026-08-01-01
+  instruction: Create an approved rollback decision, generate a new reverse change set from this receipt, preview it, apply it and append a rolled_back event. Historical events and payload snapshots remain immutable.

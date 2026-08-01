@@ -2,9 +2,10 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import test from "node:test";
+import { fileURLToPath } from "node:url";
 import YAML from "yaml";
 
-const platform = path.resolve(import.meta.dirname, "../..");
+const platform = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 const canonical = [
   ["PRP-FND-001", "Назначение проекта", "Проект «Колобочная» является основой для создания и развития компании, способной масштабировать новый формат общественного питания федерального уровня.\nВсе стратегические решения внутри проекта принимаются с позиции их влияния на долгосрочное развитие компании, её устойчивость, потенциал масштабирования и способность создавать самостоятельную ценность на каждом этапе своего развития."],
   ["PRP-FND-002", "Главный актив проекта", "Главным активом проекта является не отдельный продукт, технология или объект инфраструктуры, а компания, её способность к развитию, масштабированию и долгосрочному созданию ценности.\nЛюбые материальные и нематериальные активы рассматриваются как инструменты усиления компании, а не как самостоятельная цель её существования."],
@@ -30,13 +31,13 @@ test("Foundation v1.0 registers the governing document and all canonical PRP blo
       title: "Foundation",
       type: "internal_governing_document",
       status: "approved",
-      google_file_id: null,
+      google_file_id: "1CY6MWcNk7Kc-QpE1iL6zjWXoBsPZdI2TTt05WEkad8I",
       template: null,
       sections: canonical.map(([id]) => id),
       version: "1.0",
       governance_level: "governing",
       local_path: "docs-platform/00-foundation.md",
-      updated_at: "2026-07-23"
+      updated_at: "2026-08-01"
     }
   );
 

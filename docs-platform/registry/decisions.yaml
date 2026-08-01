@@ -3,8 +3,7 @@ decisions:
   - id: DEC-001
     title: Создать локальную платформу управления инвестиционными документами
     status: approved
-    decision: Платформа ведёт registry локально; Google Docs и Sheets будут
-      производными представлениями.
+    decision: Платформа ведёт registry локально; Google Docs и Sheets будут производными представлениями.
     rationale: Нужен проверяемый фундамент до подключения Google Workspace.
     affected_documents:
       - DOC-README
@@ -19,10 +18,8 @@ decisions:
   - id: DEC-002
     title: Сравнить сценарии использования помещения
     status: approved
-    decision: Для финансовой модели сравнивать покупку, обычную аренду и
-      долгосрочную аренду с возможностью субаренды.
-    rationale: Решение определяет состав исследования, но не выбирает конкретное
-      помещение или сценарий.
+    decision: Для финансовой модели сравнивать покупку, обычную аренду и долгосрочную аренду с возможностью субаренды.
+    rationale: Решение определяет состав исследования, но не выбирает конкретное помещение или сценарий.
     affected_documents:
       - DOC-INVESTMENT-MEMO
     approved_by: project owner
@@ -34,9 +31,7 @@ decisions:
   - id: DEC-003
     title: Зарегистрировать Foundation v1.0 как управляющий документ
     status: approved
-    decision: Создать и зарегистрировать Foundation v1.0 как внутренний управляющий
-      документ проекта с семью утверждёнными неизменяемыми положениями
-      PRP-FND-001—PRP-FND-007.
+    decision: Создать и зарегистрировать Foundation v1.0 как внутренний управляющий документ проекта с семью утверждёнными неизменяемыми положениями PRP-FND-001—PRP-FND-007.
     rationale: Прямое утверждённое задание владельца проекта от 2026-07-23.
     affected_documents:
       - DOC-FOUNDATION
@@ -49,9 +44,7 @@ decisions:
   - id: DEC-004
     title: Зарегистрировать Business Model Architecture v1.0 как управляющий документ
     status: approved
-    decision: Создать и зарегистрировать Business Model Architecture v1.0 как
-      внутренний управляющий документ архитектуры бизнес-модели проекта с
-      десятью утверждёнными неизменяемыми положениями PRP-BMA-001—PRP-BMA-010.
+    decision: Создать и зарегистрировать Business Model Architecture v1.0 как внутренний управляющий документ архитектуры бизнес-модели проекта с десятью утверждёнными неизменяемыми положениями PRP-BMA-001—PRP-BMA-010.
     rationale: Прямое утверждённое задание владельца проекта от 2026-08-01.
     affected_documents:
       - DOC-BUSINESS-MODEL-ARCHITECTURE
@@ -64,12 +57,8 @@ decisions:
   - id: DEC-005
     title: Зарегистрировать рабочую CAPEX-спецификацию v0.1 со статусом research
     status: approved
-    decision: Создать и зарегистрировать CAPEX — Equipment Specification v0.1 как
-      рабочий документ со статусом research, не утверждая перечисленное
-      оборудование, цены, модели, финансовые показатели или итоговый CAPEX.
-    rationale: Прямое задание владельца проекта от 2026-08-01 сохранить полную
-      рабочую спецификацию без самостоятельного завершения отсутствующих
-      разделов.
+    decision: Создать и зарегистрировать CAPEX — Equipment Specification v0.1 как рабочий документ со статусом research, не утверждая перечисленное оборудование, цены, модели, финансовые показатели или итоговый CAPEX.
+    rationale: Прямое задание владельца проекта от 2026-08-01 сохранить полную рабочую спецификацию без самостоятельного завершения отсутствующих разделов.
     affected_documents:
       - DOC-CAPEX-EQUIPMENT-SPECIFICATION
     approved_by: project owner
@@ -77,4 +66,33 @@ decisions:
     supersedes: null
     source_ids:
       - SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
+    updated_at: 2026-08-01
+  - id: DEC-006
+    title: Опубликовать три существующих документа проекта в Google Drive
+    status: approved
+    decision: Создать или обновить в проверенной папке «Колобочная — Investment» нативные Google Docs для Foundation v1.0, Business Model Architecture v1.0 и CAPEX — Equipment Specification v0.1, используя только соответствующие локальные источники и сохраняя их действующие статусы.
+    rationale: Прямое задание владельца проекта от 2026-08-01; решение утверждает только техническую публикацию и не переутверждает, не редактирует и не расширяет содержание документов.
+    affected_documents:
+      - DOC-FOUNDATION
+      - DOC-BUSINESS-MODEL-ARCHITECTURE
+      - DOC-CAPEX-EQUIPMENT-SPECIFICATION
+    approved_by: project owner
+    approved_at: 2026-08-01
+    supersedes: null
+    source_ids:
+      - SRC-GOOGLE-DRIVE-PUBLICATION-BRIEF
+    updated_at: 2026-08-01
+  - id: DEC-007
+    title: Создать структурированный CAPEX Equipment Register v0.1 и обязательный lifecycle journal
+    status: approved
+    decision: Структурно преобразовать все 124 существующие записи CAPEX — Equipment Specification v0.1 в CAPEX Equipment Register v0.1 со статусом research, не меняя смысл исходных позиций; создать производные CSV и нативную Google Sheet; для последующих содержательных итераций обязательно применять proposal, approved decision, preview, apply, verification, append-only timeline и governed reverse change set.
+    rationale: Прямое утверждение владельца проекта от 2026-08-01. Решение утверждает только структуру, перенос и governance-механизм и не утверждает модели, цены, поставщиков, новые позиции, технические показатели, окончательные количества или итоговый CAPEX.
+    affected_documents:
+      - DOC-CAPEX-EQUIPMENT-SPECIFICATION
+      - DOC-CAPEX-EQUIPMENT-REGISTER
+    approved_by: project owner
+    approved_at: 2026-08-01
+    supersedes: null
+    source_ids:
+      - SRC-CAPEX-EQUIPMENT-REGISTER-BRIEF
     updated_at: 2026-08-01

@@ -1,0 +1,25 @@
+receipt_version: 1
+registry_id: DOC-CAPEX-EQUIPMENT-SPECIFICATION
+decision_id: DEC-006
+change_set_id: CHG-010
+local_path: docs-platform/working/capex-equipment-specification.md
+local_sha256: 2157364e09699173fecfbfe861edf4e6fac85a0437e23aebe100caebeab599d6
+google_file_id: 14qdJnfKHzFkHie6zLK2fTmtwlWnnvEZB2Gy822GfWNs
+google_mime_type: application/vnd.google-apps.document
+google_title: "02 — CAPEX — Спецификация оснащения пилотного объекта"
+web_view_link: "https://docs.google.com/document/d/14qdJnfKHzFkHie6zLK2fTmtwlWnnvEZB2Gy822GfWNs/edit?usp=drivesdk"
+synced_at: 2026-08-01T14:31:51.406Z
+action: create
+source_status: research
+source_version: "0.1"
+readback: passed
+section_count: 30
+table_count: 0
+validation_status: passed
+validation:
+  semantic_text: exact
+  required_sections: CAPEX-01—CAPEX-04; Что ещё не сформировано
+  item_count: 124
+  prices_absent: true
+  total_capex_absent: true
+  folder_guard: passed

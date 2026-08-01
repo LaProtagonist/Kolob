@@ -3,9 +3,10 @@ import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import test from "node:test";
+import { fileURLToPath } from "node:url";
 import YAML from "yaml";
 
-const platform = path.resolve(import.meta.dirname, "../..");
+const platform = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 const expected = [
   ["PRP-BMA-001", "Ядро бизнес-модели", "f9208f6bf699e6d9a92e4a970c0de50d0e1f2e2161ba388b8c11a0b639fdfd27"],
   ["PRP-BMA-002", "Практическая основа и задача нового этапа", "33033f64ead18b6d256c14d5c8594ac6a41b3a9992e12aaf291db9a0b7795ccd"],
@@ -46,7 +47,7 @@ test("Business Model Architecture v1.0 is registered with ten exact approved can
     title: "Business Model Architecture",
     type: "internal_governing_business_architecture_document",
     status: "approved",
-    google_file_id: null,
+    google_file_id: "1RLZOlNJEj_WRH4rg6e-TIG76H-2sdHGa9ptVAMVdyMk",
     template: null,
     sections: expected.map(([id]) => id),
     version: "1.0",

@@ -1,0 +1,60 @@
+change_id: CHG-012
+title: "Зарегистрировать CAPEX Equipment Register v0.1 и его Google Sheet"
+status: approved
+created_at: 2026-08-01
+decision_id: DEC-007
+iteration_id: ITR-CAPEX-REGISTER-2026-08-01-01
+proposal_id: PROP-CAPEX-REGISTER-2026-08-01-01
+approved_payload_path: docs-platform/changelog/payloads/ITR-CAPEX-REGISTER-2026-08-01-01-approved.yaml
+approved_payload_sha256: 75698b54ff3819449239a62d535bf84c3ddb30a64b7b6a92076ee2f706775dec
+operations:
+  - type: add
+    entity: documents
+    value:
+      id: DOC-CAPEX-EQUIPMENT-REGISTER
+      title: CAPEX Equipment Register
+      type: working_capex_equipment_register
+      status: research
+      google_file_id: 1J7sHM8P2IoMfHVLEHfY-UJLIZ-HBid89G6n6BS4BSJA
+      template: null
+      sections:
+        - README
+        - EQUIPMENT
+        - OPEN_PARAMETERS
+        - MISSING_SECTIONS
+        - DICTIONARIES
+      version: "0.1"
+      local_path: docs-platform/working/capex-equipment-register.yaml
+      updated_at: 2026-08-01
+  - type: add
+    entity: dependencies
+    value:
+      id: DEP-CAPEX-SPEC-EQUIPMENT-REGISTER
+      source_document_id: DOC-CAPEX-EQUIPMENT-SPECIFICATION
+      priority: governing_source
+      status: approved
+      version: "0.1"
+      target_documents:
+        - title: CAPEX Equipment Register
+          document_id: DOC-CAPEX-EQUIPMENT-REGISTER
+      updated_at: 2026-08-01
+  - type: add
+    entity: dependencies
+    value:
+      id: DEP-CAPEX-REGISTER-DERIVED-DOCUMENTS
+      source_document_id: DOC-CAPEX-EQUIPMENT-REGISTER
+      priority: governing_source
+      status: approved
+      version: "0.1"
+      target_documents:
+        - title: Financial Model
+          document_id: null
+      updated_at: 2026-08-01
+  - type: update
+    entity: decisions
+    id: DEC-007
+    value:
+      affected_documents:
+        - DOC-CAPEX-EQUIPMENT-SPECIFICATION
+        - DOC-CAPEX-EQUIPMENT-REGISTER
+      updated_at: 2026-08-01

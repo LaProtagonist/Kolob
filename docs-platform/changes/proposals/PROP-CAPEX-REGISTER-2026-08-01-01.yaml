@@ -1,0 +1,29 @@
+proposal_id: PROP-CAPEX-REGISTER-2026-08-01-01
+iteration_id: ITR-CAPEX-REGISTER-2026-08-01-01
+status: proposed
+created_at: 2026-08-01
+actor: project owner
+source_id: SRC-CAPEX-EQUIPMENT-REGISTER-BRIEF
+scope: "Структурно преобразовать существующие 124 research-записи CAPEX v0.1 без смысловых изменений, создать YAML/CSV и нативную Google Sheet, а также внедрить append-only timeline и governed reverse change set."
+affected_document_ids:
+  - DOC-CAPEX-EQUIPMENT-SPECIFICATION
+  - DOC-CAPEX-EQUIPMENT-REGISTER
+affected_item_range: CAPEX-01-001—CAPEX-04-003
+approved_payload_path: docs-platform/changelog/payloads/ITR-CAPEX-REGISTER-2026-08-01-01-approved.yaml
+approved_payload_sha256: 75698b54ff3819449239a62d535bf84c3ddb30a64b7b6a92076ee2f706775dec
+source_path: docs-platform/working/capex-equipment-specification.md
+source_sha256: 2157364e09699173fecfbfe861edf4e6fac85a0437e23aebe100caebeab599d6
+boundaries:
+  approved:
+    - structural transformation of the existing 124 records
+    - CAPEX Equipment Register v0.1 with status research
+    - native Google Sheet publication
+    - mandatory chronological journaling and governed rollback support
+  not_approved:
+    - models
+    - prices
+    - suppliers
+    - technical performance values not present in the source
+    - final quantities
+    - total CAPEX
+    - new equipment positions

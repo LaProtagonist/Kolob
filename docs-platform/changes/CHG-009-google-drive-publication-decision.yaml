@@ -1,0 +1,35 @@
+change_id: CHG-009
+title: "Зафиксировать решение о публикации трёх существующих документов в Google Drive"
+status: approved
+created_at: 2026-08-01
+decision_id: DEC-001
+operations:
+  - type: add
+    entity: sources
+    value:
+      id: SRC-GOOGLE-DRIVE-PUBLICATION-BRIEF
+      title: "Задание на публикацию проектных документов в Google Drive"
+      type: instruction
+      location: "User instruction, 2026-08-01"
+      publisher: "project owner"
+      publication_date: 2026-08-01
+      accessed_at: 2026-08-01
+      reliability: primary
+      notes: "Первичный источник разрешения опубликовать только Foundation v1.0, Business Model Architecture v1.0 и рабочую CAPEX-спецификацию v0.1 без изменения их содержания и статусов."
+  - type: add
+    entity: decisions
+    value:
+      id: DEC-006
+      title: "Опубликовать три существующих документа проекта в Google Drive"
+      status: approved
+      decision: "Создать или обновить в проверенной папке «Колобочная — Investment» нативные Google Docs для Foundation v1.0, Business Model Architecture v1.0 и CAPEX — Equipment Specification v0.1, используя только соответствующие локальные источники и сохраняя их действующие статусы."
+      rationale: "Прямое задание владельца проекта от 2026-08-01; решение утверждает только техническую публикацию и не переутверждает, не редактирует и не расширяет содержание документов."
+      affected_documents:
+        - DOC-FOUNDATION
+        - DOC-BUSINESS-MODEL-ARCHITECTURE
+        - DOC-CAPEX-EQUIPMENT-SPECIFICATION
+      approved_by: "project owner"
+      approved_at: 2026-08-01
+      supersedes: null
+      source_ids: [SRC-GOOGLE-DRIVE-PUBLICATION-BRIEF]
+      updated_at: 2026-08-01

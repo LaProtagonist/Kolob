@@ -1,0 +1,26 @@
+schema_version: 1
+iteration_id: ITR-CAPEX-REGISTER-2026-08-01-01
+proposal_id: PROP-CAPEX-REGISTER-2026-08-01-01
+decision_id: DEC-007
+change_set_id: CHG-012
+status: approved
+approved_by: project owner
+approved_at: 2026-08-01
+actor: project owner
+scope: "Структурное преобразование 124 существующих research-записей CAPEX v0.1 без изменения смысла; публикация производного Google Sheet; внедрение append-only timeline и governed reverse change set."
+approved_payload_path: docs-platform/changelog/payloads/ITR-CAPEX-REGISTER-2026-08-01-01-approved.yaml
+approved_payload_sha256: 75698b54ff3819449239a62d535bf84c3ddb30a64b7b6a92076ee2f706775dec
+source_path: docs-platform/working/capex-equipment-specification.md
+source_sha256: 2157364e09699173fecfbfe861edf4e6fac85a0437e23aebe100caebeab599d6
+source_record_count: 124
+mapped_record_count: 124
+unmapped_record_count: 0
+apply_contract:
+  payload_identity: exact_bytes
+  hash_algorithm: SHA-256
+  canonical_target: docs-platform/working/capex-equipment-register.yaml
+  generated_view: docs-platform/working/capex-equipment-register.csv
+rollback_contract:
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true

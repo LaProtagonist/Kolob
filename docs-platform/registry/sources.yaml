@@ -44,8 +44,7 @@ sources:
     publication_date: null
     accessed_at: 2026-07-21
     reliability: medium
-    notes: Опубликованный контент, требующий первичного подтверждения для
-      инвестматериалов.
+    notes: Опубликованный контент, требующий первичного подтверждения для инвестматериалов.
   - id: SRC-FOUNDATION-V1-APPROVAL
     title: Утверждённое задание Foundation v1.0
     type: instruction
@@ -63,8 +62,7 @@ sources:
     publication_date: 2026-08-01
     accessed_at: 2026-08-01
     reliability: primary
-    notes: Первичный источник статуса и канонических текстов Business Model
-      Architecture v1.0.
+    notes: Первичный источник статуса и канонических текстов Business Model Architecture v1.0.
   - id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
     title: Рабочая спецификация оснащения пилотного объекта v0.1
     type: instruction
@@ -73,5 +71,22 @@ sources:
     publication_date: 2026-08-01
     accessed_at: 2026-08-01
     reliability: primary
-    notes: Первичный источник рабочего состава оборудования; содержание имеет статус
-      research и не включает цены, выбранные модели или итоговый CAPEX.
+    notes: Первичный источник рабочего состава оборудования; содержание имеет статус research и не включает цены, выбранные модели или итоговый CAPEX.
+  - id: SRC-GOOGLE-DRIVE-PUBLICATION-BRIEF
+    title: Задание на публикацию проектных документов в Google Drive
+    type: instruction
+    location: User instruction, 2026-08-01
+    publisher: project owner
+    publication_date: 2026-08-01
+    accessed_at: 2026-08-01
+    reliability: primary
+    notes: Первичный источник разрешения опубликовать только Foundation v1.0, Business Model Architecture v1.0 и рабочую CAPEX-спецификацию v0.1 без изменения их содержания и статусов.
+  - id: SRC-CAPEX-EQUIPMENT-REGISTER-BRIEF
+    title: Задание на структурированный CAPEX Equipment Register v0.1
+    type: instruction
+    location: User instruction, 2026-08-01
+    publisher: project owner
+    publication_date: 2026-08-01
+    accessed_at: 2026-08-01
+    reliability: primary
+    notes: Первичный источник разрешения структурно преобразовать ровно 124 существующие research-записи CAPEX v0.1 без изменения смысла, опубликовать производную Google Sheet и внедрить обязательный хронологический журнал и governed rollback. Модели, цены, поставщики, окончательные количества, общий CAPEX и новые позиции не утверждаются.

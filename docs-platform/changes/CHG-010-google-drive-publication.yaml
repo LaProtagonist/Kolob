@@ -1,0 +1,24 @@
+change_id: CHG-010
+title: "Зарегистрировать Google Docs для трёх существующих документов проекта"
+status: approved
+created_at: 2026-08-01
+decision_id: DEC-006
+operations:
+  - type: update
+    entity: documents
+    id: DOC-FOUNDATION
+    value:
+      google_file_id: 1CY6MWcNk7Kc-QpE1iL6zjWXoBsPZdI2TTt05WEkad8I
+      updated_at: 2026-08-01
+  - type: update
+    entity: documents
+    id: DOC-BUSINESS-MODEL-ARCHITECTURE
+    value:
+      google_file_id: 1RLZOlNJEj_WRH4rg6e-TIG76H-2sdHGa9ptVAMVdyMk
+      updated_at: 2026-08-01
+  - type: update
+    entity: documents
+    id: DOC-CAPEX-EQUIPMENT-SPECIFICATION
+    value:
+      google_file_id: 14qdJnfKHzFkHie6zLK2fTmtwlWnnvEZB2Gy822GfWNs
+      updated_at: 2026-08-01

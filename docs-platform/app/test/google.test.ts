@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { log } from "../src/google/auth.js";
+import { log, projectFolderPickerUrl } from "../src/google/auth.js";
 import { probeDriveApi } from "../src/google/drive.js";
 import { assertFileInProjectFolder, assertSingleFolder, requireProjectFolder } from "../src/google/guard.js";
 import { testUpdatePreview } from "../src/google/docs.js";
@@ -16,6 +16,7 @@ test("preview is pure and finds TEST-01", () => { const text = "[TEST-01]\nПл�
 test("apply requires decision and explicit flag", () => { assert.throws(() => requireApprovedApply(false, true)); assert.throws(() => requireApprovedApply(true, false)); assert.doesNotThrow(() => requireApprovedApply(true, true)); });
 test("structured logs redact OAuth secrets", () => { const original = console.log; const out: string[] = []; const payload: Record<string, unknown> = { event: "x", file: "safe" }; payload["access" + "Token"] = "redaction-sentinel"; payload["refresh" + "_token"] = "redaction-sentinel"; payload["client" + "_secret"] = "redaction-sentinel"; console.log = value => out.push(String(value)); try { log(payload as { event: string; [key: string]: unknown }); } finally { console.log = original; } assert.match(out[0], /\[REDACTED\]/); assert.doesNotMatch(out[0], /redaction-sentinel/); });
 test("structured logs retain safe diagnostic booleans", () => { const original = console.log; const out: string[] = []; console.log = value => out.push(String(value)); try { log({ event: "doctor", credentials: true, token: false }); } finally { console.log = original; } assert.match(out[0], /"credentials":true/); assert.match(out[0], /"token":false/); });
+test("project folder OAuth uses one-file Picker without broader scopes", () => { const url = new URL(projectFolderPickerUrl({ clientId: "client", redirectUri: "http://127.0.0.1:1234", folderId: "folder-1", state: "state-1" })); assert.equal(url.searchParams.get("scope"), "https://www.googleapis.com/auth/drive.file"); assert.equal(url.searchParams.get("trigger_onepick"), "true"); assert.equal(url.searchParams.get("allow_folder_selection"), "true"); assert.equal(url.searchParams.get("file_ids"), "folder-1"); assert.equal(url.searchParams.get("state"), "state-1"); });
 test("doctor probes Drive API without listing files", async () => { let fields = ""; const drive = { about: { get: async (options: { fields: string }) => { fields = options.fields; return { data: {} }; } } }; await probeDriveApi(drive as never); assert.equal(fields, "user(permissionId)"); });
 test("cleanup targets come only from manifest", () => assert.deepEqual(cleanupTargets(manifest, config), ["doc-1", "sheet-1"]));
 test("API failure during test creation leaves manifest unsaved", async () => { let saved = false; await assert.rejects(() => reuseOrCreateTests({ manifest: null, config, getFile: async () => ({ id: "", name: "", mimeType: "", parents: [] }), createDocument: async () => "doc-1", createSpreadsheet: async () => { throw new Error("API failed"); }, save: () => { saved = true; } })); assert.equal(saved, false); });
