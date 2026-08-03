@@ -1,0 +1,75 @@
+receipt_version: 2
+change_id: CHG-017
+iteration_id: ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01
+proposal_id: PROP-CAPEX-WEB-CONFIGURATOR-2026-08-03-01
+decision_id: DEC-001
+source_change_set: docs-platform/changes/CHG-017-capex-web-configurator-decision.yaml
+status: applied
+applied_at: 2026-08-02T23:21:41.259Z
+actor: Codex
+tool: docs-platform change:apply
+approved_payload: null
+before_hash: 7bdada86331ff49fca6e6f7d1893e65614318f712e3f62b9e174d068014e77c4
+after_hash: f622fd592fb5e23b9125e106414a725ca36239ec4292d991605b6a7ebc81aa18
+touched_registry_files:
+  - path: docs-platform/registry/sources.yaml
+    backup_path: docs-platform/changelog/backups/2026-08-02T23-21-41-259Z-CHG-017/sources.yaml
+  - path: docs-platform/registry/decisions.yaml
+    backup_path: docs-platform/changelog/backups/2026-08-02T23-21-41-259Z-CHG-017/decisions.yaml
+operations:
+  - type: add
+    entity: sources
+    id: SRC-CAPEX-WEB-CONFIGURATOR-AUDIT-BRIEF
+    before: null
+    after:
+      id: SRC-CAPEX-WEB-CONFIGURATOR-AUDIT-BRIEF
+      title: Задание на аудит и улучшение рабочего CAPEX-конфигуратора
+      type: instruction
+      location: User instruction, 2026-08-03
+      publisher: project owner
+      publication_date: 2026-08-03
+      accessed_at: 2026-08-03
+      reliability: primary
+      notes: Утверждает одну единицу CAPEX-01-009, research-пересчёт, обновление существующей Google Sheet и внутреннего рабочего интерфейса. Не утверждает второй аппарат, новые цены, финальный CAPEX или публичную инвесторскую версию.
+    before_index: null
+    after_index: 114
+    before_sha256: null
+    after_sha256: d3fbf949e6113b6ec105d7ca50075b6155699b006d6e2dc4203a34904383f887
+    reverse_operation:
+      type: remove
+      entity: sources
+      id: SRC-CAPEX-WEB-CONFIGURATOR-AUDIT-BRIEF
+  - type: add
+    entity: decisions
+    id: DEC-010
+    before: null
+    after:
+      id: DEC-010
+      title: Использовать один пароконвектомат и канонический snapshot в рабочем CAPEX-конфигураторе
+      status: approved
+      decision: Для текущей модели MOD-PREP использовать один профессиональный пароконвектомат CAPEX-01-009 во всех сценариях; пересчитать research-оценку по существующим единичным ценам, обновить существующую Google Sheet и подключить внутренний CAPEX-конфигуратор к детерминированному snapshot канонических реестров.
+      rationale: Прямое утверждение владельца проекта от 2026-08-03. Второй аппарат не включается автоматически в SCALE_READY, а страница остаётся скрытым внутренним research-инструментом без показателей финансовой модели.
+      affected_documents:
+        - DOC-CAPEX-EQUIPMENT-REGISTER
+        - DOC-CAPEX-MODULES
+        - DOC-CAPEX-PRICE-RESEARCH
+      approved_by: project owner
+      approved_at: 2026-08-03
+      supersedes: null
+      source_ids:
+        - SRC-CAPEX-WEB-CONFIGURATOR-AUDIT-BRIEF
+      updated_at: 2026-08-03
+    before_index: null
+    after_index: 9
+    before_sha256: null
+    after_sha256: ef2577a4927156c60157ebabf9eaa2d788ee90ef6a322d18c684613f83a0a3cb
+    reverse_operation:
+      type: remove
+      entity: decisions
+      id: DEC-010
+validation_result: passed
+git_commit_hash: null
+rollback:
+  source_receipt: docs-platform/changelog/change-receipts/CHG-017.yaml
+  command: npm run change:reverse:preview -- ../changelog/change-receipts/CHG-017.yaml --change-id CHG-ROLLBACK-XXX --decision DEC-ROLLBACK-XXX
+  rollback_of: CHG-017

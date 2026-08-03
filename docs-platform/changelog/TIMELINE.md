@@ -16,9 +16,13 @@
 | 2026-08-01T23:04:30.001Z | EVT-ITR-CAPEX-PRICE-RESEARCH-2026-08-02-01-002 | ITR-CAPEX-PRICE-RESEARCH-2026-08-02-01 | approved | decision_approved | DEC-009 | CHG-016 | pending | DEC-009 утвердил только research-ориентиры MINIMUM, BASE и SCALE_READY по exact payload SHA-256; модели, поставщики, КП и финальный CAPEX не утверждены. |
 | 2026-08-01T23:04:30.002Z | EVT-ITR-CAPEX-PRICE-RESEARCH-2026-08-02-01-003 | ITR-CAPEX-PRICE-RESEARCH-2026-08-02-01 | applied | price_payload_registry_and_google_sheet_applied | DEC-009 | CHG-016 | passed | Exact price research payload применён к 39 из 47 eligible позиций; 8 оставлены без цены, существующая Sheet обновлена без дубликата и прошла API readback. |
 | 2026-08-01T23:04:30.003Z | EVT-ITR-CAPEX-PRICE-RESEARCH-2026-08-02-01-004 | ITR-CAPEX-PRICE-RESEARCH-2026-08-02-01 | verified | sources_tests_google_readback_and_reverse_preview_verified | DEC-009 | CHG-016 | passed | Проверены 39 priced, 8 unpriced, 99 доступных public URLs, расчёты трёх сценариев, Google readback, отсутствие double count и оба governed reverse preview с восстановлением исходных hashes. |
+| 2026-08-03T00:31:30.062Z | EVT-ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01-001 | ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01 | proposed | proposal_recorded | DEC-010 | CHG-018 | pending | Proposal зафиксировал аудит внутреннего конфигуратора, одну единицу CAPEX-01-009 и границы без новых цен, финального CAPEX или публичной инвесторской версии. |
+| 2026-08-03T00:31:30.063Z | EVT-ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01-002 | ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01 | approved | decision_approved | DEC-010 | CHG-018 | pending | DEC-010 утвердил exact payload SHA-256: один пароконвектомат во всех research-сценариях, пересчёт и детерминированный canonical snapshot. |
+| 2026-08-03T00:31:30.064Z | EVT-ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01-003 | ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01 | applied | canonical_correction_google_sheet_and_web_snapshot_applied | DEC-010 | CHG-018 | passed | CAPEX-01-009 приведён к одной единице в Register, module-item rule и Price Research; существующая Sheet обновлена, UI подключён к generated snapshot. |
+| 2026-08-03T00:31:30.065Z | EVT-ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01-004 | ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01 | verified | tests_build_google_readback_visual_audit_and_reverse_preview_verified | DEC-010 | CHG-018 | passed | Проверены hashes, 151 records, семь форматов, scenario totals, noindex, Google readback, адаптивный интерфейс, timeline chain и governed reverse preview. |
 
 ## Проверка цепочки
 
-- Событий: 12.
-- Последний event hash: `4736731416427073de6322858473e340668e82deae3b124c339c3675e86bb493`.
+- Событий: 16.
+- Последний event hash: `2571346aee5440a2364869e6a61f430438acb3945e4f4c5184f7fcbdba678419`.
 - Полная машинная запись, approved payload SHA-256, before/after hashes и rollback reference находятся в `events.ndjson`.

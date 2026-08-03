@@ -5,6 +5,7 @@ import test from "node:test";
 import { fileURLToPath } from "node:url";
 import { readRegister } from "../src/capex/register.js";
 import { readModularSources } from "../src/capex/modular.js";
+import { CAPEX_CONFIGURATOR_DECISION_ID, CAPEX_CONFIGURATOR_ITERATION_ID } from "../src/capex/configurator-audit-workflow.js";
 import {
   CAPEX_REGISTER_GOOGLE_TITLE,
   CAPEX_REGISTER_SHEET_NAMES,
@@ -80,18 +81,18 @@ test("exact-folder resolver updates one existing Sheet and refuses zero or dupli
   assert.throws(() => chooseSpreadsheetTarget([file, { ...file, id: "second" }]), /Multiple spreadsheets/);
 });
 
-test("preview logging masks the Google file ID and binds the approved price-research decision", () => {
+test("preview logging masks the Google file ID and binds the current approved configurator decision", () => {
   const logged = sheetPreviewForLog({
     preview_id: "p", created_at: "2026-08-01T00:00:00.000Z", registry_id: "DOC-CAPEX-EQUIPMENT-REGISTER",
     google_title: CAPEX_REGISTER_GOOGLE_TITLE, folder_name: "Колобочная — Investment", folder_check: "passed", action: "update",
-    google_file_id: "1234567890abcdef", google_file_id_masked: "1234…cdef", decision_id: "DEC-009",
-    iteration_id: "ITR-CAPEX-PRICE-RESEARCH-2026-08-02-01", source_yaml_path: "docs-platform/working/capex-equipment-register.yaml",
+    google_file_id: "1234567890abcdef", google_file_id_masked: "1234…cdef", decision_id: CAPEX_CONFIGURATOR_DECISION_ID,
+    iteration_id: CAPEX_CONFIGURATOR_ITERATION_ID, source_yaml_path: "docs-platform/working/capex-equipment-register.yaml",
     source_yaml_sha256: "a".repeat(64), source_record_count: 124, equipment_record_count: 151, mapped_record_count: 124,
     unmapped_record_count: 0, sheets: CAPEX_REGISTER_SHEET_NAMES, legacy_sheet_renames: LEGACY_SHEET_RENAMES, warnings: [],
   });
   assert.equal("google_file_id" in logged, false);
   assert.equal(logged.google_file_id_masked, "1234…cdef");
-  assert.equal(logged.decision_id, "DEC-009");
+  assert.equal(logged.decision_id, CAPEX_CONFIGURATOR_DECISION_ID);
 });
 
 test("Google preview and override preview contain no write path", () => {

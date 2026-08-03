@@ -68,7 +68,17 @@ function relative(file) {
   return path.relative(projectRoot, file).replaceAll(path.sep, "/");
 }
 
-const files = publicRoots.flatMap(walk);
+function isInternalCapexArtifact(file) {
+  const filePath = relative(file);
+  return filePath === "src/content/capex-configurator-data.json"
+    || filePath.startsWith("src/components/CapexConfigurator.")
+    || filePath.startsWith("dist/capex-configurator/")
+    || /^dist\/assets\/CapexConfigurator-[^/]+\.(?:js|css)$/.test(filePath);
+}
+
+// The marketing copy audit intentionally covers public routes only. The hidden,
+// noindex CAPEX research tool has its own canonical-data and interface tests.
+const files = publicRoots.flatMap(walk).filter((file) => !isInternalCapexArtifact(file));
 const corpus = files.map((file) => ({ file, text: fs.readFileSync(file, "utf8") }));
 const combined = corpus.map((item) => item.text).join("\n");
 

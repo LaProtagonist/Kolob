@@ -1,4 +1,4 @@
-import { MouseEvent, useEffect, useMemo, useState } from "react";
+import { lazy, MouseEvent, Suspense, useEffect, useMemo, useState } from "react";
 import {
   Breadcrumbs,
   ContactForm,
@@ -52,6 +52,10 @@ import { productionRoute } from "./content/production-route";
 import { qualityCta, qualityDrinks, qualityHero, qualitySections, repeatableQuality } from "./content/quality";
 import { pageByPath, site } from "./content/site";
 import type { PageMeta } from "./types";
+
+const CapexConfiguratorPage = lazy(() =>
+  import("./components/CapexConfigurator").then((module) => ({ default: module.CapexConfiguratorPage }))
+);
 
 function normalizePath(pathname: string) {
   return pathname === "" ? "/" : pathname.replace(/\/+$/, "") || "/";
@@ -767,6 +771,12 @@ function renderPage(path: string) {
       return <InvestorQuestionsPage />;
     case "/privacy":
       return <PrivacyPage />;
+    case "/capex-configurator":
+      return (
+        <Suspense fallback={<main className="plain-page"><div className="section-inner"><p>Загружается CAPEX-конфигуратор…</p></div></main>}>
+          <CapexConfiguratorPage />
+        </Suspense>
+      );
     case "/404":
       return <NotFoundPage />;
     default:

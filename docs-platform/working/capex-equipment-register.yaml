@@ -7,9 +7,9 @@ document:
   version: "0.1"
   status: research
   document_type: Working structured CAPEX equipment register
-  decision_id: DEC-009
-  iteration_id: ITR-CAPEX-PRICE-RESEARCH-2026-08-02-01
-  proposal_id: PROP-CAPEX-PRICE-RESEARCH-2026-08-02-01
+  decision_id: DEC-010
+  iteration_id: ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01
+  proposal_id: PROP-CAPEX-WEB-CONFIGURATOR-2026-08-03-01
   source_document_id: DOC-CAPEX-EQUIPMENT-SPECIFICATION
   source_path: docs-platform/working/capex-equipment-specification.md
   source_sha256: 2157364e09699173fecfbfe861edf4e6fac85a0437e23aebe100caebeab599d6
@@ -19,7 +19,7 @@ document:
   equipment_record_count: 151
   unmapped_record_count: 0
   csv_generated_from_yaml: true
-  warning: Первичная ценовая оценка пищевого оснащения имеет статус research и не является коммерческим предложением или утверждённым CAPEX. 151 — число записей реестра, а не самостоятельных закупочных единиц.
+  warning: Цены и количества остаются research. Для текущей модели MOD-PREP DEC-010 фиксирует один профессиональный пароконвектомат во всех ценовых сценариях; исходная текстовая CAPEX Specification v0.1 сохранена без изменений.
   price_research_path: docs-platform/working/capex-price-research.yaml
   price_research_date: 2026-08-02
   priced_record_count: 39
@@ -463,18 +463,18 @@ equipment:
     module_name: Заготовочный цех
     category: Заготовочный цех
     subcategory: тепловая обработка
-    name: Профессиональные пароконвектоматы
+    name: Профессиональный пароконвектомат
     record_type: equipment
     parent_item_id: null
     inclusion_status: standalone
     requirement: tbd
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: 2
-    quantity_scale_ready: null
+    quantity_min: 1
+    quantity_base: 1
+    quantity_scale_ready: 1
     unit: шт.
     source_quantity: 2 шт.
-    specification: полноценные режимы конвекции, пара и комбинированного приготовления; обязательное подключение к водопроводу; подключение к канализации; две независимые единицы для параллельной работы и резервирования
+    specification: полноценные режимы конвекции, пара и комбинированного приготовления; обязательное подключение к водопроводу; подключение к канализации; одна профессиональная единица для текущей модели заготовочного производства
     open_parameters: количество уровней, формат GN, питание, автомойка и термощуп
     premises_dependency: водопровод, канализация, электроснабжение и расстановка
     procurement_mode: tbd
@@ -495,12 +495,12 @@ equipment:
     supplier: КЛЕН
     source_id: SRC-PRICE-20260802-COMBI-BASE
     quote_status: researched
-    notes: null
+    notes: Исходная CAPEX Specification v0.1 содержит две единицы; текущая структурированная модель заменяет это количество решением DEC-010, не переписывая исходный документ.
     source_section: CAPEX-01 / Тепловая обработка
     source_item_number: 9
     source_record_sha256: e6f817662a96e5b76f02c7b0c973a80acc9e130365111f53895a6ac70b23ed6c
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    price_notes: Две независимые единицы заданы спецификацией; вода/дренаж и монтаж не включены.
+    price_notes: Одна профессиональная единица во всех сценариях по DEC-010; указаны цены одной единицы из существующих источников. Вода, дренаж и монтаж не включены.
     checked_at: 2026-08-01T22:19:05.000Z
     supplier_name: КЛЕН
     product_name: Apach AP7QT

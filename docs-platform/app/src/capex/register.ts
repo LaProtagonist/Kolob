@@ -692,7 +692,7 @@ export function validateRegister(register: CapexRegister, source?: string) {
     if (item.quote_status === "included_in_parent" && hasPrice) errors.push(`${item.item_id}: included_in_parent quote status must not contain a price.`);
     if (item.lifecycle_status !== "research") errors.push(`${item.item_id}: lifecycle status must remain research.`);
   }
-  if (register.document.decision_id === "DEC-009") {
+  if (["DEC-009", "DEC-010"].includes(register.document.decision_id)) {
     const priced = register.equipment.filter(item => item.price_base !== null);
     if (priced.length !== 39) errors.push(`DEC-009 register must contain 39 preliminary priced records, got ${priced.length}.`);
     if (register.document.priced_record_count !== 39 || register.document.unpriced_procurement_record_count !== 8) errors.push("DEC-009 price coverage metadata must be 39 priced and 8 unpriced eligible procurement records.");

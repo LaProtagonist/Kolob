@@ -7,6 +7,7 @@ export type RouteId =
   | "materials"
   | "investorQuestions"
   | "privacy"
+  | "capexConfigurator"
   | "notFound";
 
 export type PageMeta = {

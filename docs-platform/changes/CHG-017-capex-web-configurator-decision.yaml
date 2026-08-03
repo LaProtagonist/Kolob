@@ -1,0 +1,38 @@
+change_id: CHG-017
+title: Зафиксировать решение об одной единице пароконвектомата и рабочем CAPEX-конфигураторе
+status: approved
+created_at: 2026-08-03
+decision_id: DEC-001
+iteration_id: ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01
+proposal_id: PROP-CAPEX-WEB-CONFIGURATOR-2026-08-03-01
+operations:
+  - type: add
+    entity: sources
+    value:
+      id: SRC-CAPEX-WEB-CONFIGURATOR-AUDIT-BRIEF
+      title: Задание на аудит и улучшение рабочего CAPEX-конфигуратора
+      type: instruction
+      location: User instruction, 2026-08-03
+      publisher: project owner
+      publication_date: 2026-08-03
+      accessed_at: 2026-08-03
+      reliability: primary
+      notes: Утверждает одну единицу CAPEX-01-009, research-пересчёт, обновление существующей Google Sheet и внутреннего рабочего интерфейса. Не утверждает второй аппарат, новые цены, финальный CAPEX или публичную инвесторскую версию.
+  - type: add
+    entity: decisions
+    value:
+      id: DEC-010
+      title: Использовать один пароконвектомат и канонический snapshot в рабочем CAPEX-конфигураторе
+      status: approved
+      decision: Для текущей модели MOD-PREP использовать один профессиональный пароконвектомат CAPEX-01-009 во всех сценариях; пересчитать research-оценку по существующим единичным ценам, обновить существующую Google Sheet и подключить внутренний CAPEX-конфигуратор к детерминированному snapshot канонических реестров.
+      rationale: Прямое утверждение владельца проекта от 2026-08-03. Второй аппарат не включается автоматически в SCALE_READY, а страница остаётся скрытым внутренним research-инструментом без показателей финансовой модели.
+      affected_documents:
+        - DOC-CAPEX-EQUIPMENT-REGISTER
+        - DOC-CAPEX-MODULES
+        - DOC-CAPEX-PRICE-RESEARCH
+      approved_by: project owner
+      approved_at: 2026-08-03
+      supersedes: null
+      source_ids:
+        - SRC-CAPEX-WEB-CONFIGURATOR-AUDIT-BRIEF
+      updated_at: 2026-08-03

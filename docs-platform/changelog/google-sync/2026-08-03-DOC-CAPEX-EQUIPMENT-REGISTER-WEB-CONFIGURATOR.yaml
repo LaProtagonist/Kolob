@@ -1,0 +1,49 @@
+receipt_version: 1
+registry_id: DOC-CAPEX-EQUIPMENT-REGISTER
+decision_id: DEC-010
+change_set_id: CHG-018
+iteration_id: ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01
+local_path: docs-platform/working/capex-equipment-register.yaml
+local_sha256: 58604b2ae2fd3bdb8a572f2f7f8f3832c45268613d8d080a57142c844cc1e8bf
+google_file_id: 1J7sHM8P2IoMfHVLEHfY-UJLIZ-HBid89G6n6BS4BSJA
+google_mime_type: application/vnd.google-apps.spreadsheet
+google_title: 03 — CAPEX — Реестр оснащения пилотного объекта
+web_view_link: https://docs.google.com/spreadsheets/d/1J7sHM8P2IoMfHVLEHfY-UJLIZ-HBid89G6n6BS4BSJA/edit?usp=drivesdk
+synced_at: 2026-08-02T23:58:32.931Z
+action: update
+source_status: research
+source_version: "0.1"
+sheets:
+  - Описание
+  - Конфигуратор
+  - Комплектация
+  - Переопределения
+  - Оснащение
+  - Модули
+  - Форматы точек
+  - Состав форматов
+  - Открытые параметры
+  - Недостающие разделы
+  - Справочники
+source_record_count: 124
+added_research_record_count: 27
+equipment_record_count: 151
+mapped_record_count: 124
+unmapped_record_count: 0
+readback_hash: 8f25ba4acbdc09406f70ab1b79a9d40dd019c668f177dfce2767d62fbbb5c370
+readback: passed
+comments_preserved: true
+manual_override_rows_preserved: 0
+manual_configurator_rows_preserved: 1
+validation_status: passed
+validation:
+  folder_guard: passed
+  stable_item_order: passed
+  native_google_sheet: true
+  localized_sheet_order: passed
+  legacy_sheets_absent: true
+  numeric_tbd_absent: true
+  preliminary_prices_present: true
+  price_status_research: true
+  included_in_parent_unpriced: true
+  final_capex_not_approved: true

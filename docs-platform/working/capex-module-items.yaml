@@ -7,9 +7,9 @@ document:
   version: "0.1"
   status: research
   document_type: Generated module-to-equipment mapping
-  decision_id: DEC-008
-  iteration_id: ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01
-  proposal_id: PROP-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01
+  decision_id: DEC-010
+  iteration_id: ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01
+  proposal_id: PROP-CAPEX-WEB-CONFIGURATOR-2026-08-03-01
   generated_from:
     - docs-platform/working/capex-modules.yaml
     - docs-platform/working/capex-equipment-register.yaml
@@ -90,11 +90,11 @@ links:
     item_id: CAPEX-01-009
     default_requirement: tbd
     quantity_rule_type: fixed
-    quantity_rule_value: 2
+    quantity_rule_value: 1
     minimum_quantity: null
     aggregation_rule: once
     condition: null
-    notes: null
+    notes: Одна единица для MOD-PREP по DEC-010; второй аппарат требует отдельного будущего решения.
   - module_id: MOD-PREP
     item_id: CAPEX-01-010
     default_requirement: tbd

@@ -4,15 +4,15 @@ document:
   document_id: DOC-CAPEX-PRICE-RESEARCH
   title: CAPEX Preliminary Price Research
   russian_title: CAPEX — Первичная ценовая оценка пищевого оснащения
-  version: "0.1"
+  version: "0.2"
   status: research
-  decision_id: DEC-009
-  iteration_id: ITR-CAPEX-PRICE-RESEARCH-2026-08-02-01
-  proposal_id: PROP-CAPEX-PRICE-RESEARCH-2026-08-02-01
+  decision_id: DEC-010
+  iteration_id: ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01
+  proposal_id: PROP-CAPEX-WEB-CONFIGURATOR-2026-08-03-01
   checked_at: 2026-08-01T22:19:05.000Z
   currency: RUB
   source_register_path: docs-platform/working/capex-equipment-register.yaml
-  source_register_before_sha256: 8491d105566ce22909f67a679db46f401d1aa54cfe12878c78abc52c4779acb0
+  source_register_before_sha256: f675e12efa69932a49a5ad67ebee33c40459b151cb2aea654e206f6a9b9238b0
   warning: Все цены — первичная research-оценка по публичным карточкам на дату проверки, не коммерческое предложение и не утверждённый CAPEX. Доставка, монтаж, инженерные подключения, ПО и иные исключённые расходы не добавляются, если это не указано явно.
 business_capacity:
   prep_outlet_count: 5
@@ -417,9 +417,9 @@ items:
         checked_at: 2026-08-01T22:19:05.000Z
         price_includes_vat: null
         delivery_included: null
-        quantity: 2
-        quantity_basis: research_assumption
-        line_total_rub: 600744
+        quantity: 1
+        quantity_basis: register
+        line_total_rub: 300372
       base:
         supplier_name: КЛЕН
         product_name: Apach AP7QT
@@ -433,9 +433,9 @@ items:
         checked_at: 2026-08-01T22:19:05.000Z
         price_includes_vat: null
         delivery_included: null
-        quantity: 2
+        quantity: 1
         quantity_basis: register
-        line_total_rub: 873128
+        line_total_rub: 436564
       scale_ready:
         supplier_name: КЛЕН
         product_name: Tecnoeka MKF 1111 V TS
@@ -449,10 +449,10 @@ items:
         checked_at: 2026-08-01T22:19:05.000Z
         price_includes_vat: null
         delivery_included: null
-        quantity: 2
-        quantity_basis: research_assumption
-        line_total_rub: 1192060
-    notes: Две независимые единицы заданы спецификацией; вода/дренаж и монтаж не включены.
+        quantity: 1
+        quantity_basis: register
+        line_total_rub: 596030
+    notes: Одна профессиональная единица во всех сценариях по DEC-010; вода/дренаж и монтаж не включены. Второй аппарат не добавляется автоматически в SCALE_READY.
   - item_id: CAPEX-01-010
     module_id: MOD-PREP
     valuation_status: priced
@@ -2326,14 +2326,14 @@ summary:
   unpriced_record_count: 8
   quote_required_count: 23
   totals_rub:
-    minimum: 2327130
-    base: 3531329
-    scale_ready: 4940051.46
+    minimum: 2026758
+    base: 3094765
+    scale_ready: 4344021.46
   module_totals_rub:
     MOD-PREP:
-      minimum: 1452327
-      base: 2378500
-      scale_ready: 3260891
+      minimum: 1151955
+      base: 1941936
+      scale_ready: 2664861
     MOD-RETAIL-HOT:
       minimum: 215756
       base: 309117
@@ -2359,12 +2359,12 @@ summary:
       base: 285000
       scale_ready: 403800
   top_10_base:
-    - item_id: CAPEX-01-009
-      module_id: MOD-PREP
-      line_total_rub: 873128
     - item_id: CAPEX-01-014
       module_id: MOD-PREP
       line_total_rub: 472582
+    - item_id: CAPEX-01-009
+      module_id: MOD-PREP
+      line_total_rub: 436564
     - item_id: CAPEX-03-001
       module_id: MOD-GROW
       line_total_rub: 258000

@@ -157,10 +157,17 @@ test("approved payload hash is exact and source CAPEX Markdown remains unchanged
   const source = fs.readFileSync(path.join(platform, "working", "capex-equipment-specification.md"));
   assert.equal(crypto.createHash("sha256").update(source).digest("hex"), CAPEX_REGISTER_SOURCE_SHA256);
   const payload = YAML.parse(fs.readFileSync(payloadPath, "utf8"));
-  assert.equal(modularPayloadHash(payload.equipment_register, sources), payloadHash);
+  const historicalSources = {
+    modules: payload.modules,
+    module_items: payload.module_items,
+    point_formats: payload.point_formats,
+    configurations: payload.configurations,
+    configuration_overrides: payload.configuration_overrides,
+  } as ModularSources;
+  assert.equal(modularPayloadHash(payload.equipment_register, historicalSources), payloadHash);
   assert.equal(payload.equipment_register.document.decision_id, "DEC-008");
   assert.equal(payload.equipment_register.equipment.every((item: { price_base: number | null }) => item.price_base === null), true);
-  assert.equal(register.document.decision_id, "DEC-009");
+  assert.equal(register.document.decision_id, "DEC-010");
 });
 
 test("governed reverse preview restores the original composite hash without Git reset", () => {

@@ -1,0 +1,34 @@
+proposal_id: PROP-CAPEX-WEB-CONFIGURATOR-2026-08-03-01
+iteration_id: ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01
+status: proposed
+created_at: 2026-08-03
+actor: project owner
+source_id: SRC-CAPEX-WEB-CONFIGURATOR-AUDIT-BRIEF
+scope: Один профессиональный пароконвектомат CAPEX-01-009 для MOD-PREP во всех research-сценариях; пересчёт исследовательских сумм; публикация обновлённых данных и техническое улучшение внутреннего CAPEX-конфигуратора без создания публичной инвесторской версии.
+affected_document_ids:
+  - DOC-CAPEX-EQUIPMENT-REGISTER
+  - DOC-CAPEX-MODULES
+  - DOC-CAPEX-PRICE-RESEARCH
+affected_item_ids:
+  - CAPEX-01-009
+approved_payload_path: docs-platform/changelog/payloads/ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01-approved.yaml
+approved_payload_sha256: 16ccea27ec2b91b1eb4525ef33f3ccdb5eb54ec17ffe295b73f7f0c52a6f17fb
+source_path: User instruction, 2026-08-03
+source_sha256: null
+boundaries:
+  approved:
+    - CAPEX-01-009 quantity fixed at one
+    - research totals recalculated from existing unit-price sources
+    - existing Google Sheet updated
+    - working configurator reads a deterministic canonical snapshot
+  not_approved:
+    - second combi oven
+    - new prices or suppliers
+    - final CAPEX
+    - financial model
+    - public investor configurator
+apply_contract:
+  payload_identity: structurally_identical_yaml
+  hash_algorithm: SHA-256
+  google_target: existing registered Sheet only
+  rollback_mode: governed_reverse_change_set

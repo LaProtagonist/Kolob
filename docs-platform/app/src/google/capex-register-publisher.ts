@@ -13,12 +13,13 @@ import {
   validateRegister,
   type CapexRegister,
 } from "../capex/register.js";
+import { readPriceResearch } from "../capex/price-research.js";
 import {
-  CAPEX_PRICE_CHANGE_ID,
-  CAPEX_PRICE_DECISION_ID,
-  CAPEX_PRICE_ITERATION_ID,
-  readPriceResearch,
-} from "../capex/price-research.js";
+  CAPEX_CONFIGURATOR_CHANGE_ID,
+  CAPEX_CONFIGURATOR_DECISION_ID,
+  CAPEX_CONFIGURATOR_GOOGLE_RECEIPT_PATH,
+  CAPEX_CONFIGURATOR_ITERATION_ID,
+} from "../capex/configurator-audit-workflow.js";
 import {
   AGGREGATION_RULES,
   CAPEX_FORMAT_IDS,
@@ -52,7 +53,7 @@ const projectRoot = path.resolve(platformRoot, "..");
 const runtimePreviewPath = path.join(platformRoot, ".runtime", "capex-register-sheet-preview.json");
 const runtimeResultPath = path.join(platformRoot, ".runtime", "capex-register-sheet-result.json");
 const runtimeOverridePreviewPath = path.join(platformRoot, ".runtime", "capex-overrides-import-preview.json");
-export const capexSheetReceiptPath = path.join(platformRoot, "changelog", "google-sync", "2026-08-02-DOC-CAPEX-EQUIPMENT-REGISTER-PRICE-RESEARCH.yaml");
+export const capexSheetReceiptPath = path.resolve(projectRoot, CAPEX_CONFIGURATOR_GOOGLE_RECEIPT_PATH);
 
 type MatrixValue = string | number | boolean;
 type Matrix = MatrixValue[][];
@@ -68,8 +69,8 @@ type SheetPreview = {
   action: "update";
   google_file_id: string;
   google_file_id_masked: string;
-  decision_id: typeof CAPEX_PRICE_DECISION_ID;
-  iteration_id: typeof CAPEX_PRICE_ITERATION_ID;
+  decision_id: typeof CAPEX_CONFIGURATOR_DECISION_ID;
+  iteration_id: typeof CAPEX_CONFIGURATOR_ITERATION_ID;
   source_yaml_path: string;
   source_yaml_sha256: string;
   source_record_count: number;
@@ -113,7 +114,7 @@ async function services() {
 }
 function mask(id: string) { return `${id.slice(0, 4)}…${id.slice(-4)}`; }
 function documentsRegistry() { return (YAML.parse(fs.readFileSync(path.join(platformRoot, "registry", "documents.yaml"), "utf8"))?.documents ?? []) as Array<{ id: string; google_file_id?: string | null; status: string }> ; }
-function approvedDecision() { return (YAML.parse(fs.readFileSync(path.join(platformRoot, "registry", "decisions.yaml"), "utf8"))?.decisions ?? []).some((item: { id: string; status: string }) => item.id === CAPEX_PRICE_DECISION_ID && item.status === "approved"); }
+function approvedDecision() { return (YAML.parse(fs.readFileSync(path.join(platformRoot, "registry", "decisions.yaml"), "utf8"))?.decisions ?? []).some((item: { id: string; status: string }) => item.id === CAPEX_CONFIGURATOR_DECISION_ID && item.status === "approved"); }
 
 async function resolveSpreadsheet(drive: drive_v3.Drive, config: GoogleConfig) {
   const registered = documentsRegistry().find(item => item.id === CAPEX_REGISTER_DOCUMENT_ID)?.google_file_id ?? null;
@@ -245,7 +246,7 @@ function bomRows(register: CapexRegister, sources: ModularSources): Matrix {
 export function sheetDatasets(register: CapexRegister, sources: ModularSources = readModularSources(), syncedAt = "1970-01-01T00:00:00.000Z", preserved: PreservedRows = { configurator: [], overrides: [] }): Dataset[] {
   const yamlHash = sha256(serializeRegister(register));
   const statistics = registerStatistics(register);
-  const priceResearch = register.document.decision_id === CAPEX_PRICE_DECISION_ID ? readPriceResearch() : null;
+  const priceResearch = register.document.decision_id === CAPEX_CONFIGURATOR_DECISION_ID ? readPriceResearch() : null;
   const description: Matrix = [
     ["Поле", "Значение"],
     ["Название", "CAPEX Equipment Register / CAPEX — Реестр оснащения пилотного объекта"],
@@ -344,7 +345,7 @@ async function computePreview() {
   validateCurrentTitles(titles);
   const base: Omit<SheetPreview, "preview_id" | "created_at" | "google_file_id_masked"> = {
     registry_id: CAPEX_REGISTER_DOCUMENT_ID, google_title: CAPEX_REGISTER_GOOGLE_TITLE, folder_name: config.projectFolderName, folder_check: "passed",
-    action: "update", google_file_id: remote.file.id, decision_id: CAPEX_PRICE_DECISION_ID, iteration_id: CAPEX_PRICE_ITERATION_ID,
+    action: "update", google_file_id: remote.file.id, decision_id: CAPEX_CONFIGURATOR_DECISION_ID, iteration_id: CAPEX_CONFIGURATOR_ITERATION_ID,
     source_yaml_path: "docs-platform/working/capex-equipment-register.yaml", source_yaml_sha256: sha256(serializeRegister(register)),
     source_record_count: register.document.source_record_count, equipment_record_count: register.document.equipment_record_count,
     mapped_record_count: register.document.mapped_record_count, unmapped_record_count: register.document.unmapped_record_count,
@@ -483,8 +484,8 @@ async function commentIds(drive: drive_v3.Drive, fileId: string) {
 }
 
 export async function applyCapexRegisterSheet(options: { apply: boolean; decisionId: string }) {
-  if (!options.apply || options.decisionId !== CAPEX_PRICE_DECISION_ID) throw new Error(`Apply requires --apply --decision ${CAPEX_PRICE_DECISION_ID}.`);
-  if (!approvedDecision()) throw new Error(`${CAPEX_PRICE_DECISION_ID} must be approved before Google apply.`);
+  if (!options.apply || options.decisionId !== CAPEX_CONFIGURATOR_DECISION_ID) throw new Error(`Apply requires --apply --decision ${CAPEX_CONFIGURATOR_DECISION_ID}.`);
+  if (!approvedDecision()) throw new Error(`${CAPEX_CONFIGURATOR_DECISION_ID} must be approved before Google apply.`);
   if (!fs.existsSync(runtimePreviewPath)) throw new Error("Google Sheet preview is missing. Run capex:sheet:preview first.");
   const saved = JSON.parse(fs.readFileSync(runtimePreviewPath, "utf8")) as SheetPreview;
   const { preview, register, sources } = await computePreview();
@@ -500,7 +501,7 @@ export async function applyCapexRegisterSheet(options: { apply: boolean; decisio
   if (JSON.stringify(commentsBefore) !== JSON.stringify(commentsAfter)) throw new Error("Drive comments changed during Google Sheet publication.");
   const statistics = registerStatistics(register);
   const receipt = {
-    receipt_version: 1, registry_id: CAPEX_REGISTER_DOCUMENT_ID, decision_id: CAPEX_PRICE_DECISION_ID, change_set_id: CAPEX_PRICE_CHANGE_ID, iteration_id: CAPEX_PRICE_ITERATION_ID,
+    receipt_version: 1, registry_id: CAPEX_REGISTER_DOCUMENT_ID, decision_id: CAPEX_CONFIGURATOR_DECISION_ID, change_set_id: CAPEX_CONFIGURATOR_CHANGE_ID, iteration_id: CAPEX_CONFIGURATOR_ITERATION_ID,
     local_path: "docs-platform/working/capex-equipment-register.yaml", local_sha256: sha256(serializeRegister(register)), google_file_id: result.verified.id,
     google_mime_type: result.verified.mimeType, google_title: result.verified.name, web_view_link: result.verified.webViewLink, synced_at: syncedAt,
     action: "update", source_status: "research", source_version: "0.1", sheets: CAPEX_REGISTER_SHEET_NAMES,

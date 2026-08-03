@@ -2,11 +2,11 @@
 
 Статус: операционный навигационный документ
 
-Дата проверки: 2026-08-02
+Дата проверки: 2026-08-03
 
-Последний проверенный Git commit до текущей ценовой CAPEX-итерации: `d9f5fbda4afd2fd7e9513ff3fa41aa6817a8d788` (`feat(docs-platform): add modular CAPEX format configurator`)
+Последний проверенный Git commit до текущей итерации рабочего CAPEX-конфигуратора: `8e01e675ebc739844202126e671620a7ad8cb7f9` (`docs(docs-platform): add preliminary CAPEX price research`)
 
-Проверенная ветка: `master`; на момент начала ценовой CAPEX-задачи ahead/behind относительно `origin/master`: `6/0`
+Проверенная ветка: `master`; на момент начала текущей задачи ahead/behind относительно `origin/master`: `7/0`
 
 > При начале нового Codex-чата сначала прочитать доступный корневой AGENTS.md, docs-platform/AGENTS.md и docs-platform/context/CODEX_HANDOFF.md; затем прочитать актуальный docs-platform/changelog/TIMELINE.md, последние approved decisions и applied change sets; после этого проверить git status и актуальность registry.
 
@@ -21,6 +21,7 @@
 ## 2. Структура репозитория
 
 - `src/` — React/Vite/TypeScript-сайт; редактируемый публичный контент находится в `src/content/`.
+- `src/components/CapexConfigurator.tsx` и `src/content/capex-configurator-data.json` — скрытый внутренний CAPEX-инструмент и его детерминированный generated snapshot; маршрут `/capex-configurator` имеет `noindex, nofollow`, отсутствует в публичной навигации и sitemap.
 - `public/` — подготовленные web-медиа.
 - `scripts/` — сборка, prerender, проверки сайта и подготовка медиа.
 - `server/` — backend формы контакта.
@@ -50,6 +51,7 @@
 - Канонический структурированный источник для будущих CAPEX-итераций: `docs-platform/working/capex-equipment-register.yaml`; статус `research`. CSV и Google Sheet генерируются из YAML и не заменяют его.
 - Первичная ценовая оценка пищевой части: `docs-platform/working/capex-price-research.yaml`; отдельный зарегистрированный research-источник сценариев MINIMUM, BASE и SCALE_READY. Он не утверждает модели, поставщиков, КП, окончательные количества или итоговый CAPEX.
 - Модульный CAPEX хранится раздельно: `capex-modules.yaml` ссылается на Equipment Register через `capex-module-items.yaml`; `capex-point-formats.yaml` ссылается на модули; `capex-configurations.yaml` и `capex-configuration-overrides.yaml` задают конкретный объект; BOM генерируется в `working/configurations/<configuration-id>/`.
+- Web-представление CAPEX формируется командой `npm run capex:web:sync` из Equipment Register, Price Research, Modules, Module Items, Point Formats, Configurations, Overrides, registry и timeline. `src/content/capex-configurator-data.json` нельзя редактировать вручную; `npm run capex:web:check` обнаруживает устаревшие source hashes.
 - Факты, допущения, решения, документы, источники и зависимости: `docs-platform/registry/*.yaml`.
 - Утверждённый публичный текст: `src/content/approved-copy.ts`; не перефразировать без отдельного согласования.
 - Текущее опубликованное содержание: остальные файлы `src/content/*.ts`.
@@ -85,6 +87,7 @@
 - не заменять формулы Google Sheets статическими числами и не удалять ручные комментарии Google Docs.
 - не дублировать оборудование в модулях, форматах или конфигурациях; отличия конкретной точки хранить только как overrides, а финансовую модель строить по сгенерированному BOM.
 - не считать публичную цену утверждённой закупочной ценой: до отдельного решения все текущие цены имеют статус `research`, а позиции `quote_required` требуют коммерческого предложения или уточнения конфигурации.
+- сохранять `/capex-configurator` внутренним рабочим маршрутом: без публичного меню, sitemap, инвесторского режима, unit economics и неподтверждённых показателей; итог называется «Стоимость текущей комплектации оборудования» и не выдаётся за полный CAPEX запуска.
 
 ## 5. Утверждённые канонические документы
 
@@ -131,10 +134,10 @@
 - Генерируемое представление: `docs-platform/working/capex-equipment-register.csv`.
 - Registry ID: `DOC-CAPEX-EQUIPMENT-REGISTER`.
 - Статус: `research`; это структурированное представление исходного working draft, а не утверждённый бюджет или закупочный перечень.
-- Исходное создание: `DEC-007`, `CHG-011`, `CHG-012`, iteration `ITR-CAPEX-REGISTER-2026-08-01-01`. Модульное расширение: `DEC-008`, `CHG-013`, `CHG-014`, iteration `ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01`. Первичная ценовая оценка: `DEC-009`, `CHG-015`, `CHG-016`, iteration `ITR-CAPEX-PRICE-RESEARCH-2026-08-02-01`.
+- Исходное создание: `DEC-007`, `CHG-011`, `CHG-012`, iteration `ITR-CAPEX-REGISTER-2026-08-01-01`. Модульное расширение: `DEC-008`, `CHG-013`, `CHG-014`, iteration `ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01`. Первичная ценовая оценка: `DEC-009`, `CHG-015`, `CHG-016`, iteration `ITR-CAPEX-PRICE-RESEARCH-2026-08-02-01`. Коррекция пароконвектомата и внутренний web-конфигуратор: `DEC-010`, `CHG-017`, `CHG-018`, iteration `ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01`.
 - Зависимость от текстового источника: `DEP-CAPEX-SPEC-EQUIPMENT-REGISTER`. Цепочка будущей Financial Model теперь проходит Equipment Register → Modules → Point Formats → Configuration → Generated Equipment BOM.
 - Покрытие: 124 исходные записи сохранены структурно идентично, добавлены 27 research-записей `CAPEX-05-001`—`CAPEX-05-027`; всего equipment `151`, mapped `151`, unmapped `0`. Из 47 самостоятельных закупочных записей разрешённой food-side области 39 получили research-оценку, 8 оставлены без цены; CAPEX-05 и итоговый CAPEX не оценивались.
-- Research-сценарии на дату проверки: MINIMUM `2 327 130 RUB`, BASE `3 531 329 RUB`, SCALE_READY `4 940 051,46 RUB`. Это сумма охваченных позиций по исследовательским количествам, а не утверждённый бюджет объекта.
+- Research-сценарии на дату проверки: MINIMUM `2 026 758 RUB`, BASE `3 094 765 RUB`, SCALE_READY `4 344 021,46 RUB`. Это сумма охваченных позиций по исследовательским количествам, а не утверждённый бюджет объекта. `CAPEX-01-009` учитывается одной профессиональной единицей во всех трёх сценариях и только при наличии `MOD-PREP`; второй аппарат не добавляется автоматически в SCALE_READY.
 - Модули: 12; форматы точек: 7; пустая шаблонная конфигурация: `CFG-TEMPLATE-001` (`FMT-CUSTOM`); её BOM содержит 0 строк и не является реальным объектом.
 - Google Sheet: `03 — CAPEX — Реестр оснащения пилотного объекта`; одиннадцать листов: `Описание`, `Конфигуратор`, `Комплектация`, `Переопределения`, `Оснащение`, `Модули`, `Форматы точек`, `Состав форматов`, `Открытые параметры`, `Недостающие разделы`, `Справочники`; ценовые колонки добавлены в существующий файл, API readback passed.
 
@@ -151,6 +154,7 @@ Approved decisions:
 - `DEC-007` — структурное преобразование 124 research-записей в CAPEX Equipment Register, публикация Sheet и обязательный lifecycle journal; не утверждает модели, цены, поставщиков, окончательные количества, новый состав или итоговый CAPEX.
 - `DEC-008` — добавление 27 research-записей CAPEX-05, модульной архитектуры, семи профилей форматов, шаблонной конфигурации и обновление существующей Sheet; смысл первых 124 записей не изменён, реальные параметры, цены и итоговый CAPEX не утверждены.
 - `DEC-009` — первичная research-оценка публичных цен 47 самостоятельных food-side позиций в трёх сценариях и обновление существующей Sheet; не утверждает модели, поставщиков, КП, окончательные количества или итоговый CAPEX.
+- `DEC-010` — одна профессиональная единица `CAPEX-01-009` для `MOD-PREP` во всех research-сценариях, пересчёт по существующим единичным ценам, обновление существующей Sheet и подключение внутреннего конфигуратора к детерминированному canonical snapshot; не утверждает второй аппарат, новые цены, финальный CAPEX, финансовую модель или публичную инвесторскую версию.
 
 Approved change sets:
 
@@ -169,21 +173,23 @@ Approved change sets:
 - `CHG-014` — зарегистрированы Modules, Point Formats, Configurations, Generated BOM и новая цепочка зависимостей; предыдущая прямая зависимость Register→Financial Model помечена `superseded`, история не удалена.
 - `CHG-015` — зарегистрированы первичный источник задания на ценовое исследование и approved `DEC-009`.
 - `CHG-016` — зарегистрированы research-документ ценовой оценки, 102 карточки-источника, зависимость от Equipment Register и техническое обновление существующей записи Register.
+- `CHG-017` — добавлены первичный источник задания и approved `DEC-010`.
+- `CHG-018` — применена точная коррекция `CAPEX-01-009` в Equipment Register, module-item rule и Price Research, пересчитаны research-суммы и обновлены технические registry metadata.
 
 `example-change.yaml` имеет статус `proposed` и не должен применяться. Не применять существующие change sets повторно во время onboarding.
 
 ## 7. Состояние registry
 
-Проверено 2026-08-02 командой `npm run registry:validate`: `OK`.
+Проверено 2026-08-03 командой `npm run registry:validate`: `OK`.
 
 | Registry | Количество | Состояние |
 |---|---:|---|
 | facts | 3 | все `approved` |
 | assumptions | 3 | все `research`; сценарии помещения |
-| decisions | 9 | все `approved`; `DEC-009` утверждает только research-оценку, но не модели, поставщиков, КП или финальный CAPEX |
+| decisions | 10 | все `approved`; `DEC-010` ограничен одной единицей пароконвектомата, research-пересчётом, существующей Sheet и внутренним web-инструментом |
 | metrics | 0 | финансовые метрики отсутствуют |
 | documents | 15 | 5 `approved`, 1 `proposed`, 9 `research`, включая CAPEX source draft, Register, Modules, Point Formats, Configurations, Generated BOM и Price Research |
-| sources | 114 | 11 прежних источников, 1 первичное задание и 102 карточки цен; lifecycle status схемой не предусмотрен |
+| sources | 115 | прежние источники, задания текущих iterations и 102 карточки цен; lifecycle status схемой не предусмотрен |
 | principles | 17 | 7 Foundation и 10 Business Model Architecture, все `approved` |
 | dependencies | 11 | 10 `approved`, 1 `superseded`; Price Research зависит от Equipment Register, а CAPEX dependency chain заканчивается Generated BOM→будущая Financial Model |
 
@@ -203,7 +209,7 @@ Approved facts: правильное название «Колобочная», 
 
 Все три Google file IDs зарегистрированы в `registry/documents.yaml`. Audit receipts находятся в `docs-platform/changelog/google-sync/`; они фиксируют SHA-256 локального источника, действие `create`, MIME type, время синхронизации и успешное повторное чтение. Publisher жёстко ограничен этими тремя registry IDs, отказывается выбирать дубликаты и не перезаписывает документ с ручными комментариями.
 
-Через `DEC-007` и `CHG-012` опубликована отдельная нативная Google Sheet `03 — CAPEX — Реестр оснащения пилотного объекта`. Итерация `DEC-008`/`CHG-014` обновила тот же зарегистрированный файл до одиннадцати русских вкладок. Итерация `DEC-009`/`CHG-016` добавила в этот же файл research-колонки цен, поставщиков, ссылок, дат, наличия, статуса КП и уверенности, не создав дубликат и не затронув три Google Docs. Повторное чтение через Sheets API прошло; receipt: `docs-platform/changelog/google-sync/2026-08-02-DOC-CAPEX-EQUIPMENT-REGISTER-PRICE-RESEARCH.yaml`.
+Через `DEC-007` и `CHG-012` опубликована отдельная нативная Google Sheet `03 — CAPEX — Реестр оснащения пилотного объекта`. Итерация `DEC-008`/`CHG-014` обновила тот же зарегистрированный файл до одиннадцати русских вкладок. Итерация `DEC-009`/`CHG-016` добавила в этот же файл research-колонки цен, поставщиков, ссылок, дат, наличия, статуса КП и уверенности. Итерация `DEC-010`/`CHG-018` обновила существующую Sheet после перехода `CAPEX-01-009` с двух единиц на одну. Новый файл и новые листы не создавались, три Google Docs не изменялись; folder guard и API readback прошли. Последний receipt: `docs-platform/changelog/google-sync/2026-08-03-DOC-CAPEX-EQUIPMENT-REGISTER-WEB-CONFIGURATOR.yaml`.
 
 ## 9. MCP integration
 
@@ -225,6 +231,14 @@ Approved facts: правильное название «Колобочная», 
 ```bash
 npm test
 npm exec -- tsc --noEmit
+npm run build
+npm run capex:web:sync
+npm run capex:web:check
+npm run audit:content
+npm run audit:links
+npm run audit:seo
+npm run audit:assets
+npm run audit:routes
 ```
 
 Docs platform:
@@ -243,6 +257,9 @@ npm run capex:configuration:build -- CFG-TEMPLATE-001
 npm run capex:price:validate
 npm run capex:price:preview
 npm run capex:price:reverse:preview -- ../changelog/iteration-receipts/ITR-XXX.yaml --change-id CHG-ROLLBACK-XXX --decision DEC-ROLLBACK-XXX
+npm run capex:configurator:reverse:preview -- ../changelog/iteration-receipts/ITR-XXX.yaml --change-id CHG-ROLLBACK-XXX --decision DEC-ROLLBACK-XXX
+npm run capex:configurator:timeline
+npm run capex:web:check
 npm run capex:modular:reverse:preview -- ../changelog/iteration-receipts/ITR-XXX.yaml --change-id CHG-ROLLBACK-XXX --decision DEC-ROLLBACK-XXX
 npm run capex:modular:reverse:prepare -- ../changelog/iteration-receipts/ITR-XXX.yaml --change-id CHG-ROLLBACK-XXX --decision DEC-ROLLBACK-XXX
 npm run timeline:validate
@@ -252,7 +269,7 @@ npm run google:folder:authorize
 npm run google:publish:preview
 npm run google:publish:apply -- --apply --decision DEC-006
 npm run capex:sheet:preview
-npm run capex:sheet:apply -- --apply --decision DEC-009
+npm run capex:sheet:apply -- --apply --decision DEC-010
 npm run google:capex:overrides:import -- --preview
 npm run google:folder:inspect
 npm run mcp:test
@@ -266,16 +283,19 @@ npm test
 npm run check
 ```
 
-Результаты 2026-08-02:
+Результаты 2026-08-03:
 
-- сайт: 9 маршрутов, mobile menu и form fallback — без failures;
+- сайт: 10 маршрутов, семь CAPEX-форматов, три сценария, optional modules, поиск/фильтры, safe external links, mobile menu и form fallback — без failures, console errors, hydration errors или horizontal overflow;
 - root TypeScript — OK;
-- docs-platform: 80/80 тестов, включая register, price research, modular configurator, Sheet publisher, timeline, rollback, точные canonical checks и registry — OK;
+- production build и prerender десяти маршрутов — OK; внутренний конфигуратор вынесен в отдельный lazy-loaded bundle;
+- docs-platform: 87/87 тестов, включая register, price research, modular configurator, web snapshot, Sheet publisher, timeline, rollback, точные canonical checks и registry — OK;
 - registry validation — OK;
 - CAPEX register: `151/151/0`, при сохранённом source coverage `124/124`; JSON Schema и reference validation — OK;
 - CAPEX configurator: 12 modules, 7 formats, 1 пустая template configuration, 153 module→item links — OK;
 - CAPEX price research: 47 eligible, 39 priced, 8 unpriced, 23 `quote_required`; 99/99 уникальных публичных URL доступны на дату проверки — OK;
-- Google Sheet: folder guard, native MIME, 11 русских листов, price columns, stable IDs, numeric types и API readback — OK;
+- Google Sheet: folder guard, native MIME, 11 русских листов, price columns, stable IDs, numeric types, сохранение ручной configurator-строки и API readback — OK;
+- governed reverse preview для `CHG-018` восстанавливает исходный composite hash `1a79a014…`; apply запрещён без нового approved rollback decision;
+- append-only timeline содержит четыре события текущей iteration и валидную hash chain; post-timeline snapshot SHA-256: `5815fd47a3015b36f699e9037bcefb63e44e768aef8230c7491ce01cee3364c6`;
 - MCP: 21/21 тест, TypeScript — OK.
 
 ## 11. Правила содержательных изменений
@@ -301,22 +321,25 @@ Business Model Architecture зафиксировала требования к �
 
 Исходный CAPEX working draft по-прежнему без цен и моделей фиксирует четыре модуля пилотного объекта: заготовочный цех; торговую кухню, бар и выдачу; выращивание зелени и микрозелени; кассу, учёт и управление заказами. Остальные CAPEX-разделы только перечислены как несформированные.
 
-Register сохраняет все 124 source records в стабильных IDs `CAPEX-01-001`—`CAPEX-04-003` и добавляет 27 research-записей `CAPEX-05-001`—`CAPEX-05-027` для гостевой зоны и обслуживания. Всего 151 запись, 185 открытых параметров и 27 исторически сохранённых missing-section записей; CAPEX-05 и связанная стойка/выдача переведены в статус `structured`, остальные остаются `not_started`. Ни 124, ни 151 не являются числом самостоятельных закупочных единиц.
+Register сохраняет все 124 source records в стабильных IDs `CAPEX-01-001`—`CAPEX-04-003` и добавляет 27 research-записей `CAPEX-05-001`—`CAPEX-05-027` для гостевой зоны и обслуживания. Всего 151 запись, 185 открытых параметров и 27 исторически сохранённых missing-section записей; CAPEX-05 и связанная стойка/выдача переведены в статус `structured`, остальные остаются `not_started`. Ни 124, ни 151 не являются числом самостоятельных закупочных единиц. По `DEC-010` пароконвектомат `CAPEX-01-009` учитывается одной единицей во всех сценариях `MOD-PREP` и отсутствует у форматов без этого модуля.
 
 Модульная архитектура разделяет единый реестр оборудования, 12 функциональных модулей, 7 профилей форматов и отдельные конфигурации объектов. Форматы не являются оборудованием. Итоговая комплектация строится с дедупликацией и правилами `once`/`sum`/`max`/`manual`; неизвестные количества остаются пустыми со статусом уточнения, а `included_in_parent` не считается отдельной закупкой.
 
-Первичная ценовая итерация оценила 39 из 47 самостоятельных food-side позиций в сценариях MINIMUM, BASE и SCALE_READY; 8 позиций оставлены без цены, 23 помечены `quote_required`. Все 102 карточки цен и итоговые суммы имеют статус `research`. CAPEX-05, инженерные работы, ремонт, запуск, сырьё, оборотный капитал и несформированные разделы не оценивались.
+Первичная ценовая итерация оценила 39 из 47 самостоятельных food-side позиций в сценариях MINIMUM, BASE и SCALE_READY; 8 позиций оставлены без цены, 23 помечены `quote_required`. Все 102 карточки цен и итоговые суммы имеют статус `research`. После `DEC-010` полные research-суммы этих 47 строк равны `2 026 758`, `3 094 765` и `4 344 021,46 RUB`; CAPEX-05, инженерные работы, ремонт, запуск, сырьё, оборотный капитал и несформированные разделы не оценивались.
+
+Внутренний маршрут `/capex-configurator` получает данные только из generated snapshot канонической CAPEX-системы. Он позволяет переключать семь существующих форматов, модули и три сценария; показывает стоимость только оценённых позиций, ценовое покрытие, незавершённые обязательные модули, источники, графики, неучтённые категории, registry-документы и последние timeline events. Маршрут отсутствует в публичном меню и sitemap и имеет `robots: noindex, nofollow`. Это не публичная инвесторская версия и не финансовая модель.
 
 Три локальных источника опубликованы как нативные Google Docs и прошли повторное чтение через Google Docs API. Foundation подтверждён по PRP-FND-001—007; Business Model Architecture — по PRP-BMA-001—010, шести таблицам и утверждённой формулировке с `фудкортах`; CAPEX — по CAPEX-01—04, разделу «Что ещё не сформировано», 124 позициям и отсутствию цен/итогового CAPEX.
 
 ## 13. Следующая рабочая задача
 
-Следующий шаг — ручная проверка владельцем ценовых строк и допущений количества в Google Sheet. Дальнейшее уточнение моделей, запрос КП и включение восьми неоценённых позиций выполнять только по отдельному заданию и через новый governed lifecycle; не считать текущие суммы итоговым CAPEX.
+Следующий шаг — ручная проверка владельцем интерфейса `/capex-configurator`, строк существующей Google Sheet и research-допущений количества. Любые дальнейшие уточнения моделей, запрос КП, включение восьми неоценённых позиций, создание публичной инвесторской версии или финансовой модели выполнять только по отдельному заданию и через новый governed lifecycle; не считать текущие суммы итоговым CAPEX.
 
 ## 14. Известные открытые вопросы
 
 - Нет финансовой модели, метрик, числовых assumptions, единиц, периодов и владельцев показателей.
 - В CAPEX working draft остаются открытыми конкретные модели, производительность, часть количеств, инженерные параметры, сценарии комплектации и 27 ещё не описанных разделов.
+- Второй пароконвектомат не входит автоматически ни в один сценарий; возможное расширение мощности требует отдельного решения и расчёта производительности.
 - Без цены остаются холодильная и морозильная камеры, вытяжка, газовые грили такояки, UFO-грили, система 24 дозаторов, стойки для бутылок и закрываемое хранение алкоголя; они требуют параметров помещения, решения по формату или КП.
 - У 23 food-side записей стоит `quote_required`: это включает восемь неоценённых строк и оценённые high-risk ориентиры, где публичная карточка не подтверждает точную конфигурацию проекта.
 - У 104 записей `inclusion_status` остаётся `tbd`, у 126 не определено `quantity_base`; это сохранённая неопределённость, а не validation error.
@@ -329,10 +352,10 @@ Register сохраняет все 124 source records в стабильных ID
 
 ## 15. Git-состояние на дату проверки
 
-- До текущего итогового commit в рабочем дереве находятся только связанные изменения `docs-platform/` текущей ценовой CAPEX-итерации; изменения сайта не вносились.
+- До текущего итогового commit в рабочем дереве находятся только связанные изменения текущей CAPEX/web-итерации и игнорируемые локальные audit screenshots.
 - Ветка: `master`.
-- Upstream на момент начала ценовой CAPEX-задачи: `origin/master`, ahead/behind `6/0`.
-- Последний проверенный commit перед текущей итерацией: `d9f5fbda4afd2fd7e9513ff3fa41aa6817a8d788`, 2026-08-02, `feat(docs-platform): add modular CAPEX format configurator`.
-- Последний содержательный commit сайта: `ed6d00607a5cd8cc635f5fdc79877ccf467baabd`, 2026-07-24, `Last web fix`; он относится к сайту и `src/content/`.
-- Последний содержательный commit docs-platform до текущей итерации: `d9f5fbda4afd2fd7e9513ff3fa41aa6817a8d788`, 2026-08-02, `feat(docs-platform): add modular CAPEX format configurator`.
-- Дата проверки: 2026-08-02.
+- Upstream на момент начала задачи: `origin/master`, ahead/behind `7/0`.
+- Последний проверенный commit перед текущей итерацией: `8e01e675ebc739844202126e671620a7ad8cb7f9`, 2026-08-02, `docs(docs-platform): add preliminary CAPEX price research`.
+- Текущая итерация создаёт внутренний маршрут и governed CAPEX-коррекцию; hash итогового commit нельзя корректно включить внутрь того же commit и следует брать из `git log -1` после фиксации.
+- Push и deployment в рамках handoff не считаются выполненными без отдельного подтверждения.
+- Дата проверки: 2026-08-03.

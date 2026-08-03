@@ -127,3 +127,18 @@ decisions:
     source_ids:
       - SRC-CAPEX-PRICE-RESEARCH-BRIEF
     updated_at: 2026-08-02
+  - id: DEC-010
+    title: Использовать один пароконвектомат и канонический snapshot в рабочем CAPEX-конфигураторе
+    status: approved
+    decision: Для текущей модели MOD-PREP использовать один профессиональный пароконвектомат CAPEX-01-009 во всех сценариях; пересчитать research-оценку по существующим единичным ценам, обновить существующую Google Sheet и подключить внутренний CAPEX-конфигуратор к детерминированному snapshot канонических реестров.
+    rationale: Прямое утверждение владельца проекта от 2026-08-03. Второй аппарат не включается автоматически в SCALE_READY, а страница остаётся скрытым внутренним research-инструментом без показателей финансовой модели.
+    affected_documents:
+      - DOC-CAPEX-EQUIPMENT-REGISTER
+      - DOC-CAPEX-MODULES
+      - DOC-CAPEX-PRICE-RESEARCH
+    approved_by: project owner
+    approved_at: 2026-08-03
+    supersedes: null
+    source_ids:
+      - SRC-CAPEX-WEB-CONFIGURATOR-AUDIT-BRIEF
+    updated_at: 2026-08-03

@@ -1,0 +1,56 @@
+receipt_version: 1
+iteration_id: ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01
+proposal_id: PROP-CAPEX-WEB-CONFIGURATOR-2026-08-03-01
+decision_id: DEC-010
+change_set_id: CHG-018
+status: applied
+applied_at: 2026-08-02T23:22:18.384Z
+actor: Codex
+tool: docs-platform capex:configurator:apply
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01-approved.yaml
+  sha256: 16ccea27ec2b91b1eb4525ef33f3ccdb5eb54ec17ffe295b73f7f0c52a6f17fb
+before_composite_hash: 1a79a01465e934e55ce8fc6f7dbae5f7698c8b868a0905416d9a14c22934e0bf
+after_composite_hash: f43f73a59295324ad47b5f042408ac8f4ef1867e03b0c63b6fb95f9c072f3e51
+before_files:
+  - path: docs-platform/working/capex-equipment-register.yaml
+    existed: true
+    sha256: f675e12efa69932a49a5ad67ebee33c40459b151cb2aea654e206f6a9b9238b0
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01/working/capex-equipment-register.yaml
+  - path: docs-platform/working/capex-equipment-register.csv
+    existed: true
+    sha256: ace656716d386cf85e9248d463110c6bae0cd01bba8643e9ec1bc781543fd783
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01/working/capex-equipment-register.csv
+  - path: docs-platform/working/capex-price-research.yaml
+    existed: true
+    sha256: d1efd3968dc17118f67ce36636c6bd3f17a55be145aceeb18708641331287764
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01/working/capex-price-research.yaml
+  - path: docs-platform/working/capex-module-items.yaml
+    existed: true
+    sha256: ef6412eca819dfac4e54c4c00bfbfd11e9c8101ee1bc517201ecf010feba33c5
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01/working/capex-module-items.yaml
+after_files:
+  - path: docs-platform/working/capex-equipment-register.yaml
+    sha256: 58604b2ae2fd3bdb8a572f2f7f8f3832c45268613d8d080a57142c844cc1e8bf
+  - path: docs-platform/working/capex-equipment-register.csv
+    sha256: 9b650310273b9f1396bc23308a1a90d4c9dbaf6d484a4e019fb1692593d22a34
+  - path: docs-platform/working/capex-price-research.yaml
+    sha256: f354133277c571e7ffa1206da520604dd2fecd457726a25d4ffed9d0f0c0e34f
+  - path: docs-platform/working/capex-module-items.yaml
+    sha256: de777dd144bd15f77028f6f5cd8114ae28280e1da75997c8ee2d36d1bf600466
+totals_before_rub:
+  minimum: 2327130
+  base: 3531329
+  scale_ready: 4940051.46
+totals_after_rub:
+  minimum: 2026758
+  base: 3094765
+  scale_ready: 4344021.46
+validation_result: passed
+git_commit_hash: null
+rollback:
+  mode: governed_reverse_change_set
+  source_receipt: docs-platform/changelog/iteration-receipts/ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01.yaml
+  preview_command: npm run capex:configurator:reverse:preview -- ../changelog/iteration-receipts/ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01.yaml --change-id CHG-ROLLBACK-XXX --decision DEC-ROLLBACK-XXX
+  preserves_history: true
+  git_reset_forbidden: true

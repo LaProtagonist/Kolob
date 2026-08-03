@@ -1,0 +1,24 @@
+receipt_version: 1
+receipt_type: post_timeline_web_snapshot
+iteration_id: ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01
+decision_id: DEC-010
+change_set_id: CHG-018
+status: verified
+generated_at: 2026-08-03T00:31:30.065Z
+actor: Codex
+tool: capex:web:sync / capex:web:check
+source_timeline_last_event: EVT-ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01-004
+snapshot:
+  path: src/content/capex-configurator-data.json
+  sha256: 5815fd47a3015b36f699e9037bcefb63e44e768aef8230c7491ce01cee3364c6
+  source_bundle_sha256: 274c7c7c2ce9730526be2d8d9c6ccf2da7f5ac229888137ac998c305e34d5832
+  bytes: 443050
+validation:
+  deterministic_regeneration: passed
+  source_hashes_current: passed
+  timeline_current: passed
+  equipment_record_count: 151
+  point_format_count: 7
+  decision_id: DEC-010
+  change_set_id: CHG-018
+  status: research

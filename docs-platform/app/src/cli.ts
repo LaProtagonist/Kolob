@@ -5,6 +5,8 @@ import { applyRegister, generateCsv, previewRegister } from "./capex/workflow.js
 import { readRegister, registerStatistics, sourceMarkdownPath, validateRegister } from "./capex/register.js";
 import { applyModularIteration, applyModularReverse, buildConfiguration, listFormats, listModules, materializeModularRollbackPayload, prepareModularReverse, previewConfiguration, previewModularIteration, previewModularReverse, validateConfigurations, writeApprovedModularPayload } from "./capex/modular-workflow.js";
 import { applyPriceIteration, previewPriceIteration, previewPriceReverse, writeApprovedPriceArtifacts } from "./capex/price-workflow.js";
+import { appendConfiguratorTimeline, applyConfiguratorAudit, previewConfiguratorAudit, previewConfiguratorReverse, writeConfiguratorAuditArtifacts } from "./capex/configurator-audit-workflow.js";
+import { checkWebSnapshot, writeWebSnapshot } from "./capex/web-snapshot.js";
 import { readPriceResearch, validatePriceResearch } from "./capex/price-research.js";
 import { applyChange, loadRegistry, previewReverseChange, printChangePreview, readYaml, registryKinds, requireChange, validateRegistry, writeReverseChange } from "./governance/registry.js";
 import { appendTimelineEvent, generateTimeline, readTimelineEvents, renderTimeline, validateTimeline, type TimelineEventInput } from "./governance/timeline.js";
@@ -91,6 +93,20 @@ try {
     console.log(JSON.stringify({ validation: "OK", ...research.summary }, null, 2));
   } else if (command === "capex:price:reverse:preview") {
     previewPriceReverse(args[0] ? path.resolve(args[0]) : undefined, flag(args, "--change-id"), flag(args, "--decision"));
+  } else if (command === "capex:configurator:artifacts") {
+    writeConfiguratorAuditArtifacts();
+  } else if (command === "capex:configurator:preview") {
+    previewConfiguratorAudit();
+  } else if (command === "capex:configurator:apply") {
+    applyConfiguratorAudit(applyOptions(args));
+  } else if (command === "capex:configurator:reverse:preview") {
+    previewConfiguratorReverse(args[0] ? path.resolve(args[0]) : undefined, flag(args, "--change-id"), flag(args, "--decision"));
+  } else if (command === "capex:configurator:timeline") {
+    appendConfiguratorTimeline();
+  } else if (command === "capex:web:sync") {
+    writeWebSnapshot();
+  } else if (command === "capex:web:check") {
+    checkWebSnapshot();
   } else if (command === "capex:formats:list") {
     listFormats();
   } else if (command === "capex:modules:list") {
@@ -117,7 +133,7 @@ try {
   else if (command === "google:test:read") await readTests();
   else if (command === "google:test:update") await updateTests(args);
   else if (command === "google:test:cleanup") await cleanupTests();
-  else throw new Error("commands: registry:*|change:*|timeline:*|capex:register:*|capex:modular:*|capex:price:*|capex:configuration:*|capex:formats:list|capex:modules:list|capex:sheet:*|google:*|documents:list|decisions:list");
+  else throw new Error("commands: registry:*|change:*|timeline:*|capex:register:*|capex:modular:*|capex:price:*|capex:configurator:*|capex:web:*|capex:configuration:*|capex:formats:list|capex:modules:list|capex:sheet:*|google:*|documents:list|decisions:list");
 } catch (error) {
   console.error(`ERROR: ${(error as Error).message}`);
   process.exitCode = 1;

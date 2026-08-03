@@ -206,7 +206,7 @@ function baseLink(moduleId: ModuleId, item: EquipmentRecord): ModuleItemLink {
     minimum_quantity: item.quantity_min,
     aggregation_rule: aggregation,
     condition: item.requirement === "conditional" ? "Зависит от выбранного формата, параметров локации или отдельного решения." : item.requirement === "optional" ? "Включается только при отдельном выборе опционального направления." : null,
-    notes: capex05?.note ?? null,
+    notes: capex05?.note ?? item.notes ?? null,
   };
 }
 

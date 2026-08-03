@@ -1,0 +1,132 @@
+import assert from "node:assert/strict";
+import crypto from "node:crypto";
+import fs from "node:fs";
+import path from "node:path";
+import test from "node:test";
+import { fileURLToPath } from "node:url";
+import YAML from "yaml";
+import {
+  CAPEX_CONFIGURATOR_CHANGE_ID,
+  CAPEX_CONFIGURATOR_DECISION_ID,
+  CAPEX_CONFIGURATOR_ITERATION_ID,
+  CAPEX_CONFIGURATOR_PAYLOAD_PATH,
+  CAPEX_CONFIGURATOR_RECEIPT_PATH,
+  previewConfiguratorReverse,
+} from "../src/capex/configurator-audit-workflow.js";
+import { buildEquipmentBom, readModularSources } from "../src/capex/modular.js";
+import { PRICE_SCENARIOS, readPriceResearch } from "../src/capex/price-research.js";
+import { CAPEX_REGISTER_SOURCE_SHA256, readRegister, sha256 } from "../src/capex/register.js";
+import { buildWebSnapshot, checkWebSnapshot, WEB_SNAPSHOT_PATH } from "../src/capex/web-snapshot.js";
+
+const platform = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
+const project = path.resolve(platform, "..");
+const register = readRegister();
+const research = readPriceResearch();
+const modular = readModularSources();
+
+function configured(formatId: string) {
+  const sources = structuredClone(modular);
+  sources.configurations.configurations[0] = {
+    ...sources.configurations.configurations[0],
+    format_id: formatId as typeof sources.configurations.configurations[0]["format_id"],
+    selected_modules: [],
+    excluded_modules: [],
+  };
+  return sources;
+}
+
+test("CAPEX-01-009 is one unit in the register, MOD-PREP rule and every research scenario", () => {
+  const oven = register.equipment.find(item => item.item_id === "CAPEX-01-009")!;
+  const link = modular.module_items.links.find(item => item.module_id === "MOD-PREP" && item.item_id === oven.item_id)!;
+  const price = research.items.find(item => item.item_id === oven.item_id)!;
+  assert.equal(register.document.decision_id, CAPEX_CONFIGURATOR_DECISION_ID);
+  assert.equal(register.document.iteration_id, CAPEX_CONFIGURATOR_ITERATION_ID);
+  assert.deepEqual([oven.quantity_min, oven.quantity_base, oven.quantity_scale_ready], [1, 1, 1]);
+  assert.deepEqual([link.quantity_rule_type, link.quantity_rule_value, link.aggregation_rule], ["fixed", 1, "once"]);
+  assert.deepEqual(PRICE_SCENARIOS.map(scenario => price.scenarios[scenario]?.quantity), [1, 1, 1]);
+  assert.deepEqual(PRICE_SCENARIOS.map(scenario => price.scenarios[scenario]?.line_total_rub), [300372, 436564, 596030]);
+});
+
+test("formats without MOD-PREP omit the oven and intersections count it once", () => {
+  for (const formatId of ["FMT-FOOD-COURT", "FMT-STREET-PICKUP", "FMT-FOODTRUCK"] as const) {
+    const bom = buildEquipmentBom("CFG-TEMPLATE-001", register, configured(formatId));
+    assert.equal(bom.active_modules.some(module => module.module_id === "MOD-PREP"), false, formatId);
+    assert.equal(bom.equipment.some(item => item.item_id === "CAPEX-01-009"), false, formatId);
+  }
+  const integratedSources = configured("FMT-INTEGRATED");
+  const originalLink = integratedSources.module_items.links.find(item => item.item_id === "CAPEX-01-009")!;
+  integratedSources.module_items.links.push({ ...originalLink, module_id: "MOD-RETAIL-HOT" });
+  const integrated = buildEquipmentBom("CFG-TEMPLATE-001", register, integratedSources);
+  assert.equal(integrated.equipment.filter(item => item.item_id === "CAPEX-01-009").length, 1);
+  assert.equal(integrated.equipment.find(item => item.item_id === "CAPEX-01-009")?.calculated_quantity, 1);
+});
+
+test("scenario totals are recalculated from line items and unpriced records remain unknown", () => {
+  for (const scenario of PRICE_SCENARIOS) {
+    const calculated = research.items.reduce((sum, item) => sum + (item.scenarios[scenario]?.line_total_rub ?? 0), 0);
+    assert.equal(Math.round(calculated * 100) / 100, research.summary.totals_rub[scenario]);
+  }
+  assert.deepEqual(research.summary.totals_rub, { minimum: 2026758, base: 3094765, scale_ready: 4344021.46 });
+  const unpriced = research.items.filter(item => item.valuation_status !== "priced");
+  assert.equal(unpriced.length, research.summary.unpriced_record_count);
+  assert.equal(unpriced.every(item => PRICE_SCENARIOS.every(scenario => item.scenarios[scenario] === null)), true);
+  assert.equal(register.equipment.filter(item => item.inclusion_status === "included_in_parent").every(item => item.price_base === null), true);
+});
+
+test("the web snapshot is deterministic, current and derived from canonical source hashes", () => {
+  const built = buildWebSnapshot();
+  const stored = JSON.parse(fs.readFileSync(WEB_SNAPSHOT_PATH, "utf8"));
+  assert.deepEqual(stored, built);
+  assert.equal(built.meta.counts.equipmentRecords, 151);
+  assert.equal(built.meta.counts.formats, 7);
+  assert.equal(built.meta.counts.pricedRecords, research.summary.priced_record_count);
+  assert.equal(built.meta.counts.foodPriceScopeRecords, research.summary.eligible_procurement_record_count);
+  assert.equal(built.meta.decisionId, CAPEX_CONFIGURATOR_DECISION_ID);
+  assert.equal(built.items.find(item => item.id === "CAPEX-01-009")?.scenarios.base?.quantity, 1);
+  for (const [relative, hash] of Object.entries(built.meta.sourceHashes)) {
+    assert.equal(sha256(fs.readFileSync(path.join(project, relative))), hash, relative);
+  }
+  const original = console.log;
+  console.log = () => undefined;
+  try { assert.equal(checkWebSnapshot().validation, "OK"); }
+  finally { console.log = original; }
+});
+
+test("the React page contains no manually duplicated register or hardcoded coverage totals", () => {
+  const component = fs.readFileSync(path.join(project, "src", "components", "CapexConfigurator.tsx"), "utf8");
+  assert.match(component, /capex-configurator-data\.json/);
+  assert.doesNotMatch(component, /(?:pricedRecords|equipmentRecords|foodPriceScopeRecords)\s*[:=]\s*(?:39|47|151)/);
+  assert.doesNotMatch(component, /CAPEX-01-009[^\n]{0,120}(?:300372|436564|596030)/);
+  assert.doesNotMatch(component, /const\s+(?:equipment|items|formats|modules)\s*=\s*\[/i);
+});
+
+test("approved payload, applied hashes and governed reverse preview are exact", () => {
+  const payloadFile = path.join(project, CAPEX_CONFIGURATOR_PAYLOAD_PATH);
+  const receiptFile = path.join(project, CAPEX_CONFIGURATOR_RECEIPT_PATH);
+  const payloadText = fs.readFileSync(payloadFile, "utf8");
+  const payload = YAML.parse(payloadText);
+  const change = YAML.parse(fs.readFileSync(path.join(platform, "changes", `${CAPEX_CONFIGURATOR_CHANGE_ID}-capex-web-configurator.yaml`), "utf8"));
+  const receipt = YAML.parse(fs.readFileSync(receiptFile, "utf8"));
+  assert.equal(payload.decision_id, CAPEX_CONFIGURATOR_DECISION_ID);
+  assert.equal(change.change_id, CAPEX_CONFIGURATOR_CHANGE_ID);
+  assert.equal(change.decision_id, CAPEX_CONFIGURATOR_DECISION_ID);
+  assert.equal(receipt.approved_payload.sha256, sha256(payloadText));
+  assert.equal(receipt.after_files.every((entry: { path: string; sha256: string }) => sha256(fs.readFileSync(path.join(project, entry.path))) === entry.sha256), true);
+  const original = console.log;
+  console.log = () => undefined;
+  try {
+    const reverse = previewConfiguratorReverse(receiptFile, "CHG-ROLLBACK-WEB-TEST", "DEC-ROLLBACK-WEB-TEST");
+    assert.equal(reverse.restores_original_hash, true);
+    assert.equal(reverse.apply_allowed, false);
+    assert.equal(reverse.reverse_change_set.status, "proposed");
+    assert.equal(reverse.reverse_change_set.rollback_of, CAPEX_CONFIGURATOR_CHANGE_ID);
+    assert.equal(reverse.reverse_change_set.operations.length, 4);
+  } finally {
+    console.log = original;
+  }
+});
+
+test("source CAPEX Specification v0.1 remains byte-identical", () => {
+  const source = fs.readFileSync(path.join(platform, "working", "capex-equipment-specification.md"));
+  assert.equal(crypto.createHash("sha256").update(source).digest("hex"), CAPEX_REGISTER_SOURCE_SHA256);
+});

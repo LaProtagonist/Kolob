@@ -1,0 +1,114 @@
+receipt_version: 1
+iteration_id: ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01
+proposal_id: PROP-CAPEX-WEB-CONFIGURATOR-2026-08-03-01
+decision_id: DEC-010
+change_set_id: CHG-018
+status: verified
+verified_at: 2026-08-03T00:30:30Z
+actor: Codex
+tool: CAPEX configurator verification workflow
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01-approved.yaml
+  sha256: 16ccea27ec2b91b1eb4525ef33f3ccdb5eb54ec17ffe295b73f7f0c52a6f17fb
+source:
+  path: docs-platform/working/capex-equipment-specification.md
+  sha256: 2157364e09699173fecfbfe861edf4e6fac85a0437e23aebe100caebeab599d6
+  unchanged: true
+outputs:
+  equipment_register_yaml:
+    path: docs-platform/working/capex-equipment-register.yaml
+    sha256: 58604b2ae2fd3bdb8a572f2f7f8f3832c45268613d8d080a57142c844cc1e8bf
+  equipment_register_csv:
+    path: docs-platform/working/capex-equipment-register.csv
+    sha256: 9b650310273b9f1396bc23308a1a90d4c9dbaf6d484a4e019fb1692593d22a34
+  price_research:
+    path: docs-platform/working/capex-price-research.yaml
+    sha256: f354133277c571e7ffa1206da520604dd2fecd457726a25d4ffed9d0f0c0e34f
+  module_items:
+    path: docs-platform/working/capex-module-items.yaml
+    sha256: de777dd144bd15f77028f6f5cd8114ae28280e1da75997c8ee2d36d1bf600466
+canonical_correction:
+  item_id: CAPEX-01-009
+  prior_quantity: 2
+  current_quantity:
+    minimum: 1
+    base: 1
+    scale_ready: 1
+  module_id: MOD-PREP
+  quantity_rule_type: fixed
+  quantity_rule_value: 1
+  aggregation_rule: once
+  formats_without_mod_prep_quantity: 0
+  second_scale_ready_unit_automatic: false
+scenario_totals_rub:
+  before:
+    minimum: 2327130
+    base: 3531329
+    scale_ready: 4940051.46
+  after:
+    minimum: 2026758
+    base: 3094765
+    scale_ready: 4344021.46
+google:
+  receipt: docs-platform/changelog/google-sync/2026-08-03-DOC-CAPEX-EQUIPMENT-REGISTER-WEB-CONFIGURATOR.yaml
+  action: update
+  existing_file_reused: true
+  duplicate_file_created: false
+  folder_guard: passed
+  readback: passed
+  equipment_record_count: 151
+  localized_sheet_order: passed
+  manual_configurator_rows_preserved: 1
+web:
+  route: /capex-configurator
+  canonical_snapshot: src/content/capex-configurator-data.json
+  snapshot_sha256_before_timeline_finalization: b01865508392a360864b6ae2e4820260fe75c3554bcfa66de94b487eb2c6ed7a
+  snapshot_source_hash_validation: passed
+  snapshot_post_timeline_regeneration_required: true
+  hardcoded_register_duplicate_absent: true
+  public_navigation_link_absent: true
+  sitemap_entry_absent: true
+  robots: noindex, nofollow
+  format_count: 7
+  scenario_count: 3
+  responsive_viewports:
+    desktop_1440x900: passed
+    tablet_768x1024: passed
+    mobile_390x844: passed
+  horizontal_overflow: false
+  console_errors: 0
+  hydration_errors: 0
+  screenshots:
+    - analysis/screenshots/desktop-top.png
+    - analysis/screenshots/desktop-configurator.png
+    - analysis/screenshots/desktop-equipment-table.png
+    - analysis/screenshots/mobile-top.png
+    - analysis/screenshots/mobile-equipment-list.png
+validation:
+  root_tests: 10 routes and CAPEX interactions passed, 0 failed
+  root_typescript: passed
+  root_build: passed
+  docs_platform_tests: 87 passed, 0 failed
+  docs_platform_typescript: passed
+  registry: passed
+  canonical_data_tests: passed
+  source_hashes: passed
+  google_readback: passed
+  public_copy_audit: passed
+  link_audit: passed
+  seo_audit: passed
+  asset_audit: passed
+  route_audit: passed
+rollback:
+  source_receipt: docs-platform/changelog/iteration-receipts/ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01.yaml
+  reverse_change_set_status: previewed
+  expected_current_hash: f43f73a59295324ad47b5f042408ac8f4ef1867e03b0c63b6fb95f9c072f3e51
+  observed_current_hash: f43f73a59295324ad47b5f042408ac8f4ef1867e03b0c63b6fb95f9c072f3e51
+  expected_restored_hash: 1a79a01465e934e55ce8fc6f7dbae5f7698c8b868a0905416d9a14c22934e0bf
+  simulated_restored_hash: 1a79a01465e934e55ce8fc6f7dbae5f7698c8b868a0905416d9a14c22934e0bf
+  restores_original_hash: true
+  apply_requires_new_approved_rollback_decision: true
+  preserves_history: true
+  git_reset_forbidden: true
+git_commit_hash: null
+git_commit_note: Hash текущего commit невозможно включить в сам commit; при необходимости он фиксируется следующим append-only событием.

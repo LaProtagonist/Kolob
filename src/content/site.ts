@@ -84,6 +84,15 @@ export const pages: PageMeta[] = [
     title: approvedCopy.seo.privacy.title,
     description: approvedCopy.seo.privacy.description,
     ogImage: "/media/hero-kolobok-1200.webp"
+  },
+  {
+    id: "capexConfigurator",
+    path: "/capex-configurator",
+    label: "CAPEX-конфигуратор",
+    title: "CAPEX-конфигуратор — Колобочная",
+    description: "Внутренняя рабочая страница для выбора формата точки, модулей и оборудования с исследовательскими ценами.",
+    ogImage: "/media/hero-kolobok-1200.webp",
+    noindex: true
   }
 ];
 

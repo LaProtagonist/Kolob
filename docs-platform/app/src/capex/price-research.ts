@@ -62,11 +62,11 @@ export type CapexPriceResearch = {
     document_id: typeof CAPEX_PRICE_DOCUMENT_ID;
     title: "CAPEX Preliminary Price Research";
     russian_title: "CAPEX — Первичная ценовая оценка пищевого оснащения";
-    version: "0.1";
+    version: string;
     status: "research";
-    decision_id: typeof CAPEX_PRICE_DECISION_ID;
-    iteration_id: typeof CAPEX_PRICE_ITERATION_ID;
-    proposal_id: typeof CAPEX_PRICE_PROPOSAL_ID;
+    decision_id: string;
+    iteration_id: string;
+    proposal_id: string;
     checked_at: typeof CAPEX_PRICE_CHECKED_AT;
     currency: "RUB";
     source_register_path: "docs-platform/working/capex-equipment-register.yaml";
@@ -313,7 +313,7 @@ const pricedDefinitions: PricedDefinition[] = [
   { item_id: "CAPEX-01-006", module_id: "MOD-PREP", quotes: PRICE_FAMILIES.rack, quantities: { minimum: 1, base: 2, scale_ready: 3 }, notes: "Количество в источнике tbd; 1/2/3 — только research-сценарии до планировки." },
   { item_id: "CAPEX-01-007", module_id: "MOD-PREP", quotes: PRICE_FAMILIES.drying_rack, quantities: { minimum: 1, base: 1, scale_ready: 1 }, notes: "Один ориентировочный стеллаж; размер выбирается после планировки." },
   { item_id: "CAPEX-01-008", module_id: "MOD-PREP", quotes: PRICE_FAMILIES.waste_bin, quantities: { minimum: 4, base: 6, scale_ready: 8 }, notes: "Количество по рабочим зонам не задано; 4/6/8 — research-сценарии, не новое утверждённое количество." },
-  { item_id: "CAPEX-01-009", module_id: "MOD-PREP", quotes: PRICE_FAMILIES.combi, quantities: { minimum: 2, base: 2, scale_ready: 2 }, notes: "Две независимые единицы заданы спецификацией; вода/дренаж и монтаж не включены." },
+  { item_id: "CAPEX-01-009", module_id: "MOD-PREP", quotes: PRICE_FAMILIES.combi, quantities: { minimum: 1, base: 1, scale_ready: 1 }, notes: "Одна профессиональная единица во всех сценариях по DEC-010; вода/дренаж и монтаж не включены." },
   { item_id: "CAPEX-01-010", module_id: "MOD-PREP", quotes: PRICE_FAMILIES.sous_vide, quantities: { minimum: 1, base: 2, scale_ready: 2 }, notes: "Количество tbd; базовый сценарий предполагает два независимых термостата для параллельной работы при 500 чеках/день." },
   { item_id: "CAPEX-01-011", module_id: "MOD-PREP", quotes: PRICE_FAMILIES.induction, quantities: { minimum: 1, base: 1, scale_ready: 1 }, notes: "Одна двухконфорочная профессиональная плита." },
   { item_id: "CAPEX-01-013", module_id: "MOD-PREP", quotes: PRICE_FAMILIES.vacuum, quantities: { minimum: 1, base: 1, scale_ready: 1 }, notes: "Один камерный профессиональный аппарат; пакеты и сервис не включены." },
@@ -363,7 +363,7 @@ function scenarioValue(quoteValue: PriceQuote, quantity: number, quantityBasis: 
   return { ...quoteValue, quantity, quantity_basis: quantityBasis, line_total_rub: Math.round(quoteValue.observed_unit_price_rub * quantity * 100) / 100 };
 }
 
-function summary(items: PriceResearchItem[]): PriceResearchSummary {
+export function recalculatePriceSummary(items: PriceResearchItem[]): PriceResearchSummary {
   const priced = items.filter(item => item.valuation_status === "priced");
   const money = (value: number) => Math.round(value * 100) / 100;
   const totals = Object.fromEntries(PRICE_SCENARIOS.map(scenario => [scenario, money(priced.reduce((total, item) => total + (item.scenarios[scenario]?.line_total_rub ?? 0), 0))])) as Record<PriceScenario, number>;
@@ -447,16 +447,16 @@ export function buildPriceResearch(register: CapexRegister): CapexPriceResearch 
       eligible_procurement_record_count: 47,
     },
     items,
-    summary: summary(items),
+    summary: recalculatePriceSummary(items),
   };
 }
 
 export function applyPriceResearch(register: CapexRegister, research: CapexPriceResearch): CapexRegister {
   const result = structuredClone(register) as CapexRegister;
   const researchById = new Map(research.items.map(item => [item.item_id, item]));
-  result.document.decision_id = CAPEX_PRICE_DECISION_ID;
-  result.document.iteration_id = CAPEX_PRICE_ITERATION_ID;
-  result.document.proposal_id = CAPEX_PRICE_PROPOSAL_ID;
+  result.document.decision_id = research.document.decision_id;
+  result.document.iteration_id = research.document.iteration_id;
+  result.document.proposal_id = research.document.proposal_id;
   result.document.warning = "Первичная ценовая оценка пищевого оснащения имеет статус research и не является коммерческим предложением или утверждённым CAPEX. 151 — число записей реестра, а не самостоятельных закупочных единиц.";
   result.document.price_research_path = CAPEX_PRICE_RESEARCH_PATH;
   result.document.price_research_date = CAPEX_PRICE_DATE;
@@ -570,7 +570,7 @@ export function validatePriceResearch(research: CapexPriceResearch, register?: C
       if (hasPrice && (!item.price_min_source_id || !item.price_base_source_id || !item.price_max_source_id || !item.price_date || !item.source_url)) errors.push(`${item.item_id}: priced register row lacks scenario sources/date/URL.`);
     }
   }
-  const recalculated = summary(research.items);
+  const recalculated = recalculatePriceSummary(research.items);
   if (JSON.stringify(recalculated) !== JSON.stringify(research.summary)) errors.push("Price research summary differs from deterministic recalculation.");
   return errors;
 }

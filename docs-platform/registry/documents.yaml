@@ -142,7 +142,7 @@ documents:
       - Справочники
     version: "0.1"
     local_path: docs-platform/working/capex-equipment-register.yaml
-    updated_at: 2026-08-02
+    updated_at: 2026-08-03
   - id: DOC-CAPEX-MODULES
     title: CAPEX Modules
     type: working_capex_functional_modules
@@ -164,7 +164,7 @@ documents:
       - MOD-ENGINEERING
     version: "0.1"
     local_path: docs-platform/working/capex-modules.yaml
-    updated_at: 2026-08-01
+    updated_at: 2026-08-03
   - id: DOC-CAPEX-POINT-FORMATS
     title: CAPEX Point Formats
     type: working_capex_point_formats
@@ -220,6 +220,6 @@ documents:
       - Sources
       - Risks
       - Summary
-    version: "0.1"
+    version: "0.2"
     local_path: docs-platform/working/capex-price-research.yaml
-    updated_at: 2026-08-02
+    updated_at: 2026-08-03

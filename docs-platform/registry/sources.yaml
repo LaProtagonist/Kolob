@@ -1026,3 +1026,12 @@ sources:
     accessed_at: 2026-08-01T22:19:05.000Z
     reliability: medium
     notes: "Наблюдаемая цена: 26887 RUB. Наличие: active_catalog; stock_not_confirmed. НДС: не указано. Доставка: не указано. Уверенность: medium. Увеличенный профессиональный стол с отверстием."
+  - id: SRC-CAPEX-WEB-CONFIGURATOR-AUDIT-BRIEF
+    title: Задание на аудит и улучшение рабочего CAPEX-конфигуратора
+    type: instruction
+    location: User instruction, 2026-08-03
+    publisher: project owner
+    publication_date: 2026-08-03
+    accessed_at: 2026-08-03
+    reliability: primary
+    notes: Утверждает одну единицу CAPEX-01-009, research-пересчёт, обновление существующей Google Sheet и внутреннего рабочего интерфейса. Не утверждает второй аппарат, новые цены, финальный CAPEX или публичную инвесторскую версию.

@@ -8,7 +8,6 @@ import YAML from "yaml";
 import {
   CAPEX_PRICE_APPROVED_PAYLOAD_PATH,
   CAPEX_PRICE_CHANGE_ID,
-  CAPEX_PRICE_DECISION_ID,
   CAPEX_PRICE_ITERATION_ID,
   PRICE_SCENARIOS,
   priceSourceRegistryEntries,
@@ -17,6 +16,7 @@ import {
   validatePriceResearch,
 } from "../src/capex/price-research.js";
 import { previewPriceReverse } from "../src/capex/price-workflow.js";
+import { CAPEX_CONFIGURATOR_DECISION_ID, CAPEX_CONFIGURATOR_ITERATION_ID } from "../src/capex/configurator-audit-workflow.js";
 import { CAPEX_REGISTER_SOURCE_SHA256, readRegister, sha256 } from "../src/capex/register.js";
 
 const platform = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
@@ -27,13 +27,18 @@ const register = readRegister();
 test("preliminary research covers exactly the 47 eligible food-side procurement records", () => {
   assert.deepEqual(validatePriceResearch(research, register), []);
   assert.equal(research.document.status, "research");
-  assert.equal(research.document.decision_id, CAPEX_PRICE_DECISION_ID);
+  assert.equal(research.document.decision_id, CAPEX_CONFIGURATOR_DECISION_ID);
+  assert.equal(research.document.iteration_id, CAPEX_CONFIGURATOR_ITERATION_ID);
+  assert.equal(research.document.version, "0.2");
   assert.deepEqual(research.scope.included_modules, ["MOD-PREP", "MOD-RETAIL-HOT", "MOD-BAR", "MOD-GROW", "MOD-POS", "MOD-KDS"]);
   assert.equal(research.summary.eligible_procurement_record_count, 47);
   assert.equal(research.summary.priced_record_count, 39);
   assert.equal(research.summary.unpriced_record_count, 8);
   assert.equal(research.summary.quote_required_count, 23);
-  assert.deepEqual(research.summary.totals_rub, { minimum: 2327130, base: 3531329, scale_ready: 4940051.46 });
+  assert.deepEqual(research.summary.totals_rub, { minimum: 2026758, base: 3094765, scale_ready: 4344021.46 });
+  const oven = research.items.find(item => item.item_id === "CAPEX-01-009")!;
+  assert.deepEqual(PRICE_SCENARIOS.map(scenario => oven.scenarios[scenario]?.quantity), [1, 1, 1]);
+  assert.deepEqual(PRICE_SCENARIOS.map(scenario => oven.scenarios[scenario]?.line_total_rub), [300372, 436564, 596030]);
   assert.deepEqual(research.items.filter(item => item.valuation_status === "quote_required").map(item => item.item_id), [
     "CAPEX-01-001", "CAPEX-01-002", "CAPEX-01-012", "CAPEX-02-001", "CAPEX-02-002", "CAPEX-02-003", "CAPEX-02-054", "CAPEX-02-055",
   ]);
@@ -63,7 +68,7 @@ test("scenario totals equal source-card unit price multiplied by the research qu
       assert.equal(value.line_total_rub, Math.round(value.observed_unit_price_rub * value.quantity * 100) / 100, `${item.item_id}.${scenario}`);
     }
   }
-  assert.deepEqual(research.summary.module_totals_rub["MOD-PREP"], { minimum: 1452327, base: 2378500, scale_ready: 3260891 });
+  assert.deepEqual(research.summary.module_totals_rub["MOD-PREP"], { minimum: 1151955, base: 1941936, scale_ready: 2664861 });
   assert.deepEqual(research.summary.module_totals_rub["MOD-RETAIL-HOT"], { minimum: 215756, base: 309117, scale_ready: 420737 });
   assert.deepEqual(research.summary.module_totals_rub["MOD-BAR"], { minimum: 209247, base: 300712, scale_ready: 467623.46 });
   assert.deepEqual(research.summary.module_totals_rub["MOD-GROW"], { minimum: 238000, base: 258000, scale_ready: 387000 });

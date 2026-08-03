@@ -1,0 +1,233 @@
+receipt_version: 2
+change_id: CHG-018
+iteration_id: ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01
+proposal_id: PROP-CAPEX-WEB-CONFIGURATOR-2026-08-03-01
+decision_id: DEC-010
+source_change_set: docs-platform/changes/CHG-018-capex-web-configurator.yaml
+status: applied
+applied_at: 2026-08-02T23:21:58.008Z
+actor: Codex
+tool: docs-platform change:apply
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01-approved.yaml
+  sha256: 16ccea27ec2b91b1eb4525ef33f3ccdb5eb54ec17ffe295b73f7f0c52a6f17fb
+before_hash: f622fd592fb5e23b9125e106414a725ca36239ec4292d991605b6a7ebc81aa18
+after_hash: dac82318a0e13e36645c9ba6e48a36995f6e69f0ad49438c4ec36d3ba423a4b4
+touched_registry_files:
+  - path: docs-platform/registry/documents.yaml
+    backup_path: docs-platform/changelog/backups/2026-08-02T23-21-58-008Z-CHG-018/documents.yaml
+  - path: docs-platform/registry/decisions.yaml
+    backup_path: docs-platform/changelog/backups/2026-08-02T23-21-58-008Z-CHG-018/decisions.yaml
+operations:
+  - type: update
+    entity: documents
+    id: DOC-CAPEX-EQUIPMENT-REGISTER
+    before: &a1
+      id: DOC-CAPEX-EQUIPMENT-REGISTER
+      title: CAPEX Equipment Register
+      type: working_capex_equipment_register
+      status: research
+      google_file_id: 1J7sHM8P2IoMfHVLEHfY-UJLIZ-HBid89G6n6BS4BSJA
+      template: null
+      sections:
+        - Описание
+        - Конфигуратор
+        - Комплектация
+        - Переопределения
+        - Оснащение
+        - Модули
+        - Форматы точек
+        - Состав форматов
+        - Открытые параметры
+        - Недостающие разделы
+        - Справочники
+      version: "0.1"
+      local_path: docs-platform/working/capex-equipment-register.yaml
+      updated_at: 2026-08-02
+    after:
+      id: DOC-CAPEX-EQUIPMENT-REGISTER
+      title: CAPEX Equipment Register
+      type: working_capex_equipment_register
+      status: research
+      google_file_id: 1J7sHM8P2IoMfHVLEHfY-UJLIZ-HBid89G6n6BS4BSJA
+      template: null
+      sections:
+        - Описание
+        - Конфигуратор
+        - Комплектация
+        - Переопределения
+        - Оснащение
+        - Модули
+        - Форматы точек
+        - Состав форматов
+        - Открытые параметры
+        - Недостающие разделы
+        - Справочники
+      version: "0.1"
+      local_path: docs-platform/working/capex-equipment-register.yaml
+      updated_at: 2026-08-03
+    before_index: 9
+    after_index: 9
+    before_sha256: d0b3548146758e090b8b2c107cf1285b6bcf98d27fc5a4374ca9140200a4176c
+    after_sha256: 1e190fb8777f072d7e7a289184f21c934e27efa3102a30666edc4e6bd87cd264
+    reverse_operation:
+      type: replace
+      entity: documents
+      id: DOC-CAPEX-EQUIPMENT-REGISTER
+      value: *a1
+  - type: update
+    entity: documents
+    id: DOC-CAPEX-MODULES
+    before: &a2
+      id: DOC-CAPEX-MODULES
+      title: CAPEX Modules
+      type: working_capex_functional_modules
+      status: research
+      google_file_id: null
+      template: null
+      sections:
+        - MOD-PREP
+        - MOD-RETAIL-HOT
+        - MOD-BAR
+        - MOD-GROW
+        - MOD-POS
+        - MOD-KDS
+        - MOD-GUEST
+        - MOD-TAKEAWAY
+        - MOD-STORAGE
+        - MOD-WASH
+        - MOD-STAFF
+        - MOD-ENGINEERING
+      version: "0.1"
+      local_path: docs-platform/working/capex-modules.yaml
+      updated_at: 2026-08-01
+    after:
+      id: DOC-CAPEX-MODULES
+      title: CAPEX Modules
+      type: working_capex_functional_modules
+      status: research
+      google_file_id: null
+      template: null
+      sections:
+        - MOD-PREP
+        - MOD-RETAIL-HOT
+        - MOD-BAR
+        - MOD-GROW
+        - MOD-POS
+        - MOD-KDS
+        - MOD-GUEST
+        - MOD-TAKEAWAY
+        - MOD-STORAGE
+        - MOD-WASH
+        - MOD-STAFF
+        - MOD-ENGINEERING
+      version: "0.1"
+      local_path: docs-platform/working/capex-modules.yaml
+      updated_at: 2026-08-03
+    before_index: 10
+    after_index: 10
+    before_sha256: c304a777026a6757bf7291269a81e213f7c7ff3b50a0086488f714fdc829a517
+    after_sha256: d68c437cd5b4c607e5d00a09e1709de273e6e53e8988d4eee5beb4118123906f
+    reverse_operation:
+      type: replace
+      entity: documents
+      id: DOC-CAPEX-MODULES
+      value: *a2
+  - type: update
+    entity: documents
+    id: DOC-CAPEX-PRICE-RESEARCH
+    before: &a3
+      id: DOC-CAPEX-PRICE-RESEARCH
+      title: CAPEX Preliminary Price Research
+      type: working_capex_price_research
+      status: research
+      google_file_id: null
+      template: null
+      sections:
+        - Scope
+        - MINIMUM
+        - BASE
+        - SCALE_READY
+        - Sources
+        - Risks
+        - Summary
+      version: "0.1"
+      local_path: docs-platform/working/capex-price-research.yaml
+      updated_at: 2026-08-02
+    after:
+      id: DOC-CAPEX-PRICE-RESEARCH
+      title: CAPEX Preliminary Price Research
+      type: working_capex_price_research
+      status: research
+      google_file_id: null
+      template: null
+      sections:
+        - Scope
+        - MINIMUM
+        - BASE
+        - SCALE_READY
+        - Sources
+        - Risks
+        - Summary
+      version: "0.2"
+      local_path: docs-platform/working/capex-price-research.yaml
+      updated_at: 2026-08-03
+    before_index: 14
+    after_index: 14
+    before_sha256: 093afdf08c2e69394eb5e85b856fcb53225b9f6c4dc831e15616627df03aca4f
+    after_sha256: 2d1c094938751cf77dd0177df1d4fd253034c32e1739d86555aa3bfc4347748c
+    reverse_operation:
+      type: replace
+      entity: documents
+      id: DOC-CAPEX-PRICE-RESEARCH
+      value: *a3
+  - type: update
+    entity: decisions
+    id: DEC-010
+    before: &a4
+      id: DEC-010
+      title: Использовать один пароконвектомат и канонический snapshot в рабочем CAPEX-конфигураторе
+      status: approved
+      decision: Для текущей модели MOD-PREP использовать один профессиональный пароконвектомат CAPEX-01-009 во всех сценариях; пересчитать research-оценку по существующим единичным ценам, обновить существующую Google Sheet и подключить внутренний CAPEX-конфигуратор к детерминированному snapshot канонических реестров.
+      rationale: Прямое утверждение владельца проекта от 2026-08-03. Второй аппарат не включается автоматически в SCALE_READY, а страница остаётся скрытым внутренним research-инструментом без показателей финансовой модели.
+      affected_documents:
+        - DOC-CAPEX-EQUIPMENT-REGISTER
+        - DOC-CAPEX-MODULES
+        - DOC-CAPEX-PRICE-RESEARCH
+      approved_by: project owner
+      approved_at: 2026-08-03
+      supersedes: null
+      source_ids:
+        - SRC-CAPEX-WEB-CONFIGURATOR-AUDIT-BRIEF
+      updated_at: 2026-08-03
+    after:
+      id: DEC-010
+      title: Использовать один пароконвектомат и канонический snapshot в рабочем CAPEX-конфигураторе
+      status: approved
+      decision: Для текущей модели MOD-PREP использовать один профессиональный пароконвектомат CAPEX-01-009 во всех сценариях; пересчитать research-оценку по существующим единичным ценам, обновить существующую Google Sheet и подключить внутренний CAPEX-конфигуратор к детерминированному snapshot канонических реестров.
+      rationale: Прямое утверждение владельца проекта от 2026-08-03. Второй аппарат не включается автоматически в SCALE_READY, а страница остаётся скрытым внутренним research-инструментом без показателей финансовой модели.
+      affected_documents:
+        - DOC-CAPEX-EQUIPMENT-REGISTER
+        - DOC-CAPEX-MODULES
+        - DOC-CAPEX-PRICE-RESEARCH
+      approved_by: project owner
+      approved_at: 2026-08-03
+      supersedes: null
+      source_ids:
+        - SRC-CAPEX-WEB-CONFIGURATOR-AUDIT-BRIEF
+      updated_at: 2026-08-03
+    before_index: 9
+    after_index: 9
+    before_sha256: ef2577a4927156c60157ebabf9eaa2d788ee90ef6a322d18c684613f83a0a3cb
+    after_sha256: ef2577a4927156c60157ebabf9eaa2d788ee90ef6a322d18c684613f83a0a3cb
+    reverse_operation:
+      type: replace
+      entity: decisions
+      id: DEC-010
+      value: *a4
+validation_result: passed
+git_commit_hash: null
+rollback:
+  source_receipt: docs-platform/changelog/change-receipts/CHG-018.yaml
+  command: npm run change:reverse:preview -- ../changelog/change-receipts/CHG-018.yaml --change-id CHG-ROLLBACK-XXX --decision DEC-ROLLBACK-XXX
+  rollback_of: CHG-018
