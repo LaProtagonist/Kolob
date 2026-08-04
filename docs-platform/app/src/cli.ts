@@ -15,6 +15,7 @@ import { authorizeInteractively, authorizeProjectFolderInteractively } from "./g
 import { applyCapexRegisterSheet, importCapexOverrides, previewCapexRegisterSheet } from "./google/capex-register-publisher.js";
 import { applyPublication, buildPublicationPreview } from "./google/publisher.js";
 import { cleanupTests, createTests, doctor, inspectFolder, readTests, updateTests } from "./google/workspace.js";
+import { applyInvestorStartModel, checkInvestorStartModel, previewInvestorStartModel, previewInvestorStartReverse } from "./investor/start-model.js";
 
 function flag(args: string[], name: string) { const index = args.indexOf(name); return index >= 0 ? args[index + 1] ?? "" : ""; }
 function applyOptions(args: string[]) { return { apply: args.includes("--apply"), decisionId: flag(args, "--decision") }; }
@@ -118,6 +119,14 @@ try {
     writeWebSnapshot();
   } else if (command === "capex:web:check") {
     checkWebSnapshot();
+  } else if (command === "investor:start:preview") {
+    previewInvestorStartModel();
+  } else if (command === "investor:start:apply") {
+    applyInvestorStartModel(applyOptions(args));
+  } else if (command === "investor:start:validate") {
+    checkInvestorStartModel();
+  } else if (command === "investor:start:reverse:preview") {
+    previewInvestorStartReverse(args[0] ? path.resolve(args[0]) : undefined, flag(args, "--change-id"), flag(args, "--decision"));
   } else if (command === "capex:formats:list") {
     listFormats();
   } else if (command === "capex:modules:list") {
@@ -144,7 +153,7 @@ try {
   else if (command === "google:test:read") await readTests();
   else if (command === "google:test:update") await updateTests(args);
   else if (command === "google:test:cleanup") await cleanupTests();
-  else throw new Error("commands: registry:*|change:*|timeline:*|capex:register:*|capex:modular:*|capex:price:*|capex:configurator:*|capex:pilot:*|capex:web:*|capex:configuration:*|capex:formats:list|capex:modules:list|capex:sheet:*|google:*|documents:list|decisions:list");
+  else throw new Error("commands: registry:*|change:*|timeline:*|capex:*|investor:start:*|google:*|documents:list|decisions:list");
 } catch (error) {
   console.error(`ERROR: ${(error as Error).message}`);
   process.exitCode = 1;

@@ -72,12 +72,17 @@ function isInternalCapexArtifact(file) {
   const filePath = relative(file);
   return filePath === "src/content/capex-configurator-data.json"
     || filePath.startsWith("src/components/CapexConfigurator.")
+    || filePath.startsWith("src/components/LaunchBudget.")
+    || filePath === "src/lib/capex-runtime.ts"
+    || filePath === "src/lib/launch-budget.ts"
     || filePath.startsWith("dist/capex-configurator/")
-    || /^dist\/assets\/CapexConfigurator-[^/]+\.(?:js|css)$/.test(filePath);
+    || filePath.startsWith("dist/launch-budget/")
+    || /^dist\/assets\/(?:CapexConfigurator|LaunchBudget|capex-runtime)-[^/]+\.(?:js|css)$/.test(filePath);
 }
 
 // The marketing copy audit intentionally covers public routes only. The hidden,
-// noindex CAPEX research tool has its own canonical-data and interface tests.
+// noindex CAPEX and launch-budget research tools have their own canonical-data
+// and interface tests.
 const files = publicRoots.flatMap(walk).filter((file) => !isInternalCapexArtifact(file));
 const corpus = files.map((file) => ({ file, text: fs.readFileSync(file, "utf8") }));
 const combined = corpus.map((item) => item.text).join("\n");

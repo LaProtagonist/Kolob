@@ -143,3 +143,105 @@ assumptions:
       - SRC-PILOT-CAPEX-AND-OPERATING-BRIEF
     decision_id: DEC-011
     updated_at: 2026-08-03
+  - id: ASM-INVESTOR-START-SEATING
+    title: Рабочая плотность посадки
+    value:
+      efficient_m2_per_seat: 1.4
+      balanced_m2_per_seat: 1.6
+      comfortable_m2_per_seat: 1.8
+      default_profile: balanced
+    unit: m2/seat
+    status: research
+    rationale: Рабочие значения прямо заданы владельцем проекта для предварительного расчёта; финальная вместимость зависит от планировки, проходов, эвакуации и доступности.
+    scenario: INVESTOR_START_V0_1
+    applies_to:
+      - DOC-INVESTOR-START-MODEL
+    source_ids:
+      - SRC-INVESTOR-START-MODEL-BRIEF
+    decision_id: DEC-012
+    updated_at: 2026-08-04
+  - id: ASM-INVESTOR-START-FURNITURE
+    title: Рабочие ставки мебели на посадочное место
+    value:
+      functional_rub_per_seat: 4500
+      balanced_rub_per_seat: 8500
+      comfort_rub_per_seat: 12000
+      default_profile: balanced
+    unit: RUB/seat
+    status: research
+    rationale: Research-ориентиры владельца проекта; не являются коммерческими предложениями и не суммируются повторно с CAPEX-05.
+    scenario: INVESTOR_START_V0_1
+    applies_to:
+      - DOC-INVESTOR-START-MODEL
+    source_ids:
+      - SRC-INVESTOR-START-MODEL-BRIEF
+    decision_id: DEC-012
+    updated_at: 2026-08-04
+  - id: ASM-INVESTOR-START-RENT-ENTRY
+    title: Рабочие параметры входа в аренду
+    value:
+      prepayment_month_options:
+        - 1
+        - 3
+        - 12
+      default_prepayment_months: 1
+      security_deposit_month_options:
+        - 1
+        - 2
+        - 3
+      default_security_deposit_months: 2
+    unit: months
+    status: research
+    rationale: Параметры служат для сценарного сравнения и не фиксируют условия конкретного договора аренды.
+    scenario: INVESTOR_START_V0_1
+    applies_to:
+      - DOC-INVESTOR-START-MODEL
+    source_ids:
+      - SRC-INVESTOR-START-MODEL-BRIEF
+    decision_id: DEC-012
+    updated_at: 2026-08-04
+  - id: ASM-INVESTOR-START-OPERATING-RESERVE
+    title: Рабочая длительность операционного запаса
+    value:
+      month_options:
+        - 3
+        - 6
+        - 9
+      default_months: 6
+    unit: months
+    status: research
+    rationale: Временный сценарный параметр до появления полной OPEX-модели; не является утверждённой потребностью в оборотном капитале.
+    scenario: INVESTOR_START_V0_1
+    applies_to:
+      - DOC-INVESTOR-START-MODEL
+    source_ids:
+      - SRC-INVESTOR-START-MODEL-BRIEF
+    decision_id: DEC-012
+    updated_at: 2026-08-04
+  - id: ASM-INVESTOR-START-CONTINGENCY
+    title: Рабочий резерв непредвиденных расходов
+    value:
+      percent_options:
+        - 5
+        - 10
+        - 15
+      default_percent: 10
+      applies_to:
+        - evaluated_equipment
+        - furniture
+        - known_preparation_and_installation
+      excludes:
+        - property_purchase
+        - rent_prepayment
+        - security_deposit
+        - operating_reserve
+    unit: percent
+    status: research
+    rationale: Исследовательский резерв применяется только к известным статьям оборудования, мебели и подготовки объекта; он не является утверждённым бюджетом.
+    scenario: INVESTOR_START_V0_1
+    applies_to:
+      - DOC-INVESTOR-START-MODEL
+    source_ids:
+      - SRC-INVESTOR-START-MODEL-BRIEF
+    decision_id: DEC-012
+    updated_at: 2026-08-04

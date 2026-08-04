@@ -22,11 +22,12 @@
       "docs-platform/working/capex-configurations.yaml": "3810fa84efa969d8d95e2f0b0b49ede044b854d9be21ac92f5787d9ff8369f3c",
       "docs-platform/working/capex-configuration-overrides.yaml": "de97265a2e2a0bdb5ae67fcf74ffd368f1fa7f4243c4d1b78a6ecad8e12b1df4",
       "docs-platform/working/pilot-capex-assumptions.yaml": "25e11d4db20050b3a95cab40797ef0a29e56fad93c73d33d4a39415a8071d4ac",
-      "docs-platform/registry/documents.yaml": "b1d93ef900d716a3c69f0f3e8bd55d630f25e69d9b4cb122b4a36cf50b27bd97",
-      "docs-platform/registry/decisions.yaml": "880e1f1a5e656cf6cb4049d3e602684c44dd9606f01236fae7946daf1008b775",
-      "docs-platform/changelog/events.ndjson": "9219b2a132de605a1666cb47e4e2f30fbdbb9cb3282cb8217f758c91f3e214bf"
+      "docs-platform/working/investor-start-model.yaml": "3d1cc27dbb4711852a6b34e524a637cbe65b05ae61da48c8ece5f0c7a08b5fe7",
+      "docs-platform/registry/documents.yaml": "d961d1a2cf2656af67b76ec97e83dbb8887fced0dccd48b36368d251924b4cc8",
+      "docs-platform/registry/decisions.yaml": "aa7fd00ccd56a412bb4697ce94ed8424aec60f3623e592e16c58f56c5855ae14",
+      "docs-platform/changelog/events.ndjson": "19e2bcc9b4fec76fe74a453cbf75c6bd1bd1508229c69d3f4519ed6875f238ea"
     },
-    "sourceBundleSha256": "59cbd70c0babeeca33994c22d1e24c2b75f00854e700b24fc53c9be170d75e38",
+    "sourceBundleSha256": "5a14e56ba05bd00ae4bbec10d3ffa6e5c82381c4701b1fb62ca0ce0117f6a19f",
     "counts": {
       "equipmentRecords": 160,
       "independentProcurementRecords": 51,
@@ -2389,6 +2390,323 @@
       "Ремонт считать по обмерной ведомости и дефектам, мебель — по посадочным местам и единицам, навигацию — по фактическим точкам размещения.",
       "Получить минимум два сопоставимых коммерческих предложения по каждому крупному разделу и только затем формировать полный CAPEX запуска."
     ]
+  },
+  "investorStartModel": {
+    "schema_version": 1,
+    "document": {
+      "project": "Колобочная",
+      "document_id": "DOC-INVESTOR-START-MODEL",
+      "title": "Investor Start Model",
+      "russian_title": "Модель стартовой потребности в инвестициях",
+      "version": "0.1",
+      "status": "research",
+      "document_type": "Working investment requirement model",
+      "decision_id": "DEC-012",
+      "iteration_id": "ITR-INVESTOR-START-MODEL-2026-08-04-01",
+      "proposal_id": "PROP-INVESTOR-START-MODEL-2026-08-04-01",
+      "updated_at": "2026-08-04",
+      "disclaimer": "Документ не является утверждённой финансовой моделью или окончательным инвестиционным предложением."
+    },
+    "basis": {
+      "documents": [
+        {
+          "document_id": "DOC-FOUNDATION",
+          "title": "Foundation",
+          "version": "1.0"
+        },
+        {
+          "document_id": "DOC-BUSINESS-MODEL-ARCHITECTURE",
+          "title": "Business Model Architecture",
+          "version": "1.0"
+        },
+        {
+          "document_id": "DOC-CAPEX-EQUIPMENT-REGISTER",
+          "title": "CAPEX Equipment Register",
+          "version": "0.1"
+        },
+        {
+          "document_id": "DOC-CAPEX-PRICE-RESEARCH",
+          "title": "CAPEX Price Research",
+          "version": "0.3"
+        }
+      ],
+      "equipment_pipeline": [
+        "CAPEX Equipment Register",
+        "CAPEX Price Research",
+        "CAPEX Modules",
+        "CAPEX Point Format",
+        "CAPEX Configuration",
+        "CAPEX Configuration Overrides",
+        "Deterministic web snapshot"
+      ]
+    },
+    "point_configuration": {
+      "format_id": "FMT-INTEGRATED",
+      "format_name": "Совмещённый объект",
+      "description": "Заготовочное производство, торговая точка и собственный посадочный зал.",
+      "required_modules": [
+        "MOD-PREP",
+        "MOD-RETAIL-HOT",
+        "MOD-POS",
+        "MOD-KDS",
+        "MOD-TAKEAWAY",
+        "MOD-GUEST",
+        "MOD-STORAGE",
+        "MOD-WASH",
+        "MOD-ENGINEERING"
+      ],
+      "optional_modules": [
+        {
+          "module_id": "MOD-BAR",
+          "label": "Бар и напитки",
+          "default_enabled": true
+        },
+        {
+          "module_id": "MOD-GROW",
+          "label": "Выращивание зелени и микрозелени",
+          "default_enabled": true
+        }
+      ],
+      "equipment_exclusions": [
+        {
+          "item_id_prefix": "CAPEX-05-",
+          "reason": "Мебель и оснащение гостевой зоны рассчитываются по отдельной research-ставке на посадочное место и не должны учитываться второй раз через Equipment Register."
+        }
+      ],
+      "incomplete_module_rule": "Обязательный модуль со статусом not_started или без оценки показывается как «Не рассчитано» и не считается равным нулю."
+    },
+    "premises": {
+      "default_scenario": "purchase",
+      "scenarios": {
+        "purchase": {
+          "label": "Покупка",
+          "required_fields": [
+            "purchase_price_rub"
+          ],
+          "entry_formula": "purchase_price_rub",
+          "created_asset_formula": "purchase_price_rub + evaluated_equipment_rub + furniture_rub"
+        },
+        "rent": {
+          "label": "Аренда",
+          "required_fields": [
+            "monthly_rent_rub",
+            "prepayment_months",
+            "security_deposit_months"
+          ],
+          "prepayment_month_options": [
+            1,
+            3,
+            12
+          ],
+          "default_prepayment_months": 1,
+          "security_deposit_month_options": [
+            1,
+            2,
+            3
+          ],
+          "default_security_deposit_months": 2,
+          "entry_formula": "monthly_rent_rub * prepayment_months + monthly_rent_rub * security_deposit_months",
+          "tied_funds_formula": "monthly_rent_rub * security_deposit_months",
+          "created_asset_formula": "evaluated_equipment_rub + furniture_rub"
+        }
+      }
+    },
+    "area": {
+      "fields": [
+        "total_area_m2",
+        "kitchen_and_production_area_m2",
+        "guest_area_m2"
+      ],
+      "other_area_formula": "total_area_m2 - kitchen_and_production_area_m2 - guest_area_m2",
+      "other_area_includes": [
+        "заказ и выдача",
+        "склады",
+        "санузлы",
+        "коридоры",
+        "помещения персонала",
+        "технические зоны"
+      ],
+      "invalid_rule": "kitchen_and_production_area_m2 + guest_area_m2 > total_area_m2",
+      "invalid_result": "Итоговый расчёт не выполняется; отрицательная прочая площадь не используется."
+    },
+    "seating": {
+      "default_profile": "balanced",
+      "profiles": [
+        {
+          "id": "efficient",
+          "label": "Эффективная посадка",
+          "square_metres_per_seat": 1.4
+        },
+        {
+          "id": "balanced",
+          "label": "Сбалансированная посадка",
+          "square_metres_per_seat": 1.6
+        },
+        {
+          "id": "comfortable",
+          "label": "Комфортная посадка",
+          "square_metres_per_seat": 1.8
+        }
+      ],
+      "seat_count_formula": "floor(guest_area_m2 / square_metres_per_seat)",
+      "caveat": "Финальная вместимость определяется после разработки планировки, проверки проходов, эвакуационных требований и доступности."
+    },
+    "furniture": {
+      "status": "research",
+      "marker": "Рабочий ориентир",
+      "default_profile": "balanced",
+      "profiles": [
+        {
+          "id": "functional",
+          "label": "Функциональная комплектация",
+          "rub_per_seat": 4500
+        },
+        {
+          "id": "balanced",
+          "label": "Сбалансированная комплектация",
+          "rub_per_seat": 8500
+        },
+        {
+          "id": "comfort",
+          "label": "Повышенный комфорт",
+          "rub_per_seat": 12000
+        }
+      ],
+      "formula": "preliminary_seat_count * rub_per_seat",
+      "double_count_rule": "Позиции CAPEX-05 не увеличивают сумму оборудования, пока мебель рассчитывается по ставке на посадочное место."
+    },
+    "equipment": {
+      "status": "research",
+      "default_scenario": "BASE",
+      "scenarios": [
+        {
+          "id": "MINIMUM",
+          "snapshot_key": "minimum",
+          "label": "Минимальная комплектация"
+        },
+        {
+          "id": "BASE",
+          "snapshot_key": "base",
+          "label": "Базовая комплектация"
+        },
+        {
+          "id": "SCALE_READY",
+          "snapshot_key": "scale_ready",
+          "label": "С запасом для роста"
+        }
+      ],
+      "source_rule": "Стоимость рассчитывается только из детерминированного snapshot канонической CAPEX-архитектуры; суммы не хардкодятся в интерфейсе.",
+      "independent_procurement_rule": "included_in_parent, component, engineering_connection и open_question не суммируются как самостоятельные покупки.",
+      "partial_total_rule": "При наличии позиций без цены стоимость показывается как «от X ₽», а отсутствующие цены не считаются нулём.",
+      "combi_oven_rule": {
+        "item_id": "CAPEX-01-009",
+        "module_id": "MOD-PREP",
+        "quantity_rule_type": "fixed",
+        "quantity": 1,
+        "aggregation_rule": "once",
+        "without_module_quantity": 0
+      }
+    },
+    "preparation": {
+      "field": "preparation_and_installation_rub",
+      "label": "Подготовка помещения, инженерные работы и монтаж, ₽",
+      "required": false,
+      "unknown_label": "Не рассчитано — требуется обследование помещения",
+      "hint": "Общая предварительная оценка ремонта, инженерной адаптации, вентиляции, подключения оборудования и монтажных работ."
+    },
+    "operating_reserve": {
+      "monthly_opex_field": "monthly_opex_excluding_rent_rub",
+      "month_options": [
+        3,
+        6,
+        9
+      ],
+      "default_months": 6,
+      "purchase_formula": "monthly_opex_excluding_rent_rub * reserve_months",
+      "rent_formula": "monthly_opex_excluding_rent_rub * reserve_months + monthly_rent_rub * max(reserve_months - prepayment_months, 0)",
+      "security_deposit_excluded": true,
+      "unknown_rule": "Если ежемесячные операционные расходы не введены, операционный запас не рассчитывается и итог остаётся частичным."
+    },
+    "contingency": {
+      "percent_options": [
+        5,
+        10,
+        15
+      ],
+      "default_percent": 10,
+      "formula": "(evaluated_equipment_rub + furniture_rub + known_preparation_and_installation_rub) * contingency_percent",
+      "included_categories": [
+        "evaluated_equipment_rub",
+        "furniture_rub",
+        "preparation_and_installation_rub"
+      ],
+      "excluded_categories": [
+        "property_purchase_rub",
+        "rent_prepayment_rub",
+        "security_deposit_rub",
+        "operating_reserve_rub"
+      ],
+      "partial_basis_rule": "Если подготовка помещения не рассчитана, резерв считается только по известным статьям и отмечается как частичный."
+    },
+    "totals": {
+      "financing_requirement_formula": "premises_entry_rub + evaluated_equipment_rub + furniture_rub + preparation_and_installation_rub + operating_reserve_rub + contingency_rub",
+      "partial_rule": "Любая обязательная нерассчитанная статья или неполное ценовое покрытие оборудования переводит итог в формат «от X ₽» и добавляется в перечень отсутствующих статей.",
+      "created_assets": {
+        "purchase_formula": "property_purchase_rub + evaluated_equipment_rub + furniture_rub",
+        "rent_formula": "evaluated_equipment_rub + furniture_rub",
+        "preparation_excluded_reason": "Бухгалтерская классификация подготовки помещения ещё не определена."
+      },
+      "tied_or_conditionally_refundable_funds": {
+        "purchase_formula": null,
+        "rent_formula": "security_deposit_rub"
+      }
+    },
+    "missing_categories": [
+      "инженерные работы, если сумма не введена",
+      "подготовка и ремонт помещения",
+      "проектирование и согласования",
+      "доставка оборудования",
+      "первоначальный запас сырья и упаковки",
+      "расходы запуска",
+      "позиции оборудования без цены",
+      "коммерческие предложения по крупным позициям",
+      "полный расчёт OPEX"
+    ],
+    "documents_block": {
+      "registry_document_ids": [
+        "DOC-FOUNDATION",
+        "DOC-BUSINESS-MODEL-ARCHITECTURE",
+        "DOC-CAPEX-EQUIPMENT-SPECIFICATION",
+        "DOC-CAPEX-EQUIPMENT-REGISTER",
+        "DOC-CAPEX-PRICE-RESEARCH"
+      ],
+      "links_source": "docs-platform/registry/documents.yaml and existing safe Google sync manifest"
+    },
+    "form": {
+      "local_storage_key": "kolobochnaya.launch-budget.v0.1",
+      "server_persistence": false,
+      "analytics_submission": false,
+      "reset_requires_confirmation": true
+    },
+    "decision_boundaries": {
+      "approved": [
+        "структура стартового калькулятора",
+        "формулы расчёта",
+        "рабочие редактируемые research-допущения",
+        "публикация скрытой рабочей страницы /launch-budget"
+      ],
+      "not_approved": [
+        "окончательный бюджет",
+        "конкретное помещение",
+        "сумма инвестиций",
+        "финансовый прогноз",
+        "условия сделки с инвестором",
+        "окупаемость",
+        "стоимость компании"
+      ]
+    },
+    "warning": "Расчёт показывает порядок стартовой потребности в финансировании.\nИтоговый бюджет уточняется после выбора помещения, обследования\nинженерных систем, разработки планировки и получения коммерческих\nпредложений.",
+    "source_sha256": "3d1cc27dbb4711852a6b34e524a637cbe65b05ae61da48c8ece5f0c7a08b5fe7"
   },
   "overrides": [],
   "items": [
@@ -11863,105 +12181,90 @@
   "documents": [
     {
       "id": "DOC-FOUNDATION",
-      "title": "Foundation v1.0",
+      "title": "Foundation",
+      "version": "1.0",
+      "updatedAt": "2026-08-01",
       "status": "approved",
       "statusLabel": "Утверждён",
       "exists": true,
       "localPath": "docs-platform/00-foundation.md",
-      "googleUrl": "https://docs.google.com/document/d/1CY6MWcNk7Kc-QpE1iL6zjWXoBsPZdI2TTt05WEkad8I/preview"
+      "googleUrl": "https://docs.google.com/document/d/1CY6MWcNk7Kc-QpE1iL6zjWXoBsPZdI2TTt05WEkad8I/preview",
+      "googleSourceDocumentId": "DOC-FOUNDATION"
     },
     {
       "id": "DOC-BUSINESS-MODEL-ARCHITECTURE",
-      "title": "Business Model Architecture v1.0",
+      "title": "Business Model Architecture",
+      "version": "1.0",
+      "updatedAt": "2026-08-01",
       "status": "approved",
       "statusLabel": "Утверждён",
       "exists": true,
       "localPath": "docs-platform/01-business-model-architecture.md",
-      "googleUrl": "https://docs.google.com/document/d/1RLZOlNJEj_WRH4rg6e-TIG76H-2sdHGa9ptVAMVdyMk/preview"
+      "googleUrl": "https://docs.google.com/document/d/1RLZOlNJEj_WRH4rg6e-TIG76H-2sdHGa9ptVAMVdyMk/preview",
+      "googleSourceDocumentId": "DOC-BUSINESS-MODEL-ARCHITECTURE"
     },
     {
       "id": "DOC-CAPEX-EQUIPMENT-SPECIFICATION",
-      "title": "CAPEX Specification v0.1",
+      "title": "CAPEX Specification",
+      "version": "0.1",
+      "updatedAt": "2026-08-01",
       "status": "research",
       "statusLabel": "Исследование",
       "exists": true,
       "localPath": "docs-platform/working/capex-equipment-specification.md",
-      "googleUrl": "https://docs.google.com/document/d/14qdJnfKHzFkHie6zLK2fTmtwlWnnvEZB2Gy822GfWNs/preview"
+      "googleUrl": "https://docs.google.com/document/d/14qdJnfKHzFkHie6zLK2fTmtwlWnnvEZB2Gy822GfWNs/preview",
+      "googleSourceDocumentId": "DOC-CAPEX-EQUIPMENT-SPECIFICATION"
     },
     {
       "id": "DOC-CAPEX-EQUIPMENT-REGISTER",
-      "title": "CAPEX Equipment Register v0.1",
+      "title": "CAPEX Equipment Register",
+      "version": "0.1",
+      "updatedAt": "2026-08-03",
       "status": "research",
       "statusLabel": "Исследование",
       "exists": true,
       "localPath": "docs-platform/working/capex-equipment-register.yaml",
-      "googleUrl": "https://docs.google.com/spreadsheets/d/1J7sHM8P2IoMfHVLEHfY-UJLIZ-HBid89G6n6BS4BSJA/preview"
+      "googleUrl": "https://docs.google.com/spreadsheets/d/1J7sHM8P2IoMfHVLEHfY-UJLIZ-HBid89G6n6BS4BSJA/preview",
+      "googleSourceDocumentId": "DOC-CAPEX-EQUIPMENT-REGISTER"
     },
     {
       "id": "DOC-CAPEX-PRICE-RESEARCH",
-      "title": "CAPEX Price Research v0.3",
+      "title": "CAPEX Price Research",
+      "version": "0.3",
+      "updatedAt": "2026-08-03",
       "status": "research",
       "statusLabel": "Исследование",
       "exists": true,
       "localPath": "docs-platform/working/capex-price-research.yaml",
-      "googleUrl": null
+      "googleUrl": "https://docs.google.com/spreadsheets/d/1J7sHM8P2IoMfHVLEHfY-UJLIZ-HBid89G6n6BS4BSJA/preview",
+      "googleSourceDocumentId": "DOC-CAPEX-EQUIPMENT-REGISTER"
     },
     {
       "id": "DOC-FINANCIAL-MODEL",
       "title": "Финансовая модель",
+      "version": null,
+      "updatedAt": null,
       "status": "not_created",
       "statusLabel": "Не создана",
       "exists": false,
       "localPath": null,
-      "googleUrl": null
+      "googleUrl": null,
+      "googleSourceDocumentId": null
     },
     {
       "id": "DOC-INVESTMENT-MEMO",
       "title": "Инвестиционный меморандум",
+      "version": null,
+      "updatedAt": null,
       "status": "not_created",
       "statusLabel": "Не создан",
       "exists": false,
       "localPath": null,
-      "googleUrl": null
+      "googleUrl": null,
+      "googleSourceDocumentId": null
     }
   ],
   "timeline": [
-    {
-      "id": "EVT-ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01-001",
-      "timestamp": "2026-08-03T00:31:30.062Z",
-      "status": "proposed",
-      "action": "proposal_recorded",
-      "decisionId": "DEC-010",
-      "changeSetId": "CHG-018",
-      "summary": "Proposal зафиксировал аудит внутреннего конфигуратора, одну единицу CAPEX-01-009 и границы без новых цен, финального CAPEX или публичной инвесторской версии."
-    },
-    {
-      "id": "EVT-ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01-002",
-      "timestamp": "2026-08-03T00:31:30.063Z",
-      "status": "approved",
-      "action": "decision_approved",
-      "decisionId": "DEC-010",
-      "changeSetId": "CHG-018",
-      "summary": "DEC-010 утвердил exact payload SHA-256: один пароконвектомат во всех research-сценариях, пересчёт и детерминированный canonical snapshot."
-    },
-    {
-      "id": "EVT-ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01-003",
-      "timestamp": "2026-08-03T00:31:30.064Z",
-      "status": "applied",
-      "action": "canonical_correction_google_sheet_and_web_snapshot_applied",
-      "decisionId": "DEC-010",
-      "changeSetId": "CHG-018",
-      "summary": "CAPEX-01-009 приведён к одной единице в Register, module-item rule и Price Research; существующая Sheet обновлена, UI подключён к generated snapshot."
-    },
-    {
-      "id": "EVT-ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01-004",
-      "timestamp": "2026-08-03T00:31:30.065Z",
-      "status": "verified",
-      "action": "tests_build_google_readback_visual_audit_and_reverse_preview_verified",
-      "decisionId": "DEC-010",
-      "changeSetId": "CHG-018",
-      "summary": "Проверены hashes, 151 records, семь форматов, scenario totals, noindex, Google readback, адаптивный интерфейс, timeline chain и governed reverse preview."
-    },
     {
       "id": "EVT-ITR-PILOT-CAPEX-BASELINE-2026-08-03-01-001",
       "timestamp": "2026-08-04T20:27:56.285Z",
@@ -11997,6 +12300,42 @@
       "decisionId": "DEC-011",
       "changeSetId": "CHG-020",
       "summary": "Проверены 160 записей, 51 ценовая позиция, дедупликация одной посудомоечной системы, расчёты пилота, Google readback, build и governed reverse preview."
+    },
+    {
+      "id": "EVT-ITR-INVESTOR-START-MODEL-2026-08-04-01-001",
+      "timestamp": "2026-08-04T21:05:30.000Z",
+      "status": "proposed",
+      "action": "proposal_recorded",
+      "decisionId": "DEC-012",
+      "changeSetId": "CHG-022",
+      "summary": "Proposal зафиксировал структуру, формулы и research-границы стартового калькулятора без утверждения окончательного бюджета, помещения, суммы инвестиций или условий сделки."
+    },
+    {
+      "id": "EVT-ITR-INVESTOR-START-MODEL-2026-08-04-01-002",
+      "timestamp": "2026-08-04T21:05:39.140Z",
+      "status": "approved",
+      "action": "decision_approved",
+      "decisionId": "DEC-012",
+      "changeSetId": "CHG-022",
+      "summary": "DEC-012 утвердил exact payload SHA-256, рабочие допущения, формулы и публикацию скрытой research-страницы без утверждения финансового прогноза."
+    },
+    {
+      "id": "EVT-ITR-INVESTOR-START-MODEL-2026-08-04-01-003",
+      "timestamp": "2026-08-04T21:06:10.549Z",
+      "status": "applied",
+      "action": "investor_start_model_and_launch_budget_applied",
+      "decisionId": "DEC-012",
+      "changeSetId": "CHG-022",
+      "summary": "Каноническая research-модель применена byte-identical, snapshot расширен детерминированно, а скрытая страница подключена без изменения CAPEX и Google Sheet."
+    },
+    {
+      "id": "EVT-ITR-INVESTOR-START-MODEL-2026-08-04-01-004",
+      "timestamp": "2026-08-04T21:40:19.989Z",
+      "status": "verified",
+      "action": "tests_build_visual_audit_and_reverse_preview_verified",
+      "decisionId": "DEC-012",
+      "changeSetId": "CHG-022",
+      "summary": "Проверены exact payload, одна единица пароконвектомата, формулы покупки и аренды, отсутствие двойного учёта, partial totals, noindex, адаптивность, тесты и governed reverse preview."
     }
   ]
 }

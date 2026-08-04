@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "document",
+    "basis",
+    "point_configuration",
+    "premises",
+    "area",
+    "seating",
+    "furniture",
+    "equipment",
+    "preparation",
+    "operating_reserve",
+    "contingency",
+    "totals",
+    "missing_categories",
+    "documents_block",
+    "form",
+    "decision_boundaries",
+    "warning"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "document": {
+      "type": "object",
+      "required": ["project", "document_id", "title", "russian_title", "version", "status", "document_type", "decision_id", "iteration_id", "proposal_id", "updated_at", "disclaimer"],
+      "properties": {
+        "project": { "const": "Колобочная" },
+        "document_id": { "const": "DOC-INVESTOR-START-MODEL" },
+        "title": { "const": "Investor Start Model" },
+        "russian_title": { "const": "Модель стартовой потребности в инвестициях" },
+        "version": { "const": "0.1" },
+        "status": { "const": "research" },
+        "document_type": { "const": "Working investment requirement model" },
+        "decision_id": { "type": "string" },
+        "iteration_id": { "type": "string" },
+        "proposal_id": { "type": "string" },
+        "updated_at": { "type": "string" },
+        "disclaimer": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "basis": { "type": "object" },
+    "point_configuration": {
+      "type": "object",
+      "required": ["format_id", "required_modules", "optional_modules", "equipment_exclusions", "incomplete_module_rule"],
+      "properties": {
+        "format_id": { "const": "FMT-INTEGRATED" },
+        "format_name": { "type": "string" },
+        "description": { "type": "string" },
+        "required_modules": { "type": "array", "minItems": 9, "uniqueItems": true, "items": { "type": "string" } },
+        "optional_modules": { "type": "array", "minItems": 2, "items": { "type": "object" } },
+        "equipment_exclusions": { "type": "array", "minItems": 1, "items": { "type": "object" } },
+        "incomplete_module_rule": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "premises": { "type": "object" },
+    "area": { "type": "object" },
+    "seating": { "type": "object" },
+    "furniture": { "type": "object" },
+    "equipment": { "type": "object" },
+    "preparation": { "type": "object" },
+    "operating_reserve": { "type": "object" },
+    "contingency": { "type": "object" },
+    "totals": { "type": "object" },
+    "missing_categories": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string" } },
+    "documents_block": { "type": "object" },
+    "form": { "type": "object" },
+    "decision_boundaries": { "type": "object" },
+    "warning": { "type": "string" }
+  },
+  "additionalProperties": false
+}

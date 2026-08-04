@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite --host 127.0.0.1",
     "build": "npm run build:spa && npm run prerender",
-    "build:spa": "npm run capex:web:check && tsc -b && vite build",
+    "build:spa": "npm run investor:start:validate && npm run capex:web:check && tsc -b && vite build",
     "prerender": "node scripts/prerender-dist.cjs",
     "serve:dist": "node scripts/serve-dist.cjs",
     "preview": "node scripts/serve-dist.cjs",
@@ -16,9 +16,10 @@
     "audit:seo": "node scripts/audit-seo.mjs",
     "audit:assets": "node scripts/audit-assets.mjs",
     "audit:routes": "node scripts/audit-route-html.mjs",
-    "test": "npm run capex:web:check && node scripts/test-site.cjs",
+    "test": "npm run investor:start:validate && npm run capex:web:check && node scripts/test-site.cjs",
     "capex:web:sync": "npm --prefix docs-platform/app run capex:web:sync",
     "capex:web:check": "npm --prefix docs-platform/app run capex:web:check",
+    "investor:start:validate": "npm --prefix docs-platform/app run investor:start:validate",
     "contact:server": "node server/contact-server.mjs"
   },
   "dependencies": {

@@ -1,0 +1,23 @@
+schema_version: 1
+iteration_id: ITR-INVESTOR-START-MODEL-2026-08-04-01
+proposal_id: PROP-INVESTOR-START-MODEL-2026-08-04-01
+decision_id: DEC-012
+change_set_id: CHG-022
+status: approved
+approved_by: project owner
+approved_at: 2026-08-04
+actor: project owner
+scope: Зафиксировать research-модель стартовой потребности в инвестициях и опубликовать скрытый калькулятор /launch-budget, использующий существующую CAPEX-архитектуру без утверждения окончательного бюджета, помещения, суммы инвестиций или условий сделки.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-START-MODEL-2026-08-04-01-approved.yaml
+approved_payload_sha256: 3d1cc27dbb4711852a6b34e524a637cbe65b05ae61da48c8ece5f0c7a08b5fe7
+apply_contract:
+  payload_identity: byte_identical_yaml
+  canonical_targets:
+    - docs-platform/working/investor-start-model.yaml
+  derived_targets:
+    - src/content/capex-configurator-data.json
+    - /launch-budget
+rollback_contract:
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true

@@ -1,0 +1,112 @@
+receipt_version: 1
+iteration_id: ITR-INVESTOR-START-MODEL-2026-08-04-01
+proposal_id: PROP-INVESTOR-START-MODEL-2026-08-04-01
+decision_id: DEC-012
+change_set_id: CHG-022
+status: verified
+verified_at: 2026-08-04T21:40:19.989Z
+actor: Codex
+tool: Investor Start Model and launch-budget verification workflow
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-INVESTOR-START-MODEL-2026-08-04-01-approved.yaml
+  sha256: 3d1cc27dbb4711852a6b34e524a637cbe65b05ae61da48c8ece5f0c7a08b5fe7
+canonical_model:
+  path: docs-platform/working/investor-start-model.yaml
+  sha256: 3d1cc27dbb4711852a6b34e524a637cbe65b05ae61da48c8ece5f0c7a08b5fe7
+  approved_payload_identity: byte_identical
+capex:
+  source: Equipment Register + Price Research + Modules + Point Format + Configuration + Overrides
+  generated_snapshot: src/content/capex-configurator-data.json
+  equipment_exclusion: CAPEX-05
+  furniture_double_count: false
+  included_in_parent_double_count: false
+  oven:
+    item_id: CAPEX-01-009
+    quantity: 1
+    aggregation_rule: once
+    formats_without_mod_prep_quantity: 0
+    canonical_change_required: false
+  scenarios:
+    minimum:
+      total_rub: 3058399.33
+      priced_records: 41
+      coverage_records: 49
+      unpriced_records: 8
+      quote_required_records: 25
+    base:
+      total_rub: 4150659.33
+      priced_records: 42
+      coverage_records: 50
+      unpriced_records: 8
+      quote_required_records: 26
+    scale_ready:
+      total_rub: 5375662.79
+      priced_records: 43
+      coverage_records: 51
+      unpriced_records: 8
+      quote_required_records: 27
+  incomplete_required_modules:
+    - MOD-STORAGE
+    - MOD-ENGINEERING
+  google_sheet_changed: false
+  google_readback_required: false
+  google_note: Existing canonical CAPEX data was already correct; no Google write was performed.
+calculation:
+  purchase_property_counted_once: true
+  rent_prepayment_counted_once: true
+  rent_deposit_separated_as_tied_funds: true
+  prepaid_rent_excluded_from_remaining_runway: true
+  furniture_rate_excludes_capex_05: true
+  contingency_scope: equipment + furniture + known premises preparation
+  unknown_values_treated_as_zero: false
+  partial_total_uses_lower_bound_label: true
+  local_storage_server_write: false
+web:
+  route: /launch-budget
+  title: Расчёт стартового раунда инвестиций
+  robots: noindex, nofollow
+  public_navigation_link_absent: true
+  public_footer_link_absent: true
+  sitemap_entry_absent: true
+  capex_configurator_link_present: true
+  responsive_viewports:
+    desktop_1440x900: passed
+    tablet_768x1024: passed
+    mobile_390x844: passed
+  horizontal_overflow: false
+  keyboard_focus: passed
+  console_errors: 0
+  page_errors: 0
+  screenshots:
+    - path: analysis/screenshots/launch-budget-desktop-empty.png
+      sha256: 1dd08bc2526849d0444f08ecedd5f4e9c27ca9f7178e1fe501e90684a3a25cdb
+    - path: analysis/screenshots/launch-budget-desktop-purchase.png
+      sha256: ccba33aa15204b09385619726bd7744e0a9f63840136890095fa0db62f817c64
+    - path: analysis/screenshots/launch-budget-desktop-rent.png
+      sha256: bbd9e42141856b60fc72c08a72ff5c11dbd3f44f20fec7aa968a4c3fa51eb6b2
+    - path: analysis/screenshots/launch-budget-mobile.png
+      sha256: 74d3e231e780326057d9552f66dd786e9f51bf88dfc204496d8f04d0bd72a2df
+validation:
+  root_tests: passed
+  root_typescript: passed
+  root_build: passed with project-scoped Node 22.15.1
+  docs_platform_tests: 117 passed, 0 failed
+  docs_platform_typescript: passed
+  registry: passed
+  investor_start_model_schema: passed
+  capex_snapshot_hash_check: passed
+  route_and_seo_tests: passed
+  timeline: passed
+  git_diff_check: passed
+rollback:
+  source_receipt: docs-platform/changelog/iteration-receipts/ITR-INVESTOR-START-MODEL-2026-08-04-01.yaml
+  reverse_change_set_status: previewed
+  current_sha256: 3d1cc27dbb4711852a6b34e524a637cbe65b05ae61da48c8ece5f0c7a08b5fe7
+  expected_current_sha256: 3d1cc27dbb4711852a6b34e524a637cbe65b05ae61da48c8ece5f0c7a08b5fe7
+  expected_restored_sha256: null
+  restores_original_hash: true
+  apply_allowed_without_new_decision: false
+  preserves_history: true
+  git_reset_forbidden: true
+git_commit_hash: null
+git_commit_note: Hash текущего commit невозможно включить в сам commit; он сообщается в итоговом отчёте.

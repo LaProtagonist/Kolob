@@ -97,7 +97,9 @@ test("the web snapshot is deterministic, current and derived from canonical sour
 
 test("the React page contains no manually duplicated register or hardcoded coverage totals", () => {
   const component = fs.readFileSync(path.join(project, "src", "components", "CapexConfigurator.tsx"), "utf8");
-  assert.match(component, /capex-configurator-data\.json/);
+  const runtime = fs.readFileSync(path.join(project, "src", "lib", "capex-runtime.ts"), "utf8");
+  assert.match(component, /capex-runtime/);
+  assert.match(runtime, /capex-configurator-data\.json/);
   assert.doesNotMatch(component, /(?:pricedRecords|equipmentRecords|foodPriceScopeRecords)\s*[:=]\s*(?:43|51|160)/);
   assert.doesNotMatch(component, /CAPEX-01-009[^\n]{0,120}(?:300372|436564|596030)/);
   assert.doesNotMatch(component, /const\s+(?:equipment|items|formats|modules)\s*=\s*\[/i);

@@ -1,0 +1,39 @@
+proposal_id: PROP-INVESTOR-START-MODEL-2026-08-04-01
+iteration_id: ITR-INVESTOR-START-MODEL-2026-08-04-01
+status: proposed
+created_at: 2026-08-04
+actor: project owner
+source_id: SRC-INVESTOR-START-MODEL-BRIEF
+scope: Зафиксировать research-модель стартовой потребности в инвестициях и опубликовать скрытый калькулятор /launch-budget, использующий существующую CAPEX-архитектуру без утверждения окончательного бюджета, помещения, суммы инвестиций или условий сделки.
+affected_document_ids:
+  - DOC-INVESTOR-START-MODEL
+  - DOC-CAPEX-EQUIPMENT-REGISTER
+  - DOC-CAPEX-PRICE-RESEARCH
+affected_section_or_item_ids:
+  - /launch-budget
+  - FMT-INTEGRATED
+  - CAPEX-01-009
+  - MOD-BAR
+  - MOD-GROW
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-START-MODEL-2026-08-04-01-approved.yaml
+approved_payload_sha256: 3d1cc27dbb4711852a6b34e524a637cbe65b05ae61da48c8ece5f0c7a08b5fe7
+source_path: User instruction, 2026-08-04
+source_sha256: null
+boundaries:
+  approved:
+    - структура стартового калькулятора
+    - формулы расчёта
+    - рабочие research-допущения по посадке, мебели, аренде, запасу и резерву
+    - публикация скрытой страницы /launch-budget
+  not_approved:
+    - окончательный бюджет
+    - конкретное помещение
+    - сумма инвестиций
+    - финансовый прогноз
+    - условия сделки с инвестором
+    - окупаемость и стоимость компании
+apply_contract:
+  payload_identity: byte_identical_yaml
+  hash_algorithm: SHA-256
+  google_target: none; CAPEX Google Sheet is unchanged because canonical CAPEX data already contains one combi oven
+  rollback_mode: governed_reverse_change_set

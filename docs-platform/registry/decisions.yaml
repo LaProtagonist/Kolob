@@ -160,3 +160,18 @@ decisions:
     source_ids:
       - SRC-PILOT-CAPEX-AND-OPERATING-BRIEF
     updated_at: 2026-08-03
+  - id: DEC-012
+    title: Создать research-калькулятор стартовой потребности в инвестициях
+    status: approved
+    decision: Зафиксировать Investor Start Model v0.1 и опубликовать скрытую рабочую страницу /launch-budget. Калькулятор сравнивает покупку и аренду, использует каноническую CAPEX-архитектуру, отдельно оценивает мебель по research-ставке, показывает неполные данные как нижнюю границу и не выдаёт неизвестные статьи за ноль.
+    rationale: Прямое задание владельца проекта от 2026-08-04. Модель предназначена для предварительного обсуждения порядка финансирования первого совмещённого объекта и не является финансовой моделью или окончательным инвестиционным предложением.
+    affected_documents:
+      - DOC-INVESTOR-START-MODEL
+      - DOC-CAPEX-EQUIPMENT-REGISTER
+      - DOC-CAPEX-PRICE-RESEARCH
+    approved_by: project owner
+    approved_at: 2026-08-04
+    supersedes: null
+    source_ids:
+      - SRC-INVESTOR-START-MODEL-BRIEF
+    updated_at: 2026-08-04

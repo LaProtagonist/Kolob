@@ -93,6 +93,15 @@ export const pages: PageMeta[] = [
     description: "Внутренняя рабочая страница для выбора формата точки, модулей и оборудования с исследовательскими ценами.",
     ogImage: "/media/hero-kolobok-1200.webp",
     noindex: true
+  },
+  {
+    id: "launchBudget",
+    path: "/launch-budget",
+    label: "Расчёт стартового раунда инвестиций",
+    title: "Расчёт стартового раунда инвестиций — Колобочная",
+    description: "Рабочий расчёт порядка финансирования первого совмещённого объекта «Колобочной» при покупке или аренде помещения.",
+    ogImage: "/media/hero-kolobok-1200.webp",
+    noindex: true
   }
 ];
 

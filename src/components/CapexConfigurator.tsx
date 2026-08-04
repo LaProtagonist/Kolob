@@ -1,42 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import type { CSSProperties, ReactNode } from "react";
-import rawCapexData from "../content/capex-configurator-data.json";
+import { buildCapexRows as buildRows, capexData, type CapexItem, type CapexModule, type CapexParameters as Parameters, type ComputedCapexRow as ComputedRow, type NumericParameterKey, type ScenarioId } from "../lib/capex-runtime";
 import "./CapexConfigurator.css";
-
-type ScenarioId = "minimum" | "base" | "scale_ready";
-type CapexData = typeof rawCapexData;
-type CapexItem = CapexData["items"][number];
-type CapexModule = CapexData["modules"][number];
-type ModuleLink = CapexData["moduleItems"][number];
-type ScenarioPrice = NonNullable<CapexItem["scenarios"]["base"]>;
-type NumericParameterKey = "outletCount" | "checksPerOutlet" | "shiftCount" | "fillingCount" | "cashierPostCount" | "hotKitchenPostCount" | "kdsPostCount" | "seatCount" | "guestAreaM2" | "serviceStationCount";
-type Parameters = Record<NumericParameterKey, number | null> & {
-  alcoholEnabled: boolean;
-  sharedSeating: boolean;
-  reusableTableware: boolean;
-  centralSupply: boolean;
-  mobileFormat: boolean;
-};
-
-type ComputedRow = {
-  item: CapexItem;
-  links: ModuleLink[];
-  moduleIds: string[];
-  primaryModuleId: string;
-  requirement: string;
-  quantity: number | null;
-  quantityStatus: string;
-  quantityRule: string;
-  price: ScenarioPrice | null;
-  unitPrice: number | null;
-  lineTotal: number | null;
-  independentProcurement: boolean;
-  includedInParent: boolean;
-  quoteRequired: boolean;
-  sourceInclusion: string;
-};
-
-const capexData = rawCapexData as CapexData;
 const scenarioIds = capexData.scenarios.filter(scenario => scenario.availableInSelector).map(scenario => scenario.id as ScenarioId);
 const statusLabels: Record<string, string> = {
   research: "Исследование",
@@ -77,7 +42,6 @@ const statusLabels: Record<string, string> = {
   per_filling: "На начинку",
   per_station: "На станцию",
 };
-const requirementRank: Record<string, number> = { required: 4, conditional: 3, optional: 2, tbd: 1 };
 const rubFormatter = new Intl.NumberFormat("ru-RU", { style: "currency", currency: "RUB", maximumFractionDigits: 2 });
 const numberFormatter = new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 2 });
 const percentFormatter = new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 0 });
@@ -88,71 +52,7 @@ function formatNumber(value: number | null) { return value === null ? "—" : nu
 function label(value: string | null | undefined) { return value ? statusLabels[value] ?? value : "Не указано"; }
 function ruleLabel(value: string) { return value.split(" + ").map(part => label(part)).join(" + "); }
 function checkedDate(value: string | null | undefined) { return value ? dateFormatter.format(new Date(value)) : "не указана"; }
-function scenarioPrice(item: CapexItem, scenario: ScenarioId): ScenarioPrice | null { return item.scenarios[scenario] as ScenarioPrice | null; }
 function classToken(value: string) { return value.toLowerCase().replace(/[^a-z0-9]+/g, "-"); }
-
-function driverForRule(rule: string, parameters: Parameters) {
-  if (rule === "per_seat") return parameters.seatCount;
-  if (rule === "per_guest_area_m2") return parameters.guestAreaM2;
-  if (rule === "per_workstation" || rule === "per_hot_kitchen_post") return parameters.hotKitchenPostCount;
-  if (rule === "per_cashier_post") return parameters.cashierPostCount;
-  if (rule === "per_filling") return parameters.fillingCount;
-  if (rule === "per_station") return parameters.serviceStationCount;
-  return null;
-}
-
-function computedFromLinks(links: ModuleLink[], parameters: Parameters) {
-  const calculated = links.map(link => {
-    if (link.quantityRuleType === "fixed" && link.quantityRuleValue !== null) return { value: link.quantityRuleValue, link };
-    const driver = driverForRule(link.quantityRuleType, parameters);
-    if (driver !== null && link.quantityRuleValue !== null) return { value: driver * link.quantityRuleValue, link };
-    return { value: null, link };
-  });
-  const known = calculated.filter(entry => entry.value !== null) as Array<{ value: number; link: ModuleLink }>;
-  if (!known.length) return { quantity: null, rule: links.map(link => link.quantityRuleType).join(" + ") || "tbd" };
-  if (links.some(link => link.aggregationRule === "manual")) return { quantity: null, rule: "manual" };
-  if (links.some(link => link.aggregationRule === "sum")) return { quantity: known.reduce((sum, entry) => sum + entry.value, 0), rule: known.map(entry => entry.link.quantityRuleType).join(" + ") };
-  if (links.some(link => link.aggregationRule === "max")) return { quantity: Math.max(...known.map(entry => entry.value)), rule: "max" };
-  return { quantity: known[0].value, rule: known[0].link.quantityRuleType };
-}
-
-function buildRows(activeModuleIds: Set<string>, scenario: ScenarioId, parameters: Parameters): ComputedRow[] {
-  const itemById = new Map(capexData.items.map(item => [item.id, item]));
-  const linksByItem = new Map<string, ModuleLink[]>();
-  for (const link of capexData.moduleItems) {
-    if (!activeModuleIds.has(link.moduleId)) continue;
-    linksByItem.set(link.itemId, [...(linksByItem.get(link.itemId) ?? []), link]);
-  }
-  return [...linksByItem.entries()].map(([itemId, links]) => {
-    const item = itemById.get(itemId)!;
-    const price = scenarioPrice(item, scenario);
-    const rules = computedFromLinks(links, parameters);
-    const parameterDriven = links.some(link => link.quantityRuleType.startsWith("per_") && driverForRule(link.quantityRuleType, parameters) !== null && link.quantityRuleValue !== null);
-    const quantity = parameterDriven ? rules.quantity : price?.quantity ?? rules.quantity;
-    const includedInParent = item.inclusionStatus === "included_in_parent" || item.recordType === "component";
-    const independentProcurement = ["standalone", "purchased_separately"].includes(item.inclusionStatus) && !["component", "engineering_connection", "open_question"].includes(item.recordType);
-    const unitPrice = price?.unitPriceRub ?? null;
-    const lineTotal = includedInParent || unitPrice === null || quantity === null || quantity <= 0 ? null : Math.round(unitPrice * quantity * 100) / 100;
-    const requirement = [...links].sort((a, b) => (requirementRank[b.defaultRequirement] ?? 0) - (requirementRank[a.defaultRequirement] ?? 0))[0]?.defaultRequirement ?? item.requirement;
-    return {
-      item,
-      links,
-      moduleIds: [...new Set(links.map(link => link.moduleId))],
-      primaryModuleId: links[0]?.moduleId ?? item.linkedModuleIds[0] ?? item.sourceModuleId,
-      requirement,
-      quantity,
-      quantityStatus: quantity === null ? "Требует расчёта производительности" : quantity === 0 ? "Не входит в сценарий" : "Рассчитано по данным",
-      quantityRule: parameterDriven ? rules.rule : price ? `Сценарий: ${capexData.scenarios.find(entry => entry.id === scenario)?.label ?? scenario}` : rules.rule,
-      price,
-      unitPrice,
-      lineTotal,
-      independentProcurement,
-      includedInParent,
-      quoteRequired: item.quoteStatus === "quote_required" || item.priceResearch?.quoteStatus === "quote_required",
-      sourceInclusion: links.map(link => `${link.moduleId}: ${label(link.defaultRequirement)}`).join("; "),
-    };
-  }).sort((a, b) => a.item.id.localeCompare(b.item.id));
-}
 
 function NumberStepper({ labelText, value, onChange, hint, min = 0 }: { labelText: string; value: number | null; onChange: (value: number | null) => void; hint?: string; min?: number }) {
   return (

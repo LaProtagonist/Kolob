@@ -57,6 +57,10 @@ const CapexConfiguratorPage = lazy(() =>
   import("./components/CapexConfigurator").then((module) => ({ default: module.CapexConfiguratorPage }))
 );
 
+const LaunchBudgetPage = lazy(() =>
+  import("./components/LaunchBudget").then((module) => ({ default: module.LaunchBudgetPage }))
+);
+
 function normalizePath(pathname: string) {
   return pathname === "" ? "/" : pathname.replace(/\/+$/, "") || "/";
 }
@@ -775,6 +779,12 @@ function renderPage(path: string) {
       return (
         <Suspense fallback={<main className="plain-page"><div className="section-inner"><p>Загружается CAPEX-конфигуратор…</p></div></main>}>
           <CapexConfiguratorPage />
+        </Suspense>
+      );
+    case "/launch-budget":
+      return (
+        <Suspense fallback={<main className="plain-page"><div className="section-inner"><p>Загружается расчёт стартового раунда…</p></div></main>}>
+          <LaunchBudgetPage />
         </Suspense>
       );
     case "/404":

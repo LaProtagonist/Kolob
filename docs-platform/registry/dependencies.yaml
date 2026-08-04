@@ -121,3 +121,39 @@ dependencies:
       - title: CAPEX Preliminary Price Research
         document_id: DOC-CAPEX-PRICE-RESEARCH
     updated_at: 2026-08-02
+  - id: DEP-FOUNDATION-INVESTOR-START-MODEL
+    source_document_id: DOC-FOUNDATION
+    priority: governing_source
+    status: approved
+    version: "1.0"
+    target_documents:
+      - title: Investor Start Model
+        document_id: DOC-INVESTOR-START-MODEL
+    updated_at: 2026-08-04
+  - id: DEP-BMA-INVESTOR-START-MODEL
+    source_document_id: DOC-BUSINESS-MODEL-ARCHITECTURE
+    priority: governing_source
+    status: approved
+    version: "1.0"
+    target_documents:
+      - title: Investor Start Model
+        document_id: DOC-INVESTOR-START-MODEL
+    updated_at: 2026-08-04
+  - id: DEP-CAPEX-REGISTER-INVESTOR-START-MODEL
+    source_document_id: DOC-CAPEX-EQUIPMENT-REGISTER
+    priority: governing_source
+    status: approved
+    version: "0.1"
+    target_documents:
+      - title: Investor Start Model
+        document_id: DOC-INVESTOR-START-MODEL
+    updated_at: 2026-08-04
+  - id: DEP-CAPEX-PRICE-RESEARCH-INVESTOR-START-MODEL
+    source_document_id: DOC-CAPEX-PRICE-RESEARCH
+    priority: governing_source
+    status: approved
+    version: "0.3"
+    target_documents:
+      - title: Investor Start Model
+        document_id: DOC-INVESTOR-START-MODEL
+    updated_at: 2026-08-04

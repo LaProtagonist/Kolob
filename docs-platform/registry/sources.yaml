@@ -1125,3 +1125,12 @@ sources:
     accessed_at: 2026-08-03T12:00:00.000Z
     reliability: low
     notes: "Наблюдаемая цена: 309760 RUB. Наличие: research_composite; exact_cart_not_confirmed. НДС: не указано. Доставка: не включена. Уверенность: low. Bottom-up research-бюджет 281 600 ₽ по 18 группам + 10% резерв 28 160 ₽. Это не готовая корзина поставщика. Дополнительные карточки комплекта: https://restoll.ru/catalog/doski_iz_plastika/, https://restoll.ru/catalog/product/kastryulya-katun-kt-ob-20-k-/, https://restoll.ru/catalog/product/kryshka-dlya-gastroem-1-1-nerzh-mgsteel-1-6-mgsteel-111000mg/."
+  - id: SRC-INVESTOR-START-MODEL-BRIEF
+    title: Задание на модель стартовой потребности в инвестициях и страницу launch-budget
+    type: instruction
+    location: User instruction, 2026-08-04
+    publisher: project owner
+    publication_date: 2026-08-04
+    accessed_at: 2026-08-04
+    reliability: primary
+    notes: Утверждает структуру, формулы, research-допущения и публикацию скрытого калькулятора первого совмещённого объекта. Не утверждает окончательный бюджет, помещение, сумму инвестиций, финансовый прогноз, условия сделки, окупаемость или стоимость компании.

@@ -20,6 +20,7 @@ const SOURCE_PATHS = [
   "docs-platform/working/capex-configurations.yaml",
   "docs-platform/working/capex-configuration-overrides.yaml",
   "docs-platform/working/pilot-capex-assumptions.yaml",
+  "docs-platform/working/investor-start-model.yaml",
   "docs-platform/registry/documents.yaml",
   "docs-platform/registry/decisions.yaml",
   "docs-platform/changelog/events.ndjson",
@@ -43,6 +44,7 @@ export function buildWebSnapshot() {
   const research = readPriceResearch();
   const modular = readModularSources();
   const pilotAssumptions = readYaml("docs-platform/working/pilot-capex-assumptions.yaml");
+  const investorStartModel = readYaml("docs-platform/working/investor-start-model.yaml");
   const documents = (readYaml("docs-platform/registry/documents.yaml")?.documents ?? []) as Array<Record<string, unknown>>;
   const decisions = (readYaml("docs-platform/registry/decisions.yaml")?.decisions ?? []) as Array<Record<string, unknown>>;
   const events = readTimelineEvents();
@@ -60,19 +62,31 @@ export function buildWebSnapshot() {
   const procurement = register.equipment.filter(item => ["standalone", "purchased_separately"].includes(item.inclusion_status) && !["component", "engineering_connection", "open_question"].includes(item.record_type));
 
   const localDocuments = [
-    ["DOC-FOUNDATION", "Foundation v1.0", "Утверждён", "document"],
-    ["DOC-BUSINESS-MODEL-ARCHITECTURE", "Business Model Architecture v1.0", "Утверждён", "document"],
-    ["DOC-CAPEX-EQUIPMENT-SPECIFICATION", "CAPEX Specification v0.1", "Исследование", "document"],
-    ["DOC-CAPEX-EQUIPMENT-REGISTER", "CAPEX Equipment Register v0.1", "Исследование", "spreadsheet"],
-    ["DOC-CAPEX-PRICE-RESEARCH", `CAPEX Price Research v${research.document.version}`, "Исследование", "document"],
-  ].map(([id, title, statusLabel, googleType]) => {
+    { id: "DOC-FOUNDATION", title: "Foundation", statusLabel: "Утверждён", googleType: "document", googleFallbackId: null },
+    { id: "DOC-BUSINESS-MODEL-ARCHITECTURE", title: "Business Model Architecture", statusLabel: "Утверждён", googleType: "document", googleFallbackId: null },
+    { id: "DOC-CAPEX-EQUIPMENT-SPECIFICATION", title: "CAPEX Specification", statusLabel: "Исследование", googleType: "document", googleFallbackId: null },
+    { id: "DOC-CAPEX-EQUIPMENT-REGISTER", title: "CAPEX Equipment Register", statusLabel: "Исследование", googleType: "spreadsheet", googleFallbackId: null },
+    { id: "DOC-CAPEX-PRICE-RESEARCH", title: "CAPEX Price Research", statusLabel: "Исследование", googleType: "spreadsheet", googleFallbackId: "DOC-CAPEX-EQUIPMENT-REGISTER" },
+  ].map(({ id, title, statusLabel, googleType, googleFallbackId }) => {
     const entry = documents.find(item => item.id === id);
-    const googleId = typeof entry?.google_file_id === "string" ? entry.google_file_id : null;
-    return { id, title, status: entry?.status ?? "not_created", statusLabel, exists: Boolean(entry), localPath: entry?.local_path ?? null, googleUrl: googleId ? googleLink(googleId, googleType) : null };
+    const fallbackEntry = googleFallbackId ? documents.find(item => item.id === googleFallbackId) : null;
+    const googleId = typeof entry?.google_file_id === "string" ? entry.google_file_id : typeof fallbackEntry?.google_file_id === "string" ? fallbackEntry.google_file_id : null;
+    return {
+      id,
+      title,
+      version: entry?.version ?? null,
+      updatedAt: entry?.updated_at ?? null,
+      status: entry?.status ?? "not_created",
+      statusLabel,
+      exists: Boolean(entry),
+      localPath: entry?.local_path ?? null,
+      googleUrl: googleId ? googleLink(googleId, googleType) : null,
+      googleSourceDocumentId: typeof entry?.google_file_id === "string" ? id : googleId ? googleFallbackId : null,
+    };
   });
   localDocuments.push(
-    { id: "DOC-FINANCIAL-MODEL", title: "Финансовая модель", status: "not_created", statusLabel: "Не создана", exists: false, localPath: null, googleUrl: null },
-    { id: "DOC-INVESTMENT-MEMO", title: "Инвестиционный меморандум", status: "not_created", statusLabel: "Не создан", exists: false, localPath: null, googleUrl: null },
+    { id: "DOC-FINANCIAL-MODEL", title: "Финансовая модель", version: null, updatedAt: null, status: "not_created", statusLabel: "Не создана", exists: false, localPath: null, googleUrl: null, googleSourceDocumentId: null },
+    { id: "DOC-INVESTMENT-MEMO", title: "Инвестиционный меморандум", version: null, updatedAt: null, status: "not_created", statusLabel: "Не создан", exists: false, localPath: null, googleUrl: null, googleSourceDocumentId: null },
   );
 
   return {
@@ -139,6 +153,10 @@ export function buildWebSnapshot() {
     configurationTemplate: modular.configurations.configurations.find(configuration => configuration.configuration_id === "CFG-TEMPLATE-001") ?? null,
     pilotConfiguration: modular.configurations.configurations.find(configuration => configuration.configuration_id === "CFG-PILOT-001") ?? null,
     pilotEconomics: pilotAssumptions,
+    investorStartModel: {
+      ...investorStartModel,
+      source_sha256: sourceHashes["docs-platform/working/investor-start-model.yaml"],
+    },
     overrides: modular.configuration_overrides.overrides,
     items: register.equipment.map(item => {
       const price = researchByItem.get(item.item_id);

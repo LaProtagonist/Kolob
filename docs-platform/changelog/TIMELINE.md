@@ -24,9 +24,13 @@
 | 2026-08-04T20:27:56.286Z | EVT-ITR-PILOT-CAPEX-BASELINE-2026-08-03-01-002 | ITR-PILOT-CAPEX-BASELINE-2026-08-03-01 | approved | decision_approved | DEC-011 | CHG-020 | pending | DEC-011 утвердил exact research-payload без утверждения помещения, полного CAPEX, поставщиков или финансовой модели. |
 | 2026-08-04T20:27:56.287Z | EVT-ITR-PILOT-CAPEX-BASELINE-2026-08-03-01-003 | ITR-PILOT-CAPEX-BASELINE-2026-08-03-01 | applied | pilot_baseline_register_sheet_and_web_applied | DEC-011 | CHG-020 | passed | Добавлены CAPEX-08, комплекты инвентаря, CFG-PILOT-001, операционные допущения, generated BOM и обновлён внутренний конфигуратор. |
 | 2026-08-04T20:27:56.288Z | EVT-ITR-PILOT-CAPEX-BASELINE-2026-08-03-01-004 | ITR-PILOT-CAPEX-BASELINE-2026-08-03-01 | verified | tests_build_google_readback_and_reverse_preview_verified | DEC-011 | CHG-020 | passed | Проверены 160 записей, 51 ценовая позиция, дедупликация одной посудомоечной системы, расчёты пилота, Google readback, build и governed reverse preview. |
+| 2026-08-04T21:05:30.000Z | EVT-ITR-INVESTOR-START-MODEL-2026-08-04-01-001 | ITR-INVESTOR-START-MODEL-2026-08-04-01 | proposed | proposal_recorded | DEC-012 | CHG-022 | pending | Proposal зафиксировал структуру, формулы и research-границы стартового калькулятора без утверждения окончательного бюджета, помещения, суммы инвестиций или условий сделки. |
+| 2026-08-04T21:05:39.140Z | EVT-ITR-INVESTOR-START-MODEL-2026-08-04-01-002 | ITR-INVESTOR-START-MODEL-2026-08-04-01 | approved | decision_approved | DEC-012 | CHG-022 | pending | DEC-012 утвердил exact payload SHA-256, рабочие допущения, формулы и публикацию скрытой research-страницы без утверждения финансового прогноза. |
+| 2026-08-04T21:06:10.549Z | EVT-ITR-INVESTOR-START-MODEL-2026-08-04-01-003 | ITR-INVESTOR-START-MODEL-2026-08-04-01 | applied | investor_start_model_and_launch_budget_applied | DEC-012 | CHG-022 | passed | Каноническая research-модель применена byte-identical, snapshot расширен детерминированно, а скрытая страница подключена без изменения CAPEX и Google Sheet. |
+| 2026-08-04T21:40:19.989Z | EVT-ITR-INVESTOR-START-MODEL-2026-08-04-01-004 | ITR-INVESTOR-START-MODEL-2026-08-04-01 | verified | tests_build_visual_audit_and_reverse_preview_verified | DEC-012 | CHG-022 | passed | Проверены exact payload, одна единица пароконвектомата, формулы покупки и аренды, отсутствие двойного учёта, partial totals, noindex, адаптивность, тесты и governed reverse preview. |
 
 ## Проверка цепочки
 
-- Событий: 20.
-- Последний event hash: `0865c791180c8465ddea808e9e9efb31d23f70c35e61684e3233087f1db742a5`.
+- Событий: 24.
+- Последний event hash: `cdea67f9d29d2d3266fa123916f92f660a36cc1b2cfbbb107442cd29f6fbc2f7`.
 - Полная машинная запись, approved payload SHA-256, before/after hashes и rollback reference находятся в `events.ndjson`.

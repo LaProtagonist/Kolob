@@ -1,0 +1,40 @@
+receipt_version: 1
+iteration_id: ITR-INVESTOR-START-MODEL-2026-08-04-01
+proposal_id: PROP-INVESTOR-START-MODEL-2026-08-04-01
+decision_id: DEC-012
+change_set_id: CHG-022
+status: previewed
+previewed_at: 2026-08-04T21:05:55.000Z
+actor: Codex
+tool: docs-platform investor:start:preview
+writes_performed: false
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-INVESTOR-START-MODEL-2026-08-04-01-approved.yaml
+  sha256: 3d1cc27dbb4711852a6b34e524a637cbe65b05ae61da48c8ece5f0c7a08b5fe7
+canonical_target:
+  path: docs-platform/working/investor-start-model.yaml
+  before_sha256: null
+  expected_after_sha256: 3d1cc27dbb4711852a6b34e524a637cbe65b05ae61da48c8ece5f0c7a08b5fe7
+registry_previews:
+  - change_set_id: CHG-021
+    before_sha256: 7d433c29903cc2c43c0f90493a1cf993f9920f36ee4aa35037bee7756560ca31
+    expected_after_sha256: 8e4985a50c7582036f131b6fc3ed76fc70d47b9c8626ddcb3128285359b9d499
+  - change_set_id: CHG-022
+    before_sha256: 8e4985a50c7582036f131b6fc3ed76fc70d47b9c8626ddcb3128285359b9d499
+    expected_after_sha256: 70ac659672a3a49c17d7b2f93dbe17307f60182ffd1498e503761a4972f71e3b
+checks:
+  schema_validation: passed
+  canonical_references: passed
+  approved_payload_identity: passed
+  capex_oven_item_id: CAPEX-01-009
+  capex_oven_quantity: 1
+  capex_oven_aggregation_rule: once
+  foundation_change_planned: false
+  business_model_architecture_change_planned: false
+  capex_canonical_change_planned: false
+  google_sheet_write_planned: false
+planned_outputs:
+  - docs-platform/working/investor-start-model.yaml
+  - src/content/capex-configurator-data.json
+  - /launch-budget
+validation: passed

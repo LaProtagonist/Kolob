@@ -1,0 +1,112 @@
+receipt_version: 2
+change_id: CHG-021
+iteration_id: ITR-INVESTOR-START-MODEL-2026-08-04-01
+proposal_id: PROP-INVESTOR-START-MODEL-2026-08-04-01
+decision_id: DEC-001
+source_change_set: docs-platform/changes/CHG-021-investor-start-model-decision.yaml
+status: applied
+applied_at: 2026-08-04T21:05:39.140Z
+actor: Codex
+tool: docs-platform change:apply
+approved_payload: null
+before_hash: 7d433c29903cc2c43c0f90493a1cf993f9920f36ee4aa35037bee7756560ca31
+after_hash: 8e4985a50c7582036f131b6fc3ed76fc70d47b9c8626ddcb3128285359b9d499
+touched_registry_files:
+  - path: docs-platform/registry/sources.yaml
+    backup_path: docs-platform/changelog/backups/2026-08-04T21-05-39-140Z-CHG-021/sources.yaml
+  - path: docs-platform/registry/documents.yaml
+    backup_path: docs-platform/changelog/backups/2026-08-04T21-05-39-140Z-CHG-021/documents.yaml
+  - path: docs-platform/registry/decisions.yaml
+    backup_path: docs-platform/changelog/backups/2026-08-04T21-05-39-140Z-CHG-021/decisions.yaml
+operations:
+  - type: add
+    entity: sources
+    id: SRC-INVESTOR-START-MODEL-BRIEF
+    before: null
+    after:
+      id: SRC-INVESTOR-START-MODEL-BRIEF
+      title: Задание на модель стартовой потребности в инвестициях и страницу launch-budget
+      type: instruction
+      location: User instruction, 2026-08-04
+      publisher: project owner
+      publication_date: 2026-08-04
+      accessed_at: 2026-08-04
+      reliability: primary
+      notes: Утверждает структуру, формулы, research-допущения и публикацию скрытого калькулятора первого совмещённого объекта. Не утверждает окончательный бюджет, помещение, сумму инвестиций, финансовый прогноз, условия сделки, окупаемость или стоимость компании.
+    before_index: null
+    after_index: 125
+    before_sha256: null
+    after_sha256: 31e0dc1a4d0f74d104a27f1798f96ebca590a1e87ddb623c28751703abf4ff4b
+    reverse_operation:
+      type: remove
+      entity: sources
+      id: SRC-INVESTOR-START-MODEL-BRIEF
+  - type: add
+    entity: documents
+    id: DOC-INVESTOR-START-MODEL
+    before: null
+    after:
+      id: DOC-INVESTOR-START-MODEL
+      title: Investor Start Model
+      type: working_investment_requirement_model
+      status: research
+      google_file_id: null
+      template: null
+      sections:
+        - Помещение
+        - Площадь объекта
+        - Посадочные места
+        - Мебель посадочного зала
+        - Комплектация оборудования
+        - Подготовка помещения и монтаж
+        - Операционный запас
+        - Резерв
+        - Ориентировочная потребность в финансировании
+        - Полнота расчёта
+        - Основания расчёта
+      version: "0.1"
+      governance_level: working
+      local_path: docs-platform/working/investor-start-model.yaml
+      updated_at: 2026-08-04
+    before_index: null
+    after_index: 16
+    before_sha256: null
+    after_sha256: b4c43f27010ce035f4e7b6e3379b1214ef23cb768448cab3daa9915018b8330d
+    reverse_operation:
+      type: remove
+      entity: documents
+      id: DOC-INVESTOR-START-MODEL
+  - type: add
+    entity: decisions
+    id: DEC-012
+    before: null
+    after:
+      id: DEC-012
+      title: Создать research-калькулятор стартовой потребности в инвестициях
+      status: approved
+      decision: Зафиксировать Investor Start Model v0.1 и опубликовать скрытую рабочую страницу /launch-budget. Калькулятор сравнивает покупку и аренду, использует каноническую CAPEX-архитектуру, отдельно оценивает мебель по research-ставке, показывает неполные данные как нижнюю границу и не выдаёт неизвестные статьи за ноль.
+      rationale: Прямое задание владельца проекта от 2026-08-04. Модель предназначена для предварительного обсуждения порядка финансирования первого совмещённого объекта и не является финансовой моделью или окончательным инвестиционным предложением.
+      affected_documents:
+        - DOC-INVESTOR-START-MODEL
+        - DOC-CAPEX-EQUIPMENT-REGISTER
+        - DOC-CAPEX-PRICE-RESEARCH
+      approved_by: project owner
+      approved_at: 2026-08-04
+      supersedes: null
+      source_ids:
+        - SRC-INVESTOR-START-MODEL-BRIEF
+      updated_at: 2026-08-04
+    before_index: null
+    after_index: 11
+    before_sha256: null
+    after_sha256: a116e7c255614b0731f7d47e48bdc91a5e641c24a7d7ed2bd8050ed6e8504875
+    reverse_operation:
+      type: remove
+      entity: decisions
+      id: DEC-012
+validation_result: passed
+git_commit_hash: null
+rollback:
+  source_receipt: docs-platform/changelog/change-receipts/CHG-021.yaml
+  command: npm run change:reverse:preview -- ../changelog/change-receipts/CHG-021.yaml --change-id CHG-ROLLBACK-XXX --decision DEC-ROLLBACK-XXX
+  rollback_of: CHG-021

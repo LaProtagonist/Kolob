@@ -1,0 +1,10 @@
+schema_version: 1
+iteration_id: ITR-INVESTOR-START-MODEL-2026-08-04-01
+source_change_set: CHG-022
+target: docs-platform/working/investor-start-model.yaml
+before:
+  existed: false
+  sha256: null
+  payload: null
+reverse_operation: remove_generated_file
+preserves_history: true

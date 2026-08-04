@@ -241,3 +241,25 @@ documents:
     version: "0.1"
     local_path: docs-platform/working/pilot-capex-assumptions.yaml
     updated_at: 2026-08-03
+  - id: DOC-INVESTOR-START-MODEL
+    title: Investor Start Model
+    type: working_investment_requirement_model
+    status: research
+    google_file_id: null
+    template: null
+    sections:
+      - Помещение
+      - Площадь объекта
+      - Посадочные места
+      - Мебель посадочного зала
+      - Комплектация оборудования
+      - Подготовка помещения и монтаж
+      - Операционный запас
+      - Резерв
+      - Ориентировочная потребность в финансировании
+      - Полнота расчёта
+      - Основания расчёта
+    version: "0.1"
+    governance_level: working
+    local_path: docs-platform/working/investor-start-model.yaml
+    updated_at: 2026-08-04
