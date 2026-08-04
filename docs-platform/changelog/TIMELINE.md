@@ -20,9 +20,13 @@
 | 2026-08-03T00:31:30.063Z | EVT-ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01-002 | ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01 | approved | decision_approved | DEC-010 | CHG-018 | pending | DEC-010 утвердил exact payload SHA-256: один пароконвектомат во всех research-сценариях, пересчёт и детерминированный canonical snapshot. |
 | 2026-08-03T00:31:30.064Z | EVT-ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01-003 | ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01 | applied | canonical_correction_google_sheet_and_web_snapshot_applied | DEC-010 | CHG-018 | passed | CAPEX-01-009 приведён к одной единице в Register, module-item rule и Price Research; существующая Sheet обновлена, UI подключён к generated snapshot. |
 | 2026-08-03T00:31:30.065Z | EVT-ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01-004 | ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01 | verified | tests_build_google_readback_visual_audit_and_reverse_preview_verified | DEC-010 | CHG-018 | passed | Проверены hashes, 151 records, семь форматов, scenario totals, noindex, Google readback, адаптивный интерфейс, timeline chain и governed reverse preview. |
+| 2026-08-04T20:27:56.285Z | EVT-ITR-PILOT-CAPEX-BASELINE-2026-08-03-01-001 | ITR-PILOT-CAPEX-BASELINE-2026-08-03-01 | proposed | proposal_recorded | DEC-011 | CHG-020 | pending | Proposal зафиксировал пилотный формат, посудомоечную систему, мелкий инвентарь, ПО, food cost, штат и открытые бюджетные слои. |
+| 2026-08-04T20:27:56.286Z | EVT-ITR-PILOT-CAPEX-BASELINE-2026-08-03-01-002 | ITR-PILOT-CAPEX-BASELINE-2026-08-03-01 | approved | decision_approved | DEC-011 | CHG-020 | pending | DEC-011 утвердил exact research-payload без утверждения помещения, полного CAPEX, поставщиков или финансовой модели. |
+| 2026-08-04T20:27:56.287Z | EVT-ITR-PILOT-CAPEX-BASELINE-2026-08-03-01-003 | ITR-PILOT-CAPEX-BASELINE-2026-08-03-01 | applied | pilot_baseline_register_sheet_and_web_applied | DEC-011 | CHG-020 | passed | Добавлены CAPEX-08, комплекты инвентаря, CFG-PILOT-001, операционные допущения, generated BOM и обновлён внутренний конфигуратор. |
+| 2026-08-04T20:27:56.288Z | EVT-ITR-PILOT-CAPEX-BASELINE-2026-08-03-01-004 | ITR-PILOT-CAPEX-BASELINE-2026-08-03-01 | verified | tests_build_google_readback_and_reverse_preview_verified | DEC-011 | CHG-020 | passed | Проверены 160 записей, 51 ценовая позиция, дедупликация одной посудомоечной системы, расчёты пилота, Google readback, build и governed reverse preview. |
 
 ## Проверка цепочки
 
-- Событий: 16.
-- Последний event hash: `2571346aee5440a2364869e6a61f430438acb3945e4f4c5184f7fcbdba678419`.
+- Событий: 20.
+- Последний event hash: `0865c791180c8465ddea808e9e9efb31d23f70c35e61684e3233087f1db742a5`.
 - Полная машинная запись, approved payload SHA-256, before/after hashes и rollback reference находятся в `events.ndjson`.

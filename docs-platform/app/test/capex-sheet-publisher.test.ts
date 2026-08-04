@@ -5,7 +5,7 @@ import test from "node:test";
 import { fileURLToPath } from "node:url";
 import { readRegister } from "../src/capex/register.js";
 import { readModularSources } from "../src/capex/modular.js";
-import { CAPEX_CONFIGURATOR_DECISION_ID, CAPEX_CONFIGURATOR_ITERATION_ID } from "../src/capex/configurator-audit-workflow.js";
+import { PILOT_DECISION_ID, PILOT_ITERATION_ID } from "../src/capex/pilot-expansion-workflow.js";
 import {
   CAPEX_REGISTER_GOOGLE_TITLE,
   CAPEX_REGISTER_SHEET_NAMES,
@@ -25,9 +25,9 @@ test("Google Sheet contract has the exact eleven localized tabs in stable order"
   assert.deepEqual(CAPEX_REGISTER_SHEET_NAMES, ["Описание", "Конфигуратор", "Комплектация", "Переопределения", "Оснащение", "Модули", "Форматы точек", "Состав форматов", "Открытые параметры", "Недостающие разделы", "Справочники"]);
   const datasets = sheetDatasets(register, sources, "2026-08-01T00:00:00.000Z");
   assert.deepEqual(datasets.map(dataset => dataset.name), [...CAPEX_REGISTER_SHEET_NAMES]);
-  assert.equal(datasets.find(dataset => dataset.name === "Оснащение")?.values.length, 152);
+  assert.equal(datasets.find(dataset => dataset.name === "Оснащение")?.values.length, 161);
   assert.equal(datasets.find(dataset => dataset.name === "Форматы точек")?.values.length, 8);
-  assert.equal(datasets.find(dataset => dataset.name === "Комплектация")?.values.length, 154);
+  assert.equal(datasets.find(dataset => dataset.name === "Комплектация")?.values.length, 163);
   for (const legacy of Object.keys(LEGACY_SHEET_RENAMES)) assert.equal(datasets.some(dataset => dataset.name === legacy), false);
 });
 
@@ -43,7 +43,7 @@ test("Sheet datasets keep numerical equipment fields numeric or blank, never tbd
     for (const row of equipment.values.slice(1)) assert.equal(row[column] === "" || typeof row[column] === "number", true, `${field}: ${row[column]}`);
   }
   for (const header of ["Цена min", "Цена base", "Цена max", "Валюта", "Поставщик", "Ссылка", "Дата проверки", "Наличие", "Статус КП", "Уверенность", "Комментарий по цене"]) assert.equal(EQUIPMENT_SHEET_HEADERS.includes(header), true, header);
-  assert.equal(equipment.values.slice(1).filter(row => typeof row[headers.indexOf("Цена base")] === "number").length, 39);
+  assert.equal(equipment.values.slice(1).filter(row => typeof row[headers.indexOf("Цена base")] === "number").length, 43);
 });
 
 test("configurator and BOM contain formulas, validation-ready IDs and no invented template values", () => {
@@ -54,7 +54,7 @@ test("configurator and BOM contain formulas, validation-ready IDs and no invente
   for (let column = 3; column <= 22; column += 1) assert.equal(configurator.values[1][column], "", `configurator column ${column}`);
   assert.match(String(configurator.values[1].at(-1)), /^=IF\(/);
   const bom = datasets.find(dataset => dataset.name === "Комплектация")!;
-  assert.equal(bom.values[0][1], "CFG-TEMPLATE-001");
+  assert.equal(bom.values[0][1], "CFG-PILOT-001");
   assert.match(String(bom.values[3][4]), /^=IF\(/);
   assert.match(String(bom.values[3][13]), /^=IFERROR\(/);
 });
@@ -85,14 +85,14 @@ test("preview logging masks the Google file ID and binds the current approved co
   const logged = sheetPreviewForLog({
     preview_id: "p", created_at: "2026-08-01T00:00:00.000Z", registry_id: "DOC-CAPEX-EQUIPMENT-REGISTER",
     google_title: CAPEX_REGISTER_GOOGLE_TITLE, folder_name: "Колобочная — Investment", folder_check: "passed", action: "update",
-    google_file_id: "1234567890abcdef", google_file_id_masked: "1234…cdef", decision_id: CAPEX_CONFIGURATOR_DECISION_ID,
-    iteration_id: CAPEX_CONFIGURATOR_ITERATION_ID, source_yaml_path: "docs-platform/working/capex-equipment-register.yaml",
-    source_yaml_sha256: "a".repeat(64), source_record_count: 124, equipment_record_count: 151, mapped_record_count: 124,
+    google_file_id: "1234567890abcdef", google_file_id_masked: "1234…cdef", decision_id: PILOT_DECISION_ID,
+    iteration_id: PILOT_ITERATION_ID, source_yaml_path: "docs-platform/working/capex-equipment-register.yaml",
+    source_yaml_sha256: "a".repeat(64), source_record_count: 124, equipment_record_count: 160, mapped_record_count: 124,
     unmapped_record_count: 0, sheets: CAPEX_REGISTER_SHEET_NAMES, legacy_sheet_renames: LEGACY_SHEET_RENAMES, warnings: [],
   });
   assert.equal("google_file_id" in logged, false);
   assert.equal(logged.google_file_id_masked, "1234…cdef");
-  assert.equal(logged.decision_id, CAPEX_CONFIGURATOR_DECISION_ID);
+  assert.equal(logged.decision_id, PILOT_DECISION_ID);
 });
 
 test("Google preview and override preview contain no write path", () => {

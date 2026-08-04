@@ -1,0 +1,106 @@
+receipt_version: 1
+iteration_id: ITR-PILOT-CAPEX-BASELINE-2026-08-03-01
+proposal_id: PROP-PILOT-CAPEX-BASELINE-2026-08-03-01
+decision_id: DEC-011
+change_set_id: CHG-020
+status: verified
+verified_at: 2026-08-04T20:26:54Z
+actor: Codex
+tool: pilot CAPEX verification workflow
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-PILOT-CAPEX-BASELINE-2026-08-03-01-approved.yaml
+  sha256: f8af78bb762df25f08231936cfbf6eee3833bd96361d02228586fc979b754007
+source:
+  path: docs-platform/working/capex-equipment-specification.md
+  sha256: 2157364e09699173fecfbfe861edf4e6fac85a0437e23aebe100caebeab599d6
+  unchanged: true
+outputs:
+  equipment_register_yaml:
+    path: docs-platform/working/capex-equipment-register.yaml
+    sha256: e5e835ecae0d0d433afd24cff8923026097d115d87c234f1af475c463bb8f6e0
+  equipment_register_csv:
+    path: docs-platform/working/capex-equipment-register.csv
+    sha256: f3eaee8145728ac2e4b4c7269949fef921164ee6116371977255fb602e6a3d97
+  price_research:
+    path: docs-platform/working/capex-price-research.yaml
+    sha256: 96d2ba3e55b02843d05ebeffc6e8c3e3c400e82392a5d95b16cd321e4d5e5b3d
+  modules:
+    path: docs-platform/working/capex-modules.yaml
+    sha256: 2fb31d90b852a5aaae6500d99412c7fabba0bbe9187f08106e3f37c7a52ae33a
+  module_items:
+    path: docs-platform/working/capex-module-items.yaml
+    sha256: 4b18b5c644293361c4901a58de7a9a6e96fbb08eb03c1e84aa91e66ac9db2b55
+  configurations:
+    path: docs-platform/working/capex-configurations.yaml
+    sha256: 3810fa84efa969d8d95e2f0b0b49ede044b854d9be21ac92f5787d9ff8369f3c
+  pilot_assumptions:
+    path: docs-platform/working/pilot-capex-assumptions.yaml
+    sha256: 25e11d4db20050b3a95cab40797ef0a29e56fad93c73d33d4a39415a8071d4ac
+  pilot_bom_yaml:
+    path: docs-platform/working/configurations/CFG-PILOT-001/equipment-bom.yaml
+    sha256: 671375dd8ac2a2387a9afa71104e08df21704493c67810f7d313d29ae0e38035
+  pilot_bom_csv:
+    path: docs-platform/working/configurations/CFG-PILOT-001/equipment-bom.csv
+    sha256: b3af34b3c022e127cf3a0bc3257e571a79fa7cf0b79d587842dee93c57f8f5ab
+pilot:
+  configuration_id: CFG-PILOT-001
+  equipment_record_count: 160
+  priced_procurement_record_count: 51
+  wash_system_count: 1
+  wash_system_deduplicated: true
+  totals_rub:
+    minimum: 2820399.33
+    base: 3892659.33
+    scale_ready: 4988662.79
+google:
+  receipt: docs-platform/changelog/google-sync/2026-08-03-DOC-CAPEX-EQUIPMENT-REGISTER-PILOT-BASELINE.yaml
+  action: update
+  existing_file_reused: true
+  duplicate_file_created: false
+  folder_guard: passed
+  readback: passed
+  equipment_record_count: 160
+  localized_sheet_order: passed
+  comments_preserved: true
+  manual_configurator_rows_preserved: 1
+web:
+  route: /capex-configurator
+  canonical_snapshot: src/content/capex-configurator-data.json
+  snapshot_sha256: f757ec8e3160796709943ac5bf3c1165222663bbf1b4fe8cc75609d2b1662a0f
+  snapshot_source_hash_validation: passed
+  public_navigation_link_absent: true
+  sitemap_entry_absent: true
+  robots: noindex, nofollow
+  format_count: 7
+  selectable_scenario_count: 2
+  responsive_viewports:
+    desktop: passed
+    tablet: passed
+    mobile: passed
+  horizontal_overflow: false
+  console_errors: 0
+  page_errors: 0
+validation:
+  root_tests: 10 routes and CAPEX interactions passed, 0 failed
+  root_typescript: passed
+  root_build: passed with project-scoped Node 22.15.1
+  docs_platform_tests: 88 passed, 0 failed
+  docs_platform_typescript: passed
+  registry: passed
+  canonical_data_tests: passed
+  source_hashes: passed
+  google_readback: passed
+  git_diff_check: passed
+rollback:
+  source_receipt: docs-platform/changelog/iteration-receipts/ITR-PILOT-CAPEX-BASELINE-2026-08-03-01.yaml
+  reverse_change_set_status: previewed
+  expected_current_hash: 5772a81aa343d0c2ada21c8e4fbe5216a10a398dc4517bced3e5687ae2268b75
+  observed_current_hash: 5772a81aa343d0c2ada21c8e4fbe5216a10a398dc4517bced3e5687ae2268b75
+  expected_restored_hash: c33eea5c6883c71c64c87bb08fc99a5116465af6734d5955fa9293d81cad2752
+  simulated_restored_hash: c33eea5c6883c71c64c87bb08fc99a5116465af6734d5955fa9293d81cad2752
+  restores_original_hash: true
+  apply_requires_new_approved_rollback_decision: true
+  preserves_history: true
+  git_reset_forbidden: true
+git_commit_hash: null
+git_commit_note: Hash текущего commit невозможно включить в сам commit; при необходимости он фиксируется следующим append-only событием.

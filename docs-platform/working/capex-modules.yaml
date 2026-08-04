@@ -7,9 +7,9 @@ document:
   version: "0.1"
   status: research
   document_type: Working CAPEX functional module library
-  decision_id: DEC-008
-  iteration_id: ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01
-  proposal_id: PROP-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01
+  decision_id: DEC-011
+  iteration_id: ITR-PILOT-CAPEX-BASELINE-2026-08-03-01
+  proposal_id: PROP-PILOT-CAPEX-BASELINE-2026-08-03-01
 modules:
   - module_id: MOD-PREP
     name: Заготовочный цех
@@ -58,9 +58,9 @@ modules:
     notes: Соответствующий CAPEX-раздел ещё не сформирован.
   - module_id: MOD-WASH
     name: Посудомоечная и санитарная зона
-    purpose: Будущий функциональный модуль посудомоечного и санитарного оснащения.
-    lifecycle_status: not_started
-    notes: Соответствующие CAPEX-разделы ещё не сформированы.
+    purpose: Единая профессиональная посудомоечная зона для заготовочного цеха, совмещённого объекта или точки с собственной посадкой.
+    lifecycle_status: research
+    notes: Одна система учитывается один раз при совмещении модулей; инженерные подключения зависят от помещения.
   - module_id: MOD-STAFF
     name: Служебные помещения и оснащение персонала
     purpose: Будущий функциональный модуль служебных помещений.

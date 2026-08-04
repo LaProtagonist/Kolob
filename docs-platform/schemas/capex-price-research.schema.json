@@ -12,11 +12,11 @@
         "document_id": { "const": "DOC-CAPEX-PRICE-RESEARCH" },
         "title": { "const": "CAPEX Preliminary Price Research" },
         "russian_title": { "type": "string" },
-        "version": { "enum": ["0.1", "0.2"] },
+        "version": { "enum": ["0.1", "0.2", "0.3"] },
         "status": { "const": "research" },
-        "decision_id": { "enum": ["DEC-009", "DEC-010"] },
-        "iteration_id": { "enum": ["ITR-CAPEX-PRICE-RESEARCH-2026-08-02-01", "ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01"] },
-        "proposal_id": { "enum": ["PROP-CAPEX-PRICE-RESEARCH-2026-08-02-01", "PROP-CAPEX-WEB-CONFIGURATOR-2026-08-03-01"] },
+        "decision_id": { "enum": ["DEC-009", "DEC-010", "DEC-011"] },
+        "iteration_id": { "enum": ["ITR-CAPEX-PRICE-RESEARCH-2026-08-02-01", "ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01", "ITR-PILOT-CAPEX-BASELINE-2026-08-03-01"] },
+        "proposal_id": { "enum": ["PROP-CAPEX-PRICE-RESEARCH-2026-08-02-01", "PROP-CAPEX-WEB-CONFIGURATOR-2026-08-03-01", "PROP-PILOT-CAPEX-BASELINE-2026-08-03-01"] },
         "checked_at": { "type": "string" },
         "currency": { "const": "RUB" },
         "source_register_path": { "const": "docs-platform/working/capex-equipment-register.yaml" },
@@ -40,22 +40,22 @@
       "type": "object",
       "required": ["included_modules", "excluded_modules_and_categories", "eligible_procurement_record_count"],
       "properties": {
-        "included_modules": { "type": "array", "uniqueItems": true, "items": { "enum": ["MOD-PREP", "MOD-RETAIL-HOT", "MOD-BAR", "MOD-GROW", "MOD-POS", "MOD-KDS"] } },
+        "included_modules": { "type": "array", "uniqueItems": true, "items": { "enum": ["MOD-PREP", "MOD-RETAIL-HOT", "MOD-BAR", "MOD-GROW", "MOD-POS", "MOD-KDS", "MOD-WASH"] } },
         "excluded_modules_and_categories": { "type": "array", "items": { "type": "string" } },
-        "eligible_procurement_record_count": { "const": 47 }
+        "eligible_procurement_record_count": { "const": 51 }
       },
       "additionalProperties": false
     },
     "items": {
       "type": "array",
-      "minItems": 47,
-      "maxItems": 47,
+      "minItems": 51,
+      "maxItems": 51,
       "items": {
         "type": "object",
         "required": ["item_id", "module_id", "valuation_status", "quote_status", "high_risk", "risk_reason", "scenarios", "notes"],
         "properties": {
-          "item_id": { "type": "string", "pattern": "^CAPEX-0[1-4]-[0-9]{3}$" },
-          "module_id": { "enum": ["MOD-PREP", "MOD-RETAIL-HOT", "MOD-BAR", "MOD-GROW", "MOD-POS", "MOD-KDS"] },
+          "item_id": { "type": "string", "pattern": "^CAPEX-[0-9]{2}-[0-9]{3}$" },
+          "module_id": { "enum": ["MOD-PREP", "MOD-RETAIL-HOT", "MOD-BAR", "MOD-GROW", "MOD-POS", "MOD-KDS", "MOD-WASH"] },
           "valuation_status": { "enum": ["priced", "quote_required"] },
           "quote_status": { "enum": ["researched", "quote_required"] },
           "high_risk": { "type": "boolean" },
@@ -79,10 +79,10 @@
       "type": "object",
       "required": ["eligible_procurement_record_count", "priced_record_count", "unpriced_record_count", "quote_required_count", "totals_rub", "module_totals_rub", "top_10_base", "high_risk_item_ids"],
       "properties": {
-        "eligible_procurement_record_count": { "const": 47 },
-        "priced_record_count": { "type": "integer", "minimum": 1, "maximum": 47 },
-        "unpriced_record_count": { "type": "integer", "minimum": 0, "maximum": 47 },
-        "quote_required_count": { "type": "integer", "minimum": 0, "maximum": 47 },
+        "eligible_procurement_record_count": { "const": 51 },
+        "priced_record_count": { "type": "integer", "minimum": 1, "maximum": 51 },
+        "unpriced_record_count": { "type": "integer", "minimum": 0, "maximum": 51 },
+        "quote_required_count": { "type": "integer", "minimum": 0, "maximum": 51 },
         "totals_rub": { "$ref": "#/$defs/scenarioTotals" },
         "module_totals_rub": { "type": "object", "additionalProperties": { "$ref": "#/$defs/scenarioTotals" } },
         "top_10_base": {

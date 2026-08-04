@@ -142,6 +142,8 @@ async function inspectCapex(browser, baseUrl) {
   const scenarioButtons = page.locator(".capex-scenario-switch [data-scenario-id]");
   const formatIds = await formatButtons.evaluateAll(buttons => buttons.map(button => button.getAttribute("data-format-id")));
   const scenarioIds = await scenarioButtons.evaluateAll(buttons => buttons.map(button => button.getAttribute("data-scenario-id")));
+  const selectableScenarios = capexSnapshot.scenarios.filter(scenario => scenario.availableInSelector !== false);
+  const minimumScenarioButtonCount = await page.locator('[data-scenario-id="minimum"]').count();
   const switchedFormats = [];
   for (const format of capexSnapshot.formats) {
     const button = page.locator(`[data-format-id="${format.id}"]`);
@@ -152,7 +154,7 @@ async function inspectCapex(browser, baseUrl) {
   await page.locator('[data-format-id="FMT-INTEGRATED"]').click();
   const incompleteWarning = await page.getByText("Комплектация формата неполная", { exact: true }).count();
   const scenarioTotals = {};
-  for (const scenario of capexSnapshot.scenarios) {
+  for (const scenario of selectableScenarios) {
     await page.locator(`[data-scenario-id="${scenario.id}"]`).click();
     scenarioTotals[scenario.id] = parseMoney(await page.locator(".capex-live-summary > strong").innerText());
   }
@@ -193,7 +195,6 @@ async function inspectCapex(browser, baseUrl) {
   const tableHeaders = await page.locator(".capex-table thead").first().locator("th").evaluateAll(headers => headers.map(header => header.textContent?.trim()));
   const bodyText = await page.locator("body").innerText();
   const russianTerms = [
-    "Минимальная комплектация",
     "Базовая комплектация",
     "С запасом для роста",
     "Требуется КП",
@@ -213,6 +214,7 @@ async function inspectCapex(browser, baseUrl) {
     robots,
     formatIds,
     scenarioIds,
+    minimumScenarioButtonCount,
     switchedFormats,
     incompleteWarning,
     scenarioTotals,
@@ -284,10 +286,12 @@ async function inspectCapex(browser, baseUrl) {
     if (sitemap.includes("capex-configurator")) failures.push("sitemap exposes hidden CAPEX route");
     if (!String(capex.robots).includes("noindex") || !String(capex.robots).includes("nofollow")) failures.push(`CAPEX robots: ${capex.robots}`);
     if (capex.formatIds.length !== 7 || capex.formatIds.join("|") !== capexSnapshot.formats.map(item => item.id).join("|")) failures.push("CAPEX formats do not match snapshot");
-    if (capex.scenarioIds.length !== 3 || capex.scenarioIds.join("|") !== capexSnapshot.scenarios.map(item => item.id).join("|")) failures.push("CAPEX scenarios do not match snapshot");
+    const selectableScenarioIds = capexSnapshot.scenarios.filter(item => item.availableInSelector !== false).map(item => item.id);
+    if (capex.scenarioIds.join("|") !== selectableScenarioIds.join("|")) failures.push("CAPEX selectable scenarios do not match snapshot");
+    if (capex.minimumScenarioButtonCount !== 0) failures.push("minimum scenario is still available in selector");
     if (capex.switchedFormats.some(item => item.selected !== "true")) failures.push("one or more CAPEX formats did not switch");
     if (!capex.incompleteWarning) failures.push("required incomplete modules are not surfaced");
-    if (!(capex.scenarioTotals.minimum < capex.scenarioTotals.base && capex.scenarioTotals.base < capex.scenarioTotals.scale_ready)) failures.push(`CAPEX scenario totals do not change monotonically: ${JSON.stringify(capex.scenarioTotals)}`);
+    if (!(capex.scenarioTotals.base < capex.scenarioTotals.scale_ready)) failures.push(`CAPEX selectable scenario totals do not change monotonically: ${JSON.stringify(capex.scenarioTotals)}`);
     if (!/^1(?:[,.]0+)?\s*шт\./.test(capex.ovenQuantity)) failures.push(`oven quantity is not one: ${capex.ovenQuantity}`);
     if (!capex.ovenSourceAttrs.href || capex.ovenSourceAttrs.target !== "_blank" || !String(capex.ovenSourceAttrs.rel).includes("noopener") || !String(capex.ovenSourceAttrs.rel).includes("noreferrer")) failures.push("oven product link attributes are unsafe or missing");
     if (capex.ovenSearchCount !== 1 || capex.otherSearchRows !== 1) failures.push("CAPEX search does not isolate the oven row");
@@ -296,6 +300,7 @@ async function inspectCapex(browser, baseUrl) {
     if (!(capex.foodCourtWithBarTotal > capex.foodCourtTotal)) failures.push("optional bar module did not change evaluated cost");
     if (capex.customModuleChoices !== capexSnapshot.modules.length) failures.push(`custom format exposes ${capex.customModuleChoices} module choices, expected ${capexSnapshot.modules.length}`);
     if (capex.documentLinks.some(link => !link.href || link.target !== "_blank" || !String(link.rel).includes("noopener") || !String(link.rel).includes("noreferrer"))) failures.push("project document links are missing or unsafe");
+    if (capex.documentLinks.some(link => !link.href.endsWith("/preview"))) failures.push("project document links do not use read-only preview mode");
     if (capex.tableHeaders.join("|") !== "ID|Оборудование|Модуль|Обязательность|Количество|Цена за единицу|Сумма|Поставщик|Дата проверки|Статус цены") failures.push("equipment table headers changed");
     if (capex.russianTerms.length) failures.push(`missing Russian UI terms: ${capex.russianTerms.join(", ")}`);
     if (capex.desktopOverflow || capex.tabletOverflow || capex.mobileOverflow) failures.push(`CAPEX overflow desktop=${capex.desktopOverflow} tablet=${capex.tabletOverflow} mobile=${capex.mobileOverflow}`);

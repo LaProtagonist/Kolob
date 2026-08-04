@@ -29,11 +29,11 @@ function configured(formatId: typeof CAPEX_FORMAT_IDS[number], selectedModules: 
   return result;
 }
 
-test("Equipment Register contains 151 records and formats are separate from equipment", () => {
-  assert.equal(register.equipment.length, 151);
+test("Equipment Register contains 160 records and formats are separate from equipment", () => {
+  assert.equal(register.equipment.length, 160);
   assert.equal(register.document.source_record_count, 124);
-  assert.equal(register.document.added_research_record_count, 27);
-  assert.equal(register.document.equipment_record_count, 151);
+  assert.equal(register.document.added_research_record_count, 36);
+  assert.equal(register.document.equipment_record_count, 160);
   assert.equal(register.equipment.filter(item => item.item_id.startsWith("CAPEX-05-")).length, 27);
   for (const formatId of CAPEX_FORMAT_IDS) assert.equal(register.equipment.some(item => item.item_id === formatId), false);
 });
@@ -44,8 +44,8 @@ test("module, item and format IDs are unique and all cross-references validate",
   assert.equal(new Set(sources.module_items.links.map(item => `${item.module_id}\u0000${item.item_id}`)).size, sources.module_items.links.length);
   assert.deepEqual(validateModularSources(register, sources), []);
   assert.deepEqual(modularStatistics(register, sources), {
-    equipment_record_count: 151, module_count: 12, point_format_count: 7, configuration_count: 1,
-    module_item_link_count: 153, mapped_equipment_record_count: 151, unmapped_record_count: 0,
+    equipment_record_count: 160, module_count: 12, point_format_count: 7, configuration_count: 2,
+    module_item_link_count: 162, mapped_equipment_record_count: 160, unmapped_record_count: 0,
   });
 });
 
@@ -145,7 +145,7 @@ test("numeric fields contain no tbd and preliminary prices do not alter CAPEX-05
   for (const item of register.equipment) {
     for (const field of ["quantity_min", "quantity_base", "quantity_scale_ready", "power_kw", "voltage", "price_min", "price_base", "price_max"] as const) assert.equal(typeof item[field] === "string", false, `${item.item_id}.${field}`);
   }
-  assert.equal(register.equipment.filter(item => item.price_base !== null).length, 39);
+  assert.equal(register.equipment.filter(item => item.price_base !== null).length, 43);
   assert.equal(register.equipment.filter(item => item.item_id.startsWith("CAPEX-05-")).every(item => item.price_min === null && item.price_base === null && item.price_max === null && item.supplier === null), true);
   assert.doesNotMatch(fs.readFileSync(path.join(platform, "working", "capex-equipment-register.yaml"), "utf8"), /итоговый CAPEX:\s*\d/i);
 });
@@ -167,7 +167,15 @@ test("approved payload hash is exact and source CAPEX Markdown remains unchanged
   assert.equal(modularPayloadHash(payload.equipment_register, historicalSources), payloadHash);
   assert.equal(payload.equipment_register.document.decision_id, "DEC-008");
   assert.equal(payload.equipment_register.equipment.every((item: { price_base: number | null }) => item.price_base === null), true);
-  assert.equal(register.document.decision_id, "DEC-010");
+  assert.equal(register.document.decision_id, "DEC-011");
+});
+
+test("pilot configuration includes one deduplicated wash system and the approved optional modules", () => {
+  const bom = buildEquipmentBom("CFG-PILOT-001", register, sources);
+  assert.equal(bom.equipment.filter(item => item.item_id === "CAPEX-08-001").length, 1);
+  assert.equal(bom.equipment.find(item => item.item_id === "CAPEX-08-001")?.calculated_quantity, 1);
+  for (const moduleId of ["MOD-GUEST", "MOD-BAR", "MOD-STAFF", "MOD-WASH"]) assert.equal(bom.active_modules.some(item => item.module_id === moduleId), true, moduleId);
+  assert.equal(bom.active_modules.some(item => item.module_id === "MOD-GROW"), false);
 });
 
 test("governed reverse preview restores the original composite hash without Git reset", () => {

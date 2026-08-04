@@ -221,10 +221,116 @@
 }
 
 .capex-format-section,
+.capex-pilot-baseline,
 .capex-work-section,
 .capex-equipment-section,
 .capex-documents-section {
   padding: 92px 40px;
+}
+
+.capex-pilot-baseline {
+  padding-top: 78px;
+  padding-bottom: 78px;
+  border-bottom: 1px solid var(--capex-line);
+  background: #f8f3e7;
+}
+
+.capex-pilot-facts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.capex-pilot-facts article,
+.capex-pilot-detail-grid article {
+  min-width: 0;
+  padding: 22px;
+  border: 1px solid var(--capex-line);
+  border-radius: 15px;
+  background: var(--capex-card);
+}
+
+.capex-pilot-facts article.is-primary {
+  color: #fff;
+  background: #1b1b18;
+}
+
+.capex-pilot-facts article > span {
+  display: block;
+  color: #8d651b;
+  font-size: 0.67rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.capex-pilot-facts article.is-primary > span {
+  color: var(--capex-yellow);
+}
+
+.capex-pilot-facts article > strong {
+  display: block;
+  margin: 15px 0 10px;
+  font-size: clamp(1.35rem, 2.2vw, 2.2rem);
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+}
+
+.capex-pilot-facts p,
+.capex-pilot-detail-grid p {
+  margin: 0;
+  color: var(--capex-muted);
+  font-size: 0.72rem;
+  line-height: 1.5;
+}
+
+.capex-pilot-facts article.is-primary p {
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.capex-pilot-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.capex-pilot-detail-grid h3 {
+  margin: 0 0 16px;
+  font-size: 1rem;
+}
+
+.capex-pilot-detail-grid ul {
+  display: grid;
+  gap: 0;
+  margin: 0 0 15px;
+  padding: 0;
+  list-style: none;
+}
+
+.capex-pilot-detail-grid li {
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--capex-line);
+  font-size: 0.72rem;
+}
+
+.capex-pilot-detail-grid li span {
+  color: var(--capex-muted);
+}
+
+.capex-pilot-detail-grid li strong {
+  flex: none;
+  text-align: right;
+}
+
+.capex-reference-note {
+  margin-top: 14px !important;
+  padding: 12px;
+  border-left: 3px solid var(--capex-yellow);
+  background: #f1ebdd;
 }
 
 .capex-section-title {
@@ -567,7 +673,7 @@
 
 .capex-scenario-switch {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 9px;
   margin-bottom: 18px;
 }
@@ -983,15 +1089,43 @@
   margin-top: 35px;
 }
 
-.capex-table-group > h3 {
+.capex-table-group > summary {
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 0 12px;
+  color: var(--capex-ink);
+  cursor: pointer;
+  list-style: none;
+}
+
+.capex-table-group > summary::-webkit-details-marker {
+  display: none;
+}
+
+.capex-table-group > summary > span {
   display: flex;
   gap: 10px;
   align-items: center;
-  margin: 0 0 12px;
   font-size: 1.1rem;
+  font-weight: 900;
 }
 
-.capex-table-group > h3 span {
+.capex-table-group > summary > span::before {
+  width: 18px;
+  content: "▸";
+  color: #8d651b;
+  font-size: 0.9rem;
+  transform: rotate(90deg);
+  transition: transform 150ms ease;
+}
+
+.capex-table-group:not([open]) > summary > span::before {
+  transform: rotate(0deg);
+}
+
+.capex-table-group > summary b {
   display: inline-grid;
   place-items: center;
   min-width: 26px;
@@ -1001,6 +1135,18 @@
   color: var(--capex-ink);
   background: var(--capex-yellow);
   font-size: 0.68rem;
+}
+
+.capex-table-group > summary small {
+  color: var(--capex-muted);
+  font-size: 0.67rem;
+  font-weight: 800;
+}
+
+.capex-row-details li span {
+  display: block;
+  margin-top: 3px;
+  color: var(--capex-muted);
 }
 
 .capex-table-wrap {
@@ -1369,6 +1515,7 @@
 
 @media (max-width: 1024px) {
   .capex-hero,
+  .capex-pilot-baseline,
   .capex-format-section,
   .capex-work-section,
   .capex-charts-section,
@@ -1418,6 +1565,10 @@
   .capex-documents-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
+
+  .capex-pilot-facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 768px) {
@@ -1438,6 +1589,7 @@
   }
 
   .capex-format-detail,
+  .capex-pilot-detail-grid,
   .capex-history-grid {
     grid-template-columns: 1fr;
   }
@@ -1557,6 +1709,7 @@
 
 @media (max-width: 520px) {
   .capex-hero,
+  .capex-pilot-baseline,
   .capex-format-section,
   .capex-work-section,
   .capex-charts-section,
@@ -1596,6 +1749,19 @@
 
   .capex-metrics-grid {
     grid-template-columns: 1fr;
+  }
+
+  .capex-pilot-facts {
+    grid-template-columns: 1fr;
+  }
+
+  .capex-pilot-detail-grid li {
+    display: grid;
+    gap: 5px;
+  }
+
+  .capex-pilot-detail-grid li strong {
+    text-align: left;
   }
 
   .capex-metric,

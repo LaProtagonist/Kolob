@@ -190,10 +190,11 @@ documents:
     template: null
     sections:
       - CFG-TEMPLATE-001
+      - CFG-PILOT-001
       - Configuration overrides
     version: "0.1"
     local_path: docs-platform/working/capex-configurations.yaml
-    updated_at: 2026-08-01
+    updated_at: 2026-08-03
   - id: DOC-CAPEX-GENERATED-EQUIPMENT-BOM
     title: CAPEX Generated Equipment BOM
     type: generated_capex_equipment_bom
@@ -204,8 +205,8 @@ documents:
       - Active modules
       - Equipment
     version: "0.1"
-    local_path: docs-platform/working/configurations/CFG-TEMPLATE-001/equipment-bom.yaml
-    updated_at: 2026-08-01
+    local_path: docs-platform/working/configurations/CFG-PILOT-001/equipment-bom.yaml
+    updated_at: 2026-08-03
   - id: DOC-CAPEX-PRICE-RESEARCH
     title: CAPEX Preliminary Price Research
     type: working_capex_price_research
@@ -220,6 +221,23 @@ documents:
       - Sources
       - Risks
       - Summary
-    version: "0.2"
+    version: "0.3"
     local_path: docs-platform/working/capex-price-research.yaml
+    updated_at: 2026-08-03
+  - id: DOC-PILOT-CAPEX-ASSUMPTIONS
+    title: Пилотный объект — CAPEX и операционные допущения
+    type: working_pilot_capex_assumptions
+    status: research
+    google_file_id: null
+    template: null
+    sections:
+      - Конфигурация пилота
+      - Оборудование
+      - Программное обеспечение
+      - Юнит-экономика
+      - Штат
+      - Помещение
+      - Открытые слои бюджета
+    version: "0.1"
+    local_path: docs-platform/working/pilot-capex-assumptions.yaml
     updated_at: 2026-08-03

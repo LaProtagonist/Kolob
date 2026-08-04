@@ -1,0 +1,551 @@
+receipt_version: 2
+change_id: CHG-020
+iteration_id: ITR-PILOT-CAPEX-BASELINE-2026-08-03-01
+proposal_id: PROP-PILOT-CAPEX-BASELINE-2026-08-03-01
+decision_id: DEC-011
+source_change_set: docs-platform/changes/CHG-020-pilot-capex-baseline.yaml
+status: applied
+applied_at: 2026-08-03T12:04:52.508Z
+actor: Codex
+tool: docs-platform change:apply
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-PILOT-CAPEX-BASELINE-2026-08-03-01-approved.yaml
+  sha256: f8af78bb762df25f08231936cfbf6eee3833bd96361d02228586fc979b754007
+before_hash: b2527df7a51dc86434137abc1c7214ccc69f9864b73a62fb86b5ebac12665cc5
+after_hash: 7d433c29903cc2c43c0f90493a1cf993f9920f36ee4aa35037bee7756560ca31
+touched_registry_files:
+  - path: docs-platform/registry/sources.yaml
+    backup_path: docs-platform/changelog/backups/2026-08-03T12-04-52-508Z-CHG-020/sources.yaml
+  - path: docs-platform/registry/assumptions.yaml
+    backup_path: docs-platform/changelog/backups/2026-08-03T12-04-52-508Z-CHG-020/assumptions.yaml
+  - path: docs-platform/registry/documents.yaml
+    backup_path: docs-platform/changelog/backups/2026-08-03T12-04-52-508Z-CHG-020/documents.yaml
+operations:
+  - type: add
+    entity: sources
+    id: SRC-PRICE-20260803-BAR-INVENTORY-KIT
+    before: null
+    after:
+      id: SRC-PRICE-20260803-BAR-INVENTORY-KIT
+      title: Расчётный комплект базового барного инвентаря
+      type: supplier_product_card
+      location: https://restoll.ru/catalog-by-type/stolovaya/
+      publisher: Расчётный комплект / Restoll
+      publication_date: null
+      accessed_at: 2026-08-03T12:00:00.000Z
+      reliability: low
+      notes: "Наблюдаемая цена: 122760 RUB. Наличие: research_composite; exact_cart_not_confirmed. НДС: не указано. Доставка: не включена. Уверенность: low. Bottom-up research-бюджет 111 600 ₽ по 11 группам + 10% резерв 11 160 ₽. Многоразовая гостевая посуда и алкогольный бар не включены. Дополнительные карточки комплекта: https://restoll.ru/catalog/doski_iz_plastika/, https://restoll.ru/catalog/product/kastryulya-katun-kt-ob-20-k-/, https://restoll.ru/catalog/product/kryshka-dlya-gastroem-1-1-nerzh-mgsteel-1-6-mgsteel-111000mg/."
+    before_index: null
+    after_index: 121
+    before_sha256: null
+    after_sha256: 768077b7f57ad481c120346bd29618d263d250cb8cc17e883d87ed07b4920249
+    reverse_operation:
+      type: remove
+      entity: sources
+      id: SRC-PRICE-20260803-BAR-INVENTORY-KIT
+  - type: add
+    entity: sources
+    id: SRC-PRICE-20260803-DISHWASH-SYSTEM
+    before: null
+    after:
+      id: SRC-PRICE-20260803-DISHWASH-SYSTEM
+      title: ABAT МПК-700К + предмоечный и выходной столы + 3 кассеты + DVA LT12
+      type: supplier_product_card
+      location: https://abat-online.ru/product/kupolnaya-posudomoechnaya-mashina-abat-mpk-700k/
+      publisher: ABAT Online / Трапеза
+      publication_date: null
+      accessed_at: 2026-08-03T12:00:00.000Z
+      reliability: low
+      notes: "Наблюдаемая цена: 304101.33 RUB. Наличие: research_composite; exact_cart_not_confirmed. НДС: не указано. Доставка: не включена. Уверенность: low. Композит: машина 214 410 ₽ + предмоечный стол 48 486 ₽ + выходной стол 23 128 ₽ + три кассеты 6 207 ₽ + умягчитель 11 870,33 ₽. Доставка, монтаж, химия, вода, канализация и электрическое подключение не включены. Дополнительные карточки комплекта: https://abat-online.ru/catalog/aksessuary-posudomoyki/, https://www.trapeza.ru/goods/283821/."
+    before_index: null
+    after_index: 122
+    before_sha256: null
+    after_sha256: 36278dab9eaaaf40646cb9359dc5bd6c56f2b1e890345e883918683bbd688070
+    reverse_operation:
+      type: remove
+      entity: sources
+      id: SRC-PRICE-20260803-DISHWASH-SYSTEM
+  - type: add
+    entity: sources
+    id: SRC-PRICE-20260803-PREP-INVENTORY-KIT
+    before: null
+    after:
+      id: SRC-PRICE-20260803-PREP-INVENTORY-KIT
+      title: Расчётный комплект мелкого инвентаря заготовочного цеха
+      type: supplier_product_card
+      location: https://restoll.ru/catalog-by-type/stolovaya/
+      publisher: Расчётный комплект / Restoll
+      publication_date: null
+      accessed_at: 2026-08-03T12:00:00.000Z
+      reliability: low
+      notes: "Наблюдаемая цена: 295020 RUB. Наличие: research_composite; exact_cart_not_confirmed. НДС: не указано. Доставка: не включена. Уверенность: low. Bottom-up research-бюджет 268 200 ₽ по 16 группам + 10% резерв 26 820 ₽. Это не готовая корзина поставщика. Дополнительные карточки комплекта: https://restoll.ru/catalog/doski_iz_plastika/, https://restoll.ru/catalog/product/kastryulya-katun-kt-ob-20-k-/, https://restoll.ru/catalog/product/kryshka-dlya-gastroem-1-1-nerzh-mgsteel-1-6-mgsteel-111000mg/."
+    before_index: null
+    after_index: 123
+    before_sha256: null
+    after_sha256: 733ccbcaf346261c38d6aa2188b8597a952fb5ead70e4d2a220e3ac85e9e0245
+    reverse_operation:
+      type: remove
+      entity: sources
+      id: SRC-PRICE-20260803-PREP-INVENTORY-KIT
+  - type: add
+    entity: sources
+    id: SRC-PRICE-20260803-RETAIL-INVENTORY-KIT
+    before: null
+    after:
+      id: SRC-PRICE-20260803-RETAIL-INVENTORY-KIT
+      title: Расчётный комплект мелкого инвентаря торговой кухни
+      type: supplier_product_card
+      location: https://restoll.ru/catalog-by-type/stolovaya/
+      publisher: Расчётный комплект / Restoll
+      publication_date: null
+      accessed_at: 2026-08-03T12:00:00.000Z
+      reliability: low
+      notes: "Наблюдаемая цена: 309760 RUB. Наличие: research_composite; exact_cart_not_confirmed. НДС: не указано. Доставка: не включена. Уверенность: low. Bottom-up research-бюджет 281 600 ₽ по 18 группам + 10% резерв 28 160 ₽. Это не готовая корзина поставщика. Дополнительные карточки комплекта: https://restoll.ru/catalog/doski_iz_plastika/, https://restoll.ru/catalog/product/kastryulya-katun-kt-ob-20-k-/, https://restoll.ru/catalog/product/kryshka-dlya-gastroem-1-1-nerzh-mgsteel-1-6-mgsteel-111000mg/."
+    before_index: null
+    after_index: 124
+    before_sha256: null
+    after_sha256: 84f8f4601afbbcdc766baff5167c4af5ee111715064148fa42b1aebce3d07b4d
+    reverse_operation:
+      type: remove
+      entity: sources
+      id: SRC-PRICE-20260803-RETAIL-INVENTORY-KIT
+  - type: add
+    entity: assumptions
+    id: ASM-PILOT-FORMAT
+    before: null
+    after:
+      id: ASM-PILOT-FORMAT
+      title: Формат пилотного объекта
+      value: Заготовочный цех + торговая точка + собственный посадочный зал
+      unit: null
+      status: research
+      rationale: Прямое задание владельца проекта; параметры помещения ещё не определены.
+      scenario: PILOT_BASE
+      applies_to:
+        - DOC-PILOT-CAPEX-ASSUMPTIONS
+        - DOC-CAPEX-CONFIGURATIONS
+      source_ids:
+        - SRC-PILOT-CAPEX-AND-OPERATING-BRIEF
+      decision_id: DEC-011
+      updated_at: 2026-08-03
+    before_index: null
+    after_index: 3
+    before_sha256: null
+    after_sha256: 3d871f75b54c93074239b5dfe49bd7449977753a65d6970d4000aa408f31324a
+    reverse_operation:
+      type: remove
+      entity: assumptions
+      id: ASM-PILOT-FORMAT
+  - type: add
+    entity: assumptions
+    id: ASM-PILOT-SOFTWARE
+    before: null
+    after:
+      id: ASM-PILOT-SOFTWARE
+      title: Бюджет программного обеспечения
+      value: 120000
+      unit: RUB/year
+      status: research
+      rationale: Задано владельцем проекта; учитывается как OPEX, а при годовой предоплате — как отдельный денежный отток запуска.
+      scenario: PILOT_BASE
+      applies_to:
+        - DOC-PILOT-CAPEX-ASSUMPTIONS
+      source_ids:
+        - SRC-PILOT-CAPEX-AND-OPERATING-BRIEF
+      decision_id: DEC-011
+      updated_at: 2026-08-03
+    before_index: null
+    after_index: 4
+    before_sha256: null
+    after_sha256: 87715c1682c4048d1d8c22cf8382a3adf0b57fd2029bcb319393308dc6cf73d2
+    reverse_operation:
+      type: remove
+      entity: assumptions
+      id: ASM-PILOT-SOFTWARE
+  - type: add
+    entity: assumptions
+    id: ASM-PILOT-FOOD-COST
+    before: null
+    after:
+      id: ASM-PILOT-FOOD-COST
+      title: Целевая рецептурная себестоимость с упаковкой
+      value: 25
+      unit: percent of revenue
+      status: research
+      rationale: Цена равна четырём рецептурным себестоимостям; это формальная наценка 300% и валовая маржа 75% до прочих затрат.
+      scenario: PILOT_BASE
+      applies_to:
+        - DOC-PILOT-CAPEX-ASSUMPTIONS
+      source_ids:
+        - SRC-PILOT-CAPEX-AND-OPERATING-BRIEF
+      decision_id: DEC-011
+      updated_at: 2026-08-03
+    before_index: null
+    after_index: 5
+    before_sha256: null
+    after_sha256: 2b444f20e10c8a1203025e25c6bafc8b31ea2c6fc42cbfadfd7b3df1b60fa0ba
+    reverse_operation:
+      type: remove
+      entity: assumptions
+      id: ASM-PILOT-FOOD-COST
+  - type: add
+    entity: assumptions
+    id: ASM-PILOT-STAFFING
+    before: null
+    after:
+      id: ASM-PILOT-STAFFING
+      title: Стартовые посты пилотного объекта
+      value:
+        prep_cook: 1
+        line_cook: 2
+        barista_cashier: 2
+        cleaner: 1
+        administrator: 1
+      unit: posts per operating shift
+      status: research
+      rationale: Прямой ориентир владельца проекта; headcount и графики требуют операционного режима и часов работы.
+      scenario: PILOT_BASE
+      applies_to:
+        - DOC-PILOT-CAPEX-ASSUMPTIONS
+      source_ids:
+        - SRC-PILOT-CAPEX-AND-OPERATING-BRIEF
+      decision_id: DEC-011
+      updated_at: 2026-08-03
+    before_index: null
+    after_index: 6
+    before_sha256: null
+    after_sha256: 066f9f4d1fc747920a0e1d056f71a3647394c232ac8294ce20a1caa2ba1e4bce
+    reverse_operation:
+      type: remove
+      entity: assumptions
+      id: ASM-PILOT-STAFFING
+  - type: add
+    entity: assumptions
+    id: ASM-PILOT-PAYROLL-SPB
+    before: null
+    after:
+      id: ASM-PILOT-PAYROLL-SPB
+      title: Исследовательский фонд работодателя для стартовых постов
+      value:
+        from_rub_per_month: 1290051.62
+        to_rub_per_month: 1368735.63
+      unit: RUB/month
+      status: research
+      rationale: Расчёт по видимым вакансиям Санкт-Петербурга, 30 операционным дням, графику 2/2, НДФЛ 13% и диапазону страховых взносов. Не включает ряд кадровых расходов.
+      scenario: PILOT_BASE
+      applies_to:
+        - DOC-PILOT-CAPEX-ASSUMPTIONS
+      source_ids:
+        - SRC-LABOR-SPB-20260803-PREP
+        - SRC-LABOR-SPB-20260803-BARISTA
+        - SRC-LABOR-SPB-20260803-ADMIN
+        - SRC-TAX-2026-CONTRIBUTIONS
+      decision_id: DEC-011
+      updated_at: 2026-08-03
+    before_index: null
+    after_index: 7
+    before_sha256: null
+    after_sha256: 4e778bdf8fd0ce0473974848619925df21c281880db65797a8fce6ab021824ab
+    reverse_operation:
+      type: remove
+      entity: assumptions
+      id: ASM-PILOT-PAYROLL-SPB
+  - type: add
+    entity: assumptions
+    id: ASM-PILOT-PREMISES-OPEN
+    before: null
+    after:
+      id: ASM-PILOT-PREMISES-OPEN
+      title: Зависимые от помещения слои CAPEX
+      value: null
+      unit: null
+      status: research
+      rationale: Камеры, вентиляция, газ, вода, канализация, электричество, ремонт, монтаж, пусконаладка, мебель и навигация считаются после выбора и обследования помещения.
+      scenario: PILOT_BASE
+      applies_to:
+        - DOC-PILOT-CAPEX-ASSUMPTIONS
+        - DOC-CAPEX-EQUIPMENT-REGISTER
+      source_ids:
+        - SRC-PILOT-CAPEX-AND-OPERATING-BRIEF
+        - SRC-COLD-ROOM-BENCHMARK-20260803
+      decision_id: DEC-011
+      updated_at: 2026-08-03
+    before_index: null
+    after_index: 8
+    before_sha256: null
+    after_sha256: f58e7e8036bbbe68a3c3b459fca92ddab067c33e517c7b16375c40cadcb498c9
+    reverse_operation:
+      type: remove
+      entity: assumptions
+      id: ASM-PILOT-PREMISES-OPEN
+  - type: add
+    entity: assumptions
+    id: ASM-PILOT-LAUNCH-COSTS-OPEN
+    before: null
+    after:
+      id: ASM-PILOT-LAUNCH-COSTS-OPEN
+      title: Открытые расходы запуска
+      value: null
+      unit: null
+      status: research
+      rationale: Расходы перед открытием, первоначальные запасы, оборотный капитал и резерв пока не оценены и не считаются нулём.
+      scenario: PILOT_BASE
+      applies_to:
+        - DOC-PILOT-CAPEX-ASSUMPTIONS
+      source_ids:
+        - SRC-PILOT-CAPEX-AND-OPERATING-BRIEF
+      decision_id: DEC-011
+      updated_at: 2026-08-03
+    before_index: null
+    after_index: 9
+    before_sha256: null
+    after_sha256: d52a14262f1ee2c87b176c31333a1d30ae0c60fbf98062b70d1c21bf5fcb3274
+    reverse_operation:
+      type: remove
+      entity: assumptions
+      id: ASM-PILOT-LAUNCH-COSTS-OPEN
+  - type: update
+    entity: documents
+    id: DOC-CAPEX-EQUIPMENT-REGISTER
+    before: &a1
+      id: DOC-CAPEX-EQUIPMENT-REGISTER
+      title: CAPEX Equipment Register
+      type: working_capex_equipment_register
+      status: research
+      google_file_id: 1J7sHM8P2IoMfHVLEHfY-UJLIZ-HBid89G6n6BS4BSJA
+      template: null
+      sections:
+        - Описание
+        - Конфигуратор
+        - Комплектация
+        - Переопределения
+        - Оснащение
+        - Модули
+        - Форматы точек
+        - Состав форматов
+        - Открытые параметры
+        - Недостающие разделы
+        - Справочники
+      version: "0.1"
+      local_path: docs-platform/working/capex-equipment-register.yaml
+      updated_at: 2026-08-03
+    after:
+      id: DOC-CAPEX-EQUIPMENT-REGISTER
+      title: CAPEX Equipment Register
+      type: working_capex_equipment_register
+      status: research
+      google_file_id: 1J7sHM8P2IoMfHVLEHfY-UJLIZ-HBid89G6n6BS4BSJA
+      template: null
+      sections:
+        - Описание
+        - Конфигуратор
+        - Комплектация
+        - Переопределения
+        - Оснащение
+        - Модули
+        - Форматы точек
+        - Состав форматов
+        - Открытые параметры
+        - Недостающие разделы
+        - Справочники
+      version: "0.1"
+      local_path: docs-platform/working/capex-equipment-register.yaml
+      updated_at: 2026-08-03
+    before_index: 9
+    after_index: 9
+    before_sha256: 1e190fb8777f072d7e7a289184f21c934e27efa3102a30666edc4e6bd87cd264
+    after_sha256: 1e190fb8777f072d7e7a289184f21c934e27efa3102a30666edc4e6bd87cd264
+    reverse_operation:
+      type: replace
+      entity: documents
+      id: DOC-CAPEX-EQUIPMENT-REGISTER
+      value: *a1
+  - type: update
+    entity: documents
+    id: DOC-CAPEX-MODULES
+    before: &a2
+      id: DOC-CAPEX-MODULES
+      title: CAPEX Modules
+      type: working_capex_functional_modules
+      status: research
+      google_file_id: null
+      template: null
+      sections:
+        - MOD-PREP
+        - MOD-RETAIL-HOT
+        - MOD-BAR
+        - MOD-GROW
+        - MOD-POS
+        - MOD-KDS
+        - MOD-GUEST
+        - MOD-TAKEAWAY
+        - MOD-STORAGE
+        - MOD-WASH
+        - MOD-STAFF
+        - MOD-ENGINEERING
+      version: "0.1"
+      local_path: docs-platform/working/capex-modules.yaml
+      updated_at: 2026-08-03
+    after:
+      id: DOC-CAPEX-MODULES
+      title: CAPEX Modules
+      type: working_capex_functional_modules
+      status: research
+      google_file_id: null
+      template: null
+      sections:
+        - MOD-PREP
+        - MOD-RETAIL-HOT
+        - MOD-BAR
+        - MOD-GROW
+        - MOD-POS
+        - MOD-KDS
+        - MOD-GUEST
+        - MOD-TAKEAWAY
+        - MOD-STORAGE
+        - MOD-WASH
+        - MOD-STAFF
+        - MOD-ENGINEERING
+      version: "0.1"
+      local_path: docs-platform/working/capex-modules.yaml
+      updated_at: 2026-08-03
+    before_index: 10
+    after_index: 10
+    before_sha256: d68c437cd5b4c607e5d00a09e1709de273e6e53e8988d4eee5beb4118123906f
+    after_sha256: d68c437cd5b4c607e5d00a09e1709de273e6e53e8988d4eee5beb4118123906f
+    reverse_operation:
+      type: replace
+      entity: documents
+      id: DOC-CAPEX-MODULES
+      value: *a2
+  - type: update
+    entity: documents
+    id: DOC-CAPEX-CONFIGURATIONS
+    before: &a3
+      id: DOC-CAPEX-CONFIGURATIONS
+      title: CAPEX Configurations
+      type: working_capex_object_configurations
+      status: research
+      google_file_id: null
+      template: null
+      sections:
+        - CFG-TEMPLATE-001
+        - Configuration overrides
+      version: "0.1"
+      local_path: docs-platform/working/capex-configurations.yaml
+      updated_at: 2026-08-01
+    after:
+      id: DOC-CAPEX-CONFIGURATIONS
+      title: CAPEX Configurations
+      type: working_capex_object_configurations
+      status: research
+      google_file_id: null
+      template: null
+      sections:
+        - CFG-TEMPLATE-001
+        - CFG-PILOT-001
+        - Configuration overrides
+      version: "0.1"
+      local_path: docs-platform/working/capex-configurations.yaml
+      updated_at: 2026-08-03
+    before_index: 12
+    after_index: 12
+    before_sha256: 3781a0015c5a753a3e45f500f1c8b40a64609c8a8b0495ea2c9d9cfbe7c8888f
+    after_sha256: 15242596b004ee4dd435579de75c03c1c18ad186c6ea4f0f349e70e3cfc279b6
+    reverse_operation:
+      type: replace
+      entity: documents
+      id: DOC-CAPEX-CONFIGURATIONS
+      value: *a3
+  - type: update
+    entity: documents
+    id: DOC-CAPEX-GENERATED-EQUIPMENT-BOM
+    before: &a4
+      id: DOC-CAPEX-GENERATED-EQUIPMENT-BOM
+      title: CAPEX Generated Equipment BOM
+      type: generated_capex_equipment_bom
+      status: research
+      google_file_id: null
+      template: null
+      sections:
+        - Active modules
+        - Equipment
+      version: "0.1"
+      local_path: docs-platform/working/configurations/CFG-TEMPLATE-001/equipment-bom.yaml
+      updated_at: 2026-08-01
+    after:
+      id: DOC-CAPEX-GENERATED-EQUIPMENT-BOM
+      title: CAPEX Generated Equipment BOM
+      type: generated_capex_equipment_bom
+      status: research
+      google_file_id: null
+      template: null
+      sections:
+        - Active modules
+        - Equipment
+      version: "0.1"
+      local_path: docs-platform/working/configurations/CFG-PILOT-001/equipment-bom.yaml
+      updated_at: 2026-08-03
+    before_index: 13
+    after_index: 13
+    before_sha256: 479feb093f5907669cc670eacf2682ab78fa62d16a75efe89397761da8b72363
+    after_sha256: ec3ea87cb8ea336b1347999f4f087c8057fb0d533d1d4ce555b48b62ccf33e2f
+    reverse_operation:
+      type: replace
+      entity: documents
+      id: DOC-CAPEX-GENERATED-EQUIPMENT-BOM
+      value: *a4
+  - type: update
+    entity: documents
+    id: DOC-CAPEX-PRICE-RESEARCH
+    before: &a5
+      id: DOC-CAPEX-PRICE-RESEARCH
+      title: CAPEX Preliminary Price Research
+      type: working_capex_price_research
+      status: research
+      google_file_id: null
+      template: null
+      sections:
+        - Scope
+        - MINIMUM
+        - BASE
+        - SCALE_READY
+        - Sources
+        - Risks
+        - Summary
+      version: "0.2"
+      local_path: docs-platform/working/capex-price-research.yaml
+      updated_at: 2026-08-03
+    after:
+      id: DOC-CAPEX-PRICE-RESEARCH
+      title: CAPEX Preliminary Price Research
+      type: working_capex_price_research
+      status: research
+      google_file_id: null
+      template: null
+      sections:
+        - Scope
+        - MINIMUM
+        - BASE
+        - SCALE_READY
+        - Sources
+        - Risks
+        - Summary
+      version: "0.3"
+      local_path: docs-platform/working/capex-price-research.yaml
+      updated_at: 2026-08-03
+    before_index: 14
+    after_index: 14
+    before_sha256: 2d1c094938751cf77dd0177df1d4fd253034c32e1739d86555aa3bfc4347748c
+    after_sha256: 41493bf3cbda379d8120704a3180580fff6a58689ce2d56571a6c68bb2f0eee2
+    reverse_operation:
+      type: replace
+      entity: documents
+      id: DOC-CAPEX-PRICE-RESEARCH
+      value: *a5
+validation_result: passed
+git_commit_hash: null
+rollback:
+  source_receipt: docs-platform/changelog/change-receipts/CHG-020.yaml
+  command: npm run change:reverse:preview -- ../changelog/change-receipts/CHG-020.yaml --change-id CHG-ROLLBACK-XXX --decision DEC-ROLLBACK-XXX
+  rollback_of: CHG-020

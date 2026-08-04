@@ -5,9 +5,7 @@ assumptions:
     value: null
     unit: null
     status: research
-    rationale: Сценарий покупки исследуется наравне с арендой и долгосрочной арендой
-      с возможностью субаренды; решение о выборе помещения или сценария не
-      принято.
+    rationale: Сценарий покупки исследуется наравне с арендой и долгосрочной арендой с возможностью субаренды; решение о выборе помещения или сценария не принято.
     scenario: PURCHASE
     applies_to:
       - DOC-INVESTMENT-MEMO
@@ -41,3 +39,107 @@ assumptions:
       - SRC-USER-BRIEF
     decision_id: DEC-002
     updated_at: 2026-07-21
+  - id: ASM-PILOT-FORMAT
+    title: Формат пилотного объекта
+    value: Заготовочный цех + торговая точка + собственный посадочный зал
+    unit: null
+    status: research
+    rationale: Прямое задание владельца проекта; параметры помещения ещё не определены.
+    scenario: PILOT_BASE
+    applies_to:
+      - DOC-PILOT-CAPEX-ASSUMPTIONS
+      - DOC-CAPEX-CONFIGURATIONS
+    source_ids:
+      - SRC-PILOT-CAPEX-AND-OPERATING-BRIEF
+    decision_id: DEC-011
+    updated_at: 2026-08-03
+  - id: ASM-PILOT-SOFTWARE
+    title: Бюджет программного обеспечения
+    value: 120000
+    unit: RUB/year
+    status: research
+    rationale: Задано владельцем проекта; учитывается как OPEX, а при годовой предоплате — как отдельный денежный отток запуска.
+    scenario: PILOT_BASE
+    applies_to:
+      - DOC-PILOT-CAPEX-ASSUMPTIONS
+    source_ids:
+      - SRC-PILOT-CAPEX-AND-OPERATING-BRIEF
+    decision_id: DEC-011
+    updated_at: 2026-08-03
+  - id: ASM-PILOT-FOOD-COST
+    title: Целевая рецептурная себестоимость с упаковкой
+    value: 25
+    unit: percent of revenue
+    status: research
+    rationale: Цена равна четырём рецептурным себестоимостям; это формальная наценка 300% и валовая маржа 75% до прочих затрат.
+    scenario: PILOT_BASE
+    applies_to:
+      - DOC-PILOT-CAPEX-ASSUMPTIONS
+    source_ids:
+      - SRC-PILOT-CAPEX-AND-OPERATING-BRIEF
+    decision_id: DEC-011
+    updated_at: 2026-08-03
+  - id: ASM-PILOT-STAFFING
+    title: Стартовые посты пилотного объекта
+    value:
+      prep_cook: 1
+      line_cook: 2
+      barista_cashier: 2
+      cleaner: 1
+      administrator: 1
+    unit: posts per operating shift
+    status: research
+    rationale: Прямой ориентир владельца проекта; headcount и графики требуют операционного режима и часов работы.
+    scenario: PILOT_BASE
+    applies_to:
+      - DOC-PILOT-CAPEX-ASSUMPTIONS
+    source_ids:
+      - SRC-PILOT-CAPEX-AND-OPERATING-BRIEF
+    decision_id: DEC-011
+    updated_at: 2026-08-03
+  - id: ASM-PILOT-PAYROLL-SPB
+    title: Исследовательский фонд работодателя для стартовых постов
+    value:
+      from_rub_per_month: 1290051.62
+      to_rub_per_month: 1368735.63
+    unit: RUB/month
+    status: research
+    rationale: Расчёт по видимым вакансиям Санкт-Петербурга, 30 операционным дням, графику 2/2, НДФЛ 13% и диапазону страховых взносов. Не включает ряд кадровых расходов.
+    scenario: PILOT_BASE
+    applies_to:
+      - DOC-PILOT-CAPEX-ASSUMPTIONS
+    source_ids:
+      - SRC-LABOR-SPB-20260803-PREP
+      - SRC-LABOR-SPB-20260803-BARISTA
+      - SRC-LABOR-SPB-20260803-ADMIN
+      - SRC-TAX-2026-CONTRIBUTIONS
+    decision_id: DEC-011
+    updated_at: 2026-08-03
+  - id: ASM-PILOT-PREMISES-OPEN
+    title: Зависимые от помещения слои CAPEX
+    value: null
+    unit: null
+    status: research
+    rationale: Камеры, вентиляция, газ, вода, канализация, электричество, ремонт, монтаж, пусконаладка, мебель и навигация считаются после выбора и обследования помещения.
+    scenario: PILOT_BASE
+    applies_to:
+      - DOC-PILOT-CAPEX-ASSUMPTIONS
+      - DOC-CAPEX-EQUIPMENT-REGISTER
+    source_ids:
+      - SRC-PILOT-CAPEX-AND-OPERATING-BRIEF
+      - SRC-COLD-ROOM-BENCHMARK-20260803
+    decision_id: DEC-011
+    updated_at: 2026-08-03
+  - id: ASM-PILOT-LAUNCH-COSTS-OPEN
+    title: Открытые расходы запуска
+    value: null
+    unit: null
+    status: research
+    rationale: Расходы перед открытием, первоначальные запасы, оборотный капитал и резерв пока не оценены и не считаются нулём.
+    scenario: PILOT_BASE
+    applies_to:
+      - DOC-PILOT-CAPEX-ASSUMPTIONS
+    source_ids:
+      - SRC-PILOT-CAPEX-AND-OPERATING-BRIEF
+    decision_id: DEC-011
+    updated_at: 2026-08-03

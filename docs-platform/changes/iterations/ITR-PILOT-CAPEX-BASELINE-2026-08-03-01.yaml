@@ -1,0 +1,28 @@
+schema_version: 1
+iteration_id: ITR-PILOT-CAPEX-BASELINE-2026-08-03-01
+proposal_id: PROP-PILOT-CAPEX-BASELINE-2026-08-03-01
+decision_id: DEC-011
+change_set_id: CHG-020
+status: approved
+approved_by: project owner
+approved_at: 2026-08-03
+actor: project owner
+scope: "Зафиксировать research-базу пилотного совмещённого объекта с посадочным залом: одна посудомоечная система, комплекты мелкого инвентаря, программное обеспечение 120 000 ₽/год, food cost 25% с упаковкой, исследовательский штат и открытые зависимые от помещения и запуска слои бюджета."
+approved_payload_path: docs-platform/changelog/payloads/ITR-PILOT-CAPEX-BASELINE-2026-08-03-01-approved.yaml
+approved_payload_sha256: f8af78bb762df25f08231936cfbf6eee3833bd96361d02228586fc979b754007
+apply_contract:
+  payload_identity: structurally_identical_yaml
+  canonical_targets:
+    - docs-platform/working/capex-equipment-register.yaml
+    - docs-platform/working/capex-equipment-register.csv
+    - docs-platform/working/capex-price-research.yaml
+    - docs-platform/working/capex-modules.yaml
+    - docs-platform/working/capex-module-items.yaml
+    - docs-platform/working/capex-configurations.yaml
+    - docs-platform/working/pilot-capex-assumptions.yaml
+    - docs-platform/working/configurations/CFG-PILOT-001/equipment-bom.yaml
+    - docs-platform/working/configurations/CFG-PILOT-001/equipment-bom.csv
+rollback_contract:
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true

@@ -23,8 +23,8 @@
         "source_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
         "source_record_count": { "const": 124 },
         "mapped_record_count": { "const": 124 },
-        "added_research_record_count": { "const": 27 },
-        "equipment_record_count": { "const": 151 },
+        "added_research_record_count": { "const": 36 },
+        "equipment_record_count": { "const": 160 },
         "unmapped_record_count": { "const": 0 },
         "csv_generated_from_yaml": { "const": true },
         "warning": { "type": "string" },
@@ -37,13 +37,13 @@
     },
     "modules": {
       "type": "array",
-      "minItems": 5,
-      "maxItems": 5,
+      "minItems": 6,
+      "maxItems": 6,
       "items": {
         "type": "object",
         "required": ["module_id", "module_name", "source_record_count", "record_count"],
         "properties": {
-          "module_id": { "pattern": "^CAPEX-0[1-5]$" },
+          "module_id": { "pattern": "^CAPEX-[0-9]{2}$" },
           "module_name": { "type": "string" },
           "source_record_count": { "type": "integer", "minimum": 0 },
           "record_count": { "type": "integer", "minimum": 1 }
@@ -53,14 +53,14 @@
     },
     "equipment": {
       "type": "array",
-      "minItems": 151,
-      "maxItems": 151,
+      "minItems": 160,
+      "maxItems": 160,
       "items": {
         "type": "object",
         "required": ["item_id", "module_id", "module_name", "category", "subcategory", "name", "record_type", "parent_item_id", "inclusion_status", "requirement", "lifecycle_status", "quantity_min", "quantity_base", "quantity_scale_ready", "unit", "source_quantity", "specification", "open_parameters", "premises_dependency", "procurement_mode", "existing_condition", "power_kw", "voltage", "water_required", "drainage_required", "gas_required", "extraction_required", "dimensions", "service_clearance", "price_min", "price_base", "price_max", "currency", "price_date", "supplier", "source_id", "quote_status", "notes", "source_section", "source_item_number", "source_record_sha256"],
         "properties": {
-          "item_id": { "type": "string", "pattern": "^CAPEX-0[1-5]-[0-9]{3}$" },
-          "module_id": { "type": "string", "pattern": "^CAPEX-0[1-5]$" },
+          "item_id": { "type": "string", "pattern": "^CAPEX-[0-9]{2}-[0-9]{3}$" },
+          "module_id": { "type": "string", "pattern": "^CAPEX-[0-9]{2}$" },
           "module_name": { "type": "string" },
           "category": { "type": "string" },
           "subcategory": { "type": "string" },

@@ -49,11 +49,11 @@ test("canonical YAML passes schema and reference validation and CSV is generated
   assert.deepEqual(validateRegister(register, source), []);
   assert.equal(fs.readFileSync(yamlPath, "utf8"), serializeRegister(register));
   assert.equal(fs.readFileSync(csvPath, "utf8"), equipmentCsv(register));
-  assert.equal(fs.readFileSync(csvPath, "utf8").trimEnd().split("\n").length, 152);
+  assert.equal(fs.readFileSync(csvPath, "utf8").trimEnd().split("\n").length, 161);
   assert.equal(fs.readFileSync(csvPath, "utf8").split("\n", 1)[0], EQUIPMENT_COLUMNS.join(","));
 });
 
-test("the 124 pre-existing records preserve history except the governed DEC-010 oven correction", () => {
+test("the 124 source records preserve history outside the governed DEC-010/DEC-011 changes", () => {
   const previous = YAML.parse(fs.readFileSync(path.join(platform, "changelog", "payloads", "ITR-CAPEX-REGISTER-2026-08-01-01-approved.yaml"), "utf8"));
   const current = readRegister();
   const withoutPriceResearch = current.equipment.slice(0, 124).map(item => {
@@ -72,7 +72,13 @@ test("the 124 pre-existing records preserve history except the governed DEC-010 
     ]) delete normalized[field];
     return normalized;
   });
-  assert.deepEqual(withoutPriceResearch.filter(item => item.item_id !== "CAPEX-01-009"), previous.equipment.filter((item: { item_id: string }) => item.item_id !== "CAPEX-01-009"));
+  const governedSourceIds = new Set([
+    "CAPEX-01-009", "CAPEX-01-015",
+    ...Array.from({ length: 16 }, (_, index) => `CAPEX-01-${String(index + 27).padStart(3, "0")}`),
+    "CAPEX-02-001", "CAPEX-02-002",
+    ...Array.from({ length: 29 }, (_, index) => `CAPEX-02-${String(index + 14).padStart(3, "0")}`),
+  ]);
+  assert.deepEqual(withoutPriceResearch.filter(item => !governedSourceIds.has(String(item.item_id))), previous.equipment.filter((item: { item_id: string }) => !governedSourceIds.has(item.item_id)));
   const oldOven = previous.equipment.find((item: { item_id: string }) => item.item_id === "CAPEX-01-009");
   const currentOven = withoutPriceResearch.find(item => item.item_id === "CAPEX-01-009")!;
   assert.deepEqual([oldOven.quantity_min, oldOven.quantity_base, oldOven.quantity_scale_ready], [null, 2, null]);
@@ -80,7 +86,12 @@ test("the 124 pre-existing records preserve history except the governed DEC-010 
   assert.equal(currentOven.source_quantity, "2 шт.");
   assert.equal(currentOven.source_record_sha256, oldOven.source_record_sha256);
   assert.match(String(currentOven.notes), /DEC-010/);
-  assert.equal(current.equipment.slice(124).length, 27);
+  const grinder = withoutPriceResearch.find(item => item.item_id === "CAPEX-01-015")!;
+  assert.deepEqual([grinder.quantity_min, grinder.quantity_base, grinder.quantity_scale_ready], [0, 1, 1]);
+  assert.equal(grinder.requirement, "required");
+  assert.equal(withoutPriceResearch.find(item => item.item_id === "CAPEX-02-001")?.name, "Газовый гриль для колобков");
+  assert.equal(withoutPriceResearch.find(item => item.item_id === "CAPEX-02-002")?.name, "Гриль для Манчеса");
+  assert.equal(current.equipment.slice(124).length, 36);
 });
 
 test("parent references, inclusion and numerical uncertainty rules prevent double counting", () => {
@@ -100,7 +111,7 @@ test("parent references, inclusion and numerical uncertainty rules prevent doubl
     }
     assert.equal(item.lifecycle_status, "research");
   }
-  assert.equal(register.equipment.filter(item => item.price_base !== null).length, 39);
+  assert.equal(register.equipment.filter(item => item.price_base !== null).length, 43);
   assert.equal(register.equipment.filter(item => item.price_base !== null).every(item => item.supplier !== null && item.source_url && item.checked_at), true);
   assert.equal(register.equipment.filter(item => item.item_id.startsWith("CAPEX-05-")).every(item => item.price_min === null && item.price_base === null && item.price_max === null), true);
   assert.equal(register.equipment.filter(item => item.inclusion_status === "included_in_parent" || ["component", "engineering_connection", "open_question"].includes(item.record_type)).every(item => item.price_min === null && item.price_base === null && item.price_max === null), true);
@@ -124,8 +135,8 @@ test("open parameters and missing sections preserve explicit source boundaries",
     "инженерный расчёт модуля выращивания", "резервные единицы оборудования", "запасные части и расходные компоненты",
   ]);
   assert.equal(register.missing_sections.length, 27);
-  assert.deepEqual(register.missing_sections.slice(0, 2).map(section => section.status), ["structured", "structured"]);
-  assert.equal(register.missing_sections.slice(2).every(section => section.status === "not_started"), true);
+  assert.deepEqual(register.missing_sections.slice(0, 4).map(section => section.status), ["structured", "structured", "not_started", "structured"]);
+  assert.equal(register.missing_sections.slice(4).every(section => section.status === "not_started"), true);
   assert.equal(register.missing_sections[0].section_id, "CAPEX-05");
   assert.equal(register.missing_sections.at(-1)?.section_id, "CAPEX-31");
 });
@@ -135,20 +146,20 @@ test("register statistics distinguish source records from independent procuremen
   assert.deepEqual(statistics, {
     source_record_count: 124,
     mapped_record_count: 124,
-    added_research_record_count: 27,
-    equipment_record_count: 151,
+    added_research_record_count: 36,
+    equipment_record_count: 160,
     unmapped_record_count: 0,
-    main_procurement_records: 47,
+    main_procurement_records: 51,
     by_record_type: {
-      equipment: 30, system: 13, component: 14, accessory: 10, inventory: 56, furniture: 25,
+      equipment: 31, system: 17, component: 16, accessory: 12, inventory: 56, furniture: 25,
       engineering_connection: 1, installation_service: 0, consumable: 0, software: 0, open_question: 2,
     },
-    inclusion_status_tbd: 104,
-    quantity_base_tbd: 126,
-    priced_record_count: 39,
+    inclusion_status_tbd: 59,
+    quantity_base_tbd: 80,
+    priced_record_count: 43,
     unpriced_eligible_procurement_record_count: 8,
-    quote_required_count: 23,
-    open_parameter_count: 185,
+    quote_required_count: 27,
+    open_parameter_count: 145,
     missing_section_count: 27,
   });
 });
@@ -174,6 +185,7 @@ test("registry and governed records identify the research register and modular s
   assert.deepEqual(decisions.find(item => item.id === "DEC-008")?.affected_documents, ["DOC-CAPEX-EQUIPMENT-REGISTER", "DOC-CAPEX-MODULES", "DOC-CAPEX-POINT-FORMATS", "DOC-CAPEX-CONFIGURATIONS", "DOC-CAPEX-GENERATED-EQUIPMENT-BOM"]);
   assert.deepEqual(decisions.find(item => item.id === "DEC-009")?.affected_documents, ["DOC-CAPEX-EQUIPMENT-REGISTER", "DOC-CAPEX-PRICE-RESEARCH"]);
   assert.deepEqual(decisions.find(item => item.id === "DEC-010")?.affected_documents, ["DOC-CAPEX-EQUIPMENT-REGISTER", "DOC-CAPEX-MODULES", "DOC-CAPEX-PRICE-RESEARCH"]);
+  assert.deepEqual(decisions.find(item => item.id === "DEC-011")?.affected_documents, ["DOC-CAPEX-EQUIPMENT-REGISTER", "DOC-CAPEX-MODULES", "DOC-CAPEX-CONFIGURATIONS", "DOC-CAPEX-GENERATED-EQUIPMENT-BOM", "DOC-CAPEX-PRICE-RESEARCH", "DOC-PILOT-CAPEX-ASSUMPTIONS"]);
   assert.equal(change.change_id, "CHG-014");
   assert.equal(change.decision_id, "DEC-008");
   assert.equal(change.approved_payload_sha256, "73f5a811214f548ba3c8e1cde8e16317e5bbc3b98cf3f5ecc67c4c12ffdb6453");

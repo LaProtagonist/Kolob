@@ -1035,3 +1035,93 @@ sources:
     accessed_at: 2026-08-03
     reliability: primary
     notes: Утверждает одну единицу CAPEX-01-009, research-пересчёт, обновление существующей Google Sheet и внутреннего рабочего интерфейса. Не утверждает второй аппарат, новые цены, финальный CAPEX или публичную инвесторскую версию.
+  - id: SRC-PILOT-CAPEX-AND-OPERATING-BRIEF
+    title: Задание на CAPEX и операционную базу пилотного объекта
+    type: instruction
+    location: User instruction, 2026-08-03
+    publisher: project owner
+    publication_date: 2026-08-03
+    accessed_at: 2026-08-03
+    reliability: primary
+    notes: Фиксирует формат пилота, одну посудомоечную систему, необходимость полного мелкого инвентаря, ПО 120 000 ₽/год, target food cost 25% с упаковкой и стартовые роли. Не утверждает помещение, финальный бюджет, поставщиков или штатное расписание.
+  - id: SRC-LABOR-SPB-20260803-PREP
+    title: Вакансии поваров-заготовщиков в Санкт-Петербурге
+    type: labor_market_listing
+    location: https://spb.hh.ru/vacancies/povar-zagotovschik
+    publisher: HeadHunter
+    publication_date: null
+    accessed_at: 2026-08-03
+    reliability: medium
+    notes: Исследовательский ориентир ставок; видимые предложения включают примерно 4 600–7 000 ₽ за смену и 95 000–124 000 ₽ в месяц. Не является статистической средней или утверждённой ставкой.
+  - id: SRC-LABOR-SPB-20260803-BARISTA
+    title: Вакансии бариста-кассиров в Санкт-Петербурге
+    type: labor_market_listing
+    location: https://spb.hh.ru/vacancies/barista-kassir
+    publisher: HeadHunter
+    publication_date: null
+    accessed_at: 2026-08-03
+    reliability: medium
+    notes: Исследовательский ориентир; видимые предложения включают около 60 000–90 000 ₽ в месяц и 4 200 ₽ за смену.
+  - id: SRC-LABOR-SPB-20260803-ADMIN
+    title: Вакансии администраторов ресторанов в Санкт-Петербурге
+    type: labor_market_listing
+    location: https://spb.hh.ru/vacancies/administratory_restorana
+    publisher: HeadHunter
+    publication_date: null
+    accessed_at: 2026-08-03
+    reliability: medium
+    notes: Исследовательский ориентир; видимые предложения для ресторанных менеджеров и администраторов преимущественно лежат около 75 000–140 000 ₽ в месяц.
+  - id: SRC-TAX-2026-CONTRIBUTIONS
+    title: Пониженные тарифы страховых взносов в 2026 году
+    type: official_tax_guidance
+    location: https://www.nalog.gov.ru/rn11/news/activities_fts/16601574/
+    publisher: ФНС России
+    publication_date: 2026-02-09
+    accessed_at: 2026-08-03
+    reliability: high
+    notes: ФНС указывает тариф 15% с выплат сверх 1,5 МРОТ для применимых категорий; право на льготу должно быть подтверждено по фактическому юридическому и налоговому статусу работодателя.
+  - id: SRC-COLD-ROOM-BENCHMARK-20260803
+    title: Холодильная камера Polair КХН-6,61
+    type: supplier_product_card
+    location: https://www.polair-shop.ru/catalog/holodylnye_kamery/polair_standart2/kxh-6.61/
+    publisher: Polair
+    publication_date: null
+    accessed_at: 2026-08-03
+    reliability: high
+    notes: Публичная цена оболочки 142 831 ₽; размеры 1960×1960×2200 мм и объём 6,61 м³. Используется только как benchmark, не как бюджет помещения.
+  - id: SRC-PRICE-20260803-BAR-INVENTORY-KIT
+    title: Расчётный комплект базового барного инвентаря
+    type: supplier_product_card
+    location: https://restoll.ru/catalog-by-type/stolovaya/
+    publisher: Расчётный комплект / Restoll
+    publication_date: null
+    accessed_at: 2026-08-03T12:00:00.000Z
+    reliability: low
+    notes: "Наблюдаемая цена: 122760 RUB. Наличие: research_composite; exact_cart_not_confirmed. НДС: не указано. Доставка: не включена. Уверенность: low. Bottom-up research-бюджет 111 600 ₽ по 11 группам + 10% резерв 11 160 ₽. Многоразовая гостевая посуда и алкогольный бар не включены. Дополнительные карточки комплекта: https://restoll.ru/catalog/doski_iz_plastika/, https://restoll.ru/catalog/product/kastryulya-katun-kt-ob-20-k-/, https://restoll.ru/catalog/product/kryshka-dlya-gastroem-1-1-nerzh-mgsteel-1-6-mgsteel-111000mg/."
+  - id: SRC-PRICE-20260803-DISHWASH-SYSTEM
+    title: ABAT МПК-700К + предмоечный и выходной столы + 3 кассеты + DVA LT12
+    type: supplier_product_card
+    location: https://abat-online.ru/product/kupolnaya-posudomoechnaya-mashina-abat-mpk-700k/
+    publisher: ABAT Online / Трапеза
+    publication_date: null
+    accessed_at: 2026-08-03T12:00:00.000Z
+    reliability: low
+    notes: "Наблюдаемая цена: 304101.33 RUB. Наличие: research_composite; exact_cart_not_confirmed. НДС: не указано. Доставка: не включена. Уверенность: low. Композит: машина 214 410 ₽ + предмоечный стол 48 486 ₽ + выходной стол 23 128 ₽ + три кассеты 6 207 ₽ + умягчитель 11 870,33 ₽. Доставка, монтаж, химия, вода, канализация и электрическое подключение не включены. Дополнительные карточки комплекта: https://abat-online.ru/catalog/aksessuary-posudomoyki/, https://www.trapeza.ru/goods/283821/."
+  - id: SRC-PRICE-20260803-PREP-INVENTORY-KIT
+    title: Расчётный комплект мелкого инвентаря заготовочного цеха
+    type: supplier_product_card
+    location: https://restoll.ru/catalog-by-type/stolovaya/
+    publisher: Расчётный комплект / Restoll
+    publication_date: null
+    accessed_at: 2026-08-03T12:00:00.000Z
+    reliability: low
+    notes: "Наблюдаемая цена: 295020 RUB. Наличие: research_composite; exact_cart_not_confirmed. НДС: не указано. Доставка: не включена. Уверенность: low. Bottom-up research-бюджет 268 200 ₽ по 16 группам + 10% резерв 26 820 ₽. Это не готовая корзина поставщика. Дополнительные карточки комплекта: https://restoll.ru/catalog/doski_iz_plastika/, https://restoll.ru/catalog/product/kastryulya-katun-kt-ob-20-k-/, https://restoll.ru/catalog/product/kryshka-dlya-gastroem-1-1-nerzh-mgsteel-1-6-mgsteel-111000mg/."
+  - id: SRC-PRICE-20260803-RETAIL-INVENTORY-KIT
+    title: Расчётный комплект мелкого инвентаря торговой кухни
+    type: supplier_product_card
+    location: https://restoll.ru/catalog-by-type/stolovaya/
+    publisher: Расчётный комплект / Restoll
+    publication_date: null
+    accessed_at: 2026-08-03T12:00:00.000Z
+    reliability: low
+    notes: "Наблюдаемая цена: 309760 RUB. Наличие: research_composite; exact_cart_not_confirmed. НДС: не указано. Доставка: не включена. Уверенность: low. Bottom-up research-бюджет 281 600 ₽ по 18 группам + 10% резерв 28 160 ₽. Это не готовая корзина поставщика. Дополнительные карточки комплекта: https://restoll.ru/catalog/doski_iz_plastika/, https://restoll.ru/catalog/product/kastryulya-katun-kt-ob-20-k-/, https://restoll.ru/catalog/product/kryshka-dlya-gastroem-1-1-nerzh-mgsteel-1-6-mgsteel-111000mg/."

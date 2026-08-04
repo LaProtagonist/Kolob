@@ -142,3 +142,21 @@ decisions:
     source_ids:
       - SRC-CAPEX-WEB-CONFIGURATOR-AUDIT-BRIEF
     updated_at: 2026-08-03
+  - id: DEC-011
+    title: Сформировать research-базу CAPEX и операционных допущений пилотного объекта
+    status: approved
+    decision: Зафиксировать пилот как совмещённый заготовочный цех и торговую точку с собственным посадочным залом; добавить одну дедуплицируемую посудомоечную систему и расчётные комплекты мелкого инвентаря; принять как research ПО 120 000 ₽/год, target food cost 25% с упаковкой и стартовые роли; сохранить все зависящие от помещения и запуска расходы открытыми.
+    rationale: Прямое задание владельца проекта от 2026-08-03. Исследовательские цены и ставки используются только как ориентиры и не утверждают закупку, помещение, штатное расписание, полный CAPEX или финансовую модель.
+    affected_documents:
+      - DOC-CAPEX-EQUIPMENT-REGISTER
+      - DOC-CAPEX-MODULES
+      - DOC-CAPEX-CONFIGURATIONS
+      - DOC-CAPEX-GENERATED-EQUIPMENT-BOM
+      - DOC-CAPEX-PRICE-RESEARCH
+      - DOC-PILOT-CAPEX-ASSUMPTIONS
+    approved_by: project owner
+    approved_at: 2026-08-03
+    supersedes: null
+    source_ids:
+      - SRC-PILOT-CAPEX-AND-OPERATING-BRIEF
+    updated_at: 2026-08-03

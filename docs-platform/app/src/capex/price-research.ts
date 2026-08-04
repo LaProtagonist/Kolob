@@ -19,6 +19,7 @@ export const CAPEX_PRICE_CHECKED_AT = "2026-08-01T22:19:05.000Z";
 export const CAPEX_PRICE_DATE = "2026-08-02";
 
 export const PRICE_SCENARIOS = ["minimum", "base", "scale_ready"] as const;
+export const CURRENT_PRICE_SCOPE_COUNT = 51;
 export type PriceScenario = typeof PRICE_SCENARIOS[number];
 export type PriceConfidence = "high" | "medium" | "low";
 export type PriceQuoteStatus = "researched" | "quote_required" | "included_in_parent" | "tbd" | "not_requested";
@@ -46,7 +47,7 @@ export type PriceScenarioValue = PriceQuote & {
 
 export type PriceResearchItem = {
   item_id: string;
-  module_id: "MOD-PREP" | "MOD-RETAIL-HOT" | "MOD-BAR" | "MOD-GROW" | "MOD-POS" | "MOD-KDS";
+  module_id: "MOD-PREP" | "MOD-RETAIL-HOT" | "MOD-BAR" | "MOD-GROW" | "MOD-POS" | "MOD-KDS" | "MOD-WASH";
   valuation_status: "priced" | "quote_required";
   quote_status: "researched" | "quote_required";
   high_risk: boolean;
@@ -67,7 +68,7 @@ export type CapexPriceResearch = {
     decision_id: string;
     iteration_id: string;
     proposal_id: string;
-    checked_at: typeof CAPEX_PRICE_CHECKED_AT;
+    checked_at: string;
     currency: "RUB";
     source_register_path: "docs-platform/working/capex-equipment-register.yaml";
     source_register_before_sha256: string;
@@ -82,7 +83,7 @@ export type CapexPriceResearch = {
   scope: {
     included_modules: string[];
     excluded_modules_and_categories: string[];
-    eligible_procurement_record_count: 47;
+    eligible_procurement_record_count: number;
   };
   items: PriceResearchItem[];
   summary: PriceResearchSummary;
@@ -368,7 +369,7 @@ export function recalculatePriceSummary(items: PriceResearchItem[]): PriceResear
   const money = (value: number) => Math.round(value * 100) / 100;
   const totals = Object.fromEntries(PRICE_SCENARIOS.map(scenario => [scenario, money(priced.reduce((total, item) => total + (item.scenarios[scenario]?.line_total_rub ?? 0), 0))])) as Record<PriceScenario, number>;
   const moduleTotals: Record<string, Record<PriceScenario, number>> = {};
-  for (const moduleId of ["MOD-PREP", "MOD-RETAIL-HOT", "MOD-BAR", "MOD-GROW", "MOD-POS", "MOD-KDS"]) {
+  for (const moduleId of ["MOD-PREP", "MOD-RETAIL-HOT", "MOD-BAR", "MOD-GROW", "MOD-POS", "MOD-KDS", "MOD-WASH"]) {
     moduleTotals[moduleId] = Object.fromEntries(PRICE_SCENARIOS.map(scenario => [scenario, money(priced.filter(item => item.module_id === moduleId).reduce((total, item) => total + (item.scenarios[scenario]?.line_total_rub ?? 0), 0))])) as Record<PriceScenario, number>;
   }
   moduleTotals["POS/KDS"] = Object.fromEntries(PRICE_SCENARIOS.map(scenario => [scenario, money(moduleTotals["MOD-POS"][scenario] + moduleTotals["MOD-KDS"][scenario])])) as Record<PriceScenario, number>;
@@ -387,8 +388,8 @@ export function recalculatePriceSummary(items: PriceResearchItem[]): PriceResear
 
 export function buildPriceResearch(register: CapexRegister): CapexPriceResearch {
   const registerById = new Map(register.equipment.map(item => [item.item_id, item]));
-  const eligible = register.equipment.filter(item => item.item_id <= "CAPEX-04-999" && ["standalone", "purchased_separately"].includes(item.inclusion_status) && !["open_question", "engineering_connection"].includes(item.record_type));
-  if (eligible.length !== 47) throw new Error(`Expected 47 independent procurement records in CAPEX-01—04, got ${eligible.length}.`);
+  const eligible = register.equipment.filter(item => !item.item_id.startsWith("CAPEX-05-") && ["standalone", "purchased_separately"].includes(item.inclusion_status) && !["open_question", "engineering_connection"].includes(item.record_type));
+  if (eligible.length !== CURRENT_PRICE_SCOPE_COUNT) throw new Error(`Expected ${CURRENT_PRICE_SCOPE_COUNT} independent procurement records in the current research scope, got ${eligible.length}.`);
   const definitions = new Set([...pricedDefinitions, ...unpricedDefinitions].map(item => item.item_id));
   const missing = eligible.map(item => item.item_id).filter(id => !definitions.has(id));
   const extra = [...definitions].filter(id => !eligible.some(item => item.item_id === id));
@@ -442,9 +443,9 @@ export function buildPriceResearch(register: CapexRegister): CapexPriceResearch 
     },
     business_capacity: { prep_outlet_count: 5, checks_per_outlet_per_day: 100, total_checks_per_day: 500, scale_boundary: "Профессиональное кафе/пилотный объект; без бытового оборудования и без промышленной производственной линии." },
     scope: {
-      included_modules: ["MOD-PREP", "MOD-RETAIL-HOT", "MOD-BAR", "MOD-GROW", "MOD-POS", "MOD-KDS"],
+      included_modules: ["MOD-PREP", "MOD-RETAIL-HOT", "MOD-BAR", "MOD-GROW", "MOD-POS", "MOD-KDS", "MOD-WASH"],
       excluded_modules_and_categories: ["MOD-GUEST", "CAPEX-05", "ремонт", "инженерное проектирование и монтаж", "пожарная безопасность", "оборотный капитал", "сырьё", "упаковка и расходники запуска", "ещё не сформированные разделы"],
-      eligible_procurement_record_count: 47,
+      eligible_procurement_record_count: CURRENT_PRICE_SCOPE_COUNT,
     },
     items,
     summary: recalculatePriceSummary(items),
@@ -457,7 +458,7 @@ export function applyPriceResearch(register: CapexRegister, research: CapexPrice
   result.document.decision_id = research.document.decision_id;
   result.document.iteration_id = research.document.iteration_id;
   result.document.proposal_id = research.document.proposal_id;
-  result.document.warning = "Первичная ценовая оценка пищевого оснащения имеет статус research и не является коммерческим предложением или утверждённым CAPEX. 151 — число записей реестра, а не самостоятельных закупочных единиц.";
+  result.document.warning = "Первичная ценовая оценка пищевого оснащения имеет статус research и не является коммерческим предложением или утверждённым CAPEX. Число записей реестра не равно числу самостоятельных закупочных единиц.";
   result.document.price_research_path = CAPEX_PRICE_RESEARCH_PATH;
   result.document.price_research_date = CAPEX_PRICE_DATE;
   result.document.priced_record_count = research.summary.priced_record_count;
@@ -542,10 +543,10 @@ export function validatePriceResearch(research: CapexPriceResearch, register?: C
     const validate = new Ajv2020({ allErrors: true, strict: false }).compile(JSON.parse(fs.readFileSync(schemaPath, "utf8")));
     if (!validate(research)) errors.push(...(validate.errors ?? []).map(error => `schema ${error.instancePath || "/"} ${error.message}`));
   }
-  if (research.items.length !== 47) errors.push(`Expected 47 eligible price records, got ${research.items.length}.`);
+  if (research.items.length !== CURRENT_PRICE_SCOPE_COUNT) errors.push(`Expected ${CURRENT_PRICE_SCOPE_COUNT} eligible price records, got ${research.items.length}.`);
   const ids = research.items.map(item => item.item_id);
   if (new Set(ids).size !== ids.length) errors.push("Duplicate price research item_id.");
-  if (research.summary.priced_record_count + research.summary.unpriced_record_count !== 47) errors.push("Price coverage summary must total 47.");
+  if (research.summary.priced_record_count + research.summary.unpriced_record_count !== CURRENT_PRICE_SCOPE_COUNT) errors.push(`Price coverage summary must total ${CURRENT_PRICE_SCOPE_COUNT}.`);
   for (const item of research.items) {
     if (item.valuation_status === "priced") {
       for (const scenario of PRICE_SCENARIOS) {

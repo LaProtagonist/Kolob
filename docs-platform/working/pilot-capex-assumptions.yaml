@@ -1,0 +1,157 @@
+schema_version: 1
+document:
+  project: Колобочная
+  document_id: DOC-PILOT-CAPEX-ASSUMPTIONS
+  title: Pilot CAPEX and Operating Assumptions
+  russian_title: Пилотный объект — CAPEX и операционные допущения
+  version: "0.1"
+  status: research
+  decision_id: DEC-011
+  iteration_id: ITR-PILOT-CAPEX-BASELINE-2026-08-03-01
+  proposal_id: PROP-PILOT-CAPEX-BASELINE-2026-08-03-01
+  updated_at: 2026-08-03
+  warning: Документ содержит исследовательские ориентиры. Он не утверждает помещение, финальный CAPEX, штатное расписание, поставщиков или финансовую модель.
+pilot_configuration:
+  configuration_id: CFG-PILOT-001
+  format_id: FMT-INTEGRATED
+  description: Заготовочный цех, совмещённый с торговой точкой и собственным посадочным залом.
+  location: null
+  premises_selected: false
+  selected_optional_modules:
+    - MOD-GUEST
+    - MOD-BAR
+    - MOD-STAFF
+  excluded_modules:
+    - MOD-GROW
+equipment_estimate:
+  totals_rub:
+    minimum: 2820399.33
+    base: 3892659.33
+    scale_ready: 4988662.79
+  default_scenario: base
+  minimum_selector_available: false
+  known_additions_base_rub: 1031641.33
+  known_additions:
+    - id: CAPEX-08-001
+      name: Профессиональная посудомоечная зона
+      amount_rub: 304101.33
+    - id: CAPEX-01-048
+      name: Мелкий инвентарь заготовочного цеха
+      amount_rub: 295020
+    - id: CAPEX-02-056
+      name: Мелкий инвентарь торговой кухни
+      amount_rub: 309760
+    - id: CAPEX-02-057
+      name: Базовый барный инвентарь
+      amount_rub: 122760
+  warning: "Даже BASE остаётся нижней границей: позиции без цены и все зависящие от помещения работы не считаются как ноль."
+software:
+  amount_rub_per_year: 120000
+  amount_rub_per_month: 10000
+  classification: OPEX
+  opening_cash_treatment: Если оплачивается авансом за год — отдельный денежный отток запуска, но не Equipment CAPEX.
+  source: project owner instruction
+unit_economics:
+  target_recipe_cost_percent: 25
+  packaging_included: true
+  price_to_recipe_cost_multiple: 4
+  formal_markup_on_cost_percent: 300
+  gross_margin_before_labor_rent_and_other_costs_percent: 75
+  terminology_note: Цена в четыре раза выше себестоимости означает наценку 300%, а не 400%. Формальная наценка 400% дала бы food cost 20%.
+staffing:
+  status: research
+  research_geography: Санкт-Петербург
+  operating_days_per_month: 30
+  schedule_assumption: 2/2 для сменных ролей; один администратор не закрывает семь дней без участия владельца или подмены.
+  on_shift_posts:
+    - role: Повар-заготовщик
+      posts: 1
+      net_rub_per_shift: 4800
+      net_rub_per_month_all_posts: 144000
+      headcount_for_2_2: 2
+    - role: Повар торговой кухни
+      posts: 2
+      net_rub_per_shift: 5200
+      net_rub_per_month_all_posts: 312000
+      headcount_for_2_2: 4
+    - role: Бариста-кассир
+      posts: 2
+      net_rub_per_shift: 4200
+      net_rub_per_month_all_posts: 252000
+      headcount_for_2_2: 4
+    - role: Уборщик
+      posts: 1
+      net_rub_per_shift: 3600
+      net_rub_per_month_all_posts: 108000
+      headcount_for_2_2: 2
+    - role: Администратор
+      posts: 1
+      net_rub_per_month: 100000
+      headcount: 1
+  total_headcount_assumption: 13
+  net_payouts_rub_per_month: 916000
+  gross_payroll_rub_per_month_at_13_percent_ndfl: 1052873.56
+  employer_cost_range_rub_per_month:
+    qualifying_reduced_contributions: 1290051.62
+    standard_30_percent_contributions: 1368735.63
+  excluded_from_employer_cost:
+    - взносы от несчастных случаев
+    - медкнижки
+    - форма
+    - питание
+    - оплачиваемые отпуска и больничные
+    - резерв подмен
+    - подбор и обучение
+  sources:
+    - https://spb.hh.ru/vacancies/povar-zagotovschik
+    - https://spb.hh.ru/vacancies/barista-kassir
+    - https://spb.hh.ru/vacancies/administratory_restorana
+    - https://www.nalog.gov.ru/rn11/news/activities_fts/16601574/
+cold_room_benchmark:
+  status: reference_only_not_in_budget
+  model: Polair КХН-6,61
+  dimensions_mm: 1960×1960×2200
+  internal_volume_m3: 6.61
+  footprint_m2: 3.8416
+  shell_rub: 142831
+  medium_temperature_monoblock_reference_rub: 77325
+  assembly_reference_rub: 12000
+  indicative_total_before_shelves_delivery_electrical_and_condensate_rub: 232156
+  indicative_rub_per_footprint_m2: 60432.11
+  source_url: https://www.polair-shop.ru/catalog/holodylnye_kamery/polair_standart2/kxh-6.61/
+  rule: Не переносить цену за м² в CAPEX автоматически. Камеры считаются после выбора помещения по внутренним размерам, температуре, толщине панелей, нагрузке, дверям, агрегату и монтажу.
+budget_layers:
+  - id: EQUIPMENT
+    name: Оборудование и мелкий инвентарь
+    status: partially_priced
+    calculation_basis: Equipment Register + Price Research + generated BOM
+  - id: PREMISES
+    name: "Помещение: камеры, вентиляция, газ, вода, канализация, электрика, ремонт, монтаж, пусконаладка, мебель и навигация"
+    status: open_until_premises
+    calculation_basis: обмеры + технологическая расстановка + инженерные проекты + коммерческие предложения
+  - id: SOFTWARE
+    name: Программное обеспечение
+    status: assumption
+    amount_rub_per_year: 120000
+  - id: PREOPENING
+    name: Расходы перед открытием
+    status: open
+    amount_rub: null
+  - id: INITIAL_STOCK
+    name: Первоначальные запасы сырья, упаковки и расходников
+    status: open
+    amount_rub: null
+  - id: WORKING_CAPITAL
+    name: Оборотный капитал
+    status: open
+    amount_rub: null
+  - id: CONTINGENCY
+    name: Резерв бюджета
+    status: open
+    amount_rub: null
+premises_calculation_method:
+  - Зафиксировать зоны, площади, высоты, мощность и фазность, воду, канализацию, газ, вентиляционные трассы и место наружных блоков.
+  - Сделать технологическую расстановку оборудования и разделить грязные/чистые и сырьевые/готовые потоки.
+  - Считать камеры по внутренним размерам и температурным режимам; вентиляцию — по тепловыделениям и воздухообмену; инженерные подключения — по точкам, мощностям и длинам трасс.
+  - Ремонт считать по обмерной ведомости и дефектам, мебель — по посадочным местам и единицам, навигацию — по фактическим точкам размещения.
+  - Получить минимум два сопоставимых коммерческих предложения по каждому крупному разделу и только затем формировать полный CAPEX запуска.

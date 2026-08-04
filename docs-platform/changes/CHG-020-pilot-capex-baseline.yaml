@@ -1,0 +1,214 @@
+change_id: CHG-020
+title: Применить research-базу CAPEX и операционных допущений пилота
+status: approved
+created_at: 2026-08-03
+decision_id: DEC-011
+iteration_id: ITR-PILOT-CAPEX-BASELINE-2026-08-03-01
+proposal_id: PROP-PILOT-CAPEX-BASELINE-2026-08-03-01
+approved_payload_path: docs-platform/changelog/payloads/ITR-PILOT-CAPEX-BASELINE-2026-08-03-01-approved.yaml
+approved_payload_sha256: f8af78bb762df25f08231936cfbf6eee3833bd96361d02228586fc979b754007
+operations:
+  - type: add
+    entity: sources
+    value:
+      id: SRC-PRICE-20260803-BAR-INVENTORY-KIT
+      title: Расчётный комплект базового барного инвентаря
+      type: supplier_product_card
+      location: https://restoll.ru/catalog-by-type/stolovaya/
+      publisher: Расчётный комплект / Restoll
+      publication_date: null
+      accessed_at: 2026-08-03T12:00:00.000Z
+      reliability: low
+      notes: "Наблюдаемая цена: 122760 RUB. Наличие: research_composite; exact_cart_not_confirmed. НДС: не указано. Доставка: не включена. Уверенность: low. Bottom-up research-бюджет 111 600 ₽ по 11 группам + 10% резерв 11 160 ₽. Многоразовая гостевая посуда и алкогольный бар не включены. Дополнительные карточки комплекта: https://restoll.ru/catalog/doski_iz_plastika/, https://restoll.ru/catalog/product/kastryulya-katun-kt-ob-20-k-/, https://restoll.ru/catalog/product/kryshka-dlya-gastroem-1-1-nerzh-mgsteel-1-6-mgsteel-111000mg/."
+  - type: add
+    entity: sources
+    value:
+      id: SRC-PRICE-20260803-DISHWASH-SYSTEM
+      title: ABAT МПК-700К + предмоечный и выходной столы + 3 кассеты + DVA LT12
+      type: supplier_product_card
+      location: https://abat-online.ru/product/kupolnaya-posudomoechnaya-mashina-abat-mpk-700k/
+      publisher: ABAT Online / Трапеза
+      publication_date: null
+      accessed_at: 2026-08-03T12:00:00.000Z
+      reliability: low
+      notes: "Наблюдаемая цена: 304101.33 RUB. Наличие: research_composite; exact_cart_not_confirmed. НДС: не указано. Доставка: не включена. Уверенность: low. Композит: машина 214 410 ₽ + предмоечный стол 48 486 ₽ + выходной стол 23 128 ₽ + три кассеты 6 207 ₽ + умягчитель 11 870,33 ₽. Доставка, монтаж, химия, вода, канализация и электрическое подключение не включены. Дополнительные карточки комплекта: https://abat-online.ru/catalog/aksessuary-posudomoyki/, https://www.trapeza.ru/goods/283821/."
+  - type: add
+    entity: sources
+    value:
+      id: SRC-PRICE-20260803-PREP-INVENTORY-KIT
+      title: Расчётный комплект мелкого инвентаря заготовочного цеха
+      type: supplier_product_card
+      location: https://restoll.ru/catalog-by-type/stolovaya/
+      publisher: Расчётный комплект / Restoll
+      publication_date: null
+      accessed_at: 2026-08-03T12:00:00.000Z
+      reliability: low
+      notes: "Наблюдаемая цена: 295020 RUB. Наличие: research_composite; exact_cart_not_confirmed. НДС: не указано. Доставка: не включена. Уверенность: low. Bottom-up research-бюджет 268 200 ₽ по 16 группам + 10% резерв 26 820 ₽. Это не готовая корзина поставщика. Дополнительные карточки комплекта: https://restoll.ru/catalog/doski_iz_plastika/, https://restoll.ru/catalog/product/kastryulya-katun-kt-ob-20-k-/, https://restoll.ru/catalog/product/kryshka-dlya-gastroem-1-1-nerzh-mgsteel-1-6-mgsteel-111000mg/."
+  - type: add
+    entity: sources
+    value:
+      id: SRC-PRICE-20260803-RETAIL-INVENTORY-KIT
+      title: Расчётный комплект мелкого инвентаря торговой кухни
+      type: supplier_product_card
+      location: https://restoll.ru/catalog-by-type/stolovaya/
+      publisher: Расчётный комплект / Restoll
+      publication_date: null
+      accessed_at: 2026-08-03T12:00:00.000Z
+      reliability: low
+      notes: "Наблюдаемая цена: 309760 RUB. Наличие: research_composite; exact_cart_not_confirmed. НДС: не указано. Доставка: не включена. Уверенность: low. Bottom-up research-бюджет 281 600 ₽ по 18 группам + 10% резерв 28 160 ₽. Это не готовая корзина поставщика. Дополнительные карточки комплекта: https://restoll.ru/catalog/doski_iz_plastika/, https://restoll.ru/catalog/product/kastryulya-katun-kt-ob-20-k-/, https://restoll.ru/catalog/product/kryshka-dlya-gastroem-1-1-nerzh-mgsteel-1-6-mgsteel-111000mg/."
+  - type: add
+    entity: assumptions
+    value:
+      id: ASM-PILOT-FORMAT
+      title: Формат пилотного объекта
+      value: Заготовочный цех + торговая точка + собственный посадочный зал
+      unit: null
+      status: research
+      rationale: Прямое задание владельца проекта; параметры помещения ещё не определены.
+      scenario: PILOT_BASE
+      applies_to:
+        - DOC-PILOT-CAPEX-ASSUMPTIONS
+        - DOC-CAPEX-CONFIGURATIONS
+      source_ids:
+        - SRC-PILOT-CAPEX-AND-OPERATING-BRIEF
+      decision_id: DEC-011
+      updated_at: 2026-08-03
+  - type: add
+    entity: assumptions
+    value:
+      id: ASM-PILOT-SOFTWARE
+      title: Бюджет программного обеспечения
+      value: 120000
+      unit: RUB/year
+      status: research
+      rationale: Задано владельцем проекта; учитывается как OPEX, а при годовой предоплате — как отдельный денежный отток запуска.
+      scenario: PILOT_BASE
+      applies_to:
+        - DOC-PILOT-CAPEX-ASSUMPTIONS
+      source_ids:
+        - SRC-PILOT-CAPEX-AND-OPERATING-BRIEF
+      decision_id: DEC-011
+      updated_at: 2026-08-03
+  - type: add
+    entity: assumptions
+    value:
+      id: ASM-PILOT-FOOD-COST
+      title: Целевая рецептурная себестоимость с упаковкой
+      value: 25
+      unit: percent of revenue
+      status: research
+      rationale: Цена равна четырём рецептурным себестоимостям; это формальная наценка 300% и валовая маржа 75% до прочих затрат.
+      scenario: PILOT_BASE
+      applies_to:
+        - DOC-PILOT-CAPEX-ASSUMPTIONS
+      source_ids:
+        - SRC-PILOT-CAPEX-AND-OPERATING-BRIEF
+      decision_id: DEC-011
+      updated_at: 2026-08-03
+  - type: add
+    entity: assumptions
+    value:
+      id: ASM-PILOT-STAFFING
+      title: Стартовые посты пилотного объекта
+      value:
+        prep_cook: 1
+        line_cook: 2
+        barista_cashier: 2
+        cleaner: 1
+        administrator: 1
+      unit: posts per operating shift
+      status: research
+      rationale: Прямой ориентир владельца проекта; headcount и графики требуют операционного режима и часов работы.
+      scenario: PILOT_BASE
+      applies_to:
+        - DOC-PILOT-CAPEX-ASSUMPTIONS
+      source_ids:
+        - SRC-PILOT-CAPEX-AND-OPERATING-BRIEF
+      decision_id: DEC-011
+      updated_at: 2026-08-03
+  - type: add
+    entity: assumptions
+    value:
+      id: ASM-PILOT-PAYROLL-SPB
+      title: Исследовательский фонд работодателя для стартовых постов
+      value:
+        from_rub_per_month: 1290051.62
+        to_rub_per_month: 1368735.63
+      unit: RUB/month
+      status: research
+      rationale: Расчёт по видимым вакансиям Санкт-Петербурга, 30 операционным дням, графику 2/2, НДФЛ 13% и диапазону страховых взносов. Не включает ряд кадровых расходов.
+      scenario: PILOT_BASE
+      applies_to:
+        - DOC-PILOT-CAPEX-ASSUMPTIONS
+      source_ids:
+        - SRC-LABOR-SPB-20260803-PREP
+        - SRC-LABOR-SPB-20260803-BARISTA
+        - SRC-LABOR-SPB-20260803-ADMIN
+        - SRC-TAX-2026-CONTRIBUTIONS
+      decision_id: DEC-011
+      updated_at: 2026-08-03
+  - type: add
+    entity: assumptions
+    value:
+      id: ASM-PILOT-PREMISES-OPEN
+      title: Зависимые от помещения слои CAPEX
+      value: null
+      unit: null
+      status: research
+      rationale: Камеры, вентиляция, газ, вода, канализация, электричество, ремонт, монтаж, пусконаладка, мебель и навигация считаются после выбора и обследования помещения.
+      scenario: PILOT_BASE
+      applies_to:
+        - DOC-PILOT-CAPEX-ASSUMPTIONS
+        - DOC-CAPEX-EQUIPMENT-REGISTER
+      source_ids:
+        - SRC-PILOT-CAPEX-AND-OPERATING-BRIEF
+        - SRC-COLD-ROOM-BENCHMARK-20260803
+      decision_id: DEC-011
+      updated_at: 2026-08-03
+  - type: add
+    entity: assumptions
+    value:
+      id: ASM-PILOT-LAUNCH-COSTS-OPEN
+      title: Открытые расходы запуска
+      value: null
+      unit: null
+      status: research
+      rationale: Расходы перед открытием, первоначальные запасы, оборотный капитал и резерв пока не оценены и не считаются нулём.
+      scenario: PILOT_BASE
+      applies_to:
+        - DOC-PILOT-CAPEX-ASSUMPTIONS
+      source_ids:
+        - SRC-PILOT-CAPEX-AND-OPERATING-BRIEF
+      decision_id: DEC-011
+      updated_at: 2026-08-03
+  - type: update
+    entity: documents
+    id: DOC-CAPEX-EQUIPMENT-REGISTER
+    value:
+      updated_at: 2026-08-03
+  - type: update
+    entity: documents
+    id: DOC-CAPEX-MODULES
+    value:
+      updated_at: 2026-08-03
+  - type: update
+    entity: documents
+    id: DOC-CAPEX-CONFIGURATIONS
+    value:
+      sections:
+        - CFG-TEMPLATE-001
+        - CFG-PILOT-001
+        - Configuration overrides
+      updated_at: 2026-08-03
+  - type: update
+    entity: documents
+    id: DOC-CAPEX-GENERATED-EQUIPMENT-BOM
+    value:
+      local_path: docs-platform/working/configurations/CFG-PILOT-001/equipment-bom.yaml
+      updated_at: 2026-08-03
+  - type: update
+    entity: documents
+    id: DOC-CAPEX-PRICE-RESEARCH
+    value:
+      version: "0.3"
+      updated_at: 2026-08-03

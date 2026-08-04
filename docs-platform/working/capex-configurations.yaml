@@ -7,9 +7,9 @@ document:
   version: "0.1"
   status: research
   document_type: Working CAPEX object configurations
-  decision_id: DEC-008
-  iteration_id: ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01
-  proposal_id: PROP-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01
+  decision_id: DEC-011
+  iteration_id: ITR-PILOT-CAPEX-BASELINE-2026-08-03-01
+  proposal_id: PROP-PILOT-CAPEX-BASELINE-2026-08-03-01
 configurations:
   - configuration_id: CFG-TEMPLATE-001
     name: Пустая шаблонная конфигурация
@@ -37,3 +37,33 @@ configurations:
     selected_modules: []
     excluded_modules: []
     notes: Шаблон структуры; не является конфигурацией реального объекта.
+  - configuration_id: CFG-PILOT-001
+    name: "Пилот: заготовочный цех + торговая точка с посадочным залом"
+    format_id: FMT-INTEGRATED
+    lifecycle_status: research
+    total_area_m2: null
+    guest_area_m2: null
+    hall_count: 1
+    seat_count: null
+    cashier_post_count: 2
+    hot_kitchen_post_count: 2
+    filling_count: null
+    service_station_count: null
+    peak_orders_per_hour: null
+    daily_orders: null
+    bar_enabled: true
+    alcohol_enabled: false
+    prep_enabled: true
+    grow_enabled: false
+    central_supply_enabled: false
+    self_service_enabled: false
+    reusable_tableware_enabled: null
+    shared_seating: false
+    mobile_format: false
+    selected_modules:
+      - MOD-GUEST
+      - MOD-BAR
+      - MOD-STAFF
+    excluded_modules:
+      - MOD-GROW
+    notes: Каноническая research-конфигурация пилота по DEC-011. Площадь, число посадочных мест, инженерия и мебель остаются открытыми до выбора помещения.

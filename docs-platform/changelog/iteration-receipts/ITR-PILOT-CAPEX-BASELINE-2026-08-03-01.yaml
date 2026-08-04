@@ -1,0 +1,82 @@
+receipt_version: 1
+iteration_id: ITR-PILOT-CAPEX-BASELINE-2026-08-03-01
+proposal_id: PROP-PILOT-CAPEX-BASELINE-2026-08-03-01
+decision_id: DEC-011
+change_set_id: CHG-020
+status: applied
+applied_at: 2026-08-03T12:04:31.855Z
+actor: Codex
+tool: docs-platform capex:pilot:apply
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-PILOT-CAPEX-BASELINE-2026-08-03-01-approved.yaml
+  sha256: f8af78bb762df25f08231936cfbf6eee3833bd96361d02228586fc979b754007
+before_composite_hash: c33eea5c6883c71c64c87bb08fc99a5116465af6734d5955fa9293d81cad2752
+after_composite_hash: 5772a81aa343d0c2ada21c8e4fbe5216a10a398dc4517bced3e5687ae2268b75
+before_files:
+  - path: docs-platform/working/capex-equipment-register.yaml
+    existed: true
+    sha256: 58604b2ae2fd3bdb8a572f2f7f8f3832c45268613d8d080a57142c844cc1e8bf
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-PILOT-CAPEX-BASELINE-2026-08-03-01/working/capex-equipment-register.yaml
+  - path: docs-platform/working/capex-equipment-register.csv
+    existed: true
+    sha256: 9b650310273b9f1396bc23308a1a90d4c9dbaf6d484a4e019fb1692593d22a34
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-PILOT-CAPEX-BASELINE-2026-08-03-01/working/capex-equipment-register.csv
+  - path: docs-platform/working/capex-price-research.yaml
+    existed: true
+    sha256: f354133277c571e7ffa1206da520604dd2fecd457726a25d4ffed9d0f0c0e34f
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-PILOT-CAPEX-BASELINE-2026-08-03-01/working/capex-price-research.yaml
+  - path: docs-platform/working/capex-modules.yaml
+    existed: true
+    sha256: f6596a417019d440bc30653c183ba1b8f79e538a78b4cf4d1354996f0eb0477f
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-PILOT-CAPEX-BASELINE-2026-08-03-01/working/capex-modules.yaml
+  - path: docs-platform/working/capex-module-items.yaml
+    existed: true
+    sha256: de777dd144bd15f77028f6f5cd8114ae28280e1da75997c8ee2d36d1bf600466
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-PILOT-CAPEX-BASELINE-2026-08-03-01/working/capex-module-items.yaml
+  - path: docs-platform/working/capex-configurations.yaml
+    existed: true
+    sha256: 35fe08382f012a1b3a1dfbbaea86251a5bf910bdb35d3ca9886f67b7b688ca8a
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-PILOT-CAPEX-BASELINE-2026-08-03-01/working/capex-configurations.yaml
+  - path: docs-platform/working/pilot-capex-assumptions.yaml
+    existed: false
+    sha256: null
+    rollback_payload_path: null
+  - path: docs-platform/working/configurations/CFG-PILOT-001/equipment-bom.yaml
+    existed: false
+    sha256: null
+    rollback_payload_path: null
+  - path: docs-platform/working/configurations/CFG-PILOT-001/equipment-bom.csv
+    existed: false
+    sha256: null
+    rollback_payload_path: null
+after_files:
+  - path: docs-platform/working/capex-equipment-register.yaml
+    sha256: e5e835ecae0d0d433afd24cff8923026097d115d87c234f1af475c463bb8f6e0
+  - path: docs-platform/working/capex-equipment-register.csv
+    sha256: f3eaee8145728ac2e4b4c7269949fef921164ee6116371977255fb602e6a3d97
+  - path: docs-platform/working/capex-price-research.yaml
+    sha256: 96d2ba3e55b02843d05ebeffc6e8c3e3c400e82392a5d95b16cd321e4d5e5b3d
+  - path: docs-platform/working/capex-modules.yaml
+    sha256: 2fb31d90b852a5aaae6500d99412c7fabba0bbe9187f08106e3f37c7a52ae33a
+  - path: docs-platform/working/capex-module-items.yaml
+    sha256: 4b18b5c644293361c4901a58de7a9a6e96fbb08eb03c1e84aa91e66ac9db2b55
+  - path: docs-platform/working/capex-configurations.yaml
+    sha256: 3810fa84efa969d8d95e2f0b0b49ede044b854d9be21ac92f5787d9ff8369f3c
+  - path: docs-platform/working/pilot-capex-assumptions.yaml
+    sha256: 25e11d4db20050b3a95cab40797ef0a29e56fad93c73d33d4a39415a8071d4ac
+  - path: docs-platform/working/configurations/CFG-PILOT-001/equipment-bom.yaml
+    sha256: 671375dd8ac2a2387a9afa71104e08df21704493c67810f7d313d29ae0e38035
+  - path: docs-platform/working/configurations/CFG-PILOT-001/equipment-bom.csv
+    sha256: b3af34b3c022e127cf3a0bc3257e571a79fa7cf0b79d587842dee93c57f8f5ab
+pilot_equipment_totals_rub:
+  minimum: 2820399.33
+  base: 3892659.33
+  scale_ready: 4988662.79
+validation_result: passed
+git_commit_hash: null
+rollback:
+  mode: governed_reverse_change_set
+  source_receipt: docs-platform/changelog/iteration-receipts/ITR-PILOT-CAPEX-BASELINE-2026-08-03-01.yaml
+  preview_command: npm run capex:pilot:reverse:preview -- ../changelog/iteration-receipts/ITR-PILOT-CAPEX-BASELINE-2026-08-03-01.yaml --change-id CHG-ROLLBACK-XXX --decision DEC-ROLLBACK-XXX
+  preserves_history: true
+  git_reset_forbidden: true

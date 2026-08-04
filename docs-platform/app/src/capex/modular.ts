@@ -345,7 +345,7 @@ export function validateModularSources(register: CapexRegister, sources: Modular
   for (const [label, ids] of [["item_id", [...itemIds]], ["module_id", moduleIds], ["format_id", formatIds], ["configuration_id", configurationIds]] as const) {
     if (new Set(ids).size !== ids.length) errors.push(`Duplicate ${label}.`);
   }
-  if (register.equipment.length !== EQUIPMENT_RECORD_COUNT) errors.push("Equipment Register must contain exactly 151 records.");
+  if (register.equipment.length !== EQUIPMENT_RECORD_COUNT) errors.push(`Equipment Register must contain exactly ${EQUIPMENT_RECORD_COUNT} records.`);
   if (formatIds.length !== 7) errors.push("Point format library must contain exactly seven formats.");
   const moduleSet = new Set(moduleIds);
   const formatSet = new Set(formatIds);

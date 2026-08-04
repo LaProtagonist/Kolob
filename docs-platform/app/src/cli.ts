@@ -6,6 +6,7 @@ import { readRegister, registerStatistics, sourceMarkdownPath, validateRegister 
 import { applyModularIteration, applyModularReverse, buildConfiguration, listFormats, listModules, materializeModularRollbackPayload, prepareModularReverse, previewConfiguration, previewModularIteration, previewModularReverse, validateConfigurations, writeApprovedModularPayload } from "./capex/modular-workflow.js";
 import { applyPriceIteration, previewPriceIteration, previewPriceReverse, writeApprovedPriceArtifacts } from "./capex/price-workflow.js";
 import { appendConfiguratorTimeline, applyConfiguratorAudit, previewConfiguratorAudit, previewConfiguratorReverse, writeConfiguratorAuditArtifacts } from "./capex/configurator-audit-workflow.js";
+import { appendPilotTimeline, applyPilotIteration, previewPilotIteration, previewPilotReverse, writePilotArtifacts } from "./capex/pilot-expansion-workflow.js";
 import { checkWebSnapshot, writeWebSnapshot } from "./capex/web-snapshot.js";
 import { readPriceResearch, validatePriceResearch } from "./capex/price-research.js";
 import { applyChange, loadRegistry, previewReverseChange, printChangePreview, readYaml, registryKinds, requireChange, validateRegistry, writeReverseChange } from "./governance/registry.js";
@@ -103,6 +104,16 @@ try {
     previewConfiguratorReverse(args[0] ? path.resolve(args[0]) : undefined, flag(args, "--change-id"), flag(args, "--decision"));
   } else if (command === "capex:configurator:timeline") {
     appendConfiguratorTimeline();
+  } else if (command === "capex:pilot:artifacts") {
+    writePilotArtifacts();
+  } else if (command === "capex:pilot:preview") {
+    previewPilotIteration();
+  } else if (command === "capex:pilot:apply") {
+    applyPilotIteration(applyOptions(args));
+  } else if (command === "capex:pilot:reverse:preview") {
+    previewPilotReverse(args[0] ? path.resolve(args[0]) : undefined, flag(args, "--change-id"), flag(args, "--decision"));
+  } else if (command === "capex:pilot:timeline") {
+    appendPilotTimeline();
   } else if (command === "capex:web:sync") {
     writeWebSnapshot();
   } else if (command === "capex:web:check") {
@@ -133,7 +144,7 @@ try {
   else if (command === "google:test:read") await readTests();
   else if (command === "google:test:update") await updateTests(args);
   else if (command === "google:test:cleanup") await cleanupTests();
-  else throw new Error("commands: registry:*|change:*|timeline:*|capex:register:*|capex:modular:*|capex:price:*|capex:configurator:*|capex:web:*|capex:configuration:*|capex:formats:list|capex:modules:list|capex:sheet:*|google:*|documents:list|decisions:list");
+  else throw new Error("commands: registry:*|change:*|timeline:*|capex:register:*|capex:modular:*|capex:price:*|capex:configurator:*|capex:pilot:*|capex:web:*|capex:configuration:*|capex:formats:list|capex:modules:list|capex:sheet:*|google:*|documents:list|decisions:list");
 } catch (error) {
   console.error(`ERROR: ${(error as Error).message}`);
   process.exitCode = 1;

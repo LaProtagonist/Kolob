@@ -4,16 +4,16 @@ document:
   document_id: DOC-CAPEX-PRICE-RESEARCH
   title: CAPEX Preliminary Price Research
   russian_title: CAPEX — Первичная ценовая оценка пищевого оснащения
-  version: "0.2"
+  version: "0.3"
   status: research
-  decision_id: DEC-010
-  iteration_id: ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01
-  proposal_id: PROP-CAPEX-WEB-CONFIGURATOR-2026-08-03-01
-  checked_at: 2026-08-01T22:19:05.000Z
+  decision_id: DEC-011
+  iteration_id: ITR-PILOT-CAPEX-BASELINE-2026-08-03-01
+  proposal_id: PROP-PILOT-CAPEX-BASELINE-2026-08-03-01
+  checked_at: 2026-08-03T12:00:00.000Z
   currency: RUB
   source_register_path: docs-platform/working/capex-equipment-register.yaml
-  source_register_before_sha256: f675e12efa69932a49a5ad67ebee33c40459b151cb2aea654e206f6a9b9238b0
-  warning: Все цены — первичная research-оценка по публичным карточкам на дату проверки, не коммерческое предложение и не утверждённый CAPEX. Доставка, монтаж, инженерные подключения, ПО и иные исключённые расходы не добавляются, если это не указано явно.
+  source_register_before_sha256: 58604b2ae2fd3bdb8a572f2f7f8f3832c45268613d8d080a57142c844cc1e8bf
+  warning: Цены имеют статус research. Новые комплекты являются составными оценками, а не готовыми корзинами поставщика; помещение, доставка, монтаж, инженерные подключения, ПО и расходы запуска учитываются отдельно.
 business_capacity:
   prep_outlet_count: 5
   checks_per_outlet_per_day: 100
@@ -27,17 +27,18 @@ scope:
     - MOD-GROW
     - MOD-POS
     - MOD-KDS
+    - MOD-WASH
   excluded_modules_and_categories:
     - MOD-GUEST
     - CAPEX-05
     - ремонт
     - инженерное проектирование и монтаж
     - пожарная безопасность
+    - первоначальный запас
     - оборотный капитал
-    - сырьё
-    - упаковка и расходники запуска
+    - резерв
     - ещё не сформированные разделы
-  eligible_procurement_record_count: 47
+  eligible_procurement_record_count: 51
 items:
   - item_id: CAPEX-01-001
     module_id: MOD-PREP
@@ -696,7 +697,7 @@ items:
     valuation_status: priced
     quote_status: quote_required
     high_risk: true
-    risk_reason: Позиция покупается только если выбранный процессор не обеспечивает требуемую работу с мясом.
+    risk_reason: Количество зафиксировано как одна единица; точную модель и производительность нужно подтвердить по техкартам и объёму мясной заготовки.
     scenarios:
       minimum:
         supplier_name: КЛЕН
@@ -727,9 +728,9 @@ items:
         checked_at: 2026-08-01T22:19:05.000Z
         price_includes_vat: null
         delivery_included: null
-        quantity: 0
-        quantity_basis: conditional_excluded
-        line_total_rub: 0
+        quantity: 1
+        quantity_basis: research_assumption
+        line_total_rub: 24253
       scale_ready:
         supplier_name: КЛЕН
         product_name: Hurakan HKN-22SP
@@ -746,7 +747,7 @@ items:
         quantity: 1
         quantity_basis: research_assumption
         line_total_rub: 32505
-    notes: Цены сохранены для развилки; MINIMUM и BASE не включают отдельную мясорубку, SCALE_READY включает одну условно.
+    notes: MINIMUM не включает мясорубку; BASE и SCALE_READY включают по одной профессиональной мясорубке.
   - item_id: CAPEX-01-016
     module_id: MOD-PREP
     valuation_status: priced
@@ -1478,28 +1479,93 @@ items:
         quantity_basis: research_assumption
         line_total_rub: 20550
     notes: Ориентир ёмкости + крышки; количества research, материал ванн и санитарная схема требуют решения.
+  - item_id: CAPEX-01-048
+    module_id: MOD-PREP
+    valuation_status: priced
+    quote_status: quote_required
+    high_risk: true
+    risk_reason: Составная research-оценка требует точной спецификации и коммерческого предложения перед закупкой.
+    scenarios:
+      minimum:
+        source_id: SRC-PRICE-20260803-PREP-INVENTORY-KIT
+        supplier_name: Расчётный комплект / Restoll
+        product_name: Расчётный комплект мелкого инвентаря заготовочного цеха
+        source_url: https://restoll.ru/catalog-by-type/stolovaya/
+        additional_urls:
+          - https://restoll.ru/catalog/doski_iz_plastika/
+          - https://restoll.ru/catalog/product/kastryulya-katun-kt-ob-20-k-/
+          - https://restoll.ru/catalog/product/kryshka-dlya-gastroem-1-1-nerzh-mgsteel-1-6-mgsteel-111000mg/
+        observed_unit_price_rub: 295020
+        availability_status: research_composite; exact_cart_not_confirmed
+        checked_at: 2026-08-03T12:00:00.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: low
+        notes: Bottom-up research-бюджет 268 200 ₽ по 16 группам + 10% резерв 26 820 ₽. Это не готовая корзина поставщика.
+        quantity: 1
+        quantity_basis: register
+        line_total_rub: 295020
+      base:
+        source_id: SRC-PRICE-20260803-PREP-INVENTORY-KIT
+        supplier_name: Расчётный комплект / Restoll
+        product_name: Расчётный комплект мелкого инвентаря заготовочного цеха
+        source_url: https://restoll.ru/catalog-by-type/stolovaya/
+        additional_urls:
+          - https://restoll.ru/catalog/doski_iz_plastika/
+          - https://restoll.ru/catalog/product/kastryulya-katun-kt-ob-20-k-/
+          - https://restoll.ru/catalog/product/kryshka-dlya-gastroem-1-1-nerzh-mgsteel-1-6-mgsteel-111000mg/
+        observed_unit_price_rub: 295020
+        availability_status: research_composite; exact_cart_not_confirmed
+        checked_at: 2026-08-03T12:00:00.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: low
+        notes: Bottom-up research-бюджет 268 200 ₽ по 16 группам + 10% резерв 26 820 ₽. Это не готовая корзина поставщика.
+        quantity: 1
+        quantity_basis: register
+        line_total_rub: 295020
+      scale_ready:
+        source_id: SRC-PRICE-20260803-PREP-INVENTORY-KIT
+        supplier_name: Расчётный комплект / Restoll
+        product_name: Расчётный комплект мелкого инвентаря заготовочного цеха
+        source_url: https://restoll.ru/catalog-by-type/stolovaya/
+        additional_urls:
+          - https://restoll.ru/catalog/doski_iz_plastika/
+          - https://restoll.ru/catalog/product/kastryulya-katun-kt-ob-20-k-/
+          - https://restoll.ru/catalog/product/kryshka-dlya-gastroem-1-1-nerzh-mgsteel-1-6-mgsteel-111000mg/
+        observed_unit_price_rub: 295020
+        availability_status: research_composite; exact_cart_not_confirmed
+        checked_at: 2026-08-03T12:00:00.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: low
+        notes: Bottom-up research-бюджет 268 200 ₽ по 16 группам + 10% резерв 26 820 ₽. Это не готовая корзина поставщика.
+        quantity: 1
+        quantity_basis: register
+        line_total_rub: 295020
+    notes: Bottom-up research-бюджет 268 200 ₽ по 16 группам + 10% резерв 26 820 ₽. Это не готовая корзина поставщика.
   - item_id: CAPEX-02-001
     module_id: MOD-RETAIL-HOT
     valuation_status: quote_required
     quote_status: quote_required
     high_risk: true
-    risk_reason: Для профессионального газового такояки-гриля с нужной геометрией не найден надёжный активный российский ценовой источник.
+    risk_reason: Для газового гриля с полусферическими ячейками под колобки не найден надёжный активный российский ценовой источник.
     scenarios:
       minimum: null
       base: null
       scale_ready: null
-    notes: Нужны технический подбор, способ газоснабжения и коммерческое предложение.
+    notes: Нужны технический подбор, способ газоснабжения, проверка сертификации и коммерческое предложение.
   - item_id: CAPEX-02-002
     module_id: MOD-RETAIL-HOT
     valuation_status: quote_required
     quote_status: quote_required
     high_risk: true
-    risk_reason: Активная российская карточка UFO-гриля не содержит надёжной публичной цены.
+    risk_reason: Активная российская карточка профессионального гриля для Манчеса с подтверждённой ценой не найдена.
     scenarios:
       minimum: null
       base: null
       scale_ready: null
-    notes: Нужно коммерческое предложение на 3–4 профессиональные единицы.
+    notes: Нужно коммерческое предложение на точную конструкцию и количество единиц.
   - item_id: CAPEX-02-003
     module_id: MOD-RETAIL-HOT
     valuation_status: quote_required
@@ -2096,6 +2162,136 @@ items:
       base: null
       scale_ready: null
     notes: Закрываемая зона хранения алкоголя остаётся без цены.
+  - item_id: CAPEX-02-056
+    module_id: MOD-RETAIL-HOT
+    valuation_status: priced
+    quote_status: quote_required
+    high_risk: true
+    risk_reason: Составная research-оценка требует точной спецификации и коммерческого предложения перед закупкой.
+    scenarios:
+      minimum:
+        source_id: SRC-PRICE-20260803-RETAIL-INVENTORY-KIT
+        supplier_name: Расчётный комплект / Restoll
+        product_name: Расчётный комплект мелкого инвентаря торговой кухни
+        source_url: https://restoll.ru/catalog-by-type/stolovaya/
+        additional_urls:
+          - https://restoll.ru/catalog/doski_iz_plastika/
+          - https://restoll.ru/catalog/product/kastryulya-katun-kt-ob-20-k-/
+          - https://restoll.ru/catalog/product/kryshka-dlya-gastroem-1-1-nerzh-mgsteel-1-6-mgsteel-111000mg/
+        observed_unit_price_rub: 309760
+        availability_status: research_composite; exact_cart_not_confirmed
+        checked_at: 2026-08-03T12:00:00.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: low
+        notes: Bottom-up research-бюджет 281 600 ₽ по 18 группам + 10% резерв 28 160 ₽. Это не готовая корзина поставщика.
+        quantity: 1
+        quantity_basis: register
+        line_total_rub: 309760
+      base:
+        source_id: SRC-PRICE-20260803-RETAIL-INVENTORY-KIT
+        supplier_name: Расчётный комплект / Restoll
+        product_name: Расчётный комплект мелкого инвентаря торговой кухни
+        source_url: https://restoll.ru/catalog-by-type/stolovaya/
+        additional_urls:
+          - https://restoll.ru/catalog/doski_iz_plastika/
+          - https://restoll.ru/catalog/product/kastryulya-katun-kt-ob-20-k-/
+          - https://restoll.ru/catalog/product/kryshka-dlya-gastroem-1-1-nerzh-mgsteel-1-6-mgsteel-111000mg/
+        observed_unit_price_rub: 309760
+        availability_status: research_composite; exact_cart_not_confirmed
+        checked_at: 2026-08-03T12:00:00.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: low
+        notes: Bottom-up research-бюджет 281 600 ₽ по 18 группам + 10% резерв 28 160 ₽. Это не готовая корзина поставщика.
+        quantity: 1
+        quantity_basis: register
+        line_total_rub: 309760
+      scale_ready:
+        source_id: SRC-PRICE-20260803-RETAIL-INVENTORY-KIT
+        supplier_name: Расчётный комплект / Restoll
+        product_name: Расчётный комплект мелкого инвентаря торговой кухни
+        source_url: https://restoll.ru/catalog-by-type/stolovaya/
+        additional_urls:
+          - https://restoll.ru/catalog/doski_iz_plastika/
+          - https://restoll.ru/catalog/product/kastryulya-katun-kt-ob-20-k-/
+          - https://restoll.ru/catalog/product/kryshka-dlya-gastroem-1-1-nerzh-mgsteel-1-6-mgsteel-111000mg/
+        observed_unit_price_rub: 309760
+        availability_status: research_composite; exact_cart_not_confirmed
+        checked_at: 2026-08-03T12:00:00.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: low
+        notes: Bottom-up research-бюджет 281 600 ₽ по 18 группам + 10% резерв 28 160 ₽. Это не готовая корзина поставщика.
+        quantity: 1
+        quantity_basis: register
+        line_total_rub: 309760
+    notes: Bottom-up research-бюджет 281 600 ₽ по 18 группам + 10% резерв 28 160 ₽. Это не готовая корзина поставщика.
+  - item_id: CAPEX-02-057
+    module_id: MOD-BAR
+    valuation_status: priced
+    quote_status: quote_required
+    high_risk: true
+    risk_reason: Составная research-оценка требует точной спецификации и коммерческого предложения перед закупкой.
+    scenarios:
+      minimum:
+        source_id: SRC-PRICE-20260803-BAR-INVENTORY-KIT
+        supplier_name: Расчётный комплект / Restoll
+        product_name: Расчётный комплект базового барного инвентаря
+        source_url: https://restoll.ru/catalog-by-type/stolovaya/
+        additional_urls:
+          - https://restoll.ru/catalog/doski_iz_plastika/
+          - https://restoll.ru/catalog/product/kastryulya-katun-kt-ob-20-k-/
+          - https://restoll.ru/catalog/product/kryshka-dlya-gastroem-1-1-nerzh-mgsteel-1-6-mgsteel-111000mg/
+        observed_unit_price_rub: 122760
+        availability_status: research_composite; exact_cart_not_confirmed
+        checked_at: 2026-08-03T12:00:00.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: low
+        notes: Bottom-up research-бюджет 111 600 ₽ по 11 группам + 10% резерв 11 160 ₽. Многоразовая гостевая посуда и алкогольный бар не включены.
+        quantity: 1
+        quantity_basis: register
+        line_total_rub: 122760
+      base:
+        source_id: SRC-PRICE-20260803-BAR-INVENTORY-KIT
+        supplier_name: Расчётный комплект / Restoll
+        product_name: Расчётный комплект базового барного инвентаря
+        source_url: https://restoll.ru/catalog-by-type/stolovaya/
+        additional_urls:
+          - https://restoll.ru/catalog/doski_iz_plastika/
+          - https://restoll.ru/catalog/product/kastryulya-katun-kt-ob-20-k-/
+          - https://restoll.ru/catalog/product/kryshka-dlya-gastroem-1-1-nerzh-mgsteel-1-6-mgsteel-111000mg/
+        observed_unit_price_rub: 122760
+        availability_status: research_composite; exact_cart_not_confirmed
+        checked_at: 2026-08-03T12:00:00.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: low
+        notes: Bottom-up research-бюджет 111 600 ₽ по 11 группам + 10% резерв 11 160 ₽. Многоразовая гостевая посуда и алкогольный бар не включены.
+        quantity: 1
+        quantity_basis: register
+        line_total_rub: 122760
+      scale_ready:
+        source_id: SRC-PRICE-20260803-BAR-INVENTORY-KIT
+        supplier_name: Расчётный комплект / Restoll
+        product_name: Расчётный комплект базового барного инвентаря
+        source_url: https://restoll.ru/catalog-by-type/stolovaya/
+        additional_urls:
+          - https://restoll.ru/catalog/doski_iz_plastika/
+          - https://restoll.ru/catalog/product/kastryulya-katun-kt-ob-20-k-/
+          - https://restoll.ru/catalog/product/kryshka-dlya-gastroem-1-1-nerzh-mgsteel-1-6-mgsteel-111000mg/
+        observed_unit_price_rub: 122760
+        availability_status: research_composite; exact_cart_not_confirmed
+        checked_at: 2026-08-03T12:00:00.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: low
+        notes: Bottom-up research-бюджет 111 600 ₽ по 11 группам + 10% резерв 11 160 ₽. Многоразовая гостевая посуда и алкогольный бар не включены.
+        quantity: 1
+        quantity_basis: register
+        line_total_rub: 122760
+    notes: Bottom-up research-бюджет 111 600 ₽ по 11 группам + 10% резерв 11 160 ₽. Многоразовая гостевая посуда и алкогольный бар не включены.
   - item_id: CAPEX-03-001
     module_id: MOD-GROW
     valuation_status: priced
@@ -2320,28 +2516,90 @@ items:
         quantity_basis: research_assumption
         line_total_rub: 201900
     notes: Три экрана заданы спецификацией; лицензии KDS, сеть и крепления не включены.
+  - item_id: CAPEX-08-001
+    module_id: MOD-WASH
+    valuation_status: priced
+    quote_status: quote_required
+    high_risk: true
+    risk_reason: Составная research-оценка требует точной спецификации и коммерческого предложения перед закупкой.
+    scenarios:
+      minimum:
+        source_id: SRC-PRICE-20260803-DISHWASH-SYSTEM
+        supplier_name: ABAT Online / Трапеза
+        product_name: ABAT МПК-700К + предмоечный и выходной столы + 3 кассеты + DVA LT12
+        source_url: https://abat-online.ru/product/kupolnaya-posudomoechnaya-mashina-abat-mpk-700k/
+        additional_urls:
+          - https://abat-online.ru/catalog/aksessuary-posudomoyki/
+          - https://www.trapeza.ru/goods/283821/
+        observed_unit_price_rub: 304101.33
+        availability_status: research_composite; exact_cart_not_confirmed
+        checked_at: 2026-08-03T12:00:00.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: low
+        notes: "Композит: машина 214 410 ₽ + предмоечный стол 48 486 ₽ + выходной стол 23 128 ₽ + три кассеты 6 207 ₽ + умягчитель 11 870,33 ₽. Доставка, монтаж, химия, вода, канализация и электрическое подключение не включены."
+        quantity: 1
+        quantity_basis: register
+        line_total_rub: 304101.33
+      base:
+        source_id: SRC-PRICE-20260803-DISHWASH-SYSTEM
+        supplier_name: ABAT Online / Трапеза
+        product_name: ABAT МПК-700К + предмоечный и выходной столы + 3 кассеты + DVA LT12
+        source_url: https://abat-online.ru/product/kupolnaya-posudomoechnaya-mashina-abat-mpk-700k/
+        additional_urls:
+          - https://abat-online.ru/catalog/aksessuary-posudomoyki/
+          - https://www.trapeza.ru/goods/283821/
+        observed_unit_price_rub: 304101.33
+        availability_status: research_composite; exact_cart_not_confirmed
+        checked_at: 2026-08-03T12:00:00.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: low
+        notes: "Композит: машина 214 410 ₽ + предмоечный стол 48 486 ₽ + выходной стол 23 128 ₽ + три кассеты 6 207 ₽ + умягчитель 11 870,33 ₽. Доставка, монтаж, химия, вода, канализация и электрическое подключение не включены."
+        quantity: 1
+        quantity_basis: register
+        line_total_rub: 304101.33
+      scale_ready:
+        source_id: SRC-PRICE-20260803-DISHWASH-SYSTEM
+        supplier_name: ABAT Online / Трапеза
+        product_name: ABAT МПК-700К + предмоечный и выходной столы + 3 кассеты + DVA LT12
+        source_url: https://abat-online.ru/product/kupolnaya-posudomoechnaya-mashina-abat-mpk-700k/
+        additional_urls:
+          - https://abat-online.ru/catalog/aksessuary-posudomoyki/
+          - https://www.trapeza.ru/goods/283821/
+        observed_unit_price_rub: 304101.33
+        availability_status: research_composite; exact_cart_not_confirmed
+        checked_at: 2026-08-03T12:00:00.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: low
+        notes: "Композит: машина 214 410 ₽ + предмоечный стол 48 486 ₽ + выходной стол 23 128 ₽ + три кассеты 6 207 ₽ + умягчитель 11 870,33 ₽. Доставка, монтаж, химия, вода, канализация и электрическое подключение не включены."
+        quantity: 1
+        quantity_basis: register
+        line_total_rub: 304101.33
+    notes: "Композит: машина 214 410 ₽ + предмоечный стол 48 486 ₽ + выходной стол 23 128 ₽ + три кассеты 6 207 ₽ + умягчитель 11 870,33 ₽. Доставка, монтаж, химия, вода, канализация и электрическое подключение не включены."
 summary:
-  eligible_procurement_record_count: 47
-  priced_record_count: 39
+  eligible_procurement_record_count: 51
+  priced_record_count: 43
   unpriced_record_count: 8
-  quote_required_count: 23
+  quote_required_count: 27
   totals_rub:
-    minimum: 2026758
-    base: 3094765
-    scale_ready: 4344021.46
+    minimum: 3058399.33
+    base: 4150659.33
+    scale_ready: 5375662.79
   module_totals_rub:
     MOD-PREP:
-      minimum: 1151955
-      base: 1941936
-      scale_ready: 2664861
+      minimum: 1446975
+      base: 2261209
+      scale_ready: 2959881
     MOD-RETAIL-HOT:
-      minimum: 215756
-      base: 309117
-      scale_ready: 420737
+      minimum: 525516
+      base: 618877
+      scale_ready: 730497
     MOD-BAR:
-      minimum: 209247
-      base: 300712
-      scale_ready: 467623.46
+      minimum: 332007
+      base: 423472
+      scale_ready: 590383.46
     MOD-GROW:
       minimum: 238000
       base: 258000
@@ -2354,6 +2612,10 @@ summary:
       minimum: 105900
       base: 142500
       scale_ready: 201900
+    MOD-WASH:
+      minimum: 304101.33
+      base: 304101.33
+      scale_ready: 304101.33
     POS/KDS:
       minimum: 211800
       base: 285000
@@ -2365,6 +2627,15 @@ summary:
     - item_id: CAPEX-01-009
       module_id: MOD-PREP
       line_total_rub: 436564
+    - item_id: CAPEX-02-056
+      module_id: MOD-RETAIL-HOT
+      line_total_rub: 309760
+    - item_id: CAPEX-08-001
+      module_id: MOD-WASH
+      line_total_rub: 304101.33
+    - item_id: CAPEX-01-048
+      module_id: MOD-PREP
+      line_total_rub: 295020
     - item_id: CAPEX-03-001
       module_id: MOD-GROW
       line_total_rub: 258000
@@ -2380,15 +2651,6 @@ summary:
     - item_id: CAPEX-04-003
       module_id: MOD-KDS
       line_total_rub: 142500
-    - item_id: CAPEX-01-010
-      module_id: MOD-PREP
-      line_total_rub: 121852
-    - item_id: CAPEX-04-001
-      module_id: MOD-POS
-      line_total_rub: 95000
-    - item_id: CAPEX-01-011
-      module_id: MOD-PREP
-      line_total_rub: 84752
   high_risk_item_ids:
     - CAPEX-01-001
     - CAPEX-01-002
@@ -2400,6 +2662,7 @@ summary:
     - CAPEX-01-024
     - CAPEX-01-043
     - CAPEX-01-045
+    - CAPEX-01-048
     - CAPEX-02-001
     - CAPEX-02-002
     - CAPEX-02-003
@@ -2409,7 +2672,10 @@ summary:
     - CAPEX-02-013
     - CAPEX-02-054
     - CAPEX-02-055
+    - CAPEX-02-056
+    - CAPEX-02-057
     - CAPEX-03-001
     - CAPEX-04-001
     - CAPEX-04-002
     - CAPEX-04-003
+    - CAPEX-08-001

@@ -16,7 +16,10 @@ export const CAPEX_REGISTER_SOURCE_SHA256 = "2157364e09699173fecfbfe861edf4e6fac
 export const CAPEX_REGISTER_SOURCE_ID = "SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF";
 export const CAPEX_MODULAR_SOURCE_ID = "SRC-CAPEX-MODULAR-CONFIGURATOR-BRIEF";
 export const SOURCE_RECORD_COUNT = 124;
-export const ADDED_RESEARCH_RECORD_COUNT = 27;
+export const BASE_ADDED_RESEARCH_RECORD_COUNT = 27;
+export const BASE_EQUIPMENT_RECORD_COUNT = SOURCE_RECORD_COUNT + BASE_ADDED_RESEARCH_RECORD_COUNT;
+export const PILOT_ADDED_RESEARCH_RECORD_COUNT = 9;
+export const ADDED_RESEARCH_RECORD_COUNT = BASE_ADDED_RESEARCH_RECORD_COUNT + PILOT_ADDED_RESEARCH_RECORD_COUNT;
 export const EQUIPMENT_RECORD_COUNT = SOURCE_RECORD_COUNT + ADDED_RESEARCH_RECORD_COUNT;
 
 export const RECORD_TYPES = ["equipment", "system", "component", "accessory", "inventory", "furniture", "engineering_connection", "installation_service", "consumable", "software", "open_question"] as const;
@@ -137,8 +140,8 @@ export type CapexRegister = {
     source_sha256: typeof CAPEX_REGISTER_SOURCE_SHA256;
     source_record_count: 124;
     mapped_record_count: 124;
-    added_research_record_count: 27;
-    equipment_record_count: 151;
+    added_research_record_count: number;
+    equipment_record_count: number;
     unmapped_record_count: 0;
     csv_generated_from_yaml: true;
     warning: string;
@@ -674,7 +677,7 @@ export function validateRegister(register: CapexRegister, source?: string) {
   const validateSchema = new Ajv2020({ allErrors: true, strict: false }).compile(schema);
   if (!validateSchema(register)) errors.push(...(validateSchema.errors ?? []).map(error => `schema ${error.instancePath || "/"} ${error.message}`));
   if (register.document.source_record_count !== SOURCE_RECORD_COUNT || register.document.mapped_record_count !== SOURCE_RECORD_COUNT) errors.push("CAPEX source coverage must remain exactly 124/124.");
-  if (register.document.added_research_record_count !== ADDED_RESEARCH_RECORD_COUNT || register.document.equipment_record_count !== EQUIPMENT_RECORD_COUNT || register.equipment.length !== EQUIPMENT_RECORD_COUNT) errors.push("CAPEX register must contain exactly 151 records: 124 source records plus 27 governed CAPEX-05 research records.");
+  if (register.document.added_research_record_count !== ADDED_RESEARCH_RECORD_COUNT || register.document.equipment_record_count !== EQUIPMENT_RECORD_COUNT || register.equipment.length !== EQUIPMENT_RECORD_COUNT) errors.push(`CAPEX register must contain exactly ${EQUIPMENT_RECORD_COUNT} records: ${SOURCE_RECORD_COUNT} source records plus ${ADDED_RESEARCH_RECORD_COUNT} governed research records.`);
   const ids = register.equipment.map(item => item.item_id);
   if (new Set(ids).size !== ids.length) errors.push("CAPEX register contains duplicate item IDs.");
   for (const item of register.equipment) {
@@ -702,9 +705,12 @@ export function validateRegister(register: CapexRegister, source?: string) {
     if (sha256(source) !== register.document.source_sha256) errors.push("Source Markdown SHA-256 differs from register metadata.");
     const sourceIds = new Set(extractSourceRecords(source).map(record => record.itemId));
     for (const id of ids.slice(0, SOURCE_RECORD_COUNT)) if (!sourceIds.has(id)) errors.push(`${id}: not present in source Markdown.`);
-    const newIds = ids.slice(SOURCE_RECORD_COUNT);
-    const expectedNewIds = Array.from({ length: ADDED_RESEARCH_RECORD_COUNT }, (_, index) => `CAPEX-05-${String(index + 1).padStart(3, "0")}`);
-    if (JSON.stringify(newIds) !== JSON.stringify(expectedNewIds)) errors.push("CAPEX-05 stable ID sequence differs from CAPEX-05-001—CAPEX-05-027.");
+    const capex05Ids = ids.slice(SOURCE_RECORD_COUNT, SOURCE_RECORD_COUNT + BASE_ADDED_RESEARCH_RECORD_COUNT);
+    const expectedCapex05Ids = Array.from({ length: BASE_ADDED_RESEARCH_RECORD_COUNT }, (_, index) => `CAPEX-05-${String(index + 1).padStart(3, "0")}`);
+    if (JSON.stringify(capex05Ids) !== JSON.stringify(expectedCapex05Ids)) errors.push("CAPEX-05 stable ID sequence differs from CAPEX-05-001—CAPEX-05-027.");
+    const pilotIds = ids.slice(SOURCE_RECORD_COUNT + BASE_ADDED_RESEARCH_RECORD_COUNT);
+    const expectedPilotIds = ["CAPEX-01-048", "CAPEX-02-056", "CAPEX-02-057", ...Array.from({ length: 6 }, (_, index) => `CAPEX-08-${String(index + 1).padStart(3, "0")}`)];
+    if (JSON.stringify(pilotIds) !== JSON.stringify(expectedPilotIds)) errors.push("DEC-011 pilot research ID sequence differs from the approved payload.");
   }
   return errors;
 }

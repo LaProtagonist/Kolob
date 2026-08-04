@@ -37,7 +37,7 @@ type ComputedRow = {
 };
 
 const capexData = rawCapexData as CapexData;
-const scenarioIds: ScenarioId[] = ["minimum", "base", "scale_ready"];
+const scenarioIds = capexData.scenarios.filter(scenario => scenario.availableInSelector).map(scenario => scenario.id as ScenarioId);
 const statusLabels: Record<string, string> = {
   research: "Исследование",
   required: "Обязательно",
@@ -193,25 +193,27 @@ function CostBar({ value, max, labelText, detail, index = 0 }: { value: number; 
 }
 
 export function CapexConfiguratorPage() {
+  const pilotConfiguration = capexData.pilotConfiguration;
+  const pilotEconomics = capexData.pilotEconomics;
   const [formatId, setFormatId] = useState("FMT-INTEGRATED");
   const [scenarioId, setScenarioId] = useState<ScenarioId>("base");
-  const [selectedModuleIds, setSelectedModuleIds] = useState<string[]>([]);
+  const [selectedModuleIds, setSelectedModuleIds] = useState<string[]>(pilotConfiguration?.selected_modules ?? []);
   const [parameters, setParameters] = useState<Parameters>({
     outletCount: capexData.businessCapacity.prep_outlet_count,
     checksPerOutlet: capexData.businessCapacity.checks_per_outlet_per_day,
     shiftCount: null,
-    fillingCount: null,
-    cashierPostCount: null,
-    hotKitchenPostCount: null,
+    fillingCount: pilotConfiguration?.filling_count ?? null,
+    cashierPostCount: pilotConfiguration?.cashier_post_count ?? null,
+    hotKitchenPostCount: pilotConfiguration?.hot_kitchen_post_count ?? null,
     kdsPostCount: null,
-    seatCount: null,
-    guestAreaM2: null,
-    serviceStationCount: null,
-    alcoholEnabled: false,
-    sharedSeating: false,
-    reusableTableware: false,
-    centralSupply: false,
-    mobileFormat: false,
+    seatCount: pilotConfiguration?.seat_count ?? null,
+    guestAreaM2: pilotConfiguration?.guest_area_m2 ?? null,
+    serviceStationCount: pilotConfiguration?.service_station_count ?? null,
+    alcoholEnabled: pilotConfiguration?.alcohol_enabled ?? false,
+    sharedSeating: pilotConfiguration?.shared_seating ?? false,
+    reusableTableware: pilotConfiguration?.reusable_tableware_enabled ?? false,
+    centralSupply: pilotConfiguration?.central_supply_enabled ?? false,
+    mobileFormat: pilotConfiguration?.mobile_format ?? false,
   });
   const [search, setSearch] = useState("");
   const [moduleFilter, setModuleFilter] = useState("all");
@@ -226,19 +228,30 @@ export function CapexConfiguratorPage() {
   const [showComponents, setShowComponents] = useState(false);
   const [showOptional, setShowOptional] = useState(false);
   const [groupBy, setGroupBy] = useState("module");
+  const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({});
 
   const currentFormat = capexData.formats.find(format => format.id === formatId) ?? capexData.formats[1];
   const moduleById = useMemo(() => new Map(capexData.modules.map(module => [module.id, module])), []);
 
   useEffect(() => {
-    setSelectedModuleIds([]);
+    const isPilot = formatId === pilotConfiguration?.format_id;
+    setSelectedModuleIds(isPilot ? pilotConfiguration.selected_modules : []);
     setModuleFilter("all");
     setParameters(current => ({
       ...current,
-      sharedSeating: formatId === "FMT-FOOD-COURT",
-      mobileFormat: formatId === "FMT-FOODTRUCK",
+      fillingCount: isPilot ? pilotConfiguration.filling_count : null,
+      cashierPostCount: isPilot ? pilotConfiguration.cashier_post_count : null,
+      hotKitchenPostCount: isPilot ? pilotConfiguration.hot_kitchen_post_count : null,
+      seatCount: isPilot ? pilotConfiguration.seat_count : null,
+      guestAreaM2: isPilot ? pilotConfiguration.guest_area_m2 : null,
+      serviceStationCount: isPilot ? pilotConfiguration.service_station_count : null,
+      alcoholEnabled: isPilot ? pilotConfiguration.alcohol_enabled ?? false : false,
+      reusableTableware: isPilot ? pilotConfiguration.reusable_tableware_enabled ?? false : false,
+      centralSupply: isPilot ? pilotConfiguration.central_supply_enabled ?? false : false,
+      sharedSeating: isPilot ? pilotConfiguration.shared_seating ?? false : formatId === "FMT-FOOD-COURT",
+      mobileFormat: isPilot ? pilotConfiguration.mobile_format ?? false : formatId === "FMT-FOODTRUCK",
     }));
-  }, [formatId]);
+  }, [formatId, pilotConfiguration]);
 
   const activeModuleIds = useMemo(() => new Set([...currentFormat.requiredModules, ...selectedModuleIds]), [currentFormat.requiredModules, selectedModuleIds]);
   const rows = useMemo(() => buildRows(activeModuleIds, scenarioId, parameters), [activeModuleIds, scenarioId, parameters]);
@@ -356,6 +369,24 @@ export function CapexConfiguratorPage() {
         </div>
       </section>
 
+      <section className="capex-pilot-baseline" aria-labelledby="capex-pilot-baseline-title">
+        <div className="section-inner">
+          <div className="capex-section-title"><span>База пилота</span><h2 id="capex-pilot-baseline-title">Что уже можно заложить, а что ждёт помещения</h2><p>Пилот зафиксирован как заготовочный цех, совмещённый с торговой точкой и собственным посадочным залом. BASE ниже — нижняя граница оборудования, а не полный бюджет открытия.</p></div>
+          <div className="capex-pilot-facts">
+            <article className="is-primary"><span>Оборудование · BASE</span><strong>{formatRub(pilotEconomics.equipment_estimate.totals_rub.base)}</strong><p>Включает одну мясорубку, одну посудомоечную систему и расчётные комплекты мелкого инвентаря.</p></article>
+            <article><span>Программное обеспечение</span><strong>{formatRub(pilotEconomics.software.amount_rub_per_year)} / год</strong><p>Операционные расходы; при предоплате за год — отдельный денежный отток запуска.</p></article>
+            <article><span>Рецептурная себестоимость</span><strong>{pilotEconomics.unit_economics.target_recipe_cost_percent}%</strong><p>Включая упаковку. Цена ×4 к себестоимости означает наценку 300% и валовую маржу 75% до остальных расходов.</p></article>
+            <article><span>Фонд работодателя · ориентир</span><strong>{formatRub(pilotEconomics.staffing.employer_cost_range_rub_per_month.qualifying_reduced_contributions)}–{formatRub(pilotEconomics.staffing.employer_cost_range_rub_per_month.standard_30_percent_contributions)}</strong><p>В месяц, исследовательский ориентир для Санкт-Петербурга; льготный тариф требует проверки права на него.</p></article>
+          </div>
+          <div className="capex-pilot-detail-grid">
+            <article><h3>Добавлено в известную часть</h3><ul>{pilotEconomics.equipment_estimate.known_additions.map(addition => <li key={addition.id}><span>{addition.name}</span><strong>{formatRub(addition.amount_rub)}</strong></li>)}</ul><p>Всего новых оценённых комплектов: {formatRub(pilotEconomics.equipment_estimate.known_additions_base_rub)}.</p></article>
+            <article><h3>Штат на смене</h3><ul>{pilotEconomics.staffing.on_shift_posts.map(post => <li key={post.role}><span>{post.role} · {post.posts} пост{post.posts === 1 ? "" : "а"}</span><strong>{"net_rub_per_shift" in post && typeof post.net_rub_per_shift === "number" ? `${numberFormatter.format(post.net_rub_per_shift)} ₽/смена` : `${numberFormatter.format(post.net_rub_per_month ?? 0)} ₽/мес.`}</strong></li>)}</ul><p>Расчётная численность при графике 2/2 — {pilotEconomics.staffing.total_headcount_assumption} человек; один администратор не закрывает семь дней без владельца или подмены.</p></article>
+            <article><h3>Помещение пока не выбрано</h3><p>Камеры, вентиляция, газ, вода, канализация, электрика, ремонт, монтаж, пусконаладка, мебель и навигация остаются открытыми до обмеров и технологической расстановки.</p><p className="capex-reference-note">Только справочный ориентир: камера Polair {pilotEconomics.cold_room_benchmark.dimensions_mm} — около {formatRub(pilotEconomics.cold_room_benchmark.indicative_total_before_shelves_delivery_electrical_and_condensate_rub)} до стеллажей, доставки, электрики и отвода конденсата. В итог BASE не включена.</p></article>
+            <article><h3>Открытые расходы запуска</h3><ul>{pilotEconomics.budget_layers.filter(layer => ["open", "open_until_premises"].includes(layer.status)).map(layer => <li key={layer.id}><span>{layer.name}</span><strong>Не рассчитано</strong></li>)}</ul><p>Открытая статья не считается нулём и не уменьшает необходимый бюджет.</p></article>
+          </div>
+        </div>
+      </section>
+
       <section className="capex-format-section" aria-labelledby="capex-format-title">
         <div className="section-inner">
           <div className="capex-section-title"><span>01 · Формат точки</span><h2 id="capex-format-title">С чего собираем объект</h2><p>Используются семь канонических профилей <code>FMT-*</code>. Формат подключает модули, но не копирует оборудование.</p></div>
@@ -413,7 +444,7 @@ export function CapexConfiguratorPage() {
 
             <div className="capex-module-column">
               <div className="capex-scenario-switch" role="group" aria-label="Сценарий стоимости">
-                {capexData.scenarios.map(scenario => <button type="button" key={scenario.id} data-scenario-id={scenario.id} className={scenario.id === scenarioId ? "is-selected" : ""} aria-pressed={scenario.id === scenarioId} onClick={() => setScenarioId(scenario.id as ScenarioId)}><strong>{scenario.label}</strong><span>{scenario.description}</span></button>)}
+                {capexData.scenarios.filter(scenario => scenario.availableInSelector).map(scenario => <button type="button" key={scenario.id} data-scenario-id={scenario.id} className={scenario.id === scenarioId ? "is-selected" : ""} aria-pressed={scenario.id === scenarioId} onClick={() => setScenarioId(scenario.id as ScenarioId)}><strong>{scenario.label}</strong><span>{scenario.description}</span></button>)}
               </div>
               {moduleOptions.length ? <div className="capex-module-picker"><h3>{currentFormat.manualSelection ? "Выберите модули вручную" : "Опциональные и условные модули"}</h3>{moduleOptions.map(module => <Toggle key={module.id} checked={activeModuleIds.has(module.id)} disabled={currentFormat.requiredModules.includes(module.id)} onChange={() => toggleModule(module.id)} hint={`${module.id} · ${label(module.status)}`}>{module.name}</Toggle>)}</div> : null}
               <div className="capex-module-cards">
@@ -467,10 +498,10 @@ export function CapexConfiguratorPage() {
             <Toggle checked={showOptional} onChange={() => setShowOptional(value => !value)}>Показать опциональные позиции</Toggle>
           </div>
 
-          {groupedRows.length ? groupedRows.map(([group, groupRows]) => <div className="capex-table-group" key={group}><h3>{group}<span>{groupRows.length}</span></h3><div className="capex-table-wrap"><table className="capex-table"><thead><tr><th scope="col">ID</th><th scope="col">Оборудование</th><th scope="col">Модуль</th><th scope="col">Обязательность</th><th scope="col">Количество</th><th scope="col">Цена за единицу</th><th scope="col">Сумма</th><th scope="col">Поставщик</th><th scope="col">Дата проверки</th><th scope="col">Статус цены</th></tr></thead><tbody>{groupRows.map(row => {
+          {groupedRows.length ? groupedRows.map(([group, groupRows]) => <details className="capex-table-group" key={group} open={openGroups[group] ?? true} onToggle={event => { const isOpen = event.currentTarget.open; setOpenGroups(current => current[group] === isOpen ? current : { ...current, [group]: isOpen }); }}><summary><span>{group}<b>{groupRows.length}</b></span><small>{openGroups[group] === false ? "Развернуть" : "Свернуть"}</small></summary><div className="capex-table-wrap"><table className="capex-table"><thead><tr><th scope="col">ID</th><th scope="col">Оборудование</th><th scope="col">Модуль</th><th scope="col">Обязательность</th><th scope="col">Количество</th><th scope="col">Цена за единицу</th><th scope="col">Сумма</th><th scope="col">Поставщик</th><th scope="col">Дата проверки</th><th scope="col">Статус цены</th></tr></thead><tbody>{groupRows.map(row => {
             const components = row.item.childItemIds.map(id => capexData.items.find(item => item.id === id)).filter(Boolean) as CapexItem[];
-            return <tr key={`${group}-${row.item.id}`} data-item-id={row.item.id}><td data-label="ID"><code>{row.item.id}</code></td><td data-label="Оборудование"><strong>{row.item.name}</strong><small>{row.price?.productName ?? row.item.subcategory}</small><details><summary>Требования и происхождение</summary><div className="capex-row-details">{row.item.specification ? <p><b>Минимальные требования:</b> {row.item.specification}</p> : null}<p><b>Источник включения:</b> {row.sourceInclusion}</p><p><b>Правило количества:</b> {ruleLabel(row.quantityRule)}; {row.quantityStatus}</p>{components.length ? <div><b>Входит в систему:</b><ul>{components.map(component => <li key={component.id}>{component.id} — {component.name}</li>)}</ul></div> : null}{row.item.openParameters ? <p><b>Открытые параметры:</b> {row.item.openParameters}</p> : null}<p><b>Инфраструктура:</b> {[row.item.voltage ? `${row.item.voltage} В` : null, row.item.waterRequired ? "вода" : null, row.item.drainageRequired ? "канализация" : null, row.item.gasRequired ? "газ" : null, row.item.extractionRequired ? "вытяжка" : null].filter(Boolean).join(", ") || "не указана"}</p>{row.item.premisesDependency ? <p><b>Зависимость от помещения:</b> {row.item.premisesDependency}</p> : null}{row.item.priceResearch?.riskReason ? <p><b>Риск цены:</b> {row.item.priceResearch.riskReason}</p> : null}{row.item.priceNotes ? <p><b>Комментарий по цене:</b> {row.item.priceNotes}</p> : null}{row.item.notes ? <p>{row.item.notes}</p> : null}</div></details></td><td data-label="Модуль">{row.moduleIds.map(id => <span className="capex-code capex-code-block" key={id}>{id}</span>)}</td><td data-label="Обязательность"><span className={`capex-tag status-${classToken(row.requirement)}`}>{label(row.requirement)}</span></td><td data-label="Количество"><strong>{formatNumber(row.quantity)} {row.quantity !== null && row.item.unit !== "tbd" ? row.item.unit : ""}</strong><small>{row.quantityStatus}</small></td><td data-label="Цена за единицу">{formatRub(row.unitPrice)}</td><td data-label="Сумма"><strong>{row.includedInParent ? "Входит в комплект" : row.lineTotal === null ? "Не рассчитано" : formatRub(row.lineTotal)}</strong></td><td data-label="Поставщик">{row.price?.supplierName ?? "Не определён"}{row.price?.sourceUrl ? <a className="capex-product-link" href={row.price.sourceUrl} target="_blank" rel="noopener noreferrer">Открыть товар ↗</a> : <span className="capex-quote-label">Требуется КП</span>}</td><td data-label="Дата проверки">{checkedDate(row.price?.checkedAt ?? row.item.priceDate)}</td><td data-label="Статус цены"><span className={`capex-tag ${row.quoteRequired ? "status-warning" : row.lineTotal !== null ? "status-researched" : "status-tbd"}`}>{row.quoteRequired ? "Требуется КП" : row.lineTotal !== null ? "Исследование цен" : "Без цены"}</span>{row.price ? <small>Уверенность: {label(row.price.confidence)}</small> : null}</td></tr>;
-          })}</tbody></table></div></div>) : <div className="capex-empty-state"><strong>Нет строк по выбранным фильтрам</strong><p>Сбросьте часть фильтров или включите компоненты и опциональные позиции.</p></div>}
+            return <tr key={`${group}-${row.item.id}`} data-item-id={row.item.id}><td data-label="ID"><code>{row.item.id}</code></td><td data-label="Оборудование"><strong>{row.item.name}</strong><small>{row.price?.productName ?? row.item.subcategory}</small><details><summary>Требования и происхождение</summary><div className="capex-row-details">{row.item.specification ? <p><b>Минимальные требования:</b> {row.item.specification}</p> : null}<p><b>Источник включения:</b> {row.sourceInclusion}</p><p><b>Правило количества:</b> {ruleLabel(row.quantityRule)}; {row.quantityStatus}</p>{components.length ? <div><b>Входит в систему:</b><ul>{components.map(component => <li key={component.id}><strong>{component.id} — {component.name}</strong>{component.specification ? <span>{component.specification}</span> : null}</li>)}</ul></div> : null}{row.item.openParameters ? <p><b>Открытые параметры:</b> {row.item.openParameters}</p> : null}<p><b>Инфраструктура:</b> {[row.item.voltage ? `${row.item.voltage} В` : null, row.item.waterRequired ? "вода" : null, row.item.drainageRequired ? "канализация" : null, row.item.gasRequired ? "газ" : null, row.item.extractionRequired ? "вытяжка" : null].filter(Boolean).join(", ") || "не указана"}</p>{row.item.premisesDependency ? <p><b>Зависимость от помещения:</b> {row.item.premisesDependency}</p> : null}{row.item.priceResearch?.riskReason ? <p><b>Риск цены:</b> {row.item.priceResearch.riskReason}</p> : null}{row.item.priceNotes ? <p><b>Комментарий по цене:</b> {row.item.priceNotes}</p> : null}{row.item.notes ? <p>{row.item.notes}</p> : null}</div></details></td><td data-label="Модуль">{row.moduleIds.map(id => <span className="capex-code capex-code-block" key={id}>{id}</span>)}</td><td data-label="Обязательность"><span className={`capex-tag status-${classToken(row.requirement)}`}>{label(row.requirement)}</span></td><td data-label="Количество"><strong>{formatNumber(row.quantity)} {row.quantity !== null && row.item.unit !== "tbd" ? row.item.unit : ""}</strong><small>{row.quantityStatus}</small></td><td data-label="Цена за единицу">{formatRub(row.unitPrice)}</td><td data-label="Сумма"><strong>{row.includedInParent ? "Входит в комплект" : row.lineTotal === null ? "Не рассчитано" : formatRub(row.lineTotal)}</strong></td><td data-label="Поставщик">{row.price?.supplierName ?? "Не определён"}{row.price?.sourceUrl ? <a className="capex-product-link" href={row.price.sourceUrl} target="_blank" rel="noopener noreferrer">Открыть товар ↗</a> : <span className="capex-quote-label">Требуется КП</span>}</td><td data-label="Дата проверки">{checkedDate(row.price?.checkedAt ?? row.item.priceDate)}</td><td data-label="Статус цены"><span className={`capex-tag ${row.quoteRequired ? "status-warning" : row.lineTotal !== null ? "status-researched" : "status-tbd"}`}>{row.quoteRequired ? "Требуется КП" : row.lineTotal !== null ? "Исследование цен" : "Без цены"}</span>{row.price ? <small>Уверенность: {label(row.price.confidence)}</small> : null}</td></tr>;
+          })}</tbody></table></div></details>) : <div className="capex-empty-state"><strong>Нет строк по выбранным фильтрам</strong><p>Сбросьте часть фильтров или включите компоненты и опциональные позиции.</p></div>}
         </div>
       </section>
 

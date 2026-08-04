@@ -7,32 +7,32 @@ document:
   version: "0.1"
   status: research
   document_type: Working structured CAPEX equipment register
-  decision_id: DEC-010
-  iteration_id: ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01
-  proposal_id: PROP-CAPEX-WEB-CONFIGURATOR-2026-08-03-01
+  decision_id: DEC-011
+  iteration_id: ITR-PILOT-CAPEX-BASELINE-2026-08-03-01
+  proposal_id: PROP-PILOT-CAPEX-BASELINE-2026-08-03-01
   source_document_id: DOC-CAPEX-EQUIPMENT-SPECIFICATION
   source_path: docs-platform/working/capex-equipment-specification.md
   source_sha256: 2157364e09699173fecfbfe861edf4e6fac85a0437e23aebe100caebeab599d6
   source_record_count: 124
   mapped_record_count: 124
-  added_research_record_count: 27
-  equipment_record_count: 151
+  added_research_record_count: 36
+  equipment_record_count: 160
   unmapped_record_count: 0
   csv_generated_from_yaml: true
-  warning: Цены и количества остаются research. Для текущей модели MOD-PREP DEC-010 фиксирует один профессиональный пароконвектомат во всех ценовых сценариях; исходная текстовая CAPEX Specification v0.1 сохранена без изменений.
+  warning: Research-реестр пилота включает посудомоечную систему и расчётные комплекты мелкого инвентаря. Помещение, инженерия, ремонт, мебель, запуск, оборотный капитал и резерв не считаются как ноль и остаются открытыми до исходных данных.
   price_research_path: docs-platform/working/capex-price-research.yaml
   price_research_date: 2026-08-02
-  priced_record_count: 39
+  priced_record_count: 43
   unpriced_procurement_record_count: 8
 modules:
   - module_id: CAPEX-01
     module_name: Заготовочный цех
     source_record_count: 47
-    record_count: 47
+    record_count: 48
   - module_id: CAPEX-02
     module_name: Торговая кухня, бар и зона выдачи
     source_record_count: 55
-    record_count: 55
+    record_count: 57
   - module_id: CAPEX-03
     module_name: Модуль выращивания зелени и микрозелени
     source_record_count: 19
@@ -45,6 +45,10 @@ modules:
     module_name: Гостевая зона и обслуживание
     source_record_count: 0
     record_count: 27
+  - module_id: CAPEX-08
+    module_name: Посудомоечное оборудование
+    source_record_count: 0
+    record_count: 6
 equipment:
   - item_id: CAPEX-01-001
     module_id: CAPEX-01
@@ -781,17 +785,17 @@ equipment:
     record_type: equipment
     parent_item_id: null
     inclusion_status: standalone
-    requirement: conditional
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 0
+    quantity_base: 1
+    quantity_scale_ready: 1
+    unit: шт.
     source_quantity: tbd
-    specification: профессиональная средняя производительность; бытовые варианты не рассматриваются
-    open_parameters: необходимость отдельной мясорубки, количество и производительность
-    premises_dependency: приобретается отдельно, если выбранный Robot Coupe или аналог не обеспечивает требуемую работу с мясом
-    procurement_mode: tbd
+    specification: Одна профессиональная электрическая мясорубка средней производительности в BASE и SCALE_READY; модель и производительность подтверждаются по техкартам и объёму мясной заготовки.
+    open_parameters: модель, производительность, система ножей и требования к санитарной разборке
+    premises_dependency: место установки и электрическое подключение уточняются после технологической расстановки
+    procurement_mode: purchase
     existing_condition: требует проверки
     power_kw: null
     voltage: null
@@ -809,7 +813,7 @@ equipment:
     supplier: КЛЕН
     source_id: SRC-PRICE-20260802-GRINDER-BASE
     quote_status: quote_required
-    notes: null
+    notes: DEC-011 фиксирует одну отдельную профессиональную мясорубку в BASE и SCALE_READY независимо от комплектации Robot Coupe.
     source_section: CAPEX-01 / Механическая обработка
     source_item_number: 15
     source_record_sha256: 55d701ed8dd773c61ba7d11e4265ca0f2a3206b24a0b5fd12b5d496e5fd76e6b
@@ -1427,17 +1431,17 @@ equipment:
     subcategory: Кухонный инвентарь заготовочного цеха
     name: Кастрюли
     record_type: inventory
-    parent_item_id: null
-    inclusion_status: tbd
-    requirement: tbd
+    parent_item_id: CAPEX-01-048
+    inclusion_status: included_in_parent
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 6
+    quantity_base: 6
+    quantity_scale_ready: 6
+    unit: шт.
     source_quantity: null
-    specification: null
-    open_parameters: Количество, размеры и состав комплекта — tbd.
+    specification: "Набор профессиональных кастрюль разных объёмов. Research-бюджет строки: 6 × 7000 ₽ = 42000 ₽; отдельно не суммируется, входит в CAPEX-01-048."
+    open_parameters: Точный бренд, размеры и материал подтверждаются перед закупкой.
     premises_dependency: null
     procurement_mode: tbd
     existing_condition: null
@@ -1456,8 +1460,8 @@ equipment:
     price_date: null
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    quote_status: not_requested
-    notes: null
+    quote_status: included_in_parent
+    notes: Компонент расчётного комплекта CAPEX-01-048; количество и бюджет имеют статус research по DEC-011.
     source_section: CAPEX-01 / Кухонный инвентарь заготовочного цеха
     source_item_number: 27
     source_record_sha256: 193ad6f73ab6b1043b36c3ee753243f1dfd829863aea67e8c6e3e1a58acc6965
@@ -1469,17 +1473,17 @@ equipment:
     subcategory: Кухонный инвентарь заготовочного цеха
     name: Сковороды
     record_type: inventory
-    parent_item_id: null
-    inclusion_status: tbd
-    requirement: tbd
+    parent_item_id: CAPEX-01-048
+    inclusion_status: included_in_parent
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 4
+    quantity_base: 4
+    quantity_scale_ready: 4
+    unit: шт.
     source_quantity: null
-    specification: null
-    open_parameters: Количество, размеры и состав комплекта — tbd.
+    specification: "Профессиональные сковороды рабочих диаметров. Research-бюджет строки: 4 × 5000 ₽ = 20000 ₽; отдельно не суммируется, входит в CAPEX-01-048."
+    open_parameters: Точный бренд, размеры и материал подтверждаются перед закупкой.
     premises_dependency: null
     procurement_mode: tbd
     existing_condition: null
@@ -1498,8 +1502,8 @@ equipment:
     price_date: null
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    quote_status: not_requested
-    notes: null
+    quote_status: included_in_parent
+    notes: Компонент расчётного комплекта CAPEX-01-048; количество и бюджет имеют статус research по DEC-011.
     source_section: CAPEX-01 / Кухонный инвентарь заготовочного цеха
     source_item_number: 28
     source_record_sha256: f444b34102a299f47a814d85d5105caa8f16aa48ae72b2097aa6e43d47b16260
@@ -1511,17 +1515,17 @@ equipment:
     subcategory: Кухонный инвентарь заготовочного цеха
     name: Профессиональные ножи
     record_type: inventory
-    parent_item_id: null
-    inclusion_status: tbd
-    requirement: tbd
+    parent_item_id: CAPEX-01-048
+    inclusion_status: included_in_parent
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 8
+    quantity_base: 8
+    quantity_scale_ready: 8
+    unit: шт.
     source_quantity: null
-    specification: null
-    open_parameters: Количество, типы и состав комплекта — tbd.
+    specification: "Ножи по рабочим операциям и резерву. Research-бюджет строки: 8 × 3500 ₽ = 28000 ₽; отдельно не суммируется, входит в CAPEX-01-048."
+    open_parameters: Точный бренд, размеры и материал подтверждаются перед закупкой.
     premises_dependency: null
     procurement_mode: tbd
     existing_condition: null
@@ -1540,8 +1544,8 @@ equipment:
     price_date: null
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    quote_status: not_requested
-    notes: null
+    quote_status: included_in_parent
+    notes: Компонент расчётного комплекта CAPEX-01-048; количество и бюджет имеют статус research по DEC-011.
     source_section: CAPEX-01 / Кухонный инвентарь заготовочного цеха
     source_item_number: 29
     source_record_sha256: b1157a611b6d50d82e7101af2793544ad41f6d948521b17d75d6452c3f23eee8
@@ -1553,17 +1557,17 @@ equipment:
     subcategory: Кухонный инвентарь заготовочного цеха
     name: Промаркированные разделочные доски
     record_type: inventory
-    parent_item_id: null
-    inclusion_status: tbd
-    requirement: tbd
+    parent_item_id: CAPEX-01-048
+    inclusion_status: included_in_parent
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 12
+    quantity_base: 12
+    quantity_scale_ready: 12
+    unit: шт.
     source_quantity: null
-    specification: null
-    open_parameters: Количество, размеры и схема маркировки — tbd.
+    specification: "Цветовая маркировка по продуктовым группам. Research-бюджет строки: 12 × 1500 ₽ = 18000 ₽; отдельно не суммируется, входит в CAPEX-01-048."
+    open_parameters: Точный бренд, размеры и материал подтверждаются перед закупкой.
     premises_dependency: null
     procurement_mode: tbd
     existing_condition: null
@@ -1582,8 +1586,8 @@ equipment:
     price_date: null
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    quote_status: not_requested
-    notes: null
+    quote_status: included_in_parent
+    notes: Компонент расчётного комплекта CAPEX-01-048; количество и бюджет имеют статус research по DEC-011.
     source_section: CAPEX-01 / Кухонный инвентарь заготовочного цеха
     source_item_number: 30
     source_record_sha256: 7bfc3d3a00c477ca04a4ca76995bafd5d2e34e4627e2dc9e5af7960aed07ca8e
@@ -1595,17 +1599,17 @@ equipment:
     subcategory: Кухонный инвентарь заготовочного цеха
     name: Рыбные пинцеты и специализированные щипцы
     record_type: inventory
-    parent_item_id: null
-    inclusion_status: tbd
-    requirement: tbd
+    parent_item_id: CAPEX-01-048
+    inclusion_status: included_in_parent
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 4
+    quantity_base: 4
+    quantity_scale_ready: 4
+    unit: шт.
     source_quantity: null
-    specification: null
-    open_parameters: Количество и состав комплекта — tbd.
+    specification: "Пинцеты и специализированные щипцы. Research-бюджет строки: 4 × 1200 ₽ = 4800 ₽; отдельно не суммируется, входит в CAPEX-01-048."
+    open_parameters: Точный бренд, размеры и материал подтверждаются перед закупкой.
     premises_dependency: null
     procurement_mode: tbd
     existing_condition: null
@@ -1624,8 +1628,8 @@ equipment:
     price_date: null
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    quote_status: not_requested
-    notes: null
+    quote_status: included_in_parent
+    notes: Компонент расчётного комплекта CAPEX-01-048; количество и бюджет имеют статус research по DEC-011.
     source_section: CAPEX-01 / Кухонный инвентарь заготовочного цеха
     source_item_number: 31
     source_record_sha256: 59d5d2f1c3c5e6ba6a404ebb3b20dfa7355d93b105b7560ea3bbe87693f183a3
@@ -1637,17 +1641,17 @@ equipment:
     subcategory: Кухонный инвентарь заготовочного цеха
     name: Обычные кухонные щипцы
     record_type: inventory
-    parent_item_id: null
-    inclusion_status: tbd
-    requirement: tbd
+    parent_item_id: CAPEX-01-048
+    inclusion_status: included_in_parent
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 8
+    quantity_base: 8
+    quantity_scale_ready: 8
+    unit: шт.
     source_quantity: null
-    specification: null
-    open_parameters: Количество и состав комплекта — tbd.
+    specification: "Кухонные щипцы по постам. Research-бюджет строки: 8 × 800 ₽ = 6400 ₽; отдельно не суммируется, входит в CAPEX-01-048."
+    open_parameters: Точный бренд, размеры и материал подтверждаются перед закупкой.
     premises_dependency: null
     procurement_mode: tbd
     existing_condition: null
@@ -1666,8 +1670,8 @@ equipment:
     price_date: null
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    quote_status: not_requested
-    notes: null
+    quote_status: included_in_parent
+    notes: Компонент расчётного комплекта CAPEX-01-048; количество и бюджет имеют статус research по DEC-011.
     source_section: CAPEX-01 / Кухонный инвентарь заготовочного цеха
     source_item_number: 32
     source_record_sha256: e39095e3020d3a55823df3bd176b655fd19e463919e580b8847b57372bd5ad75
@@ -1679,17 +1683,17 @@ equipment:
     subcategory: Кухонный инвентарь заготовочного цеха
     name: Лопатки
     record_type: inventory
-    parent_item_id: null
-    inclusion_status: tbd
-    requirement: tbd
+    parent_item_id: CAPEX-01-048
+    inclusion_status: included_in_parent
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 8
+    quantity_base: 8
+    quantity_scale_ready: 8
+    unit: шт.
     source_quantity: null
-    specification: null
-    open_parameters: Количество и состав комплекта — tbd.
+    specification: "Лопатки разных типов. Research-бюджет строки: 8 × 700 ₽ = 5600 ₽; отдельно не суммируется, входит в CAPEX-01-048."
+    open_parameters: Точный бренд, размеры и материал подтверждаются перед закупкой.
     premises_dependency: null
     procurement_mode: tbd
     existing_condition: null
@@ -1708,8 +1712,8 @@ equipment:
     price_date: null
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    quote_status: not_requested
-    notes: null
+    quote_status: included_in_parent
+    notes: Компонент расчётного комплекта CAPEX-01-048; количество и бюджет имеют статус research по DEC-011.
     source_section: CAPEX-01 / Кухонный инвентарь заготовочного цеха
     source_item_number: 33
     source_record_sha256: a8dfd39e0a2fe84bd008b903876c8df77dd8416af220a9cad99e0c7c477c2560
@@ -1721,17 +1725,17 @@ equipment:
     subcategory: Кухонный инвентарь заготовочного цеха
     name: Венчики
     record_type: inventory
-    parent_item_id: null
-    inclusion_status: tbd
-    requirement: tbd
+    parent_item_id: CAPEX-01-048
+    inclusion_status: included_in_parent
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 4
+    quantity_base: 4
+    quantity_scale_ready: 4
+    unit: шт.
     source_quantity: null
-    specification: null
-    open_parameters: Количество и состав комплекта — tbd.
+    specification: "Венчики рабочих размеров. Research-бюджет строки: 4 × 1000 ₽ = 4000 ₽; отдельно не суммируется, входит в CAPEX-01-048."
+    open_parameters: Точный бренд, размеры и материал подтверждаются перед закупкой.
     premises_dependency: null
     procurement_mode: tbd
     existing_condition: null
@@ -1750,8 +1754,8 @@ equipment:
     price_date: null
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    quote_status: not_requested
-    notes: null
+    quote_status: included_in_parent
+    notes: Компонент расчётного комплекта CAPEX-01-048; количество и бюджет имеют статус research по DEC-011.
     source_section: CAPEX-01 / Кухонный инвентарь заготовочного цеха
     source_item_number: 34
     source_record_sha256: 423d1a22e2e8a156a2c50b48e3fe4a93406ea8df1543d7838e5851fb8478b6e1
@@ -1763,17 +1767,17 @@ equipment:
     subcategory: Кухонный инвентарь заготовочного цеха
     name: Половники
     record_type: inventory
-    parent_item_id: null
-    inclusion_status: tbd
-    requirement: tbd
+    parent_item_id: CAPEX-01-048
+    inclusion_status: included_in_parent
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 6
+    quantity_base: 6
+    quantity_scale_ready: 6
+    unit: шт.
     source_quantity: null
-    specification: null
-    open_parameters: Количество и состав комплекта — tbd.
+    specification: "Половники по ёмкостям и процессам. Research-бюджет строки: 6 × 1000 ₽ = 6000 ₽; отдельно не суммируется, входит в CAPEX-01-048."
+    open_parameters: Точный бренд, размеры и материал подтверждаются перед закупкой.
     premises_dependency: null
     procurement_mode: tbd
     existing_condition: null
@@ -1792,8 +1796,8 @@ equipment:
     price_date: null
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    quote_status: not_requested
-    notes: null
+    quote_status: included_in_parent
+    notes: Компонент расчётного комплекта CAPEX-01-048; количество и бюджет имеют статус research по DEC-011.
     source_section: CAPEX-01 / Кухонный инвентарь заготовочного цеха
     source_item_number: 35
     source_record_sha256: 4bfe108db4dc2c2b1ce75e19c48350f5b271a41e54b45b4296f09c01bbc69e89
@@ -1805,17 +1809,17 @@ equipment:
     subcategory: Кухонный инвентарь заготовочного цеха
     name: Шумовки
     record_type: inventory
-    parent_item_id: null
-    inclusion_status: tbd
-    requirement: tbd
+    parent_item_id: CAPEX-01-048
+    inclusion_status: included_in_parent
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 4
+    quantity_base: 4
+    quantity_scale_ready: 4
+    unit: шт.
     source_quantity: null
-    specification: null
-    open_parameters: Количество и состав комплекта — tbd.
+    specification: "Шумовки рабочих размеров. Research-бюджет строки: 4 × 1000 ₽ = 4000 ₽; отдельно не суммируется, входит в CAPEX-01-048."
+    open_parameters: Точный бренд, размеры и материал подтверждаются перед закупкой.
     premises_dependency: null
     procurement_mode: tbd
     existing_condition: null
@@ -1834,8 +1838,8 @@ equipment:
     price_date: null
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    quote_status: not_requested
-    notes: null
+    quote_status: included_in_parent
+    notes: Компонент расчётного комплекта CAPEX-01-048; количество и бюджет имеют статус research по DEC-011.
     source_section: CAPEX-01 / Кухонный инвентарь заготовочного цеха
     source_item_number: 36
     source_record_sha256: 8d89116797b391a18e60aa924d907754112b0ba17f503b5fb520aa29291f06b6
@@ -1847,17 +1851,17 @@ equipment:
     subcategory: Кухонный инвентарь заготовочного цеха
     name: Сита и дуршлаги
     record_type: inventory
-    parent_item_id: null
-    inclusion_status: tbd
-    requirement: tbd
+    parent_item_id: CAPEX-01-048
+    inclusion_status: included_in_parent
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 6
+    quantity_base: 6
+    quantity_scale_ready: 6
+    unit: шт.
     source_quantity: null
-    specification: null
-    open_parameters: Количество, размеры и состав комплекта — tbd.
+    specification: "Сита и дуршлаги разных размеров. Research-бюджет строки: 6 × 2000 ₽ = 12000 ₽; отдельно не суммируется, входит в CAPEX-01-048."
+    open_parameters: Точный бренд, размеры и материал подтверждаются перед закупкой.
     premises_dependency: null
     procurement_mode: tbd
     existing_condition: null
@@ -1876,8 +1880,8 @@ equipment:
     price_date: null
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    quote_status: not_requested
-    notes: null
+    quote_status: included_in_parent
+    notes: Компонент расчётного комплекта CAPEX-01-048; количество и бюджет имеют статус research по DEC-011.
     source_section: CAPEX-01 / Кухонный инвентарь заготовочного цеха
     source_item_number: 37
     source_record_sha256: 8df6015d56a9d30d225e20d9b1b28ad5c1519593b2a4a7ac9ea53573e7646fde
@@ -1889,17 +1893,17 @@ equipment:
     subcategory: Кухонный инвентарь заготовочного цеха
     name: Скребки
     record_type: inventory
-    parent_item_id: null
-    inclusion_status: tbd
-    requirement: tbd
+    parent_item_id: CAPEX-01-048
+    inclusion_status: included_in_parent
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 6
+    quantity_base: 6
+    quantity_scale_ready: 6
+    unit: шт.
     source_quantity: null
-    specification: null
-    open_parameters: Количество и состав комплекта — tbd.
+    specification: "Скребки для рабочих поверхностей и ёмкостей. Research-бюджет строки: 6 × 500 ₽ = 3000 ₽; отдельно не суммируется, входит в CAPEX-01-048."
+    open_parameters: Точный бренд, размеры и материал подтверждаются перед закупкой.
     premises_dependency: null
     procurement_mode: tbd
     existing_condition: null
@@ -1918,8 +1922,8 @@ equipment:
     price_date: null
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    quote_status: not_requested
-    notes: null
+    quote_status: included_in_parent
+    notes: Компонент расчётного комплекта CAPEX-01-048; количество и бюджет имеют статус research по DEC-011.
     source_section: CAPEX-01 / Кухонный инвентарь заготовочного цеха
     source_item_number: 38
     source_record_sha256: a8dd9a365ec557291ef8fdcc4347d2f1cf7d0f9a4cd7ed0b5f58633e58153da4
@@ -1931,17 +1935,17 @@ equipment:
     subcategory: Кухонный инвентарь заготовочного цеха
     name: Мерные ёмкости
     record_type: inventory
-    parent_item_id: null
-    inclusion_status: tbd
-    requirement: tbd
+    parent_item_id: CAPEX-01-048
+    inclusion_status: included_in_parent
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 8
+    quantity_base: 8
+    quantity_scale_ready: 8
+    unit: шт.
     source_quantity: null
-    specification: null
-    open_parameters: Количество, размеры и состав комплекта — tbd.
+    specification: "Мерные кувшины и ёмкости. Research-бюджет строки: 8 × 800 ₽ = 6400 ₽; отдельно не суммируется, входит в CAPEX-01-048."
+    open_parameters: Точный бренд, размеры и материал подтверждаются перед закупкой.
     premises_dependency: null
     procurement_mode: tbd
     existing_condition: null
@@ -1960,8 +1964,8 @@ equipment:
     price_date: null
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    quote_status: not_requested
-    notes: null
+    quote_status: included_in_parent
+    notes: Компонент расчётного комплекта CAPEX-01-048; количество и бюджет имеют статус research по DEC-011.
     source_section: CAPEX-01 / Кухонный инвентарь заготовочного цеха
     source_item_number: 39
     source_record_sha256: 31cc3830b184a47f9941daf21bb9557e6d2b784ab0328243ca5d5e67be91a0c5
@@ -1973,17 +1977,17 @@ equipment:
     subcategory: Кухонный инвентарь заготовочного цеха
     name: Гастроёмкости разных размеров с крышками
     record_type: inventory
-    parent_item_id: null
-    inclusion_status: tbd
-    requirement: tbd
+    parent_item_id: CAPEX-01-048
+    inclusion_status: included_in_parent
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 36
+    quantity_base: 36
+    quantity_scale_ready: 36
+    unit: шт.
     source_quantity: null
-    specification: null
-    open_parameters: Количество, размеры и формат — tbd.
+    specification: "Оборотный набор гастроёмкостей и крышек. Research-бюджет строки: 36 × 2000 ₽ = 72000 ₽; отдельно не суммируется, входит в CAPEX-01-048."
+    open_parameters: Точный бренд, размеры и материал подтверждаются перед закупкой.
     premises_dependency: null
     procurement_mode: tbd
     existing_condition: null
@@ -2002,8 +2006,8 @@ equipment:
     price_date: null
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    quote_status: not_requested
-    notes: null
+    quote_status: included_in_parent
+    notes: Компонент расчётного комплекта CAPEX-01-048; количество и бюджет имеют статус research по DEC-011.
     source_section: CAPEX-01 / Кухонный инвентарь заготовочного цеха
     source_item_number: 40
     source_record_sha256: 009c14347cd5c0f6d518cab71dd3d4683ea3c6320c07d94ce6b049441184635f
@@ -2015,17 +2019,17 @@ equipment:
     subcategory: Кухонный инвентарь заготовочного цеха
     name: Герметичные контейнеры для сырья и заготовок
     record_type: inventory
-    parent_item_id: null
-    inclusion_status: tbd
-    requirement: tbd
+    parent_item_id: CAPEX-01-048
+    inclusion_status: included_in_parent
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 30
+    quantity_base: 30
+    quantity_scale_ready: 30
+    unit: шт.
     source_quantity: null
-    specification: null
-    open_parameters: Количество, размеры и материал — tbd.
+    specification: "Герметичные контейнеры разных объёмов. Research-бюджет строки: 30 × 1200 ₽ = 36000 ₽; отдельно не суммируется, входит в CAPEX-01-048."
+    open_parameters: Точный бренд, размеры и материал подтверждаются перед закупкой.
     premises_dependency: null
     procurement_mode: tbd
     existing_condition: null
@@ -2044,8 +2048,8 @@ equipment:
     price_date: null
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    quote_status: not_requested
-    notes: null
+    quote_status: included_in_parent
+    notes: Компонент расчётного комплекта CAPEX-01-048; количество и бюджет имеют статус research по DEC-011.
     source_section: CAPEX-01 / Кухонный инвентарь заготовочного цеха
     source_item_number: 41
     source_record_sha256: f3c85a2d3330789efa8b5529cd59b7ca302b48b7dd4194a689989e49fe765408
@@ -2057,17 +2061,17 @@ equipment:
     subcategory: Кухонный инвентарь заготовочного цеха
     name: Раздельные комплекты инвентаря для мяса, рыбы, овощей и готовых компонентов
     record_type: inventory
-    parent_item_id: null
-    inclusion_status: tbd
-    requirement: tbd
+    parent_item_id: CAPEX-01-048
+    inclusion_status: included_in_parent
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 1
+    quantity_base: 1
+    quantity_scale_ready: 1
+    unit: комплект
     source_quantity: null
-    specification: null
-    open_parameters: Состав, количество и маркировка комплектов — tbd.
+    specification: "Разделение уже обеспечивается количеством и цветовой маркировкой ножей, досок и ёмкостей; отдельно не суммируется. Research-бюджет строки: 1 × 0 ₽ = 0 ₽; отдельно не суммируется, входит в CAPEX-01-048."
+    open_parameters: Точный бренд, размеры и материал подтверждаются перед закупкой.
     premises_dependency: null
     procurement_mode: tbd
     existing_condition: null
@@ -2086,8 +2090,8 @@ equipment:
     price_date: null
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    quote_status: not_requested
-    notes: null
+    quote_status: included_in_parent
+    notes: Компонент расчётного комплекта CAPEX-01-048; количество и бюджет имеют статус research по DEC-011.
     source_section: CAPEX-01 / Кухонный инвентарь заготовочного цеха
     source_item_number: 42
     source_record_sha256: c3510d1ca24edb13964a8258244d4ed07f2b733e047a5b1a7cb00bfb06a1b946
@@ -2331,7 +2335,7 @@ equipment:
     module_name: Торговая кухня, бар и зона выдачи
     category: Торговая кухня, бар и зона выдачи
     subcategory: приготовление колобков
-    name: Газовые грили для такояки
+    name: Газовый гриль для колобков
     record_type: equipment
     parent_item_id: null
     inclusion_status: standalone
@@ -2342,7 +2346,7 @@ equipment:
     quantity_scale_ready: null
     unit: шт.
     source_quantity: 2 шт.
-    specification: по две секции каждый; две независимые установки
+    specification: Профессиональный газовый гриль с полусферическими ячейками по геометрии takoyaki; продукт и рабочее название — колобки. Две независимые установки по исходной рабочей спецификации.
     open_parameters: количество ячеек, диаметр формы, мощность и способ газоснабжения
     premises_dependency: способ газоснабжения и размещение
     procurement_mode: tbd
@@ -2363,7 +2367,7 @@ equipment:
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
     quote_status: quote_required
-    notes: null
+    notes: Надёжная российская карточка профессионального газового аппарата нужной геометрии не найдена; требуется технический подбор, сертификация газовой схемы и КП.
     source_section: CAPEX-02 / Приготовление колобков
     source_item_number: 1
     source_record_sha256: 28f07d47d0349e1c1dbe479a76d39637f50bfb4120388014cadd067c81faa106
@@ -2375,7 +2379,7 @@ equipment:
     module_name: Торговая кухня, бар и зона выдачи
     category: Торговая кухня, бар и зона выдачи
     subcategory: приготовление колобков
-    name: UFO-грили
+    name: Гриль для Манчеса
     record_type: equipment
     parent_item_id: null
     inclusion_status: standalone
@@ -2386,7 +2390,7 @@ equipment:
     quantity_scale_ready: 4
     unit: шт.
     source_quantity: 3–4 шт.
-    specification: tbd
+    specification: Профессиональный гриль для приготовления продукта «Манчес»; точная конструкция, мощность и производительность требуют спецификации.
     open_parameters: технические характеристики
     premises_dependency: расстановка и энергоснабжение
     procurement_mode: tbd
@@ -2407,7 +2411,7 @@ equipment:
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
     quote_status: quote_required
-    notes: null
+    notes: Рабочее название приведено к продукту сайта; исходная спецификация использовала термин UFO-гриль.
     source_section: CAPEX-02 / Приготовление колобков
     source_item_number: 2
     source_record_sha256: 4f16b46842e11e40c109dec1b2e04c59fe437e4375591eb199773877af9b9034
@@ -3005,17 +3009,17 @@ equipment:
     subcategory: Кухонный инвентарь торговой точки
     name: Профессиональные ножи
     record_type: inventory
-    parent_item_id: null
-    inclusion_status: tbd
-    requirement: tbd
+    parent_item_id: CAPEX-02-056
+    inclusion_status: included_in_parent
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 4
+    quantity_base: 4
+    quantity_scale_ready: 4
+    unit: шт.
     source_quantity: null
-    specification: null
-    open_parameters: Количество, типы и состав комплекта — tbd.
+    specification: "Ножи по двум горячим постам и резерву. Research-бюджет строки: 4 × 3500 ₽ = 14000 ₽; отдельно не суммируется, входит в CAPEX-02-056."
+    open_parameters: Точный бренд, размеры и материал подтверждаются перед закупкой.
     premises_dependency: null
     procurement_mode: tbd
     existing_condition: null
@@ -3034,8 +3038,8 @@ equipment:
     price_date: null
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    quote_status: not_requested
-    notes: null
+    quote_status: included_in_parent
+    notes: Компонент расчётного комплекта CAPEX-02-056; количество и бюджет имеют статус research по DEC-011.
     source_section: CAPEX-02 / Кухонный инвентарь торговой точки
     source_item_number: 14
     source_record_sha256: 50b69aa011dbac2c63b19213b57d0e76ac013ef3fb103cb215fca5eeb52e4e9f
@@ -3047,17 +3051,17 @@ equipment:
     subcategory: Кухонный инвентарь торговой точки
     name: Промаркированные разделочные доски
     record_type: inventory
-    parent_item_id: null
-    inclusion_status: tbd
-    requirement: tbd
+    parent_item_id: CAPEX-02-056
+    inclusion_status: included_in_parent
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 8
+    quantity_base: 8
+    quantity_scale_ready: 8
+    unit: шт.
     source_quantity: null
-    specification: null
-    open_parameters: Количество, размеры и схема маркировки — tbd.
+    specification: "Маркированные доски по рабочим операциям. Research-бюджет строки: 8 × 1500 ₽ = 12000 ₽; отдельно не суммируется, входит в CAPEX-02-056."
+    open_parameters: Точный бренд, размеры и материал подтверждаются перед закупкой.
     premises_dependency: null
     procurement_mode: tbd
     existing_condition: null
@@ -3076,8 +3080,8 @@ equipment:
     price_date: null
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    quote_status: not_requested
-    notes: null
+    quote_status: included_in_parent
+    notes: Компонент расчётного комплекта CAPEX-02-056; количество и бюджет имеют статус research по DEC-011.
     source_section: CAPEX-02 / Кухонный инвентарь торговой точки
     source_item_number: 15
     source_record_sha256: 9f61578b6630173de913583040f1fe75d4c7936c1947d01545abfb2938b3e206
@@ -3089,17 +3093,17 @@ equipment:
     subcategory: Кухонный инвентарь торговой точки
     name: Кухонные ножницы
     record_type: inventory
-    parent_item_id: null
-    inclusion_status: tbd
-    requirement: tbd
+    parent_item_id: CAPEX-02-056
+    inclusion_status: included_in_parent
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 4
+    quantity_base: 4
+    quantity_scale_ready: 4
+    unit: шт.
     source_quantity: null
-    specification: null
-    open_parameters: Количество и типы — tbd.
+    specification: "Профессиональные кухонные ножницы. Research-бюджет строки: 4 × 1200 ₽ = 4800 ₽; отдельно не суммируется, входит в CAPEX-02-056."
+    open_parameters: Точный бренд, размеры и материал подтверждаются перед закупкой.
     premises_dependency: null
     procurement_mode: tbd
     existing_condition: null
@@ -3118,8 +3122,8 @@ equipment:
     price_date: null
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    quote_status: not_requested
-    notes: null
+    quote_status: included_in_parent
+    notes: Компонент расчётного комплекта CAPEX-02-056; количество и бюджет имеют статус research по DEC-011.
     source_section: CAPEX-02 / Кухонный инвентарь торговой точки
     source_item_number: 16
     source_record_sha256: ecb4b2aca88e226d4c2f38dfbe9b80fc70fc04f738eb12ace016bb6d529e267e
@@ -3131,17 +3135,17 @@ equipment:
     subcategory: Кухонный инвентарь торговой точки
     name: Лопатки
     record_type: inventory
-    parent_item_id: null
-    inclusion_status: tbd
-    requirement: tbd
+    parent_item_id: CAPEX-02-056
+    inclusion_status: included_in_parent
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 12
+    quantity_base: 12
+    quantity_scale_ready: 12
+    unit: шт.
     source_quantity: null
-    specification: null
-    open_parameters: Количество и типы — tbd.
+    specification: "Лопатки по постам и резерву. Research-бюджет строки: 12 × 700 ₽ = 8400 ₽; отдельно не суммируется, входит в CAPEX-02-056."
+    open_parameters: Точный бренд, размеры и материал подтверждаются перед закупкой.
     premises_dependency: null
     procurement_mode: tbd
     existing_condition: null
@@ -3160,8 +3164,8 @@ equipment:
     price_date: null
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    quote_status: not_requested
-    notes: null
+    quote_status: included_in_parent
+    notes: Компонент расчётного комплекта CAPEX-02-056; количество и бюджет имеют статус research по DEC-011.
     source_section: CAPEX-02 / Кухонный инвентарь торговой точки
     source_item_number: 17
     source_record_sha256: 9eb9f05ae16b2a281c8a5e7cb718d668a72f8d907ccb56c16526caf62428f777
@@ -3173,17 +3177,17 @@ equipment:
     subcategory: Кухонный инвентарь торговой точки
     name: Щипцы
     record_type: inventory
-    parent_item_id: null
-    inclusion_status: tbd
-    requirement: tbd
+    parent_item_id: CAPEX-02-056
+    inclusion_status: included_in_parent
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 12
+    quantity_base: 12
+    quantity_scale_ready: 12
+    unit: шт.
     source_quantity: null
-    specification: null
-    open_parameters: Количество и типы — tbd.
+    specification: "Щипцы по постам и резерву. Research-бюджет строки: 12 × 800 ₽ = 9600 ₽; отдельно не суммируется, входит в CAPEX-02-056."
+    open_parameters: Точный бренд, размеры и материал подтверждаются перед закупкой.
     premises_dependency: null
     procurement_mode: tbd
     existing_condition: null
@@ -3202,8 +3206,8 @@ equipment:
     price_date: null
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    quote_status: not_requested
-    notes: null
+    quote_status: included_in_parent
+    notes: Компонент расчётного комплекта CAPEX-02-056; количество и бюджет имеют статус research по DEC-011.
     source_section: CAPEX-02 / Кухонный инвентарь торговой точки
     source_item_number: 18
     source_record_sha256: 0675a8d8e8220474981b89b09fda0fd749b4ffbf64c17c2de26ad45a9da726c9
@@ -3215,17 +3219,17 @@ equipment:
     subcategory: Кухонный инвентарь торговой точки
     name: Вилки и ложки
     record_type: inventory
-    parent_item_id: null
-    inclusion_status: tbd
-    requirement: tbd
+    parent_item_id: CAPEX-02-056
+    inclusion_status: included_in_parent
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 12
+    quantity_base: 12
+    quantity_scale_ready: 12
+    unit: шт.
     source_quantity: null
-    specification: null
-    open_parameters: Количество и состав комплекта — tbd.
+    specification: "Рабочие вилки и ложки. Research-бюджет строки: 12 × 500 ₽ = 6000 ₽; отдельно не суммируется, входит в CAPEX-02-056."
+    open_parameters: Точный бренд, размеры и материал подтверждаются перед закупкой.
     premises_dependency: null
     procurement_mode: tbd
     existing_condition: null
@@ -3244,8 +3248,8 @@ equipment:
     price_date: null
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    quote_status: not_requested
-    notes: null
+    quote_status: included_in_parent
+    notes: Компонент расчётного комплекта CAPEX-02-056; количество и бюджет имеют статус research по DEC-011.
     source_section: CAPEX-02 / Кухонный инвентарь торговой точки
     source_item_number: 19
     source_record_sha256: a5824d6f715bdcba7163dfe1c74a0edade0e9c48952d89722d0f50719db7ab93
@@ -3257,17 +3261,17 @@ equipment:
     subcategory: Кухонный инвентарь торговой точки
     name: Половники и шумовки
     record_type: inventory
-    parent_item_id: null
-    inclusion_status: tbd
-    requirement: tbd
+    parent_item_id: CAPEX-02-056
+    inclusion_status: included_in_parent
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 8
+    quantity_base: 8
+    quantity_scale_ready: 8
+    unit: шт.
     source_quantity: null
-    specification: null
-    open_parameters: Количество и состав комплекта — tbd.
+    specification: "Половники и шумовки. Research-бюджет строки: 8 × 1000 ₽ = 8000 ₽; отдельно не суммируется, входит в CAPEX-02-056."
+    open_parameters: Точный бренд, размеры и материал подтверждаются перед закупкой.
     premises_dependency: null
     procurement_mode: tbd
     existing_condition: null
@@ -3286,8 +3290,8 @@ equipment:
     price_date: null
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    quote_status: not_requested
-    notes: null
+    quote_status: included_in_parent
+    notes: Компонент расчётного комплекта CAPEX-02-056; количество и бюджет имеют статус research по DEC-011.
     source_section: CAPEX-02 / Кухонный инвентарь торговой точки
     source_item_number: 20
     source_record_sha256: c2d14ec1a2010bca95f7d4cbdde11c200f6279f84de7fa40a6ab2faf216145f2
@@ -3299,17 +3303,17 @@ equipment:
     subcategory: Кухонный инвентарь торговой точки
     name: Венчики
     record_type: inventory
-    parent_item_id: null
-    inclusion_status: tbd
-    requirement: tbd
+    parent_item_id: CAPEX-02-056
+    inclusion_status: included_in_parent
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 4
+    quantity_base: 4
+    quantity_scale_ready: 4
+    unit: шт.
     source_quantity: null
-    specification: null
-    open_parameters: Количество и типы — tbd.
+    specification: "Венчики рабочих размеров. Research-бюджет строки: 4 × 1000 ₽ = 4000 ₽; отдельно не суммируется, входит в CAPEX-02-056."
+    open_parameters: Точный бренд, размеры и материал подтверждаются перед закупкой.
     premises_dependency: null
     procurement_mode: tbd
     existing_condition: null
@@ -3328,8 +3332,8 @@ equipment:
     price_date: null
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    quote_status: not_requested
-    notes: null
+    quote_status: included_in_parent
+    notes: Компонент расчётного комплекта CAPEX-02-056; количество и бюджет имеют статус research по DEC-011.
     source_section: CAPEX-02 / Кухонный инвентарь торговой точки
     source_item_number: 21
     source_record_sha256: 7551218f0f31d77fcabcc318f85b028c6735302b42b8391e059c95d917637f99
@@ -3341,17 +3345,17 @@ equipment:
     subcategory: Кухонный инвентарь торговой точки
     name: Палочки и инструменты для работы с грилями
     record_type: inventory
-    parent_item_id: null
-    inclusion_status: tbd
-    requirement: tbd
+    parent_item_id: CAPEX-02-056
+    inclusion_status: included_in_parent
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 12
+    quantity_base: 12
+    quantity_scale_ready: 12
+    unit: шт.
     source_quantity: null
-    specification: null
-    open_parameters: Количество, типы и материал — tbd.
+    specification: "Палочки и инструменты для грилей Колобков и Манчеса. Research-бюджет строки: 12 × 500 ₽ = 6000 ₽; отдельно не суммируется, входит в CAPEX-02-056."
+    open_parameters: Точный бренд, размеры и материал подтверждаются перед закупкой.
     premises_dependency: null
     procurement_mode: tbd
     existing_condition: null
@@ -3370,8 +3374,8 @@ equipment:
     price_date: null
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    quote_status: not_requested
-    notes: null
+    quote_status: included_in_parent
+    notes: Компонент расчётного комплекта CAPEX-02-056; количество и бюджет имеют статус research по DEC-011.
     source_section: CAPEX-02 / Кухонный инвентарь торговой точки
     source_item_number: 22
     source_record_sha256: d67527889854a2b601508a7fc5db47abe602284fa3f8b313522207879b84ee0e
@@ -3383,17 +3387,17 @@ equipment:
     subcategory: Кухонный инвентарь торговой точки
     name: Сита и дуршлаги
     record_type: inventory
-    parent_item_id: null
-    inclusion_status: tbd
-    requirement: tbd
+    parent_item_id: CAPEX-02-056
+    inclusion_status: included_in_parent
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 4
+    quantity_base: 4
+    quantity_scale_ready: 4
+    unit: шт.
     source_quantity: null
-    specification: null
-    open_parameters: Количество, размеры и состав комплекта — tbd.
+    specification: "Сита и дуршлаги. Research-бюджет строки: 4 × 2000 ₽ = 8000 ₽; отдельно не суммируется, входит в CAPEX-02-056."
+    open_parameters: Точный бренд, размеры и материал подтверждаются перед закупкой.
     premises_dependency: null
     procurement_mode: tbd
     existing_condition: null
@@ -3412,8 +3416,8 @@ equipment:
     price_date: null
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    quote_status: not_requested
-    notes: null
+    quote_status: included_in_parent
+    notes: Компонент расчётного комплекта CAPEX-02-056; количество и бюджет имеют статус research по DEC-011.
     source_section: CAPEX-02 / Кухонный инвентарь торговой точки
     source_item_number: 23
     source_record_sha256: 392cd7ce49aa2cc9daf602f5d9a176229a46ee3231f2060c61ec0e1bad4afa3c
@@ -3425,17 +3429,17 @@ equipment:
     subcategory: Кухонный инвентарь торговой точки
     name: Мерные стаканы, кувшины и мерные ложки
     record_type: inventory
-    parent_item_id: null
-    inclusion_status: tbd
-    requirement: tbd
+    parent_item_id: CAPEX-02-056
+    inclusion_status: included_in_parent
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 8
+    quantity_base: 8
+    quantity_scale_ready: 8
+    unit: шт.
     source_quantity: null
-    specification: null
-    open_parameters: Количество, объёмы и состав комплекта — tbd.
+    specification: "Мерные стаканы, кувшины и ложки. Research-бюджет строки: 8 × 750 ₽ = 6000 ₽; отдельно не суммируется, входит в CAPEX-02-056."
+    open_parameters: Точный бренд, размеры и материал подтверждаются перед закупкой.
     premises_dependency: null
     procurement_mode: tbd
     existing_condition: null
@@ -3454,8 +3458,8 @@ equipment:
     price_date: null
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    quote_status: not_requested
-    notes: null
+    quote_status: included_in_parent
+    notes: Компонент расчётного комплекта CAPEX-02-056; количество и бюджет имеют статус research по DEC-011.
     source_section: CAPEX-02 / Кухонный инвентарь торговой точки
     source_item_number: 24
     source_record_sha256: eca513b9e81ef6f045daa00f7a74cda0e3e4e849b9d8793ebf47009b199bdb71
@@ -3467,17 +3471,17 @@ equipment:
     subcategory: Кухонный инвентарь торговой точки
     name: Весы и термощупы
     record_type: inventory
-    parent_item_id: null
-    inclusion_status: tbd
-    requirement: tbd
+    parent_item_id: CAPEX-02-056
+    inclusion_status: included_in_parent
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 4
+    quantity_base: 4
+    quantity_scale_ready: 4
+    unit: шт.
     source_quantity: null
-    specification: null
-    open_parameters: Количество и характеристики — tbd.
+    specification: "Дополнительные весы и термощупы торговой кухни. Research-бюджет строки: 4 × 3500 ₽ = 14000 ₽; отдельно не суммируется, входит в CAPEX-02-056."
+    open_parameters: Точный бренд, размеры и материал подтверждаются перед закупкой.
     premises_dependency: null
     procurement_mode: tbd
     existing_condition: null
@@ -3496,8 +3500,8 @@ equipment:
     price_date: null
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    quote_status: not_requested
-    notes: null
+    quote_status: included_in_parent
+    notes: Компонент расчётного комплекта CAPEX-02-056; количество и бюджет имеют статус research по DEC-011.
     source_section: CAPEX-02 / Кухонный инвентарь торговой точки
     source_item_number: 25
     source_record_sha256: 0eee02f04b702e0e68ac0f1776c79d41e98f42a42c532be345bca887ae4aec6e
@@ -3509,17 +3513,17 @@ equipment:
     subcategory: Кухонный инвентарь торговой точки
     name: Подносы и противни
     record_type: inventory
-    parent_item_id: null
-    inclusion_status: tbd
-    requirement: tbd
+    parent_item_id: CAPEX-02-056
+    inclusion_status: included_in_parent
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 12
+    quantity_base: 12
+    quantity_scale_ready: 12
+    unit: шт.
     source_quantity: null
-    specification: null
-    open_parameters: Количество, размеры и состав комплекта — tbd.
+    specification: "Подносы и противни оборотного комплекта. Research-бюджет строки: 12 × 2500 ₽ = 30000 ₽; отдельно не суммируется, входит в CAPEX-02-056."
+    open_parameters: Точный бренд, размеры и материал подтверждаются перед закупкой.
     premises_dependency: null
     procurement_mode: tbd
     existing_condition: null
@@ -3538,8 +3542,8 @@ equipment:
     price_date: null
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    quote_status: not_requested
-    notes: null
+    quote_status: included_in_parent
+    notes: Компонент расчётного комплекта CAPEX-02-056; количество и бюджет имеют статус research по DEC-011.
     source_section: CAPEX-02 / Кухонный инвентарь торговой точки
     source_item_number: 26
     source_record_sha256: 93bd55e6424b8a1a91b4df2e952737be1dd0f420d3d48310d635501a656293a9
@@ -3551,17 +3555,17 @@ equipment:
     subcategory: Кухонный инвентарь торговой точки
     name: Гастроёмкости и крышки
     record_type: inventory
-    parent_item_id: null
-    inclusion_status: tbd
-    requirement: tbd
+    parent_item_id: CAPEX-02-056
+    inclusion_status: included_in_parent
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 40
+    quantity_base: 40
+    quantity_scale_ready: 40
+    unit: шт.
     source_quantity: null
-    specification: null
-    open_parameters: Количество, размеры и формат — tbd.
+    specification: "Гастроёмкости и крышки оборотного комплекта. Research-бюджет строки: 40 × 2000 ₽ = 80000 ₽; отдельно не суммируется, входит в CAPEX-02-056."
+    open_parameters: Точный бренд, размеры и материал подтверждаются перед закупкой.
     premises_dependency: null
     procurement_mode: tbd
     existing_condition: null
@@ -3580,8 +3584,8 @@ equipment:
     price_date: null
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    quote_status: not_requested
-    notes: null
+    quote_status: included_in_parent
+    notes: Компонент расчётного комплекта CAPEX-02-056; количество и бюджет имеют статус research по DEC-011.
     source_section: CAPEX-02 / Кухонный инвентарь торговой точки
     source_item_number: 27
     source_record_sha256: a9135949c148eb0a7921dcea43e5513dc4262c62c767b40be17821ebf047842b
@@ -3593,17 +3597,17 @@ equipment:
     subcategory: Кухонный инвентарь торговой точки
     name: Герметичные пластиковые контейнеры
     record_type: inventory
-    parent_item_id: null
-    inclusion_status: tbd
-    requirement: tbd
+    parent_item_id: CAPEX-02-056
+    inclusion_status: included_in_parent
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 25
+    quantity_base: 25
+    quantity_scale_ready: 25
+    unit: шт.
     source_quantity: null
-    specification: null
-    open_parameters: Количество, размеры и материал — tbd.
+    specification: "Герметичные контейнеры разных объёмов. Research-бюджет строки: 25 × 1200 ₽ = 30000 ₽; отдельно не суммируется, входит в CAPEX-02-056."
+    open_parameters: Точный бренд, размеры и материал подтверждаются перед закупкой.
     premises_dependency: null
     procurement_mode: tbd
     existing_condition: null
@@ -3622,8 +3626,8 @@ equipment:
     price_date: null
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    quote_status: not_requested
-    notes: null
+    quote_status: included_in_parent
+    notes: Компонент расчётного комплекта CAPEX-02-056; количество и бюджет имеют статус research по DEC-011.
     source_section: CAPEX-02 / Кухонный инвентарь торговой точки
     source_item_number: 28
     source_record_sha256: c803a3e7f4ce9961f3f15f5352c53a79fae056e13683b702a976d5d6ade6c429
@@ -3635,17 +3639,17 @@ equipment:
     subcategory: Кухонный инвентарь торговой точки
     name: Дозаторы для соусов и топпингов
     record_type: inventory
-    parent_item_id: null
-    inclusion_status: tbd
-    requirement: tbd
+    parent_item_id: CAPEX-02-056
+    inclusion_status: included_in_parent
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 24
+    quantity_base: 24
+    quantity_scale_ready: 24
+    unit: шт.
     source_quantity: null
-    specification: null
-    open_parameters: Количество, объёмы и типы — tbd.
+    specification: "Дозаторы для соусов и топпингов. Research-бюджет строки: 24 × 700 ₽ = 16800 ₽; отдельно не суммируется, входит в CAPEX-02-056."
+    open_parameters: Точный бренд, размеры и материал подтверждаются перед закупкой.
     premises_dependency: null
     procurement_mode: tbd
     existing_condition: null
@@ -3664,8 +3668,8 @@ equipment:
     price_date: null
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    quote_status: not_requested
-    notes: null
+    quote_status: included_in_parent
+    notes: Компонент расчётного комплекта CAPEX-02-056; количество и бюджет имеют статус research по DEC-011.
     source_section: CAPEX-02 / Кухонный инвентарь торговой точки
     source_item_number: 29
     source_record_sha256: ab9d46408b24427057bdafaf65ab8cab01ea915069ceb62ed5c60df62b4e5d92
@@ -3677,17 +3681,17 @@ equipment:
     subcategory: Кухонный инвентарь торговой точки
     name: Органайзеры для рабочего инструмента
     record_type: inventory
-    parent_item_id: null
-    inclusion_status: tbd
-    requirement: tbd
+    parent_item_id: CAPEX-02-056
+    inclusion_status: included_in_parent
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 6
+    quantity_base: 6
+    quantity_scale_ready: 6
+    unit: шт.
     source_quantity: null
-    specification: null
-    open_parameters: Количество, размеры и размещение — tbd.
+    specification: "Органайзеры по рабочим постам. Research-бюджет строки: 6 × 2000 ₽ = 12000 ₽; отдельно не суммируется, входит в CAPEX-02-056."
+    open_parameters: Точный бренд, размеры и материал подтверждаются перед закупкой.
     premises_dependency: null
     procurement_mode: tbd
     existing_condition: null
@@ -3706,8 +3710,8 @@ equipment:
     price_date: null
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    quote_status: not_requested
-    notes: null
+    quote_status: included_in_parent
+    notes: Компонент расчётного комплекта CAPEX-02-056; количество и бюджет имеют статус research по DEC-011.
     source_section: CAPEX-02 / Кухонный инвентарь торговой точки
     source_item_number: 30
     source_record_sha256: 5bbde93c7d8aca125b6ce3cc930fb933f73c7397df5eaed9cbd706ebdd0cf845
@@ -3719,17 +3723,17 @@ equipment:
     subcategory: Кухонный инвентарь торговой точки
     name: Ёмкости для санитарной обработки инвентаря
     record_type: inventory
-    parent_item_id: null
-    inclusion_status: tbd
-    requirement: tbd
+    parent_item_id: CAPEX-02-056
+    inclusion_status: included_in_parent
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 6
+    quantity_base: 6
+    quantity_scale_ready: 6
+    unit: шт.
     source_quantity: null
-    specification: null
-    open_parameters: Количество, объёмы и материал — tbd.
+    specification: "Ёмкости для санитарной обработки инвентаря. Research-бюджет строки: 6 × 2000 ₽ = 12000 ₽; отдельно не суммируется, входит в CAPEX-02-056."
+    open_parameters: Точный бренд, размеры и материал подтверждаются перед закупкой.
     premises_dependency: null
     procurement_mode: tbd
     existing_condition: null
@@ -3748,8 +3752,8 @@ equipment:
     price_date: null
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    quote_status: not_requested
-    notes: null
+    quote_status: included_in_parent
+    notes: Компонент расчётного комплекта CAPEX-02-056; количество и бюджет имеют статус research по DEC-011.
     source_section: CAPEX-02 / Кухонный инвентарь торговой точки
     source_item_number: 31
     source_record_sha256: 956485c3141a7e03a8d9130526474c747fe4e7bf81766f4f8dc2018b3db1ce1d
@@ -3761,17 +3765,17 @@ equipment:
     subcategory: Базовый барный инвентарь
     name: Джиггеры и мерные стаканы
     record_type: inventory
-    parent_item_id: null
-    inclusion_status: tbd
-    requirement: tbd
+    parent_item_id: CAPEX-02-057
+    inclusion_status: included_in_parent
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 6
+    quantity_base: 6
+    quantity_scale_ready: 6
+    unit: шт.
     source_quantity: null
-    specification: null
-    open_parameters: Количество, объёмы и состав комплекта — tbd.
+    specification: "Джиггеры и мерные стаканы. Research-бюджет строки: 6 × 800 ₽ = 4800 ₽; отдельно не суммируется, входит в CAPEX-02-057."
+    open_parameters: Точный бренд, размеры и материал подтверждаются перед закупкой.
     premises_dependency: null
     procurement_mode: tbd
     existing_condition: null
@@ -3790,8 +3794,8 @@ equipment:
     price_date: null
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    quote_status: not_requested
-    notes: null
+    quote_status: included_in_parent
+    notes: Компонент расчётного комплекта CAPEX-02-057; количество и бюджет имеют статус research по DEC-011.
     source_section: CAPEX-02 / Базовый барный инвентарь
     source_item_number: 32
     source_record_sha256: 72dd7fbbd50817eada5ba7e0b56793920d90b4d09fc46c7ee245238019bd6a62
@@ -3803,17 +3807,17 @@ equipment:
     subcategory: Базовый барный инвентарь
     name: Барные ложки
     record_type: inventory
-    parent_item_id: null
-    inclusion_status: tbd
-    requirement: tbd
+    parent_item_id: CAPEX-02-057
+    inclusion_status: included_in_parent
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 6
+    quantity_base: 6
+    quantity_scale_ready: 6
+    unit: шт.
     source_quantity: null
-    specification: null
-    open_parameters: Количество и типы — tbd.
+    specification: "Барные ложки. Research-бюджет строки: 6 × 800 ₽ = 4800 ₽; отдельно не суммируется, входит в CAPEX-02-057."
+    open_parameters: Точный бренд, размеры и материал подтверждаются перед закупкой.
     premises_dependency: null
     procurement_mode: tbd
     existing_condition: null
@@ -3832,8 +3836,8 @@ equipment:
     price_date: null
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    quote_status: not_requested
-    notes: null
+    quote_status: included_in_parent
+    notes: Компонент расчётного комплекта CAPEX-02-057; количество и бюджет имеют статус research по DEC-011.
     source_section: CAPEX-02 / Базовый барный инвентарь
     source_item_number: 33
     source_record_sha256: 6bd51a85c4fc099f63cf27edd5ecf9f0590f099bc20fa1670ee71613248988ef
@@ -3845,17 +3849,17 @@ equipment:
     subcategory: Базовый барный инвентарь
     name: Кувшины
     record_type: inventory
-    parent_item_id: null
-    inclusion_status: tbd
-    requirement: tbd
+    parent_item_id: CAPEX-02-057
+    inclusion_status: included_in_parent
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 4
+    quantity_base: 4
+    quantity_scale_ready: 4
+    unit: шт.
     source_quantity: null
-    specification: null
-    open_parameters: Количество и объёмы — tbd.
+    specification: "Кувшины рабочих объёмов. Research-бюджет строки: 4 × 2400 ₽ = 9600 ₽; отдельно не суммируется, входит в CAPEX-02-057."
+    open_parameters: Точный бренд, размеры и материал подтверждаются перед закупкой.
     premises_dependency: null
     procurement_mode: tbd
     existing_condition: null
@@ -3874,8 +3878,8 @@ equipment:
     price_date: null
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    quote_status: not_requested
-    notes: null
+    quote_status: included_in_parent
+    notes: Компонент расчётного комплекта CAPEX-02-057; количество и бюджет имеют статус research по DEC-011.
     source_section: CAPEX-02 / Базовый барный инвентарь
     source_item_number: 34
     source_record_sha256: db015b44a60f03100de10848b071402d84b1eef9cff391a3563c6aa89ae1f458
@@ -3887,17 +3891,17 @@ equipment:
     subcategory: Базовый барный инвентарь
     name: Бутылки, помпы и дозаторы для сиропов
     record_type: inventory
-    parent_item_id: null
-    inclusion_status: tbd
-    requirement: tbd
+    parent_item_id: CAPEX-02-057
+    inclusion_status: included_in_parent
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 24
+    quantity_base: 24
+    quantity_scale_ready: 24
+    unit: шт.
     source_quantity: null
-    specification: null
-    open_parameters: Количество, объёмы и состав комплекта — tbd.
+    specification: "Бутылки, помпы и дозаторы для сиропов. Research-бюджет строки: 24 × 700 ₽ = 16800 ₽; отдельно не суммируется, входит в CAPEX-02-057."
+    open_parameters: Точный бренд, размеры и материал подтверждаются перед закупкой.
     premises_dependency: null
     procurement_mode: tbd
     existing_condition: null
@@ -3916,8 +3920,8 @@ equipment:
     price_date: null
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    quote_status: not_requested
-    notes: null
+    quote_status: included_in_parent
+    notes: Компонент расчётного комплекта CAPEX-02-057; количество и бюджет имеют статус research по DEC-011.
     source_section: CAPEX-02 / Базовый барный инвентарь
     source_item_number: 35
     source_record_sha256: 27d378a75c4064ff325c9acfadddf9ada80dd35709d5ac2a30a000642f3eca10
@@ -3929,17 +3933,17 @@ equipment:
     subcategory: Базовый барный инвентарь
     name: Совки и щипцы для льда
     record_type: inventory
-    parent_item_id: null
-    inclusion_status: tbd
-    requirement: tbd
+    parent_item_id: CAPEX-02-057
+    inclusion_status: included_in_parent
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 6
+    quantity_base: 6
+    quantity_scale_ready: 6
+    unit: шт.
     source_quantity: null
-    specification: null
-    open_parameters: Количество и состав комплекта — tbd.
+    specification: "Совки и щипцы для льда. Research-бюджет строки: 6 × 800 ₽ = 4800 ₽; отдельно не суммируется, входит в CAPEX-02-057."
+    open_parameters: Точный бренд, размеры и материал подтверждаются перед закупкой.
     premises_dependency: null
     procurement_mode: tbd
     existing_condition: null
@@ -3958,8 +3962,8 @@ equipment:
     price_date: null
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    quote_status: not_requested
-    notes: null
+    quote_status: included_in_parent
+    notes: Компонент расчётного комплекта CAPEX-02-057; количество и бюджет имеют статус research по DEC-011.
     source_section: CAPEX-02 / Базовый барный инвентарь
     source_item_number: 36
     source_record_sha256: 6989ac98ce5c980a2dc0f7c8af11f1b1fc40ebb2c4d7e38cb376684a36a776e2
@@ -3971,17 +3975,17 @@ equipment:
     subcategory: Базовый барный инвентарь
     name: Закрываемые контейнеры для льда
     record_type: inventory
-    parent_item_id: null
-    inclusion_status: tbd
-    requirement: tbd
+    parent_item_id: CAPEX-02-057
+    inclusion_status: included_in_parent
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 4
+    quantity_base: 4
+    quantity_scale_ready: 4
+    unit: шт.
     source_quantity: null
-    specification: null
-    open_parameters: Количество и объёмы — tbd.
+    specification: "Закрываемые контейнеры для льда. Research-бюджет строки: 4 × 2000 ₽ = 8000 ₽; отдельно не суммируется, входит в CAPEX-02-057."
+    open_parameters: Точный бренд, размеры и материал подтверждаются перед закупкой.
     premises_dependency: null
     procurement_mode: tbd
     existing_condition: null
@@ -4000,8 +4004,8 @@ equipment:
     price_date: null
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    quote_status: not_requested
-    notes: null
+    quote_status: included_in_parent
+    notes: Компонент расчётного комплекта CAPEX-02-057; количество и бюджет имеют статус research по DEC-011.
     source_section: CAPEX-02 / Базовый барный инвентарь
     source_item_number: 37
     source_record_sha256: 4c25792e93482421d27097d98752ab02bb8bf41900e60d0439d95bdf1d9bbccd
@@ -4013,17 +4017,17 @@ equipment:
     subcategory: Базовый барный инвентарь
     name: Ножи и доски для фруктов
     record_type: inventory
-    parent_item_id: null
-    inclusion_status: tbd
-    requirement: tbd
+    parent_item_id: CAPEX-02-057
+    inclusion_status: included_in_parent
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 1
+    quantity_base: 1
+    quantity_scale_ready: 1
+    unit: комплект
     source_quantity: null
-    specification: null
-    open_parameters: Количество, типы и схема маркировки — tbd.
+    specification: "Ножи и цветовые доски для фруктов. Research-бюджет строки: 1 × 10000 ₽ = 10000 ₽; отдельно не суммируется, входит в CAPEX-02-057."
+    open_parameters: Точный бренд, размеры и материал подтверждаются перед закупкой.
     premises_dependency: null
     procurement_mode: tbd
     existing_condition: null
@@ -4042,8 +4046,8 @@ equipment:
     price_date: null
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    quote_status: not_requested
-    notes: null
+    quote_status: included_in_parent
+    notes: Компонент расчётного комплекта CAPEX-02-057; количество и бюджет имеют статус research по DEC-011.
     source_section: CAPEX-02 / Базовый барный инвентарь
     source_item_number: 38
     source_record_sha256: bc2a99d372e5316b1a29cf8add14b23d07babed75a53cedcc6c2f5de0307b770
@@ -4055,17 +4059,17 @@ equipment:
     subcategory: Базовый барный инвентарь
     name: Ручной пресс для цитрусовых
     record_type: inventory
-    parent_item_id: null
-    inclusion_status: tbd
-    requirement: tbd
+    parent_item_id: CAPEX-02-057
+    inclusion_status: included_in_parent
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 2
+    quantity_base: 2
+    quantity_scale_ready: 2
+    unit: шт.
     source_quantity: null
-    specification: null
-    open_parameters: Количество и характеристики — tbd.
+    specification: "Ручные прессы для цитрусовых. Research-бюджет строки: 2 × 6000 ₽ = 12000 ₽; отдельно не суммируется, входит в CAPEX-02-057."
+    open_parameters: Точный бренд, размеры и материал подтверждаются перед закупкой.
     premises_dependency: null
     procurement_mode: tbd
     existing_condition: null
@@ -4084,8 +4088,8 @@ equipment:
     price_date: null
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    quote_status: not_requested
-    notes: null
+    quote_status: included_in_parent
+    notes: Компонент расчётного комплекта CAPEX-02-057; количество и бюджет имеют статус research по DEC-011.
     source_section: CAPEX-02 / Базовый барный инвентарь
     source_item_number: 39
     source_record_sha256: 25abc2a5a43827fa2d1dea9c1eee56848efdf1a26a5274618a26b51258116ccc
@@ -4097,17 +4101,17 @@ equipment:
     subcategory: Базовый барный инвентарь
     name: Ёмкости для лимона, мяты и других добавок
     record_type: inventory
-    parent_item_id: null
-    inclusion_status: tbd
-    requirement: tbd
+    parent_item_id: CAPEX-02-057
+    inclusion_status: included_in_parent
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 12
+    quantity_base: 12
+    quantity_scale_ready: 12
+    unit: шт.
     source_quantity: null
-    specification: null
-    open_parameters: Количество, объёмы и материал — tbd.
+    specification: "Закрываемые ёмкости для добавок. Research-бюджет строки: 12 × 900 ₽ = 10800 ₽; отдельно не суммируется, входит в CAPEX-02-057."
+    open_parameters: Точный бренд, размеры и материал подтверждаются перед закупкой.
     premises_dependency: null
     procurement_mode: tbd
     existing_condition: null
@@ -4126,8 +4130,8 @@ equipment:
     price_date: null
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    quote_status: not_requested
-    notes: null
+    quote_status: included_in_parent
+    notes: Компонент расчётного комплекта CAPEX-02-057; количество и бюджет имеют статус research по DEC-011.
     source_section: CAPEX-02 / Базовый барный инвентарь
     source_item_number: 40
     source_record_sha256: b5df0f14307f8c77f3ceb59638bddb32f6f1144e070ad35763c5901e2dcd357b
@@ -4139,17 +4143,17 @@ equipment:
     subcategory: Базовый барный инвентарь
     name: Поддоны и каплесборники
     record_type: inventory
-    parent_item_id: null
-    inclusion_status: tbd
-    requirement: tbd
+    parent_item_id: CAPEX-02-057
+    inclusion_status: included_in_parent
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 4
+    quantity_base: 4
+    quantity_scale_ready: 4
+    unit: шт.
     source_quantity: null
-    specification: null
-    open_parameters: Количество, размеры и размещение — tbd.
+    specification: "Поддоны и каплесборники. Research-бюджет строки: 4 × 2500 ₽ = 10000 ₽; отдельно не суммируется, входит в CAPEX-02-057."
+    open_parameters: Точный бренд, размеры и материал подтверждаются перед закупкой.
     premises_dependency: null
     procurement_mode: tbd
     existing_condition: null
@@ -4168,8 +4172,8 @@ equipment:
     price_date: null
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    quote_status: not_requested
-    notes: null
+    quote_status: included_in_parent
+    notes: Компонент расчётного комплекта CAPEX-02-057; количество и бюджет имеют статус research по DEC-011.
     source_section: CAPEX-02 / Базовый барный инвентарь
     source_item_number: 41
     source_record_sha256: b64bcc75c018e5e59d0fd7205ce9d94e4a79cddc24af5cdedc126777d073b3e1
@@ -4181,17 +4185,17 @@ equipment:
     subcategory: Базовый барный инвентарь
     name: Инвентарь для мойки кег, шлангов и барного оборудования
     record_type: inventory
-    parent_item_id: null
-    inclusion_status: tbd
-    requirement: tbd
+    parent_item_id: CAPEX-02-057
+    inclusion_status: included_in_parent
+    requirement: required
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
-    unit: tbd
+    quantity_min: 1
+    quantity_base: 1
+    quantity_scale_ready: 1
+    unit: комплект
     source_quantity: null
-    specification: null
-    open_parameters: Количество и состав комплекта — tbd.
+    specification: "Инвентарь для мойки кег, шлангов и барного оборудования. Research-бюджет строки: 1 × 20000 ₽ = 20000 ₽; отдельно не суммируется, входит в CAPEX-02-057."
+    open_parameters: Точный бренд, размеры и материал подтверждаются перед закупкой.
     premises_dependency: null
     procurement_mode: tbd
     existing_condition: null
@@ -4210,8 +4214,8 @@ equipment:
     price_date: null
     supplier: null
     source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    quote_status: not_requested
-    notes: null
+    quote_status: included_in_parent
+    notes: Компонент расчётного комплекта CAPEX-02-057; количество и бюджет имеют статус research по DEC-011.
     source_section: CAPEX-02 / Базовый барный инвентарь
     source_item_number: 42
     source_record_sha256: 33da43fe440e1e3662f8d025d99ac3e285751f7e6453710cf5bf4f588640dac3
@@ -6872,6 +6876,487 @@ equipment:
     source_item_number: 27
     source_record_sha256: 86ee5b88617361ac9375e0b42b7a3093607abdbef7650e2ea6c00fa8637730e2
     content_source_id: SRC-CAPEX-MODULAR-CONFIGURATOR-BRIEF
+  - item_id: CAPEX-01-048
+    module_id: CAPEX-01
+    module_name: Заготовочный цех
+    category: Заготовочный цех
+    subcategory: Кухонный инвентарь заготовочного цеха
+    name: Комплект мелкого инвентаря заготовочного цеха
+    record_type: system
+    parent_item_id: null
+    inclusion_status: standalone
+    requirement: required
+    lifecycle_status: research
+    quantity_min: 1
+    quantity_base: 1
+    quantity_scale_ready: 1
+    unit: комплект
+    source_quantity: null
+    specification: "Расчётный комплект: 16 групп инвентаря; сумма строк 268200 ₽ + 10% резерв на дубли, бой и замену 26820 ₽ = 295020 ₽."
+    open_parameters: Точный cart по брендам, размерам, материалам и количеству рабочих постов подтверждается после меню, техкарт и планировки.
+    premises_dependency: null
+    procurement_mode: purchase
+    existing_condition: null
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: false
+    extraction_required: false
+    dimensions: null
+    service_clearance: null
+    price_min: 295020
+    price_base: 295020
+    price_max: 295020
+    currency: RUB
+    price_date: 2026-08-03
+    supplier: Расчётный комплект / Restoll
+    supplier_name: Расчётный комплект / Restoll
+    product_name: Расчётный комплект мелкого инвентаря заготовочного цеха
+    source_url: https://restoll.ru/catalog-by-type/stolovaya/
+    content_source_id: SRC-PILOT-CAPEX-AND-OPERATING-BRIEF
+    price_min_source_id: SRC-PRICE-20260803-PREP-INVENTORY-KIT
+    price_base_source_id: SRC-PRICE-20260803-PREP-INVENTORY-KIT
+    price_max_source_id: SRC-PRICE-20260803-PREP-INVENTORY-KIT
+    availability_status: research_composite; exact_cart_not_confirmed
+    price_includes_vat: null
+    delivery_included: false
+    confidence: low
+    price_notes: Bottom-up research-бюджет 268 200 ₽ по 16 группам + 10% резерв 26 820 ₽. Это не готовая корзина поставщика. Составная research-оценка требует точной спецификации и коммерческого предложения перед закупкой.
+    source_id: SRC-PRICE-20260803-PREP-INVENTORY-KIT
+    quote_status: quote_required
+    notes: Добавлено решением DEC-011 как research-позиция; не является утверждённой закупкой или финальным CAPEX.
+    source_section: CAPEX-01 / Кухонный инвентарь заготовочного цеха
+    source_item_number: 48
+    source_record_sha256: 5238dec49a9689b7f7606b9321883bb8a6e967cc7ccb9f7f3fa074fc14f63107
+    checked_at: 2026-08-03T12:00:00.000Z
+  - item_id: CAPEX-02-056
+    module_id: CAPEX-02
+    module_name: Торговая кухня, бар и зона выдачи
+    category: Торговая кухня, бар и зона выдачи
+    subcategory: Кухонный инвентарь торговой точки
+    name: Комплект мелкого инвентаря торговой кухни
+    record_type: system
+    parent_item_id: null
+    inclusion_status: standalone
+    requirement: required
+    lifecycle_status: research
+    quantity_min: 1
+    quantity_base: 1
+    quantity_scale_ready: 1
+    unit: комплект
+    source_quantity: null
+    specification: "Расчётный комплект: 18 групп инвентаря; сумма строк 281600 ₽ + 10% резерв на дубли, бой и замену 28160 ₽ = 309760 ₽."
+    open_parameters: Точный cart по брендам, размерам, материалам и количеству рабочих постов подтверждается после меню, техкарт и планировки.
+    premises_dependency: null
+    procurement_mode: purchase
+    existing_condition: null
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: false
+    extraction_required: false
+    dimensions: null
+    service_clearance: null
+    price_min: 309760
+    price_base: 309760
+    price_max: 309760
+    currency: RUB
+    price_date: 2026-08-03
+    supplier: Расчётный комплект / Restoll
+    supplier_name: Расчётный комплект / Restoll
+    product_name: Расчётный комплект мелкого инвентаря торговой кухни
+    source_url: https://restoll.ru/catalog-by-type/stolovaya/
+    content_source_id: SRC-PILOT-CAPEX-AND-OPERATING-BRIEF
+    price_min_source_id: SRC-PRICE-20260803-RETAIL-INVENTORY-KIT
+    price_base_source_id: SRC-PRICE-20260803-RETAIL-INVENTORY-KIT
+    price_max_source_id: SRC-PRICE-20260803-RETAIL-INVENTORY-KIT
+    availability_status: research_composite; exact_cart_not_confirmed
+    price_includes_vat: null
+    delivery_included: false
+    confidence: low
+    price_notes: Bottom-up research-бюджет 281 600 ₽ по 18 группам + 10% резерв 28 160 ₽. Это не готовая корзина поставщика. Составная research-оценка требует точной спецификации и коммерческого предложения перед закупкой.
+    source_id: SRC-PRICE-20260803-RETAIL-INVENTORY-KIT
+    quote_status: quote_required
+    notes: Добавлено решением DEC-011 как research-позиция; не является утверждённой закупкой или финальным CAPEX.
+    source_section: CAPEX-02 / Кухонный инвентарь торговой точки
+    source_item_number: 56
+    source_record_sha256: 693a27a9ed3d75535432c45dabe5169b60755f67d64f9b4938f4e1671326e53e
+    checked_at: 2026-08-03T12:00:00.000Z
+  - item_id: CAPEX-02-057
+    module_id: CAPEX-02
+    module_name: Торговая кухня, бар и зона выдачи
+    category: Торговая кухня, бар и зона выдачи
+    subcategory: Базовый барный инвентарь
+    name: Комплект базового барного инвентаря
+    record_type: system
+    parent_item_id: null
+    inclusion_status: standalone
+    requirement: required
+    lifecycle_status: research
+    quantity_min: 1
+    quantity_base: 1
+    quantity_scale_ready: 1
+    unit: комплект
+    source_quantity: null
+    specification: "Расчётный комплект: 11 групп инвентаря; сумма строк 111600 ₽ + 10% резерв на дубли, бой и замену 11160 ₽ = 122760 ₽."
+    open_parameters: Точный cart по брендам, размерам, материалам и количеству рабочих постов подтверждается после меню, техкарт и планировки.
+    premises_dependency: null
+    procurement_mode: purchase
+    existing_condition: null
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: false
+    extraction_required: false
+    dimensions: null
+    service_clearance: null
+    price_min: 122760
+    price_base: 122760
+    price_max: 122760
+    currency: RUB
+    price_date: 2026-08-03
+    supplier: Расчётный комплект / Restoll
+    supplier_name: Расчётный комплект / Restoll
+    product_name: Расчётный комплект базового барного инвентаря
+    source_url: https://restoll.ru/catalog-by-type/stolovaya/
+    content_source_id: SRC-PILOT-CAPEX-AND-OPERATING-BRIEF
+    price_min_source_id: SRC-PRICE-20260803-BAR-INVENTORY-KIT
+    price_base_source_id: SRC-PRICE-20260803-BAR-INVENTORY-KIT
+    price_max_source_id: SRC-PRICE-20260803-BAR-INVENTORY-KIT
+    availability_status: research_composite; exact_cart_not_confirmed
+    price_includes_vat: null
+    delivery_included: false
+    confidence: low
+    price_notes: Bottom-up research-бюджет 111 600 ₽ по 11 группам + 10% резерв 11 160 ₽. Многоразовая гостевая посуда и алкогольный бар не включены. Составная research-оценка требует точной спецификации и коммерческого предложения перед закупкой.
+    source_id: SRC-PRICE-20260803-BAR-INVENTORY-KIT
+    quote_status: quote_required
+    notes: Добавлено решением DEC-011 как research-позиция; не является утверждённой закупкой или финальным CAPEX.
+    source_section: CAPEX-02 / Базовый барный инвентарь
+    source_item_number: 57
+    source_record_sha256: 9f15c93224ed4370eaa4e8f24972fccf48285094977651a4956b3be4cbf6f3d8
+    checked_at: 2026-08-03T12:00:00.000Z
+  - item_id: CAPEX-08-001
+    module_id: CAPEX-08
+    module_name: Посудомоечное оборудование
+    category: Посудомоечное оборудование
+    subcategory: Профессиональная посудомоечная зона
+    name: Комплект профессиональной посудомоечной зоны
+    record_type: system
+    parent_item_id: null
+    inclusion_status: standalone
+    requirement: required
+    lifecycle_status: research
+    quantity_min: 1
+    quantity_base: 1
+    quantity_scale_ready: 1
+    unit: комплект
+    source_quantity: null
+    specification: Одна купольная машина ABAT МПК-700К, предмоечный стол с душирующим устройством, выходной стол, три дополнительные кассеты 500×500 и умягчитель воды DVA LT12.
+    open_parameters: Точный состав, химия, вытяжка над зоной, корзины под фактическую посуду и необходимость мойки кухонной тары.
+    premises_dependency: Требуются место для грязного и чистого потоков, 400 В, вода, канализация, трап и проверка жёсткости воды.
+    procurement_mode: purchase
+    existing_condition: null
+    power_kw: null
+    voltage: 400
+    water_required: true
+    drainage_required: true
+    gas_required: false
+    extraction_required: false
+    dimensions: null
+    service_clearance: null
+    price_min: 304101.33
+    price_base: 304101.33
+    price_max: 304101.33
+    currency: RUB
+    price_date: 2026-08-03
+    supplier: ABAT Online / Трапеза
+    supplier_name: ABAT Online / Трапеза
+    product_name: ABAT МПК-700К + предмоечный и выходной столы + 3 кассеты + DVA LT12
+    source_url: https://abat-online.ru/product/kupolnaya-posudomoechnaya-mashina-abat-mpk-700k/
+    content_source_id: SRC-PILOT-CAPEX-AND-OPERATING-BRIEF
+    price_min_source_id: SRC-PRICE-20260803-DISHWASH-SYSTEM
+    price_base_source_id: SRC-PRICE-20260803-DISHWASH-SYSTEM
+    price_max_source_id: SRC-PRICE-20260803-DISHWASH-SYSTEM
+    availability_status: research_composite; exact_cart_not_confirmed
+    price_includes_vat: null
+    delivery_included: false
+    confidence: low
+    price_notes: "Композит: машина 214 410 ₽ + предмоечный стол 48 486 ₽ + выходной стол 23 128 ₽ + три кассеты 6 207 ₽ + умягчитель 11 870,33 ₽. Доставка, монтаж, химия, вода, канализация и электрическое подключение не включены. Составная research-оценка требует точной спецификации и коммерческого предложения перед закупкой."
+    source_id: SRC-PRICE-20260803-DISHWASH-SYSTEM
+    quote_status: quote_required
+    notes: Добавлено решением DEC-011 как research-позиция; не является утверждённой закупкой или финальным CAPEX.
+    source_section: CAPEX-08 / Профессиональная посудомоечная зона
+    source_item_number: 1
+    source_record_sha256: d585db7beae8a5395c9e3c8c922eb607078a59450205c2f3f1c1ad6ebf047790
+    checked_at: 2026-08-03T12:00:00.000Z
+  - item_id: CAPEX-08-002
+    module_id: CAPEX-08
+    module_name: Посудомоечное оборудование
+    category: Посудомоечное оборудование
+    subcategory: Профессиональная посудомоечная зона
+    name: Купольная посудомоечная машина ABAT МПК-700К
+    record_type: equipment
+    parent_item_id: CAPEX-08-001
+    inclusion_status: included_in_parent
+    requirement: required
+    lifecycle_status: research
+    quantity_min: 1
+    quantity_base: 1
+    quantity_scale_ready: 1
+    unit: шт.
+    source_quantity: null
+    specification: До 700 тарелок/час; публичная карточка указывает применение в объектах до 50 посадочных мест.
+    open_parameters: null
+    premises_dependency: 400 В, подача воды и канализация; параметры подключения сверяются по паспорту.
+    procurement_mode: purchase
+    existing_condition: null
+    power_kw: null
+    voltage: 400
+    water_required: true
+    drainage_required: true
+    gas_required: false
+    extraction_required: false
+    dimensions: null
+    service_clearance: null
+    price_min: null
+    price_base: null
+    price_max: null
+    currency: null
+    price_date: null
+    supplier: null
+    supplier_name: null
+    product_name: null
+    source_url: null
+    content_source_id: SRC-PILOT-CAPEX-AND-OPERATING-BRIEF
+    price_min_source_id: null
+    price_base_source_id: null
+    price_max_source_id: null
+    availability_status: null
+    price_includes_vat: null
+    delivery_included: null
+    confidence: null
+    price_notes: null
+    source_id: SRC-PILOT-CAPEX-AND-OPERATING-BRIEF
+    quote_status: included_in_parent
+    notes: Добавлено решением DEC-011 как research-позиция; не является утверждённой закупкой или финальным CAPEX.
+    source_section: CAPEX-08 / Профессиональная посудомоечная зона
+    source_item_number: 2
+    source_record_sha256: a01fc622a124579499bbdb92dd75b061404e502c2626e65277ee096866c05f62
+  - item_id: CAPEX-08-003
+    module_id: CAPEX-08
+    module_name: Посудомоечное оборудование
+    category: Посудомоечное оборудование
+    subcategory: Профессиональная посудомоечная зона
+    name: Предмоечный стол с душирующим устройством
+    record_type: component
+    parent_item_id: CAPEX-08-001
+    inclusion_status: included_in_parent
+    requirement: required
+    lifecycle_status: research
+    quantity_min: 1
+    quantity_base: 1
+    quantity_scale_ready: 1
+    unit: шт.
+    source_quantity: null
+    specification: Ориентир ABAT СПМП-6-1; формирует грязную сторону и предварительный смыв.
+    open_parameters: null
+    premises_dependency: null
+    procurement_mode: purchase
+    existing_condition: null
+    power_kw: null
+    voltage: null
+    water_required: true
+    drainage_required: true
+    gas_required: false
+    extraction_required: false
+    dimensions: null
+    service_clearance: null
+    price_min: null
+    price_base: null
+    price_max: null
+    currency: null
+    price_date: null
+    supplier: null
+    supplier_name: null
+    product_name: null
+    source_url: null
+    content_source_id: SRC-PILOT-CAPEX-AND-OPERATING-BRIEF
+    price_min_source_id: null
+    price_base_source_id: null
+    price_max_source_id: null
+    availability_status: null
+    price_includes_vat: null
+    delivery_included: null
+    confidence: null
+    price_notes: null
+    source_id: SRC-PILOT-CAPEX-AND-OPERATING-BRIEF
+    quote_status: included_in_parent
+    notes: Добавлено решением DEC-011 как research-позиция; не является утверждённой закупкой или финальным CAPEX.
+    source_section: CAPEX-08 / Профессиональная посудомоечная зона
+    source_item_number: 3
+    source_record_sha256: d2f1fdd2b3dae4804cc866b41365155ffc688a031c42c04ba5935d259450481d
+  - item_id: CAPEX-08-004
+    module_id: CAPEX-08
+    module_name: Посудомоечное оборудование
+    category: Посудомоечное оборудование
+    subcategory: Профессиональная посудомоечная зона
+    name: Выходной стол для чистой посуды
+    record_type: component
+    parent_item_id: CAPEX-08-001
+    inclusion_status: included_in_parent
+    requirement: required
+    lifecycle_status: research
+    quantity_min: 1
+    quantity_base: 1
+    quantity_scale_ready: 1
+    unit: шт.
+    source_quantity: null
+    specification: Ориентир ABAT СПМР-6-1; формирует чистую сторону посудомоечной линии.
+    open_parameters: null
+    premises_dependency: null
+    procurement_mode: purchase
+    existing_condition: null
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: false
+    extraction_required: false
+    dimensions: null
+    service_clearance: null
+    price_min: null
+    price_base: null
+    price_max: null
+    currency: null
+    price_date: null
+    supplier: null
+    supplier_name: null
+    product_name: null
+    source_url: null
+    content_source_id: SRC-PILOT-CAPEX-AND-OPERATING-BRIEF
+    price_min_source_id: null
+    price_base_source_id: null
+    price_max_source_id: null
+    availability_status: null
+    price_includes_vat: null
+    delivery_included: null
+    confidence: null
+    price_notes: null
+    source_id: SRC-PILOT-CAPEX-AND-OPERATING-BRIEF
+    quote_status: included_in_parent
+    notes: Добавлено решением DEC-011 как research-позиция; не является утверждённой закупкой или финальным CAPEX.
+    source_section: CAPEX-08 / Профессиональная посудомоечная зона
+    source_item_number: 4
+    source_record_sha256: 88e2a3ea598ddad8ec38e5b05e0f2bc1bd1c554cb5840ce3b2ab7cdcb340f68a
+  - item_id: CAPEX-08-005
+    module_id: CAPEX-08
+    module_name: Посудомоечное оборудование
+    category: Посудомоечное оборудование
+    subcategory: Профессиональная посудомоечная зона
+    name: Дополнительные кассеты 500×500
+    record_type: accessory
+    parent_item_id: CAPEX-08-001
+    inclusion_status: included_in_parent
+    requirement: required
+    lifecycle_status: research
+    quantity_min: 3
+    quantity_base: 3
+    quantity_scale_ready: 3
+    unit: шт.
+    source_quantity: null
+    specification: Три дополнительные кассеты сверх базовой комплектации; типы уточняются под тарелки, стаканы и приборы.
+    open_parameters: null
+    premises_dependency: null
+    procurement_mode: purchase
+    existing_condition: null
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: false
+    extraction_required: false
+    dimensions: null
+    service_clearance: null
+    price_min: null
+    price_base: null
+    price_max: null
+    currency: null
+    price_date: null
+    supplier: null
+    supplier_name: null
+    product_name: null
+    source_url: null
+    content_source_id: SRC-PILOT-CAPEX-AND-OPERATING-BRIEF
+    price_min_source_id: null
+    price_base_source_id: null
+    price_max_source_id: null
+    availability_status: null
+    price_includes_vat: null
+    delivery_included: null
+    confidence: null
+    price_notes: null
+    source_id: SRC-PILOT-CAPEX-AND-OPERATING-BRIEF
+    quote_status: included_in_parent
+    notes: Добавлено решением DEC-011 как research-позиция; не является утверждённой закупкой или финальным CAPEX.
+    source_section: CAPEX-08 / Профессиональная посудомоечная зона
+    source_item_number: 5
+    source_record_sha256: 3738a9e8f40c5b075e837c82afc9a6add9b8375ca3be4c491e22cbfd1a96a331
+  - item_id: CAPEX-08-006
+    module_id: CAPEX-08
+    module_name: Посудомоечное оборудование
+    category: Посудомоечное оборудование
+    subcategory: Профессиональная посудомоечная зона
+    name: Умягчитель воды DVA LT12
+    record_type: accessory
+    parent_item_id: CAPEX-08-001
+    inclusion_status: included_in_parent
+    requirement: required
+    lifecycle_status: research
+    quantity_min: 1
+    quantity_base: 1
+    quantity_scale_ready: 1
+    unit: шт.
+    source_quantity: null
+    specification: 12 л, номинальный поток до 1000 л/час; необходимость и ресурс уточняются анализом жёсткости воды.
+    open_parameters: null
+    premises_dependency: null
+    procurement_mode: purchase
+    existing_condition: null
+    power_kw: null
+    voltage: null
+    water_required: true
+    drainage_required: true
+    gas_required: false
+    extraction_required: false
+    dimensions: null
+    service_clearance: null
+    price_min: null
+    price_base: null
+    price_max: null
+    currency: null
+    price_date: null
+    supplier: null
+    supplier_name: null
+    product_name: null
+    source_url: null
+    content_source_id: SRC-PILOT-CAPEX-AND-OPERATING-BRIEF
+    price_min_source_id: null
+    price_base_source_id: null
+    price_max_source_id: null
+    availability_status: null
+    price_includes_vat: null
+    delivery_included: null
+    confidence: null
+    price_notes: null
+    source_id: SRC-PILOT-CAPEX-AND-OPERATING-BRIEF
+    quote_status: included_in_parent
+    notes: Добавлено решением DEC-011 как research-позиция; не является утверждённой закупкой или финальным CAPEX.
+    source_section: CAPEX-08 / Профессиональная посудомоечная зона
+    source_item_number: 6
+    source_record_sha256: 318c40f153caeadb2f7390ac471a257c6826e32f0f8cc06fe1ed3f647fc86fb5
 open_parameters:
   - parameter_id: OP-CAPEX-01-001-01
     item_id: CAPEX-01-001
@@ -6988,11 +7473,11 @@ open_parameters:
   - parameter_id: OP-CAPEX-01-015-01
     item_id: CAPEX-01-015
     module_id: CAPEX-01
-    parameter: необходимость отдельной мясорубки, количество и производительность
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
+    parameter: модель, производительность, система ножей и требования к санитарной разборке
+    reason: Наличие одной мясорубки в BASE и SCALE_READY зафиксировано; остаётся подобрать точную модель под техкарты и объём заготовки.
+    required_before: коммерческое предложение и закупка
     status: open
-    notes: CAPEX-01 / Механическая обработка
+    notes: Количество BASE и SCALE_READY — одна единица.
   - parameter_id: OP-CAPEX-01-016-01
     item_id: CAPEX-01-016
     module_id: CAPEX-01
@@ -7041,134 +7526,6 @@ open_parameters:
     required_before: утверждение закупочной спецификации или соответствующего инженерного решения
     status: open
     notes: CAPEX-01 / Моечная зона
-  - parameter_id: OP-CAPEX-01-027-01
-    item_id: CAPEX-01-027
-    module_id: CAPEX-01
-    parameter: Количество, размеры и состав комплекта — tbd.
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
-    status: open
-    notes: CAPEX-01 / Кухонный инвентарь заготовочного цеха
-  - parameter_id: OP-CAPEX-01-028-01
-    item_id: CAPEX-01-028
-    module_id: CAPEX-01
-    parameter: Количество, размеры и состав комплекта — tbd.
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
-    status: open
-    notes: CAPEX-01 / Кухонный инвентарь заготовочного цеха
-  - parameter_id: OP-CAPEX-01-029-01
-    item_id: CAPEX-01-029
-    module_id: CAPEX-01
-    parameter: Количество, типы и состав комплекта — tbd.
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
-    status: open
-    notes: CAPEX-01 / Кухонный инвентарь заготовочного цеха
-  - parameter_id: OP-CAPEX-01-030-01
-    item_id: CAPEX-01-030
-    module_id: CAPEX-01
-    parameter: Количество, размеры и схема маркировки — tbd.
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
-    status: open
-    notes: CAPEX-01 / Кухонный инвентарь заготовочного цеха
-  - parameter_id: OP-CAPEX-01-031-01
-    item_id: CAPEX-01-031
-    module_id: CAPEX-01
-    parameter: Количество и состав комплекта — tbd.
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
-    status: open
-    notes: CAPEX-01 / Кухонный инвентарь заготовочного цеха
-  - parameter_id: OP-CAPEX-01-032-01
-    item_id: CAPEX-01-032
-    module_id: CAPEX-01
-    parameter: Количество и состав комплекта — tbd.
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
-    status: open
-    notes: CAPEX-01 / Кухонный инвентарь заготовочного цеха
-  - parameter_id: OP-CAPEX-01-033-01
-    item_id: CAPEX-01-033
-    module_id: CAPEX-01
-    parameter: Количество и состав комплекта — tbd.
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
-    status: open
-    notes: CAPEX-01 / Кухонный инвентарь заготовочного цеха
-  - parameter_id: OP-CAPEX-01-034-01
-    item_id: CAPEX-01-034
-    module_id: CAPEX-01
-    parameter: Количество и состав комплекта — tbd.
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
-    status: open
-    notes: CAPEX-01 / Кухонный инвентарь заготовочного цеха
-  - parameter_id: OP-CAPEX-01-035-01
-    item_id: CAPEX-01-035
-    module_id: CAPEX-01
-    parameter: Количество и состав комплекта — tbd.
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
-    status: open
-    notes: CAPEX-01 / Кухонный инвентарь заготовочного цеха
-  - parameter_id: OP-CAPEX-01-036-01
-    item_id: CAPEX-01-036
-    module_id: CAPEX-01
-    parameter: Количество и состав комплекта — tbd.
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
-    status: open
-    notes: CAPEX-01 / Кухонный инвентарь заготовочного цеха
-  - parameter_id: OP-CAPEX-01-037-01
-    item_id: CAPEX-01-037
-    module_id: CAPEX-01
-    parameter: Количество, размеры и состав комплекта — tbd.
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
-    status: open
-    notes: CAPEX-01 / Кухонный инвентарь заготовочного цеха
-  - parameter_id: OP-CAPEX-01-038-01
-    item_id: CAPEX-01-038
-    module_id: CAPEX-01
-    parameter: Количество и состав комплекта — tbd.
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
-    status: open
-    notes: CAPEX-01 / Кухонный инвентарь заготовочного цеха
-  - parameter_id: OP-CAPEX-01-039-01
-    item_id: CAPEX-01-039
-    module_id: CAPEX-01
-    parameter: Количество, размеры и состав комплекта — tbd.
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
-    status: open
-    notes: CAPEX-01 / Кухонный инвентарь заготовочного цеха
-  - parameter_id: OP-CAPEX-01-040-01
-    item_id: CAPEX-01-040
-    module_id: CAPEX-01
-    parameter: Количество, размеры и формат — tbd.
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
-    status: open
-    notes: CAPEX-01 / Кухонный инвентарь заготовочного цеха
-  - parameter_id: OP-CAPEX-01-041-01
-    item_id: CAPEX-01-041
-    module_id: CAPEX-01
-    parameter: Количество, размеры и материал — tbd.
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
-    status: open
-    notes: CAPEX-01 / Кухонный инвентарь заготовочного цеха
-  - parameter_id: OP-CAPEX-01-042-01
-    item_id: CAPEX-01-042
-    module_id: CAPEX-01
-    parameter: Состав, количество и маркировка комплектов — tbd.
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
-    status: open
-    notes: CAPEX-01 / Кухонный инвентарь заготовочного цеха
   - parameter_id: OP-CAPEX-01-043-01
     item_id: CAPEX-01-043
     module_id: CAPEX-01
@@ -7313,238 +7670,6 @@ open_parameters:
     required_before: утверждение закупочной спецификации или соответствующего инженерного решения
     status: open
     notes: CAPEX-02 / Льдогенератор отдельной торговой точки
-  - parameter_id: OP-CAPEX-02-014-01
-    item_id: CAPEX-02-014
-    module_id: CAPEX-02
-    parameter: Количество, типы и состав комплекта — tbd.
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
-    status: open
-    notes: CAPEX-02 / Кухонный инвентарь торговой точки
-  - parameter_id: OP-CAPEX-02-015-01
-    item_id: CAPEX-02-015
-    module_id: CAPEX-02
-    parameter: Количество, размеры и схема маркировки — tbd.
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
-    status: open
-    notes: CAPEX-02 / Кухонный инвентарь торговой точки
-  - parameter_id: OP-CAPEX-02-016-01
-    item_id: CAPEX-02-016
-    module_id: CAPEX-02
-    parameter: Количество и типы — tbd.
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
-    status: open
-    notes: CAPEX-02 / Кухонный инвентарь торговой точки
-  - parameter_id: OP-CAPEX-02-017-01
-    item_id: CAPEX-02-017
-    module_id: CAPEX-02
-    parameter: Количество и типы — tbd.
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
-    status: open
-    notes: CAPEX-02 / Кухонный инвентарь торговой точки
-  - parameter_id: OP-CAPEX-02-018-01
-    item_id: CAPEX-02-018
-    module_id: CAPEX-02
-    parameter: Количество и типы — tbd.
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
-    status: open
-    notes: CAPEX-02 / Кухонный инвентарь торговой точки
-  - parameter_id: OP-CAPEX-02-019-01
-    item_id: CAPEX-02-019
-    module_id: CAPEX-02
-    parameter: Количество и состав комплекта — tbd.
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
-    status: open
-    notes: CAPEX-02 / Кухонный инвентарь торговой точки
-  - parameter_id: OP-CAPEX-02-020-01
-    item_id: CAPEX-02-020
-    module_id: CAPEX-02
-    parameter: Количество и состав комплекта — tbd.
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
-    status: open
-    notes: CAPEX-02 / Кухонный инвентарь торговой точки
-  - parameter_id: OP-CAPEX-02-021-01
-    item_id: CAPEX-02-021
-    module_id: CAPEX-02
-    parameter: Количество и типы — tbd.
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
-    status: open
-    notes: CAPEX-02 / Кухонный инвентарь торговой точки
-  - parameter_id: OP-CAPEX-02-022-01
-    item_id: CAPEX-02-022
-    module_id: CAPEX-02
-    parameter: Количество, типы и материал — tbd.
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
-    status: open
-    notes: CAPEX-02 / Кухонный инвентарь торговой точки
-  - parameter_id: OP-CAPEX-02-023-01
-    item_id: CAPEX-02-023
-    module_id: CAPEX-02
-    parameter: Количество, размеры и состав комплекта — tbd.
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
-    status: open
-    notes: CAPEX-02 / Кухонный инвентарь торговой точки
-  - parameter_id: OP-CAPEX-02-024-01
-    item_id: CAPEX-02-024
-    module_id: CAPEX-02
-    parameter: Количество, объёмы и состав комплекта — tbd.
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
-    status: open
-    notes: CAPEX-02 / Кухонный инвентарь торговой точки
-  - parameter_id: OP-CAPEX-02-025-01
-    item_id: CAPEX-02-025
-    module_id: CAPEX-02
-    parameter: Количество и характеристики — tbd.
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
-    status: open
-    notes: CAPEX-02 / Кухонный инвентарь торговой точки
-  - parameter_id: OP-CAPEX-02-026-01
-    item_id: CAPEX-02-026
-    module_id: CAPEX-02
-    parameter: Количество, размеры и состав комплекта — tbd.
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
-    status: open
-    notes: CAPEX-02 / Кухонный инвентарь торговой точки
-  - parameter_id: OP-CAPEX-02-027-01
-    item_id: CAPEX-02-027
-    module_id: CAPEX-02
-    parameter: Количество, размеры и формат — tbd.
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
-    status: open
-    notes: CAPEX-02 / Кухонный инвентарь торговой точки
-  - parameter_id: OP-CAPEX-02-028-01
-    item_id: CAPEX-02-028
-    module_id: CAPEX-02
-    parameter: Количество, размеры и материал — tbd.
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
-    status: open
-    notes: CAPEX-02 / Кухонный инвентарь торговой точки
-  - parameter_id: OP-CAPEX-02-029-01
-    item_id: CAPEX-02-029
-    module_id: CAPEX-02
-    parameter: Количество, объёмы и типы — tbd.
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
-    status: open
-    notes: CAPEX-02 / Кухонный инвентарь торговой точки
-  - parameter_id: OP-CAPEX-02-030-01
-    item_id: CAPEX-02-030
-    module_id: CAPEX-02
-    parameter: Количество, размеры и размещение — tbd.
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
-    status: open
-    notes: CAPEX-02 / Кухонный инвентарь торговой точки
-  - parameter_id: OP-CAPEX-02-031-01
-    item_id: CAPEX-02-031
-    module_id: CAPEX-02
-    parameter: Количество, объёмы и материал — tbd.
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
-    status: open
-    notes: CAPEX-02 / Кухонный инвентарь торговой точки
-  - parameter_id: OP-CAPEX-02-032-01
-    item_id: CAPEX-02-032
-    module_id: CAPEX-02
-    parameter: Количество, объёмы и состав комплекта — tbd.
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
-    status: open
-    notes: CAPEX-02 / Базовый барный инвентарь
-  - parameter_id: OP-CAPEX-02-033-01
-    item_id: CAPEX-02-033
-    module_id: CAPEX-02
-    parameter: Количество и типы — tbd.
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
-    status: open
-    notes: CAPEX-02 / Базовый барный инвентарь
-  - parameter_id: OP-CAPEX-02-034-01
-    item_id: CAPEX-02-034
-    module_id: CAPEX-02
-    parameter: Количество и объёмы — tbd.
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
-    status: open
-    notes: CAPEX-02 / Базовый барный инвентарь
-  - parameter_id: OP-CAPEX-02-035-01
-    item_id: CAPEX-02-035
-    module_id: CAPEX-02
-    parameter: Количество, объёмы и состав комплекта — tbd.
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
-    status: open
-    notes: CAPEX-02 / Базовый барный инвентарь
-  - parameter_id: OP-CAPEX-02-036-01
-    item_id: CAPEX-02-036
-    module_id: CAPEX-02
-    parameter: Количество и состав комплекта — tbd.
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
-    status: open
-    notes: CAPEX-02 / Базовый барный инвентарь
-  - parameter_id: OP-CAPEX-02-037-01
-    item_id: CAPEX-02-037
-    module_id: CAPEX-02
-    parameter: Количество и объёмы — tbd.
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
-    status: open
-    notes: CAPEX-02 / Базовый барный инвентарь
-  - parameter_id: OP-CAPEX-02-038-01
-    item_id: CAPEX-02-038
-    module_id: CAPEX-02
-    parameter: Количество, типы и схема маркировки — tbd.
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
-    status: open
-    notes: CAPEX-02 / Базовый барный инвентарь
-  - parameter_id: OP-CAPEX-02-039-01
-    item_id: CAPEX-02-039
-    module_id: CAPEX-02
-    parameter: Количество и характеристики — tbd.
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
-    status: open
-    notes: CAPEX-02 / Базовый барный инвентарь
-  - parameter_id: OP-CAPEX-02-040-01
-    item_id: CAPEX-02-040
-    module_id: CAPEX-02
-    parameter: Количество, объёмы и материал — tbd.
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
-    status: open
-    notes: CAPEX-02 / Базовый барный инвентарь
-  - parameter_id: OP-CAPEX-02-041-01
-    item_id: CAPEX-02-041
-    module_id: CAPEX-02
-    parameter: Количество, размеры и размещение — tbd.
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
-    status: open
-    notes: CAPEX-02 / Базовый барный инвентарь
-  - parameter_id: OP-CAPEX-02-042-01
-    item_id: CAPEX-02-042
-    module_id: CAPEX-02
-    parameter: Количество и состав комплекта — tbd.
-    reason: Параметр прямо оставлен неопределённым в исходной спецификации v0.1.
-    required_before: утверждение закупочной спецификации или соответствующего инженерного решения
-    status: open
-    notes: CAPEX-02 / Базовый барный инвентарь
   - parameter_id: OP-CAPEX-02-043-01
     item_id: CAPEX-02-043
     module_id: CAPEX-02
@@ -8353,6 +8478,46 @@ open_parameters:
     required_before: утверждение закупочной спецификации, бюджета или соответствующего технического решения
     status: open
     notes: Применяется к реестру в целом или к нескольким позициям; связь с одной позицией не назначается без отдельного решения.
+  - parameter_id: OP-CAPEX-01-048-01
+    item_id: CAPEX-01-048
+    module_id: CAPEX-01
+    parameter: точная спецификация комплекта мелкого инвентаря
+    reason: Состав зависит от меню, числа рабочих постов, оборота мойки и выбранных материалов.
+    required_before: коммерческое предложение и закупка
+    status: open
+    notes: Бюджет включает 10% резерв; точный cart ещё не собран.
+  - parameter_id: OP-CAPEX-02-056-01
+    item_id: CAPEX-02-056
+    module_id: CAPEX-02
+    parameter: точная спецификация комплекта мелкого инвентаря
+    reason: Состав зависит от меню, числа рабочих постов, оборота мойки и выбранных материалов.
+    required_before: коммерческое предложение и закупка
+    status: open
+    notes: Бюджет включает 10% резерв; точный cart ещё не собран.
+  - parameter_id: OP-CAPEX-02-057-01
+    item_id: CAPEX-02-057
+    module_id: CAPEX-02
+    parameter: точная спецификация комплекта мелкого инвентаря
+    reason: Состав зависит от меню, числа рабочих постов, оборота мойки и выбранных материалов.
+    required_before: коммерческое предложение и закупка
+    status: open
+    notes: Бюджет включает 10% резерв; точный cart ещё не собран.
+  - parameter_id: OP-CAPEX-08-001-01
+    item_id: CAPEX-08-001
+    module_id: CAPEX-08
+    parameter: производительность и типы кассет посудомоечной зоны
+    reason: Нужны число посадочных мест, пиковый возврат посуды и состав кухонной тары.
+    required_before: финальный подбор модели и коммерческое предложение
+    status: open
+    notes: Текущий ориентир — одна купольная машина до 700 тарелок/час.
+  - parameter_id: OP-CAPEX-08-001-02
+    item_id: CAPEX-08-001
+    module_id: CAPEX-08
+    parameter: инженерные подключения и монтаж посудомоечной зоны
+    reason: Зависят от выбранного помещения, точки воды, канализации, трапа и электрической мощности.
+    required_before: полный CAPEX помещения
+    status: open
+    notes: Не входят в исследовательские 304 101,33 ₽.
 missing_sections:
   - section_id: CAPEX-05
     name: Гостевой зал и мебель
@@ -8373,9 +8538,16 @@ missing_sections:
     notes: Раздел перечислен, но не описан в CAPEX — Equipment Specification v0.1.
   - section_id: CAPEX-08
     name: Посудомоечное оборудование
-    status: not_started
-    dependencies: []
-    notes: Раздел перечислен, но не описан в CAPEX — Equipment Specification v0.1.
+    status: structured
+    dependencies:
+      - пиковый возврат посуды
+      - число посадочных мест
+      - состав кухонной тары
+      - планировка
+      - вода
+      - канализация
+      - электрическая мощность
+    notes: Базовый состав профессиональной посудомоечной зоны перенесён в CAPEX-08-001—006; монтаж и инженерные подключения остаются открытыми до помещения.
   - section_id: CAPEX-09
     name: Отдельная мойка продуктов и овощей
     status: not_started

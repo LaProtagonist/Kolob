@@ -19,6 +19,7 @@ const SOURCE_PATHS = [
   "docs-platform/working/capex-point-formats.yaml",
   "docs-platform/working/capex-configurations.yaml",
   "docs-platform/working/capex-configuration-overrides.yaml",
+  "docs-platform/working/pilot-capex-assumptions.yaml",
   "docs-platform/registry/documents.yaml",
   "docs-platform/registry/decisions.yaml",
   "docs-platform/changelog/events.ndjson",
@@ -26,7 +27,7 @@ const SOURCE_PATHS = [
 
 function readYaml(relativePath: string) { return YAML.parse(fs.readFileSync(path.join(projectRoot, relativePath), "utf8")); }
 function googleLink(id: string, type: string) {
-  if (type === "spreadsheet") return `https://docs.google.com/spreadsheets/d/${id}/edit`;
+  if (type === "spreadsheet") return `https://docs.google.com/spreadsheets/d/${id}/preview`;
   return `https://docs.google.com/document/d/${id}/preview`;
 }
 function gitBaseline(timestamp: string) {
@@ -41,6 +42,7 @@ export function buildWebSnapshot() {
   const register = readRegister();
   const research = readPriceResearch();
   const modular = readModularSources();
+  const pilotAssumptions = readYaml("docs-platform/working/pilot-capex-assumptions.yaml");
   const documents = (readYaml("docs-platform/registry/documents.yaml")?.documents ?? []) as Array<Record<string, unknown>>;
   const decisions = (readYaml("docs-platform/registry/decisions.yaml")?.decisions ?? []) as Array<Record<string, unknown>>;
   const events = readTimelineEvents();
@@ -103,9 +105,9 @@ export function buildWebSnapshot() {
       scenarioTotalsRub: research.summary.totals_rub,
     },
     scenarios: [
-      { id: "minimum", label: "Минимальная комплектация", description: "Минимально рабочий профессиональный состав по текущему исследованию." },
-      { id: "base", label: "Базовая комплектация", description: "Рекомендуемый рабочий ориентир пилотного объекта по текущему исследованию." },
-      { id: "scale_ready", label: "С запасом для роста", description: "Более надёжные модели и подтверждённые сценарные количества без автоматического перехода к заводскому масштабу." },
+      { id: "minimum", label: "Минимальная комплектация", description: "Исторический исследовательский сценарий; для запуска пилота не используется.", availableInSelector: false },
+      { id: "base", label: "Базовая комплектация", description: "Рекомендуемый рабочий ориентир пилотного объекта по текущему исследованию.", availableInSelector: true },
+      { id: "scale_ready", label: "С запасом для роста", description: "Более надёжные модели и подтверждённые сценарные количества без автоматического перехода к заводскому масштабу.", availableInSelector: true },
     ],
     businessCapacity: research.business_capacity,
     modules: modular.modules.modules.map(module => ({ id: module.module_id, name: module.name, purpose: module.purpose, status: module.lifecycle_status, notes: module.notes })),
@@ -134,7 +136,9 @@ export function buildWebSnapshot() {
       condition: link.condition,
       notes: link.notes,
     })),
-    configurationTemplate: modular.configurations.configurations[0] ?? null,
+    configurationTemplate: modular.configurations.configurations.find(configuration => configuration.configuration_id === "CFG-TEMPLATE-001") ?? null,
+    pilotConfiguration: modular.configurations.configurations.find(configuration => configuration.configuration_id === "CFG-PILOT-001") ?? null,
+    pilotEconomics: pilotAssumptions,
     overrides: modular.configuration_overrides.overrides,
     items: register.equipment.map(item => {
       const price = researchByItem.get(item.item_id);
