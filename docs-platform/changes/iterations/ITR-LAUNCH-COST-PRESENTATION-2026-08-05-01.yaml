@@ -1,0 +1,24 @@
+schema_version: 1
+iteration_id: ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01
+proposal_id: PROP-LAUNCH-COST-PRESENTATION-2026-08-05-01
+decision_id: DEC-013
+change_set_id: CHG-025
+status: approved
+approved_by: project owner
+approved_at: 2026-08-05
+actor: project owner
+scope: Переориентировать скрытую страницу /launch-budget с внутренней research-подачи на понятный предварительный расчёт стоимости запуска для инвесторского обсуждения, не меняя канонические CAPEX-данные, финансовые ставки или архитектуру калькулятора.
+approved_payload_path: docs-platform/changelog/payloads/ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01-approved-v2.yaml
+approved_payload_sha256: d5b1f6c939f7067298769cd0faea75f853c7592c847b32a158bae32a7e91f257
+apply_contract:
+  payload_identity: byte_identical_yaml
+  preflight_payload_reference: docs-platform/changelog/payloads/ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01-approved.yaml
+  canonical_targets:
+    - docs-platform/working/investor-start-model.yaml
+  derived_targets:
+    - src/content/capex-configurator-data.json
+    - /launch-budget
+rollback_contract:
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true

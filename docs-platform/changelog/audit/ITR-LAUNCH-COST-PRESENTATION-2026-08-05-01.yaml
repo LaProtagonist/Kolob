@@ -1,0 +1,145 @@
+audit_version: 1
+iteration_id: ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01
+proposal_id: PROP-LAUNCH-COST-PRESENTATION-2026-08-05-01
+decision_id: DEC-013
+change_set_id: CHG-025
+timestamp: 2026-08-05T00:30:13.084Z
+actor: Codex
+tool: launch-cost public presentation audit
+scope: Точечное уточнение публичной страницы /launch-budget без изменения архитектуры калькулятора, ставок мебели, CAPEX-цен или канонических бизнес-документов.
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01-approved-v2.yaml
+  sha256: d5b1f6c939f7067298769cd0faea75f853c7592c847b32a158bae32a7e91f257
+human_readable_summary: Публичная страница переориентирована с внутренней подачи на предварительное инвесторское обсуждение: изменено название, убраны технические статусы и внутренние документы, добавлены демонстрационные параметры покупки и аренды и раскрыт состав рассчитываемого объекта.
+field_edits:
+  - field_id: page_title
+    before: Расчёт стартового раунда инвестиций
+    after: Расчёт стоимости запуска
+    reason: Кратко и прямо описать назначение страницы без терминологии инвестиционного раунда.
+    source_decision: DEC-013
+    timestamp: 2026-08-05T00:30:13.084Z
+  - field_id: total_title
+    before: Ориентировочная потребность в финансировании
+    after: Стоимость запуска
+    reason: Обозначить крупную сумму как ориентировочную стоимость выбранной конфигурации.
+    source_decision: DEC-013
+    timestamp: 2026-08-05T00:30:13.084Z
+  - field_id: legal_disclaimer
+    before: Не является полной финансовой моделью
+    after: Представленная информация носит предварительный характер и не является публичной офертой.
+    reason: Использовать одну понятную предварительную юридическую подпись.
+    source_decision: DEC-013
+    timestamp: 2026-08-05T00:30:13.084Z
+  - field_id: equipment_description
+    before: Оборудование загружается из канонического CAPEX snapshot; мебель считается отдельно.
+    after: Стоимость оборудования рассчитывается на основании актуального состава оснащения и текущих цен поставщиков. Мебель посадочного зала учитывается отдельно.
+    reason: Убрать из публичного интерфейса внутреннюю техническую терминологию при сохранении источника расчёта.
+    source_decision: DEC-013
+    timestamp: 2026-08-05T00:30:13.084Z
+  - field_id: next_steps_title
+    before: Пока не включено или требует уточнения
+    after: Следующие этапы расчёта
+    reason: Представить дальнейшее уточнение как последовательный этап работы, а не ошибку модели.
+    source_decision: DEC-013
+    timestamp: 2026-08-05T00:30:13.084Z
+  - field_id: calculation_basis_title
+    before: Основания расчёта
+    after: Что учитывает расчёт
+    reason: Заменить перечень внутренних источников понятным описанием состава расчёта.
+    source_decision: DEC-013
+    timestamp: 2026-08-05T00:30:13.084Z
+  - field_id: calculation_basis_note
+    before: "Расчётные данные имеют статус «Исследование». Snapshot SHA-256 показывается пользователю."
+    after: Расчёт основан на текущей модели проекта и актуальных ценовых ориентирах. Все параметры могут быть уточнены в ходе обсуждения конкретного сценария запуска.
+    reason: Скрыть технический статус и hash, сохранив предупреждение о предварительном характере параметров.
+    source_decision: DEC-013
+    timestamp: 2026-08-05T00:30:13.084Z
+demonstration_defaults:
+  before:
+    premises_scenario: purchase
+    purchase_price_rub: null
+    monthly_rent_rub: null
+    prepayment_months: 1
+    security_deposit_months: 2
+    total_area_m2: null
+    kitchen_and_production_area_m2: null
+    guest_area_m2: null
+  after:
+    premises_scenario: rent
+    purchase_price_rub: 69000000
+    monthly_rent_rub: 350000
+    prepayment_months: 12
+    security_deposit_months: 2
+    total_area_m2: 200
+    kitchen_and_production_area_m2: 90
+    guest_area_m2: 80
+    calculated_other_area_m2: 30
+  editable: true
+public_visibility_changes:
+  removed:
+    - Рабочая версия
+    - Исследование и версия v0.1
+    - внутренние статусы документов
+    - Foundation
+    - внутренний Business Model Architecture с PRP-ID
+    - CAPEX Equipment Register и технические CAPEX-файлы
+    - ссылка на /capex-configurator
+    - source SHA-256
+  added:
+    - динамический компактный состав текущей конфигурации
+    - нормы посадки 1,4 / 1,6 / 1,8 м² на место
+  separate_public_bma_found: false
+  public_bma_action: Внутренний документ скрыт; отдельная public-facing версия должна создаваться только отдельной governed-итерацией.
+data_impact:
+  canonical_capex_changed: false
+  capex_price_research_changed: false
+  google_sheet_changed: false
+  furniture_rates_changed: false
+  operating_reserve_rules_changed: false
+  contingency_rates_changed: false
+  combi_oven:
+    item_id: CAPEX-01-009
+    quantity: 1
+    aggregation_rule: once
+    data_change_required: false
+affected_files:
+  - path: docs-platform/app/src/investor/start-model.ts
+    before_sha256: a2502553ed564c508192a8050bb819695f99ddb1720c833f24be2f2d46923447
+    after_sha256: b65da7d493721bae9ffdd3281c49d5f621c79eec37443fff7ea232246f69decb
+  - path: docs-platform/app/test/investor-start-model.test.ts
+    before_sha256: 24789bcac256964aa02ddb161a4433a6558b1e2ba0337d2ff2e56d1b0e10f81b
+    after_sha256: 7c243b11848f84a286a096c5e9c5a0f8e3bb6406e552107ab80f2c581f03ec85
+  - path: docs-platform/schemas/investor-start-model.schema.json
+    before_sha256: 4a71d0a0281243b1cacedbe6a4c2da658260d3e59630461020650aef1834ff53
+    after_sha256: cd8866468d949c6b205cf85b8dc6e5edaae61c36a15fe600232665c705304858
+  - path: docs-platform/working/investor-start-model.yaml
+    before_sha256: 3d1cc27dbb4711852a6b34e524a637cbe65b05ae61da48c8ece5f0c7a08b5fe7
+    after_sha256: d5b1f6c939f7067298769cd0faea75f853c7592c847b32a158bae32a7e91f257
+  - path: scripts/audit-route-html.mjs
+    before_sha256: 4ed307ab732fec5028efc1f70e4010e776d86f22b605eeaca86e4b1aac6858bb
+    after_sha256: 7429e832a807a9864e2260dc7ad681108e892a0d1fdfd391468e39106fc16dfa
+  - path: scripts/test-site.cjs
+    before_sha256: 0f657a5bfb27eab14f8ff1a7ce8282ab09ec33e5ee7fad211fe6db0cda8847b6
+    after_sha256: 57a3a9c14a592c34782771044f1e3bd18a9fc6fc250cd02cfb78cf22d18166c8
+  - path: src/App.tsx
+    before_sha256: 580ae8f8645e0a1a03f216558969bd66d370629111e33e9b7a03a48e48a2632e
+    after_sha256: cfdaddc6c4eefb0023dfa7dab353ecdf724684430305322615b225e2efb3f7a0
+  - path: src/components/LaunchBudget.css
+    before_sha256: 988f51ef38e41ec051df375164e63e8b38093f32ab0694b27764e2eae759cd25
+    after_sha256: 4e38f8ef56b6884d6a84ea49047fe5cd5130a51ed198e1b01350870100689478
+  - path: src/components/LaunchBudget.tsx
+    before_sha256: b1e0dccf6483e513e382044554315590193e8ea03a8139c80f1c3a08f0191a4a
+    after_sha256: 219c4b6ab9c5a8d40eadc968acadc463b4878ac931afbcaabfcb72a86a80e906
+  - path: src/content/site.ts
+    before_sha256: f4794b4407034d18754095b924d26f3513c9b348f4adccf990aa91f32673fbf9
+    after_sha256: 534c864870072dc5b3f15fd629ea96231015681fc017773509c7fd66fdf6b17c
+  - path: src/lib/launch-budget.ts
+    before_sha256: 4984c0b1302df30a296e4bc15a677c14a3b1472335de365cf822e63c0baca59b
+    after_sha256: a08afcdb5b3219725e8816cf56b1e7e0f78f5a704ea2da5be2ab5d4f39c28743
+rollback:
+  mode: governed_reverse_change_set
+  manifest: docs-platform/changelog/rollback-payloads/ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01/manifest.yaml
+  reverse_preview_only: true
+  requires_new_approved_decision: true
+  preserves_history: true
+  git_reset_forbidden: true

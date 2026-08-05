@@ -1,0 +1,23 @@
+receipt_version: 1
+iteration_id: ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01
+proposal_id: PROP-LAUNCH-COST-PRESENTATION-2026-08-05-01
+decision_id: DEC-013
+change_set_id: CHG-025
+status: applied
+applied_at: 2026-08-05T00:12:09.394Z
+actor: Codex
+tool: docs-platform investor:start:apply
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01-approved-v2.yaml
+  sha256: d5b1f6c939f7067298769cd0faea75f853c7592c847b32a158bae32a7e91f257
+target: docs-platform/working/investor-start-model.yaml
+before_sha256: 3d1cc27dbb4711852a6b34e524a637cbe65b05ae61da48c8ece5f0c7a08b5fe7
+after_sha256: d5b1f6c939f7067298769cd0faea75f853c7592c847b32a158bae32a7e91f257
+validation_result: passed
+git_commit_hash: null
+rollback:
+  mode: governed_reverse_change_set
+  rollback_payload: docs-platform/changelog/rollback-payloads/ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01/manifest.yaml
+  preview_command: npm run investor:start:reverse:preview -- ../changelog/iteration-receipts/ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01.yaml --change-id CHG-ROLLBACK-XXX --decision DEC-ROLLBACK-XXX
+  preserves_history: true
+  git_reset_forbidden: true

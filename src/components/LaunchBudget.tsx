@@ -5,7 +5,7 @@ import {
   calculateLaunchBudget,
   defaultLaunchBudgetState,
   launchModel,
-  normalizeLaunchBudgetState,
+  restoreLaunchBudgetState,
   type EquipmentScenarioId,
   type FurnitureProfileId,
   type LaunchBudgetState,
@@ -16,15 +16,9 @@ import "./LaunchBudget.css";
 
 const rubFormatter = new Intl.NumberFormat("ru-RU", { style: "currency", currency: "RUB", maximumFractionDigits: 0 });
 const numberFormatter = new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 1 });
-const dateFormatter = new Intl.DateTimeFormat("ru-RU", { day: "numeric", month: "long", year: "numeric" });
 
 function formatRub(value: number | null) {
   return value === null ? "Не рассчитано" : rubFormatter.format(value);
-}
-
-function formatDate(value: string | null | undefined) {
-  if (!value) return "Дата не указана";
-  return dateFormatter.format(new Date(`${value}T00:00:00`));
 }
 
 function parseNumber(value: string) {
@@ -120,7 +114,7 @@ export function LaunchBudgetPage() {
   const [state, setState] = useState<LaunchBudgetState>(() => {
     try {
       const saved = window.localStorage.getItem(launchModel.form.local_storage_key);
-      return saved ? normalizeLaunchBudgetState(JSON.parse(saved)) : defaults;
+      return saved ? restoreLaunchBudgetState(JSON.parse(saved)) : defaults;
     } catch {
       return defaults;
     }
@@ -130,7 +124,7 @@ export function LaunchBudgetPage() {
     try {
       window.localStorage.setItem(launchModel.form.local_storage_key, JSON.stringify(state));
     } catch {
-      // Local persistence is optional; canonical data is never changed.
+      // Local persistence is optional; shared project data is never changed.
     }
   }, [state]);
 
@@ -139,7 +133,13 @@ export function LaunchBudgetPage() {
   const furnitureProfile = rawModel.furniture.profiles.find(item => item.id === state.furnitureProfileId)!;
   const equipmentProfile = rawModel.equipment.scenarios.find(item => item.id === state.equipmentScenarioId)!;
   const equipmentPartial = result.equipment.unpricedCount > 0 || result.incompleteRequiredModules.length > 0;
-  const basisDocuments = capexData.documents.filter(document => rawModel.documents_block.registry_document_ids.includes(document.id));
+  const currentConfiguration = rawModel.point_configuration.summary_modules.filter(item => result.activeModuleIds.includes(item.module_id));
+  const partialSummary = [
+    ...(state.preparationRub === null ? ["подготовка помещения"] : []),
+    ...(result.operatingReserveRub === null ? ["операционный запас"] : []),
+    ...(result.equipment.unpricedCount > 0 ? ["часть оборудования"] : []),
+    ...(result.incompleteRequiredModules.length > 0 ? ["часть обязательного оснащения"] : []),
+  ];
 
   function update<K extends keyof LaunchBudgetState>(key: K, value: LaunchBudgetState[K]) {
     setState(current => ({ ...current, [key]: value }));
@@ -151,30 +151,17 @@ export function LaunchBudgetPage() {
     setState(defaultLaunchBudgetState());
   }
 
-  const activeMissing = [
-    ...(state.preparationRub === null ? ["Инженерные работы, подготовка и ремонт помещения"] : []),
-    "Проектирование и согласования",
-    "Доставка оборудования",
-    "Первоначальный запас сырья и упаковки",
-    "Расходы запуска",
-    ...(result.equipment.unpricedCount > 0 ? [`Позиции оборудования без цены — ${result.equipment.unpricedCount}`] : []),
-    ...(result.equipment.quoteRequiredCount > 0 ? [`Коммерческие предложения по крупным позициям — ${result.equipment.quoteRequiredCount}`] : []),
-    "Полный расчёт OPEX",
-  ];
-
   return (
     <div className="launch-budget-page">
       <section className="launch-hero" aria-labelledby="launch-budget-title">
         <div className="section-inner launch-hero-inner">
           <div>
-            <p className="launch-eyebrow"><span>Рабочая версия</span><span>Исследование · v{rawModel.document.version}</span></p>
-            <h1 id="launch-budget-title">Расчёт стартового раунда инвестиций</h1>
-            <p className="launch-subtitle">Первый совмещённый объект „Колобочной“: заготовочное производство, торговая точка и посадочный зал.</p>
+            <h1 id="launch-budget-title">{rawModel.public_presentation.page_title}</h1>
+            <p className="launch-subtitle">{rawModel.public_presentation.subtitle}</p>
           </div>
           <aside>
-            <strong>Что показывает расчёт</strong>
-            <p>Порядок финансирования при покупке или аренде помещения — по известным статьям, с операционным запасом и резервом.</p>
-            <span>Не является полной финансовой моделью</span>
+            <strong>{rawModel.public_presentation.hero_summary_title}</strong>
+            <p>{rawModel.public_presentation.hero_summary}</p>
           </aside>
         </div>
       </section>
@@ -192,7 +179,7 @@ export function LaunchBudgetPage() {
                 onChange={value => update("premisesScenario", value as PremisesScenario)}
               />
               {state.premisesScenario === "purchase" ? (
-                <NumberField id="purchase-price" label="Стоимость помещения" suffix="₽" value={state.purchasePriceRub} onChange={value => update("purchasePriceRub", value)} required />
+                <NumberField id="purchase-price" label="Стоимость помещения" suffix="₽" value={state.purchasePriceRub} onChange={value => update("purchasePriceRub", value)} hint={rawModel.premises.scenarios.purchase.hint} required />
               ) : (
                 <div className="launch-fields-grid">
                   <NumberField id="monthly-rent" label="Аренда в месяц" suffix="₽" value={state.monthlyRentRub} onChange={value => update("monthlyRentRub", value)} required />
@@ -217,14 +204,14 @@ export function LaunchBudgetPage() {
                 label="Плотность посадки"
                 value={state.seatingProfileId}
                 dataName="seating-profile"
-                options={rawModel.seating.profiles.map(profile => ({ value: profile.id, label: profile.label, hint: `${String(profile.square_metres_per_seat).replace(".", ",")} м² / место` }))}
+                options={rawModel.seating.profiles.map(profile => ({ value: profile.id, label: profile.label, hint: `${String(profile.square_metres_per_seat).replace(".", ",")} м² на место` }))}
                 onChange={value => update("seatingProfileId", value as SeatingProfileId)}
               />
               <div className="launch-seat-result"><span>Предварительно</span><strong>{result.seatCount === null ? "Не рассчитано" : `${result.seatCount} мест`}</strong><p>{rawModel.seating.caveat}</p></div>
             </section>
 
             <section className="launch-card" aria-labelledby="launch-equipment-title">
-              <SectionHeading number="03" title="Комплектация оборудования и мебель" text="Оборудование загружается из канонического CAPEX snapshot; мебель считается отдельно." />
+              <SectionHeading number="03" title="Комплектация оборудования и мебель" text={rawModel.public_presentation.equipment_description} />
               <h3 className="launch-control-title">Мебель посадочного зала</h3>
               <Segmented
                 label="Комплектация мебели"
@@ -252,9 +239,8 @@ export function LaunchBudgetPage() {
                 <div><span>{equipmentProfile.label}</span><strong>{equipmentPartial ? "от " : ""}{formatRub(result.equipment.total)}</strong></div>
                 <dl><div><dt>Оценено позиций</dt><dd>{result.equipment.pricedCount}</dd></div><div><dt>Без цены</dt><dd>{result.equipment.unpricedCount}</dd></div><div><dt>Требуется КП</dt><dd>{result.equipment.quoteRequiredCount}</dd></div></dl>
                 <p>В сумму включены только оценённые позиции выбранной комплектации оборудования.</p>
-                <a href="/capex-configurator">Открыть подробный CAPEX-конфигуратор ↗</a>
               </div>
-              <p className="launch-double-count-note">Позиции CAPEX-05 не суммируются второй раз: на этой странице мебель учитывается только по рабочей ставке на посадочное место.</p>
+              <p className="launch-double-count-note">{rawModel.public_presentation.equipment_double_count_note}</p>
             </section>
 
             <section className="launch-card" aria-labelledby="launch-preparation-title">
@@ -264,7 +250,7 @@ export function LaunchBudgetPage() {
             </section>
 
             <section className="launch-card" aria-labelledby="launch-reserve-title">
-              <SectionHeading number="05" title="Запас на запуск" text="Временный ручной ориентир до появления полной OPEX-модели." />
+              <SectionHeading number="05" title="Запас на запуск" text="Значение уточняется после подготовки полного расчёта операционных расходов." />
               <NumberField id="monthly-opex" label="Ежемесячные операционные расходы без аренды" suffix="₽" value={state.monthlyOpexExcludingRentRub} onChange={value => update("monthlyOpexExcludingRentRub", value)} />
               <h3 className="launch-control-title">Операционный запас</h3>
               <Segmented label="Месяцы операционного запаса" value={state.operatingReserveMonths} dataName="reserve-months" options={rawModel.operating_reserve.month_options.map(value => ({ value, label: `${value} месяцев` }))} onChange={value => update("operatingReserveMonths", Number(value))} />
@@ -279,9 +265,15 @@ export function LaunchBudgetPage() {
 
           <aside className="launch-total-card" aria-live="polite" data-testid="launch-total">
             <p className="launch-total-eyebrow">Предварительный расчёт</p>
-            <h2>Ориентировочная потребность в финансировании</h2>
+            <h2>{rawModel.public_presentation.total_title}</h2>
             <strong className="launch-total-value">{result.financingRequirementRub === null ? "Не рассчитано" : `${result.partial ? "от " : ""}${formatRub(result.financingRequirementRub)}`}</strong>
+            {result.partial && !result.areaInvalid && partialSummary.length ? <p className="launch-total-note">Требуют уточнения: {partialSummary.join(", ")}.</p> : null}
             {result.areaInvalid ? <p className="launch-total-blocked">Исправьте распределение площади, чтобы продолжить расчёт.</p> : null}
+            <div className="launch-current-configuration">
+              <h3>{rawModel.public_presentation.current_configuration_title}</h3>
+              <strong>{rawModel.point_configuration.format_name}</strong>
+              <ul>{currentConfiguration.map(item => <li key={item.module_id}><span aria-hidden="true">✓</span>{item.label}</li>)}</ul>
+            </div>
             <dl className="launch-total-breakdown">
               <SummaryRow label="Вход в помещение" value={result.premisesEntryRub} />
               <SummaryRow label="Стоимость текущей комплектации оборудования" value={result.equipment.total} partial={equipmentPartial} />
@@ -300,11 +292,12 @@ export function LaunchBudgetPage() {
                 <li><span>Требуют КП</span><strong>{result.equipment.quoteRequiredCount}</strong></li>
                 <li><span>Подготовка помещения</span><strong>{state.preparationRub === null ? "не рассчитана" : "рассчитана"}</strong></li>
                 <li><span>Операционный запас</span><strong>{result.operatingReserveRub === null ? "не рассчитан" : "рассчитан"}</strong></li>
-                <li><span>Обязательные модули</span><strong>{result.incompleteRequiredModules.length ? "не сформированы полностью" : "сформированы"}</strong></li>
+                <li><span>Обязательные части объекта</span><strong>{result.incompleteRequiredModules.length ? "не сформированы полностью" : "сформированы"}</strong></li>
               </ul>
               {result.incompleteRequiredModules.length ? <p>{result.incompleteRequiredModules.map(module => module.name).join(" · ")}</p> : null}
             </div>
             <p className="launch-warning">{rawModel.warning}</p>
+            <p className="launch-legal">{rawModel.public_presentation.legal_disclaimer}</p>
           </aside>
         </div>
       </section>
@@ -312,18 +305,16 @@ export function LaunchBudgetPage() {
       <section className="launch-lower-section">
         <div className="section-inner launch-lower-grid">
           <article className="launch-boundaries">
-            <p className="launch-section-kicker">Границы версии 0.1</p>
-            <h2>Пока не включено или требует уточнения</h2>
-            <ul>{activeMissing.map(item => <li key={item}>{item}</li>)}</ul>
-            {result.missing.length ? <details><summary>Почему итог остаётся частичным</summary><ul>{result.missing.map(item => <li key={item}>{item}</li>)}</ul></details> : null}
+            <p className="launch-section-kicker">Уточнение бюджета</p>
+            <h2>{rawModel.public_presentation.next_steps_title}</h2>
+            <p>{rawModel.public_presentation.next_steps_intro}</p>
+            <ul>{rawModel.missing_categories.map(item => <li key={item}>{item}</li>)}</ul>
           </article>
           <article className="launch-basis">
-            <p className="launch-section-kicker">Источники истины</p>
-            <h2>Основания расчёта</h2>
-            <div className="launch-document-list">
-              {basisDocuments.map(document => <div key={document.id}><span><strong>{document.title}{document.version ? ` v${document.version}` : ""}</strong><small>{document.statusLabel} · {formatDate(document.updatedAt)}</small></span>{document.googleUrl ? <a href={document.googleUrl} target="_blank" rel="noopener noreferrer">Открыть ↗</a> : <em>Ссылка не создана</em>}</div>)}
-            </div>
-            <p>Расчётные данные имеют статус «Исследование». Snapshot SHA-256: <code>{rawModel.source_sha256.slice(0, 12)}…</code></p>
+            <p className="launch-section-kicker">Состав расчёта</p>
+            <h2>{rawModel.public_presentation.calculation_basis_title}</h2>
+            <ul>{rawModel.public_presentation.calculation_factors.map(item => <li key={item}>{item}</li>)}</ul>
+            <p>{rawModel.public_presentation.calculation_basis_note}</p>
           </article>
         </div>
       </section>

@@ -1,0 +1,125 @@
+receipt_version: 1
+iteration_id: ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01
+proposal_id: PROP-LAUNCH-COST-PRESENTATION-2026-08-05-01
+decision_id: DEC-013
+change_set_id: CHG-025
+status: verified
+verified_at: 2026-08-05T00:38:16.251Z
+actor: Codex
+tool: Launch cost presentation verification workflow
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01-approved-v2.yaml
+  sha256: d5b1f6c939f7067298769cd0faea75f853c7592c847b32a158bae32a7e91f257
+canonical_model:
+  path: docs-platform/working/investor-start-model.yaml
+  before_sha256: 3d1cc27dbb4711852a6b34e524a637cbe65b05ae61da48c8ece5f0c7a08b5fe7
+  after_sha256: d5b1f6c939f7067298769cd0faea75f853c7592c847b32a158bae32a7e91f257
+  approved_payload_identity: byte_identical
+public_presentation:
+  route: /launch-budget
+  page_title: Расчёт стоимости запуска
+  total_title: Стоимость запуска
+  legal_disclaimer: Представленная информация носит предварительный характер и не является публичной офертой.
+  default_rent:
+    monthly_rent_rub: 350000
+    prepayment_months: 12
+    security_deposit_months: 2
+    entry_rub: 4900000
+    tied_or_conditionally_refundable_rub: 700000
+  default_purchase:
+    purchase_price_rub: 69000000
+  default_area:
+    total_area_m2: 200
+    kitchen_and_production_area_m2: 90
+    guest_area_m2: 80
+    calculated_other_area_m2: 30
+  current_configuration_dynamic: true
+  bar_and_grow_follow_switches: true
+  seating_density_hints:
+    - 1.4
+    - 1.6
+    - 1.8
+  partial_total_lower_bound: true
+  missing_values_rendered_as_zero: false
+  annual_rent_prepayment_duplicated_in_operating_reserve: false
+  internal_documents_visible: false
+  capex_configurator_link_visible: false
+  public_bma_found: false
+  robots: noindex, nofollow
+  public_navigation_link_absent: true
+  public_footer_link_absent: true
+  sitemap_entry_absent: true
+capex:
+  canonical_data_changed: false
+  google_sheet_changed: false
+  source: Equipment Register + Price Research + Modules + Point Format + Configuration + Overrides
+  web_snapshot_before_final_timeline_event:
+    path: src/content/capex-configurator-data.json
+    sha256: 30d598a3fafc191d66079937389491ba2e6e76d3039139e6144ec9271894ef51
+    final_regeneration_required: true
+  final_web_snapshot:
+    path: src/content/capex-configurator-data.json
+    sha256: d2237fa72867972927ba409db681cc8d02e88c14574f7c6c306bcc9b5ea2d0f6
+    regenerated_after_verified_event: true
+  furniture_capex_05_double_count: false
+  included_in_parent_double_count: false
+  combi_oven:
+    item_id: CAPEX-01-009
+    quantity: 1
+    aggregation_rule: once
+    formats_without_mod_prep_quantity: 0
+    data_change_required: false
+  scenario_totals_rub:
+    minimum: 3058399.33
+    base: 4150659.33
+    scale_ready: 5375662.79
+audit:
+  receipt: docs-platform/changelog/audit/ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01.yaml
+  receipt_sha256: 7115a492ce3e79dcb309def3129d3b910599413a4d3eeac20f39279ed3fce20f
+  key_before_after_fields: 7
+  affected_site_and_test_files: 11
+  exact_previous_copy_retained: true
+visual:
+  responsive_viewports:
+    desktop_1440x900: passed
+    tablet_768x1024: passed
+    mobile_390x844: passed
+  horizontal_overflow: false
+  current_configuration_fits_total_card: true
+  console_errors: 0
+  page_errors: 0
+  screenshots:
+    - path: analysis/screenshots/launch-cost-desktop-rent.png
+      sha256: 26491df9bc15dc1ff813f857082b27bffa849a33931f8ad993ea556af20e21b5
+    - path: analysis/screenshots/launch-cost-desktop-purchase.png
+      sha256: 99233993e5de48c31c50e3803804b8903922f58c17b6d0379dc059fba35d2519
+    - path: analysis/screenshots/launch-cost-mobile.png
+      sha256: 797eb173aaa417165492696716908763ae1665c141c80da4f9d988a692b1c9b5
+validation:
+  root_tests: passed; all route and launch-budget interaction failures empty
+  root_typescript: passed
+  root_build: passed with project-scoped Node 22.15.1
+  docs_platform_tests: 122 passed, 0 failed
+  docs_platform_typescript: passed
+  registry: passed
+  investor_start_model_schema: passed
+  capex_snapshot_hash_check: passed
+  route_html_audit: 14 checks, 0 issues
+  route_mobile_seo_tests: passed
+  timeline_before_verified_event: passed, 27 events
+  timeline_final: passed, 28 events
+  git_diff_check: passed
+rollback:
+  source_receipt: docs-platform/changelog/iteration-receipts/ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01.yaml
+  manifest: docs-platform/changelog/rollback-payloads/ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01/manifest.yaml
+  manifest_sha256: 9db0d4e1805416971295946ff411ef94010f2018c3552bae125965cf56e9ba0b
+  reverse_change_set_status: previewed
+  expected_current_sha256: d5b1f6c939f7067298769cd0faea75f853c7592c847b32a158bae32a7e91f257
+  expected_restored_sha256: 3d1cc27dbb4711852a6b34e524a637cbe65b05ae61da48c8ece5f0c7a08b5fe7
+  restores_original_hash: true
+  restores_previous_public_copy: true
+  apply_allowed_without_new_decision: false
+  preserves_history: true
+  git_reset_forbidden: true
+git_commit_hash: null
+git_commit_note: Hash текущего commit невозможно включить в сам commit; он сообщается в итоговом отчёте и может быть связан следующим append-only событием.

@@ -4,7 +4,7 @@ import path from "node:path";
 import test from "node:test";
 import YAML from "yaml";
 import { platformRoot } from "../src/google/config.js";
-import { checkInvestorStartModel, INVESTOR_START_PAYLOAD_PATH, validateInvestorStartModel } from "../src/investor/start-model.js";
+import { checkInvestorStartModel, INVESTOR_START_PAYLOAD_PATH, previewInvestorStartReverse, validateInvestorStartModel } from "../src/investor/start-model.js";
 import {
   calculateLaunchBudget,
   calculateOperatingReserve,
@@ -12,6 +12,7 @@ import {
   calculateSeatCount,
   defaultLaunchBudgetState,
   normalizeLaunchBudgetState,
+  restoreLaunchBudgetState,
   type LaunchBudgetState,
 } from "../../../src/lib/launch-budget.js";
 import { buildCapexRows, capexData, emptyCapexParameters, summarizeEquipment } from "../../../src/lib/capex-runtime.js";
@@ -164,7 +165,7 @@ test("23. equipment totals are derived from snapshot rows", () => {
   const result = calculateLaunchBudget(filled());
   const sum = result.equipment.rows.filter(row => row.independentProcurement && row.lineTotal !== null).reduce((total, row) => total + row.lineTotal!, 0);
   assert.equal(result.equipment.total, sum);
-  assert.equal(capexData.investorStartModel.source_sha256, "3d1cc27dbb4711852a6b34e524a637cbe65b05ae61da48c8ece5f0c7a08b5fe7");
+  assert.equal(capexData.investorStartModel.source_sha256, "d5b1f6c939f7067298769cd0faea75f853c7592c847b32a158bae32a7e91f257");
 });
 
 test("24. equipment scenario changes recalculate the total", () => {
@@ -186,10 +187,75 @@ test("26. local-state normalization does not mutate canonical snapshot", () => {
   assert.equal(JSON.stringify(capexData), before);
 });
 
-test("27. reset state contains no local user values and leaves canonical data intact", () => {
+test("27. reset restores the governed demonstration scenario and leaves canonical data intact", () => {
   const before = JSON.stringify(capexData.investorStartModel);
   const reset = defaultLaunchBudgetState();
-  assert.equal(reset.purchasePriceRub, null);
-  assert.equal(reset.monthlyRentRub, null);
+  assert.equal(reset.premisesScenario, "rent");
+  assert.equal(reset.purchasePriceRub, 69_000_000);
+  assert.equal(reset.monthlyRentRub, 350_000);
+  assert.equal(reset.prepaymentMonths, 12);
+  assert.equal(reset.securityDepositMonths, 2);
+  assert.equal(reset.totalAreaM2, 200);
+  assert.equal(reset.kitchenAreaM2, 90);
+  assert.equal(reset.guestAreaM2, 80);
   assert.equal(JSON.stringify(capexData.investorStartModel), before);
+});
+
+test("28. legacy empty local state migrates to the demonstration defaults", () => {
+  const migrated = restoreLaunchBudgetState({
+    premisesScenario: "purchase",
+    purchasePriceRub: null,
+    monthlyRentRub: null,
+    prepaymentMonths: 1,
+    securityDepositMonths: 2,
+    totalAreaM2: null,
+    kitchenAreaM2: null,
+    guestAreaM2: null,
+  });
+  assert.deepEqual(migrated, defaultLaunchBudgetState());
+});
+
+test("29. annual default rent prepayment is not repeated in a six-month operating reserve", () => {
+  const state = filled({
+    premisesScenario: "rent",
+    monthlyRentRub: 350_000,
+    prepaymentMonths: 12,
+    securityDepositMonths: 2,
+    operatingReserveMonths: 6,
+    monthlyOpexExcludingRentRub: 2_000_000,
+  });
+  assert.equal(calculateOperatingReserve(state), 12_000_000);
+  const result = calculateLaunchBudget(state);
+  assert.equal(result.premisesEntryRub, 4_900_000);
+  assert.equal(result.tiedFundsRub, 700_000);
+});
+
+test("30. public presentation hides internal documents and technical wording", () => {
+  const model = capexData.investorStartModel;
+  assert.deepEqual(model.documents_block.public_documents, []);
+  assert.equal(model.documents_block.public_bma_available, false);
+  const publicCopy = JSON.stringify(model.public_presentation).toLowerCase();
+  for (const forbidden of ["потребност", "стартовый раунд", "research", "approved", "v0.1", "prp-", "snapshot", "registry", "payload", "change set"]) {
+    assert.equal(publicCopy.includes(forbidden), false, forbidden);
+  }
+});
+
+test("31. current-configuration summary follows active BAR and GROW modules", () => {
+  const full = calculateLaunchBudget(filled({ barEnabled: true, growEnabled: true }));
+  const reduced = calculateLaunchBudget(filled({ barEnabled: false, growEnabled: false }));
+  assert.equal(full.activeModuleIds.includes("MOD-BAR"), true);
+  assert.equal(full.activeModuleIds.includes("MOD-GROW"), true);
+  assert.equal(reduced.activeModuleIds.includes("MOD-BAR"), false);
+  assert.equal(reduced.activeModuleIds.includes("MOD-GROW"), false);
+});
+
+test("32. governed reverse preview restores the previous public presentation without applying it", () => {
+  const preview = previewInvestorStartReverse(undefined, "CHG-ROLLBACK-LAUNCH-COST-PREVIEW", "DEC-ROLLBACK-PREVIEW") as any;
+  assert.equal(preview.apply_allowed, false);
+  assert.equal(preview.restores_original_hash, true);
+  assert.equal(preview.restores_previous_public_copy, true);
+  const operation = preview.reverse_change_set.operations.find((item: any) => item.type === "restore_public_presentation_from_audit_receipt");
+  assert.equal(operation.restore_values.page_title, "Расчёт стартового раунда инвестиций");
+  assert.equal(operation.restore_values.total_title, "Ориентировочная потребность в финансировании");
+  assert.equal(operation.restore_values.internal_document_links_visible, true);
 });

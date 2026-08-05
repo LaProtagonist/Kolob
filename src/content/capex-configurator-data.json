@@ -22,12 +22,12 @@
       "docs-platform/working/capex-configurations.yaml": "3810fa84efa969d8d95e2f0b0b49ede044b854d9be21ac92f5787d9ff8369f3c",
       "docs-platform/working/capex-configuration-overrides.yaml": "de97265a2e2a0bdb5ae67fcf74ffd368f1fa7f4243c4d1b78a6ecad8e12b1df4",
       "docs-platform/working/pilot-capex-assumptions.yaml": "25e11d4db20050b3a95cab40797ef0a29e56fad93c73d33d4a39415a8071d4ac",
-      "docs-platform/working/investor-start-model.yaml": "3d1cc27dbb4711852a6b34e524a637cbe65b05ae61da48c8ece5f0c7a08b5fe7",
-      "docs-platform/registry/documents.yaml": "d961d1a2cf2656af67b76ec97e83dbb8887fced0dccd48b36368d251924b4cc8",
-      "docs-platform/registry/decisions.yaml": "aa7fd00ccd56a412bb4697ce94ed8424aec60f3623e592e16c58f56c5855ae14",
-      "docs-platform/changelog/events.ndjson": "19e2bcc9b4fec76fe74a453cbf75c6bd1bd1508229c69d3f4519ed6875f238ea"
+      "docs-platform/working/investor-start-model.yaml": "d5b1f6c939f7067298769cd0faea75f853c7592c847b32a158bae32a7e91f257",
+      "docs-platform/registry/documents.yaml": "7c62249b9389146a70400cda1ae02d9a49ad5e6d3ebd96cec88c7474655aedfc",
+      "docs-platform/registry/decisions.yaml": "83a255308cd54f1a7f28cd4aebd40f509e275969c85a0547963c7cde071e7466",
+      "docs-platform/changelog/events.ndjson": "9fc21e39b26a934e34f0e934ef33dc057f65f1b33e240f9567cd6cd444e8b076"
     },
-    "sourceBundleSha256": "5a14e56ba05bd00ae4bbec10d3ffa6e5c82381c4701b1fb62ca0ce0117f6a19f",
+    "sourceBundleSha256": "1a44234d832e62727e45ddaa3eb619b2b0c732ec3f0e53e635a513cc11aff6fd",
     "counts": {
       "equipmentRecords": 160,
       "independentProcurementRecords": 51,
@@ -2401,10 +2401,10 @@
       "version": "0.1",
       "status": "research",
       "document_type": "Working investment requirement model",
-      "decision_id": "DEC-012",
-      "iteration_id": "ITR-INVESTOR-START-MODEL-2026-08-04-01",
-      "proposal_id": "PROP-INVESTOR-START-MODEL-2026-08-04-01",
-      "updated_at": "2026-08-04",
+      "decision_id": "DEC-013",
+      "iteration_id": "ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01",
+      "proposal_id": "PROP-LAUNCH-COST-PRESENTATION-2026-08-05-01",
+      "updated_at": "2026-08-05",
       "disclaimer": "Документ не является утверждённой финансовой моделью или окончательным инвестиционным предложением."
     },
     "basis": {
@@ -2467,6 +2467,28 @@
           "default_enabled": true
         }
       ],
+      "summary_modules": [
+        {
+          "module_id": "MOD-PREP",
+          "label": "Заготовочное производство"
+        },
+        {
+          "module_id": "MOD-RETAIL-HOT",
+          "label": "Торговая точка"
+        },
+        {
+          "module_id": "MOD-GUEST",
+          "label": "Посадочный зал"
+        },
+        {
+          "module_id": "MOD-BAR",
+          "label": "Бар и напитки"
+        },
+        {
+          "module_id": "MOD-GROW",
+          "label": "Выращивание зелени"
+        }
+      ],
       "equipment_exclusions": [
         {
           "item_id_prefix": "CAPEX-05-",
@@ -2476,10 +2498,12 @@
       "incomplete_module_rule": "Обязательный модуль со статусом not_started или без оценки показывается как «Не рассчитано» и не считается равным нулю."
     },
     "premises": {
-      "default_scenario": "purchase",
+      "default_scenario": "rent",
       "scenarios": {
         "purchase": {
           "label": "Покупка",
+          "default_purchase_price_rub": 69000000,
+          "hint": "Рабочий ориентир для помещения около 200 м².",
           "required_fields": [
             "purchase_price_rub"
           ],
@@ -2488,6 +2512,7 @@
         },
         "rent": {
           "label": "Аренда",
+          "default_monthly_rent_rub": 350000,
           "required_fields": [
             "monthly_rent_rub",
             "prepayment_months",
@@ -2498,7 +2523,7 @@
             3,
             12
           ],
-          "default_prepayment_months": 1,
+          "default_prepayment_months": 12,
           "security_deposit_month_options": [
             1,
             2,
@@ -2517,12 +2542,17 @@
         "kitchen_and_production_area_m2",
         "guest_area_m2"
       ],
+      "defaults": {
+        "total_area_m2": 200,
+        "kitchen_and_production_area_m2": 90,
+        "guest_area_m2": 80
+      },
       "other_area_formula": "total_area_m2 - kitchen_and_production_area_m2 - guest_area_m2",
       "other_area_includes": [
         "заказ и выдача",
         "склады",
         "санузлы",
-        "коридоры",
+        "проходы",
         "помещения персонала",
         "технические зоны"
       ],
@@ -2662,25 +2692,51 @@
       }
     },
     "missing_categories": [
-      "инженерные работы, если сумма не введена",
-      "подготовка и ремонт помещения",
+      "инженерное обследование помещения",
       "проектирование и согласования",
-      "доставка оборудования",
-      "первоначальный запас сырья и упаковки",
-      "расходы запуска",
-      "позиции оборудования без цены",
+      "итоговая стоимость ремонта",
+      "доставка и монтаж оборудования",
       "коммерческие предложения по крупным позициям",
-      "полный расчёт OPEX"
+      "первоначальный запас сырья и упаковки",
+      "полный расчёт операционных расходов"
     ],
     "documents_block": {
-      "registry_document_ids": [
+      "public_documents": [],
+      "public_empty_message": "Материалы проекта подготавливаются для предоставления в рамках дальнейшего обсуждения.",
+      "hidden_internal_document_ids": [
         "DOC-FOUNDATION",
         "DOC-BUSINESS-MODEL-ARCHITECTURE",
         "DOC-CAPEX-EQUIPMENT-SPECIFICATION",
         "DOC-CAPEX-EQUIPMENT-REGISTER",
         "DOC-CAPEX-PRICE-RESEARCH"
       ],
-      "links_source": "docs-platform/registry/documents.yaml and existing safe Google sync manifest"
+      "public_bma_available": false,
+      "public_bma_note": "Отдельная очищенная версия Business Model Architecture для внешнего чтения в registry не зарегистрирована."
+    },
+    "public_presentation": {
+      "page_title": "Расчёт стоимости запуска",
+      "subtitle": "Первый совмещённый объект „Колобочной“: заготовочное производство, торговая точка и посадочный зал.",
+      "hero_summary_title": "Что показывает расчёт",
+      "hero_summary": "Предварительную стоимость запуска при покупке или аренде помещения — по известным статьям, с операционным запасом и резервом.",
+      "total_title": "Стоимость запуска",
+      "total_partial_prefix": "от",
+      "legal_disclaimer": "Представленная информация носит предварительный характер и не является публичной офертой.",
+      "equipment_description": "Стоимость оборудования рассчитывается на основании актуального состава оснащения и текущих цен поставщиков. Мебель посадочного зала учитывается отдельно.",
+      "equipment_double_count_note": "Мебель посадочного зала учитывается по выбранной ставке на место и не добавляется к расчёту повторно через перечень оснащения.",
+      "current_configuration_title": "Текущая конфигурация",
+      "next_steps_title": "Следующие этапы расчёта",
+      "next_steps_intro": "Эти статьи уточняются после выбора помещения и получения исходных данных. Они дополнят текущий расчёт на следующем этапе.",
+      "calculation_basis_title": "Что учитывает расчёт",
+      "calculation_factors": [
+        "выбранный способ использования помещения",
+        "площадь объекта и посадочного зала",
+        "актуальный состав оборудования",
+        "уровень комплектации мебели",
+        "подготовку помещения",
+        "операционный запас",
+        "резерв непредвиденных расходов"
+      ],
+      "calculation_basis_note": "Расчёт основан на текущей модели проекта и актуальных ценовых ориентирах. Все параметры могут быть уточнены в ходе обсуждения конкретного сценария запуска."
     },
     "form": {
       "local_storage_key": "kolobochnaya.launch-budget.v0.1",
@@ -2690,23 +2746,25 @@
     },
     "decision_boundaries": {
       "approved": [
-        "структура стартового калькулятора",
-        "формулы расчёта",
-        "рабочие редактируемые research-допущения",
-        "публикация скрытой рабочей страницы /launch-budget"
+        "новая публичная формулировка страницы",
+        "демонстрационные значения покупки, аренды и площади",
+        "удаление технического языка из публичного интерфейса",
+        "скрытие внутренних документов",
+        "дополнение итоговой панели текущей конфигурацией",
+        "сохранение технической истории во внутренней системе"
       ],
       "not_approved": [
-        "окончательный бюджет",
+        "окончательная сумма инвестиций",
         "конкретное помещение",
-        "сумма инвестиций",
-        "финансовый прогноз",
-        "условия сделки с инвестором",
-        "окупаемость",
-        "стоимость компании"
+        "ставки ремонта",
+        "ставки мебели",
+        "финансовая модель",
+        "инвестиционное предложение",
+        "условия сделки"
       ]
     },
-    "warning": "Расчёт показывает порядок стартовой потребности в финансировании.\nИтоговый бюджет уточняется после выбора помещения, обследования\nинженерных систем, разработки планировки и получения коммерческих\nпредложений.",
-    "source_sha256": "3d1cc27dbb4711852a6b34e524a637cbe65b05ae61da48c8ece5f0c7a08b5fe7"
+    "warning": "Расчёт показывает предварительную стоимость запуска выбранной конфигурации.\nИтоговые значения уточняются после выбора помещения, обследования\nинженерных систем, разработки планировки и получения коммерческих\nпредложений.",
+    "source_sha256": "d5b1f6c939f7067298769cd0faea75f853c7592c847b32a158bae32a7e91f257"
   },
   "overrides": [],
   "items": [
@@ -12266,42 +12324,6 @@
   ],
   "timeline": [
     {
-      "id": "EVT-ITR-PILOT-CAPEX-BASELINE-2026-08-03-01-001",
-      "timestamp": "2026-08-04T20:27:56.285Z",
-      "status": "proposed",
-      "action": "proposal_recorded",
-      "decisionId": "DEC-011",
-      "changeSetId": "CHG-020",
-      "summary": "Proposal зафиксировал пилотный формат, посудомоечную систему, мелкий инвентарь, ПО, food cost, штат и открытые бюджетные слои."
-    },
-    {
-      "id": "EVT-ITR-PILOT-CAPEX-BASELINE-2026-08-03-01-002",
-      "timestamp": "2026-08-04T20:27:56.286Z",
-      "status": "approved",
-      "action": "decision_approved",
-      "decisionId": "DEC-011",
-      "changeSetId": "CHG-020",
-      "summary": "DEC-011 утвердил exact research-payload без утверждения помещения, полного CAPEX, поставщиков или финансовой модели."
-    },
-    {
-      "id": "EVT-ITR-PILOT-CAPEX-BASELINE-2026-08-03-01-003",
-      "timestamp": "2026-08-04T20:27:56.287Z",
-      "status": "applied",
-      "action": "pilot_baseline_register_sheet_and_web_applied",
-      "decisionId": "DEC-011",
-      "changeSetId": "CHG-020",
-      "summary": "Добавлены CAPEX-08, комплекты инвентаря, CFG-PILOT-001, операционные допущения, generated BOM и обновлён внутренний конфигуратор."
-    },
-    {
-      "id": "EVT-ITR-PILOT-CAPEX-BASELINE-2026-08-03-01-004",
-      "timestamp": "2026-08-04T20:27:56.288Z",
-      "status": "verified",
-      "action": "tests_build_google_readback_and_reverse_preview_verified",
-      "decisionId": "DEC-011",
-      "changeSetId": "CHG-020",
-      "summary": "Проверены 160 записей, 51 ценовая позиция, дедупликация одной посудомоечной системы, расчёты пилота, Google readback, build и governed reverse preview."
-    },
-    {
       "id": "EVT-ITR-INVESTOR-START-MODEL-2026-08-04-01-001",
       "timestamp": "2026-08-04T21:05:30.000Z",
       "status": "proposed",
@@ -12336,6 +12358,42 @@
       "decisionId": "DEC-012",
       "changeSetId": "CHG-022",
       "summary": "Проверены exact payload, одна единица пароконвектомата, формулы покупки и аренды, отсутствие двойного учёта, partial totals, noindex, адаптивность, тесты и governed reverse preview."
+    },
+    {
+      "id": "EVT-ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01-001",
+      "timestamp": "2026-08-05T00:06:30.000Z",
+      "status": "proposed",
+      "action": "propose_public_launch_cost_presentation",
+      "decisionId": "DEC-013",
+      "changeSetId": "CHG-025",
+      "summary": "Предложено переименовать страницу и итог, убрать внутреннюю терминологию и документы, задать редактируемый демонстрационный сценарий и показать состав конфигурации; формулы, CAPEX-цены и ставки не пересматриваются."
+    },
+    {
+      "id": "EVT-ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01-002",
+      "timestamp": "2026-08-05T00:07:30.000Z",
+      "status": "approved",
+      "action": "approve_exact_public_presentation_payload",
+      "decisionId": "DEC-013",
+      "changeSetId": "CHG-025",
+      "summary": "DEC-013 утверждает название «Расчёт стоимости запуска», итог «Стоимость запуска», точную юридическую подпись, демонстрационные 350 000/12/2, 69 000 000 и 200/90/80, но не окончательный бюджет или сделку."
+    },
+    {
+      "id": "EVT-ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01-003",
+      "timestamp": "2026-08-05T00:12:09.394Z",
+      "status": "applied",
+      "action": "apply_launch_cost_presentation_and_defaults",
+      "decisionId": "DEC-013",
+      "changeSetId": "CHG-025",
+      "summary": "Применена новая публичная подача, редактируемые демонстрационные значения и динамическая конфигурация; скрыты Foundation, внутренний BMA, технические CAPEX-материалы и ссылка на конфигуратор; CAPEX и Google не менялись."
+    },
+    {
+      "id": "EVT-ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01-004",
+      "timestamp": "2026-08-05T00:38:16.251Z",
+      "status": "verified",
+      "action": "verify_copy_defaults_calculation_routes_visuals_and_reverse_preview",
+      "decisionId": "DEC-013",
+      "changeSetId": "CHG-025",
+      "summary": "Подтверждены новые публичные тексты и значения, годовая аренда не дублируется, мебель и included-in-parent не считаются дважды, один пароконвектомат сохраняется, внутренние документы скрыты, три viewport прошли, reverse preview восстанавливает прежнюю редакцию."
     }
   ]
 }

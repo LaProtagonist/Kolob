@@ -1,0 +1,29 @@
+preview_version: 1
+iteration_id: ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01
+proposal_id: PROP-LAUNCH-COST-PRESENTATION-2026-08-05-01
+decision_id: DEC-013
+change_set_id: CHG-025
+generated_at: 2026-08-05T00:11:53.000Z
+actor: Codex
+tool: docs-platform investor:start:preview
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01-approved-v2.yaml
+  sha256: d5b1f6c939f7067298769cd0faea75f853c7592c847b32a158bae32a7e91f257
+target: docs-platform/working/investor-start-model.yaml
+before_sha256: 3d1cc27dbb4711852a6b34e524a637cbe65b05ae61da48c8ece5f0c7a08b5fe7
+after_sha256: d5b1f6c939f7067298769cd0faea75f853c7592c847b32a158bae32a7e91f257
+writes: false
+validation: passed
+preflight:
+  first_payload_path: docs-platform/changelog/payloads/ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01-approved.yaml
+  first_payload_sha256: d742edfe63bd297b0934bec66582d820fb020e68f049422fbd8946adfdaaaab8
+  result: failed_before_apply
+  reason: YAML plain scalar with a colon in the subtitle required quoting.
+  correction: v2 changes YAML serialization only; approved user-facing subtitle is unchanged.
+capex:
+  canonical_change_required: false
+  google_sheet_change_required: false
+  combi_oven:
+    item_id: CAPEX-01-009
+    quantity: 1
+    aggregation_rule: once

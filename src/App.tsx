@@ -783,7 +783,7 @@ function renderPage(path: string) {
       );
     case "/launch-budget":
       return (
-        <Suspense fallback={<main className="plain-page"><div className="section-inner"><p>Загружается расчёт стартового раунда…</p></div></main>}>
+        <Suspense fallback={<main className="plain-page"><div className="section-inner"><p>Загружается расчёт стоимости запуска…</p></div></main>}>
           <LaunchBudgetPage />
         </Suspense>
       );

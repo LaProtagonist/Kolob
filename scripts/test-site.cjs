@@ -19,7 +19,7 @@ const routes = [
   { path: "/investor-questions", must: ["Обсудить участие"] },
   { path: "/privacy", must: ["Политика обработки персональных данных"] },
   { path: "/capex-configurator", must: ["CAPEX-конфигуратор", "Стоимость текущей комплектации оборудования"], internal: true },
-  { path: "/launch-budget", must: ["Расчёт стартового раунда инвестиций", "Ориентировочная потребность в финансировании"], internal: true },
+  { path: "/launch-budget", must: ["Расчёт стоимости запуска", "Стоимость запуска"], internal: true },
   { path: "/404", must: ["Страница не найдена"] }
 ];
 
@@ -146,7 +146,18 @@ async function inspectLaunchBudget(browser, baseUrl) {
   const total = page.locator(".launch-total-value");
   const equipmentValue = page.locator(".launch-equipment-summary > div > strong");
   const defaults = {
-    purchaseSelected: await page.locator('[data-control="premises-scenario"][data-option="purchase"]').getAttribute("aria-pressed"),
+    rentSelected: await page.locator('[data-control="premises-scenario"][data-option="rent"]').getAttribute("aria-pressed"),
+    monthlyRent: await page.locator("#monthly-rent").inputValue(),
+    prepaymentMonths: await page.locator("#prepayment-months").inputValue(),
+    securityDepositMonths: await page.locator("#security-deposit-months").inputValue(),
+    totalArea: await page.locator("#total-area").inputValue(),
+    kitchenArea: await page.locator("#kitchen-area").inputValue(),
+    guestArea: await page.locator("#guest-area").inputValue(),
+    otherArea: await page.locator(".launch-inline-result").filter({ hasText: "Прочая площадь" }).locator("strong").innerText(),
+    seats: await page.locator(".launch-seat-result strong").innerText(),
+    furniture: await money(page.locator(".launch-research-line strong")),
+    premisesEntry: await money(page.locator(".launch-total-breakdown > div").filter({ hasText: "Вход в помещение" }).locator("dd")),
+    tiedFunds: await money(page.locator(".launch-tied-funds strong")),
     baseSelected: await page.locator('[data-control="equipment-scenario"][data-option="BASE"]').getAttribute("aria-pressed"),
     barEnabled: await page.locator("#bar-enabled").getAttribute("aria-checked"),
     growEnabled: await page.locator("#grow-enabled").getAttribute("aria-checked"),
@@ -170,6 +181,8 @@ async function inspectLaunchBudget(browser, baseUrl) {
   };
   await page.locator("#kitchen-area").fill("120");
 
+  await page.locator('[data-control="premises-scenario"][data-option="purchase"]').click();
+  const defaultPurchasePrice = await page.locator("#purchase-price").inputValue();
   await page.locator("#purchase-price").fill("20000000");
   await page.locator("#preparation-cost").fill("4000000");
   await page.locator("#monthly-opex").fill("2000000");
@@ -199,9 +212,11 @@ async function inspectLaunchBudget(browser, baseUrl) {
   }
   await page.locator('[data-control="equipment-scenario"][data-option="BASE"]').click();
   const allModulesTotal = await money(equipmentValue);
+  const fullConfiguration = await page.locator(".launch-current-configuration li").allTextContents();
   await page.locator("#bar-enabled").click();
   await page.locator("#grow-enabled").click();
   const reducedModulesTotal = await money(equipmentValue);
+  const reducedConfiguration = await page.locator(".launch-current-configuration li").allTextContents();
 
   await page.locator("#total-area").fill("321");
   await page.reload({ waitUntil: "networkidle" });
@@ -235,6 +250,16 @@ async function inspectLaunchBudget(browser, baseUrl) {
 
   const bodyText = await page.locator("body").innerText();
   const forbiddenDetail = ["EBITDA", "Окупаемость", "Доходность инвестора", "Точка безубыточности"].filter(term => bodyText.includes(term));
+  const forbiddenPublicCopy = ["потребност", "стартовый раунд", "исследование", "research", "approved", "v0.1", "prp-", "canonical", "snapshot", "registry", "payload", "change set", "decision id", "source hash"].filter(term => bodyText.toLowerCase().includes(term));
+  const titleAndMetadata = {
+    h1: await page.locator("h1").innerText(),
+    title: await page.title(),
+    ogTitle: await page.locator('meta[property="og:title"]').getAttribute("content"),
+    totalHeading: await page.locator(".launch-total-card h2").innerText(),
+    legalCount: await page.getByText("Представленная информация носит предварительный характер и не является публичной офертой.", { exact: true }).count(),
+  };
+  const seatingHints = await page.locator('[data-control="seating-profile"] span').allTextContents();
+  const internalDocumentMentions = ["Foundation", "Business Model Architecture", "CODEX_HANDOFF", "Equipment Register"].filter(term => bodyText.includes(term));
   const result = {
     robots,
     defaults,
@@ -246,6 +271,9 @@ async function inspectLaunchBudget(browser, baseUrl) {
     scenarioTotals,
     allModulesTotal,
     reducedModulesTotal,
+    fullConfiguration,
+    reducedConfiguration,
+    defaultPurchasePrice,
     persistedTotalArea,
     resetTotalArea,
     resetStorage,
@@ -256,6 +284,10 @@ async function inspectLaunchBudget(browser, baseUrl) {
     overflow,
     focus,
     forbiddenDetail,
+    forbiddenPublicCopy,
+    titleAndMetadata,
+    seatingHints,
+    internalDocumentMentions,
     consoleMessages,
     pageErrors,
   };
@@ -447,8 +479,23 @@ async function inspectCapex(browser, baseUrl) {
     if (capex.consoleMessages.length) failures.push(`CAPEX console: ${capex.consoleMessages.join(" | ")}`);
     if (capex.pageErrors.length) failures.push(`CAPEX page errors: ${capex.pageErrors.join(" | ")}`);
     if (!String(launchBudget.robots).includes("noindex") || !String(launchBudget.robots).includes("nofollow")) failures.push(`launch-budget robots: ${launchBudget.robots}`);
-    if (launchBudget.defaults.purchaseSelected !== "true" || launchBudget.defaults.baseSelected !== "true" || launchBudget.defaults.barEnabled !== "true" || launchBudget.defaults.growEnabled !== "true") failures.push(`launch-budget defaults invalid: ${JSON.stringify(launchBudget.defaults)}`);
-    if (!launchBudget.defaults.totalText.startsWith("от ") || !(launchBudget.defaults.equipmentTotal > 0)) failures.push("launch-budget empty state does not show a positive lower bound");
+    if (launchBudget.defaults.rentSelected !== "true"
+      || launchBudget.defaults.monthlyRent !== "350000"
+      || launchBudget.defaults.prepaymentMonths !== "12"
+      || launchBudget.defaults.securityDepositMonths !== "2"
+      || launchBudget.defaults.totalArea !== "200"
+      || launchBudget.defaults.kitchenArea !== "90"
+      || launchBudget.defaults.guestArea !== "80"
+      || launchBudget.defaults.otherArea !== "30 м²"
+      || launchBudget.defaults.seats !== "50 мест"
+      || launchBudget.defaults.furniture !== 425000
+      || launchBudget.defaults.premisesEntry !== 4900000
+      || launchBudget.defaults.tiedFunds !== 700000
+      || launchBudget.defaults.baseSelected !== "true"
+      || launchBudget.defaults.barEnabled !== "true"
+      || launchBudget.defaults.growEnabled !== "true") failures.push(`launch-budget defaults invalid: ${JSON.stringify(launchBudget.defaults)}`);
+    if (launchBudget.defaultPurchasePrice !== "69000000") failures.push(`launch-budget purchase default invalid: ${launchBudget.defaultPurchasePrice}`);
+    if (!launchBudget.defaults.totalText.startsWith("от ") || !(launchBudget.defaults.equipmentTotal > 0)) failures.push("launch-budget default state does not show a positive lower bound");
     if (launchBudget.area.other !== "80 м²" || launchBudget.area.seats !== "62 мест" || parseMoney(launchBudget.area.furniture) !== 527000) failures.push(`launch-budget area or furniture math invalid: ${JSON.stringify(launchBudget.area)}`);
     if (launchBudget.invalidArea.alert !== 1 || launchBudget.invalidArea.total !== "Не рассчитано") failures.push("launch-budget invalid area is not blocking total");
     if (launchBudget.purchase.entry !== 20000000 || launchBudget.purchase.reserve !== 12000000 || !(launchBudget.purchase.assets > 20000000)) failures.push(`launch-budget purchase math invalid: ${JSON.stringify(launchBudget.purchase)}`);
@@ -456,9 +503,19 @@ async function inspectCapex(browser, baseUrl) {
     if (launchBudget.rentWithAnnualPrepaymentReserve !== 12000000) failures.push(`launch-budget prepaid rent duplicated: ${launchBudget.rentWithAnnualPrepaymentReserve}`);
     if (!(launchBudget.scenarioTotals.MINIMUM < launchBudget.scenarioTotals.BASE && launchBudget.scenarioTotals.BASE < launchBudget.scenarioTotals.SCALE_READY)) failures.push(`launch-budget equipment scenarios invalid: ${JSON.stringify(launchBudget.scenarioTotals)}`);
     if (!(launchBudget.allModulesTotal > launchBudget.reducedModulesTotal)) failures.push("launch-budget BAR/GROW toggles do not change equipment total");
-    if (launchBudget.persistedTotalArea !== "321" || launchBudget.resetTotalArea !== "" || launchBudget.resetStorage === null) failures.push(`launch-budget local persistence/reset invalid: ${JSON.stringify({ persisted: launchBudget.persistedTotalArea, reset: launchBudget.resetTotalArea, storage: launchBudget.resetStorage })}`);
-    if (launchBudget.documents.length !== 5 || launchBudget.documents.some(link => !link.href || link.target !== "_blank" || !String(link.rel).includes("noopener") || !String(link.rel).includes("noreferrer"))) failures.push("launch-budget document links missing or unsafe");
-    if (launchBudget.capexLink !== 1) failures.push("launch-budget detailed CAPEX link is missing");
+    if (launchBudget.persistedTotalArea !== "321" || launchBudget.resetTotalArea !== "200" || launchBudget.resetStorage === null) failures.push(`launch-budget local persistence/reset invalid: ${JSON.stringify({ persisted: launchBudget.persistedTotalArea, reset: launchBudget.resetTotalArea, storage: launchBudget.resetStorage })}`);
+    if (launchBudget.documents.length !== 0 || launchBudget.internalDocumentMentions.length) failures.push(`launch-budget exposes internal documents: ${JSON.stringify({ links: launchBudget.documents, mentions: launchBudget.internalDocumentMentions })}`);
+    if (launchBudget.capexLink !== 0) failures.push("launch-budget exposes the internal CAPEX configurator");
+    if (launchBudget.titleAndMetadata.h1 !== "Расчёт стоимости запуска"
+      || launchBudget.titleAndMetadata.title !== "Расчёт стоимости запуска — Колобочная"
+      || launchBudget.titleAndMetadata.ogTitle !== "Расчёт стоимости запуска — Колобочная"
+      || launchBudget.titleAndMetadata.totalHeading !== "Стоимость запуска"
+      || launchBudget.titleAndMetadata.legalCount !== 1) failures.push(`launch-budget title or legal metadata invalid: ${JSON.stringify(launchBudget.titleAndMetadata)}`);
+    if (launchBudget.forbiddenPublicCopy.length) failures.push(`launch-budget exposes forbidden internal wording: ${launchBudget.forbiddenPublicCopy.join(", ")}`);
+    if (launchBudget.seatingHints.join("|") !== "1,4 м² на место|1,6 м² на место|1,8 м² на место") failures.push(`launch-budget seating hints invalid: ${launchBudget.seatingHints.join(" | ")}`);
+    if (!launchBudget.fullConfiguration.some(item => item.includes("Бар и напитки"))
+      || !launchBudget.fullConfiguration.some(item => item.includes("Выращивание зелени"))
+      || launchBudget.reducedConfiguration.some(item => item.includes("Бар и напитки") || item.includes("Выращивание зелени"))) failures.push(`launch-budget current configuration is not dynamic: ${JSON.stringify({ full: launchBudget.fullConfiguration, reduced: launchBudget.reducedConfiguration })}`);
     if (launchBudget.publicExposure.nav || launchBudget.publicExposure.footer) failures.push(`launch-budget exposed in public navigation: ${JSON.stringify(launchBudget.publicExposure)}`);
     if (launchBudget.unknownZeroCount > 0) failures.push("launch-budget renders an unknown item as 0 ₽");
     if (Object.values(launchBudget.overflow).some(Boolean)) failures.push(`launch-budget overflow: ${JSON.stringify(launchBudget.overflow)}`);

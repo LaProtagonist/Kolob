@@ -16,7 +16,7 @@ const checks = [
   { route: "/investor-questions", expectedStatus: 200, mustInclude: "Обсудить участие" },
   { route: "/privacy", expectedStatus: 200, mustInclude: "Политика обработки персональных данных" },
   { route: "/capex-configurator", expectedStatus: 200, mustInclude: "CAPEX-конфигуратор" },
-  { route: "/launch-budget", expectedStatus: 200, mustInclude: "Расчёт стартового раунда инвестиций" },
+  { route: "/launch-budget", expectedStatus: 200, mustInclude: "Расчёт стоимости запуска" },
   { route: "/404", expectedStatus: 200, mustInclude: "Страница не найдена" },
   { route: "/robots.txt", expectedStatus: 200, mustInclude: "Sitemap: https://colob.spi.ski/sitemap.xml" },
   { route: "/sitemap.xml", expectedStatus: 200, mustInclude: "https://colob.spi.ski/investor-questions" },

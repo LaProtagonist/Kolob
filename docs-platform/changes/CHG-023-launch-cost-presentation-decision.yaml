@@ -1,0 +1,38 @@
+change_id: CHG-023
+title: Зафиксировать решение о новой публичной подаче расчёта стоимости запуска
+status: approved
+created_at: 2026-08-05
+decision_id: DEC-001
+iteration_id: ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01
+proposal_id: PROP-LAUNCH-COST-PRESENTATION-2026-08-05-01
+approved_payload_path: docs-platform/changelog/payloads/ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01-approved.yaml
+approved_payload_sha256: d742edfe63bd297b0934bec66582d820fb020e68f049422fbd8946adfdaaaab8
+operations:
+  - type: add
+    entity: sources
+    value:
+      id: SRC-LAUNCH-COST-PRESENTATION-BRIEF
+      title: Задание на уточнение публичной подачи страницы расчёта стоимости запуска
+      type: instruction
+      location: User instruction, 2026-08-05
+      publisher: project owner
+      publication_date: 2026-08-05
+      accessed_at: 2026-08-05
+      reliability: primary
+      notes: Утверждает новые публичные тексты, демонстрационные значения покупки, аренды и площади, скрытие внутренних документов и динамический состав конфигурации. Не утверждает конкретное помещение, окончательный бюджет, ставки ремонта или мебели, финансовую модель либо условия сделки.
+  - type: add
+    entity: decisions
+    value:
+      id: DEC-013
+      title: Уточнить публичную подачу расчёта стоимости запуска
+      status: approved
+      decision: Переименовать скрытую страницу в «Расчёт стоимости запуска», использовать итог «Стоимость запуска», добавить предварительную юридическую подпись, демонстрационный сценарий аренды 350 000 ₽ в месяц с предоплатой 12 месяцев и депозитом 2 месяца, ориентир покупки 69 000 000 ₽, площади 200/90/80 м², убрать технический язык и внутренние документы и показывать фактически включённые части текущей конфигурации.
+      rationale: Прямое задание владельца проекта от 2026-08-05. Решение улучшает инвесторскую понятность страницы и сохраняет внутренний аудит, noindex, действующие формулы, ставки, CAPEX-архитектуру и одну единицу пароконвектомата.
+      affected_documents:
+        - DOC-INVESTOR-START-MODEL
+      approved_by: project owner
+      approved_at: 2026-08-05
+      supersedes: null
+      source_ids:
+        - SRC-LAUNCH-COST-PRESENTATION-BRIEF
+      updated_at: 2026-08-05

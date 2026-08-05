@@ -2,11 +2,11 @@
 
 Статус: операционный навигационный документ
 
-Дата проверки: 2026-08-04
+Дата проверки: 2026-08-05
 
-Последний проверенный Git commit до текущей итерации Investor Start Model: `3b94126eca0177761b481a68476a41879d7a3728` (`feat(capex): add pilot CAPEX baseline`)
+Последний проверенный Git commit до текущей итерации публичной подачи: `4e4e55b04e4952e44da0348b4df76b8f20174a2d` (`feat(investor): add launch budget calculator`)
 
-Проверенная ветка: `master`; до итогового commit текущей итерации ahead/behind относительно `origin/master`: `9/0`
+Проверенная ветка: `master`; до итогового commit текущей итерации совпадает с `origin/master`.
 
 > При начале нового Codex-чата сначала прочитать доступный корневой AGENTS.md, docs-platform/AGENTS.md и docs-platform/context/CODEX_HANDOFF.md; затем прочитать актуальный docs-platform/changelog/TIMELINE.md, последние approved decisions и applied change sets; после этого проверить git status и актуальность registry.
 
@@ -22,7 +22,7 @@
 
 - `src/` — React/Vite/TypeScript-сайт; редактируемый публичный контент находится в `src/content/`.
 - `src/components/CapexConfigurator.tsx` и `src/content/capex-configurator-data.json` — скрытый внутренний CAPEX-инструмент и его детерминированный generated snapshot; маршрут `/capex-configurator` имеет `noindex, nofollow`, отсутствует в публичной навигации и sitemap.
-- `src/components/LaunchBudget.tsx`, `src/lib/launch-budget.ts` и тот же generated snapshot — скрытый research-калькулятор стартовой потребности; маршрут `/launch-budget` имеет `noindex, nofollow`, отсутствует в публичной навигации и sitemap.
+- `src/components/LaunchBudget.tsx`, `src/lib/launch-budget.ts` и тот же generated snapshot — скрытый калькулятор стоимости запуска; маршрут `/launch-budget` имеет `noindex, nofollow`, отсутствует в публичной навигации и sitemap. Публичный интерфейс не раскрывает внутренние статусы, ID, hashes, governing-документы или ссылку на `/capex-configurator`.
 - `public/` — подготовленные web-медиа.
 - `scripts/` — сборка, prerender, проверки сайта и подготовка медиа.
 - `server/` — backend формы контакта.
@@ -90,7 +90,7 @@
 - не дублировать оборудование в модулях, форматах или конфигурациях; отличия конкретной точки хранить только как overrides, а финансовую модель строить по сгенерированному BOM.
 - не считать публичную цену утверждённой закупочной ценой: до отдельного решения все текущие цены имеют статус `research`, а позиции `quote_required` требуют коммерческого предложения или уточнения конфигурации.
 - сохранять `/capex-configurator` внутренним рабочим маршрутом: без публичного меню, sitemap, инвесторского режима, unit economics и неподтверждённых показателей; итог называется «Стоимость текущей комплектации оборудования» и не выдаётся за полный CAPEX запуска.
-- сохранять `/launch-budget` скрытым research-маршрутом: без публичного меню, footer и sitemap, с `noindex, nofollow`; неизвестные статьи не равны нулю, неполная сумма обозначается `от`, а CAPEX-05 не суммируется второй раз с мебелью по ставке на место.
+- сохранять `/launch-budget` скрытым маршрутом для просмотра по прямой ссылке: без публичного меню, footer и sitemap, с `noindex, nofollow`; неизвестные статьи не равны нулю, неполная сумма обозначается `от`, а CAPEX-05 не суммируется второй раз с мебелью по ставке на место. В публичном интерфейсе использовать деловой русский язык без внутренних статусов, PRP-ID, registry, hashes и governance-терминологии.
 
 ## 5. Утверждённые канонические документы
 
@@ -149,9 +149,12 @@
 - Файл: `docs-platform/working/investor-start-model.yaml`.
 - Registry ID: `DOC-INVESTOR-START-MODEL`.
 - Статус: `research`; это рабочая модель порядка стартовой потребности, а не утверждённая финансовая модель или инвестиционное предложение.
-- Decision: `DEC-012`; change sets: `CHG-021`, `CHG-022`; iteration: `ITR-INVESTOR-START-MODEL-2026-08-04-01`.
+- Базовая модель: `DEC-012`; change sets `CHG-021`, `CHG-022`; iteration `ITR-INVESTOR-START-MODEL-2026-08-04-01`.
+- Публичная подача: `DEC-013`; change sets `CHG-023`, `CHG-024`, `CHG-025`; iteration `ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01`.
 - Основания: Foundation v1.0, Business Model Architecture v1.0, CAPEX Equipment Register и CAPEX Price Research.
-- Web route: `/launch-budget`; equipment totals строятся из generated CAPEX snapshot, мебель CAPEX-05 исключена из повторного суммирования, неизвестные статьи сохраняются как незавершённые.
+- Web route: `/launch-budget`; публичное название — «Расчёт стоимости запуска», итог — «Стоимость запуска». По умолчанию задан редактируемый демонстрационный сценарий аренды `350 000 RUB` в месяц, предоплата `12` месяцев, депозит `2` месяца и площади `200/90/80 м²`; при выборе покупки подставляется `69 000 000 RUB` как рабочий ориентир.
+- Equipment totals строятся из generated CAPEX snapshot, мебель CAPEX-05 исключена из повторного суммирования, годовая предоплата аренды не дублируется в операционном запасе, неизвестные статьи сохраняются как незавершённые.
+- Внутренние Foundation/BMA/CAPEX-документы и `/capex-configurator` не публикуются на этой странице. Отдельная очищенная public-facing версия Business Model Architecture не зарегистрирована и должна создаваться только новой governed-итерацией.
 - `CAPEX-01-009` подтверждён как одна единица с `aggregation_rule: once`; изменения CAPEX и Google Sheet для этой итерации не потребовались.
 
 ## 6. Последние approved decisions и change sets
@@ -170,6 +173,7 @@ Approved decisions:
 - `DEC-010` — одна профессиональная единица `CAPEX-01-009` для `MOD-PREP` во всех research-сценариях, пересчёт по существующим единичным ценам, обновление существующей Sheet и подключение внутреннего конфигуратора к детерминированному canonical snapshot; не утверждает второй аппарат, новые цены, финальный CAPEX, финансовую модель или публичную инвесторскую версию.
 - `DEC-011` — research-база совмещённого пилотного объекта: одна посудомоечная система, расчётные комплекты мелкого инвентаря, ПО `120 000 RUB/year`, food cost `25%` с упаковкой, стартовые роли и явно открытые слои помещения/запуска; не утверждает помещение, полный CAPEX, закупку, поставщиков, штатное расписание или финансовую модель.
 - `DEC-012` — структура, формулы и research-допущения Investor Start Model v0.1 и публикация скрытого `/launch-budget`; не утверждает окончательный бюджет, помещение, сумму инвестиций, прогноз, условия сделки, окупаемость или стоимость компании.
+- `DEC-013` — публичное название «Расчёт стоимости запуска», демонстрационные значения покупки/аренды/площади, удаление технической терминологии и внутренних документов, динамический состав текущей конфигурации; не утверждает окончательный бюджет, конкретное помещение, ставки ремонта/мебели, финансовую модель или условия сделки.
 
 Approved change sets:
 
@@ -194,21 +198,24 @@ Approved change sets:
 - `CHG-020` — применён exact research-payload пилота к Equipment Register, Price Research, модулям, конфигурации, generated BOM и registry; reverse preview восстанавливает исходный composite hash.
 - `CHG-021` — зарегистрированы первичный источник задания, рабочий документ Investor Start Model и approved `DEC-012`.
 - `CHG-022` — зарегистрированы пять ограниченных research-допущений и зависимости Investor Start Model от Foundation, BMA, Equipment Register и Price Research; canonical model применена byte-identical approved payload.
+- `CHG-023` — зарегистрированы первичный source brief публичного уточнения и approved `DEC-013`.
+- `CHG-024` — зарегистрированы демонстрационные research-допущения аренды, покупки и площади без изменения CAPEX-цен.
+- `CHG-025` — byte-identical применён approved payload публичной подачи; before/after тексты и reverse operation зафиксированы в audit/rollback receipts.
 
 `example-change.yaml` имеет статус `proposed` и не должен применяться. Не применять существующие change sets повторно во время onboarding.
 
 ## 7. Состояние registry
 
-Проверено 2026-08-04 командой `npm run registry:validate`: `OK`.
+Проверено 2026-08-05 командой `npm run registry:validate`: `OK`.
 
 | Registry | Количество | Состояние |
 |---|---:|---|
 | facts | 3 | все `approved` |
-| assumptions | 15 | все `research`; сценарии помещения, допущения пилота и пять ограниченных допущений Investor Start Model |
-| decisions | 12 | все `approved`; `DEC-012` утверждает только research-модель и скрытую страницу, не окончательный бюджет или условия сделки |
+| assumptions | 17 | все `research`; сценарии помещения, допущения пилота, Investor Start Model и демонстрационные значения страницы |
+| decisions | 13 | все `approved`; `DEC-013` утверждает только публичную подачу и редактируемые демонстрационные значения, не окончательный бюджет или условия сделки |
 | metrics | 0 | финансовые метрики отсутствуют |
 | documents | 17 | 5 `approved`, 1 `proposed`, 11 `research`, включая Investor Start Model |
-| sources | 126 | прежние источники, задания iterations, карточки цен, research-источники пилота и source brief Investor Start Model; lifecycle status схемой не предусмотрен |
+| sources | 127 | прежние источники, задания iterations, карточки цен, research-источники пилота и source briefs Investor Start Model/публичной подачи; lifecycle status схемой не предусмотрен |
 | principles | 17 | 7 Foundation и 10 Business Model Architecture, все `approved` |
 | dependencies | 15 | 14 `approved`, 1 `superseded`; Investor Start Model зависит от Foundation, BMA, Equipment Register и Price Research |
 
@@ -305,19 +312,19 @@ npm test
 npm run check
 ```
 
-Результаты 2026-08-04:
+Результаты 2026-08-05:
 
-- сайт: 11 маршрутов, включая скрытые `/capex-configurator` и `/launch-budget`; purchase/rent, площади, посадка, мебель, три equipment-сценария, BAR/GROW, OPEX reserve, contingency, localStorage/reset и partial totals — без failures, console errors, page errors или horizontal overflow;
+- сайт: 11 маршрутов, включая скрытые `/capex-configurator` и `/launch-budget`; обновлённые title/OG, демонстрационные purchase/rent, площади, посадка, мебель, три equipment-сценария, BAR/GROW, OPEX reserve, contingency, localStorage/reset и partial totals — без failures, console errors, page errors или horizontal overflow;
 - root TypeScript — OK;
 - production build и prerender одиннадцати маршрутов — OK; оба внутренних инструмента вынесены в lazy-loaded bundles;
-- docs-platform: 117/117 тестов, включая 27 unit tests Investor Start Model, register, price research, modular configurator, pilot configuration, web snapshot, Sheet publisher, timeline, rollback, точные canonical checks и registry — OK;
+- docs-platform: 122/122 тестов, включая 32 unit tests Investor Start Model, register, price research, modular configurator, pilot configuration, web snapshot, Sheet publisher, timeline, public-copy audit, reverse preview, точные canonical checks и registry — OK;
 - registry validation — OK;
 - CAPEX register: `160` equipment records, source coverage `124/124`, unmapped `0`; JSON Schema и reference validation — OK;
 - CAPEX configurator: 12 modules, 7 formats, 2 configurations, 162 module→item links — OK;
 - CAPEX price research: 51 eligible, 43 priced, 8 unpriced, 27 `quote_required` — OK;
 - Google Sheet: folder guard, native MIME, 11 русских листов, price columns, stable IDs, numeric types, сохранение ручной configurator-строки и API readback — OK;
 - governed reverse preview для `CHG-020` восстанавливает исходный composite hash `c33eea5c…`; apply запрещён без нового approved rollback decision;
-- append-only timeline содержит 24 события и валидную hash chain; последние четыре события относятся к `ITR-INVESTOR-START-MODEL-2026-08-04-01`;
+- append-only timeline содержит 28 событий и валидную hash chain; последние четыре события `proposed → approved → applied → verified` относятся к `ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01`;
 - MCP: 21/21 тест, TypeScript — OK.
 
 ## 11. Правила содержательных изменений
@@ -351,7 +358,9 @@ Price Research оценивает 43 из 51 самостоятельной по
 
 Внутренний маршрут `/capex-configurator` получает данные только из generated snapshot канонической CAPEX-системы. Он позволяет переключать семь форматов, модули и два доступных для выбора сценария (`BASE`, `SCALE_READY`); показывает стоимость только оценённых позиций, ценовое покрытие, незавершённые обязательные модули, источники, графики, неучтённые категории, registry-документы и timeline. Маршрут отсутствует в публичном меню и sitemap и имеет `robots: noindex, nofollow`. Это рабочий research-инструмент, а не финансовая модель.
 
-Investor Start Model v0.1 реализован как отдельный structured research source и скрытая страница `/launch-budget`. Страница сравнивает покупку и аренду, считает площадь и предварительную посадку, мебель по рабочей ставке, выбранный equipment-сценарий, подготовку помещения, операционный запас и резерв. Неполные статьи не превращаются в нули: итог остаётся нижней границей `от X ₽`, а незавершённые `MOD-STORAGE` и `MOD-ENGINEERING` показываются явно. Введённые пользователем значения хранятся только локально в браузере.
+Investor Start Model v0.1 реализован как отдельный structured research source и скрытая страница `/launch-budget` с публичным названием «Расчёт стоимости запуска». Страница сравнивает покупку и аренду, считает площадь и предварительную посадку, мебель по рабочей ставке, выбранный equipment-сценарий, подготовку помещения, операционный запас и резерв. Демонстрационный сценарий открывается на аренде `350 000 RUB` в месяц с предоплатой `12` месяцев, депозитом `2` месяца и площадями `200/90/80 м²`; покупка имеет редактируемый ориентир `69 000 000 RUB`. Неполные статьи не превращаются в нули: итог остаётся нижней границей `от X ₽`, а незавершённые `MOD-STORAGE` и `MOD-ENGINEERING` показываются явно. Введённые пользователем значения хранятся только локально в браузере.
+
+Публичный интерфейс `/launch-budget` не показывает internal status/version, PRP-ID, Decision/Change/Iteration IDs, source hashes, Foundation, внутренний BMA, CAPEX Equipment Register или ссылку на `/capex-configurator`. Правая итоговая панель динамически показывает фактически включённые части конфигурации, включая BAR/GROW только при активных переключателях. Внутренняя governed-история, exact payload и audit before/after сохранены отдельно и не удалены.
 
 Для стартовой конфигурации с BAR и GROW исследовательские equipment-суммы из canonical snapshot: MINIMUM `3 058 399,33 RUB`, BASE `4 150 659,33 RUB`, SCALE_READY `5 375 662,79 RUB`. Это только оценённые позиции оборудования; они не являются полной потребностью в инвестициях. CAPEX-05 исключён из equipment total, поскольку мебель на странице считается отдельно по местам.
 
@@ -359,12 +368,13 @@ Investor Start Model v0.1 реализован как отдельный structu
 
 ## 13. Следующая рабочая задача
 
-Следующий шаг — ручная проверка владельцем production-страницы `/launch-budget` и её поведения на реальных вводных покупки/аренды. Любые уточнения ставок мебели, помещение-зависимых работ, OPEX, восьми неоценённых позиций или создание полной финансовой модели выполнять только по отдельному заданию и через новый governed lifecycle; не считать текущие суммы итоговым CAPEX.
+Следующий шаг — ручная проверка владельцем обновлённой production-страницы `/launch-budget` и её инвесторской подачи. Отдельная публичная версия Business Model Architecture пока отсутствует; её нельзя создавать из внутреннего governing-документа без нового exact approved payload. Любые уточнения ставок мебели, помещение-зависимых работ, OPEX, восьми неоценённых позиций или создание полной финансовой модели выполнять только по отдельному заданию и через новый governed lifecycle; не считать текущие суммы итоговым CAPEX.
 
 ## 14. Известные открытые вопросы
 
 - Нет утверждённой финансовой модели и metrics; числовые значения pilot/Investor Start Model имеют только ограниченный статус `research` и не являются прогнозом или утверждённым бюджетом.
-- В Investor Start Model отсутствуют стоимость конкретного помещения, обследование/подготовка, полная OPEX-модель и цены восьми equipment-позиций; поэтому production-страница по умолчанию показывает частичный итог `от`.
+- Демонстрационные `69 000 000 RUB` для покупки и `350 000 RUB/месяц` для аренды не являются утверждённой стоимостью конкретного помещения. Обследование/подготовка, полная OPEX-модель и цены восьми equipment-позиций отсутствуют; поэтому production-страница по умолчанию показывает частичный итог `от`.
+- Отдельная публичная очищенная версия Business Model Architecture не зарегистрирована; внутренний документ с PRP-ID и служебными метаданными скрыт со страницы.
 - В CAPEX working draft остаются открытыми конкретные модели, производительность, часть количеств, инженерные параметры, сценарии комплектации и 27 ещё не описанных разделов.
 - Второй пароконвектомат не входит автоматически ни в один сценарий; возможное расширение мощности требует отдельного решения и расчёта производительности.
 - Без цены остаются холодильная и морозильная камеры, вытяжка, газовые грили такояки, UFO-грили, система 24 дозаторов, стойки для бутылок и закрываемое хранение алкоголя; они требуют параметров помещения, решения по формату или КП.
@@ -379,10 +389,10 @@ Investor Start Model v0.1 реализован как отдельный structu
 
 ## 15. Git-состояние на дату проверки
 
-- До текущего итогового commit в рабочем дереве находятся только связанные изменения Investor Start Model и `/launch-budget`; локальные secrets и runtime не добавлены.
+- До текущего итогового commit в рабочем дереве находятся связанные изменения публичной подачи `/launch-budget`, governed registry/receipts и generated snapshot; локальные secrets и runtime не добавлены.
 - Ветка: `master`.
-- Upstream перед итоговым commit: `origin/master`, ahead/behind `9/0`.
-- Последний проверенный commit перед текущей итерацией: `3b94126eca0177761b481a68476a41879d7a3728`, 2026-08-04, `feat(capex): add pilot CAPEX baseline`.
-- Текущая итерация добавляет governed Investor Start Model v0.1, generated snapshot и скрытую страницу `/launch-budget`; hash итогового commit нельзя корректно включить внутрь того же commit и следует брать из `git log -1` после фиксации.
+- Upstream перед итоговым commit: `origin/master`, ahead/behind `0/0`.
+- Последний проверенный commit перед текущей итерацией: `4e4e55b04e4952e44da0348b4df76b8f20174a2d`, 2026-08-05, `feat(investor): add launch budget calculator`.
+- Текущая итерация уточняет публичную подачу, демонстрационные значения и audit/rollback `/launch-budget`; hash итогового commit нельзя корректно включить внутрь того же commit и следует брать из `git log -1` после фиксации.
 - Серверная публикация должна выполняться только после успешного commit и фиксироваться в итоговом отчёте конкретным commit hash.
-- Дата проверки: 2026-08-04.
+- Дата проверки: 2026-08-05.

@@ -1,0 +1,75 @@
+receipt_version: 2
+change_id: CHG-023
+iteration_id: ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01
+proposal_id: PROP-LAUNCH-COST-PRESENTATION-2026-08-05-01
+decision_id: DEC-001
+source_change_set: docs-platform/changes/CHG-023-launch-cost-presentation-decision.yaml
+status: applied
+applied_at: 2026-08-05T00:07:47.710Z
+actor: Codex
+tool: docs-platform change:apply
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01-approved.yaml
+  sha256: d742edfe63bd297b0934bec66582d820fb020e68f049422fbd8946adfdaaaab8
+before_hash: 70ac659672a3a49c17d7b2f93dbe17307f60182ffd1498e503761a4972f71e3b
+after_hash: b447a86882c28605b2e6cb445bef96ae35d6feda87f14a1c6061a0e3ed33360e
+touched_registry_files:
+  - path: docs-platform/registry/sources.yaml
+    backup_path: docs-platform/changelog/backups/2026-08-05T00-07-47-710Z-CHG-023/sources.yaml
+  - path: docs-platform/registry/decisions.yaml
+    backup_path: docs-platform/changelog/backups/2026-08-05T00-07-47-710Z-CHG-023/decisions.yaml
+operations:
+  - type: add
+    entity: sources
+    id: SRC-LAUNCH-COST-PRESENTATION-BRIEF
+    before: null
+    after:
+      id: SRC-LAUNCH-COST-PRESENTATION-BRIEF
+      title: Задание на уточнение публичной подачи страницы расчёта стоимости запуска
+      type: instruction
+      location: User instruction, 2026-08-05
+      publisher: project owner
+      publication_date: 2026-08-05
+      accessed_at: 2026-08-05
+      reliability: primary
+      notes: Утверждает новые публичные тексты, демонстрационные значения покупки, аренды и площади, скрытие внутренних документов и динамический состав конфигурации. Не утверждает конкретное помещение, окончательный бюджет, ставки ремонта или мебели, финансовую модель либо условия сделки.
+    before_index: null
+    after_index: 126
+    before_sha256: null
+    after_sha256: aa2ad653e1b2c324666869ac3732985ce83f2b56a6bb8b7f1db872af1e66b609
+    reverse_operation:
+      type: remove
+      entity: sources
+      id: SRC-LAUNCH-COST-PRESENTATION-BRIEF
+  - type: add
+    entity: decisions
+    id: DEC-013
+    before: null
+    after:
+      id: DEC-013
+      title: Уточнить публичную подачу расчёта стоимости запуска
+      status: approved
+      decision: Переименовать скрытую страницу в «Расчёт стоимости запуска», использовать итог «Стоимость запуска», добавить предварительную юридическую подпись, демонстрационный сценарий аренды 350 000 ₽ в месяц с предоплатой 12 месяцев и депозитом 2 месяца, ориентир покупки 69 000 000 ₽, площади 200/90/80 м², убрать технический язык и внутренние документы и показывать фактически включённые части текущей конфигурации.
+      rationale: Прямое задание владельца проекта от 2026-08-05. Решение улучшает инвесторскую понятность страницы и сохраняет внутренний аудит, noindex, действующие формулы, ставки, CAPEX-архитектуру и одну единицу пароконвектомата.
+      affected_documents:
+        - DOC-INVESTOR-START-MODEL
+      approved_by: project owner
+      approved_at: 2026-08-05
+      supersedes: null
+      source_ids:
+        - SRC-LAUNCH-COST-PRESENTATION-BRIEF
+      updated_at: 2026-08-05
+    before_index: null
+    after_index: 12
+    before_sha256: null
+    after_sha256: 9d6af014b6f94501206aa9cb36b686229a0d022beed9e52f46b9876ad0dbbcec
+    reverse_operation:
+      type: remove
+      entity: decisions
+      id: DEC-013
+validation_result: passed
+git_commit_hash: null
+rollback:
+  source_receipt: docs-platform/changelog/change-receipts/CHG-023.yaml
+  command: npm run change:reverse:preview -- ../changelog/change-receipts/CHG-023.yaml --change-id CHG-ROLLBACK-XXX --decision DEC-ROLLBACK-XXX
+  rollback_of: CHG-023

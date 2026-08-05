@@ -48,17 +48,31 @@ export type LaunchBudgetResult = {
 
 type LaunchModel = {
   point_configuration: {
+    format_name: string;
     required_modules: string[];
     optional_modules: Array<{ module_id: string; default_enabled: boolean }>;
+    summary_modules: Array<{ module_id: string; label: string }>;
     equipment_exclusions: Array<{ item_id_prefix: string }>;
   };
   premises: {
     default_scenario: PremisesScenario;
     scenarios: {
+      purchase: {
+        default_purchase_price_rub: number;
+        hint: string;
+      };
       rent: {
+        default_monthly_rent_rub: number;
         default_prepayment_months: number;
         default_security_deposit_months: number;
       };
+    };
+  };
+  area: {
+    defaults: {
+      total_area_m2: number;
+      kitchen_and_production_area_m2: number;
+      guest_area_m2: number;
     };
   };
   seating: {
@@ -83,13 +97,13 @@ export const launchModel = capexData.investorStartModel as unknown as LaunchMode
 export function defaultLaunchBudgetState(model = launchModel): LaunchBudgetState {
   return {
     premisesScenario: model.premises.default_scenario,
-    purchasePriceRub: null,
-    monthlyRentRub: null,
+    purchasePriceRub: model.premises.scenarios.purchase.default_purchase_price_rub,
+    monthlyRentRub: model.premises.scenarios.rent.default_monthly_rent_rub,
     prepaymentMonths: model.premises.scenarios.rent.default_prepayment_months,
     securityDepositMonths: model.premises.scenarios.rent.default_security_deposit_months,
-    totalAreaM2: null,
-    kitchenAreaM2: null,
-    guestAreaM2: null,
+    totalAreaM2: model.area.defaults.total_area_m2,
+    kitchenAreaM2: model.area.defaults.kitchen_and_production_area_m2,
+    guestAreaM2: model.area.defaults.guest_area_m2,
     seatingProfileId: model.seating.default_profile,
     furnitureProfileId: model.furniture.default_profile,
     equipmentScenarioId: model.equipment.default_scenario,
@@ -115,7 +129,7 @@ export function normalizeLaunchBudgetState(value: unknown, model = launchModel):
   const equipmentIds = new Set(model.equipment.scenarios.map(item => item.id));
   return {
     ...defaults,
-    premisesScenario: input.premisesScenario === "rent" ? "rent" : "purchase",
+    premisesScenario: input.premisesScenario === "rent" || input.premisesScenario === "purchase" ? input.premisesScenario : defaults.premisesScenario,
     purchasePriceRub: finiteOrNull(input.purchasePriceRub),
     monthlyRentRub: finiteOrNull(input.monthlyRentRub),
     prepaymentMonths: [1, 3, 12].includes(Number(input.prepaymentMonths)) ? Number(input.prepaymentMonths) : defaults.prepaymentMonths,
@@ -133,6 +147,21 @@ export function normalizeLaunchBudgetState(value: unknown, model = launchModel):
     operatingReserveMonths: [3, 6, 9].includes(Number(input.operatingReserveMonths)) ? Number(input.operatingReserveMonths) : defaults.operatingReserveMonths,
     contingencyPercent: [5, 10, 15].includes(Number(input.contingencyPercent)) ? Number(input.contingencyPercent) : defaults.contingencyPercent,
   };
+}
+
+export function restoreLaunchBudgetState(value: unknown, model = launchModel): LaunchBudgetState {
+  const defaults = defaultLaunchBudgetState(model);
+  if (!value || typeof value !== "object") return defaults;
+  const input = value as Partial<LaunchBudgetState>;
+  const legacyEmptyState = input.premisesScenario === "purchase"
+    && input.purchasePriceRub === null
+    && input.monthlyRentRub === null
+    && input.totalAreaM2 === null
+    && input.kitchenAreaM2 === null
+    && input.guestAreaM2 === null
+    && input.prepaymentMonths === 1
+    && input.securityDepositMonths === 2;
+  return legacyEmptyState ? defaults : normalizeLaunchBudgetState(value, model);
 }
 
 export function calculateOtherArea(totalAreaM2: number | null, kitchenAreaM2: number | null, guestAreaM2: number | null) {
@@ -199,7 +228,7 @@ export function calculateLaunchBudget(state: LaunchBudgetState, model = launchMo
   if (premisesEntryRub === null) missing.push(state.premisesScenario === "purchase" ? "Стоимость помещения" : "Аренда в месяц");
   if (furnitureRub === null) missing.push("Площадь посадочного зала и мебель");
   if (state.preparationRub === null) missing.push("Подготовка помещения, инженерные работы и монтаж");
-  if (operatingReserveRub === null) missing.push("Полный расчёт OPEX и операционный запас");
+  if (operatingReserveRub === null) missing.push("Полный расчёт операционных расходов и операционный запас");
   if (equipment.unpricedCount > 0) missing.push(`Позиции оборудования без цены: ${equipment.unpricedCount}`);
   if (equipment.quoteRequiredCount > 0) missing.push(`Коммерческие предложения по крупным позициям: ${equipment.quoteRequiredCount}`);
   for (const module of incompleteRequiredModules) missing.push(`Обязательный модуль не сформирован: ${module.name}`);

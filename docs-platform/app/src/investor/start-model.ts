@@ -8,11 +8,11 @@ import { readModularSources } from "../capex/modular.js";
 import { readRegister, sha256 } from "../capex/register.js";
 import { readPriceResearch } from "../capex/price-research.js";
 
-export const INVESTOR_START_ITERATION_ID = "ITR-INVESTOR-START-MODEL-2026-08-04-01";
-export const INVESTOR_START_PROPOSAL_ID = "PROP-INVESTOR-START-MODEL-2026-08-04-01";
-export const INVESTOR_START_DECISION_ID = "DEC-012";
-export const INVESTOR_START_CHANGE_ID = "CHG-022";
-export const INVESTOR_START_PAYLOAD_PATH = `docs-platform/changelog/payloads/${INVESTOR_START_ITERATION_ID}-approved.yaml`;
+export const INVESTOR_START_ITERATION_ID = "ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01";
+export const INVESTOR_START_PROPOSAL_ID = "PROP-LAUNCH-COST-PRESENTATION-2026-08-05-01";
+export const INVESTOR_START_DECISION_ID = "DEC-013";
+export const INVESTOR_START_CHANGE_ID = "CHG-025";
+export const INVESTOR_START_PAYLOAD_PATH = `docs-platform/changelog/payloads/${INVESTOR_START_ITERATION_ID}-approved-v2.yaml`;
 export const INVESTOR_START_MODEL_PATH = "docs-platform/working/investor-start-model.yaml";
 export const INVESTOR_START_RECEIPT_PATH = `docs-platform/changelog/iteration-receipts/${INVESTOR_START_ITERATION_ID}.yaml`;
 
@@ -67,6 +67,7 @@ export function validateInvestorStartModel(model?: any) {
   if (!formats.has(value.point_configuration?.format_id)) errors.push(`Unknown format ${value.point_configuration?.format_id}.`);
   for (const moduleId of value.point_configuration?.required_modules ?? []) if (!modules.has(moduleId)) errors.push(`Unknown required module ${moduleId}.`);
   for (const item of value.point_configuration?.optional_modules ?? []) if (!modules.has(item.module_id)) errors.push(`Unknown optional module ${item.module_id}.`);
+  for (const item of value.point_configuration?.summary_modules ?? []) if (!modules.has(item.module_id)) errors.push(`Unknown summary module ${item.module_id}.`);
 
   const oven = register.equipment.find(item => item.item_id === "CAPEX-01-009");
   const ovenLink = modular.module_items.links.find(item => item.module_id === "MOD-PREP" && item.item_id === "CAPEX-01-009");
@@ -79,6 +80,25 @@ export function validateInvestorStartModel(model?: any) {
   }
   const exclusion = value.point_configuration?.equipment_exclusions?.find((item: any) => item.item_id_prefix === "CAPEX-05-");
   if (!exclusion) errors.push("CAPEX-05 furniture exclusion is missing.");
+  if (value.premises?.default_scenario !== "rent"
+    || value.premises?.scenarios?.rent?.default_monthly_rent_rub !== 350_000
+    || value.premises?.scenarios?.rent?.default_prepayment_months !== 12
+    || value.premises?.scenarios?.rent?.default_security_deposit_months !== 2
+    || value.premises?.scenarios?.purchase?.default_purchase_price_rub !== 69_000_000) {
+    errors.push("Launch-cost demonstration premises defaults do not match DEC-013.");
+  }
+  if (value.area?.defaults?.total_area_m2 !== 200
+    || value.area?.defaults?.kitchen_and_production_area_m2 !== 90
+    || value.area?.defaults?.guest_area_m2 !== 80) {
+    errors.push("Launch-cost demonstration area defaults do not match DEC-013.");
+  }
+  if ((value.documents_block?.public_documents ?? []).length !== 0 || value.documents_block?.public_bma_available !== false) {
+    errors.push("Internal governing documents must remain hidden from the launch-cost page.");
+  }
+  const publicCopy = JSON.stringify(value.public_presentation ?? {});
+  for (const forbidden of ["потребност", "стартов", "research", "approved", "v0.1", "snapshot", "registry", "payload", "change set"]) {
+    if (publicCopy.toLowerCase().includes(forbidden)) errors.push(`Public presentation contains forbidden technical wording: ${forbidden}.`);
+  }
   if (value.form?.server_persistence !== false || value.form?.analytics_submission !== false) errors.push("Launch inputs must remain local-only.");
   return errors;
 }
@@ -126,7 +146,6 @@ export function applyInvestorStartModel(options: { apply: boolean; decisionId: s
   const approved = readApprovedPayload();
   const existed = fs.existsSync(modelFile);
   const beforeContent = existed ? fs.readFileSync(modelFile, "utf8") : null;
-  if (existed && beforeContent !== approved.serialized) throw new Error("Existing Investor Start Model differs from approved payload.");
   writeYaml(rollbackManifestFile, {
     schema_version: 1,
     iteration_id: INVESTOR_START_ITERATION_ID,
@@ -176,6 +195,17 @@ export function previewInvestorStartReverse(receiptPath = receiptFile, changeId 
   const receipt = YAML.parse(fs.readFileSync(path.resolve(receiptPath), "utf8"));
   const rollback = YAML.parse(fs.readFileSync(rollbackManifestFile, "utf8"));
   const currentSha256 = fileHash(modelFile);
+  const operations: Array<Record<string, unknown>> = [
+    { type: rollback.reverse_operation, path: INVESTOR_START_MODEL_PATH, expected_sha256: rollback.before.sha256 },
+  ];
+  if (rollback.public_page) {
+    operations.push({
+      type: rollback.public_page.reverse_operation,
+      audit_receipt: rollback.public_page.audit_receipt,
+      affected_files: rollback.public_page.affected_files,
+      restore_values: rollback.public_page.before,
+    });
+  }
   const result = {
     reverse_change_set: {
       change_id: changeId,
@@ -186,12 +216,13 @@ export function previewInvestorStartReverse(receiptPath = receiptFile, changeId 
       proposal_id: `PROP-${changeId}`,
       rollback_of: INVESTOR_START_CHANGE_ID,
       source_receipt: path.relative(projectRoot, path.resolve(receiptPath)).replaceAll(path.sep, "/"),
-      operations: [{ type: rollback.reverse_operation, path: INVESTOR_START_MODEL_PATH, expected_sha256: rollback.before.sha256 }],
+      operations,
     },
     current_sha256: currentSha256,
     expected_current_sha256: receipt.after_sha256,
     expected_restored_sha256: rollback.before.sha256,
     restores_original_hash: currentSha256 === receipt.after_sha256,
+    restores_previous_public_copy: Boolean(rollback.public_page?.before?.page_title),
     apply_allowed: false,
     instruction: "Создать и утвердить rollback decision, затем применить новый reverse change set; исторические события не удаляются.",
   };

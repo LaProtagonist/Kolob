@@ -1,0 +1,13 @@
+change_id: CHG-025
+title: Применить исправленный exact payload публичной подачи расчёта стоимости запуска
+status: approved
+created_at: 2026-08-05
+decision_id: DEC-013
+iteration_id: ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01
+proposal_id: PROP-LAUNCH-COST-PRESENTATION-2026-08-05-01
+approved_payload_path: docs-platform/changelog/payloads/ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01-approved-v2.yaml
+approved_payload_sha256: d5b1f6c939f7067298769cd0faea75f853c7592c847b32a158bae32a7e91f257
+operations: []
+notes:
+  preflight_payload: docs-platform/changelog/payloads/ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01-approved.yaml
+  correction: В v2 подзаголовок заключён в YAML-кавычки; пользовательский текст и утверждённый смысл не изменены.

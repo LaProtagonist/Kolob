@@ -1,0 +1,40 @@
+proposal_id: PROP-LAUNCH-COST-PRESENTATION-2026-08-05-01
+iteration_id: ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01
+status: proposed
+created_at: 2026-08-05
+actor: project owner
+source_id: SRC-LAUNCH-COST-PRESENTATION-BRIEF
+scope: Переориентировать скрытую страницу /launch-budget с внутренней research-подачи на понятный предварительный расчёт стоимости запуска для инвесторского обсуждения, не меняя канонические CAPEX-данные, финансовые ставки или архитектуру калькулятора.
+affected_document_ids:
+  - DOC-INVESTOR-START-MODEL
+affected_section_or_item_ids:
+  - /launch-budget
+  - FMT-INTEGRATED
+  - MOD-BAR
+  - MOD-GROW
+  - CAPEX-01-009
+approved_payload_path: docs-platform/changelog/payloads/ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01-approved-v2.yaml
+approved_payload_sha256: d5b1f6c939f7067298769cd0faea75f853c7592c847b32a158bae32a7e91f257
+source_path: User instruction, 2026-08-05
+source_sha256: null
+boundaries:
+  approved:
+    - новая публичная формулировка страницы и итоговой суммы
+    - демонстрационные значения покупки, аренды и площади
+    - удаление технического языка и ссылок на внутренние документы
+    - динамический состав текущей конфигурации в итоговой панели
+    - сохранение noindex, nofollow и скрытого маршрута
+  not_approved:
+    - окончательная сумма инвестиций
+    - конкретное помещение
+    - ставки ремонта и мебели
+    - новые цены оборудования
+    - финансовая модель
+    - инвестиционное предложение и условия сделки
+apply_contract:
+  payload_identity: byte_identical_yaml
+  hash_algorithm: SHA-256
+  preflight_payload_reference: docs-platform/changelog/payloads/ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01-approved.yaml
+  preflight_note: Первый сериализованный payload сохранён в истории; основной apply использует синтаксически исправленный v2 с тем же утверждённым содержанием.
+  google_target: none; canonical CAPEX data and Google Sheet remain unchanged
+  rollback_mode: governed_reverse_change_set
