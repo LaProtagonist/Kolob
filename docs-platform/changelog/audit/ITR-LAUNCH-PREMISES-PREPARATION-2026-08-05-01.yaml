@@ -1,0 +1,136 @@
+audit_version: 1
+iteration_id: ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01
+proposal_id: PROP-LAUNCH-PREMISES-PREPARATION-2026-08-05-01
+decision_id: DEC-014
+change_set_id: CHG-028
+timestamp: 2026-08-05T02:29:29.354Z
+actor: Codex
+tool: launch premises preparation implementation audit
+scope: Переработка только блока «Подготовка помещения» и связанных расчётов резерва и стоимости запуска без исследования, Google sync или изменения CAPEX-данных.
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01-approved.yaml
+  sha256: 3bf792a1a0c0dfd21e7c87399025f51effde1f08c910c987003cd341472494b1
+human_readable_summary: Блок подготовки помещения переведён из одной укрупнённой суммы в управляемую структуру из восьми категорий. Общий базовый ориентир 11 млн ₽ сохранён. Пользователь получил возможность исключать уже существующие в помещении системы без изменения канонической модели проекта.
+before:
+  state:
+    preparation_rub: number_or_null
+  public_field: Подготовка помещения, инженерные работы и монтаж, ₽
+  public_hint: Общая предварительная оценка ремонта, инженерной адаптации, вентиляции, подключения оборудования и монтажных работ.
+  formula: Введённая общая сумма напрямую использовалась в расчёте и резерве; внутреннего состава работ не было.
+after:
+  state:
+    preparation_mode: breakdown_or_manual
+    preparation_enabled_category_ids: stable_category_ids
+    preparation_manual_rub: number_or_null
+    preparation_accordion_open: boolean
+  public_title: Подготовка помещения
+  public_hint: Предварительная оценка адаптации помещения около 200 м² в Санкт-Петербурге.
+  accordion_label: Состав работ
+  manual_action_label: Указать общую сумму вручную
+  manual_field_label: Общая оценка подготовки помещения, ₽
+  manual_marker: Введено вручную
+  breakdown_action_label: Вернуться к расчёту по составу
+  area_note: Ориентир рассчитан для помещения около 200 м². Для объекта другой площади или состояния сумму можно скорректировать вручную.
+  breakdown_formula: sum(amount_rub for enabled categories)
+  effective_formula: manual_mode ? manual_amount_rub : breakdown_amount_rub
+categories:
+  - id: PREP-BUILDING
+    name: Общестроительная адаптация
+    amount_rub: 3000000
+    enabled_by_default: true
+  - id: PREP-ELECTRICAL
+    name: Электроснабжение
+    amount_rub: 1200000
+    enabled_by_default: true
+  - id: PREP-WATER-DRAINAGE
+    name: Водоснабжение и канализация
+    amount_rub: 800000
+    enabled_by_default: true
+  - id: PREP-VENTILATION
+    name: Приточно-вытяжная вентиляция
+    amount_rub: 2500000
+    enabled_by_default: true
+  - id: PREP-LIGHTING
+    name: Освещение
+    amount_rub: 400000
+    enabled_by_default: true
+  - id: PREP-GUEST-AREA
+    name: Подготовка торгового зала
+    amount_rub: 800000
+    enabled_by_default: true
+  - id: PREP-BUILT-IN
+    name: Стойки и встроенная мебель
+    amount_rub: 1300000
+    enabled_by_default: true
+  - id: PREP-DESIGN
+    name: Проектирование и согласования
+    amount_rub: 1000000
+    enabled_by_default: true
+control_totals:
+  all_enabled_rub: 11000000
+  without_ventilation_rub: 8500000
+  without_ventilation_and_design_rub: 7500000
+  ventilation_restored_design_disabled_rub: 10000000
+calculation_impact:
+  effective_preparation_amount: manual_mode ? manual_amount_rub : sum(enabled_category.amount_rub)
+  contingency_basis: evaluated_equipment_rub + furniture_rub + effective_preparation_amount_rub
+  launch_total: premises_entry_rub + evaluated_equipment_rub + furniture_rub + effective_preparation_amount_rub + operating_reserve_rub + contingency_rub
+  property_purchase_in_contingency: false
+  rent_deposit_in_contingency: false
+  operating_reserve_in_contingency: false
+local_storage:
+  saved_fields:
+    - preparationMode
+    - preparationEnabledCategoryIds
+    - preparationManualRub
+    - preparationAccordionOpen
+  legacy_single_amount_migrates_to_manual_mode: true
+  reset_restores_all_categories_and_11000000_rub: true
+data_impact:
+  internet_research_performed: false
+  independently_invented_values_added: false
+  capex_equipment_register_changed: false
+  capex_price_research_changed: false
+  google_sync_performed: false
+  foundation_changed: false
+  business_model_architecture_changed: false
+affected_files:
+  - path: docs-platform/app/src/investor/start-model.ts
+    before_sha256: b65da7d493721bae9ffdd3281c49d5f621c79eec37443fff7ea232246f69decb
+    after_sha256: e45df9de1dd8a4ca80a058e0a04cfacd110b6e957308f3ad3c8ed6805cc1026d
+  - path: docs-platform/app/test/investor-start-model.test.ts
+    before_sha256: 7c243b11848f84a286a096c5e9c5a0f8e3bb6406e552107ab80f2c581f03ec85
+    after_sha256: 2d1a77a15fa943fb137e4c1fa3eeb54d845014a2d09c3ae5fc7ce86056523337
+  - path: docs-platform/schemas/investor-start-model.schema.json
+    before_sha256: cd8866468d949c6b205cf85b8dc6e5edaae61c36a15fe600232665c705304858
+    after_sha256: d33ff39cf7735aecf15dcfe8a65e2de6f0df8c93a3874e35c1ae94af4b853284
+  - path: docs-platform/working/investor-start-model.yaml
+    before_sha256: d5b1f6c939f7067298769cd0faea75f853c7592c847b32a158bae32a7e91f257
+    after_sha256: 3bf792a1a0c0dfd21e7c87399025f51effde1f08c910c987003cd341472494b1
+  - path: scripts/test-site.cjs
+    before_sha256: 57a3a9c14a592c34782771044f1e3bd18a9fc6fc250cd02cfb78cf22d18166c8
+    after_sha256: 7eb0ea639c32e4254cbec0baed2355c1c24b3bd94fdb2f041ca70654605cfac7
+  - path: src/components/LaunchBudget.css
+    before_sha256: 4e38f8ef56b6884d6a84ea49047fe5cd5130a51ed198e1b01350870100689478
+    after_sha256: d83a5dafbc47dea62316f9f47d2d2f7a1006f98ebe44cd8a4d79f4d7ca09423e
+  - path: src/components/LaunchBudget.tsx
+    before_sha256: 219c4b6ab9c5a8d40eadc968acadc463b4878ac931afbcaabfcb72a86a80e906
+    after_sha256: 9698f6d6b964395d1e183aa959b864a30d3b5fd3099bef310d706f03b4350554
+  - path: src/content/capex-configurator-data.json
+    before_sha256: d2237fa72867972927ba409db681cc8d02e88c14574f7c6c306bcc9b5ea2d0f6
+    after_sha256_before_timeline: 59f3a0d627a0b53d9c59298e62125514e7d1dbfbf74c2b7c53b1d99d561d480e
+  - path: src/lib/launch-budget.ts
+    before_sha256: a08afcdb5b3219725e8816cf56b1e7e0f78f5a704ea2da5be2ab5d4f39c28743
+    after_sha256: 369748d01e5fc86556fbada5d03b852511415eef6be9ec67589d62ddcd23f572
+rollback:
+  mode: governed_reverse_change_set
+  manifest: docs-platform/changelog/rollback-payloads/ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01/manifest.yaml
+  reverse_preview_only: true
+  requires_new_approved_decision: true
+  restores_previous_model_sha256: d5b1f6c939f7067298769cd0faea75f853c7592c847b32a158bae32a7e91f257
+  restores_previous_public_implementation: true
+  preserves_history: true
+  git_reset_forbidden: true
+git_commit_hash: null
+git_commit_note: Hash текущего commit невозможно включить в сам commit; он сообщается в итоговом отчёте и может быть связан следующим append-only событием.
+deployment: pending_after_commit

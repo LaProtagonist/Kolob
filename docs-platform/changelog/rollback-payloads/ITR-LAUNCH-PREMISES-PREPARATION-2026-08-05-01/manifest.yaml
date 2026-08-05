@@ -1,0 +1,331 @@
+schema_version: 1
+iteration_id: ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01
+source_change_set: CHG-028
+target: docs-platform/working/investor-start-model.yaml
+before:
+  existed: true
+  sha256: d5b1f6c939f7067298769cd0faea75f853c7592c847b32a158bae32a7e91f257
+  payload: |
+    schema_version: 1
+    document:
+      project: Колобочная
+      document_id: DOC-INVESTOR-START-MODEL
+      title: Investor Start Model
+      russian_title: Модель стартовой потребности в инвестициях
+      version: "0.1"
+      status: research
+      document_type: Working investment requirement model
+      decision_id: DEC-013
+      iteration_id: ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01
+      proposal_id: PROP-LAUNCH-COST-PRESENTATION-2026-08-05-01
+      updated_at: 2026-08-05
+      disclaimer: Документ не является утверждённой финансовой моделью или окончательным инвестиционным предложением.
+    basis:
+      documents:
+        - document_id: DOC-FOUNDATION
+          title: Foundation
+          version: "1.0"
+        - document_id: DOC-BUSINESS-MODEL-ARCHITECTURE
+          title: Business Model Architecture
+          version: "1.0"
+        - document_id: DOC-CAPEX-EQUIPMENT-REGISTER
+          title: CAPEX Equipment Register
+          version: "0.1"
+        - document_id: DOC-CAPEX-PRICE-RESEARCH
+          title: CAPEX Price Research
+          version: "0.3"
+      equipment_pipeline:
+        - CAPEX Equipment Register
+        - CAPEX Price Research
+        - CAPEX Modules
+        - CAPEX Point Format
+        - CAPEX Configuration
+        - CAPEX Configuration Overrides
+        - Deterministic web snapshot
+    point_configuration:
+      format_id: FMT-INTEGRATED
+      format_name: Совмещённый объект
+      description: Заготовочное производство, торговая точка и собственный посадочный зал.
+      required_modules:
+        - MOD-PREP
+        - MOD-RETAIL-HOT
+        - MOD-POS
+        - MOD-KDS
+        - MOD-TAKEAWAY
+        - MOD-GUEST
+        - MOD-STORAGE
+        - MOD-WASH
+        - MOD-ENGINEERING
+      optional_modules:
+        - module_id: MOD-BAR
+          label: Бар и напитки
+          default_enabled: true
+        - module_id: MOD-GROW
+          label: Выращивание зелени и микрозелени
+          default_enabled: true
+      summary_modules:
+        - module_id: MOD-PREP
+          label: Заготовочное производство
+        - module_id: MOD-RETAIL-HOT
+          label: Торговая точка
+        - module_id: MOD-GUEST
+          label: Посадочный зал
+        - module_id: MOD-BAR
+          label: Бар и напитки
+        - module_id: MOD-GROW
+          label: Выращивание зелени
+      equipment_exclusions:
+        - item_id_prefix: CAPEX-05-
+          reason: Мебель и оснащение гостевой зоны рассчитываются по отдельной research-ставке на посадочное место и не должны учитываться второй раз через Equipment Register.
+      incomplete_module_rule: Обязательный модуль со статусом not_started или без оценки показывается как «Не рассчитано» и не считается равным нулю.
+    premises:
+      default_scenario: rent
+      scenarios:
+        purchase:
+          label: Покупка
+          default_purchase_price_rub: 69000000
+          hint: Рабочий ориентир для помещения около 200 м².
+          required_fields:
+            - purchase_price_rub
+          entry_formula: purchase_price_rub
+          created_asset_formula: purchase_price_rub + evaluated_equipment_rub + furniture_rub
+        rent:
+          label: Аренда
+          default_monthly_rent_rub: 350000
+          required_fields:
+            - monthly_rent_rub
+            - prepayment_months
+            - security_deposit_months
+          prepayment_month_options:
+            - 1
+            - 3
+            - 12
+          default_prepayment_months: 12
+          security_deposit_month_options:
+            - 1
+            - 2
+            - 3
+          default_security_deposit_months: 2
+          entry_formula: monthly_rent_rub * prepayment_months + monthly_rent_rub * security_deposit_months
+          tied_funds_formula: monthly_rent_rub * security_deposit_months
+          created_asset_formula: evaluated_equipment_rub + furniture_rub
+    area:
+      fields:
+        - total_area_m2
+        - kitchen_and_production_area_m2
+        - guest_area_m2
+      defaults:
+        total_area_m2: 200
+        kitchen_and_production_area_m2: 90
+        guest_area_m2: 80
+      other_area_formula: total_area_m2 - kitchen_and_production_area_m2 - guest_area_m2
+      other_area_includes:
+        - заказ и выдача
+        - склады
+        - санузлы
+        - проходы
+        - помещения персонала
+        - технические зоны
+      invalid_rule: kitchen_and_production_area_m2 + guest_area_m2 > total_area_m2
+      invalid_result: Итоговый расчёт не выполняется; отрицательная прочая площадь не используется.
+    seating:
+      default_profile: balanced
+      profiles:
+        - id: efficient
+          label: Эффективная посадка
+          square_metres_per_seat: 1.4
+        - id: balanced
+          label: Сбалансированная посадка
+          square_metres_per_seat: 1.6
+        - id: comfortable
+          label: Комфортная посадка
+          square_metres_per_seat: 1.8
+      seat_count_formula: floor(guest_area_m2 / square_metres_per_seat)
+      caveat: Финальная вместимость определяется после разработки планировки, проверки проходов, эвакуационных требований и доступности.
+    furniture:
+      status: research
+      marker: Рабочий ориентир
+      default_profile: balanced
+      profiles:
+        - id: functional
+          label: Функциональная комплектация
+          rub_per_seat: 4500
+        - id: balanced
+          label: Сбалансированная комплектация
+          rub_per_seat: 8500
+        - id: comfort
+          label: Повышенный комфорт
+          rub_per_seat: 12000
+      formula: preliminary_seat_count * rub_per_seat
+      double_count_rule: Позиции CAPEX-05 не увеличивают сумму оборудования, пока мебель рассчитывается по ставке на посадочное место.
+    equipment:
+      status: research
+      default_scenario: BASE
+      scenarios:
+        - id: MINIMUM
+          snapshot_key: minimum
+          label: Минимальная комплектация
+        - id: BASE
+          snapshot_key: base
+          label: Базовая комплектация
+        - id: SCALE_READY
+          snapshot_key: scale_ready
+          label: С запасом для роста
+      source_rule: Стоимость рассчитывается только из детерминированного snapshot канонической CAPEX-архитектуры; суммы не хардкодятся в интерфейсе.
+      independent_procurement_rule: included_in_parent, component, engineering_connection и open_question не суммируются как самостоятельные покупки.
+      partial_total_rule: При наличии позиций без цены стоимость показывается как «от X ₽», а отсутствующие цены не считаются нулём.
+      combi_oven_rule:
+        item_id: CAPEX-01-009
+        module_id: MOD-PREP
+        quantity_rule_type: fixed
+        quantity: 1
+        aggregation_rule: once
+        without_module_quantity: 0
+    preparation:
+      field: preparation_and_installation_rub
+      label: Подготовка помещения, инженерные работы и монтаж, ₽
+      required: false
+      unknown_label: Не рассчитано — требуется обследование помещения
+      hint: Общая предварительная оценка ремонта, инженерной адаптации, вентиляции, подключения оборудования и монтажных работ.
+    operating_reserve:
+      monthly_opex_field: monthly_opex_excluding_rent_rub
+      month_options:
+        - 3
+        - 6
+        - 9
+      default_months: 6
+      purchase_formula: monthly_opex_excluding_rent_rub * reserve_months
+      rent_formula: monthly_opex_excluding_rent_rub * reserve_months + monthly_rent_rub * max(reserve_months - prepayment_months, 0)
+      security_deposit_excluded: true
+      unknown_rule: Если ежемесячные операционные расходы не введены, операционный запас не рассчитывается и итог остаётся частичным.
+    contingency:
+      percent_options:
+        - 5
+        - 10
+        - 15
+      default_percent: 10
+      formula: (evaluated_equipment_rub + furniture_rub + known_preparation_and_installation_rub) * contingency_percent
+      included_categories:
+        - evaluated_equipment_rub
+        - furniture_rub
+        - preparation_and_installation_rub
+      excluded_categories:
+        - property_purchase_rub
+        - rent_prepayment_rub
+        - security_deposit_rub
+        - operating_reserve_rub
+      partial_basis_rule: Если подготовка помещения не рассчитана, резерв считается только по известным статьям и отмечается как частичный.
+    totals:
+      financing_requirement_formula: premises_entry_rub + evaluated_equipment_rub + furniture_rub + preparation_and_installation_rub + operating_reserve_rub + contingency_rub
+      partial_rule: Любая обязательная нерассчитанная статья или неполное ценовое покрытие оборудования переводит итог в формат «от X ₽» и добавляется в перечень отсутствующих статей.
+      created_assets:
+        purchase_formula: property_purchase_rub + evaluated_equipment_rub + furniture_rub
+        rent_formula: evaluated_equipment_rub + furniture_rub
+        preparation_excluded_reason: Бухгалтерская классификация подготовки помещения ещё не определена.
+      tied_or_conditionally_refundable_funds:
+        purchase_formula: null
+        rent_formula: security_deposit_rub
+    missing_categories:
+      - инженерное обследование помещения
+      - проектирование и согласования
+      - итоговая стоимость ремонта
+      - доставка и монтаж оборудования
+      - коммерческие предложения по крупным позициям
+      - первоначальный запас сырья и упаковки
+      - полный расчёт операционных расходов
+    documents_block:
+      public_documents: []
+      public_empty_message: Материалы проекта подготавливаются для предоставления в рамках дальнейшего обсуждения.
+      hidden_internal_document_ids:
+        - DOC-FOUNDATION
+        - DOC-BUSINESS-MODEL-ARCHITECTURE
+        - DOC-CAPEX-EQUIPMENT-SPECIFICATION
+        - DOC-CAPEX-EQUIPMENT-REGISTER
+        - DOC-CAPEX-PRICE-RESEARCH
+      public_bma_available: false
+      public_bma_note: Отдельная очищенная версия Business Model Architecture для внешнего чтения в registry не зарегистрирована.
+    public_presentation:
+      page_title: Расчёт стоимости запуска
+      subtitle: "Первый совмещённый объект „Колобочной“: заготовочное производство, торговая точка и посадочный зал."
+      hero_summary_title: Что показывает расчёт
+      hero_summary: Предварительную стоимость запуска при покупке или аренде помещения — по известным статьям, с операционным запасом и резервом.
+      total_title: Стоимость запуска
+      total_partial_prefix: от
+      legal_disclaimer: Представленная информация носит предварительный характер и не является публичной офертой.
+      equipment_description: Стоимость оборудования рассчитывается на основании актуального состава оснащения и текущих цен поставщиков. Мебель посадочного зала учитывается отдельно.
+      equipment_double_count_note: Мебель посадочного зала учитывается по выбранной ставке на место и не добавляется к расчёту повторно через перечень оснащения.
+      current_configuration_title: Текущая конфигурация
+      next_steps_title: Следующие этапы расчёта
+      next_steps_intro: Эти статьи уточняются после выбора помещения и получения исходных данных. Они дополнят текущий расчёт на следующем этапе.
+      calculation_basis_title: Что учитывает расчёт
+      calculation_factors:
+        - выбранный способ использования помещения
+        - площадь объекта и посадочного зала
+        - актуальный состав оборудования
+        - уровень комплектации мебели
+        - подготовку помещения
+        - операционный запас
+        - резерв непредвиденных расходов
+      calculation_basis_note: Расчёт основан на текущей модели проекта и актуальных ценовых ориентирах. Все параметры могут быть уточнены в ходе обсуждения конкретного сценария запуска.
+    form:
+      local_storage_key: kolobochnaya.launch-budget.v0.1
+      server_persistence: false
+      analytics_submission: false
+      reset_requires_confirmation: true
+    decision_boundaries:
+      approved:
+        - новая публичная формулировка страницы
+        - демонстрационные значения покупки, аренды и площади
+        - удаление технического языка из публичного интерфейса
+        - скрытие внутренних документов
+        - дополнение итоговой панели текущей конфигурацией
+        - сохранение технической истории во внутренней системе
+      not_approved:
+        - окончательная сумма инвестиций
+        - конкретное помещение
+        - ставки ремонта
+        - ставки мебели
+        - финансовая модель
+        - инвестиционное предложение
+        - условия сделки
+    warning: |-
+      Расчёт показывает предварительную стоимость запуска выбранной конфигурации.
+      Итоговые значения уточняются после выбора помещения, обследования
+      инженерных систем, разработки планировки и получения коммерческих
+      предложений.
+reverse_operation: restore_file
+site_files:
+  - path: docs-platform/schemas/investor-start-model.schema.json
+    existed: true
+    before_sha256: cd8866468d949c6b205cf85b8dc6e5edaae61c36a15fe600232665c705304858
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01/site/docs-platform/schemas/investor-start-model.schema.json
+    after_sha256: d33ff39cf7735aecf15dcfe8a65e2de6f0df8c93a3874e35c1ae94af4b853284
+  - path: docs-platform/app/test/investor-start-model.test.ts
+    existed: true
+    before_sha256: 7c243b11848f84a286a096c5e9c5a0f8e3bb6406e552107ab80f2c581f03ec85
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01/site/docs-platform/app/test/investor-start-model.test.ts
+    after_sha256: 2d1a77a15fa943fb137e4c1fa3eeb54d845014a2d09c3ae5fc7ce86056523337
+  - path: scripts/test-site.cjs
+    existed: true
+    before_sha256: 57a3a9c14a592c34782771044f1e3bd18a9fc6fc250cd02cfb78cf22d18166c8
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01/site/scripts/test-site.cjs
+    after_sha256: 7eb0ea639c32e4254cbec0baed2355c1c24b3bd94fdb2f041ca70654605cfac7
+  - path: src/lib/launch-budget.ts
+    existed: true
+    before_sha256: a08afcdb5b3219725e8816cf56b1e7e0f78f5a704ea2da5be2ab5d4f39c28743
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01/site/src/lib/launch-budget.ts
+    after_sha256: 369748d01e5fc86556fbada5d03b852511415eef6be9ec67589d62ddcd23f572
+  - path: src/components/LaunchBudget.tsx
+    existed: true
+    before_sha256: 219c4b6ab9c5a8d40eadc968acadc463b4878ac931afbcaabfcb72a86a80e906
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01/site/src/components/LaunchBudget.tsx
+    after_sha256: 9698f6d6b964395d1e183aa959b864a30d3b5fd3099bef310d706f03b4350554
+  - path: src/components/LaunchBudget.css
+    existed: true
+    before_sha256: 4e38f8ef56b6884d6a84ea49047fe5cd5130a51ed198e1b01350870100689478
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01/site/src/components/LaunchBudget.css
+    after_sha256: d83a5dafbc47dea62316f9f47d2d2f7a1006f98ebe44cd8a4d79f4d7ca09423e
+derived_refresh:
+  command: npm run capex:web:sync
+  target: src/content/capex-configurator-data.json
+preserves_history: true

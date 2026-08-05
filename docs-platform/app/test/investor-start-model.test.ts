@@ -7,8 +7,10 @@ import { platformRoot } from "../src/google/config.js";
 import { checkInvestorStartModel, INVESTOR_START_PAYLOAD_PATH, previewInvestorStartReverse, validateInvestorStartModel } from "../src/investor/start-model.js";
 import {
   calculateLaunchBudget,
+  calculateEffectivePreparationAmount,
   calculateOperatingReserve,
   calculateOtherArea,
+  calculatePreparationBreakdown,
   calculateSeatCount,
   defaultLaunchBudgetState,
   normalizeLaunchBudgetState,
@@ -29,7 +31,8 @@ function filled(overrides: Partial<LaunchBudgetState> = {}): LaunchBudgetState {
     totalAreaM2: 300,
     kitchenAreaM2: 120,
     guestAreaM2: 100,
-    preparationRub: 4_000_000,
+    preparationMode: "manual",
+    preparationManualRub: 4_000_000,
     monthlyOpexExcludingRentRub: 2_000_000,
     ...overrides,
   };
@@ -125,7 +128,7 @@ test("16. contingency applies to equipment, furniture and known preparation", ()
 });
 
 test("17. unknown preparation is not silently treated as complete zero", () => {
-  const result = calculateLaunchBudget(filled({ preparationRub: null }));
+  const result = calculateLaunchBudget(filled({ preparationMode: "manual", preparationManualRub: null }));
   assert.equal(result.partial, true);
   assert.equal(result.contingencyPartial, true);
   assert.ok(result.missing.some(item => item.includes("Подготовка помещения")));
@@ -165,7 +168,7 @@ test("23. equipment totals are derived from snapshot rows", () => {
   const result = calculateLaunchBudget(filled());
   const sum = result.equipment.rows.filter(row => row.independentProcurement && row.lineTotal !== null).reduce((total, row) => total + row.lineTotal!, 0);
   assert.equal(result.equipment.total, sum);
-  assert.equal(capexData.investorStartModel.source_sha256, "d5b1f6c939f7067298769cd0faea75f853c7592c847b32a158bae32a7e91f257");
+  assert.equal(capexData.investorStartModel.source_sha256, "3bf792a1a0c0dfd21e7c87399025f51effde1f08c910c987003cd341472494b1");
 });
 
 test("24. equipment scenario changes recalculate the total", () => {
@@ -198,6 +201,10 @@ test("27. reset restores the governed demonstration scenario and leaves canonica
   assert.equal(reset.totalAreaM2, 200);
   assert.equal(reset.kitchenAreaM2, 90);
   assert.equal(reset.guestAreaM2, 80);
+  assert.equal(reset.preparationMode, "breakdown");
+  assert.equal(reset.preparationManualRub, null);
+  assert.equal(reset.preparationAccordionOpen, false);
+  assert.deepEqual(reset.preparationEnabledCategoryIds, capexData.investorStartModel.preparation.categories.map(category => category.id));
   assert.equal(JSON.stringify(capexData.investorStartModel), before);
 });
 
@@ -254,8 +261,116 @@ test("32. governed reverse preview restores the previous public presentation wit
   assert.equal(preview.apply_allowed, false);
   assert.equal(preview.restores_original_hash, true);
   assert.equal(preview.restores_previous_public_copy, true);
-  const operation = preview.reverse_change_set.operations.find((item: any) => item.type === "restore_public_presentation_from_audit_receipt");
-  assert.equal(operation.restore_values.page_title, "Расчёт стартового раунда инвестиций");
-  assert.equal(operation.restore_values.total_title, "Ориентировочная потребность в финансировании");
-  assert.equal(operation.restore_values.internal_document_links_visible, true);
+  assert.equal(preview.rollback_payloads_match_before_hashes, true);
+  assert.ok(preview.reverse_change_set.operations.some((item: any) => item.type === "restore_file" && item.path === "src/components/LaunchBudget.tsx"));
+  assert.ok(preview.reverse_change_set.operations.some((item: any) => item.type === "regenerate_derived_snapshot"));
+});
+
+test("33. preparation source contains exactly eight unique enabled categories totaling 11000000 RUB", () => {
+  const preparation = capexData.investorStartModel.preparation;
+  assert.equal(preparation.categories.length, 8);
+  assert.equal(new Set(preparation.categories.map(category => category.id)).size, 8);
+  assert.equal(preparation.categories.every(category => category.enabled_by_default), true);
+  assert.equal(preparation.categories.reduce((sum, category) => sum + category.amount_rub, 0), 11_000_000);
+  assert.equal(preparation.default_total_rub, 11_000_000);
+});
+
+test("34. preparation category amounts match DEC-014 exactly", () => {
+  const amounts = Object.fromEntries(capexData.investorStartModel.preparation.categories.map(category => [category.id, category.amount_rub]));
+  assert.deepEqual(amounts, {
+    "PREP-BUILDING": 3_000_000,
+    "PREP-ELECTRICAL": 1_200_000,
+    "PREP-WATER-DRAINAGE": 800_000,
+    "PREP-VENTILATION": 2_500_000,
+    "PREP-LIGHTING": 400_000,
+    "PREP-GUEST-AREA": 800_000,
+    "PREP-BUILT-IN": 1_300_000,
+    "PREP-DESIGN": 1_000_000,
+  });
+});
+
+test("35. snapshot preparation data is identical to the canonical YAML", () => {
+  const canonical = YAML.parse(fs.readFileSync(modelPath, "utf8"));
+  assert.deepEqual(capexData.investorStartModel.preparation, canonical.preparation);
+  assert.equal(capexData.investorStartModel.source_sha256, "3bf792a1a0c0dfd21e7c87399025f51effde1f08c910c987003cd341472494b1");
+});
+
+test("36. public preparation descriptions are read from structured data, not duplicated in React", () => {
+  const component = fs.readFileSync(path.join(projectRoot, "src/components/LaunchBudget.tsx"), "utf8");
+  for (const category of capexData.investorStartModel.preparation.categories) assert.equal(component.includes(category.description), false, category.id);
+});
+
+test("37. default preparation breakdown equals 11000000 RUB", () => {
+  const state = defaultLaunchBudgetState();
+  assert.equal(calculatePreparationBreakdown(state), 11_000_000);
+  assert.equal(calculateEffectivePreparationAmount(state), 11_000_000);
+});
+
+test("38. excluding ventilation produces 8500000 RUB", () => {
+  const state = defaultLaunchBudgetState();
+  state.preparationEnabledCategoryIds = state.preparationEnabledCategoryIds.filter(id => id !== "PREP-VENTILATION");
+  assert.equal(calculatePreparationBreakdown(state), 8_500_000);
+});
+
+test("39. excluding ventilation and design produces 7500000 RUB", () => {
+  const state = defaultLaunchBudgetState();
+  state.preparationEnabledCategoryIds = state.preparationEnabledCategoryIds.filter(id => !["PREP-VENTILATION", "PREP-DESIGN"].includes(id));
+  assert.equal(calculatePreparationBreakdown(state), 7_500_000);
+});
+
+test("40. re-enabling ventilation with design excluded restores 10000000 RUB", () => {
+  const state = defaultLaunchBudgetState();
+  state.preparationEnabledCategoryIds = state.preparationEnabledCategoryIds.filter(id => id !== "PREP-DESIGN");
+  assert.equal(calculatePreparationBreakdown(state), 10_000_000);
+});
+
+test("41. preparation breakdown cannot become negative and all categories restore 11000000 RUB", () => {
+  const state = defaultLaunchBudgetState();
+  state.preparationEnabledCategoryIds = [];
+  assert.equal(calculatePreparationBreakdown(state), 0);
+  state.preparationEnabledCategoryIds = capexData.investorStartModel.preparation.categories.map(category => category.id);
+  assert.equal(calculatePreparationBreakdown(state), 11_000_000);
+});
+
+test("42. manual preparation replaces breakdown and category toggles do not change it", () => {
+  const state = defaultLaunchBudgetState();
+  state.preparationMode = "manual";
+  state.preparationManualRub = 6_250_000;
+  assert.equal(calculateEffectivePreparationAmount(state), 6_250_000);
+  state.preparationEnabledCategoryIds = [];
+  assert.equal(calculateEffectivePreparationAmount(state), 6_250_000);
+  state.preparationMode = "breakdown";
+  assert.equal(calculateEffectivePreparationAmount(state), 0);
+});
+
+test("43. contingency follows breakdown exclusions and manual preparation", () => {
+  const baseline = calculateLaunchBudget(filled({ preparationMode: "breakdown", preparationEnabledCategoryIds: defaultLaunchBudgetState().preparationEnabledCategoryIds, contingencyPercent: 10 }));
+  const noVentilationIds = defaultLaunchBudgetState().preparationEnabledCategoryIds.filter(id => id !== "PREP-VENTILATION");
+  const noVentilation = calculateLaunchBudget(filled({ preparationMode: "breakdown", preparationEnabledCategoryIds: noVentilationIds, contingencyPercent: 10 }));
+  const manual = calculateLaunchBudget(filled({ preparationMode: "manual", preparationManualRub: 5_000_000, contingencyPercent: 10 }));
+  assert.equal(baseline.contingencyRub - noVentilation.contingencyRub, 250_000);
+  assert.equal(manual.contingencyRub, Math.round((manual.equipment.total + manual.furnitureRub! + 5_000_000) * 10) / 100);
+});
+
+test("44. preparation state is normalized and restored from local persistence", () => {
+  const saved = normalizeLaunchBudgetState({
+    preparationMode: "manual",
+    preparationManualRub: 7_000_000,
+    preparationEnabledCategoryIds: ["PREP-BUILDING", "PREP-VENTILATION", "UNKNOWN"],
+    preparationAccordionOpen: true,
+  });
+  assert.equal(saved.preparationMode, "manual");
+  assert.equal(saved.preparationManualRub, 7_000_000);
+  assert.deepEqual(saved.preparationEnabledCategoryIds, ["PREP-BUILDING", "PREP-VENTILATION"]);
+  assert.equal(saved.preparationAccordionOpen, true);
+  assert.deepEqual(restoreLaunchBudgetState(saved), saved);
+});
+
+test("45. legacy preparation amount migrates to manual mode and stale values are safe", () => {
+  const legacy = restoreLaunchBudgetState({ preparationRub: 4_500_000 });
+  assert.equal(legacy.preparationMode, "manual");
+  assert.equal(legacy.preparationManualRub, 4_500_000);
+  const stale = restoreLaunchBudgetState({ preparationMode: "obsolete", preparationEnabledCategoryIds: ["UNKNOWN"] });
+  assert.equal(stale.preparationMode, "breakdown");
+  assert.deepEqual(stale.preparationEnabledCategoryIds, []);
 });

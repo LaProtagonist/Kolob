@@ -1,0 +1,143 @@
+receipt_version: 2
+change_id: CHG-027
+iteration_id: ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01
+proposal_id: PROP-LAUNCH-PREMISES-PREPARATION-2026-08-05-01
+decision_id: DEC-014
+source_change_set: docs-platform/changes/CHG-027-launch-premises-preparation.yaml
+status: applied
+applied_at: 2026-08-05T02:01:34.920Z
+actor: Codex
+tool: docs-platform change:apply
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01-approved.yaml
+  sha256: 3bf792a1a0c0dfd21e7c87399025f51effde1f08c910c987003cd341472494b1
+before_hash: 154dc55475a7b51667a882b73f2dde905072ff5a778e6e338c71f49e6c4fd077
+after_hash: 37f0bc5b28a180b0c8b30320a0121445eff77106f572e58024178b69995f7f48
+touched_registry_files:
+  - path: docs-platform/registry/assumptions.yaml
+    backup_path: docs-platform/changelog/backups/2026-08-05T02-01-34-920Z-CHG-027/assumptions.yaml
+  - path: docs-platform/registry/documents.yaml
+    backup_path: docs-platform/changelog/backups/2026-08-05T02-01-34-920Z-CHG-027/documents.yaml
+operations:
+  - type: add
+    entity: assumptions
+    id: ASM-INVESTOR-START-PREPARATION-BREAKDOWN
+    before: null
+    after:
+      id: ASM-INVESTOR-START-PREPARATION-BREAKDOWN
+      title: Заданная структура подготовки помещения
+      value:
+        baseline_area_m2: 200
+        default_total_rub: 11000000
+        default_mode: breakdown
+        categories:
+          - id: PREP-BUILDING
+            amount_rub: 3000000
+            enabled_by_default: true
+          - id: PREP-ELECTRICAL
+            amount_rub: 1200000
+            enabled_by_default: true
+          - id: PREP-WATER-DRAINAGE
+            amount_rub: 800000
+            enabled_by_default: true
+          - id: PREP-VENTILATION
+            amount_rub: 2500000
+            enabled_by_default: true
+          - id: PREP-LIGHTING
+            amount_rub: 400000
+            enabled_by_default: true
+          - id: PREP-GUEST-AREA
+            amount_rub: 800000
+            enabled_by_default: true
+          - id: PREP-BUILT-IN
+            amount_rub: 1300000
+            enabled_by_default: true
+          - id: PREP-DESIGN
+            amount_rub: 1000000
+            enabled_by_default: true
+      unit: RUB
+      status: research
+      rationale: Значения дословно заданы владельцем проекта для укрупнённой инвестиционной модели помещения около 200 м²; они не получены исследованием, не масштабируются от площади и не являются сметой или коммерческим предложением.
+      scenario: INVESTOR_START_V0_1
+      applies_to:
+        - DOC-INVESTOR-START-MODEL
+      source_ids:
+        - SRC-LAUNCH-PREMISES-PREPARATION-BRIEF
+      decision_id: DEC-014
+      updated_at: 2026-08-05
+    before_index: null
+    after_index: 17
+    before_sha256: null
+    after_sha256: 076fbf35067901f1146bdef1c63efc5744db789138019cf9c925eb8cac5ef154
+    reverse_operation:
+      type: remove
+      entity: assumptions
+      id: ASM-INVESTOR-START-PREPARATION-BREAKDOWN
+  - type: update
+    entity: documents
+    id: DOC-INVESTOR-START-MODEL
+    before: &a1
+      id: DOC-INVESTOR-START-MODEL
+      title: Investor Start Model
+      type: working_investment_requirement_model
+      status: research
+      google_file_id: null
+      template: null
+      sections:
+        - Помещение
+        - Площадь объекта
+        - Посадочные места
+        - Мебель посадочного зала
+        - Комплектация оборудования
+        - Подготовка помещения и монтаж
+        - Операционный запас
+        - Резерв
+        - Стоимость запуска
+        - Текущая конфигурация
+        - Полнота расчёта
+        - Следующие этапы расчёта
+        - Что учитывает расчёт
+      version: "0.1"
+      governance_level: working
+      local_path: docs-platform/working/investor-start-model.yaml
+      updated_at: 2026-08-05
+    after:
+      id: DOC-INVESTOR-START-MODEL
+      title: Investor Start Model
+      type: working_investment_requirement_model
+      status: research
+      google_file_id: null
+      template: null
+      sections:
+        - Помещение
+        - Площадь объекта
+        - Посадочные места
+        - Мебель посадочного зала
+        - Комплектация оборудования
+        - Подготовка помещения
+        - Операционный запас
+        - Резерв
+        - Стоимость запуска
+        - Текущая конфигурация
+        - Полнота расчёта
+        - Следующие этапы расчёта
+        - Что учитывает расчёт
+      version: "0.1"
+      governance_level: working
+      local_path: docs-platform/working/investor-start-model.yaml
+      updated_at: 2026-08-05
+    before_index: 16
+    after_index: 16
+    before_sha256: 7399965dfd60855104ef74334d5276c9e9fdfa221af385bb7eafc6cc79eafac4
+    after_sha256: d9ee23ff81aa289f5ccd7918e7f4eb1897378fe25901a6da91667cd25935bbd0
+    reverse_operation:
+      type: replace
+      entity: documents
+      id: DOC-INVESTOR-START-MODEL
+      value: *a1
+validation_result: passed
+git_commit_hash: null
+rollback:
+  source_receipt: docs-platform/changelog/change-receipts/CHG-027.yaml
+  command: npm run change:reverse:preview -- ../changelog/change-receipts/CHG-027.yaml --change-id CHG-ROLLBACK-XXX --decision DEC-ROLLBACK-XXX
+  rollback_of: CHG-027

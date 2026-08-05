@@ -76,7 +76,65 @@
     "seating": { "type": "object" },
     "furniture": { "type": "object" },
     "equipment": { "type": "object" },
-    "preparation": { "type": "object" },
+    "preparation": {
+      "type": "object",
+      "required": [
+        "field",
+        "title",
+        "currency",
+        "baseline_area_m2",
+        "status",
+        "default_mode",
+        "default_total_rub",
+        "collapsed_hint",
+        "area_note",
+        "accordion_label",
+        "manual_action_label",
+        "manual_field_label",
+        "manual_marker",
+        "breakdown_action_label",
+        "breakdown_formula",
+        "effective_formula",
+        "categories"
+      ],
+      "properties": {
+        "field": { "const": "effective_preparation_amount_rub" },
+        "title": { "const": "Подготовка помещения" },
+        "currency": { "const": "RUB" },
+        "baseline_area_m2": { "const": 200 },
+        "status": { "const": "research" },
+        "default_mode": { "const": "breakdown" },
+        "default_total_rub": { "const": 11000000 },
+        "collapsed_hint": { "type": "string", "minLength": 1 },
+        "area_note": { "type": "string", "minLength": 1 },
+        "accordion_label": { "const": "Состав работ" },
+        "manual_action_label": { "const": "Указать общую сумму вручную" },
+        "manual_field_label": { "const": "Общая оценка подготовки помещения, ₽" },
+        "manual_marker": { "const": "Введено вручную" },
+        "breakdown_action_label": { "const": "Вернуться к расчёту по составу" },
+        "breakdown_formula": { "type": "string", "minLength": 1 },
+        "effective_formula": { "type": "string", "minLength": 1 },
+        "categories": {
+          "type": "array",
+          "minItems": 8,
+          "maxItems": 8,
+          "items": {
+            "type": "object",
+            "required": ["id", "name", "amount_rub", "enabled_by_default", "description", "boundaries"],
+            "properties": {
+              "id": { "type": "string", "pattern": "^PREP-[A-Z-]+$" },
+              "name": { "type": "string", "minLength": 1 },
+              "amount_rub": { "type": "integer", "minimum": 0 },
+              "enabled_by_default": { "const": true },
+              "description": { "type": "string", "minLength": 1 },
+              "boundaries": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
     "operating_reserve": { "type": "object" },
     "contingency": { "type": "object" },
     "totals": { "type": "object" },

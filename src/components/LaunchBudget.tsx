@@ -108,6 +108,28 @@ function SectionHeading({ number, title, text }: { number: string; title: string
   return <header className="launch-card-heading"><span>{number}</span><div><h2>{title}</h2>{text ? <p>{text}</p> : null}</div></header>;
 }
 
+function PreparationCategoryRow({ category, enabled, onChange }: {
+  category: { id: string; name: string; amount_rub: number; description: string };
+  enabled: boolean;
+  onChange: () => void;
+}) {
+  return (
+    <div className={`launch-preparation-category${enabled ? " is-enabled" : " is-disabled"}`} data-preparation-id={category.id}>
+      <button type="button" role="switch" aria-checked={enabled} onClick={onChange}>
+        <span className="launch-toggle-track" aria-hidden="true"><i /></span>
+        <span className="launch-preparation-category-copy">
+          <strong>{category.name}</strong>
+          <small>{category.description}</small>
+        </span>
+        <span className="launch-preparation-category-value">
+          <b>{formatRub(category.amount_rub)}</b>
+          <small>{enabled ? "Включено" : "Не включено"}</small>
+        </span>
+      </button>
+    </div>
+  );
+}
+
 export function LaunchBudgetPage() {
   const rawModel = capexData.investorStartModel;
   const defaults = useMemo(() => defaultLaunchBudgetState(), []);
@@ -135,7 +157,7 @@ export function LaunchBudgetPage() {
   const equipmentPartial = result.equipment.unpricedCount > 0 || result.incompleteRequiredModules.length > 0;
   const currentConfiguration = rawModel.point_configuration.summary_modules.filter(item => result.activeModuleIds.includes(item.module_id));
   const partialSummary = [
-    ...(state.preparationRub === null ? ["подготовка помещения"] : []),
+    ...(result.effectivePreparationRub === null ? ["подготовка помещения"] : []),
     ...(result.operatingReserveRub === null ? ["операционный запас"] : []),
     ...(result.equipment.unpricedCount > 0 ? ["часть оборудования"] : []),
     ...(result.incompleteRequiredModules.length > 0 ? ["часть обязательного оснащения"] : []),
@@ -143,6 +165,15 @@ export function LaunchBudgetPage() {
 
   function update<K extends keyof LaunchBudgetState>(key: K, value: LaunchBudgetState[K]) {
     setState(current => ({ ...current, [key]: value }));
+  }
+
+  function togglePreparationCategory(categoryId: string) {
+    setState(current => ({
+      ...current,
+      preparationEnabledCategoryIds: current.preparationEnabledCategoryIds.includes(categoryId)
+        ? current.preparationEnabledCategoryIds.filter(id => id !== categoryId)
+        : [...current.preparationEnabledCategoryIds, categoryId],
+    }));
   }
 
   function reset() {
@@ -244,9 +275,52 @@ export function LaunchBudgetPage() {
             </section>
 
             <section className="launch-card" aria-labelledby="launch-preparation-title">
-              <SectionHeading number="04" title="Подготовка объекта" text="Одна укрупнённая оценка без преждевременной инженерной детализации." />
-              <NumberField id="preparation-cost" label="Подготовка помещения, инженерные работы и монтаж" suffix="₽" value={state.preparationRub} onChange={value => update("preparationRub", value)} hint={rawModel.preparation.hint} />
-              {state.preparationRub === null ? <p className="launch-unknown">Не рассчитано — требуется обследование помещения</p> : null}
+              <SectionHeading number="04" title={rawModel.preparation.title} text={rawModel.preparation.collapsed_hint} />
+              <div className="launch-preparation-summary" aria-live="polite">
+                <span>{rawModel.preparation.title}</span>
+                <strong>{formatRub(result.effectivePreparationRub)}</strong>
+                <small>{state.preparationMode === "manual" ? rawModel.preparation.manual_marker : rawModel.preparation.collapsed_hint}</small>
+              </div>
+              <button
+                type="button"
+                className="launch-preparation-accordion-button"
+                aria-expanded={state.preparationAccordionOpen}
+                aria-controls="launch-preparation-details"
+                onClick={() => update("preparationAccordionOpen", !state.preparationAccordionOpen)}
+              >
+                <span>{rawModel.preparation.accordion_label}</span>
+                <span aria-hidden="true">{state.preparationAccordionOpen ? "−" : "+"}</span>
+              </button>
+              {state.preparationAccordionOpen ? (
+                <div className="launch-preparation-details" id="launch-preparation-details">
+                  <div className="launch-preparation-categories">
+                    {rawModel.preparation.categories.map(category => (
+                      <PreparationCategoryRow
+                        key={category.id}
+                        category={category}
+                        enabled={state.preparationEnabledCategoryIds.includes(category.id)}
+                        onChange={() => togglePreparationCategory(category.id)}
+                      />
+                    ))}
+                  </div>
+                  {state.preparationMode === "manual" ? (
+                    <div className="launch-preparation-manual">
+                      <NumberField
+                        id="preparation-manual-cost"
+                        label={rawModel.preparation.manual_field_label.replace(", ₽", "")}
+                        suffix="₽"
+                        value={state.preparationManualRub}
+                        onChange={value => update("preparationManualRub", value)}
+                      />
+                      <p>{rawModel.preparation.manual_marker}. Состав работ остаётся ориентиром и не изменяет введённую сумму.</p>
+                      <button type="button" onClick={() => update("preparationMode", "breakdown")}>{rawModel.preparation.breakdown_action_label}</button>
+                    </div>
+                  ) : (
+                    <button type="button" className="launch-preparation-mode-button" onClick={() => update("preparationMode", "manual")}>{rawModel.preparation.manual_action_label}</button>
+                  )}
+                  <p className="launch-preparation-area-note">{rawModel.preparation.area_note}</p>
+                </div>
+              ) : null}
             </section>
 
             <section className="launch-card" aria-labelledby="launch-reserve-title">
@@ -278,7 +352,7 @@ export function LaunchBudgetPage() {
               <SummaryRow label="Вход в помещение" value={result.premisesEntryRub} />
               <SummaryRow label="Стоимость текущей комплектации оборудования" value={result.equipment.total} partial={equipmentPartial} />
               <SummaryRow label="Мебель посадочного зала" value={result.furnitureRub} />
-              <SummaryRow label="Подготовка помещения и монтаж" value={state.preparationRub} />
+              <SummaryRow label="Подготовка помещения и монтаж" value={result.effectivePreparationRub} />
               <SummaryRow label="Операционный запас" value={result.operatingReserveRub} />
               <SummaryRow label="Резерв" value={result.contingencyRub} />
             </dl>
@@ -290,7 +364,7 @@ export function LaunchBudgetPage() {
                 <li><span>Оценено оборудование</span><strong>{result.equipment.pricedCount} из {result.equipment.coverageCount}</strong></li>
                 <li><span>Не имеют цены</span><strong>{result.equipment.unpricedCount}</strong></li>
                 <li><span>Требуют КП</span><strong>{result.equipment.quoteRequiredCount}</strong></li>
-                <li><span>Подготовка помещения</span><strong>{state.preparationRub === null ? "не рассчитана" : "рассчитана"}</strong></li>
+                <li><span>Подготовка помещения</span><strong>{result.effectivePreparationRub === null ? "не рассчитана" : "рассчитана"}</strong></li>
                 <li><span>Операционный запас</span><strong>{result.operatingReserveRub === null ? "не рассчитан" : "рассчитан"}</strong></li>
                 <li><span>Обязательные части объекта</span><strong>{result.incompleteRequiredModules.length ? "не сформированы полностью" : "сформированы"}</strong></li>
               </ul>

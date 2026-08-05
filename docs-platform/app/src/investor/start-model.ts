@@ -8,11 +8,11 @@ import { readModularSources } from "../capex/modular.js";
 import { readRegister, sha256 } from "../capex/register.js";
 import { readPriceResearch } from "../capex/price-research.js";
 
-export const INVESTOR_START_ITERATION_ID = "ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01";
-export const INVESTOR_START_PROPOSAL_ID = "PROP-LAUNCH-COST-PRESENTATION-2026-08-05-01";
-export const INVESTOR_START_DECISION_ID = "DEC-013";
-export const INVESTOR_START_CHANGE_ID = "CHG-025";
-export const INVESTOR_START_PAYLOAD_PATH = `docs-platform/changelog/payloads/${INVESTOR_START_ITERATION_ID}-approved-v2.yaml`;
+export const INVESTOR_START_ITERATION_ID = "ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01";
+export const INVESTOR_START_PROPOSAL_ID = "PROP-LAUNCH-PREMISES-PREPARATION-2026-08-05-01";
+export const INVESTOR_START_DECISION_ID = "DEC-014";
+export const INVESTOR_START_CHANGE_ID = "CHG-028";
+export const INVESTOR_START_PAYLOAD_PATH = `docs-platform/changelog/payloads/${INVESTOR_START_ITERATION_ID}-approved.yaml`;
 export const INVESTOR_START_MODEL_PATH = "docs-platform/working/investor-start-model.yaml";
 export const INVESTOR_START_RECEIPT_PATH = `docs-platform/changelog/iteration-receipts/${INVESTOR_START_ITERATION_ID}.yaml`;
 
@@ -24,6 +24,25 @@ const manifestFile = path.join(platformRoot, "changes", "iterations", `${INVESTO
 const runtimePreviewFile = path.join(platformRoot, ".runtime", "investor-start-model-preview.json");
 const receiptFile = path.join(projectRoot, INVESTOR_START_RECEIPT_PATH);
 const rollbackManifestFile = path.join(platformRoot, "changelog", "rollback-payloads", INVESTOR_START_ITERATION_ID, "manifest.yaml");
+const siteRollbackTargets = [
+  "docs-platform/schemas/investor-start-model.schema.json",
+  "docs-platform/app/test/investor-start-model.test.ts",
+  "scripts/test-site.cjs",
+  "src/lib/launch-budget.ts",
+  "src/components/LaunchBudget.tsx",
+  "src/components/LaunchBudget.css",
+] as const;
+
+const preparationCategoryAmounts = new Map([
+  ["PREP-BUILDING", 3_000_000],
+  ["PREP-ELECTRICAL", 1_200_000],
+  ["PREP-WATER-DRAINAGE", 800_000],
+  ["PREP-VENTILATION", 2_500_000],
+  ["PREP-LIGHTING", 400_000],
+  ["PREP-GUEST-AREA", 800_000],
+  ["PREP-BUILT-IN", 1_300_000],
+  ["PREP-DESIGN", 1_000_000],
+]);
 
 function fileHash(file: string) {
   return fs.existsSync(file) ? sha256(fs.readFileSync(file)) : null;
@@ -95,6 +114,26 @@ export function validateInvestorStartModel(model?: any) {
   if ((value.documents_block?.public_documents ?? []).length !== 0 || value.documents_block?.public_bma_available !== false) {
     errors.push("Internal governing documents must remain hidden from the launch-cost page.");
   }
+  if (value.document?.decision_id === INVESTOR_START_DECISION_ID || Array.isArray(value.preparation?.categories)) {
+    const categories = value.preparation?.categories ?? [];
+    const ids = categories.map((item: any) => item.id);
+    const total = categories.reduce((sum: number, item: any) => sum + Number(item.amount_rub ?? 0), 0);
+    if (categories.length !== preparationCategoryAmounts.size) errors.push("Premises preparation must contain exactly eight categories.");
+    if (new Set(ids).size !== ids.length) errors.push("Premises preparation category IDs must be unique.");
+    for (const [id, amount] of preparationCategoryAmounts) {
+      const category = categories.find((item: any) => item.id === id);
+      if (!category) errors.push(`Missing premises preparation category ${id}.`);
+      else {
+        if (category.amount_rub !== amount) errors.push(`${id} must equal ${amount} RUB.`);
+        if (category.enabled_by_default !== true) errors.push(`${id} must be enabled by default.`);
+        if (typeof category.name !== "string" || !category.name || typeof category.description !== "string" || !category.description) errors.push(`${id} public copy is incomplete.`);
+      }
+    }
+    if (value.preparation?.default_total_rub !== 11_000_000 || total !== 11_000_000) errors.push("Premises preparation categories must total exactly 11000000 RUB.");
+    if (value.preparation?.baseline_area_m2 !== 200 || value.preparation?.currency !== "RUB" || value.preparation?.default_mode !== "breakdown") {
+      errors.push("Premises preparation defaults must remain 200 m2, RUB and breakdown mode.");
+    }
+  }
   const publicCopy = JSON.stringify(value.public_presentation ?? {});
   for (const forbidden of ["потребност", "стартов", "research", "approved", "v0.1", "snapshot", "registry", "payload", "change set"]) {
     if (publicCopy.toLowerCase().includes(forbidden)) errors.push(`Public presentation contains forbidden technical wording: ${forbidden}.`);
@@ -146,6 +185,22 @@ export function applyInvestorStartModel(options: { apply: boolean; decisionId: s
   const approved = readApprovedPayload();
   const existed = fs.existsSync(modelFile);
   const beforeContent = existed ? fs.readFileSync(modelFile, "utf8") : null;
+  const rollbackRoot = path.dirname(rollbackManifestFile);
+  if (fs.existsSync(rollbackRoot)) throw new Error("Investor Start Model rollback payload already exists; refusing to overwrite it.");
+  const siteFiles = siteRollbackTargets.map(relativePath => {
+    const source = path.join(projectRoot, relativePath);
+    const fileExisted = fs.existsSync(source);
+    const content = fileExisted ? fs.readFileSync(source) : null;
+    const rollbackPayload = path.join(rollbackRoot, "site", relativePath);
+    if (content) atomicWrite(rollbackPayload, content.toString("utf8"));
+    return {
+      path: relativePath,
+      existed: fileExisted,
+      before_sha256: content ? sha256(content) : null,
+      rollback_payload_path: content ? path.relative(projectRoot, rollbackPayload).replaceAll(path.sep, "/") : null,
+      after_sha256: null,
+    };
+  });
   writeYaml(rollbackManifestFile, {
     schema_version: 1,
     iteration_id: INVESTOR_START_ITERATION_ID,
@@ -153,6 +208,11 @@ export function applyInvestorStartModel(options: { apply: boolean; decisionId: s
     target: INVESTOR_START_MODEL_PATH,
     before: { existed, sha256: beforeContent ? sha256(beforeContent) : null, payload: beforeContent },
     reverse_operation: existed ? "restore_file" : "remove_generated_file",
+    site_files: siteFiles,
+    derived_refresh: {
+      command: "npm run capex:web:sync",
+      target: "src/content/capex-configurator-data.json",
+    },
     preserves_history: true,
   });
   atomicWrite(modelFile, approved.serialized);
@@ -176,6 +236,7 @@ export function applyInvestorStartModel(options: { apply: boolean; decisionId: s
     target: INVESTOR_START_MODEL_PATH,
     before_sha256: current.before_sha256,
     after_sha256: current.after_sha256,
+    before_files: siteFiles,
     validation_result: "passed",
     git_commit_hash: null,
     rollback: {
@@ -192,8 +253,10 @@ export function applyInvestorStartModel(options: { apply: boolean; decisionId: s
 }
 
 export function previewInvestorStartReverse(receiptPath = receiptFile, changeId = "CHG-ROLLBACK-XXX", decisionId = "DEC-ROLLBACK-XXX") {
-  const receipt = YAML.parse(fs.readFileSync(path.resolve(receiptPath), "utf8"));
-  const rollback = YAML.parse(fs.readFileSync(rollbackManifestFile, "utf8"));
+  const absoluteReceipt = path.resolve(receiptPath);
+  const receipt = YAML.parse(fs.readFileSync(absoluteReceipt, "utf8"));
+  const iterationRollbackManifest = path.join(platformRoot, "changelog", "rollback-payloads", receipt.iteration_id, "manifest.yaml");
+  const rollback = YAML.parse(fs.readFileSync(iterationRollbackManifest, "utf8"));
   const currentSha256 = fileHash(modelFile);
   const operations: Array<Record<string, unknown>> = [
     { type: rollback.reverse_operation, path: INVESTOR_START_MODEL_PATH, expected_sha256: rollback.before.sha256 },
@@ -206,23 +269,35 @@ export function previewInvestorStartReverse(receiptPath = receiptFile, changeId 
       restore_values: rollback.public_page.before,
     });
   }
+  for (const file of rollback.site_files ?? []) {
+    operations.push({
+      type: file.existed ? "restore_file" : "remove_generated_file",
+      path: file.path,
+      source: file.rollback_payload_path,
+      expected_sha256: file.before_sha256,
+    });
+  }
+  if (rollback.derived_refresh) operations.push({ type: "regenerate_derived_snapshot", ...rollback.derived_refresh });
+  const siteFilesMatch = (rollback.site_files ?? []).every((file: any) => file.after_sha256 && fileHash(path.join(projectRoot, file.path)) === file.after_sha256);
+  const rollbackPayloadsMatch = (rollback.site_files ?? []).every((file: any) => !file.existed || (file.rollback_payload_path && fileHash(path.join(projectRoot, file.rollback_payload_path)) === file.before_sha256));
   const result = {
     reverse_change_set: {
       change_id: changeId,
-      title: `Откат ${INVESTOR_START_CHANGE_ID} через governed reverse change set`,
+      title: `Откат ${receipt.change_set_id} через governed reverse change set`,
       status: "proposed",
       decision_id: decisionId,
-      iteration_id: `${INVESTOR_START_ITERATION_ID}-ROLLBACK`,
+      iteration_id: `${receipt.iteration_id}-ROLLBACK`,
       proposal_id: `PROP-${changeId}`,
-      rollback_of: INVESTOR_START_CHANGE_ID,
-      source_receipt: path.relative(projectRoot, path.resolve(receiptPath)).replaceAll(path.sep, "/"),
+      rollback_of: receipt.change_set_id,
+      source_receipt: path.relative(projectRoot, absoluteReceipt).replaceAll(path.sep, "/"),
       operations,
     },
     current_sha256: currentSha256,
     expected_current_sha256: receipt.after_sha256,
     expected_restored_sha256: rollback.before.sha256,
-    restores_original_hash: currentSha256 === receipt.after_sha256,
-    restores_previous_public_copy: Boolean(rollback.public_page?.before?.page_title),
+    restores_original_hash: currentSha256 === receipt.after_sha256 && (rollback.site_files ? siteFilesMatch : true),
+    restores_previous_public_copy: Boolean(rollback.public_page?.before?.page_title || rollback.site_files?.length),
+    rollback_payloads_match_before_hashes: rollbackPayloadsMatch,
     apply_allowed: false,
     instruction: "Создать и утвердить rollback decision, затем применить новый reverse change set; исторические события не удаляются.",
   };
@@ -231,11 +306,24 @@ export function previewInvestorStartReverse(receiptPath = receiptFile, changeId 
 }
 
 export function checkInvestorStartModel() {
-  const approved = readApprovedPayload();
+  if (!fs.existsSync(modelFile)) throw new Error("Investor Start Model is missing.");
+  const serialized = fs.readFileSync(modelFile, "utf8");
+  const model = YAML.parse(serialized);
   const errors = validateInvestorStartModel();
-  if (fileHash(modelFile) !== approved.payloadSha256) errors.push("Canonical Investor Start Model differs from approved payload SHA-256.");
+  const iterationId = model?.document?.iteration_id;
+  const decisionId = model?.document?.decision_id;
+  const payloadCandidates = typeof iterationId === "string"
+    ? [
+        path.join(platformRoot, "changelog", "payloads", `${iterationId}-approved.yaml`),
+        path.join(platformRoot, "changelog", "payloads", `${iterationId}-approved-v2.yaml`),
+      ]
+    : [];
+  const matchingPayload = payloadCandidates.find(candidate => fs.existsSync(candidate) && fs.readFileSync(candidate, "utf8") === serialized);
+  const registry = loadRegistry();
+  if (!matchingPayload) errors.push("Canonical Investor Start Model differs from its declared approved payload SHA-256.");
+  if (!registry.decisions.some(item => item.id === decisionId && item.status === "approved")) errors.push(`Declared Investor Start Model decision ${decisionId} is not approved.`);
   if (errors.length) throw new Error(errors.join("\n"));
-  const result = { validation: "OK", path: INVESTOR_START_MODEL_PATH, sha256: approved.payloadSha256 };
+  const result = { validation: "OK", path: INVESTOR_START_MODEL_PATH, sha256: sha256(serialized) };
   console.log(JSON.stringify(result, null, 2));
   return result;
 }

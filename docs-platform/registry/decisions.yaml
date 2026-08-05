@@ -188,3 +188,16 @@ decisions:
     source_ids:
       - SRC-LAUNCH-COST-PRESENTATION-BRIEF
     updated_at: 2026-08-05
+  - id: DEC-014
+    title: Добавить управляемую структуру подготовки помещения
+    status: approved
+    decision: Разделить базовую оценку подготовки помещения 11000000 RUB на восемь точно заданных включённых по умолчанию категорий; позволить исключать категории или вводить единую ручную сумму; использовать effectivePreparationAmount в действующих расчётах резерва и стоимости запуска.
+    rationale: Прямое задание владельца проекта от 2026-08-05. Решение реализует заранее заданную укрупнённую инвестиционную структуру и не является исследованием, строительной сметой, коммерческим предложением, нормативной стоимостью или финансовой моделью.
+    affected_documents:
+      - DOC-INVESTOR-START-MODEL
+    approved_by: project owner
+    approved_at: 2026-08-05
+    supersedes: null
+    source_ids:
+      - SRC-LAUNCH-PREMISES-PREPARATION-BRIEF
+    updated_at: 2026-08-05

@@ -1,0 +1,38 @@
+change_id: CHG-026
+title: Зафиксировать решение о структуре подготовки помещения
+status: approved
+created_at: 2026-08-05
+decision_id: DEC-001
+iteration_id: ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01
+proposal_id: PROP-LAUNCH-PREMISES-PREPARATION-2026-08-05-01
+approved_payload_path: docs-platform/changelog/payloads/ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01-approved.yaml
+approved_payload_sha256: 3bf792a1a0c0dfd21e7c87399025f51effde1f08c910c987003cd341472494b1
+operations:
+  - type: add
+    entity: sources
+    value:
+      id: SRC-LAUNCH-PREMISES-PREPARATION-BRIEF
+      title: Задание на структуру подготовки помещения в расчёте стоимости запуска
+      type: instruction
+      location: User instruction, 2026-08-05
+      publisher: project owner
+      publication_date: 2026-08-05
+      accessed_at: 2026-08-05
+      reliability: primary
+      notes: Содержит полный точный payload восьми категорий, их суммы, итог 11000000 RUB, правила ручного режима и связь с резервом. Внешнее исследование и самостоятельный подбор значений прямо запрещены.
+  - type: add
+    entity: decisions
+    value:
+      id: DEC-014
+      title: Добавить управляемую структуру подготовки помещения
+      status: approved
+      decision: Разделить базовую оценку подготовки помещения 11000000 RUB на восемь точно заданных включённых по умолчанию категорий; позволить исключать категории или вводить единую ручную сумму; использовать effectivePreparationAmount в действующих расчётах резерва и стоимости запуска.
+      rationale: Прямое задание владельца проекта от 2026-08-05. Решение реализует заранее заданную укрупнённую инвестиционную структуру и не является исследованием, строительной сметой, коммерческим предложением, нормативной стоимостью или финансовой моделью.
+      affected_documents:
+        - DOC-INVESTOR-START-MODEL
+      approved_by: project owner
+      approved_at: 2026-08-05
+      supersedes: null
+      source_ids:
+        - SRC-LAUNCH-PREMISES-PREPARATION-BRIEF
+      updated_at: 2026-08-05

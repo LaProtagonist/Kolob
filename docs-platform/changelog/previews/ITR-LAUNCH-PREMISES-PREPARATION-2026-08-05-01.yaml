@@ -1,0 +1,32 @@
+preview_version: 1
+iteration_id: ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01
+proposal_id: PROP-LAUNCH-PREMISES-PREPARATION-2026-08-05-01
+decision_id: DEC-014
+change_set_id: CHG-028
+created_at: 2026-08-05T02:01:40.000Z
+actor: Codex
+tool: docs-platform investor:start:preview
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01-approved.yaml
+  sha256: 3bf792a1a0c0dfd21e7c87399025f51effde1f08c910c987003cd341472494b1
+target:
+  path: docs-platform/working/investor-start-model.yaml
+  before_sha256: d5b1f6c939f7067298769cd0faea75f853c7592c847b32a158bae32a7e91f257
+  after_sha256: 3bf792a1a0c0dfd21e7c87399025f51effde1f08c910c987003cd341472494b1
+  action: update
+scope:
+  route: /launch-budget
+  section: Подготовка помещения
+  categories: 8
+  default_total_rub: 11000000
+  default_mode: breakdown
+  all_categories_enabled_by_default: true
+  manual_override: enabled
+out_of_scope:
+  - CAPEX Equipment Register
+  - CAPEX Price Research
+  - Google Docs
+  - Google Sheets
+  - остальные разделы /launch-budget
+writes: false
+validation: passed

@@ -1,0 +1,73 @@
+change_id: CHG-027
+title: Зарегистрировать заданные категории подготовки помещения
+status: approved
+created_at: 2026-08-05
+decision_id: DEC-014
+iteration_id: ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01
+proposal_id: PROP-LAUNCH-PREMISES-PREPARATION-2026-08-05-01
+approved_payload_path: docs-platform/changelog/payloads/ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01-approved.yaml
+approved_payload_sha256: 3bf792a1a0c0dfd21e7c87399025f51effde1f08c910c987003cd341472494b1
+operations:
+  - type: add
+    entity: assumptions
+    value:
+      id: ASM-INVESTOR-START-PREPARATION-BREAKDOWN
+      title: Заданная структура подготовки помещения
+      value:
+        baseline_area_m2: 200
+        default_total_rub: 11000000
+        default_mode: breakdown
+        categories:
+          - id: PREP-BUILDING
+            amount_rub: 3000000
+            enabled_by_default: true
+          - id: PREP-ELECTRICAL
+            amount_rub: 1200000
+            enabled_by_default: true
+          - id: PREP-WATER-DRAINAGE
+            amount_rub: 800000
+            enabled_by_default: true
+          - id: PREP-VENTILATION
+            amount_rub: 2500000
+            enabled_by_default: true
+          - id: PREP-LIGHTING
+            amount_rub: 400000
+            enabled_by_default: true
+          - id: PREP-GUEST-AREA
+            amount_rub: 800000
+            enabled_by_default: true
+          - id: PREP-BUILT-IN
+            amount_rub: 1300000
+            enabled_by_default: true
+          - id: PREP-DESIGN
+            amount_rub: 1000000
+            enabled_by_default: true
+      unit: RUB
+      status: research
+      rationale: Значения дословно заданы владельцем проекта для укрупнённой инвестиционной модели помещения около 200 м²; они не получены исследованием, не масштабируются от площади и не являются сметой или коммерческим предложением.
+      scenario: INVESTOR_START_V0_1
+      applies_to:
+        - DOC-INVESTOR-START-MODEL
+      source_ids:
+        - SRC-LAUNCH-PREMISES-PREPARATION-BRIEF
+      decision_id: DEC-014
+      updated_at: 2026-08-05
+  - type: update
+    entity: documents
+    id: DOC-INVESTOR-START-MODEL
+    value:
+      sections:
+        - Помещение
+        - Площадь объекта
+        - Посадочные места
+        - Мебель посадочного зала
+        - Комплектация оборудования
+        - Подготовка помещения
+        - Операционный запас
+        - Резерв
+        - Стоимость запуска
+        - Текущая конфигурация
+        - Полнота расчёта
+        - Следующие этапы расчёта
+        - Что учитывает расчёт
+      updated_at: 2026-08-05

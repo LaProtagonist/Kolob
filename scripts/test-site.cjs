@@ -161,8 +161,51 @@ async function inspectLaunchBudget(browser, baseUrl) {
     baseSelected: await page.locator('[data-control="equipment-scenario"][data-option="BASE"]').getAttribute("aria-pressed"),
     barEnabled: await page.locator("#bar-enabled").getAttribute("aria-checked"),
     growEnabled: await page.locator("#grow-enabled").getAttribute("aria-checked"),
+    preparationAmount: await money(page.locator(".launch-preparation-summary strong")),
+    preparationAccordionExpanded: await page.locator(".launch-preparation-accordion-button").getAttribute("aria-expanded"),
     totalText: await total.innerText(),
     equipmentTotal: await money(equipmentValue),
+  };
+
+  const defaultContingency = await money(page.locator(".launch-total-breakdown > div").filter({ hasText: "Резерв" }).locator("dd"));
+  const defaultLaunchTotal = await money(total);
+  await page.locator(".launch-preparation-accordion-button").click();
+  const preparationRows = page.locator(".launch-preparation-category");
+  const preparationDefaults = await preparationRows.locator("button").evaluateAll(buttons => buttons.map(button => button.getAttribute("aria-checked")));
+  await page.locator('[data-preparation-id="PREP-VENTILATION"] button').click();
+  const noVentilation = {
+    preparation: await money(page.locator(".launch-preparation-summary strong")),
+    contingency: await money(page.locator(".launch-total-breakdown > div").filter({ hasText: "Резерв" }).locator("dd")),
+    total: await money(total),
+    status: await page.locator('[data-preparation-id="PREP-VENTILATION"] .launch-preparation-category-value small').innerText(),
+  };
+  await page.locator('[data-preparation-id="PREP-DESIGN"] button').click();
+  const noVentilationOrDesign = await money(page.locator(".launch-preparation-summary strong"));
+  await page.locator('[data-preparation-id="PREP-VENTILATION"] button').click();
+  const noDesign = await money(page.locator(".launch-preparation-summary strong"));
+  await page.locator('[data-preparation-id="PREP-DESIGN"] button').click();
+  const restoredPreparation = await money(page.locator(".launch-preparation-summary strong"));
+  await page.locator(".launch-preparation-mode-button").click();
+  await page.locator("#preparation-manual-cost").fill("4000000");
+  const manualBeforeToggle = await money(page.locator(".launch-preparation-summary strong"));
+  await page.locator('[data-preparation-id="PREP-VENTILATION"] button').click();
+  const manualAfterToggle = await money(page.locator(".launch-preparation-summary strong"));
+  await page.locator(".launch-preparation-manual > button").click();
+  const returnedBreakdown = await money(page.locator(".launch-preparation-summary strong"));
+  await page.locator(".launch-preparation-mode-button").click();
+  await page.locator("#preparation-manual-cost").fill("4000000");
+  const preparationScenarios = {
+    rowCount: await preparationRows.count(),
+    defaults: preparationDefaults,
+    defaultContingency,
+    defaultLaunchTotal,
+    noVentilation,
+    noVentilationOrDesign,
+    noDesign,
+    restoredPreparation,
+    manualBeforeToggle,
+    manualAfterToggle,
+    returnedBreakdown,
   };
 
   await page.locator("#total-area").fill("300");
@@ -184,7 +227,6 @@ async function inspectLaunchBudget(browser, baseUrl) {
   await page.locator('[data-control="premises-scenario"][data-option="purchase"]').click();
   const defaultPurchasePrice = await page.locator("#purchase-price").inputValue();
   await page.locator("#purchase-price").fill("20000000");
-  await page.locator("#preparation-cost").fill("4000000");
   await page.locator("#monthly-opex").fill("2000000");
   const purchase = {
     total: await money(total),
@@ -221,9 +263,18 @@ async function inspectLaunchBudget(browser, baseUrl) {
   await page.locator("#total-area").fill("321");
   await page.reload({ waitUntil: "networkidle" });
   const persistedTotalArea = await page.locator("#total-area").inputValue();
+  const persistedPreparation = {
+    accordionExpanded: await page.locator(".launch-preparation-accordion-button").getAttribute("aria-expanded"),
+    manualValue: await page.locator("#preparation-manual-cost").inputValue(),
+    ventilationEnabled: await page.locator('[data-preparation-id="PREP-VENTILATION"] button').getAttribute("aria-checked"),
+  };
   page.once("dialog", dialog => dialog.accept());
   await page.locator(".launch-reset").click();
   const resetTotalArea = await page.locator("#total-area").inputValue();
+  const resetPreparation = {
+    amount: await money(page.locator(".launch-preparation-summary strong")),
+    accordionExpanded: await page.locator(".launch-preparation-accordion-button").getAttribute("aria-expanded"),
+  };
   const resetStorage = await page.evaluate(key => localStorage.getItem(key), capexSnapshot.investorStartModel.form.local_storage_key);
 
   const documents = await page.locator(".launch-document-list a").evaluateAll(links => links.map(link => ({ href: link.getAttribute("href"), target: link.getAttribute("target"), rel: link.getAttribute("rel") })));
@@ -263,6 +314,7 @@ async function inspectLaunchBudget(browser, baseUrl) {
   const result = {
     robots,
     defaults,
+    preparationScenarios,
     area,
     invalidArea,
     purchase,
@@ -275,7 +327,9 @@ async function inspectLaunchBudget(browser, baseUrl) {
     reducedConfiguration,
     defaultPurchasePrice,
     persistedTotalArea,
+    persistedPreparation,
     resetTotalArea,
+    resetPreparation,
     resetStorage,
     documents,
     capexLink,
@@ -493,7 +547,21 @@ async function inspectCapex(browser, baseUrl) {
       || launchBudget.defaults.tiedFunds !== 700000
       || launchBudget.defaults.baseSelected !== "true"
       || launchBudget.defaults.barEnabled !== "true"
-      || launchBudget.defaults.growEnabled !== "true") failures.push(`launch-budget defaults invalid: ${JSON.stringify(launchBudget.defaults)}`);
+      || launchBudget.defaults.growEnabled !== "true"
+      || launchBudget.defaults.preparationAmount !== 11000000
+      || launchBudget.defaults.preparationAccordionExpanded !== "false") failures.push(`launch-budget defaults invalid: ${JSON.stringify(launchBudget.defaults)}`);
+    if (launchBudget.preparationScenarios.rowCount !== 8
+      || launchBudget.preparationScenarios.defaults.some(value => value !== "true")) failures.push(`launch-budget preparation category defaults invalid: ${JSON.stringify(launchBudget.preparationScenarios)}`);
+    if (launchBudget.preparationScenarios.noVentilation.preparation !== 8500000
+      || launchBudget.preparationScenarios.noVentilation.status !== "Не включено"
+      || launchBudget.preparationScenarios.defaultContingency - launchBudget.preparationScenarios.noVentilation.contingency !== 250000
+      || launchBudget.preparationScenarios.defaultLaunchTotal - launchBudget.preparationScenarios.noVentilation.total !== 2750000) failures.push(`launch-budget ventilation exclusion invalid: ${JSON.stringify(launchBudget.preparationScenarios.noVentilation)}`);
+    if (launchBudget.preparationScenarios.noVentilationOrDesign !== 7500000
+      || launchBudget.preparationScenarios.noDesign !== 10000000
+      || launchBudget.preparationScenarios.restoredPreparation !== 11000000) failures.push(`launch-budget preparation restoration invalid: ${JSON.stringify(launchBudget.preparationScenarios)}`);
+    if (launchBudget.preparationScenarios.manualBeforeToggle !== 4000000
+      || launchBudget.preparationScenarios.manualAfterToggle !== 4000000
+      || launchBudget.preparationScenarios.returnedBreakdown !== 8500000) failures.push(`launch-budget manual preparation mode invalid: ${JSON.stringify(launchBudget.preparationScenarios)}`);
     if (launchBudget.defaultPurchasePrice !== "69000000") failures.push(`launch-budget purchase default invalid: ${launchBudget.defaultPurchasePrice}`);
     if (!launchBudget.defaults.totalText.startsWith("от ") || !(launchBudget.defaults.equipmentTotal > 0)) failures.push("launch-budget default state does not show a positive lower bound");
     if (launchBudget.area.other !== "80 м²" || launchBudget.area.seats !== "62 мест" || parseMoney(launchBudget.area.furniture) !== 527000) failures.push(`launch-budget area or furniture math invalid: ${JSON.stringify(launchBudget.area)}`);
@@ -503,7 +571,14 @@ async function inspectCapex(browser, baseUrl) {
     if (launchBudget.rentWithAnnualPrepaymentReserve !== 12000000) failures.push(`launch-budget prepaid rent duplicated: ${launchBudget.rentWithAnnualPrepaymentReserve}`);
     if (!(launchBudget.scenarioTotals.MINIMUM < launchBudget.scenarioTotals.BASE && launchBudget.scenarioTotals.BASE < launchBudget.scenarioTotals.SCALE_READY)) failures.push(`launch-budget equipment scenarios invalid: ${JSON.stringify(launchBudget.scenarioTotals)}`);
     if (!(launchBudget.allModulesTotal > launchBudget.reducedModulesTotal)) failures.push("launch-budget BAR/GROW toggles do not change equipment total");
-    if (launchBudget.persistedTotalArea !== "321" || launchBudget.resetTotalArea !== "200" || launchBudget.resetStorage === null) failures.push(`launch-budget local persistence/reset invalid: ${JSON.stringify({ persisted: launchBudget.persistedTotalArea, reset: launchBudget.resetTotalArea, storage: launchBudget.resetStorage })}`);
+    if (launchBudget.persistedTotalArea !== "321"
+      || launchBudget.persistedPreparation.accordionExpanded !== "true"
+      || launchBudget.persistedPreparation.manualValue !== "4000000"
+      || launchBudget.persistedPreparation.ventilationEnabled !== "false"
+      || launchBudget.resetTotalArea !== "200"
+      || launchBudget.resetPreparation.amount !== 11000000
+      || launchBudget.resetPreparation.accordionExpanded !== "false"
+      || launchBudget.resetStorage === null) failures.push(`launch-budget local persistence/reset invalid: ${JSON.stringify({ persisted: launchBudget.persistedTotalArea, persistedPreparation: launchBudget.persistedPreparation, reset: launchBudget.resetTotalArea, resetPreparation: launchBudget.resetPreparation, storage: launchBudget.resetStorage })}`);
     if (launchBudget.documents.length !== 0 || launchBudget.internalDocumentMentions.length) failures.push(`launch-budget exposes internal documents: ${JSON.stringify({ links: launchBudget.documents, mentions: launchBudget.internalDocumentMentions })}`);
     if (launchBudget.capexLink !== 0) failures.push("launch-budget exposes the internal CAPEX configurator");
     if (launchBudget.titleAndMetadata.h1 !== "Расчёт стоимости запуска"

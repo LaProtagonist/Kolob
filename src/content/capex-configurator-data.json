@@ -22,12 +22,12 @@
       "docs-platform/working/capex-configurations.yaml": "3810fa84efa969d8d95e2f0b0b49ede044b854d9be21ac92f5787d9ff8369f3c",
       "docs-platform/working/capex-configuration-overrides.yaml": "de97265a2e2a0bdb5ae67fcf74ffd368f1fa7f4243c4d1b78a6ecad8e12b1df4",
       "docs-platform/working/pilot-capex-assumptions.yaml": "25e11d4db20050b3a95cab40797ef0a29e56fad93c73d33d4a39415a8071d4ac",
-      "docs-platform/working/investor-start-model.yaml": "d5b1f6c939f7067298769cd0faea75f853c7592c847b32a158bae32a7e91f257",
-      "docs-platform/registry/documents.yaml": "7c62249b9389146a70400cda1ae02d9a49ad5e6d3ebd96cec88c7474655aedfc",
-      "docs-platform/registry/decisions.yaml": "83a255308cd54f1a7f28cd4aebd40f509e275969c85a0547963c7cde071e7466",
-      "docs-platform/changelog/events.ndjson": "9fc21e39b26a934e34f0e934ef33dc057f65f1b33e240f9567cd6cd444e8b076"
+      "docs-platform/working/investor-start-model.yaml": "3bf792a1a0c0dfd21e7c87399025f51effde1f08c910c987003cd341472494b1",
+      "docs-platform/registry/documents.yaml": "71bf6da125b9e5387425b6a3869aa7a2a8e70844274ec470c50f98c9f9c6aa8e",
+      "docs-platform/registry/decisions.yaml": "46964f45acd3a41cb205266270b79b7b2ede7db308e6fd9d2270554406c2a7ac",
+      "docs-platform/changelog/events.ndjson": "c6d4fcd6796e513f3980ae044eae3a52564b1bba6f4a5b0417d7fcf0f21e2061"
     },
-    "sourceBundleSha256": "1a44234d832e62727e45ddaa3eb619b2b0c732ec3f0e53e635a513cc11aff6fd",
+    "sourceBundleSha256": "ed7ee536bb1cf44860a3b5aca3312f3ff54823468fb825ba8387de2e833fb562",
     "counts": {
       "equipmentRecords": 160,
       "independentProcurementRecords": 51,
@@ -2401,9 +2401,9 @@
       "version": "0.1",
       "status": "research",
       "document_type": "Working investment requirement model",
-      "decision_id": "DEC-013",
-      "iteration_id": "ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01",
-      "proposal_id": "PROP-LAUNCH-COST-PRESENTATION-2026-08-05-01",
+      "decision_id": "DEC-014",
+      "iteration_id": "ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01",
+      "proposal_id": "PROP-LAUNCH-PREMISES-PREPARATION-2026-08-05-01",
       "updated_at": "2026-08-05",
       "disclaimer": "Документ не является утверждённой финансовой моделью или окончательным инвестиционным предложением."
     },
@@ -2638,11 +2638,152 @@
       }
     },
     "preparation": {
-      "field": "preparation_and_installation_rub",
-      "label": "Подготовка помещения, инженерные работы и монтаж, ₽",
-      "required": false,
-      "unknown_label": "Не рассчитано — требуется обследование помещения",
-      "hint": "Общая предварительная оценка ремонта, инженерной адаптации, вентиляции, подключения оборудования и монтажных работ."
+      "field": "effective_preparation_amount_rub",
+      "title": "Подготовка помещения",
+      "currency": "RUB",
+      "baseline_area_m2": 200,
+      "status": "research",
+      "default_mode": "breakdown",
+      "default_total_rub": 11000000,
+      "collapsed_hint": "Предварительная оценка адаптации помещения около 200 м² в Санкт-Петербурге.",
+      "area_note": "Ориентир рассчитан для помещения около 200 м². Для объекта другой площади или состояния сумму можно скорректировать вручную.",
+      "accordion_label": "Состав работ",
+      "manual_action_label": "Указать общую сумму вручную",
+      "manual_field_label": "Общая оценка подготовки помещения, ₽",
+      "manual_marker": "Введено вручную",
+      "breakdown_action_label": "Вернуться к расчёту по составу",
+      "breakdown_formula": "sum(amount_rub for enabled categories)",
+      "effective_formula": "manual_mode ? manual_amount_rub : breakdown_amount_rub",
+      "categories": [
+        {
+          "id": "PREP-BUILDING",
+          "name": "Общестроительная адаптация",
+          "amount_rub": 3000000,
+          "enabled_by_default": true,
+          "description": "Локальный демонтаж, перегородки, подготовка поверхностей, восстановление полов и потолков, отделка производственных и служебных зон.",
+          "boundaries": [
+            "включает базовые строительные работы",
+            "включает локальные перегородки",
+            "включает подготовку и восстановление поверхностей",
+            "включает износостойкую отделку кухни и служебных помещений",
+            "не включает декоративную подготовку посадочного зала",
+            "не включает свободно стоящую гостевую мебель",
+            "не включает вентиляцию, электрику и сантехнику"
+          ]
+        },
+        {
+          "id": "PREP-ELECTRICAL",
+          "name": "Электроснабжение",
+          "amount_rub": 1200000,
+          "enabled_by_default": true,
+          "description": "Модернизация щита, силовые линии, автоматы, розетки и подготовка подключений профессионального кухонного оборудования.",
+          "boundaries": [
+            "включает внутренние электрические линии",
+            "включает распределительный щит и защитную автоматику",
+            "включает силовые подключения 220/380 В",
+            "включает подготовку точек подключения оборудования",
+            "не включает стоимость самого технологического оборудования",
+            "не включает плату за внешнее увеличение выделенной мощности, если оно потребуется"
+          ]
+        },
+        {
+          "id": "PREP-WATER-DRAINAGE",
+          "name": "Водоснабжение и канализация",
+          "amount_rub": 800000,
+          "enabled_by_default": true,
+          "description": "Разводка воды и канализации, подготовка моечных зон и подключений кухонного и производственного оборудования.",
+          "boundaries": [
+            "включает внутреннюю разводку воды",
+            "включает внутреннюю разводку канализации",
+            "включает подготовку подключений моек, пароконвектомата, льдогенератора и другого оборудования",
+            "не включает стоимость самого оборудования",
+            "не включает сложный перенос общедомовых магистралей",
+            "не включает внешнее строительство новых сетей"
+          ]
+        },
+        {
+          "id": "PREP-VENTILATION",
+          "name": "Приточно-вытяжная вентиляция",
+          "amount_rub": 2500000,
+          "enabled_by_default": true,
+          "description": "Оборудование, воздуховоды, вытяжные зонты, автоматика, монтаж и пусконаладка системы вентиляции кухни и зала.",
+          "boundaries": [
+            "включает приточную и вытяжную части",
+            "включает воздуховоды",
+            "включает вытяжные зонты",
+            "включает вентиляционное оборудование",
+            "включает автоматику",
+            "включает монтаж",
+            "включает пусконаладку",
+            "проектная документация учитывается отдельно в категории проектирования",
+            "не включает сложное строительство наружной шахты или реконструкцию общедомовой вентиляции"
+          ]
+        },
+        {
+          "id": "PREP-LIGHTING",
+          "name": "Освещение",
+          "amount_rub": 400000,
+          "enabled_by_default": true,
+          "description": "Рабочее, гостевое и аварийное освещение, светильники, локальная подсветка и системы управления светом.",
+          "boundaries": [
+            "включает светильники",
+            "включает рабочее освещение кухни",
+            "включает свет посадочного зала",
+            "включает аварийное освещение",
+            "включает локальную декоративную подсветку",
+            "силовые линии и щит учитываются в категории электроснабжения"
+          ]
+        },
+        {
+          "id": "PREP-GUEST-AREA",
+          "name": "Подготовка торгового зала",
+          "amount_rub": 800000,
+          "enabled_by_default": true,
+          "description": "Чистовая адаптация гостевой зоны, зонирование, оформление посадочного зала и подготовка зон заказа, ожидания и выдачи.",
+          "boundaries": [
+            "включает чистовую адаптацию гостевой части",
+            "включает визуальное зонирование",
+            "включает подготовку зон заказа, ожидания и выдачи",
+            "включает локальные декоративные элементы",
+            "не включает свободно стоящие столы, стулья, диваны и банкетки",
+            "не включает кассовую и выдачную стойки",
+            "не дублирует общестроительную адаптацию производственных зон"
+          ]
+        },
+        {
+          "id": "PREP-BUILT-IN",
+          "name": "Стойки и встроенная мебель",
+          "amount_rub": 1300000,
+          "enabled_by_default": true,
+          "description": "Стойки заказа и выдачи, встроенные шкафы, рабочие поверхности и другие стационарные элементы торгового зала.",
+          "boundaries": [
+            "включает стойку заказа",
+            "включает стойку выдачи",
+            "включает встроенные шкафы",
+            "включает стационарные рабочие поверхности",
+            "включает встроенные элементы зонирования",
+            "не включает свободно стоящие столы и стулья",
+            "не дублирует расчёт гостевой мебели по количеству посадочных мест"
+          ]
+        },
+        {
+          "id": "PREP-DESIGN",
+          "name": "Проектирование и согласования",
+          "amount_rub": 1000000,
+          "enabled_by_default": true,
+          "description": "Технологический, архитектурный и инженерные проекты, рабочая документация и необходимые согласовательные процедуры.",
+          "boundaries": [
+            "включает технологический проект",
+            "включает рабочую документацию",
+            "включает проект электроснабжения",
+            "включает проект вентиляции",
+            "включает проект водоснабжения и канализации",
+            "включает архитектурные и планировочные решения",
+            "включает необходимые согласовательные процедуры",
+            "не включает фактическое выполнение строительных и монтажных работ"
+          ]
+        }
+      ]
     },
     "operating_reserve": {
       "monthly_opex_field": "monthly_opex_excluding_rent_rub",
@@ -2664,11 +2805,11 @@
         15
       ],
       "default_percent": 10,
-      "formula": "(evaluated_equipment_rub + furniture_rub + known_preparation_and_installation_rub) * contingency_percent",
+      "formula": "(evaluated_equipment_rub + furniture_rub + effective_preparation_amount_rub) * contingency_percent",
       "included_categories": [
         "evaluated_equipment_rub",
         "furniture_rub",
-        "preparation_and_installation_rub"
+        "effective_preparation_amount_rub"
       ],
       "excluded_categories": [
         "property_purchase_rub",
@@ -2676,10 +2817,10 @@
         "security_deposit_rub",
         "operating_reserve_rub"
       ],
-      "partial_basis_rule": "Если подготовка помещения не рассчитана, резерв считается только по известным статьям и отмечается как частичный."
+      "partial_basis_rule": "Если ручная оценка подготовки помещения не введена, резерв считается только по известным статьям и отмечается как частичный."
     },
     "totals": {
-      "financing_requirement_formula": "premises_entry_rub + evaluated_equipment_rub + furniture_rub + preparation_and_installation_rub + operating_reserve_rub + contingency_rub",
+      "financing_requirement_formula": "premises_entry_rub + evaluated_equipment_rub + furniture_rub + effective_preparation_amount_rub + operating_reserve_rub + contingency_rub",
       "partial_rule": "Любая обязательная нерассчитанная статья или неполное ценовое покрытие оборудования переводит итог в формат «от X ₽» и добавляется в перечень отсутствующих статей.",
       "created_assets": {
         "purchase_formula": "property_purchase_rub + evaluated_equipment_rub + furniture_rub",
@@ -2746,25 +2887,25 @@
     },
     "decision_boundaries": {
       "approved": [
-        "новая публичная формулировка страницы",
-        "демонстрационные значения покупки, аренды и площади",
-        "удаление технического языка из публичного интерфейса",
-        "скрытие внутренних документов",
-        "дополнение итоговой панели текущей конфигурацией",
-        "сохранение технической истории во внутренней системе"
+        "восемь категорий подготовки помещения и их точные суммы",
+        "общий базовый ориентир 11000000 RUB",
+        "включённое состояние всех категорий по умолчанию",
+        "возможность отключения отдельных категорий",
+        "режим ручной общей оценки",
+        "связь эффективной суммы подготовки с резервом и стоимостью запуска"
       ],
       "not_approved": [
-        "окончательная сумма инвестиций",
+        "строительная смета",
+        "конкретный подрядчик",
         "конкретное помещение",
-        "ставки ремонта",
-        "ставки мебели",
+        "окончательная стоимость работ",
+        "нормативная стоимость",
         "финансовая модель",
-        "инвестиционное предложение",
-        "условия сделки"
+        "инвестиционное предложение"
       ]
     },
     "warning": "Расчёт показывает предварительную стоимость запуска выбранной конфигурации.\nИтоговые значения уточняются после выбора помещения, обследования\nинженерных систем, разработки планировки и получения коммерческих\nпредложений.",
-    "source_sha256": "d5b1f6c939f7067298769cd0faea75f853c7592c847b32a158bae32a7e91f257"
+    "source_sha256": "3bf792a1a0c0dfd21e7c87399025f51effde1f08c910c987003cd341472494b1"
   },
   "overrides": [],
   "items": [
@@ -12324,42 +12465,6 @@
   ],
   "timeline": [
     {
-      "id": "EVT-ITR-INVESTOR-START-MODEL-2026-08-04-01-001",
-      "timestamp": "2026-08-04T21:05:30.000Z",
-      "status": "proposed",
-      "action": "proposal_recorded",
-      "decisionId": "DEC-012",
-      "changeSetId": "CHG-022",
-      "summary": "Proposal зафиксировал структуру, формулы и research-границы стартового калькулятора без утверждения окончательного бюджета, помещения, суммы инвестиций или условий сделки."
-    },
-    {
-      "id": "EVT-ITR-INVESTOR-START-MODEL-2026-08-04-01-002",
-      "timestamp": "2026-08-04T21:05:39.140Z",
-      "status": "approved",
-      "action": "decision_approved",
-      "decisionId": "DEC-012",
-      "changeSetId": "CHG-022",
-      "summary": "DEC-012 утвердил exact payload SHA-256, рабочие допущения, формулы и публикацию скрытой research-страницы без утверждения финансового прогноза."
-    },
-    {
-      "id": "EVT-ITR-INVESTOR-START-MODEL-2026-08-04-01-003",
-      "timestamp": "2026-08-04T21:06:10.549Z",
-      "status": "applied",
-      "action": "investor_start_model_and_launch_budget_applied",
-      "decisionId": "DEC-012",
-      "changeSetId": "CHG-022",
-      "summary": "Каноническая research-модель применена byte-identical, snapshot расширен детерминированно, а скрытая страница подключена без изменения CAPEX и Google Sheet."
-    },
-    {
-      "id": "EVT-ITR-INVESTOR-START-MODEL-2026-08-04-01-004",
-      "timestamp": "2026-08-04T21:40:19.989Z",
-      "status": "verified",
-      "action": "tests_build_visual_audit_and_reverse_preview_verified",
-      "decisionId": "DEC-012",
-      "changeSetId": "CHG-022",
-      "summary": "Проверены exact payload, одна единица пароконвектомата, формулы покупки и аренды, отсутствие двойного учёта, partial totals, noindex, адаптивность, тесты и governed reverse preview."
-    },
-    {
       "id": "EVT-ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01-001",
       "timestamp": "2026-08-05T00:06:30.000Z",
       "status": "proposed",
@@ -12394,6 +12499,42 @@
       "decisionId": "DEC-013",
       "changeSetId": "CHG-025",
       "summary": "Подтверждены новые публичные тексты и значения, годовая аренда не дублируется, мебель и included-in-parent не считаются дважды, один пароконвектомат сохраняется, внутренние документы скрыты, три viewport прошли, reverse preview восстанавливает прежнюю редакцию."
+    },
+    {
+      "id": "EVT-ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01-001",
+      "timestamp": "2026-08-05T01:55:00.000Z",
+      "status": "proposed",
+      "action": "propose_premises_preparation_breakdown",
+      "decisionId": "DEC-014",
+      "changeSetId": "CHG-028",
+      "summary": "Предложено заменить одно поле подготовки управляемым составом из восьми точных категорий общей стоимостью 11 млн ₽, сохранив ручную общую оценку и действующие границы расчёта."
+    },
+    {
+      "id": "EVT-ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01-002",
+      "timestamp": "2026-08-05T02:01:31.632Z",
+      "status": "approved",
+      "action": "approve_exact_premises_preparation_payload",
+      "decisionId": "DEC-014",
+      "changeSetId": "CHG-028",
+      "summary": "DEC-014 утвердил ровно восемь заданных категорий на 11 млн ₽ и их вычислительное поведение; строительная смета, подрядчик, конкретное помещение и новые финансовые допущения не утверждались."
+    },
+    {
+      "id": "EVT-ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01-003",
+      "timestamp": "2026-08-05T02:01:46.196Z",
+      "status": "applied",
+      "action": "apply_premises_preparation_breakdown",
+      "decisionId": "DEC-014",
+      "changeSetId": "CHG-028",
+      "summary": "Блок подготовки помещения переведён из одной укрупнённой суммы в управляемую структуру из восьми категорий. Общий базовый ориентир 11 млн ₽ сохранён. Пользователь получил возможность исключать уже существующие в помещении системы без изменения канонической модели проекта."
+    },
+    {
+      "id": "EVT-ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01-004",
+      "timestamp": "2026-08-05T02:34:41.279Z",
+      "status": "verified",
+      "action": "verify_preparation_data_calculations_ui_persistence_and_reverse_preview",
+      "decisionId": "DEC-014",
+      "changeSetId": "CHG-028",
+      "summary": "Подтверждены контрольные суммы 11,0 / 8,5 / 7,5 / 10,0 млн ₽, пересчёт резерва, ручная сумма, восстановление и сброс localStorage, восемь доступных переключателей, три viewport без переполнения и reverse preview без применения."
     }
   ]
 }

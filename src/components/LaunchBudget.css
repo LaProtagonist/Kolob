@@ -102,6 +102,32 @@
 .launch-equipment-summary a { color: var(--launch-yellow); font-size: .82rem; font-weight: 900; text-decoration: underline; text-underline-offset: 4px; }
 .launch-double-count-note { margin: 13px 0 0; color: var(--launch-muted); font-size: .78rem; }
 
+.launch-preparation-summary { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 5px 18px; align-items: center; padding: 17px 18px; border-radius: 14px; background: #191813; color: #fff; }
+.launch-preparation-summary > span { color: rgba(255,255,255,.62); font-size: .8rem; font-weight: 800; }
+.launch-preparation-summary > strong { color: var(--launch-yellow); font-size: clamp(1.45rem, 3vw, 2rem); text-align: right; }
+.launch-preparation-summary > small { grid-column: 1 / -1; color: rgba(255,255,255,.58); font-size: .73rem; line-height: 1.45; }
+.launch-preparation-accordion-button { display: flex; gap: 20px; align-items: center; justify-content: space-between; width: 100%; min-height: 48px; margin-top: 10px; padding: 0 15px; border: 1px solid var(--launch-line); border-radius: 11px; background: #f5f1e7; cursor: pointer; font-weight: 900; }
+.launch-preparation-accordion-button span:last-child { color: #76560b; font-size: 1.35rem; line-height: 1; }
+.launch-preparation-details { margin-top: 12px; padding-top: 4px; }
+.launch-preparation-categories { display: grid; gap: 8px; }
+.launch-preparation-category { border: 1px solid var(--launch-line); border-radius: 12px; background: #fff; overflow: hidden; }
+.launch-preparation-category button { display: grid; grid-template-columns: 38px minmax(0, 1fr) auto; gap: 12px; align-items: center; width: 100%; min-height: 76px; padding: 13px 14px; border: 0; text-align: left; background: transparent; cursor: pointer; }
+.launch-preparation-category.is-enabled { border-color: rgba(45,106,79,.38); background: #f8fbf5; }
+.launch-preparation-category.is-enabled .launch-toggle-track { background: #2d6a4f; }
+.launch-preparation-category.is-enabled .launch-toggle-track i { transform: translateX(16px); }
+.launch-preparation-category-copy strong { display: block; font-size: .86rem; line-height: 1.25; }
+.launch-preparation-category-copy small { display: block; margin-top: 4px; color: var(--launch-muted); font-size: .71rem; line-height: 1.4; }
+.launch-preparation-category-value { min-width: 108px; text-align: right; }
+.launch-preparation-category-value b { display: block; font-size: .82rem; white-space: nowrap; }
+.launch-preparation-category-value small { display: block; margin-top: 4px; color: #2d6a4f; font-size: .68rem; font-weight: 900; }
+.launch-preparation-category.is-disabled .launch-preparation-category-value b { color: var(--launch-muted); }
+.launch-preparation-category.is-disabled .launch-preparation-category-value small { color: #8a331f; }
+.launch-preparation-manual { margin-top: 13px; padding: 0 15px 15px; border: 1px dashed rgba(24,23,19,.28); border-radius: 12px; background: #fff9e7; }
+.launch-preparation-manual p, .launch-preparation-area-note { margin: 10px 0 0; color: var(--launch-muted); font-size: .72rem; line-height: 1.45; }
+.launch-preparation-manual > button, .launch-preparation-mode-button { min-height: 42px; margin-top: 12px; padding: 0 14px; border: 1px solid rgba(24,23,19,.28); border-radius: 9px; background: #fff; cursor: pointer; font-weight: 900; }
+.launch-preparation-mode-button { background: transparent; }
+.launch-preparation-area-note { padding-left: 12px; border-left: 3px solid var(--launch-yellow); }
+
 .launch-reset { justify-self: start; min-height: 46px; padding: 0 17px; border: 1px solid rgba(24,23,19,.25); border-radius: 10px; background: transparent; cursor: pointer; font-weight: 900; }
 .launch-reset:hover { background: #fffdf8; }
 
@@ -174,6 +200,10 @@
   .launch-equipment-summary dl { grid-template-columns: 1fr; }
   .launch-inline-result { grid-template-columns: 1fr; }
   .launch-inline-result strong { text-align: left; }
+  .launch-preparation-summary { grid-template-columns: 1fr; }
+  .launch-preparation-summary > strong { text-align: left; }
+  .launch-preparation-category button { grid-template-columns: 38px minmax(0, 1fr); }
+  .launch-preparation-category-value { grid-column: 2; min-width: 0; text-align: left; }
   .launch-total-card { margin: 0; }
   .launch-total-value { font-size: clamp(2rem, 12vw, 3.2rem); }
   .launch-document-list > div { align-items: flex-start; }

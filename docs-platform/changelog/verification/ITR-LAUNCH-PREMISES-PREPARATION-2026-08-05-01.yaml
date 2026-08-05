@@ -1,0 +1,119 @@
+receipt_version: 1
+iteration_id: ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01
+proposal_id: PROP-LAUNCH-PREMISES-PREPARATION-2026-08-05-01
+decision_id: DEC-014
+change_set_id: CHG-028
+status: verified
+verified_at: 2026-08-05T02:29:29.354Z
+actor: Codex
+tool: Launch premises preparation verification workflow
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01-approved.yaml
+  sha256: 3bf792a1a0c0dfd21e7c87399025f51effde1f08c910c987003cd341472494b1
+canonical_model:
+  path: docs-platform/working/investor-start-model.yaml
+  before_sha256: d5b1f6c939f7067298769cd0faea75f853c7592c847b32a158bae32a7e91f257
+  after_sha256: 3bf792a1a0c0dfd21e7c87399025f51effde1f08c910c987003cd341472494b1
+  approved_payload_identity: byte_identical
+preparation:
+  category_count: 8
+  unique_ids: true
+  all_enabled_by_default: true
+  default_mode: breakdown
+  default_total_rub: 11000000
+  exact_sum_passed: true
+  controls:
+    all_enabled_rub: 11000000
+    without_ventilation_rub: 8500000
+    without_ventilation_and_design_rub: 7500000
+    ventilation_restored_design_disabled_rub: 10000000
+    all_restored_rub: 11000000
+  negative_result_possible: false
+manual_mode:
+  replaces_breakdown_amount: true
+  category_toggles_do_not_change_manual_amount: true
+  return_to_breakdown_restores_enabled_category_sum: true
+  unknown_manual_amount_is_not_zero: true
+contingency:
+  effective_preparation_amount_used: true
+  ventilation_exclusion_reduces_contingency_rub: 250000
+  manual_amount_used_in_manual_mode: true
+  property_purchase_excluded: true
+  rent_deposit_excluded: true
+  operating_reserve_excluded: true
+local_storage:
+  category_states_restored: true
+  manual_mode_restored: true
+  manual_amount_restored: true
+  accordion_state_restored: true
+  legacy_single_amount_migrated: true
+  stale_state_safe: true
+  reset_restores_default_total_rub: 11000000
+  reset_restores_all_categories: true
+  server_persistence: false
+data_boundaries:
+  internet_research_performed: false
+  independently_invented_values_added: false
+  capex_equipment_register_changed: false
+  capex_price_research_changed: false
+  google_sync_performed: false
+  other_launch_budget_sections_changed: false
+visual:
+  responsive_viewports:
+    desktop_1440x900: passed
+    tablet_768x1024: passed
+    mobile_390x844: passed
+  horizontal_overflow: false
+  category_copy_clipped: false
+  keyboard_controls: passed
+  visible_focus: passed
+  console_errors: 0
+  page_errors: 0
+  screenshots:
+    - path: analysis/screenshots/launch-preparation-collapsed.png
+      sha256: a7670aca0e7f948abd3844784d4f0ba0e771463e736d3669349f3ccee72c826e
+    - path: analysis/screenshots/launch-preparation-expanded.png
+      sha256: a07b2ec43f618fbdef136940afae388935567ac7bba13d38bae6b9c72cf3d659
+    - path: analysis/screenshots/launch-preparation-no-ventilation.png
+      sha256: 0597d11d563dc70c8d895d8def503bd8b4ae2c2ef5b208d158725d0538f1e300
+    - path: analysis/screenshots/launch-preparation-manual.png
+      sha256: 56f8402b4bd431f60f5b781f278c88cbbeeef00505fa84772a80449c6e5aa6b8
+    - path: analysis/screenshots/launch-preparation-mobile.png
+      sha256: 3a521365a526e2ed11fb35084c71903e70d3c198778aa8000cfa735591d375f2
+audit:
+  receipt: docs-platform/changelog/audit/ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01.yaml
+  receipt_sha256: 625d22c65608657e828ef972574ffea4b0fcd4bfc865a651229bb6a18344f0e5
+  exact_before_after_retained: true
+validation:
+  root_tests: passed; route, calculation, interaction, localStorage and responsive failures empty
+  root_typescript: passed
+  root_build: passed with project-compatible Node.js 25.9.0
+  docs_platform_tests: 135 passed, 0 failed
+  docs_platform_typescript: passed
+  registry: passed
+  investor_start_model_schema: passed
+  capex_snapshot_hash_check: passed
+  timeline_before_verified_event: passed; 31 events
+  timeline_final: passed; 32 events
+  git_diff_check: passed
+rollback:
+  source_receipt: docs-platform/changelog/iteration-receipts/ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01.yaml
+  manifest: docs-platform/changelog/rollback-payloads/ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01/manifest.yaml
+  manifest_sha256: f525731b852ef0e2dc8641626e3b76f7ebca138b1e8838d5c08cd247f56115a1
+  reverse_change_set_status: previewed
+  expected_current_sha256: 3bf792a1a0c0dfd21e7c87399025f51effde1f08c910c987003cd341472494b1
+  expected_restored_sha256: d5b1f6c939f7067298769cd0faea75f853c7592c847b32a158bae32a7e91f257
+  restores_original_hash: true
+  restores_previous_public_copy: true
+  rollback_payloads_match_before_hashes: true
+  apply_allowed_without_new_decision: false
+  preserves_history: true
+  git_reset_forbidden: true
+web_snapshot:
+  path: src/content/capex-configurator-data.json
+  before_verified_event_sha256: 3bdbd86e441821edfa2edecfd1f60e31fde2f3d6c842c4c3ab5216f04febce18
+  final_sha256: 9e686f09f901ad6cfdb12890b4866cb4b364986c8ea1f5b0da43090a1ac2393e
+  regenerated_after_verified_event: true
+git_commit_hash: null
+git_commit_note: Hash текущего commit невозможно включить в сам commit; он сообщается в итоговом отчёте и может быть связан следующим append-only событием.
+deployment: pending_after_commit

@@ -1,0 +1,54 @@
+receipt_version: 1
+iteration_id: ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01
+proposal_id: PROP-LAUNCH-PREMISES-PREPARATION-2026-08-05-01
+decision_id: DEC-014
+change_set_id: CHG-028
+status: applied
+applied_at: 2026-08-05T02:01:46.196Z
+actor: Codex
+tool: docs-platform investor:start:apply
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01-approved.yaml
+  sha256: 3bf792a1a0c0dfd21e7c87399025f51effde1f08c910c987003cd341472494b1
+target: docs-platform/working/investor-start-model.yaml
+before_sha256: d5b1f6c939f7067298769cd0faea75f853c7592c847b32a158bae32a7e91f257
+after_sha256: 3bf792a1a0c0dfd21e7c87399025f51effde1f08c910c987003cd341472494b1
+before_files:
+  - path: docs-platform/schemas/investor-start-model.schema.json
+    existed: true
+    before_sha256: cd8866468d949c6b205cf85b8dc6e5edaae61c36a15fe600232665c705304858
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01/site/docs-platform/schemas/investor-start-model.schema.json
+    after_sha256: d33ff39cf7735aecf15dcfe8a65e2de6f0df8c93a3874e35c1ae94af4b853284
+  - path: docs-platform/app/test/investor-start-model.test.ts
+    existed: true
+    before_sha256: 7c243b11848f84a286a096c5e9c5a0f8e3bb6406e552107ab80f2c581f03ec85
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01/site/docs-platform/app/test/investor-start-model.test.ts
+    after_sha256: 2d1a77a15fa943fb137e4c1fa3eeb54d845014a2d09c3ae5fc7ce86056523337
+  - path: scripts/test-site.cjs
+    existed: true
+    before_sha256: 57a3a9c14a592c34782771044f1e3bd18a9fc6fc250cd02cfb78cf22d18166c8
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01/site/scripts/test-site.cjs
+    after_sha256: 7eb0ea639c32e4254cbec0baed2355c1c24b3bd94fdb2f041ca70654605cfac7
+  - path: src/lib/launch-budget.ts
+    existed: true
+    before_sha256: a08afcdb5b3219725e8816cf56b1e7e0f78f5a704ea2da5be2ab5d4f39c28743
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01/site/src/lib/launch-budget.ts
+    after_sha256: 369748d01e5fc86556fbada5d03b852511415eef6be9ec67589d62ddcd23f572
+  - path: src/components/LaunchBudget.tsx
+    existed: true
+    before_sha256: 219c4b6ab9c5a8d40eadc968acadc463b4878ac931afbcaabfcb72a86a80e906
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01/site/src/components/LaunchBudget.tsx
+    after_sha256: 9698f6d6b964395d1e183aa959b864a30d3b5fd3099bef310d706f03b4350554
+  - path: src/components/LaunchBudget.css
+    existed: true
+    before_sha256: 4e38f8ef56b6884d6a84ea49047fe5cd5130a51ed198e1b01350870100689478
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01/site/src/components/LaunchBudget.css
+    after_sha256: d83a5dafbc47dea62316f9f47d2d2f7a1006f98ebe44cd8a4d79f4d7ca09423e
+validation_result: passed
+git_commit_hash: null
+rollback:
+  mode: governed_reverse_change_set
+  rollback_payload: docs-platform/changelog/rollback-payloads/ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01/manifest.yaml
+  preview_command: npm run investor:start:reverse:preview -- ../changelog/iteration-receipts/ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01.yaml --change-id CHG-ROLLBACK-XXX --decision DEC-ROLLBACK-XXX
+  preserves_history: true
+  git_reset_forbidden: true

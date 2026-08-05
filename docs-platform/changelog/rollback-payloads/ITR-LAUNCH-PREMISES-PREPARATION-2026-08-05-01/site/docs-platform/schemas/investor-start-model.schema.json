@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "document",
+    "basis",
+    "point_configuration",
+    "premises",
+    "area",
+    "seating",
+    "furniture",
+    "equipment",
+    "preparation",
+    "operating_reserve",
+    "contingency",
+    "totals",
+    "missing_categories",
+    "documents_block",
+    "public_presentation",
+    "form",
+    "decision_boundaries",
+    "warning"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "document": {
+      "type": "object",
+      "required": ["project", "document_id", "title", "russian_title", "version", "status", "document_type", "decision_id", "iteration_id", "proposal_id", "updated_at", "disclaimer"],
+      "properties": {
+        "project": { "const": "Колобочная" },
+        "document_id": { "const": "DOC-INVESTOR-START-MODEL" },
+        "title": { "const": "Investor Start Model" },
+        "russian_title": { "const": "Модель стартовой потребности в инвестициях" },
+        "version": { "const": "0.1" },
+        "status": { "const": "research" },
+        "document_type": { "const": "Working investment requirement model" },
+        "decision_id": { "type": "string" },
+        "iteration_id": { "type": "string" },
+        "proposal_id": { "type": "string" },
+        "updated_at": { "type": "string" },
+        "disclaimer": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "basis": { "type": "object" },
+    "point_configuration": {
+      "type": "object",
+      "required": ["format_id", "required_modules", "optional_modules", "summary_modules", "equipment_exclusions", "incomplete_module_rule"],
+      "properties": {
+        "format_id": { "const": "FMT-INTEGRATED" },
+        "format_name": { "type": "string" },
+        "description": { "type": "string" },
+        "required_modules": { "type": "array", "minItems": 9, "uniqueItems": true, "items": { "type": "string" } },
+        "optional_modules": { "type": "array", "minItems": 2, "items": { "type": "object" } },
+        "summary_modules": {
+          "type": "array",
+          "minItems": 5,
+          "items": {
+            "type": "object",
+            "required": ["module_id", "label"],
+            "properties": {
+              "module_id": { "type": "string" },
+              "label": { "type": "string", "minLength": 1 }
+            },
+            "additionalProperties": false
+          }
+        },
+        "equipment_exclusions": { "type": "array", "minItems": 1, "items": { "type": "object" } },
+        "incomplete_module_rule": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "premises": { "type": "object" },
+    "area": { "type": "object" },
+    "seating": { "type": "object" },
+    "furniture": { "type": "object" },
+    "equipment": { "type": "object" },
+    "preparation": { "type": "object" },
+    "operating_reserve": { "type": "object" },
+    "contingency": { "type": "object" },
+    "totals": { "type": "object" },
+    "missing_categories": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string" } },
+    "documents_block": { "type": "object" },
+    "public_presentation": {
+      "type": "object",
+      "required": [
+        "page_title",
+        "subtitle",
+        "hero_summary_title",
+        "hero_summary",
+        "total_title",
+        "total_partial_prefix",
+        "legal_disclaimer",
+        "equipment_description",
+        "equipment_double_count_note",
+        "current_configuration_title",
+        "next_steps_title",
+        "next_steps_intro",
+        "calculation_basis_title",
+        "calculation_factors",
+        "calculation_basis_note"
+      ],
+      "properties": {
+        "page_title": { "const": "Расчёт стоимости запуска" },
+        "subtitle": { "type": "string" },
+        "hero_summary_title": { "type": "string" },
+        "hero_summary": { "type": "string" },
+        "total_title": { "const": "Стоимость запуска" },
+        "total_partial_prefix": { "const": "от" },
+        "legal_disclaimer": { "const": "Представленная информация носит предварительный характер и не является публичной офертой." },
+        "equipment_description": { "type": "string" },
+        "equipment_double_count_note": { "type": "string" },
+        "current_configuration_title": { "const": "Текущая конфигурация" },
+        "next_steps_title": { "const": "Следующие этапы расчёта" },
+        "next_steps_intro": { "type": "string" },
+        "calculation_basis_title": { "const": "Что учитывает расчёт" },
+        "calculation_factors": { "type": "array", "minItems": 7, "uniqueItems": true, "items": { "type": "string" } },
+        "calculation_basis_note": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "form": { "type": "object" },
+    "decision_boundaries": { "type": "object" },
+    "warning": { "type": "string" }
+  },
+  "additionalProperties": false
+}

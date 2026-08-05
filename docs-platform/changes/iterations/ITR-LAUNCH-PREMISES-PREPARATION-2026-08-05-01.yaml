@@ -1,0 +1,24 @@
+schema_version: 1
+iteration_id: ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01
+proposal_id: PROP-LAUNCH-PREMISES-PREPARATION-2026-08-05-01
+decision_id: DEC-014
+change_set_id: CHG-028
+status: approved
+approved_by: project owner
+approved_at: 2026-08-05
+actor: project owner
+scope: Реализовать только утверждённую структуру подготовки помещения из восьми категорий, ручной режим и её влияние на действующие формулы резерва и стоимости запуска.
+approved_payload_path: docs-platform/changelog/payloads/ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01-approved.yaml
+approved_payload_sha256: 3bf792a1a0c0dfd21e7c87399025f51effde1f08c910c987003cd341472494b1
+apply_contract:
+  payload_identity: byte_identical_yaml
+  canonical_targets:
+    - docs-platform/working/investor-start-model.yaml
+  derived_targets:
+    - src/content/capex-configurator-data.json
+    - /launch-budget
+  google_target: none
+rollback_contract:
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true
