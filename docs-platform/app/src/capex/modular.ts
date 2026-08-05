@@ -422,6 +422,12 @@ function aggregateQuantities(entries: InclusionSource[], configuration: CapexCon
   return null;
 }
 
+function linkConditionSatisfied(condition: string | null, configuration: CapexConfiguration) {
+  if (!condition) return true;
+  if (condition.trim() === "alcohol_enabled == true") return configuration.alcohol_enabled === true;
+  return true;
+}
+
 export type BomRecord = {
   item_id: string;
   name: string;
@@ -468,7 +474,7 @@ export function buildEquipmentBom(configurationId: string, register = readRegist
   const inclusion = new Map<string, InclusionSource[]>();
   for (const link of sources.module_items.links) {
     const source = activeModules.get(link.module_id);
-    if (!source) continue;
+    if (!source || !linkConditionSatisfied(link.condition, configuration)) continue;
     const list = inclusion.get(link.item_id) ?? [];
     list.push({ module_id: link.module_id, source, link });
     inclusion.set(link.item_id, list);

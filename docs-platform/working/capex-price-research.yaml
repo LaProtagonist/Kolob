@@ -4,16 +4,16 @@ document:
   document_id: DOC-CAPEX-PRICE-RESEARCH
   title: CAPEX Preliminary Price Research
   russian_title: CAPEX — Первичная ценовая оценка пищевого оснащения
-  version: "0.3"
+  version: "0.4"
   status: research
-  decision_id: DEC-011
-  iteration_id: ITR-PILOT-CAPEX-BASELINE-2026-08-03-01
-  proposal_id: PROP-PILOT-CAPEX-BASELINE-2026-08-03-01
-  checked_at: 2026-08-03T12:00:00.000Z
+  decision_id: DEC-015
+  iteration_id: ITR-CAPEX-REMAINING-PRICES-2026-08-05-01
+  proposal_id: PROP-CAPEX-REMAINING-PRICES-2026-08-05-01
+  checked_at: 2026-08-05T18:14:24.000Z
   currency: RUB
   source_register_path: docs-platform/working/capex-equipment-register.yaml
-  source_register_before_sha256: 58604b2ae2fd3bdb8a572f2f7f8f3832c45268613d8d080a57142c844cc1e8bf
-  warning: Цены имеют статус research. Новые комплекты являются составными оценками, а не готовыми корзинами поставщика; помещение, доставка, монтаж, инженерные подключения, ПО и расходы запуска учитываются отдельно.
+  source_register_before_sha256: e5e835ecae0d0d433afd24cff8923026097d115d87c234f1af475c463bb8f6e0
+  warning: Цены имеют статус research и quote_required; они перенесены из утверждённого владельцем payload без нового интернет-исследования и не являются коммерческими предложениями или окончательным CAPEX.
 business_capacity:
   prep_outlet_count: 5
   checks_per_outlet_per_day: 100
@@ -42,26 +42,128 @@ scope:
 items:
   - item_id: CAPEX-01-001
     module_id: MOD-PREP
-    valuation_status: quote_required
+    valuation_status: priced
     quote_status: quote_required
     high_risk: true
-    risk_reason: Цена зависит от помещения, объёма камеры и наличия существующего оборудования.
+    risk_reason: Стоимость зависит от окончательного объёма камеры, холодильной машины и условий монтажа; требуется коммерческое предложение.
     scenarios:
-      minimum: null
-      base: null
-      scale_ready: null
-    notes: Холодильная камера остаётся quote_required; приобретение/дооборудование оценивается после выбора помещения.
+      minimum:
+        source_id: SRC-PRICE-20260805-COLD-ROOM-MINIMUM
+        source_type: owner_approved_research_estimate
+        source_location: docs-platform/changelog/payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01-approved.yaml
+        supplier_name: Polair Shop
+        product_name: Холодильная камера около 8,8 м³ с ориентировочно подобранной холодильной машиной
+        source_url: https://www.polair-shop.ru/catalog/holodylnye_kamery/polair_standart2/kxh-8.81/
+        additional_urls: []
+        observed_unit_price_rub: 263919
+        availability_status: quote_required; availability_not_checked
+        checked_at: 2026-08-05T18:14:24.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: medium
+        notes: Ориентировочная площадь пола около 5 м²; ориентировочный объём около 8,8 м³. Цена учитывает камеру и ориентировочно подобранную холодильную машину. Не включает доставку, разгрузку, сборку камеры, монтаж холодильной машины, холодильные трассы, заправку, пусконаладку и внутренние стеллажи.
+        quantity: 1
+        quantity_basis: research_assumption
+        line_total_rub: 263919
+      base:
+        source_id: SRC-PRICE-20260805-COLD-ROOM-BASE
+        source_type: owner_approved_research_estimate
+        source_location: docs-platform/changelog/payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01-approved.yaml
+        supplier_name: Polair Shop
+        product_name: Холодильная камера около 15,9 м³ с ориентировочно подобранной холодильной машиной
+        source_url: https://www.polair-shop.ru/catalog/holodylnye_kamery/polair_standart2/kxh-8.81/
+        additional_urls: []
+        observed_unit_price_rub: 328655
+        availability_status: quote_required; availability_not_checked
+        checked_at: 2026-08-05T18:14:24.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: medium
+        notes: Ориентировочная площадь пола около 7,5–8 м²; ориентировочный объём около 15,9 м³. Цена учитывает камеру и ориентировочно подобранную холодильную машину. Не включает доставку, разгрузку, сборку камеры, монтаж холодильной машины, холодильные трассы, заправку, пусконаладку и внутренние стеллажи.
+        quantity: 1
+        quantity_basis: research_assumption
+        line_total_rub: 328655
+      scale_ready:
+        source_id: SRC-PRICE-20260805-COLD-ROOM-SCALE-READY
+        source_type: owner_approved_research_estimate
+        source_location: docs-platform/changelog/payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01-approved.yaml
+        supplier_name: Polair Shop
+        product_name: Холодильная камера около 20 м³ с ориентировочно подобранной холодильной машиной
+        source_url: https://www.polair-shop.ru/catalog/holodylnye_kamery/polair_standart2/kxh-8.81/
+        additional_urls: []
+        observed_unit_price_rub: 358788
+        availability_status: quote_required; availability_not_checked
+        checked_at: 2026-08-05T18:14:24.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: medium
+        notes: Ориентировочная площадь пола около 10 м²; ориентировочный объём около 20 м³. Цена учитывает камеру и ориентировочно подобранную холодильную машину. Не включает доставку, разгрузку, сборку камеры, монтаж холодильной машины, холодильные трассы, заправку, пусконаладку и внутренние стеллажи.
+        quantity: 1
+        quantity_basis: research_assumption
+        line_total_rub: 358788
+    notes: Цена учитывает камеру и ориентировочно подобранную холодильную машину. Не включает доставку, разгрузку, сборку камеры, монтаж холодильной машины, холодильные трассы, заправку, пусконаладку и внутренние стеллажи.
   - item_id: CAPEX-01-002
     module_id: MOD-PREP
-    valuation_status: quote_required
+    valuation_status: priced
     quote_status: quote_required
     high_risk: true
-    risk_reason: Цена зависит от помещения, объёма камеры и наличия существующего оборудования.
+    risk_reason: Стоимость зависит от окончательного объёма камеры, низкотемпературной машины и условий монтажа; требуется коммерческое предложение.
     scenarios:
-      minimum: null
-      base: null
-      scale_ready: null
-    notes: Морозильная камера остаётся quote_required; приобретение/дооборудование оценивается после выбора помещения.
+      minimum:
+        source_id: SRC-PRICE-20260805-FREEZER-ROOM-MINIMUM
+        source_type: owner_approved_research_estimate
+        source_location: docs-platform/changelog/payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01-approved.yaml
+        supplier_name: Polair
+        product_name: Морозильная камера около 8,8 м³ с ориентировочно подобранной низкотемпературной машиной
+        source_url: https://polair.shop/kholodilnye-kamery/kamery-kholodilnye-polair-standard/polair-kkhn-8-81-professionale/
+        additional_urls: []
+        observed_unit_price_rub: 307521
+        availability_status: quote_required; availability_not_checked
+        checked_at: 2026-08-05T18:14:24.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: medium
+        notes: Ориентировочная площадь пола около 5 м²; объём камеры около 8,8 м³. Цена учитывает камеру с теплоизоляционными панелями и ориентировочно подобранную низкотемпературную машину. Не включает доставку, сборку, трассы, монтаж, заправку, пусконаладку, внутренние стеллажи и дополнительные устройства двери и выравнивания давления, если они потребуются.
+        quantity: 1
+        quantity_basis: research_assumption
+        line_total_rub: 307521
+      base:
+        source_id: SRC-PRICE-20260805-FREEZER-ROOM-BASE
+        source_type: owner_approved_research_estimate
+        source_location: docs-platform/changelog/payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01-approved.yaml
+        supplier_name: Polair
+        product_name: Морозильная камера около 15,9 м³ с ориентировочно подобранной низкотемпературной машиной
+        source_url: https://polair.shop/kholodilnye-kamery/kamery-kholodilnye-polair-standard/polair-kkhn-8-81-professionale/
+        additional_urls: []
+        observed_unit_price_rub: 429679
+        availability_status: quote_required; availability_not_checked
+        checked_at: 2026-08-05T18:14:24.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: medium
+        notes: Ориентировочная площадь пола около 8 м²; объём камеры около 15,9 м³. Цена учитывает камеру с теплоизоляционными панелями и ориентировочно подобранную низкотемпературную машину. Не включает доставку, сборку, трассы, монтаж, заправку, пусконаладку, внутренние стеллажи и дополнительные устройства двери и выравнивания давления, если они потребуются.
+        quantity: 1
+        quantity_basis: research_assumption
+        line_total_rub: 429679
+      scale_ready:
+        source_id: SRC-PRICE-20260805-FREEZER-ROOM-SCALE-READY
+        source_type: owner_approved_research_estimate
+        source_location: docs-platform/changelog/payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01-approved.yaml
+        supplier_name: Polair
+        product_name: Морозильная камера около 20 м³ с ориентировочно подобранной низкотемпературной машиной
+        source_url: https://polair.shop/kholodilnye-kamery/kamery-kholodilnye-polair-standard/polair-kkhn-8-81-professionale/
+        additional_urls: []
+        observed_unit_price_rub: 465090
+        availability_status: quote_required; availability_not_checked
+        checked_at: 2026-08-05T18:14:24.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: medium
+        notes: Ориентировочная площадь пола около 10 м²; объём камеры около 20 м³. Цена учитывает камеру с теплоизоляционными панелями и ориентировочно подобранную низкотемпературную машину. Не включает доставку, сборку, трассы, монтаж, заправку, пусконаладку, внутренние стеллажи и дополнительные устройства двери и выравнивания давления, если они потребуются.
+        quantity: 1
+        quantity_basis: research_assumption
+        line_total_rub: 465090
+    notes: Цена учитывает камеру с теплоизоляционными панелями и ориентировочно подобранную низкотемпературную машину. Не включает доставку, сборку, трассы, монтаж, заправку, пусконаладку, внутренние стеллажи и дополнительные устройства двери и выравнивания давления, если они потребуются.
   - item_id: CAPEX-01-003
     module_id: MOD-PREP
     valuation_status: priced
@@ -568,15 +670,66 @@ items:
     notes: Одна двухконфорочная профессиональная плита.
   - item_id: CAPEX-01-012
     module_id: MOD-PREP
-    valuation_status: quote_required
+    valuation_status: priced
     quote_status: quote_required
     high_risk: true
-    risk_reason: Размер и производительность зонта определяются после расстановки; монтаж вентиляции исключён из scope.
+    risk_reason: Размер, количество и исполнение зонтов зависят от расстановки оборудования; требуется коммерческое предложение.
     scenarios:
-      minimum: null
-      base: null
-      scale_ready: null
-    notes: Цена не ставится, чтобы не смешивать товар с проектированием и монтажом вентиляции.
+      minimum:
+        source_id: SRC-PRICE-20260805-EXHAUST-HOOD-MINIMUM
+        source_type: owner_approved_research_estimate
+        source_location: docs-platform/changelog/payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01-approved.yaml
+        supplier_name: КЛЕН
+        product_name: Один профессиональный пристенный вытяжной зонт
+        source_url: https://www.klenmarket.ru/shop/equipment/neutral-equipment/exhaust-umbrellas/zonty-pristennye/pristennye-vytiazhnye/zont-vytiazhnoi-pristennyi-hicold-zvpok-1010-285147-sm-art-mko/
+        additional_urls: []
+        observed_unit_price_rub: 32909
+        availability_status: quote_required; availability_not_checked
+        checked_at: 2026-08-05T18:14:24.000Z
+        price_includes_vat: null
+        delivery_included: null
+        confidence: medium
+        notes: Один профессиональный пристенный зонт. Входит в категорию подготовки помещения «Приточно-вытяжная вентиляция» на странице launch-budget и не суммируется там второй раз. В CAPEX Equipment Register и CAPEX Configurator цена сохраняется.
+        quantity: 1
+        quantity_basis: research_assumption
+        line_total_rub: 32909
+      base:
+        source_id: SRC-PRICE-20260805-EXHAUST-HOOD-BASE
+        source_type: owner_approved_research_estimate
+        source_location: docs-platform/changelog/payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01-approved.yaml
+        supplier_name: КЛЕН
+        product_name: Система из двух вытяжных зонтов или сопоставимая конфигурация
+        source_url: https://www.klenmarket.ru/shop/equipment/neutral-equipment/exhaust-umbrellas/zonty-pristennye/pristennye-vytiazhnye/zont-vytiazhnoi-pristennyi-hicold-zvpok-1010-285147-sm-art-mko/
+        additional_urls: []
+        observed_unit_price_rub: 75172
+        availability_status: quote_required; availability_not_checked
+        checked_at: 2026-08-05T18:14:24.000Z
+        price_includes_vat: null
+        delivery_included: null
+        confidence: medium
+        notes: Система из двух зонтов или сопоставимая конфигурация. Входит в категорию подготовки помещения «Приточно-вытяжная вентиляция» на странице launch-budget и не суммируется там второй раз. В CAPEX Equipment Register и CAPEX Configurator цена сохраняется.
+        quantity: 1
+        quantity_basis: research_assumption
+        line_total_rub: 75172
+      scale_ready:
+        source_id: SRC-PRICE-20260805-EXHAUST-HOOD-SCALE-READY
+        source_type: owner_approved_research_estimate
+        source_location: docs-platform/changelog/payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01-approved.yaml
+        supplier_name: КЛЕН
+        product_name: Более крупная островная или расширенная система вытяжных зонтов
+        source_url: https://www.klenmarket.ru/shop/equipment/neutral-equipment/exhaust-umbrellas/zonty-pristennye/pristennye-vytiazhnye/zont-vytiazhnoi-pristennyi-hicold-zvpok-1010-285147-sm-art-mko/
+        additional_urls: []
+        observed_unit_price_rub: 93669
+        availability_status: quote_required; availability_not_checked
+        checked_at: 2026-08-05T18:14:24.000Z
+        price_includes_vat: null
+        delivery_included: null
+        confidence: medium
+        notes: Более крупная островная или расширенная система. Входит в категорию подготовки помещения «Приточно-вытяжная вентиляция» на странице launch-budget и не суммируется там второй раз. В CAPEX Equipment Register и CAPEX Configurator цена сохраняется.
+        quantity: 1
+        quantity_basis: research_assumption
+        line_total_rub: 93669
+    notes: Входит в категорию подготовки помещения «Приточно-вытяжная вентиляция» на странице launch-budget и не суммируется там второй раз. В CAPEX Equipment Register и CAPEX Configurator цена сохраняется.
   - item_id: CAPEX-01-013
     module_id: MOD-PREP
     valuation_status: priced
@@ -1546,37 +1699,190 @@ items:
     notes: Bottom-up research-бюджет 268 200 ₽ по 16 группам + 10% резерв 26 820 ₽. Это не готовая корзина поставщика.
   - item_id: CAPEX-02-001
     module_id: MOD-RETAIL-HOT
-    valuation_status: quote_required
+    valuation_status: priced
     quote_status: quote_required
     high_risk: true
-    risk_reason: Для газового гриля с полусферическими ячейками под колобки не найден надёжный активный российский ценовой источник.
+    risk_reason: Рабочая исследовательская оценка импортного оборудования. Точное коммерческое предложение и проверка типа газа обязательны.
     scenarios:
-      minimum: null
-      base: null
-      scale_ready: null
-    notes: Нужны технический подбор, способ газоснабжения, проверка сертификации и коммерческое предложение.
+      minimum:
+        source_id: SRC-PRICE-20260805-GAS-KOLOBOK-GRILL-MINIMUM
+        source_type: owner_approved_research_estimate
+        source_location: docs-platform/changelog/payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01-approved.yaml
+        supplier_name: Не определён
+        product_name: Газовый гриль для колобков — две установки
+        source_url: null
+        additional_urls: []
+        observed_unit_price_rub: 30000
+        availability_status: quote_required; supplier_card_absent
+        checked_at: 2026-08-05T18:14:24.000Z
+        price_includes_vat: null
+        delivery_included: null
+        confidence: low
+        notes: Две установки по 30000 RUB за единицу. Две двухсекционные газовые установки; по 32 лунки на секцию, 4 ряда × 8 лунок на секцию, 64 лунки на одну установку. Фиктивная товарная ссылка не создаётся.
+        quantity: 2
+        quantity_basis: research_assumption
+        line_total_rub: 60000
+      base:
+        source_id: SRC-PRICE-20260805-GAS-KOLOBOK-GRILL-BASE
+        source_type: owner_approved_research_estimate
+        source_location: docs-platform/changelog/payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01-approved.yaml
+        supplier_name: Не определён
+        product_name: Газовый гриль для колобков — две установки
+        source_url: null
+        additional_urls: []
+        observed_unit_price_rub: 45000
+        availability_status: quote_required; supplier_card_absent
+        checked_at: 2026-08-05T18:14:24.000Z
+        price_includes_vat: null
+        delivery_included: null
+        confidence: low
+        notes: Две установки по 45000 RUB за единицу. Две двухсекционные газовые установки; по 32 лунки на секцию, 4 ряда × 8 лунок на секцию, 64 лунки на одну установку. Фиктивная товарная ссылка не создаётся.
+        quantity: 2
+        quantity_basis: research_assumption
+        line_total_rub: 90000
+      scale_ready:
+        source_id: SRC-PRICE-20260805-GAS-KOLOBOK-GRILL-SCALE-READY
+        source_type: owner_approved_research_estimate
+        source_location: docs-platform/changelog/payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01-approved.yaml
+        supplier_name: Не определён
+        product_name: Газовый гриль для колобков — две установки
+        source_url: null
+        additional_urls: []
+        observed_unit_price_rub: 60000
+        availability_status: quote_required; supplier_card_absent
+        checked_at: 2026-08-05T18:14:24.000Z
+        price_includes_vat: null
+        delivery_included: null
+        confidence: low
+        notes: Две установки по 60000 RUB за единицу. Две двухсекционные газовые установки; по 32 лунки на секцию, 4 ряда × 8 лунок на секцию, 64 лунки на одну установку. Фиктивная товарная ссылка не создаётся.
+        quantity: 2
+        quantity_basis: research_assumption
+        line_total_rub: 120000
+    notes: Две двухсекционные газовые установки; по 32 лунки на секцию, 4 ряда × 8 лунок на секцию, 64 лунки на одну установку. Фиктивная товарная ссылка не создаётся.
   - item_id: CAPEX-02-002
     module_id: MOD-RETAIL-HOT
-    valuation_status: quote_required
+    valuation_status: priced
     quote_status: quote_required
     high_risk: true
-    risk_reason: Активная российская карточка профессионального гриля для Манчеса с подтверждённой ценой не найдена.
+    risk_reason: Требуется коммерческое предложение на точную модель и количество.
     scenarios:
-      minimum: null
-      base: null
-      scale_ready: null
-    notes: Нужно коммерческое предложение на точную конструкцию и количество единиц.
+      minimum:
+        source_id: SRC-PRICE-20260805-MANCHES-GRILL-MINIMUM
+        source_type: owner_approved_research_estimate
+        source_location: docs-platform/changelog/payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01-approved.yaml
+        supplier_name: Синтез Форм
+        product_name: Гриль для Манчеса — три установки
+        source_url: https://sintezf.com/shop/product/vafelnica-dlya-ufo-burgerov-hkn-ges15-vrashchayushchayasya/20546
+        additional_urls: []
+        observed_unit_price_rub: 16500
+        availability_status: quote_required; availability_not_checked
+        checked_at: 2026-08-05T18:14:24.000Z
+        price_includes_vat: null
+        delivery_included: null
+        confidence: medium
+        notes: Три установки по 16500 RUB за единицу. В техническом описании используется UFO-гриль Hurakan HKN-GES15 или профессиональный аналог. Канонический термин «Манчес» сохраняется.
+        quantity: 3
+        quantity_basis: research_assumption
+        line_total_rub: 49500
+      base:
+        source_id: SRC-PRICE-20260805-MANCHES-GRILL-BASE
+        source_type: owner_approved_research_estimate
+        source_location: docs-platform/changelog/payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01-approved.yaml
+        supplier_name: Синтез Форм
+        product_name: Гриль для Манчеса — три установки
+        source_url: https://sintezf.com/shop/product/vafelnica-dlya-ufo-burgerov-hkn-ges15-vrashchayushchayasya/20546
+        additional_urls: []
+        observed_unit_price_rub: 20000
+        availability_status: quote_required; availability_not_checked
+        checked_at: 2026-08-05T18:14:24.000Z
+        price_includes_vat: null
+        delivery_included: null
+        confidence: medium
+        notes: Три установки по 20000 RUB за единицу. В техническом описании используется UFO-гриль Hurakan HKN-GES15 или профессиональный аналог. Канонический термин «Манчес» сохраняется.
+        quantity: 3
+        quantity_basis: research_assumption
+        line_total_rub: 60000
+      scale_ready:
+        source_id: SRC-PRICE-20260805-MANCHES-GRILL-SCALE-READY
+        source_type: owner_approved_research_estimate
+        source_location: docs-platform/changelog/payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01-approved.yaml
+        supplier_name: Синтез Форм
+        product_name: Гриль для Манчеса — четыре установки
+        source_url: https://sintezf.com/shop/product/vafelnica-dlya-ufo-burgerov-hkn-ges15-vrashchayushchayasya/20546
+        additional_urls: []
+        observed_unit_price_rub: 25000
+        availability_status: quote_required; availability_not_checked
+        checked_at: 2026-08-05T18:14:24.000Z
+        price_includes_vat: null
+        delivery_included: null
+        confidence: medium
+        notes: Четыре установки по 25000 RUB за единицу. В техническом описании используется UFO-гриль Hurakan HKN-GES15 или профессиональный аналог. Канонический термин «Манчес» сохраняется.
+        quantity: 4
+        quantity_basis: research_assumption
+        line_total_rub: 100000
+    notes: В техническом описании используется UFO-гриль Hurakan HKN-GES15 или профессиональный аналог. Канонический термин «Манчес» сохраняется.
   - item_id: CAPEX-02-003
     module_id: MOD-RETAIL-HOT
-    valuation_status: quote_required
+    valuation_status: priced
     quote_status: quote_required
     high_risk: true
-    risk_reason: Не решено, покупать 24 отдельных шприца или систему сменных цилиндров.
+    risk_reason: До закупки требуется проверить конструкцию дозирования густых, рубленых и неоднородных начинок.
     scenarios:
-      minimum: null
-      base: null
-      scale_ready: null
-    notes: Публичные дозаторы не подтверждают работу с густыми рублеными начинками; нужен тест и КП на систему.
+      minimum:
+        source_id: SRC-PRICE-20260805-FILLING-DOSERS-MINIMUM
+        source_type: owner_approved_research_estimate
+        source_location: docs-platform/changelog/payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01-approved.yaml
+        supplier_name: КЛЕН
+        product_name: Профессиональные ручные шприцы или пистолеты-дозаторы — 24 единицы
+        source_url: https://www.klenmarket.ru/shop/equipment/technological-equipment/shpritsy-kolbasnye/shprits-kolbasnyi-hurakan-hkn-isv3/
+        additional_urls: []
+        observed_unit_price_rub: 10000
+        availability_status: quote_required; nearest_technical_reference_only
+        checked_at: 2026-08-05T18:14:24.000Z
+        price_includes_vat: null
+        delivery_included: null
+        confidence: medium
+        notes: 8 начинок × 2 одновременно работающих комплекта + 8 резервных дозаторов; 10000 RUB за единицу. До закупки проверить, требуется ли 24 самостоятельных корпуса либо рациональнее использовать меньшее количество дозаторов со сменными герметичными цилиндрами или картриджами.
+        quantity: 24
+        quantity_basis: research_assumption
+        line_total_rub: 240000
+      base:
+        source_id: SRC-PRICE-20260805-FILLING-DOSERS-BASE
+        source_type: owner_approved_research_estimate
+        source_location: docs-platform/changelog/payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01-approved.yaml
+        supplier_name: КЛЕН
+        product_name: Профессиональные ручные шприцы или пистолеты-дозаторы — 24 единицы
+        source_url: https://www.klenmarket.ru/shop/equipment/technological-equipment/shpritsy-kolbasnye/shprits-kolbasnyi-hurakan-hkn-isv3/
+        additional_urls: []
+        observed_unit_price_rub: 10000
+        availability_status: quote_required; nearest_technical_reference_only
+        checked_at: 2026-08-05T18:14:24.000Z
+        price_includes_vat: null
+        delivery_included: null
+        confidence: medium
+        notes: 8 начинок × 2 одновременно работающих комплекта + 8 резервных дозаторов; 10000 RUB за единицу. До закупки проверить, требуется ли 24 самостоятельных корпуса либо рациональнее использовать меньшее количество дозаторов со сменными герметичными цилиндрами или картриджами.
+        quantity: 24
+        quantity_basis: research_assumption
+        line_total_rub: 240000
+      scale_ready:
+        source_id: SRC-PRICE-20260805-FILLING-DOSERS-SCALE-READY
+        source_type: owner_approved_research_estimate
+        source_location: docs-platform/changelog/payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01-approved.yaml
+        supplier_name: КЛЕН
+        product_name: Профессиональные ручные шприцы или пистолеты-дозаторы — 24 единицы
+        source_url: https://www.klenmarket.ru/shop/equipment/technological-equipment/shpritsy-kolbasnye/shprits-kolbasnyi-hurakan-hkn-isv3/
+        additional_urls: []
+        observed_unit_price_rub: 10000
+        availability_status: quote_required; nearest_technical_reference_only
+        checked_at: 2026-08-05T18:14:24.000Z
+        price_includes_vat: null
+        delivery_included: null
+        confidence: medium
+        notes: 8 начинок × 2 одновременно работающих комплекта + 8 резервных дозаторов; 10000 RUB за единицу. До закупки проверить, требуется ли 24 самостоятельных корпуса либо рациональнее использовать меньшее количество дозаторов со сменными герметичными цилиндрами или картриджами.
+        quantity: 24
+        quantity_basis: research_assumption
+        line_total_rub: 240000
+    notes: До закупки проверить, требуется ли 24 самостоятельных корпуса либо рациональнее использовать меньшее количество дозаторов со сменными герметичными цилиндрами или картриджами.
   - item_id: CAPEX-02-004
     module_id: MOD-RETAIL-HOT
     valuation_status: priced
@@ -2142,26 +2448,128 @@ items:
     notes: Не включена в MINIMUM/BASE совмещённого пилота; одна единица показана только в SCALE_READY как условный отдельный формат.
   - item_id: CAPEX-02-054
     module_id: MOD-BAR
-    valuation_status: quote_required
+    valuation_status: priced
     quote_status: quote_required
     high_risk: true
-    risk_reason: Опциональное алкогольное направление не утверждено и размеры хранения не определены.
+    risk_reason: Позиция зависит от отдельного решения об алкогольном направлении и требует коммерческого предложения.
     scenarios:
-      minimum: null
-      base: null
-      scale_ready: null
-    notes: Стеллажи/держатели для бутылок остаются без цены.
+      minimum:
+        source_id: SRC-PRICE-20260805-BOTTLE-HOLDERS-MINIMUM
+        source_type: owner_approved_research_estimate
+        source_location: docs-platform/changelog/payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01-approved.yaml
+        supplier_name: Barneo
+        product_name: Стеллажи или держатели для бутылок — один комплект
+        source_url: https://www.barneo.ru/product/derzhatel-dlya-6ti-butylok-nastolnyi-p-l-barbossa-81259114
+        additional_urls: []
+        observed_unit_price_rub: 15299
+        availability_status: quote_required; availability_not_checked
+        checked_at: 2026-08-05T18:14:24.000Z
+        price_includes_vat: null
+        delivery_included: null
+        confidence: medium
+        notes: Один комплект по 15299 RUB. Включается только при alcohol_enabled == true; один включённый MOD-BAR без алкогольного направления позицию не добавляет.
+        quantity: 1
+        quantity_basis: research_assumption
+        line_total_rub: 15299
+      base:
+        source_id: SRC-PRICE-20260805-BOTTLE-HOLDERS-BASE
+        source_type: owner_approved_research_estimate
+        source_location: docs-platform/changelog/payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01-approved.yaml
+        supplier_name: Barneo
+        product_name: Стеллажи или держатели для бутылок — два комплекта
+        source_url: https://www.barneo.ru/product/derzhatel-dlya-6ti-butylok-nastolnyi-p-l-barbossa-81259114
+        additional_urls: []
+        observed_unit_price_rub: 15299
+        availability_status: quote_required; availability_not_checked
+        checked_at: 2026-08-05T18:14:24.000Z
+        price_includes_vat: null
+        delivery_included: null
+        confidence: medium
+        notes: Два комплекта по 15299 RUB. Включается только при alcohol_enabled == true; один включённый MOD-BAR без алкогольного направления позицию не добавляет.
+        quantity: 2
+        quantity_basis: research_assumption
+        line_total_rub: 30598
+      scale_ready:
+        source_id: SRC-PRICE-20260805-BOTTLE-HOLDERS-SCALE-READY
+        source_type: owner_approved_research_estimate
+        source_location: docs-platform/changelog/payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01-approved.yaml
+        supplier_name: Barneo
+        product_name: Стеллажи или держатели для бутылок — три комплекта
+        source_url: https://www.barneo.ru/product/derzhatel-dlya-6ti-butylok-nastolnyi-p-l-barbossa-81259114
+        additional_urls: []
+        observed_unit_price_rub: 15299
+        availability_status: quote_required; availability_not_checked
+        checked_at: 2026-08-05T18:14:24.000Z
+        price_includes_vat: null
+        delivery_included: null
+        confidence: medium
+        notes: Три комплекта по 15299 RUB. Включается только при alcohol_enabled == true; один включённый MOD-BAR без алкогольного направления позицию не добавляет.
+        quantity: 3
+        quantity_basis: research_assumption
+        line_total_rub: 45897
+    notes: Включается только при alcohol_enabled == true; один включённый MOD-BAR без алкогольного направления позицию не добавляет.
   - item_id: CAPEX-02-055
     module_id: MOD-BAR
-    valuation_status: quote_required
+    valuation_status: priced
     quote_status: quote_required
     high_risk: true
-    risk_reason: Опциональное алкогольное направление не утверждено и требования к закрываемой зоне не определены.
+    risk_reason: Требуется подтвердить точное исполнение закрываемой зоны хранения и получить коммерческое предложение.
     scenarios:
-      minimum: null
-      base: null
-      scale_ready: null
-    notes: Закрываемая зона хранения алкоголя остаётся без цены.
+      minimum:
+        source_id: SRC-PRICE-20260805-ALCOHOL-STORAGE-MINIMUM
+        source_type: owner_approved_research_estimate
+        source_location: docs-platform/changelog/payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01-approved.yaml
+        supplier_name: КЛЕН
+        product_name: Закрываемая зона хранения алкогольной продукции — минимальная комплектация
+        source_url: https://www.klenmarket.ru/shop/equipment/neutral-equipment/wardrobes-for-clothes-and-bags/stellazh-stk-363500-zakrytyi/
+        additional_urls: []
+        observed_unit_price_rub: 58443
+        availability_status: quote_required; availability_not_checked
+        checked_at: 2026-08-05T18:14:24.000Z
+        price_includes_vat: null
+        delivery_included: null
+        confidence: medium
+        notes: Одна единица. Перед закупкой подтвердить наличие замка или возможность установки замка, соответствующего принятой схеме хранения алкогольной продукции. Включается только при alcohol_enabled == true.
+        quantity: 1
+        quantity_basis: research_assumption
+        line_total_rub: 58443
+      base:
+        source_id: SRC-PRICE-20260805-ALCOHOL-STORAGE-BASE
+        source_type: owner_approved_research_estimate
+        source_location: docs-platform/changelog/payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01-approved.yaml
+        supplier_name: КЛЕН
+        product_name: Закрываемая зона хранения алкогольной продукции — базовая комплектация
+        source_url: https://www.klenmarket.ru/shop/equipment/neutral-equipment/wardrobes-for-clothes-and-bags/stellazh-stk-363500-zakrytyi/
+        additional_urls: []
+        observed_unit_price_rub: 83284
+        availability_status: quote_required; availability_not_checked
+        checked_at: 2026-08-05T18:14:24.000Z
+        price_includes_vat: null
+        delivery_included: null
+        confidence: medium
+        notes: Одна единица. Перед закупкой подтвердить наличие замка или возможность установки замка, соответствующего принятой схеме хранения алкогольной продукции. Включается только при alcohol_enabled == true.
+        quantity: 1
+        quantity_basis: research_assumption
+        line_total_rub: 83284
+      scale_ready:
+        source_id: SRC-PRICE-20260805-ALCOHOL-STORAGE-SCALE-READY
+        source_type: owner_approved_research_estimate
+        source_location: docs-platform/changelog/payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01-approved.yaml
+        supplier_name: КЛЕН
+        product_name: Закрываемая зона хранения алкогольной продукции — комплектация с запасом для роста
+        source_url: https://www.klenmarket.ru/shop/equipment/neutral-equipment/wardrobes-for-clothes-and-bags/stellazh-stk-363500-zakrytyi/
+        additional_urls: []
+        observed_unit_price_rub: 116874
+        availability_status: quote_required; availability_not_checked
+        checked_at: 2026-08-05T18:14:24.000Z
+        price_includes_vat: null
+        delivery_included: null
+        confidence: medium
+        notes: Одна единица. Перед закупкой подтвердить наличие замка или возможность установки замка, соответствующего принятой схеме хранения алкогольной продукции. Включается только при alcohol_enabled == true.
+        quantity: 1
+        quantity_basis: research_assumption
+        line_total_rub: 116874
+    notes: Перед закупкой подтвердить наличие замка или возможность установки замка, соответствующего принятой схеме хранения алкогольной продукции. Включается только при alcohol_enabled == true.
   - item_id: CAPEX-02-056
     module_id: MOD-RETAIL-HOT
     valuation_status: priced
@@ -2580,26 +2988,26 @@ items:
     notes: "Композит: машина 214 410 ₽ + предмоечный стол 48 486 ₽ + выходной стол 23 128 ₽ + три кассеты 6 207 ₽ + умягчитель 11 870,33 ₽. Доставка, монтаж, химия, вода, канализация и электрическое подключение не включены."
 summary:
   eligible_procurement_record_count: 51
-  priced_record_count: 43
-  unpriced_record_count: 8
+  priced_record_count: 51
+  unpriced_record_count: 0
   quote_required_count: 27
   totals_rub:
-    minimum: 3058399.33
-    base: 4150659.33
-    scale_ready: 5375662.79
+    minimum: 4085990.33
+    base: 5488047.33
+    scale_ready: 6915980.79
   module_totals_rub:
     MOD-PREP:
-      minimum: 1446975
-      base: 2261209
-      scale_ready: 2959881
+      minimum: 2051324
+      base: 3094715
+      scale_ready: 3877428
     MOD-RETAIL-HOT:
-      minimum: 525516
-      base: 618877
-      scale_ready: 730497
+      minimum: 875016
+      base: 1008877
+      scale_ready: 1190497
     MOD-BAR:
-      minimum: 332007
-      base: 423472
-      scale_ready: 590383.46
+      minimum: 405749
+      base: 537354
+      scale_ready: 753154.46
     MOD-GROW:
       minimum: 238000
       base: 258000
@@ -2627,6 +3035,12 @@ summary:
     - item_id: CAPEX-01-009
       module_id: MOD-PREP
       line_total_rub: 436564
+    - item_id: CAPEX-01-002
+      module_id: MOD-PREP
+      line_total_rub: 429679
+    - item_id: CAPEX-01-001
+      module_id: MOD-PREP
+      line_total_rub: 328655
     - item_id: CAPEX-02-056
       module_id: MOD-RETAIL-HOT
       line_total_rub: 309760
@@ -2639,18 +3053,12 @@ summary:
     - item_id: CAPEX-03-001
       module_id: MOD-GROW
       line_total_rub: 258000
+    - item_id: CAPEX-02-003
+      module_id: MOD-RETAIL-HOT
+      line_total_rub: 240000
     - item_id: CAPEX-01-043
       module_id: MOD-PREP
       line_total_rub: 234270
-    - item_id: CAPEX-02-010
-      module_id: MOD-BAR
-      line_total_rub: 199000
-    - item_id: CAPEX-02-004
-      module_id: MOD-RETAIL-HOT
-      line_total_rub: 153287
-    - item_id: CAPEX-04-003
-      module_id: MOD-KDS
-      line_total_rub: 142500
   high_risk_item_ids:
     - CAPEX-01-001
     - CAPEX-01-002

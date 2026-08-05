@@ -17,6 +17,7 @@ import {
   type ModularSources,
 } from "../src/capex/modular.js";
 import { CAPEX_REGISTER_SOURCE_SHA256, readRegister } from "../src/capex/register.js";
+import { REMAINING_PRICE_DECISION_ID } from "../src/capex/remaining-price-workflow.js";
 
 const platform = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 const register = readRegister();
@@ -145,7 +146,7 @@ test("numeric fields contain no tbd and preliminary prices do not alter CAPEX-05
   for (const item of register.equipment) {
     for (const field of ["quantity_min", "quantity_base", "quantity_scale_ready", "power_kw", "voltage", "price_min", "price_base", "price_max"] as const) assert.equal(typeof item[field] === "string", false, `${item.item_id}.${field}`);
   }
-  assert.equal(register.equipment.filter(item => item.price_base !== null).length, 43);
+  assert.equal(register.equipment.filter(item => item.price_base !== null).length, 51);
   assert.equal(register.equipment.filter(item => item.item_id.startsWith("CAPEX-05-")).every(item => item.price_min === null && item.price_base === null && item.price_max === null && item.supplier === null), true);
   assert.doesNotMatch(fs.readFileSync(path.join(platform, "working", "capex-equipment-register.yaml"), "utf8"), /итоговый CAPEX:\s*\d/i);
 });
@@ -167,7 +168,7 @@ test("approved payload hash is exact and source CAPEX Markdown remains unchanged
   assert.equal(modularPayloadHash(payload.equipment_register, historicalSources), payloadHash);
   assert.equal(payload.equipment_register.document.decision_id, "DEC-008");
   assert.equal(payload.equipment_register.equipment.every((item: { price_base: number | null }) => item.price_base === null), true);
-  assert.equal(register.document.decision_id, "DEC-011");
+  assert.equal(register.document.decision_id, REMAINING_PRICE_DECISION_ID);
 });
 
 test("pilot configuration includes one deduplicated wash system and the approved optional modules", () => {

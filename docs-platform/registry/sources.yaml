@@ -1152,3 +1152,228 @@ sources:
     accessed_at: 2026-08-05
     reliability: primary
     notes: Содержит полный точный payload восьми категорий, их суммы, итог 11000000 RUB, правила ручного режима и связь с резервом. Внешнее исследование и самостоятельный подбор значений прямо запрещены.
+  - id: SRC-CAPEX-REMAINING-PRICE-IMPLEMENTATION-BRIEF
+    title: Задание на реализацию оставшихся research-цен CAPEX
+    type: instruction
+    location: User instruction, 2026-08-05
+    publisher: project owner
+    publication_date: 2026-08-05
+    accessed_at: 2026-08-05
+    reliability: primary
+    notes: Содержит точные цены восьми существующих позиций, условие alcohol_enabled, запрет двойного учёта вытяжного зонта и новые подписи плотности. Интернет-исследование прямо запрещено.
+  - id: SRC-PRICE-20260805-COLD-ROOM-MINIMUM
+    title: Холодильная камера около 8,8 м³ с ориентировочно подобранной холодильной машиной · minimum
+    type: owner_approved_research_estimate
+    location: https://www.polair-shop.ru/catalog/holodylnye_kamery/polair_standart2/kxh-8.81/
+    publisher: Polair Shop
+    publication_date: null
+    accessed_at: 2026-08-05T18:14:24.000Z
+    reliability: medium
+    notes: "Research-ориентир из утверждённого payload ITR-CAPEX-REMAINING-PRICES-2026-08-05-01. Цена единицы: 263919 RUB; количество: 1; сумма строки: 263919 RUB. Статус: quote_required. Наличие: quote_required; availability_not_checked. Переданная владельцем техническая ссылка: https://www.polair-shop.ru/catalog/holodylnye_kamery/polair_standart2/kxh-8.81/. Ориентировочная площадь пола около 5 м²; ориентировочный объём около 8,8 м³. Цена учитывает камеру и ориентировочно подобранную холодильную машину. Не включает доставку, разгрузку, сборку камеры, монтаж холодильной машины, холодильные трассы, заправку, пусконаладку и внутренние стеллажи."
+  - id: SRC-PRICE-20260805-COLD-ROOM-BASE
+    title: Холодильная камера около 15,9 м³ с ориентировочно подобранной холодильной машиной · base
+    type: owner_approved_research_estimate
+    location: https://www.polair-shop.ru/catalog/holodylnye_kamery/polair_standart2/kxh-8.81/
+    publisher: Polair Shop
+    publication_date: null
+    accessed_at: 2026-08-05T18:14:24.000Z
+    reliability: medium
+    notes: "Research-ориентир из утверждённого payload ITR-CAPEX-REMAINING-PRICES-2026-08-05-01. Цена единицы: 328655 RUB; количество: 1; сумма строки: 328655 RUB. Статус: quote_required. Наличие: quote_required; availability_not_checked. Переданная владельцем техническая ссылка: https://www.polair-shop.ru/catalog/holodylnye_kamery/polair_standart2/kxh-8.81/. Ориентировочная площадь пола около 7,5–8 м²; ориентировочный объём около 15,9 м³. Цена учитывает камеру и ориентировочно подобранную холодильную машину. Не включает доставку, разгрузку, сборку камеры, монтаж холодильной машины, холодильные трассы, заправку, пусконаладку и внутренние стеллажи."
+  - id: SRC-PRICE-20260805-COLD-ROOM-SCALE-READY
+    title: Холодильная камера около 20 м³ с ориентировочно подобранной холодильной машиной · scale_ready
+    type: owner_approved_research_estimate
+    location: https://www.polair-shop.ru/catalog/holodylnye_kamery/polair_standart2/kxh-8.81/
+    publisher: Polair Shop
+    publication_date: null
+    accessed_at: 2026-08-05T18:14:24.000Z
+    reliability: medium
+    notes: "Research-ориентир из утверждённого payload ITR-CAPEX-REMAINING-PRICES-2026-08-05-01. Цена единицы: 358788 RUB; количество: 1; сумма строки: 358788 RUB. Статус: quote_required. Наличие: quote_required; availability_not_checked. Переданная владельцем техническая ссылка: https://www.polair-shop.ru/catalog/holodylnye_kamery/polair_standart2/kxh-8.81/. Ориентировочная площадь пола около 10 м²; ориентировочный объём около 20 м³. Цена учитывает камеру и ориентировочно подобранную холодильную машину. Не включает доставку, разгрузку, сборку камеры, монтаж холодильной машины, холодильные трассы, заправку, пусконаладку и внутренние стеллажи."
+  - id: SRC-PRICE-20260805-FREEZER-ROOM-MINIMUM
+    title: Морозильная камера около 8,8 м³ с ориентировочно подобранной низкотемпературной машиной · minimum
+    type: owner_approved_research_estimate
+    location: https://polair.shop/kholodilnye-kamery/kamery-kholodilnye-polair-standard/polair-kkhn-8-81-professionale/
+    publisher: Polair
+    publication_date: null
+    accessed_at: 2026-08-05T18:14:24.000Z
+    reliability: medium
+    notes: "Research-ориентир из утверждённого payload ITR-CAPEX-REMAINING-PRICES-2026-08-05-01. Цена единицы: 307521 RUB; количество: 1; сумма строки: 307521 RUB. Статус: quote_required. Наличие: quote_required; availability_not_checked. Переданная владельцем техническая ссылка: https://polair.shop/kholodilnye-kamery/kamery-kholodilnye-polair-standard/polair-kkhn-8-81-professionale/. Ориентировочная площадь пола около 5 м²; объём камеры около 8,8 м³. Цена учитывает камеру с теплоизоляционными панелями и ориентировочно подобранную низкотемпературную машину. Не включает доставку, сборку, трассы, монтаж, заправку, пусконаладку, внутренние стеллажи и дополнительные устройства двери и выравнивания давления, если они потребуются."
+  - id: SRC-PRICE-20260805-FREEZER-ROOM-BASE
+    title: Морозильная камера около 15,9 м³ с ориентировочно подобранной низкотемпературной машиной · base
+    type: owner_approved_research_estimate
+    location: https://polair.shop/kholodilnye-kamery/kamery-kholodilnye-polair-standard/polair-kkhn-8-81-professionale/
+    publisher: Polair
+    publication_date: null
+    accessed_at: 2026-08-05T18:14:24.000Z
+    reliability: medium
+    notes: "Research-ориентир из утверждённого payload ITR-CAPEX-REMAINING-PRICES-2026-08-05-01. Цена единицы: 429679 RUB; количество: 1; сумма строки: 429679 RUB. Статус: quote_required. Наличие: quote_required; availability_not_checked. Переданная владельцем техническая ссылка: https://polair.shop/kholodilnye-kamery/kamery-kholodilnye-polair-standard/polair-kkhn-8-81-professionale/. Ориентировочная площадь пола около 8 м²; объём камеры около 15,9 м³. Цена учитывает камеру с теплоизоляционными панелями и ориентировочно подобранную низкотемпературную машину. Не включает доставку, сборку, трассы, монтаж, заправку, пусконаладку, внутренние стеллажи и дополнительные устройства двери и выравнивания давления, если они потребуются."
+  - id: SRC-PRICE-20260805-FREEZER-ROOM-SCALE-READY
+    title: Морозильная камера около 20 м³ с ориентировочно подобранной низкотемпературной машиной · scale_ready
+    type: owner_approved_research_estimate
+    location: https://polair.shop/kholodilnye-kamery/kamery-kholodilnye-polair-standard/polair-kkhn-8-81-professionale/
+    publisher: Polair
+    publication_date: null
+    accessed_at: 2026-08-05T18:14:24.000Z
+    reliability: medium
+    notes: "Research-ориентир из утверждённого payload ITR-CAPEX-REMAINING-PRICES-2026-08-05-01. Цена единицы: 465090 RUB; количество: 1; сумма строки: 465090 RUB. Статус: quote_required. Наличие: quote_required; availability_not_checked. Переданная владельцем техническая ссылка: https://polair.shop/kholodilnye-kamery/kamery-kholodilnye-polair-standard/polair-kkhn-8-81-professionale/. Ориентировочная площадь пола около 10 м²; объём камеры около 20 м³. Цена учитывает камеру с теплоизоляционными панелями и ориентировочно подобранную низкотемпературную машину. Не включает доставку, сборку, трассы, монтаж, заправку, пусконаладку, внутренние стеллажи и дополнительные устройства двери и выравнивания давления, если они потребуются."
+  - id: SRC-PRICE-20260805-EXHAUST-HOOD-MINIMUM
+    title: Один профессиональный пристенный вытяжной зонт · minimum
+    type: owner_approved_research_estimate
+    location: https://www.klenmarket.ru/shop/equipment/neutral-equipment/exhaust-umbrellas/zonty-pristennye/pristennye-vytiazhnye/zont-vytiazhnoi-pristennyi-hicold-zvpok-1010-285147-sm-art-mko/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-05T18:14:24.000Z
+    reliability: medium
+    notes: "Research-ориентир из утверждённого payload ITR-CAPEX-REMAINING-PRICES-2026-08-05-01. Цена единицы: 32909 RUB; количество: 1; сумма строки: 32909 RUB. Статус: quote_required. Наличие: quote_required; availability_not_checked. Переданная владельцем техническая ссылка: https://www.klenmarket.ru/shop/equipment/neutral-equipment/exhaust-umbrellas/zonty-pristennye/pristennye-vytiazhnye/zont-vytiazhnoi-pristennyi-hicold-zvpok-1010-285147-sm-art-mko/. Один профессиональный пристенный зонт. Входит в категорию подготовки помещения «Приточно-вытяжная вентиляция» на странице launch-budget и не суммируется там второй раз. В CAPEX Equipment Register и CAPEX Configurator цена сохраняется."
+  - id: SRC-PRICE-20260805-EXHAUST-HOOD-BASE
+    title: Система из двух вытяжных зонтов или сопоставимая конфигурация · base
+    type: owner_approved_research_estimate
+    location: https://www.klenmarket.ru/shop/equipment/neutral-equipment/exhaust-umbrellas/zonty-pristennye/pristennye-vytiazhnye/zont-vytiazhnoi-pristennyi-hicold-zvpok-1010-285147-sm-art-mko/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-05T18:14:24.000Z
+    reliability: medium
+    notes: "Research-ориентир из утверждённого payload ITR-CAPEX-REMAINING-PRICES-2026-08-05-01. Цена единицы: 75172 RUB; количество: 1; сумма строки: 75172 RUB. Статус: quote_required. Наличие: quote_required; availability_not_checked. Переданная владельцем техническая ссылка: https://www.klenmarket.ru/shop/equipment/neutral-equipment/exhaust-umbrellas/zonty-pristennye/pristennye-vytiazhnye/zont-vytiazhnoi-pristennyi-hicold-zvpok-1010-285147-sm-art-mko/. Система из двух зонтов или сопоставимая конфигурация. Входит в категорию подготовки помещения «Приточно-вытяжная вентиляция» на странице launch-budget и не суммируется там второй раз. В CAPEX Equipment Register и CAPEX Configurator цена сохраняется."
+  - id: SRC-PRICE-20260805-EXHAUST-HOOD-SCALE-READY
+    title: Более крупная островная или расширенная система вытяжных зонтов · scale_ready
+    type: owner_approved_research_estimate
+    location: https://www.klenmarket.ru/shop/equipment/neutral-equipment/exhaust-umbrellas/zonty-pristennye/pristennye-vytiazhnye/zont-vytiazhnoi-pristennyi-hicold-zvpok-1010-285147-sm-art-mko/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-05T18:14:24.000Z
+    reliability: medium
+    notes: "Research-ориентир из утверждённого payload ITR-CAPEX-REMAINING-PRICES-2026-08-05-01. Цена единицы: 93669 RUB; количество: 1; сумма строки: 93669 RUB. Статус: quote_required. Наличие: quote_required; availability_not_checked. Переданная владельцем техническая ссылка: https://www.klenmarket.ru/shop/equipment/neutral-equipment/exhaust-umbrellas/zonty-pristennye/pristennye-vytiazhnye/zont-vytiazhnoi-pristennyi-hicold-zvpok-1010-285147-sm-art-mko/. Более крупная островная или расширенная система. Входит в категорию подготовки помещения «Приточно-вытяжная вентиляция» на странице launch-budget и не суммируется там второй раз. В CAPEX Equipment Register и CAPEX Configurator цена сохраняется."
+  - id: SRC-PRICE-20260805-GAS-KOLOBOK-GRILL-MINIMUM
+    title: Газовый гриль для колобков — две установки · minimum
+    type: owner_approved_research_estimate
+    location: docs-platform/changelog/payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01-approved.yaml
+    publisher: project owner
+    publication_date: null
+    accessed_at: 2026-08-05T18:14:24.000Z
+    reliability: low
+    notes: "Research-ориентир из утверждённого payload ITR-CAPEX-REMAINING-PRICES-2026-08-05-01. Цена единицы: 30000 RUB; количество: 2; сумма строки: 60000 RUB. Статус: quote_required. Наличие: quote_required; supplier_card_absent. Точная товарная карточка отсутствует; фиктивный URL не создавался. Две установки по 30000 RUB за единицу. Две двухсекционные газовые установки; по 32 лунки на секцию, 4 ряда × 8 лунок на секцию, 64 лунки на одну установку. Фиктивная товарная ссылка не создаётся."
+  - id: SRC-PRICE-20260805-GAS-KOLOBOK-GRILL-BASE
+    title: Газовый гриль для колобков — две установки · base
+    type: owner_approved_research_estimate
+    location: docs-platform/changelog/payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01-approved.yaml
+    publisher: project owner
+    publication_date: null
+    accessed_at: 2026-08-05T18:14:24.000Z
+    reliability: low
+    notes: "Research-ориентир из утверждённого payload ITR-CAPEX-REMAINING-PRICES-2026-08-05-01. Цена единицы: 45000 RUB; количество: 2; сумма строки: 90000 RUB. Статус: quote_required. Наличие: quote_required; supplier_card_absent. Точная товарная карточка отсутствует; фиктивный URL не создавался. Две установки по 45000 RUB за единицу. Две двухсекционные газовые установки; по 32 лунки на секцию, 4 ряда × 8 лунок на секцию, 64 лунки на одну установку. Фиктивная товарная ссылка не создаётся."
+  - id: SRC-PRICE-20260805-GAS-KOLOBOK-GRILL-SCALE-READY
+    title: Газовый гриль для колобков — две установки · scale_ready
+    type: owner_approved_research_estimate
+    location: docs-platform/changelog/payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01-approved.yaml
+    publisher: project owner
+    publication_date: null
+    accessed_at: 2026-08-05T18:14:24.000Z
+    reliability: low
+    notes: "Research-ориентир из утверждённого payload ITR-CAPEX-REMAINING-PRICES-2026-08-05-01. Цена единицы: 60000 RUB; количество: 2; сумма строки: 120000 RUB. Статус: quote_required. Наличие: quote_required; supplier_card_absent. Точная товарная карточка отсутствует; фиктивный URL не создавался. Две установки по 60000 RUB за единицу. Две двухсекционные газовые установки; по 32 лунки на секцию, 4 ряда × 8 лунок на секцию, 64 лунки на одну установку. Фиктивная товарная ссылка не создаётся."
+  - id: SRC-PRICE-20260805-MANCHES-GRILL-MINIMUM
+    title: Гриль для Манчеса — три установки · minimum
+    type: owner_approved_research_estimate
+    location: https://sintezf.com/shop/product/vafelnica-dlya-ufo-burgerov-hkn-ges15-vrashchayushchayasya/20546
+    publisher: Синтез Форм
+    publication_date: null
+    accessed_at: 2026-08-05T18:14:24.000Z
+    reliability: medium
+    notes: "Research-ориентир из утверждённого payload ITR-CAPEX-REMAINING-PRICES-2026-08-05-01. Цена единицы: 16500 RUB; количество: 3; сумма строки: 49500 RUB. Статус: quote_required. Наличие: quote_required; availability_not_checked. Переданная владельцем техническая ссылка: https://sintezf.com/shop/product/vafelnica-dlya-ufo-burgerov-hkn-ges15-vrashchayushchayasya/20546. Три установки по 16500 RUB за единицу. В техническом описании используется UFO-гриль Hurakan HKN-GES15 или профессиональный аналог. Канонический термин «Манчес» сохраняется."
+  - id: SRC-PRICE-20260805-MANCHES-GRILL-BASE
+    title: Гриль для Манчеса — три установки · base
+    type: owner_approved_research_estimate
+    location: https://sintezf.com/shop/product/vafelnica-dlya-ufo-burgerov-hkn-ges15-vrashchayushchayasya/20546
+    publisher: Синтез Форм
+    publication_date: null
+    accessed_at: 2026-08-05T18:14:24.000Z
+    reliability: medium
+    notes: "Research-ориентир из утверждённого payload ITR-CAPEX-REMAINING-PRICES-2026-08-05-01. Цена единицы: 20000 RUB; количество: 3; сумма строки: 60000 RUB. Статус: quote_required. Наличие: quote_required; availability_not_checked. Переданная владельцем техническая ссылка: https://sintezf.com/shop/product/vafelnica-dlya-ufo-burgerov-hkn-ges15-vrashchayushchayasya/20546. Три установки по 20000 RUB за единицу. В техническом описании используется UFO-гриль Hurakan HKN-GES15 или профессиональный аналог. Канонический термин «Манчес» сохраняется."
+  - id: SRC-PRICE-20260805-MANCHES-GRILL-SCALE-READY
+    title: Гриль для Манчеса — четыре установки · scale_ready
+    type: owner_approved_research_estimate
+    location: https://sintezf.com/shop/product/vafelnica-dlya-ufo-burgerov-hkn-ges15-vrashchayushchayasya/20546
+    publisher: Синтез Форм
+    publication_date: null
+    accessed_at: 2026-08-05T18:14:24.000Z
+    reliability: medium
+    notes: "Research-ориентир из утверждённого payload ITR-CAPEX-REMAINING-PRICES-2026-08-05-01. Цена единицы: 25000 RUB; количество: 4; сумма строки: 100000 RUB. Статус: quote_required. Наличие: quote_required; availability_not_checked. Переданная владельцем техническая ссылка: https://sintezf.com/shop/product/vafelnica-dlya-ufo-burgerov-hkn-ges15-vrashchayushchayasya/20546. Четыре установки по 25000 RUB за единицу. В техническом описании используется UFO-гриль Hurakan HKN-GES15 или профессиональный аналог. Канонический термин «Манчес» сохраняется."
+  - id: SRC-PRICE-20260805-FILLING-DOSERS-MINIMUM
+    title: Профессиональные ручные шприцы или пистолеты-дозаторы — 24 единицы · minimum
+    type: owner_approved_research_estimate
+    location: https://www.klenmarket.ru/shop/equipment/technological-equipment/shpritsy-kolbasnye/shprits-kolbasnyi-hurakan-hkn-isv3/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-05T18:14:24.000Z
+    reliability: medium
+    notes: "Research-ориентир из утверждённого payload ITR-CAPEX-REMAINING-PRICES-2026-08-05-01. Цена единицы: 10000 RUB; количество: 24; сумма строки: 240000 RUB. Статус: quote_required. Наличие: quote_required; nearest_technical_reference_only. Переданная владельцем техническая ссылка: https://www.klenmarket.ru/shop/equipment/technological-equipment/shpritsy-kolbasnye/shprits-kolbasnyi-hurakan-hkn-isv3/. 8 начинок × 2 одновременно работающих комплекта + 8 резервных дозаторов; 10000 RUB за единицу. До закупки проверить, требуется ли 24 самостоятельных корпуса либо рациональнее использовать меньшее количество дозаторов со сменными герметичными цилиндрами или картриджами."
+  - id: SRC-PRICE-20260805-FILLING-DOSERS-BASE
+    title: Профессиональные ручные шприцы или пистолеты-дозаторы — 24 единицы · base
+    type: owner_approved_research_estimate
+    location: https://www.klenmarket.ru/shop/equipment/technological-equipment/shpritsy-kolbasnye/shprits-kolbasnyi-hurakan-hkn-isv3/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-05T18:14:24.000Z
+    reliability: medium
+    notes: "Research-ориентир из утверждённого payload ITR-CAPEX-REMAINING-PRICES-2026-08-05-01. Цена единицы: 10000 RUB; количество: 24; сумма строки: 240000 RUB. Статус: quote_required. Наличие: quote_required; nearest_technical_reference_only. Переданная владельцем техническая ссылка: https://www.klenmarket.ru/shop/equipment/technological-equipment/shpritsy-kolbasnye/shprits-kolbasnyi-hurakan-hkn-isv3/. 8 начинок × 2 одновременно работающих комплекта + 8 резервных дозаторов; 10000 RUB за единицу. До закупки проверить, требуется ли 24 самостоятельных корпуса либо рациональнее использовать меньшее количество дозаторов со сменными герметичными цилиндрами или картриджами."
+  - id: SRC-PRICE-20260805-FILLING-DOSERS-SCALE-READY
+    title: Профессиональные ручные шприцы или пистолеты-дозаторы — 24 единицы · scale_ready
+    type: owner_approved_research_estimate
+    location: https://www.klenmarket.ru/shop/equipment/technological-equipment/shpritsy-kolbasnye/shprits-kolbasnyi-hurakan-hkn-isv3/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-05T18:14:24.000Z
+    reliability: medium
+    notes: "Research-ориентир из утверждённого payload ITR-CAPEX-REMAINING-PRICES-2026-08-05-01. Цена единицы: 10000 RUB; количество: 24; сумма строки: 240000 RUB. Статус: quote_required. Наличие: quote_required; nearest_technical_reference_only. Переданная владельцем техническая ссылка: https://www.klenmarket.ru/shop/equipment/technological-equipment/shpritsy-kolbasnye/shprits-kolbasnyi-hurakan-hkn-isv3/. 8 начинок × 2 одновременно работающих комплекта + 8 резервных дозаторов; 10000 RUB за единицу. До закупки проверить, требуется ли 24 самостоятельных корпуса либо рациональнее использовать меньшее количество дозаторов со сменными герметичными цилиндрами или картриджами."
+  - id: SRC-PRICE-20260805-BOTTLE-HOLDERS-MINIMUM
+    title: Стеллажи или держатели для бутылок — один комплект · minimum
+    type: owner_approved_research_estimate
+    location: https://www.barneo.ru/product/derzhatel-dlya-6ti-butylok-nastolnyi-p-l-barbossa-81259114
+    publisher: Barneo
+    publication_date: null
+    accessed_at: 2026-08-05T18:14:24.000Z
+    reliability: medium
+    notes: "Research-ориентир из утверждённого payload ITR-CAPEX-REMAINING-PRICES-2026-08-05-01. Цена единицы: 15299 RUB; количество: 1; сумма строки: 15299 RUB. Статус: quote_required. Наличие: quote_required; availability_not_checked. Переданная владельцем техническая ссылка: https://www.barneo.ru/product/derzhatel-dlya-6ti-butylok-nastolnyi-p-l-barbossa-81259114. Один комплект по 15299 RUB. Включается только при alcohol_enabled == true; один включённый MOD-BAR без алкогольного направления позицию не добавляет."
+  - id: SRC-PRICE-20260805-BOTTLE-HOLDERS-BASE
+    title: Стеллажи или держатели для бутылок — два комплекта · base
+    type: owner_approved_research_estimate
+    location: https://www.barneo.ru/product/derzhatel-dlya-6ti-butylok-nastolnyi-p-l-barbossa-81259114
+    publisher: Barneo
+    publication_date: null
+    accessed_at: 2026-08-05T18:14:24.000Z
+    reliability: medium
+    notes: "Research-ориентир из утверждённого payload ITR-CAPEX-REMAINING-PRICES-2026-08-05-01. Цена единицы: 15299 RUB; количество: 2; сумма строки: 30598 RUB. Статус: quote_required. Наличие: quote_required; availability_not_checked. Переданная владельцем техническая ссылка: https://www.barneo.ru/product/derzhatel-dlya-6ti-butylok-nastolnyi-p-l-barbossa-81259114. Два комплекта по 15299 RUB. Включается только при alcohol_enabled == true; один включённый MOD-BAR без алкогольного направления позицию не добавляет."
+  - id: SRC-PRICE-20260805-BOTTLE-HOLDERS-SCALE-READY
+    title: Стеллажи или держатели для бутылок — три комплекта · scale_ready
+    type: owner_approved_research_estimate
+    location: https://www.barneo.ru/product/derzhatel-dlya-6ti-butylok-nastolnyi-p-l-barbossa-81259114
+    publisher: Barneo
+    publication_date: null
+    accessed_at: 2026-08-05T18:14:24.000Z
+    reliability: medium
+    notes: "Research-ориентир из утверждённого payload ITR-CAPEX-REMAINING-PRICES-2026-08-05-01. Цена единицы: 15299 RUB; количество: 3; сумма строки: 45897 RUB. Статус: quote_required. Наличие: quote_required; availability_not_checked. Переданная владельцем техническая ссылка: https://www.barneo.ru/product/derzhatel-dlya-6ti-butylok-nastolnyi-p-l-barbossa-81259114. Три комплекта по 15299 RUB. Включается только при alcohol_enabled == true; один включённый MOD-BAR без алкогольного направления позицию не добавляет."
+  - id: SRC-PRICE-20260805-ALCOHOL-STORAGE-MINIMUM
+    title: Закрываемая зона хранения алкогольной продукции — минимальная комплектация · minimum
+    type: owner_approved_research_estimate
+    location: https://www.klenmarket.ru/shop/equipment/neutral-equipment/wardrobes-for-clothes-and-bags/stellazh-stk-363500-zakrytyi/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-05T18:14:24.000Z
+    reliability: medium
+    notes: "Research-ориентир из утверждённого payload ITR-CAPEX-REMAINING-PRICES-2026-08-05-01. Цена единицы: 58443 RUB; количество: 1; сумма строки: 58443 RUB. Статус: quote_required. Наличие: quote_required; availability_not_checked. Переданная владельцем техническая ссылка: https://www.klenmarket.ru/shop/equipment/neutral-equipment/wardrobes-for-clothes-and-bags/stellazh-stk-363500-zakrytyi/. Одна единица. Перед закупкой подтвердить наличие замка или возможность установки замка, соответствующего принятой схеме хранения алкогольной продукции. Включается только при alcohol_enabled == true."
+  - id: SRC-PRICE-20260805-ALCOHOL-STORAGE-BASE
+    title: Закрываемая зона хранения алкогольной продукции — базовая комплектация · base
+    type: owner_approved_research_estimate
+    location: https://www.klenmarket.ru/shop/equipment/neutral-equipment/wardrobes-for-clothes-and-bags/stellazh-stk-363500-zakrytyi/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-05T18:14:24.000Z
+    reliability: medium
+    notes: "Research-ориентир из утверждённого payload ITR-CAPEX-REMAINING-PRICES-2026-08-05-01. Цена единицы: 83284 RUB; количество: 1; сумма строки: 83284 RUB. Статус: quote_required. Наличие: quote_required; availability_not_checked. Переданная владельцем техническая ссылка: https://www.klenmarket.ru/shop/equipment/neutral-equipment/wardrobes-for-clothes-and-bags/stellazh-stk-363500-zakrytyi/. Одна единица. Перед закупкой подтвердить наличие замка или возможность установки замка, соответствующего принятой схеме хранения алкогольной продукции. Включается только при alcohol_enabled == true."
+  - id: SRC-PRICE-20260805-ALCOHOL-STORAGE-SCALE-READY
+    title: Закрываемая зона хранения алкогольной продукции — комплектация с запасом для роста · scale_ready
+    type: owner_approved_research_estimate
+    location: https://www.klenmarket.ru/shop/equipment/neutral-equipment/wardrobes-for-clothes-and-bags/stellazh-stk-363500-zakrytyi/
+    publisher: КЛЕН
+    publication_date: null
+    accessed_at: 2026-08-05T18:14:24.000Z
+    reliability: medium
+    notes: "Research-ориентир из утверждённого payload ITR-CAPEX-REMAINING-PRICES-2026-08-05-01. Цена единицы: 116874 RUB; количество: 1; сумма строки: 116874 RUB. Статус: quote_required. Наличие: quote_required; availability_not_checked. Переданная владельцем техническая ссылка: https://www.klenmarket.ru/shop/equipment/neutral-equipment/wardrobes-for-clothes-and-bags/stellazh-stk-363500-zakrytyi/. Одна единица. Перед закупкой подтвердить наличие замка или возможность установки замка, соответствующего принятой схеме хранения алкогольной продукции. Включается только при alcohol_enabled == true."

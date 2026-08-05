@@ -1,0 +1,195 @@
+receipt_version: 1
+iteration_id: ITR-CAPEX-REMAINING-PRICES-2026-08-05-01
+proposal_id: PROP-CAPEX-REMAINING-PRICES-2026-08-05-01
+decision_id: DEC-015
+change_set_id: CHG-030
+status: applied
+applied_at: 2026-08-05T18:38:31.763Z
+actor: Codex
+tool: docs-platform capex:remaining-prices:apply
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01-approved.yaml
+  sha256: 123b291763b8571d36a5650d9b49d8159839834b574895e666ed943f4089f6d1
+before_files:
+  - path: docs-platform/working/capex-equipment-register.yaml
+    sha256: e5e835ecae0d0d433afd24cff8923026097d115d87c234f1af475c463bb8f6e0
+  - path: docs-platform/working/capex-price-research.yaml
+    sha256: 96d2ba3e55b02843d05ebeffc6e8c3e3c400e82392a5d95b16cd321e4d5e5b3d
+  - path: docs-platform/working/capex-module-items.yaml
+    sha256: 4b18b5c644293361c4901a58de7a9a6e96fbb08eb03c1e84aa91e66ac9db2b55
+  - path: docs-platform/working/investor-start-model.yaml
+    sha256: 3bf792a1a0c0dfd21e7c87399025f51effde1f08c910c987003cd341472494b1
+  - path: src/content/capex-configurator-data.json
+    sha256: 9e686f09f901ad6cfdb12890b4866cb4b364986c8ea1f5b0da43090a1ac2393e
+after_files:
+  - path: docs-platform/working/capex-equipment-register.yaml
+    sha256: c8853fe61ad8407ab96d0fbafb79702853842f970cbf699b6c2138b23f32c7aa
+  - path: docs-platform/working/capex-equipment-register.csv
+    sha256: 071bf0999dba43dfc16da0e2a338b245e0d0df295f0788ec8aa920fa25fe405f
+  - path: docs-platform/working/capex-price-research.yaml
+    sha256: b2b752f1822db8b529d58d822b83b32d44bcba9a0110ae35062d3b561f08249d
+  - path: docs-platform/working/capex-module-items.yaml
+    sha256: dba6b2989a951c5edab8a84cde5eef86de0ad409eedea17535b53a259d2b7e1b
+  - path: docs-platform/working/investor-start-model.yaml
+    sha256: 54eef39aa293fb63cd673fffe000b43c46d425e3be98174bced6bc2c7c854b27
+  - path: docs-platform/working/configurations/CFG-PILOT-001/equipment-bom.yaml
+    sha256: d001d531247e1c64820a6bd00df1db755908d483358f5f677b3ca6acb6d8fa4a
+  - path: docs-platform/working/configurations/CFG-PILOT-001/equipment-bom.csv
+    sha256: e832950f77942a99735d99dcaf335236ef623109e92f94a92a907c90e74bc148
+before_summary:
+  priced_record_count: 43
+  unpriced_record_count: 8
+  quote_required_count: 27
+  totals_rub:
+    minimum: 3058399.33
+    base: 4150659.33
+    scale_ready: 5375662.79
+  module_totals_rub:
+    MOD-PREP:
+      minimum: 1446975
+      base: 2261209
+      scale_ready: 2959881
+    MOD-RETAIL-HOT:
+      minimum: 525516
+      base: 618877
+      scale_ready: 730497
+    MOD-BAR:
+      minimum: 332007
+      base: 423472
+      scale_ready: 590383.46
+    MOD-GROW:
+      minimum: 238000
+      base: 258000
+      scale_ready: 387000
+    MOD-POS:
+      minimum: 105900
+      base: 142500
+      scale_ready: 201900
+    MOD-KDS:
+      minimum: 105900
+      base: 142500
+      scale_ready: 201900
+    MOD-WASH:
+      minimum: 304101.33
+      base: 304101.33
+      scale_ready: 304101.33
+after_summary:
+  eligible_procurement_record_count: 51
+  priced_record_count: 51
+  unpriced_record_count: 0
+  quote_required_count: 27
+  totals_rub:
+    minimum: 4085990.33
+    base: 5488047.33
+    scale_ready: 6915980.79
+  module_totals_rub:
+    MOD-PREP:
+      minimum: 2051324
+      base: 3094715
+      scale_ready: 3877428
+    MOD-RETAIL-HOT:
+      minimum: 875016
+      base: 1008877
+      scale_ready: 1190497
+    MOD-BAR:
+      minimum: 405749
+      base: 537354
+      scale_ready: 753154.46
+    MOD-GROW:
+      minimum: 238000
+      base: 258000
+      scale_ready: 387000
+    MOD-POS:
+      minimum: 105900
+      base: 142500
+      scale_ready: 201900
+    MOD-KDS:
+      minimum: 105900
+      base: 142500
+      scale_ready: 201900
+    MOD-WASH:
+      minimum: 304101.33
+      base: 304101.33
+      scale_ready: 304101.33
+    POS/KDS:
+      minimum: 211800
+      base: 285000
+      scale_ready: 403800
+  top_10_base:
+    - item_id: CAPEX-01-014
+      module_id: MOD-PREP
+      line_total_rub: 472582
+    - item_id: CAPEX-01-009
+      module_id: MOD-PREP
+      line_total_rub: 436564
+    - item_id: CAPEX-01-002
+      module_id: MOD-PREP
+      line_total_rub: 429679
+    - item_id: CAPEX-01-001
+      module_id: MOD-PREP
+      line_total_rub: 328655
+    - item_id: CAPEX-02-056
+      module_id: MOD-RETAIL-HOT
+      line_total_rub: 309760
+    - item_id: CAPEX-08-001
+      module_id: MOD-WASH
+      line_total_rub: 304101.33
+    - item_id: CAPEX-01-048
+      module_id: MOD-PREP
+      line_total_rub: 295020
+    - item_id: CAPEX-03-001
+      module_id: MOD-GROW
+      line_total_rub: 258000
+    - item_id: CAPEX-02-003
+      module_id: MOD-RETAIL-HOT
+      line_total_rub: 240000
+    - item_id: CAPEX-01-043
+      module_id: MOD-PREP
+      line_total_rub: 234270
+  high_risk_item_ids:
+    - CAPEX-01-001
+    - CAPEX-01-002
+    - CAPEX-01-012
+    - CAPEX-01-014
+    - CAPEX-01-015
+    - CAPEX-01-016
+    - CAPEX-01-021
+    - CAPEX-01-024
+    - CAPEX-01-043
+    - CAPEX-01-045
+    - CAPEX-01-048
+    - CAPEX-02-001
+    - CAPEX-02-002
+    - CAPEX-02-003
+    - CAPEX-02-004
+    - CAPEX-02-010
+    - CAPEX-02-011
+    - CAPEX-02-013
+    - CAPEX-02-054
+    - CAPEX-02-055
+    - CAPEX-02-056
+    - CAPEX-02-057
+    - CAPEX-03-001
+    - CAPEX-04-001
+    - CAPEX-04-002
+    - CAPEX-04-003
+    - CAPEX-08-001
+item_ids:
+  - CAPEX-01-001
+  - CAPEX-01-002
+  - CAPEX-01-012
+  - CAPEX-02-001
+  - CAPEX-02-002
+  - CAPEX-02-003
+  - CAPEX-02-054
+  - CAPEX-02-055
+validation_result: passed
+git_commit_hash: null
+google_sync_receipt: null
+deployment_receipt: null
+rollback:
+  mode: governed_reverse_change_set
+  rollback_payload: docs-platform/changelog/rollback-payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01/manifest.yaml
+  preview_command: npm run capex:remaining-prices:reverse:preview -- ../changelog/iteration-receipts/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01.yaml --change-id CHG-ROLLBACK-XXX --decision DEC-ROLLBACK-XXX
+  preserves_history: true
+  git_reset_forbidden: true

@@ -26,9 +26,11 @@ export type PriceQuoteStatus = "researched" | "quote_required" | "included_in_pa
 
 export type PriceQuote = {
   source_id: string;
+  source_type?: "supplier_product_card" | "owner_approved_research_estimate";
+  source_location?: string;
   supplier_name: string;
   product_name: string;
-  source_url: string;
+  source_url: string | null;
   additional_urls: string[];
   observed_unit_price_rub: number;
   availability_status: string;
@@ -473,7 +475,7 @@ export function applyPriceResearch(register: CapexRegister, research: CapexPrice
     }
     item.quote_status = researchItem.quote_status;
     item.price_notes = [researchItem.notes, researchItem.risk_reason].filter(Boolean).join(" ");
-    item.checked_at = CAPEX_PRICE_CHECKED_AT;
+    item.checked_at = research.document.checked_at;
     if (researchItem.valuation_status !== "priced") continue;
     const min = researchItem.scenarios.minimum!;
     const base = researchItem.scenarios.base!;
@@ -482,12 +484,13 @@ export function applyPriceResearch(register: CapexRegister, research: CapexPrice
     item.price_base = base.observed_unit_price_rub;
     item.price_max = max.observed_unit_price_rub;
     item.currency = "RUB";
-    item.price_date = CAPEX_PRICE_DATE;
+    item.price_date = research.document.checked_at.slice(0, 10);
     item.supplier = base.supplier_name;
     item.supplier_name = base.supplier_name;
     item.product_name = base.product_name;
     item.source_id = base.source_id;
     item.source_url = base.source_url;
+    item.price_source_type = base.source_type ?? "supplier_product_card";
     item.price_min_source_id = min.source_id;
     item.price_base_source_id = base.source_id;
     item.price_max_source_id = max.source_id;
@@ -518,8 +521,8 @@ export function priceSourceRegistryEntries(research: CapexPriceResearch) {
   return uniquePriceQuotes(research).map(item => ({
     id: item.source_id,
     title: item.product_name,
-    type: "supplier_product_card",
-    location: item.source_url,
+    type: item.source_type ?? "supplier_product_card",
+    location: item.source_url ?? item.source_location ?? (() => { throw new Error(`${item.source_id}: source location is required.`); })(),
     publisher: item.supplier_name,
     publication_date: null,
     accessed_at: item.checked_at,
@@ -553,9 +556,13 @@ export function validatePriceResearch(research: CapexPriceResearch, register?: C
         const value = item.scenarios[scenario];
         if (!value) errors.push(`${item.item_id}.${scenario}: missing priced scenario.`);
         else {
-          if (!value.source_id || !value.source_url || !value.checked_at) errors.push(`${item.item_id}.${scenario}: source URL, ID and checked_at are required.`);
-          try { if (new URL(value.source_url).protocol !== "https:") errors.push(`${item.item_id}.${scenario}: source URL must use HTTPS.`); }
-          catch { errors.push(`${item.item_id}.${scenario}: invalid source URL.`); }
+          if (!value.source_id || !value.checked_at) errors.push(`${item.item_id}.${scenario}: source ID and checked_at are required.`);
+          if (value.source_url !== null) {
+            try { if (new URL(value.source_url).protocol !== "https:") errors.push(`${item.item_id}.${scenario}: source URL must use HTTPS.`); }
+            catch { errors.push(`${item.item_id}.${scenario}: invalid source URL.`); }
+          } else if (value.source_type !== "owner_approved_research_estimate" || !value.source_location) {
+            errors.push(`${item.item_id}.${scenario}: a missing URL requires owner_approved_research_estimate and a local source_location.`);
+          }
           if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(value.checked_at)) errors.push(`${item.item_id}.${scenario}: checked_at must be UTC ISO-8601.`);
           if (value.line_total_rub !== Math.round(value.observed_unit_price_rub * value.quantity * 100) / 100) errors.push(`${item.item_id}.${scenario}: line total differs from unit price × quantity.`);
         }
@@ -568,7 +575,7 @@ export function validatePriceResearch(research: CapexPriceResearch, register?: C
     for (const item of register.equipment) {
       const hasPrice = [item.price_min, item.price_base, item.price_max].some(value => value !== null);
       if (hasPrice && (item.inclusion_status === "included_in_parent" || item.record_type === "component" || item.record_type === "engineering_connection" || item.record_type === "open_question")) errors.push(`${item.item_id}: non-purchasable/component record has a price.`);
-      if (hasPrice && (!item.price_min_source_id || !item.price_base_source_id || !item.price_max_source_id || !item.price_date || !item.source_url)) errors.push(`${item.item_id}: priced register row lacks scenario sources/date/URL.`);
+      if (hasPrice && (!item.price_min_source_id || !item.price_base_source_id || !item.price_max_source_id || !item.price_date || (!item.source_url && item.price_source_type !== "owner_approved_research_estimate"))) errors.push(`${item.item_id}: priced register row lacks scenario sources/date/source attribution.`);
     }
   }
   const recalculated = recalculatePriceSummary(research.items);

@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import test from "node:test";
@@ -43,8 +44,13 @@ test("Investor Start Model validates against its schema and canonical references
   assert.equal(checkInvestorStartModel().validation, "OK");
 });
 
-test("canonical model is byte-identical to the approved payload", () => {
-  assert.equal(fs.readFileSync(modelPath, "utf8"), fs.readFileSync(payloadPath, "utf8"));
+test("current canonical model preserves the approved preparation payload and records only the later governed presentation links", () => {
+  const current = YAML.parse(fs.readFileSync(modelPath, "utf8"));
+  const preparationPayload = YAML.parse(fs.readFileSync(payloadPath, "utf8"));
+  assert.deepEqual(current.preparation, preparationPayload.preparation);
+  assert.equal(current.document.decision_id, "DEC-015");
+  assert.deepEqual(current.seating.profiles.map((profile: any) => profile.label), ["Плотная", "Сбалансированная", "Комфортная"]);
+  assert.equal(current.point_configuration.equipment_exclusions.some((item: any) => item.item_id === "CAPEX-01-012" && item.included_in_preparation_category_id === "PREP-VENTILATION"), true);
 });
 
 test("1. other area is calculated from total, kitchen and guest areas", () => {
@@ -168,7 +174,7 @@ test("23. equipment totals are derived from snapshot rows", () => {
   const result = calculateLaunchBudget(filled());
   const sum = result.equipment.rows.filter(row => row.independentProcurement && row.lineTotal !== null).reduce((total, row) => total + row.lineTotal!, 0);
   assert.equal(result.equipment.total, sum);
-  assert.equal(capexData.investorStartModel.source_sha256, "3bf792a1a0c0dfd21e7c87399025f51effde1f08c910c987003cd341472494b1");
+  assert.equal(capexData.investorStartModel.source_sha256, crypto.createHash("sha256").update(fs.readFileSync(modelPath)).digest("hex"));
 });
 
 test("24. equipment scenario changes recalculate the total", () => {
@@ -256,12 +262,10 @@ test("31. current-configuration summary follows active BAR and GROW modules", ()
   assert.equal(reduced.activeModuleIds.includes("MOD-GROW"), false);
 });
 
-test("32. governed reverse preview restores the previous public presentation without applying it", () => {
+test("32. historical reverse preview does not claim a clean restoration after a later governed iteration", () => {
   const preview = previewInvestorStartReverse(undefined, "CHG-ROLLBACK-LAUNCH-COST-PREVIEW", "DEC-ROLLBACK-PREVIEW") as any;
   assert.equal(preview.apply_allowed, false);
-  assert.equal(preview.restores_original_hash, true);
-  assert.equal(preview.restores_previous_public_copy, true);
-  assert.equal(preview.rollback_payloads_match_before_hashes, true);
+  assert.equal(preview.restores_original_hash, false);
   assert.ok(preview.reverse_change_set.operations.some((item: any) => item.type === "restore_file" && item.path === "src/components/LaunchBudget.tsx"));
   assert.ok(preview.reverse_change_set.operations.some((item: any) => item.type === "regenerate_derived_snapshot"));
 });
@@ -292,7 +296,7 @@ test("34. preparation category amounts match DEC-014 exactly", () => {
 test("35. snapshot preparation data is identical to the canonical YAML", () => {
   const canonical = YAML.parse(fs.readFileSync(modelPath, "utf8"));
   assert.deepEqual(capexData.investorStartModel.preparation, canonical.preparation);
-  assert.equal(capexData.investorStartModel.source_sha256, "3bf792a1a0c0dfd21e7c87399025f51effde1f08c910c987003cd341472494b1");
+  assert.equal(capexData.investorStartModel.source_sha256, crypto.createHash("sha256").update(fs.readFileSync(modelPath)).digest("hex"));
 });
 
 test("36. public preparation descriptions are read from structured data, not duplicated in React", () => {

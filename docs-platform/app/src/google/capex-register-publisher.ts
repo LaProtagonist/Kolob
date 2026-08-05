@@ -15,12 +15,14 @@ import {
 } from "../capex/register.js";
 import { readPriceResearch } from "../capex/price-research.js";
 import {
-  PILOT_CHANGE_ID,
   PILOT_CONFIGURATION_ID,
-  PILOT_DECISION_ID,
-  PILOT_GOOGLE_RECEIPT_PATH,
-  PILOT_ITERATION_ID,
 } from "../capex/pilot-expansion-workflow.js";
+import {
+  REMAINING_PRICE_CHANGE_ID,
+  REMAINING_PRICE_DECISION_ID,
+  REMAINING_PRICE_GOOGLE_RECEIPT_PATH,
+  REMAINING_PRICE_ITERATION_ID,
+} from "../capex/remaining-price-workflow.js";
 import {
   AGGREGATION_RULES,
   CAPEX_FORMAT_IDS,
@@ -54,7 +56,7 @@ const projectRoot = path.resolve(platformRoot, "..");
 const runtimePreviewPath = path.join(platformRoot, ".runtime", "capex-register-sheet-preview.json");
 const runtimeResultPath = path.join(platformRoot, ".runtime", "capex-register-sheet-result.json");
 const runtimeOverridePreviewPath = path.join(platformRoot, ".runtime", "capex-overrides-import-preview.json");
-export const capexSheetReceiptPath = path.resolve(projectRoot, PILOT_GOOGLE_RECEIPT_PATH);
+export const capexSheetReceiptPath = path.resolve(projectRoot, REMAINING_PRICE_GOOGLE_RECEIPT_PATH);
 
 type MatrixValue = string | number | boolean;
 type Matrix = MatrixValue[][];
@@ -70,8 +72,8 @@ type SheetPreview = {
   action: "update";
   google_file_id: string;
   google_file_id_masked: string;
-  decision_id: typeof PILOT_DECISION_ID;
-  iteration_id: typeof PILOT_ITERATION_ID;
+  decision_id: string;
+  iteration_id: string;
   source_yaml_path: string;
   source_yaml_sha256: string;
   source_record_count: number;
@@ -100,6 +102,7 @@ const EQUIPMENT_HEADER_OVERRIDES: Partial<Record<typeof EQUIPMENT_COLUMNS[number
   currency: "Валюта",
   supplier: "Поставщик",
   source_url: "Ссылка",
+  price_source_type: "Тип источника",
   checked_at: "Дата проверки",
   availability_status: "Наличие",
   quote_status: "Статус КП",
@@ -115,7 +118,7 @@ async function services() {
 }
 function mask(id: string) { return `${id.slice(0, 4)}…${id.slice(-4)}`; }
 function documentsRegistry() { return (YAML.parse(fs.readFileSync(path.join(platformRoot, "registry", "documents.yaml"), "utf8"))?.documents ?? []) as Array<{ id: string; google_file_id?: string | null; status: string }> ; }
-function approvedDecision() { return (YAML.parse(fs.readFileSync(path.join(platformRoot, "registry", "decisions.yaml"), "utf8"))?.decisions ?? []).some((item: { id: string; status: string }) => item.id === PILOT_DECISION_ID && item.status === "approved"); }
+function approvedDecision(decisionId: string) { return (YAML.parse(fs.readFileSync(path.join(platformRoot, "registry", "decisions.yaml"), "utf8"))?.decisions ?? []).some((item: { id: string; status: string }) => item.id === decisionId && item.status === "approved"); }
 
 async function resolveSpreadsheet(drive: drive_v3.Drive, config: GoogleConfig) {
   const registered = documentsRegistry().find(item => item.id === CAPEX_REGISTER_DOCUMENT_ID)?.google_file_id ?? null;
@@ -247,7 +250,7 @@ function bomRows(register: CapexRegister, sources: ModularSources): Matrix {
 export function sheetDatasets(register: CapexRegister, sources: ModularSources = readModularSources(), syncedAt = "1970-01-01T00:00:00.000Z", preserved: PreservedRows = { configurator: [], overrides: [] }): Dataset[] {
   const yamlHash = sha256(serializeRegister(register));
   const statistics = registerStatistics(register);
-  const priceResearch = register.document.decision_id === PILOT_DECISION_ID ? readPriceResearch() : null;
+  const priceResearch = readPriceResearch();
   const description: Matrix = [
     ["Поле", "Значение"],
     ["Название", "CAPEX Equipment Register / CAPEX — Реестр оснащения пилотного объекта"],
@@ -335,7 +338,7 @@ function validateCurrentTitles(titles: string[]) {
 async function computePreview() {
   const register = readRegister();
   const sources = readModularSources();
-  if (register.document.decision_id !== PILOT_DECISION_ID || register.document.iteration_id !== PILOT_ITERATION_ID) throw new Error("Google publication requires the canonical DEC-011 pilot state.");
+  if (register.document.decision_id !== REMAINING_PRICE_DECISION_ID || register.document.iteration_id !== REMAINING_PRICE_ITERATION_ID) throw new Error(`Google publication requires the canonical ${REMAINING_PRICE_DECISION_ID} remaining-price state.`);
   const errors = [...validateRegister(register), ...validateModularSources(register, sources)];
   if (errors.length) throw new Error(errors.join("\n"));
   const config = loadConfig();
@@ -347,7 +350,7 @@ async function computePreview() {
   validateCurrentTitles(titles);
   const base: Omit<SheetPreview, "preview_id" | "created_at" | "google_file_id_masked"> = {
     registry_id: CAPEX_REGISTER_DOCUMENT_ID, google_title: CAPEX_REGISTER_GOOGLE_TITLE, folder_name: config.projectFolderName, folder_check: "passed",
-    action: "update", google_file_id: remote.file.id, decision_id: PILOT_DECISION_ID, iteration_id: PILOT_ITERATION_ID,
+    action: "update", google_file_id: remote.file.id, decision_id: REMAINING_PRICE_DECISION_ID, iteration_id: REMAINING_PRICE_ITERATION_ID,
     source_yaml_path: "docs-platform/working/capex-equipment-register.yaml", source_yaml_sha256: sha256(serializeRegister(register)),
     source_record_count: register.document.source_record_count, equipment_record_count: register.document.equipment_record_count,
     mapped_record_count: register.document.mapped_record_count, unmapped_record_count: register.document.unmapped_record_count,
@@ -486,8 +489,8 @@ async function commentIds(drive: drive_v3.Drive, fileId: string) {
 }
 
 export async function applyCapexRegisterSheet(options: { apply: boolean; decisionId: string }) {
-  if (!options.apply || options.decisionId !== PILOT_DECISION_ID) throw new Error(`Apply requires --apply --decision ${PILOT_DECISION_ID}.`);
-  if (!approvedDecision()) throw new Error(`${PILOT_DECISION_ID} must be approved before Google apply.`);
+  if (!options.apply || options.decisionId !== REMAINING_PRICE_DECISION_ID) throw new Error(`Apply requires --apply --decision ${REMAINING_PRICE_DECISION_ID}.`);
+  if (!approvedDecision(REMAINING_PRICE_DECISION_ID)) throw new Error(`${REMAINING_PRICE_DECISION_ID} must be approved before Google apply.`);
   if (!fs.existsSync(runtimePreviewPath)) throw new Error("Google Sheet preview is missing. Run capex:sheet:preview first.");
   const saved = JSON.parse(fs.readFileSync(runtimePreviewPath, "utf8")) as SheetPreview;
   const { preview, register, sources } = await computePreview();
@@ -503,7 +506,7 @@ export async function applyCapexRegisterSheet(options: { apply: boolean; decisio
   if (JSON.stringify(commentsBefore) !== JSON.stringify(commentsAfter)) throw new Error("Drive comments changed during Google Sheet publication.");
   const statistics = registerStatistics(register);
   const receipt = {
-    receipt_version: 1, registry_id: CAPEX_REGISTER_DOCUMENT_ID, decision_id: PILOT_DECISION_ID, change_set_id: PILOT_CHANGE_ID, iteration_id: PILOT_ITERATION_ID,
+    receipt_version: 1, registry_id: CAPEX_REGISTER_DOCUMENT_ID, decision_id: REMAINING_PRICE_DECISION_ID, change_set_id: REMAINING_PRICE_CHANGE_ID, iteration_id: REMAINING_PRICE_ITERATION_ID,
     local_path: "docs-platform/working/capex-equipment-register.yaml", local_sha256: sha256(serializeRegister(register)), google_file_id: result.verified.id,
     google_mime_type: result.verified.mimeType, google_title: result.verified.name, web_view_link: result.verified.webViewLink, synced_at: syncedAt,
     action: "update", source_status: "research", source_version: "0.1", sheets: CAPEX_REGISTER_SHEET_NAMES,
@@ -512,13 +515,31 @@ export async function applyCapexRegisterSheet(options: { apply: boolean; decisio
     readback_hash: result.readback_hash, readback: "passed", comments_preserved: true,
     manual_override_rows_preserved: result.preserved_override_rows, manual_configurator_rows_preserved: result.preserved_configurator_rows,
     validation_status: "passed",
-    validation: { folder_guard: "passed", stable_item_order: "passed", native_google_sheet: true, localized_sheet_order: "passed", legacy_sheets_absent: true, numeric_tbd_absent: true, preliminary_prices_present: statistics.priced_record_count === 43, price_status_research: true, included_in_parent_unpriced: true, final_capex_not_approved: true },
+    validation: { folder_guard: "passed", stable_item_order: "passed", native_google_sheet: true, localized_sheet_order: "passed", legacy_sheets_absent: true, numeric_tbd_absent: true, preliminary_prices_present: statistics.priced_record_count === 51, price_status_research: true, included_in_parent_unpriced: true, final_capex_not_approved: true },
   };
-  if (fs.existsSync(capexSheetReceiptPath)) throw new Error("Google sync receipt for this iteration already exists; refusing to overwrite it.");
-  fs.mkdirSync(path.dirname(capexSheetReceiptPath), { recursive: true });
-  fs.writeFileSync(capexSheetReceiptPath, YAML.stringify(receipt, { lineWidth: 0 }));
   writeSecretJson(runtimeResultPath, receipt);
   console.log(JSON.stringify(receipt, null, 2));
+  return receipt;
+}
+
+export function finalizeCapexRegisterSheetReceipt(contentCommitHash: string) {
+  if (!/^[0-9a-f]{40}$/.test(contentCommitHash)) throw new Error("A full 40-character content commit hash is required.");
+  if (!fs.existsSync(runtimeResultPath)) throw new Error("Google Sheet runtime readback is missing. Run capex:sheet:apply first.");
+  if (fs.existsSync(capexSheetReceiptPath)) throw new Error("Google sync receipt for this iteration already exists; refusing to overwrite it.");
+  const runtime = JSON.parse(fs.readFileSync(runtimeResultPath, "utf8"));
+  if (runtime.iteration_id !== REMAINING_PRICE_ITERATION_ID || runtime.decision_id !== REMAINING_PRICE_DECISION_ID || runtime.readback !== "passed") throw new Error("Google Sheet runtime result does not match the current governed iteration.");
+  if (runtime.local_sha256 !== sha256(serializeRegister(readRegister()))) throw new Error("Local CAPEX source changed after Google readback.");
+  const receipt = {
+    ...runtime,
+    receipt_version: 2,
+    content_commit_hash: contentCommitHash,
+    local_source_sha256: runtime.local_sha256,
+    remote_readback_sha256: runtime.readback_hash,
+    result: "passed",
+  };
+  fs.mkdirSync(path.dirname(capexSheetReceiptPath), { recursive: true });
+  fs.writeFileSync(capexSheetReceiptPath, YAML.stringify(receipt, { lineWidth: 0 }));
+  console.log(JSON.stringify({ path: REMAINING_PRICE_GOOGLE_RECEIPT_PATH, iteration_id: receipt.iteration_id, content_commit_hash: receipt.content_commit_hash, result: receipt.result }, null, 2));
   return receipt;
 }
 

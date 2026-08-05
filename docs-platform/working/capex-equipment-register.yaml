@@ -7,9 +7,9 @@ document:
   version: "0.1"
   status: research
   document_type: Working structured CAPEX equipment register
-  decision_id: DEC-011
-  iteration_id: ITR-PILOT-CAPEX-BASELINE-2026-08-03-01
-  proposal_id: PROP-PILOT-CAPEX-BASELINE-2026-08-03-01
+  decision_id: DEC-015
+  iteration_id: ITR-CAPEX-REMAINING-PRICES-2026-08-05-01
+  proposal_id: PROP-CAPEX-REMAINING-PRICES-2026-08-05-01
   source_document_id: DOC-CAPEX-EQUIPMENT-SPECIFICATION
   source_path: docs-platform/working/capex-equipment-specification.md
   source_sha256: 2157364e09699173fecfbfe861edf4e6fac85a0437e23aebe100caebeab599d6
@@ -19,11 +19,11 @@ document:
   equipment_record_count: 160
   unmapped_record_count: 0
   csv_generated_from_yaml: true
-  warning: Research-реестр пилота включает посудомоечную систему и расчётные комплекты мелкого инвентаря. Помещение, инженерия, ремонт, мебель, запуск, оборотный капитал и резерв не считаются как ноль и остаются открытыми до исходных данных.
+  warning: Первичная ценовая оценка пищевого оснащения имеет статус research и не является коммерческим предложением или утверждённым CAPEX. Число записей реестра не равно числу самостоятельных закупочных единиц.
   price_research_path: docs-platform/working/capex-price-research.yaml
-  price_research_date: 2026-08-02
-  priced_record_count: 43
-  unpriced_procurement_record_count: 8
+  price_research_date: 2026-08-05
+  priced_record_count: 51
+  unpriced_procurement_record_count: 0
 modules:
   - module_id: CAPEX-01
     module_name: Заготовочный цех
@@ -61,9 +61,9 @@ equipment:
     inclusion_status: standalone
     requirement: required
     lifecycle_status: research
-    quantity_min: null
+    quantity_min: 1
     quantity_base: 1
-    quantity_scale_ready: null
+    quantity_scale_ready: 1
     unit: шт.
     source_quantity: 1 шт.
     specification: обязательная функция холодильного хранения
@@ -79,21 +79,32 @@ equipment:
     extraction_required: null
     dimensions: null
     service_clearance: null
-    price_min: null
-    price_base: null
-    price_max: null
-    currency: null
-    price_date: null
-    supplier: null
-    source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
+    price_min: 263919
+    price_base: 328655
+    price_max: 358788
+    currency: RUB
+    price_date: 2026-08-05
+    supplier: Polair Shop
+    source_id: SRC-PRICE-20260805-COLD-ROOM-BASE
     quote_status: quote_required
     notes: стоимость не определена
     source_section: CAPEX-01 / Холодильное хранение
     source_item_number: 1
     source_record_sha256: b5e1db2e1028a825b7ba2691add6c17d04574dd2844d19ef2a21b25932580ddf
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    price_notes: Холодильная камера остаётся quote_required; приобретение/дооборудование оценивается после выбора помещения. Цена зависит от помещения, объёма камеры и наличия существующего оборудования.
-    checked_at: 2026-08-01T22:19:05.000Z
+    price_notes: Цена учитывает камеру и ориентировочно подобранную холодильную машину. Не включает доставку, разгрузку, сборку камеры, монтаж холодильной машины, холодильные трассы, заправку, пусконаладку и внутренние стеллажи. Стоимость зависит от окончательного объёма камеры, холодильной машины и условий монтажа; требуется коммерческое предложение.
+    checked_at: 2026-08-05T18:14:24.000Z
+    supplier_name: Polair Shop
+    product_name: Холодильная камера около 15,9 м³ с ориентировочно подобранной холодильной машиной
+    source_url: https://www.polair-shop.ru/catalog/holodylnye_kamery/polair_standart2/kxh-8.81/
+    price_source_type: owner_approved_research_estimate
+    price_min_source_id: SRC-PRICE-20260805-COLD-ROOM-MINIMUM
+    price_base_source_id: SRC-PRICE-20260805-COLD-ROOM-BASE
+    price_max_source_id: SRC-PRICE-20260805-COLD-ROOM-SCALE-READY
+    availability_status: quote_required; availability_not_checked
+    price_includes_vat: null
+    delivery_included: false
+    confidence: medium
   - item_id: CAPEX-01-002
     module_id: CAPEX-01
     module_name: Заготовочный цех
@@ -105,9 +116,9 @@ equipment:
     inclusion_status: standalone
     requirement: required
     lifecycle_status: research
-    quantity_min: null
+    quantity_min: 1
     quantity_base: 1
-    quantity_scale_ready: null
+    quantity_scale_ready: 1
     unit: шт.
     source_quantity: 1 шт.
     specification: обязательная функция морозильного хранения
@@ -123,21 +134,32 @@ equipment:
     extraction_required: null
     dimensions: null
     service_clearance: null
-    price_min: null
-    price_base: null
-    price_max: null
-    currency: null
-    price_date: null
-    supplier: null
-    source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
+    price_min: 307521
+    price_base: 429679
+    price_max: 465090
+    currency: RUB
+    price_date: 2026-08-05
+    supplier: Polair
+    source_id: SRC-PRICE-20260805-FREEZER-ROOM-BASE
     quote_status: quote_required
     notes: стоимость не определена
     source_section: CAPEX-01 / Холодильное хранение
     source_item_number: 2
     source_record_sha256: 8915100e30d57f832705ef7b500eedc6b310e9ce9138725d29e56cac3212c933
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    price_notes: Морозильная камера остаётся quote_required; приобретение/дооборудование оценивается после выбора помещения. Цена зависит от помещения, объёма камеры и наличия существующего оборудования.
-    checked_at: 2026-08-01T22:19:05.000Z
+    price_notes: Цена учитывает камеру с теплоизоляционными панелями и ориентировочно подобранную низкотемпературную машину. Не включает доставку, сборку, трассы, монтаж, заправку, пусконаладку, внутренние стеллажи и дополнительные устройства двери и выравнивания давления, если они потребуются. Стоимость зависит от окончательного объёма камеры, низкотемпературной машины и условий монтажа; требуется коммерческое предложение.
+    checked_at: 2026-08-05T18:14:24.000Z
+    supplier_name: Polair
+    product_name: Морозильная камера около 15,9 м³ с ориентировочно подобранной низкотемпературной машиной
+    source_url: https://polair.shop/kholodilnye-kamery/kamery-kholodilnye-polair-standard/polair-kkhn-8-81-professionale/
+    price_source_type: owner_approved_research_estimate
+    price_min_source_id: SRC-PRICE-20260805-FREEZER-ROOM-MINIMUM
+    price_base_source_id: SRC-PRICE-20260805-FREEZER-ROOM-BASE
+    price_max_source_id: SRC-PRICE-20260805-FREEZER-ROOM-SCALE-READY
+    availability_status: quote_required; availability_not_checked
+    price_includes_vat: null
+    delivery_included: false
+    confidence: medium
   - item_id: CAPEX-01-003
     module_id: CAPEX-01
     module_name: Заготовочный цех
@@ -171,7 +193,7 @@ equipment:
     price_base: 25896
     price_max: 39232
     currency: RUB
-    price_date: 2026-08-02
+    price_date: 2026-08-05
     supplier: КЛЕН
     source_id: SRC-PRICE-20260802-TABLE-1500-BASE
     quote_status: researched
@@ -181,7 +203,7 @@ equipment:
     source_record_sha256: 29f47c66202a3188eb5ec2bfef72a4a085367d32ad6893a1b796e23911c91c62
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
     price_notes: Три стола заданы исходной спецификацией; цена за единицу.
-    checked_at: 2026-08-01T22:19:05.000Z
+    checked_at: 2026-08-05T18:14:24.000Z
     supplier_name: КЛЕН
     product_name: Luxstahl СПС-15/7, 1500×700
     source_url: https://www.klenmarket.ru/shop/equipment/neutral-equipment/stoly-proizvodstvennye-i-rabochie/stoly-razdelochnye/stol-proizvodstvennyi-luxstahl-sps-157/
@@ -192,6 +214,7 @@ equipment:
     price_includes_vat: null
     delivery_included: null
     confidence: medium
+    price_source_type: supplier_product_card
   - item_id: CAPEX-01-004
     module_id: CAPEX-01
     module_name: Заготовочный цех
@@ -225,7 +248,7 @@ equipment:
     price_base: 24187
     price_max: 26887
     currency: RUB
-    price_date: 2026-08-02
+    price_date: 2026-08-05
     supplier: КЛЕН
     source_id: SRC-PRICE-20260802-WASTE-TABLE-BASE
     quote_status: researched
@@ -235,7 +258,7 @@ equipment:
     source_record_sha256: 120fd96d379d534c4ff2d43d810adcdd5137a1524542d3bad7fe2d2a8f56f48f
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
     price_notes: Одна единица по исходной спецификации.
-    checked_at: 2026-08-01T22:19:05.000Z
+    checked_at: 2026-08-05T18:14:24.000Z
     supplier_name: КЛЕН
     product_name: Luxstahl СО-12/7
     source_url: https://www.klenmarket.ru/shop/equipment/neutral-equipment/tables-production-and-cutting/tables-for-waste-collection/stol-universalnyi-s-otverstiem-dlia-otkhodov-luxstahl-so-127-obviazka-trekhstoronniaia/
@@ -246,6 +269,7 @@ equipment:
     price_includes_vat: null
     delivery_included: null
     confidence: medium
+    price_source_type: supplier_product_card
   - item_id: CAPEX-01-005
     module_id: CAPEX-01
     module_name: Заготовочный цех
@@ -279,7 +303,7 @@ equipment:
     price_base: 4920
     price_max: 5620
     currency: RUB
-    price_date: 2026-08-02
+    price_date: 2026-08-05
     supplier: КЛЕН
     source_id: SRC-PRICE-20260802-WALL-SHELF-BASE
     quote_status: researched
@@ -289,7 +313,7 @@ equipment:
     source_record_sha256: ee7e59849e3d4ac3d4cceea57775a7bb8d0907f0cccf9278d8ae3528723026fc
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
     price_notes: Количество в источнике tbd; 1/2/3 — только research-сценарии до планировки.
-    checked_at: 2026-08-01T22:19:05.000Z
+    checked_at: 2026-08-05T18:14:24.000Z
     supplier_name: КЛЕН
     product_name: Luxstahl ПНК12/4
     source_url: https://www.klenmarket.ru/shop/equipment/neutral-equipment/wall-shelves/shelves-solid/polka-nastennaia-sploshnaia-luxstahl-pnk124/
@@ -300,6 +324,7 @@ equipment:
     price_includes_vat: null
     delivery_included: null
     confidence: high
+    price_source_type: supplier_product_card
   - item_id: CAPEX-01-006
     module_id: CAPEX-01
     module_name: Заготовочный цех
@@ -333,7 +358,7 @@ equipment:
     price_base: 32451
     price_max: 39683
     currency: RUB
-    price_date: 2026-08-02
+    price_date: 2026-08-05
     supplier: КЛЕН
     source_id: SRC-PRICE-20260802-RACK-BASE
     quote_status: researched
@@ -343,7 +368,7 @@ equipment:
     source_record_sha256: 26e1eeb8066d53d86b33e202238452bda6ba474e4c59e8f7967b287c6b964769
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
     price_notes: Количество в источнике tbd; 1/2/3 — только research-сценарии до планировки.
-    checked_at: 2026-08-01T22:19:05.000Z
+    checked_at: 2026-08-05T18:14:24.000Z
     supplier_name: КЛЕН
     product_name: HICOLD НСК-11/6
     source_url: https://www.klenmarket.ru/shop/equipment/neutral-equipment/racks/racks-with-solid-shelves/stellazh-nerzhaveiushchii-kukhonnyi-hicold-nsk-116-281473/
@@ -354,6 +379,7 @@ equipment:
     price_includes_vat: null
     delivery_included: null
     confidence: high
+    price_source_type: supplier_product_card
   - item_id: CAPEX-01-007
     module_id: CAPEX-01
     module_name: Заготовочный цех
@@ -387,7 +413,7 @@ equipment:
     price_base: 25727
     price_max: 30911
     currency: RUB
-    price_date: 2026-08-02
+    price_date: 2026-08-05
     supplier: КЛЕН
     source_id: SRC-PRICE-20260802-DRYING-RACK-BASE
     quote_status: researched
@@ -397,7 +423,7 @@ equipment:
     source_record_sha256: 3adcd9d2cd0a999d17974a617068407c98a384b68f51d21ddf66b4d941c255c5
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
     price_notes: Один ориентировочный стеллаж; размер выбирается после планировки.
-    checked_at: 2026-08-01T22:19:05.000Z
+    checked_at: 2026-08-05T18:14:24.000Z
     supplier_name: КЛЕН
     product_name: Luxstahl СРСП 1800×900×300
     source_url: https://www.klenmarket.ru/shop/equipment/neutral-equipment/racks/racks-for-drying-dishes/stellazh-dlia-posudy-luxstahl-srsp-1800900300/
@@ -408,6 +434,7 @@ equipment:
     price_includes_vat: null
     delivery_included: null
     confidence: high
+    price_source_type: supplier_product_card
   - item_id: CAPEX-01-008
     module_id: CAPEX-01
     module_name: Заготовочный цех
@@ -441,7 +468,7 @@ equipment:
     price_base: 3169
     price_max: 3499
     currency: RUB
-    price_date: 2026-08-02
+    price_date: 2026-08-05
     supplier: КЛЕН
     source_id: SRC-PRICE-20260802-WASTE-BIN-BASE
     quote_status: researched
@@ -451,7 +478,7 @@ equipment:
     source_record_sha256: 67255bf4e13edd10c494023cb645ce949d107cbe6c757a91174ee1d08337dd68
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
     price_notes: Количество по рабочим зонам не задано; 4/6/8 — research-сценарии, не новое утверждённое количество.
-    checked_at: 2026-08-01T22:19:05.000Z
+    checked_at: 2026-08-05T18:14:24.000Z
     supplier_name: КЛЕН
     product_name: Контейнер 90 л с крышкой на колёсах
     source_url: https://www.klenmarket.ru/shop/inventory/household-goods/bins-trash-bags/konteiner-90l-polipropilen-d425sm-h85sm-s-kryshkoi-na-kolesakh-dlia-pishchevykh-otkhodov-434272913/
@@ -462,6 +489,7 @@ equipment:
     price_includes_vat: null
     delivery_included: null
     confidence: high
+    price_source_type: supplier_product_card
   - item_id: CAPEX-01-009
     module_id: CAPEX-01
     module_name: Заготовочный цех
@@ -495,7 +523,7 @@ equipment:
     price_base: 436564
     price_max: 596030
     currency: RUB
-    price_date: 2026-08-02
+    price_date: 2026-08-05
     supplier: КЛЕН
     source_id: SRC-PRICE-20260802-COMBI-BASE
     quote_status: researched
@@ -504,8 +532,8 @@ equipment:
     source_item_number: 9
     source_record_sha256: e6f817662a96e5b76f02c7b0c973a80acc9e130365111f53895a6ac70b23ed6c
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    price_notes: Одна профессиональная единица во всех сценариях по DEC-010; указаны цены одной единицы из существующих источников. Вода, дренаж и монтаж не включены.
-    checked_at: 2026-08-01T22:19:05.000Z
+    price_notes: Одна профессиональная единица во всех сценариях по DEC-010; вода/дренаж и монтаж не включены. Второй аппарат не добавляется автоматически в SCALE_READY.
+    checked_at: 2026-08-05T18:14:24.000Z
     supplier_name: КЛЕН
     product_name: Apach AP7QT
     source_url: https://www.klenmarket.ru/shop/equipment/the-thermal-equipment/ovens/parokonvektomat-apach-ap7qt/
@@ -516,6 +544,7 @@ equipment:
     price_includes_vat: null
     delivery_included: null
     confidence: high
+    price_source_type: supplier_product_card
   - item_id: CAPEX-01-010
     module_id: CAPEX-01
     module_name: Заготовочный цех
@@ -549,7 +578,7 @@ equipment:
     price_base: 60926
     price_max: 82753
     currency: RUB
-    price_date: 2026-08-02
+    price_date: 2026-08-05
     supplier: КЛЕН
     source_id: SRC-PRICE-20260802-SOUS-VIDE-BASE
     quote_status: researched
@@ -559,7 +588,7 @@ equipment:
     source_record_sha256: b3ab12b2af2f8eb1b3faeaa676b82797817614f505cac49dfc926ed3392c74d5
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
     price_notes: Количество tbd; базовый сценарий предполагает два независимых термостата для параллельной работы при 500 чеках/день.
-    checked_at: 2026-08-01T22:19:05.000Z
+    checked_at: 2026-08-05T18:14:24.000Z
     supplier_name: КЛЕН
     product_name: TATRA TSV2
     source_url: https://www.klenmarket.ru/shop/equipment/the-thermal-equipment/sous-vide/termostat-pogruzhnoi-tatra-tsv2/
@@ -570,6 +599,7 @@ equipment:
     price_includes_vat: null
     delivery_included: null
     confidence: high
+    price_source_type: supplier_product_card
   - item_id: CAPEX-01-011
     module_id: CAPEX-01
     module_name: Заготовочный цех
@@ -603,7 +633,7 @@ equipment:
     price_base: 84752
     price_max: 107341
     currency: RUB
-    price_date: 2026-08-02
+    price_date: 2026-08-05
     supplier: КЛЕН
     source_id: SRC-PRICE-20260802-INDUCTION-BASE
     quote_status: researched
@@ -613,7 +643,7 @@ equipment:
     source_record_sha256: 15c076300a83fa12faafe476f03df64646143abed105908ad626296b99f0d230
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
     price_notes: Одна двухконфорочная профессиональная плита.
-    checked_at: 2026-08-01T22:19:05.000Z
+    checked_at: 2026-08-05T18:14:24.000Z
     supplier_name: КЛЕН
     product_name: Luxstahl ПИ 2-94
     source_url: https://www.klenmarket.ru/shop/equipment/the-thermal-equipment/plate/plate-induction/plita-induktsionnaia-pi-2-94/
@@ -624,6 +654,7 @@ equipment:
     price_includes_vat: null
     delivery_included: null
     confidence: high
+    price_source_type: supplier_product_card
   - item_id: CAPEX-01-012
     module_id: CAPEX-01
     module_name: Заготовочный цех
@@ -635,9 +666,9 @@ equipment:
     inclusion_status: standalone
     requirement: conditional
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
+    quantity_min: 1
+    quantity_base: 1
+    quantity_scale_ready: 1
     unit: tbd
     source_quantity: tbd
     specification: размещение над тепловым оборудованием
@@ -653,21 +684,32 @@ equipment:
     extraction_required: true
     dimensions: null
     service_clearance: null
-    price_min: null
-    price_base: null
-    price_max: null
-    currency: null
-    price_date: null
-    supplier: null
-    source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
+    price_min: 32909
+    price_base: 75172
+    price_max: 93669
+    currency: RUB
+    price_date: 2026-08-05
+    supplier: КЛЕН
+    source_id: SRC-PRICE-20260805-EXHAUST-HOOD-BASE
     quote_status: quote_required
     notes: null
     source_section: CAPEX-01 / Тепловая обработка
     source_item_number: 12
     source_record_sha256: 145d7ffe8ee0ca3f34c3e9daa779db9523217dba85f2a9f0fe7802a487c07de6
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    price_notes: Цена не ставится, чтобы не смешивать товар с проектированием и монтажом вентиляции. Размер и производительность зонта определяются после расстановки; монтаж вентиляции исключён из scope.
-    checked_at: 2026-08-01T22:19:05.000Z
+    price_notes: Входит в категорию подготовки помещения «Приточно-вытяжная вентиляция» на странице launch-budget и не суммируется там второй раз. В CAPEX Equipment Register и CAPEX Configurator цена сохраняется. Размер, количество и исполнение зонтов зависят от расстановки оборудования; требуется коммерческое предложение.
+    checked_at: 2026-08-05T18:14:24.000Z
+    supplier_name: КЛЕН
+    product_name: Система из двух вытяжных зонтов или сопоставимая конфигурация
+    source_url: https://www.klenmarket.ru/shop/equipment/neutral-equipment/exhaust-umbrellas/zonty-pristennye/pristennye-vytiazhnye/zont-vytiazhnoi-pristennyi-hicold-zvpok-1010-285147-sm-art-mko/
+    price_source_type: owner_approved_research_estimate
+    price_min_source_id: SRC-PRICE-20260805-EXHAUST-HOOD-MINIMUM
+    price_base_source_id: SRC-PRICE-20260805-EXHAUST-HOOD-BASE
+    price_max_source_id: SRC-PRICE-20260805-EXHAUST-HOOD-SCALE-READY
+    availability_status: quote_required; availability_not_checked
+    price_includes_vat: null
+    delivery_included: null
+    confidence: medium
   - item_id: CAPEX-01-013
     module_id: CAPEX-01
     module_name: Заготовочный цех
@@ -701,7 +743,7 @@ equipment:
     price_base: 69161
     price_max: 111250
     currency: RUB
-    price_date: 2026-08-02
+    price_date: 2026-08-05
     supplier: КЛЕН
     source_id: SRC-PRICE-20260802-VACUUM-BASE
     quote_status: researched
@@ -711,7 +753,7 @@ equipment:
     source_record_sha256: e0ed1ce09000efda1ad0eef59239e6af2a399e507aa854b81f0fdabac7297b31
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
     price_notes: Один камерный профессиональный аппарат; пакеты и сервис не включены.
-    checked_at: 2026-08-01T22:19:05.000Z
+    checked_at: 2026-08-05T18:14:24.000Z
     supplier_name: КЛЕН
     product_name: Hurakan HKN-VAC400E
     source_url: https://www.klenmarket.ru/shop/equipment/weighing-and-packaging-equipment/packaging-equipment/upakovshchik-vakuumnyi-hurakan-hkn-vac400e/
@@ -722,6 +764,7 @@ equipment:
     price_includes_vat: null
     delivery_included: null
     confidence: high
+    price_source_type: supplier_product_card
   - item_id: CAPEX-01-014
     module_id: CAPEX-01
     module_name: Заготовочный цех
@@ -755,7 +798,7 @@ equipment:
     price_base: 472582
     price_max: 547547
     currency: RUB
-    price_date: 2026-08-02
+    price_date: 2026-08-05
     supplier: Robot-Coupe Russia
     source_id: SRC-PRICE-20260802-ROBOT-BASE
     quote_status: quote_required
@@ -765,7 +808,7 @@ equipment:
     source_record_sha256: 3e562a4de1f199fba1f984150d794c9a6c92d76696cc07d3a5931d4a22800f7e
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
     price_notes: Композитный ориентир процессор + набор дисков; до закупки нужны тест продукта и КП на точную комплектацию. Комплект дисков и способность давать требуемую структуру рубленого мяса не подтверждены.
-    checked_at: 2026-08-01T22:19:05.000Z
+    checked_at: 2026-08-05T18:14:24.000Z
     supplier_name: Robot-Coupe Russia
     product_name: Robot-Coupe R502 + комплект дисков (ценовой ориентир комплекта)
     source_url: https://www.robotcoupe.ru/catalog/item/720/
@@ -776,6 +819,7 @@ equipment:
     price_includes_vat: null
     delivery_included: null
     confidence: low
+    price_source_type: supplier_product_card
   - item_id: CAPEX-01-015
     module_id: CAPEX-01
     module_name: Заготовочный цех
@@ -809,7 +853,7 @@ equipment:
     price_base: 24253
     price_max: 32505
     currency: RUB
-    price_date: 2026-08-02
+    price_date: 2026-08-05
     supplier: КЛЕН
     source_id: SRC-PRICE-20260802-GRINDER-BASE
     quote_status: quote_required
@@ -818,8 +862,8 @@ equipment:
     source_item_number: 15
     source_record_sha256: 55d701ed8dd773c61ba7d11e4265ca0f2a3206b24a0b5fd12b5d496e5fd76e6b
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    price_notes: Цены сохранены для развилки; MINIMUM и BASE не включают отдельную мясорубку, SCALE_READY включает одну условно. Позиция покупается только если выбранный процессор не обеспечивает требуемую работу с мясом.
-    checked_at: 2026-08-01T22:19:05.000Z
+    price_notes: MINIMUM не включает мясорубку; BASE и SCALE_READY включают по одной профессиональной мясорубке. Количество зафиксировано как одна единица; точную модель и производительность нужно подтвердить по техкартам и объёму мясной заготовки.
+    checked_at: 2026-08-05T18:14:24.000Z
     supplier_name: КЛЕН
     product_name: Hurakan HKN-22SC
     source_url: https://www.klenmarket.ru/shop/equipment/technological-equipment/grinder/miasorubka-hurakan-hkn-22sc/
@@ -830,6 +874,7 @@ equipment:
     price_includes_vat: null
     delivery_included: null
     confidence: high
+    price_source_type: supplier_product_card
   - item_id: CAPEX-01-016
     module_id: CAPEX-01
     module_name: Заготовочный цех
@@ -863,7 +908,7 @@ equipment:
     price_base: 60116
     price_max: 105408
     currency: RUB
-    price_date: 2026-08-02
+    price_date: 2026-08-05
     supplier: КЛЕН
     source_id: SRC-PRICE-20260802-JAR-BLENDER-BASE
     quote_status: quote_required
@@ -873,7 +918,7 @@ equipment:
     source_record_sha256: adf6f05721a313b278914e9f0a7d44cbc038c66aeaa536ef7db067060b98959d
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
     price_notes: Профессиональные модели; окончательный объём стакана и режим работы подтверждаются карточкой/КП. Требование чаши не менее 2 л и колки льда нужно сверить по точной модификации.
-    checked_at: 2026-08-01T22:19:05.000Z
+    checked_at: 2026-08-05T18:14:24.000Z
     supplier_name: КЛЕН
     product_name: Hamilton Beach HBF510-CE
     source_url: https://www.klenmarket.ru/shop/equipment/technological-equipment/blenders/blender-dlia-produktov-hamilton-beach-hbf510-ce/
@@ -884,6 +929,7 @@ equipment:
     price_includes_vat: null
     delivery_included: null
     confidence: medium
+    price_source_type: supplier_product_card
   - item_id: CAPEX-01-017
     module_id: CAPEX-01
     module_name: Заготовочный цех
@@ -917,7 +963,7 @@ equipment:
     price_base: 62832
     price_max: 76237
     currency: RUB
-    price_date: 2026-08-02
+    price_date: 2026-08-05
     supplier: КЛЕН
     source_id: SRC-PRICE-20260802-IMMERSION-BLENDER-BASE
     quote_status: researched
@@ -927,7 +973,7 @@ equipment:
     source_record_sha256: 875309656c8a8c1af3969452ed9b58d3b277b4914876b1a41f582d3a511c4f0b
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
     price_notes: Одна профессиональная единица.
-    checked_at: 2026-08-01T22:19:05.000Z
+    checked_at: 2026-08-05T18:14:24.000Z
     supplier_name: КЛЕН
     product_name: Robot Coupe CMP250 V.V.
     source_url: https://www.klenmarket.ru/shop/equipment/technological-equipment/hand-mixers-homogenizers/mikser-ruchnoi-robot-coupe-cmp250-vv-art34240b/
@@ -938,6 +984,7 @@ equipment:
     price_includes_vat: null
     delivery_included: null
     confidence: high
+    price_source_type: supplier_product_card
   - item_id: CAPEX-01-018
     module_id: CAPEX-01
     module_name: Заготовочный цех
@@ -971,7 +1018,7 @@ equipment:
     price_base: 44704
     price_max: 52135
     currency: RUB
-    price_date: 2026-08-02
+    price_date: 2026-08-05
     supplier: КЛЕН
     source_id: SRC-PRICE-20260802-PLANETARY-BASE
     quote_status: researched
@@ -981,7 +1028,7 @@ equipment:
     source_record_sha256: 8f2ef5138fe3ec6bf637e86eeeef4594748097afdfeac8f37d8fea886fc356ab
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
     price_notes: Одна профессиональная единица; все сценарии ≥10 л.
-    checked_at: 2026-08-01T22:19:05.000Z
+    checked_at: 2026-08-05T18:14:24.000Z
     supplier_name: КЛЕН
     product_name: ROSSO B10S
     source_url: https://www.klenmarket.ru/shop/equipment/technological-equipment/planetary-mixers/mikser-planetarnyi-rosso-b10s/
@@ -992,6 +1039,7 @@ equipment:
     price_includes_vat: null
     delivery_included: null
     confidence: high
+    price_source_type: supplier_product_card
   - item_id: CAPEX-01-019
     module_id: CAPEX-01
     module_name: Заготовочный цех
@@ -1025,7 +1073,7 @@ equipment:
     price_base: 58798
     price_max: 59366
     currency: RUB
-    price_date: 2026-08-02
+    price_date: 2026-08-05
     supplier: КЛЕН
     source_id: SRC-PRICE-20260802-DOUBLE-SINK-BASE
     quote_status: researched
@@ -1035,7 +1083,7 @@ equipment:
     source_record_sha256: 31ef093c619ba26d7fae1c7ecbfb5a32c14d45953a4c03f66f28bad12c312a5a
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
     price_notes: Одна двухсекционная мойка; смеситель/монтаж уточняются отдельно.
-    checked_at: 2026-08-01T22:19:05.000Z
+    checked_at: 2026-08-05T18:14:24.000Z
     supplier_name: КЛЕН
     product_name: ВМЦ 2/12755 нерж
     source_url: https://www.klenmarket.ru/shop/equipment/neutral-equipment/vanny-moechnye/bath-two/vanna-moechnaia-vmts-212755-nerzh/
@@ -1046,6 +1094,7 @@ equipment:
     price_includes_vat: null
     delivery_included: null
     confidence: high
+    price_source_type: supplier_product_card
   - item_id: CAPEX-01-020
     module_id: CAPEX-01
     module_name: Заготовочный цех
@@ -1079,7 +1128,7 @@ equipment:
     price_base: 10943
     price_max: 10943
     currency: RUB
-    price_date: 2026-08-02
+    price_date: 2026-08-05
     supplier: КЛЕН
     source_id: SRC-PRICE-20260802-HAND-SINK-BASE
     quote_status: researched
@@ -1089,7 +1138,7 @@ equipment:
     source_record_sha256: 511ba21c7a623563f6dcbfb3482706e454d153934c0c16120eff96d383198276
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
     price_notes: Один отдельный рукомойник персонала.
-    checked_at: 2026-08-01T22:19:05.000Z
+    checked_at: 2026-08-05T18:14:24.000Z
     supplier_name: КЛЕН
     product_name: Kamik настенный рукомойник из нержавеющей стали, смеситель в комплекте
     source_url: https://www.klenmarket.ru/shop/equipment/neutral-equipment/bath-wash/rukomoiniki/rukomoinik-kamik-iz-nerzhaveiushchei-stali-nastennyi-smesitel-v-komplekte-390kh390kh260-mm/
@@ -1100,6 +1149,7 @@ equipment:
     price_includes_vat: null
     delivery_included: null
     confidence: high
+    price_source_type: supplier_product_card
   - item_id: CAPEX-01-021
     module_id: CAPEX-01
     module_name: Заготовочный цех
@@ -1133,7 +1183,7 @@ equipment:
     price_base: 6615
     price_max: 10618
     currency: RUB
-    price_date: 2026-08-02
+    price_date: 2026-08-05
     supplier: КЛЕН
     source_id: SRC-PRICE-20260802-DISPENSER-SET-BASE
     quote_status: quote_required
@@ -1143,7 +1193,7 @@ equipment:
     source_record_sha256: a512313274e6cdb3572f4443b0b0047b433d93f7a7aaaf39d7c452aba17a4435
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
     price_notes: "Один комплект: мыло, антисептик и бумажные полотенца; расходники не включены. Цена составлена из двух карточек и не является готовым комплектом поставщика."
-    checked_at: 2026-08-01T22:19:05.000Z
+    checked_at: 2026-08-05T18:14:24.000Z
     supplier_name: КЛЕН
     product_name: "Комплект: 2 дозатора 1000 мл + PUFF-5135S"
     source_url: https://www.klenmarket.ru/shop/inventory/household-goods/oborudovanie-dlia-sanuzlov/dispenser-for-liquid-soap-1000-ml-rgs-3049a/
@@ -1154,6 +1204,7 @@ equipment:
     price_includes_vat: null
     delivery_included: null
     confidence: medium
+    price_source_type: supplier_product_card
   - item_id: CAPEX-01-022
     module_id: CAPEX-01
     module_name: Заготовочный цех
@@ -1187,7 +1238,7 @@ equipment:
     price_base: 22533
     price_max: 25701
     currency: RUB
-    price_date: 2026-08-02
+    price_date: 2026-08-05
     supplier: КЛЕН
     source_id: SRC-PRICE-20260802-BENCH-SCALE-BASE
     quote_status: researched
@@ -1197,7 +1248,7 @@ equipment:
     source_record_sha256: f79834814be1eef7fd788fb5f2e6de17dcb9d475c5ddfec20706f2d93051570b
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
     price_notes: Количество в источнике tbd; SCALE_READY содержит резервную/вторую рабочую единицу.
-    checked_at: 2026-08-01T22:19:05.000Z
+    checked_at: 2026-08-05T18:14:24.000Z
     supplier_name: КЛЕН
     product_name: CAS DB-II 60 E
     source_url: https://www.klenmarket.ru/shop/equipment/weighing-and-packaging-equipment/scales-warehouse/scales-cas-db-ii-60-e/
@@ -1208,6 +1259,7 @@ equipment:
     price_includes_vat: null
     delivery_included: null
     confidence: high
+    price_source_type: supplier_product_card
   - item_id: CAPEX-01-023
     module_id: CAPEX-01
     module_name: Заготовочный цех
@@ -1241,7 +1293,7 @@ equipment:
     price_base: 8224
     price_max: 19453
     currency: RUB
-    price_date: 2026-08-02
+    price_date: 2026-08-05
     supplier: КЛЕН
     source_id: SRC-PRICE-20260802-PORTION-SCALE-BASE
     quote_status: researched
@@ -1251,7 +1303,7 @@ equipment:
     source_record_sha256: 15642ec9e2fdafbeb9b18ed00e7b90799df5ac80a304625d175264cd3f65334d
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
     price_notes: Количество в источнике tbd; 1/2/3 — research-сценарии по рабочим постам.
-    checked_at: 2026-08-01T22:19:05.000Z
+    checked_at: 2026-08-05T18:14:24.000Z
     supplier_name: КЛЕН
     product_name: CAS SWN-3
     source_url: https://www.klenmarket.ru/shop/equipment/weighing-and-packaging-equipment/libra-a-la-carte/vesy-cas-swn-3/
@@ -1262,6 +1314,7 @@ equipment:
     price_includes_vat: null
     delivery_included: null
     confidence: high
+    price_source_type: supplier_product_card
   - item_id: CAPEX-01-024
     module_id: CAPEX-01
     module_name: Заготовочный цех
@@ -1295,7 +1348,7 @@ equipment:
     price_base: 153
     price_max: 153
     currency: RUB
-    price_date: 2026-08-02
+    price_date: 2026-08-05
     supplier: КЛЕН
     source_id: SRC-PRICE-20260802-PROBE-BASE
     quote_status: quote_required
@@ -1305,7 +1358,7 @@ equipment:
     source_record_sha256: 56b1d76a2b70ee4c3c8e8f5d36e4ac392ce44f7cd18b19dbb188964374e1c67f
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
     price_notes: Низкостоимостной ориентир; перед закупкой выбрать профессиональные пищевые термощупы. Публичная карточка не подтверждает профессиональную точность и поверку.
-    checked_at: 2026-08-01T22:19:05.000Z
+    checked_at: 2026-08-05T18:14:24.000Z
     supplier_name: КЛЕН
     product_name: Кухонный термощуп −50…+300 °C
     source_url: https://www.klenmarket.ru/shop/equipment/aksessuary-dopolnitelnoe-oborudovanie/aksessuary-dlia-teplovogo-oborudovaniia/termoshchup-kukhonnyi-diapazon-ot-50-do-300c/
@@ -1316,6 +1369,7 @@ equipment:
     price_includes_vat: null
     delivery_included: null
     confidence: low
+    price_source_type: supplier_product_card
   - item_id: CAPEX-01-025
     module_id: CAPEX-01
     module_name: Заготовочный цех
@@ -1349,7 +1403,7 @@ equipment:
     price_base: 780
     price_max: 866
     currency: RUB
-    price_date: 2026-08-02
+    price_date: 2026-08-05
     supplier: КЛЕН
     source_id: SRC-PRICE-20260802-FRIDGE-THERMOMETER-BASE
     quote_status: researched
@@ -1359,7 +1413,7 @@ equipment:
     source_record_sha256: 71c6bfa0f6b8b59d27cf17f39db0d225ba3854ccfe3f5f55033e6fccc1469e0d
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
     price_notes: Минимум по одному на холодильную и морозильную камеры; резерв в SCALE_READY.
-    checked_at: 2026-08-01T22:19:05.000Z
+    checked_at: 2026-08-05T18:14:24.000Z
     supplier_name: КЛЕН
     product_name: Термометр −50…+50 °C 04142424
     source_url: https://www.klenmarket.ru/shop/equipment/aksessuary-dopolnitelnoe-oborudovanie/izmeritelnye-pribory/termometr-30c30c-04142424/
@@ -1370,6 +1424,7 @@ equipment:
     price_includes_vat: null
     delivery_included: null
     confidence: medium
+    price_source_type: supplier_product_card
   - item_id: CAPEX-01-026
     module_id: CAPEX-01
     module_name: Заготовочный цех
@@ -1403,7 +1458,7 @@ equipment:
     price_base: 634
     price_max: 1155
     currency: RUB
-    price_date: 2026-08-02
+    price_date: 2026-08-05
     supplier: КЛЕН
     source_id: SRC-PRICE-20260802-TIMER-BASE
     quote_status: researched
@@ -1413,7 +1468,7 @@ equipment:
     source_record_sha256: 2101399fc395a474d88075bc9622561546ef626be2329670129a9f92e2a22629
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
     price_notes: Количество в источнике tbd; research-сценарии по параллельным процессам.
-    checked_at: 2026-08-01T22:19:05.000Z
+    checked_at: 2026-08-05T18:14:24.000Z
     supplier_name: КЛЕН
     product_name: Электронный сенсорный кухонный таймер
     source_url: https://www.klenmarket.ru/shop/equipment/aksessuary-dopolnitelnoe-oborudovanie/izmeritelnye-pribory/taimer-kukhonnyi-na-magnite-elektronnyi-sensornyi/
@@ -1424,6 +1479,7 @@ equipment:
     price_includes_vat: null
     delivery_included: null
     confidence: medium
+    price_source_type: supplier_product_card
   - item_id: CAPEX-01-027
     module_id: CAPEX-01
     module_name: Заготовочный цех
@@ -2129,7 +2185,7 @@ equipment:
     price_base: 234270
     price_max: 308957
     currency: RUB
-    price_date: 2026-08-02
+    price_date: 2026-08-05
     supplier: КЛЕН
     source_id: SRC-PRICE-20260802-LARGE-ICE-BASE
     quote_status: quote_required
@@ -2139,7 +2195,7 @@ equipment:
     source_record_sha256: 6fb0c0f7e046502a2bbd648a2c52188a2bef63d80c953e13d84389f7347b2a2a
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
     price_notes: В BASE ориентир 80 кг/сутки со встроенным бункером; водоподготовка и подключение не включены. Суточная потребность во льду для су-вида и бара ещё не рассчитана.
-    checked_at: 2026-08-01T22:19:05.000Z
+    checked_at: 2026-08-05T18:14:24.000Z
     supplier_name: КЛЕН
     product_name: Brema CB 840A
     source_url: https://www.klenmarket.ru/shop/equipment/refrigeration-equipment/ice-generators/ice-ice-kubikovogo/ldogenerator-brema-cb-840a/
@@ -2150,6 +2206,7 @@ equipment:
     price_includes_vat: null
     delivery_included: null
     confidence: high
+    price_source_type: supplier_product_card
   - item_id: CAPEX-01-044
     module_id: CAPEX-01
     module_name: Заготовочный цех
@@ -2225,7 +2282,7 @@ equipment:
     price_base: 3425
     price_max: 3425
     currency: RUB
-    price_date: 2026-08-02
+    price_date: 2026-08-05
     supplier: КЛЕН
     source_id: SRC-PRICE-20260802-ICE-BATH-BASE
     quote_status: quote_required
@@ -2235,7 +2292,7 @@ equipment:
     source_record_sha256: a3461e0feeb8ed4de7dd5e24b9784155a65a11dbe7905c5a28e038ad5618f399
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
     price_notes: Ориентир ёмкости + крышки; количества research, материал ванн и санитарная схема требуют решения. Сравнение ледяных ванн с шоковым охлаждением ещё не выполнено.
-    checked_at: 2026-08-01T22:19:05.000Z
+    checked_at: 2026-08-05T18:14:24.000Z
     supplier_name: КЛЕН
     product_name: GN 1/1×200 из поликарбоната + крышка
     source_url: https://www.klenmarket.ru/shop/inventory/kitchen-equipment/gastronorm-containers/gastronorm-containers-polycarbonate/gastroemkost-gn-11-530kh325kh200-jw-r118/
@@ -2246,6 +2303,7 @@ equipment:
     price_includes_vat: null
     delivery_included: null
     confidence: medium
+    price_source_type: supplier_product_card
   - item_id: CAPEX-01-046
     module_id: CAPEX-01
     module_name: Заготовочный цех
@@ -2341,9 +2399,9 @@ equipment:
     inclusion_status: standalone
     requirement: tbd
     lifecycle_status: research
-    quantity_min: null
+    quantity_min: 2
     quantity_base: 2
-    quantity_scale_ready: null
+    quantity_scale_ready: 2
     unit: шт.
     source_quantity: 2 шт.
     specification: Профессиональный газовый гриль с полусферическими ячейками по геометрии takoyaki; продукт и рабочее название — колобки. Две независимые установки по исходной рабочей спецификации.
@@ -2359,21 +2417,32 @@ equipment:
     extraction_required: null
     dimensions: null
     service_clearance: null
-    price_min: null
-    price_base: null
-    price_max: null
-    currency: null
-    price_date: null
-    supplier: null
-    source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
+    price_min: 30000
+    price_base: 45000
+    price_max: 60000
+    currency: RUB
+    price_date: 2026-08-05
+    supplier: Не определён
+    source_id: SRC-PRICE-20260805-GAS-KOLOBOK-GRILL-BASE
     quote_status: quote_required
     notes: Надёжная российская карточка профессионального газового аппарата нужной геометрии не найдена; требуется технический подбор, сертификация газовой схемы и КП.
     source_section: CAPEX-02 / Приготовление колобков
     source_item_number: 1
     source_record_sha256: 28f07d47d0349e1c1dbe479a76d39637f50bfb4120388014cadd067c81faa106
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    price_notes: Нужны технический подбор, способ газоснабжения и коммерческое предложение. Для профессионального газового такояки-гриля с нужной геометрией не найден надёжный активный российский ценовой источник.
-    checked_at: 2026-08-01T22:19:05.000Z
+    price_notes: Две двухсекционные газовые установки; по 32 лунки на секцию, 4 ряда × 8 лунок на секцию, 64 лунки на одну установку. Фиктивная товарная ссылка не создаётся. Рабочая исследовательская оценка импортного оборудования. Точное коммерческое предложение и проверка типа газа обязательны.
+    checked_at: 2026-08-05T18:14:24.000Z
+    supplier_name: Не определён
+    product_name: Газовый гриль для колобков — две установки
+    source_url: null
+    price_source_type: owner_approved_research_estimate
+    price_min_source_id: SRC-PRICE-20260805-GAS-KOLOBOK-GRILL-MINIMUM
+    price_base_source_id: SRC-PRICE-20260805-GAS-KOLOBOK-GRILL-BASE
+    price_max_source_id: SRC-PRICE-20260805-GAS-KOLOBOK-GRILL-SCALE-READY
+    availability_status: quote_required; supplier_card_absent
+    price_includes_vat: null
+    delivery_included: null
+    confidence: low
   - item_id: CAPEX-02-002
     module_id: CAPEX-02
     module_name: Торговая кухня, бар и зона выдачи
@@ -2403,21 +2472,32 @@ equipment:
     extraction_required: null
     dimensions: null
     service_clearance: null
-    price_min: null
-    price_base: null
-    price_max: null
-    currency: null
-    price_date: null
-    supplier: null
-    source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
+    price_min: 16500
+    price_base: 20000
+    price_max: 25000
+    currency: RUB
+    price_date: 2026-08-05
+    supplier: Синтез Форм
+    source_id: SRC-PRICE-20260805-MANCHES-GRILL-BASE
     quote_status: quote_required
     notes: Рабочее название приведено к продукту сайта; исходная спецификация использовала термин UFO-гриль.
     source_section: CAPEX-02 / Приготовление колобков
     source_item_number: 2
     source_record_sha256: 4f16b46842e11e40c109dec1b2e04c59fe437e4375591eb199773877af9b9034
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    price_notes: Нужно коммерческое предложение на 3–4 профессиональные единицы. Активная российская карточка UFO-гриля не содержит надёжной публичной цены.
-    checked_at: 2026-08-01T22:19:05.000Z
+    price_notes: В техническом описании используется UFO-гриль Hurakan HKN-GES15 или профессиональный аналог. Канонический термин «Манчес» сохраняется. Требуется коммерческое предложение на точную модель и количество.
+    checked_at: 2026-08-05T18:14:24.000Z
+    supplier_name: Синтез Форм
+    product_name: Гриль для Манчеса — три установки
+    source_url: https://sintezf.com/shop/product/vafelnica-dlya-ufo-burgerov-hkn-ges15-vrashchayushchayasya/20546
+    price_source_type: owner_approved_research_estimate
+    price_min_source_id: SRC-PRICE-20260805-MANCHES-GRILL-MINIMUM
+    price_base_source_id: SRC-PRICE-20260805-MANCHES-GRILL-BASE
+    price_max_source_id: SRC-PRICE-20260805-MANCHES-GRILL-SCALE-READY
+    availability_status: quote_required; availability_not_checked
+    price_includes_vat: null
+    delivery_included: null
+    confidence: medium
   - item_id: CAPEX-02-003
     module_id: CAPEX-02
     module_name: Торговая кухня, бар и зона выдачи
@@ -2429,9 +2509,9 @@ equipment:
     inclusion_status: standalone
     requirement: tbd
     lifecycle_status: research
-    quantity_min: null
+    quantity_min: 24
     quantity_base: 24
-    quantity_scale_ready: null
+    quantity_scale_ready: 24
     unit: шт.
     source_quantity: 24 шт.
     specification: минимум 8 видов начинок; 8 шт. — первый рабочий комплект; 8 шт. — второй рабочий комплект для параллельной работы; 8 шт. — резервный комплект; закрепление каждого дозатора за конкретной начинкой; работа с густыми, рублеными и неоднородными начинками; пищевая нержавейка; сменные насадки; быстрая разборка и санитарная мойка
@@ -2447,21 +2527,32 @@ equipment:
     extraction_required: null
     dimensions: null
     service_clearance: null
-    price_min: null
-    price_base: null
-    price_max: null
-    currency: null
-    price_date: null
-    supplier: null
-    source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
+    price_min: 10000
+    price_base: 10000
+    price_max: 10000
+    currency: RUB
+    price_date: 2026-08-05
+    supplier: КЛЕН
+    source_id: SRC-PRICE-20260805-FILLING-DOSERS-BASE
     quote_status: quote_required
     notes: конструкция выбирается после изучения референсов; конкретная модель не выбрана
     source_section: CAPEX-02 / Приготовление колобков
     source_item_number: 3
     source_record_sha256: e87733ac83a67c1f778aa098326fc7269e530bcc697449b4083c3dbdf2bbba7d
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    price_notes: Публичные дозаторы не подтверждают работу с густыми рублеными начинками; нужен тест и КП на систему. Не решено, покупать 24 отдельных шприца или систему сменных цилиндров.
-    checked_at: 2026-08-01T22:19:05.000Z
+    price_notes: До закупки проверить, требуется ли 24 самостоятельных корпуса либо рациональнее использовать меньшее количество дозаторов со сменными герметичными цилиндрами или картриджами. До закупки требуется проверить конструкцию дозирования густых, рубленых и неоднородных начинок.
+    checked_at: 2026-08-05T18:14:24.000Z
+    supplier_name: КЛЕН
+    product_name: Профессиональные ручные шприцы или пистолеты-дозаторы — 24 единицы
+    source_url: https://www.klenmarket.ru/shop/equipment/technological-equipment/shpritsy-kolbasnye/shprits-kolbasnyi-hurakan-hkn-isv3/
+    price_source_type: owner_approved_research_estimate
+    price_min_source_id: SRC-PRICE-20260805-FILLING-DOSERS-MINIMUM
+    price_base_source_id: SRC-PRICE-20260805-FILLING-DOSERS-BASE
+    price_max_source_id: SRC-PRICE-20260805-FILLING-DOSERS-SCALE-READY
+    availability_status: quote_required; nearest_technical_reference_only
+    price_includes_vat: null
+    delivery_included: null
+    confidence: medium
   - item_id: CAPEX-02-004
     module_id: CAPEX-02
     module_name: Торговая кухня, бар и зона выдачи
@@ -2495,7 +2586,7 @@ equipment:
     price_base: 153287
     price_max: 156056
     currency: RUB
-    price_date: 2026-08-02
+    price_date: 2026-08-05
     supplier: КЛЕН
     source_id: SRC-PRICE-20260802-SALADETTE-BASE
     quote_status: quote_required
@@ -2505,7 +2596,7 @@ equipment:
     source_record_sha256: 011528263f68e1f3cdcda5cff0acafe4042f0ac877d573c84672f3f72432a5e0
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
     price_notes: Одна саладетта; точную верхнюю конфигурацию проверить по спецификации/КП. Число GN-секций минимум под восемь начинок не подтверждено.
-    checked_at: 2026-08-01T22:19:05.000Z
+    checked_at: 2026-08-05T18:14:24.000Z
     supplier_name: КЛЕН
     product_name: HICOLD СХСб-С-1-2Д, 1390×600
     source_url: https://www.klenmarket.ru/shop/equipment/refrigeration-equipment/tables-cooled/okhlazhdaemyi-stol-saladetta-skhsb-s-12d-bez-borta-1390kh600kh870/
@@ -2516,6 +2607,7 @@ equipment:
     price_includes_vat: null
     delivery_included: null
     confidence: medium
+    price_source_type: supplier_product_card
   - item_id: CAPEX-02-005
     module_id: CAPEX-02
     module_name: Торговая кухня, бар и зона выдачи
@@ -2549,7 +2641,7 @@ equipment:
     price_base: 603
     price_max: 673
     currency: RUB
-    price_date: 2026-08-02
+    price_date: 2026-08-05
     supplier: КЛЕН
     source_id: SRC-PRICE-20260802-PLASTIC-GN-BASE
     quote_status: researched
@@ -2559,7 +2651,7 @@ equipment:
     source_record_sha256: bc22a9c2d71e396feab78ba10e2d62d598a806f9240cfc2c4dcfe4a173b23b96
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
     price_notes: Цена за одну GN 1/3 с крышкой; 8/16/24 — research-сценарии оперативного и оборотного комплекта.
-    checked_at: 2026-08-01T22:19:05.000Z
+    checked_at: 2026-08-05T18:14:24.000Z
     supplier_name: КЛЕН
     product_name: GN 1/3×100 из полипропилена + крышка
     source_url: https://www.klenmarket.ru/shop/inventory/kitchen-equipment/gastronorm-containers/gastronorm-containers-made-of-polypropylene/gastroemkost-gn-13-325kh176kh100-21011/
@@ -2570,6 +2662,7 @@ equipment:
     price_includes_vat: null
     delivery_included: null
     confidence: medium
+    price_source_type: supplier_product_card
   - item_id: CAPEX-02-006
     module_id: CAPEX-02
     module_name: Торговая кухня, бар и зона выдачи
@@ -2603,7 +2696,7 @@ equipment:
     price_base: 20320
     price_max: 25896
     currency: RUB
-    price_date: 2026-08-02
+    price_date: 2026-08-05
     supplier: КЛЕН
     source_id: SRC-PRICE-20260802-TABLE-GENERAL-BASE
     quote_status: researched
@@ -2613,7 +2706,7 @@ equipment:
     source_record_sha256: 14197dfb0a33d8fd0b285fee9dc8965b886b2799ad754485d8eed180ee379107
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
     price_notes: Минимум два стола задано источником; размеры после расстановки.
-    checked_at: 2026-08-01T22:19:05.000Z
+    checked_at: 2026-08-05T18:14:24.000Z
     supplier_name: КЛЕН
     product_name: Luxstahl СПС-12/6, 1200×600
     source_url: https://www.klenmarket.ru/shop/equipment/neutral-equipment/stoly-proizvodstvennye-i-rabochie/stoly-razdelochnye/stol-proizvodstvennyi-luxstahl-sps-126/
@@ -2624,6 +2717,7 @@ equipment:
     price_includes_vat: null
     delivery_included: null
     confidence: medium
+    price_source_type: supplier_product_card
   - item_id: CAPEX-02-007
     module_id: CAPEX-02
     module_name: Торговая кухня, бар и зона выдачи
@@ -2657,7 +2751,7 @@ equipment:
     price_base: 20320
     price_max: 25896
     currency: RUB
-    price_date: 2026-08-02
+    price_date: 2026-08-05
     supplier: КЛЕН
     source_id: SRC-PRICE-20260802-TABLE-GENERAL-BASE
     quote_status: researched
@@ -2667,7 +2761,7 @@ equipment:
     source_record_sha256: 9d217445e545ba067b00783d71164bf92d06c62b41c99630f2721cfe86f57a63
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
     price_notes: Один стол сортировки и сборки.
-    checked_at: 2026-08-01T22:19:05.000Z
+    checked_at: 2026-08-05T18:14:24.000Z
     supplier_name: КЛЕН
     product_name: Luxstahl СПС-12/6, 1200×600
     source_url: https://www.klenmarket.ru/shop/equipment/neutral-equipment/stoly-proizvodstvennye-i-rabochie/stoly-razdelochnye/stol-proizvodstvennyi-luxstahl-sps-126/
@@ -2678,6 +2772,7 @@ equipment:
     price_includes_vat: null
     delivery_included: null
     confidence: medium
+    price_source_type: supplier_product_card
   - item_id: CAPEX-02-008
     module_id: CAPEX-02
     module_name: Торговая кухня, бар и зона выдачи
@@ -2711,7 +2806,7 @@ equipment:
     price_base: 20320
     price_max: 25896
     currency: RUB
-    price_date: 2026-08-02
+    price_date: 2026-08-05
     supplier: КЛЕН
     source_id: SRC-PRICE-20260802-TABLE-GENERAL-BASE
     quote_status: researched
@@ -2721,7 +2816,7 @@ equipment:
     source_record_sha256: 5340fbc23bff7b38e2dc4bc4dc4a45bcfa99566e6c733265fb91353fe86bb62a
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
     price_notes: Один стол сервировки и выдачи.
-    checked_at: 2026-08-01T22:19:05.000Z
+    checked_at: 2026-08-05T18:14:24.000Z
     supplier_name: КЛЕН
     product_name: Luxstahl СПС-12/6, 1200×600
     source_url: https://www.klenmarket.ru/shop/equipment/neutral-equipment/stoly-proizvodstvennye-i-rabochie/stoly-razdelochnye/stol-proizvodstvennyi-luxstahl-sps-126/
@@ -2732,6 +2827,7 @@ equipment:
     price_includes_vat: null
     delivery_included: null
     confidence: medium
+    price_source_type: supplier_product_card
   - item_id: CAPEX-02-009
     module_id: CAPEX-02
     module_name: Торговая кухня, бар и зона выдачи
@@ -2765,7 +2861,7 @@ equipment:
     price_base: 32451
     price_max: 39683
     currency: RUB
-    price_date: 2026-08-02
+    price_date: 2026-08-05
     supplier: КЛЕН
     source_id: SRC-PRICE-20260802-RACK-BASE
     quote_status: researched
@@ -2775,7 +2871,7 @@ equipment:
     source_record_sha256: 4476a9c5f14c393d648b3dc43f715c6911054d8e679a1eb7a4bbfb4ddf004528
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
     price_notes: Количество tbd; research-сценарии до планировки.
-    checked_at: 2026-08-01T22:19:05.000Z
+    checked_at: 2026-08-05T18:14:24.000Z
     supplier_name: КЛЕН
     product_name: HICOLD НСК-11/6
     source_url: https://www.klenmarket.ru/shop/equipment/neutral-equipment/racks/racks-with-solid-shelves/stellazh-nerzhaveiushchii-kukhonnyi-hicold-nsk-116-281473/
@@ -2786,6 +2882,7 @@ equipment:
     price_includes_vat: null
     delivery_included: null
     confidence: high
+    price_source_type: supplier_product_card
   - item_id: CAPEX-02-010
     module_id: CAPEX-02
     module_name: Торговая кухня, бар и зона выдачи
@@ -2819,7 +2916,7 @@ equipment:
     price_base: 199000
     price_max: 253500.46
     currency: RUB
-    price_date: 2026-08-02
+    price_date: 2026-08-05
     supplier: AVIbar
     source_id: SRC-PRICE-20260802-POSTMIX-BASE
     quote_status: quote_required
@@ -2829,7 +2926,7 @@ equipment:
     source_record_sha256: 20dd77ae76a25a57a2349adbf266166311d328bc4f5154bc41a825a5c73fbde5
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
     price_notes: "До закупки нужен единый КП: охладитель, карбонизатор, CO₂, редуктор, насосы, шланги, краны/пистолет, каплесборник, фильтрация. Публичные комплекты различаются и не подтверждают весь требуемый состав."
-    checked_at: 2026-08-01T22:19:05.000Z
+    checked_at: 2026-08-05T18:14:24.000Z
     supplier_name: AVIbar
     product_name: AVIbar Press
     source_url: https://avibar.ru/postmiks-avibar-press
@@ -2840,6 +2937,7 @@ equipment:
     price_includes_vat: null
     delivery_included: null
     confidence: low
+    price_source_type: supplier_product_card
   - item_id: CAPEX-02-011
     module_id: CAPEX-02
     module_name: Торговая кухня, бар и зона выдачи
@@ -2873,7 +2971,7 @@ equipment:
     price_base: 10580
     price_max: 12363
     currency: RUB
-    price_date: 2026-08-02
+    price_date: 2026-08-05
     supplier: BeerMachines
     source_id: SRC-PRICE-20260802-KEG-BASE
     quote_status: quote_required
@@ -2883,7 +2981,7 @@ equipment:
     source_record_sha256: dcf3560d9df1826114d5b7e1bc4c5d1ce2f951c938e75c1020f9746e83775559
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
     price_notes: Цена за один 19-литровый кег; 4/8/12 — research-сценарии, фитинги и мойка отдельно не оценены. Количество вкусов и оборот напитков ещё не определены.
-    checked_at: 2026-08-01T22:19:05.000Z
+    checked_at: 2026-08-05T18:14:24.000Z
     supplier_name: BeerMachines
     product_name: KegLand Cornelius 19 л
     source_url: https://www.beermachines.ru/catalog/kegging/cornelius-keg-kegland-19/
@@ -2894,6 +2992,7 @@ equipment:
     price_includes_vat: null
     delivery_included: null
     confidence: medium
+    price_source_type: supplier_product_card
   - item_id: CAPEX-02-012
     module_id: CAPEX-02
     module_name: Торговая кухня, бар и зона выдачи
@@ -2927,7 +3026,7 @@ equipment:
     price_base: 8536
     price_max: 8693
     currency: RUB
-    price_date: 2026-08-02
+    price_date: 2026-08-05
     supplier: КЛЕН
     source_id: SRC-PRICE-20260802-THERMOPOT-BASE
     quote_status: researched
@@ -2937,7 +3036,7 @@ equipment:
     source_record_sha256: edefe98e7291b03b701f0ddbb2c13e505f1204cff7aeda30f4b7fc944631a302
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
     price_notes: Минимум две единицы задано источником; SCALE_READY добавляет резерв.
-    checked_at: 2026-08-01T22:19:05.000Z
+    checked_at: 2026-08-05T18:14:24.000Z
     supplier_name: КЛЕН
     product_name: ROSSO WB-20 PRO
     source_url: https://www.klenmarket.ru/shop/equipment/the-thermal-equipment/boilers/kipiatilnik-rosso-wb-20-pro/
@@ -2948,6 +3047,7 @@ equipment:
     price_includes_vat: null
     delivery_included: null
     confidence: medium
+    price_source_type: supplier_product_card
   - item_id: CAPEX-02-013
     module_id: CAPEX-02
     module_name: Торговая кухня, бар и зона выдачи
@@ -2981,7 +3081,7 @@ equipment:
     price_base: 36050
     price_max: 39688
     currency: RUB
-    price_date: 2026-08-02
+    price_date: 2026-08-05
     supplier: КЛЕН
     source_id: SRC-PRICE-20260802-COMPACT-ICE-BASE
     quote_status: quote_required
@@ -2991,7 +3091,7 @@ equipment:
     source_record_sha256: 8169104f07ebbdb7a81dda3485a56ee363f87c048fc1c2d01cff046c44940b02
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
     price_notes: Не включена в MINIMUM/BASE совмещённого пилота; одна единица показана только в SCALE_READY как условный отдельный формат. Позиция относится только к отдельной торговой точке без заготовочного цеха.
-    checked_at: 2026-08-01T22:19:05.000Z
+    checked_at: 2026-08-05T18:14:24.000Z
     supplier_name: КЛЕН
     product_name: Viatto VA-IM-25
     source_url: https://www.klenmarket.ru/shop/equipment/refrigeration-equipment/ice-generators/ldogeneratory-palchikovogo-lda/ldogenerator-va-im-25/
@@ -3002,6 +3102,7 @@ equipment:
     price_includes_vat: null
     delivery_included: null
     confidence: medium
+    price_source_type: supplier_product_card
   - item_id: CAPEX-02-014
     module_id: CAPEX-02
     module_name: Торговая кухня, бар и зона выдачи
@@ -4693,9 +4794,9 @@ equipment:
     inclusion_status: standalone
     requirement: optional
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
+    quantity_min: 1
+    quantity_base: 2
+    quantity_scale_ready: 3
     unit: tbd
     source_quantity: null
     specification: null
@@ -4711,21 +4812,32 @@ equipment:
     extraction_required: null
     dimensions: null
     service_clearance: null
-    price_min: null
-    price_base: null
-    price_max: null
-    currency: null
-    price_date: null
-    supplier: null
-    source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
+    price_min: 15299
+    price_base: 15299
+    price_max: 15299
+    currency: RUB
+    price_date: 2026-08-05
+    supplier: Barneo
+    source_id: SRC-PRICE-20260805-BOTTLE-HOLDERS-BASE
     quote_status: quote_required
     notes: null
     source_section: CAPEX-02 / Опциональный коктейльный комплект
     source_item_number: 54
     source_record_sha256: be395a6c45fb281ccfe66851d2f71373a4a4972ee9b26792f345aaf4e658c0db
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    price_notes: Стеллажи/держатели для бутылок остаются без цены. Опциональное алкогольное направление не утверждено и размеры хранения не определены.
-    checked_at: 2026-08-01T22:19:05.000Z
+    price_notes: Включается только при alcohol_enabled == true; один включённый MOD-BAR без алкогольного направления позицию не добавляет. Позиция зависит от отдельного решения об алкогольном направлении и требует коммерческого предложения.
+    checked_at: 2026-08-05T18:14:24.000Z
+    supplier_name: Barneo
+    product_name: Стеллажи или держатели для бутылок — два комплекта
+    source_url: https://www.barneo.ru/product/derzhatel-dlya-6ti-butylok-nastolnyi-p-l-barbossa-81259114
+    price_source_type: owner_approved_research_estimate
+    price_min_source_id: SRC-PRICE-20260805-BOTTLE-HOLDERS-MINIMUM
+    price_base_source_id: SRC-PRICE-20260805-BOTTLE-HOLDERS-BASE
+    price_max_source_id: SRC-PRICE-20260805-BOTTLE-HOLDERS-SCALE-READY
+    availability_status: quote_required; availability_not_checked
+    price_includes_vat: null
+    delivery_included: null
+    confidence: medium
   - item_id: CAPEX-02-055
     module_id: CAPEX-02
     module_name: Торговая кухня, бар и зона выдачи
@@ -4737,9 +4849,9 @@ equipment:
     inclusion_status: standalone
     requirement: optional
     lifecycle_status: research
-    quantity_min: null
-    quantity_base: null
-    quantity_scale_ready: null
+    quantity_min: 1
+    quantity_base: 1
+    quantity_scale_ready: 1
     unit: tbd
     source_quantity: null
     specification: null
@@ -4755,21 +4867,32 @@ equipment:
     extraction_required: null
     dimensions: null
     service_clearance: null
-    price_min: null
-    price_base: null
-    price_max: null
-    currency: null
-    price_date: null
-    supplier: null
-    source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
+    price_min: 58443
+    price_base: 83284
+    price_max: 116874
+    currency: RUB
+    price_date: 2026-08-05
+    supplier: КЛЕН
+    source_id: SRC-PRICE-20260805-ALCOHOL-STORAGE-BASE
     quote_status: quote_required
     notes: null
     source_section: CAPEX-02 / Опциональный коктейльный комплект
     source_item_number: 55
     source_record_sha256: ff6e1d84a1380884045a97a8ff4ddce91ac502b38c49206caaa2c0fa7afb655f
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
-    price_notes: Закрываемая зона хранения алкоголя остаётся без цены. Опциональное алкогольное направление не утверждено и требования к закрываемой зоне не определены.
-    checked_at: 2026-08-01T22:19:05.000Z
+    price_notes: Перед закупкой подтвердить наличие замка или возможность установки замка, соответствующего принятой схеме хранения алкогольной продукции. Включается только при alcohol_enabled == true. Требуется подтвердить точное исполнение закрываемой зоны хранения и получить коммерческое предложение.
+    checked_at: 2026-08-05T18:14:24.000Z
+    supplier_name: КЛЕН
+    product_name: Закрываемая зона хранения алкогольной продукции — базовая комплектация
+    source_url: https://www.klenmarket.ru/shop/equipment/neutral-equipment/wardrobes-for-clothes-and-bags/stellazh-stk-363500-zakrytyi/
+    price_source_type: owner_approved_research_estimate
+    price_min_source_id: SRC-PRICE-20260805-ALCOHOL-STORAGE-MINIMUM
+    price_base_source_id: SRC-PRICE-20260805-ALCOHOL-STORAGE-BASE
+    price_max_source_id: SRC-PRICE-20260805-ALCOHOL-STORAGE-SCALE-READY
+    availability_status: quote_required; availability_not_checked
+    price_includes_vat: null
+    delivery_included: null
+    confidence: medium
   - item_id: CAPEX-03-001
     module_id: CAPEX-03
     module_name: Модуль выращивания зелени и микрозелени
@@ -4803,7 +4926,7 @@ equipment:
     price_base: 129000
     price_max: 129000
     currency: RUB
-    price_date: 2026-08-02
+    price_date: 2026-08-05
     supplier: Green-1
     source_id: SRC-PRICE-20260802-GROW-SYSTEM-BASE
     quote_status: quote_required
@@ -4813,7 +4936,7 @@ equipment:
     source_record_sha256: edaf178370bbda4babdba77e2d0a837a34b0abdf82b9577ced7861958c0b2615
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
     price_notes: Опытный, не промышленный масштаб. Две установки — ориентир десяти рядов; точный аэротуманный модуль требует расчёта. Цены относятся к готовым гидропонным аналогам, а не к утверждённой инженерной схеме из десяти рядов.
-    checked_at: 2026-08-01T22:19:05.000Z
+    checked_at: 2026-08-05T18:14:24.000Z
     supplier_name: Green-1
     product_name: Гидропонная ферма Full, 4 уровня
     source_url: https://www.green-1.ru/index.php?path=11900330_11900332&product_id=839&route=product%2Fproduct
@@ -4824,6 +4947,7 @@ equipment:
     price_includes_vat: null
     delivery_included: null
     confidence: low
+    price_source_type: supplier_product_card
   - item_id: CAPEX-03-002
     module_id: CAPEX-03
     module_name: Модуль выращивания зелени и микрозелени
@@ -5613,7 +5737,7 @@ equipment:
     price_base: 47500
     price_max: 67300
     currency: RUB
-    price_date: 2026-08-02
+    price_date: 2026-08-05
     supplier: КЛЕН
     source_id: SRC-PRICE-20260802-POS-TERMINAL-BASE
     quote_status: quote_required
@@ -5623,7 +5747,7 @@ equipment:
     source_record_sha256: a1b7d0d9481e0202d6d8c419521077f7c5d187e193edacae46f3dbdd6635ff33
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
     price_notes: Два POS-терминала заданы спецификацией; периферия и лицензии не включены. Оценена только аппаратная часть; фискализация, эквайринг, ПО и внедрение не детализированы.
-    checked_at: 2026-08-01T22:19:05.000Z
+    checked_at: 2026-08-05T18:14:24.000Z
     supplier_name: КЛЕН
     product_name: SP/SKYV2
     source_url: https://www.klenmarket.ru/shop/equipment/oborudovanie-dlia-avtomatizatsii/pos-sistemy/sensornyi-terminal-spskyv2-15-intel-j4125-ozu-4gbssdbez-msr-windows-10-chernyi/
@@ -5634,6 +5758,7 @@ equipment:
     price_includes_vat: null
     delivery_included: null
     confidence: medium
+    price_source_type: supplier_product_card
   - item_id: CAPEX-04-002
     module_id: CAPEX-04
     module_name: Касса, учёт и управление заказами
@@ -5667,7 +5792,7 @@ equipment:
     price_base: 47500
     price_max: 67300
     currency: RUB
-    price_date: 2026-08-02
+    price_date: 2026-08-05
     supplier: КЛЕН
     source_id: SRC-PRICE-20260802-POS-TERMINAL-BASE
     quote_status: quote_required
@@ -5677,7 +5802,7 @@ equipment:
     source_record_sha256: 3e12d2cfc0ef9de24a87cb0fe03e710a17623797e9a97eb012ecdd700c515e41
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
     price_notes: Один аппаратный терминал; сканер, принтер этикеток и ПО не включены. Требования складского/производственного ПО и периферии не определены.
-    checked_at: 2026-08-01T22:19:05.000Z
+    checked_at: 2026-08-05T18:14:24.000Z
     supplier_name: КЛЕН
     product_name: SP/SKYV2
     source_url: https://www.klenmarket.ru/shop/equipment/oborudovanie-dlia-avtomatizatsii/pos-sistemy/sensornyi-terminal-spskyv2-15-intel-j4125-ozu-4gbssdbez-msr-windows-10-chernyi/
@@ -5688,6 +5813,7 @@ equipment:
     price_includes_vat: null
     delivery_included: null
     confidence: medium
+    price_source_type: supplier_product_card
   - item_id: CAPEX-04-003
     module_id: CAPEX-04
     module_name: Касса, учёт и управление заказами
@@ -5721,7 +5847,7 @@ equipment:
     price_base: 47500
     price_max: 67300
     currency: RUB
-    price_date: 2026-08-02
+    price_date: 2026-08-05
     supplier: КЛЕН
     source_id: SRC-PRICE-20260802-POS-TERMINAL-BASE
     quote_status: quote_required
@@ -5731,7 +5857,7 @@ equipment:
     source_record_sha256: 99298e3fa130b98ce7558676a5db3a3bb56dae0ac89fec48ae2c862fea7d444b
     content_source_id: SRC-CAPEX-EQUIPMENT-SPEC-V0-1-BRIEF
     price_notes: Три экрана заданы спецификацией; лицензии KDS, сеть и крепления не включены. POS-моноблоки использованы как аппаратный ориентир; нужна проверка KDS-совместимости, защиты кухни, креплений и ПО.
-    checked_at: 2026-08-01T22:19:05.000Z
+    checked_at: 2026-08-05T18:14:24.000Z
     supplier_name: КЛЕН
     product_name: SP/SKYV2
     source_url: https://www.klenmarket.ru/shop/equipment/oborudovanie-dlia-avtomatizatsii/pos-sistemy/sensornyi-terminal-spskyv2-15-intel-j4125-ozu-4gbssdbez-msr-windows-10-chernyi/
@@ -5742,6 +5868,7 @@ equipment:
     price_includes_vat: null
     delivery_included: null
     confidence: medium
+    price_source_type: supplier_product_card
   - item_id: CAPEX-05-001
     module_id: CAPEX-05
     module_name: Гостевая зона и обслуживание
@@ -6909,7 +7036,7 @@ equipment:
     price_base: 295020
     price_max: 295020
     currency: RUB
-    price_date: 2026-08-03
+    price_date: 2026-08-05
     supplier: Расчётный комплект / Restoll
     supplier_name: Расчётный комплект / Restoll
     product_name: Расчётный комплект мелкого инвентаря заготовочного цеха
@@ -6929,7 +7056,8 @@ equipment:
     source_section: CAPEX-01 / Кухонный инвентарь заготовочного цеха
     source_item_number: 48
     source_record_sha256: 5238dec49a9689b7f7606b9321883bb8a6e967cc7ccb9f7f3fa074fc14f63107
-    checked_at: 2026-08-03T12:00:00.000Z
+    checked_at: 2026-08-05T18:14:24.000Z
+    price_source_type: supplier_product_card
   - item_id: CAPEX-02-056
     module_id: CAPEX-02
     module_name: Торговая кухня, бар и зона выдачи
@@ -6963,7 +7091,7 @@ equipment:
     price_base: 309760
     price_max: 309760
     currency: RUB
-    price_date: 2026-08-03
+    price_date: 2026-08-05
     supplier: Расчётный комплект / Restoll
     supplier_name: Расчётный комплект / Restoll
     product_name: Расчётный комплект мелкого инвентаря торговой кухни
@@ -6983,7 +7111,8 @@ equipment:
     source_section: CAPEX-02 / Кухонный инвентарь торговой точки
     source_item_number: 56
     source_record_sha256: 693a27a9ed3d75535432c45dabe5169b60755f67d64f9b4938f4e1671326e53e
-    checked_at: 2026-08-03T12:00:00.000Z
+    checked_at: 2026-08-05T18:14:24.000Z
+    price_source_type: supplier_product_card
   - item_id: CAPEX-02-057
     module_id: CAPEX-02
     module_name: Торговая кухня, бар и зона выдачи
@@ -7017,7 +7146,7 @@ equipment:
     price_base: 122760
     price_max: 122760
     currency: RUB
-    price_date: 2026-08-03
+    price_date: 2026-08-05
     supplier: Расчётный комплект / Restoll
     supplier_name: Расчётный комплект / Restoll
     product_name: Расчётный комплект базового барного инвентаря
@@ -7037,7 +7166,8 @@ equipment:
     source_section: CAPEX-02 / Базовый барный инвентарь
     source_item_number: 57
     source_record_sha256: 9f15c93224ed4370eaa4e8f24972fccf48285094977651a4956b3be4cbf6f3d8
-    checked_at: 2026-08-03T12:00:00.000Z
+    checked_at: 2026-08-05T18:14:24.000Z
+    price_source_type: supplier_product_card
   - item_id: CAPEX-08-001
     module_id: CAPEX-08
     module_name: Посудомоечное оборудование
@@ -7071,7 +7201,7 @@ equipment:
     price_base: 304101.33
     price_max: 304101.33
     currency: RUB
-    price_date: 2026-08-03
+    price_date: 2026-08-05
     supplier: ABAT Online / Трапеза
     supplier_name: ABAT Online / Трапеза
     product_name: ABAT МПК-700К + предмоечный и выходной столы + 3 кассеты + DVA LT12
@@ -7091,7 +7221,8 @@ equipment:
     source_section: CAPEX-08 / Профессиональная посудомоечная зона
     source_item_number: 1
     source_record_sha256: d585db7beae8a5395c9e3c8c922eb607078a59450205c2f3f1c1ad6ebf047790
-    checked_at: 2026-08-03T12:00:00.000Z
+    checked_at: 2026-08-05T18:14:24.000Z
+    price_source_type: supplier_product_card
   - item_id: CAPEX-08-002
     module_id: CAPEX-08
     module_name: Посудомоечное оборудование

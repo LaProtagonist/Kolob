@@ -30,7 +30,7 @@ function parseNumber(value: string) {
 function Segmented({ label, value, options, onChange, dataName }: {
   label: string;
   value: string | number;
-  options: Array<{ value: string | number; label: string; hint?: string }>;
+  options: Array<{ value: string | number; label: string; hint?: string; ariaLabel?: string }>;
   onChange: (value: string) => void;
   dataName?: string;
 }) {
@@ -44,6 +44,7 @@ function Segmented({ label, value, options, onChange, dataName }: {
           data-control={dataName}
           className={String(value) === String(option.value) ? "is-selected" : ""}
           aria-pressed={String(value) === String(option.value)}
+          aria-label={option.ariaLabel}
           onClick={() => onChange(String(option.value))}
         >
           <strong>{option.label}</strong>
@@ -235,7 +236,7 @@ export function LaunchBudgetPage() {
                 label="Плотность посадки"
                 value={state.seatingProfileId}
                 dataName="seating-profile"
-                options={rawModel.seating.profiles.map(profile => ({ value: profile.id, label: profile.label, hint: `${String(profile.square_metres_per_seat).replace(".", ",")} м² на место` }))}
+                options={rawModel.seating.profiles.map(profile => ({ value: profile.id, label: profile.label, hint: `${String(profile.square_metres_per_seat).replace(".", ",")} м² на место`, ariaLabel: profile.aria_label }))}
                 onChange={value => update("seatingProfileId", value as SeatingProfileId)}
               />
               <div className="launch-seat-result"><span>Предварительно</span><strong>{result.seatCount === null ? "Не рассчитано" : `${result.seatCount} мест`}</strong><p>{rawModel.seating.caveat}</p></div>

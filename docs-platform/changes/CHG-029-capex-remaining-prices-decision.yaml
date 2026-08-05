@@ -1,0 +1,41 @@
+change_id: CHG-029
+title: Зафиксировать решение по оставшимся research-ценам CAPEX
+status: approved
+created_at: 2026-08-05
+decision_id: DEC-001
+iteration_id: ITR-CAPEX-REMAINING-PRICES-2026-08-05-01
+proposal_id: PROP-CAPEX-REMAINING-PRICES-2026-08-05-01
+approved_payload_path: docs-platform/changelog/payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01-approved.yaml
+approved_payload_sha256: 123b291763b8571d36a5650d9b49d8159839834b574895e666ed943f4089f6d1
+operations:
+  - type: add
+    entity: sources
+    value:
+      id: SRC-CAPEX-REMAINING-PRICE-IMPLEMENTATION-BRIEF
+      title: Задание на реализацию оставшихся research-цен CAPEX
+      type: instruction
+      location: User instruction, 2026-08-05
+      publisher: project owner
+      publication_date: 2026-08-05
+      accessed_at: 2026-08-05
+      reliability: primary
+      notes: Содержит точные цены восьми существующих позиций, условие alcohol_enabled, запрет двойного учёта вытяжного зонта и новые подписи плотности. Интернет-исследование прямо запрещено.
+  - type: add
+    entity: decisions
+    value:
+      id: DEC-015
+      title: Добавить утверждённые research-цены оставшихся позиций CAPEX
+      status: approved
+      decision: Добавить точные research-ориентиры восьми существующих позиций, сохранить quote_required, включать CAPEX-02-054 и CAPEX-02-055 только при alcohol_enabled == true, исключить повторное суммирование CAPEX-01-012 на launch-budget и заменить видимые подписи плотности посадки.
+      rationale: Прямое задание владельца проекта от 2026-08-05. Значения переносятся без интернет-исследования и не утверждают поставщиков, коммерческие предложения, окончательные цены или итоговый CAPEX.
+      affected_documents:
+        - DOC-CAPEX-EQUIPMENT-REGISTER
+        - DOC-CAPEX-PRICE-RESEARCH
+        - DOC-CAPEX-MODULES
+        - DOC-INVESTOR-START-MODEL
+      approved_by: project owner
+      approved_at: 2026-08-05
+      supersedes: null
+      source_ids:
+        - SRC-CAPEX-REMAINING-PRICE-IMPLEMENTATION-BRIEF
+      updated_at: 2026-08-05

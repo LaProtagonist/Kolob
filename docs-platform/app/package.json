@@ -48,6 +48,10 @@
     "capex:price:apply": "tsx src/cli.ts capex:price:apply",
     "capex:price:validate": "tsx src/cli.ts capex:price:validate",
     "capex:price:reverse:preview": "tsx src/cli.ts capex:price:reverse:preview",
+    "capex:remaining-prices:artifacts": "tsx src/cli.ts capex:remaining-prices:artifacts",
+    "capex:remaining-prices:preview": "tsx src/cli.ts capex:remaining-prices:preview",
+    "capex:remaining-prices:apply": "tsx src/cli.ts capex:remaining-prices:apply",
+    "capex:remaining-prices:reverse:preview": "tsx src/cli.ts capex:remaining-prices:reverse:preview",
     "capex:configurator:artifacts": "tsx src/cli.ts capex:configurator:artifacts",
     "capex:configurator:preview": "tsx src/cli.ts capex:configurator:preview",
     "capex:configurator:apply": "tsx src/cli.ts capex:configurator:apply",
@@ -71,6 +75,7 @@
     "capex:configuration:preview": "tsx src/cli.ts capex:configuration:preview",
     "capex:sheet:preview": "tsx src/cli.ts capex:sheet:preview",
     "capex:sheet:apply": "tsx src/cli.ts capex:sheet:apply",
+    "capex:sheet:receipt:finalize": "tsx src/cli.ts capex:sheet:receipt:finalize",
     "google:capex:overrides:import": "tsx src/cli.ts google:capex:overrides:import",
     "google:doctor": "tsx src/cli.ts google:doctor",
     "google:auth": "tsx src/cli.ts google:auth",
@@ -86,7 +91,7 @@
     "mcp:inspect": "npm --prefix ../mcp run inspect",
     "mcp:test": "npm --prefix ../mcp run test",
     "mcp:smoke": "npm --prefix ../mcp run smoke",
-    "test": "tsx --test test/*.test.ts"
+    "test": "node scripts/run-tests.cjs"
   },
   "dependencies": {
     "@google-cloud/local-auth": "^3.0.1",

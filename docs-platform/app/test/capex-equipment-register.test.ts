@@ -53,7 +53,7 @@ test("canonical YAML passes schema and reference validation and CSV is generated
   assert.equal(fs.readFileSync(csvPath, "utf8").split("\n", 1)[0], EQUIPMENT_COLUMNS.join(","));
 });
 
-test("the 124 source records preserve history outside the governed DEC-010/DEC-011 changes", () => {
+test("the 124 source records preserve history outside the governed DEC-010/DEC-011/DEC-015 changes", () => {
   const previous = YAML.parse(fs.readFileSync(path.join(platform, "changelog", "payloads", "ITR-CAPEX-REGISTER-2026-08-01-01-approved.yaml"), "utf8"));
   const current = readRegister();
   const withoutPriceResearch = current.equipment.slice(0, 124).map(item => {
@@ -67,15 +67,15 @@ test("the 124 source records preserve history outside the governed DEC-010/DEC-0
     normalized.source_id = item.content_source_id ?? item.source_id;
     normalized.quote_status = "not_requested";
     for (const field of [
-      "supplier_name", "product_name", "source_url", "content_source_id", "price_min_source_id", "price_base_source_id",
+      "supplier_name", "product_name", "source_url", "price_source_type", "content_source_id", "price_min_source_id", "price_base_source_id",
       "price_max_source_id", "availability_status", "checked_at", "price_includes_vat", "delivery_included", "confidence", "price_notes",
     ]) delete normalized[field];
     return normalized;
   });
   const governedSourceIds = new Set([
-    "CAPEX-01-009", "CAPEX-01-015",
+    "CAPEX-01-001", "CAPEX-01-002", "CAPEX-01-009", "CAPEX-01-012", "CAPEX-01-015",
     ...Array.from({ length: 16 }, (_, index) => `CAPEX-01-${String(index + 27).padStart(3, "0")}`),
-    "CAPEX-02-001", "CAPEX-02-002",
+    "CAPEX-02-001", "CAPEX-02-002", "CAPEX-02-003", "CAPEX-02-054", "CAPEX-02-055",
     ...Array.from({ length: 29 }, (_, index) => `CAPEX-02-${String(index + 14).padStart(3, "0")}`),
   ]);
   assert.deepEqual(withoutPriceResearch.filter(item => !governedSourceIds.has(String(item.item_id))), previous.equipment.filter((item: { item_id: string }) => !governedSourceIds.has(item.item_id)));
@@ -111,8 +111,8 @@ test("parent references, inclusion and numerical uncertainty rules prevent doubl
     }
     assert.equal(item.lifecycle_status, "research");
   }
-  assert.equal(register.equipment.filter(item => item.price_base !== null).length, 43);
-  assert.equal(register.equipment.filter(item => item.price_base !== null).every(item => item.supplier !== null && item.source_url && item.checked_at), true);
+  assert.equal(register.equipment.filter(item => item.price_base !== null).length, 51);
+  assert.equal(register.equipment.filter(item => item.price_base !== null).every(item => item.supplier !== null && item.checked_at && (item.source_url || item.price_source_type === "owner_approved_research_estimate")), true);
   assert.equal(register.equipment.filter(item => item.item_id.startsWith("CAPEX-05-")).every(item => item.price_min === null && item.price_base === null && item.price_max === null), true);
   assert.equal(register.equipment.filter(item => item.inclusion_status === "included_in_parent" || ["component", "engineering_connection", "open_question"].includes(item.record_type)).every(item => item.price_min === null && item.price_base === null && item.price_max === null), true);
   const baseline = registerStatistics(register).main_procurement_records;
@@ -155,9 +155,9 @@ test("register statistics distinguish source records from independent procuremen
       engineering_connection: 1, installation_service: 0, consumable: 0, software: 0, open_question: 2,
     },
     inclusion_status_tbd: 59,
-    quantity_base_tbd: 80,
-    priced_record_count: 43,
-    unpriced_eligible_procurement_record_count: 8,
+    quantity_base_tbd: 77,
+    priced_record_count: 51,
+    unpriced_eligible_procurement_record_count: 0,
     quote_required_count: 27,
     open_parameter_count: 145,
     missing_section_count: 27,
@@ -174,7 +174,7 @@ test("registry and governed records identify the research register and modular s
     id: "DOC-CAPEX-EQUIPMENT-REGISTER", title: "CAPEX Equipment Register", type: "working_capex_equipment_register",
     status: "research", google_file_id: "1J7sHM8P2IoMfHVLEHfY-UJLIZ-HBid89G6n6BS4BSJA", template: null,
     sections: ["Описание", "Конфигуратор", "Комплектация", "Переопределения", "Оснащение", "Модули", "Форматы точек", "Состав форматов", "Открытые параметры", "Недостающие разделы", "Справочники"], version: "0.1",
-    local_path: "docs-platform/working/capex-equipment-register.yaml", updated_at: "2026-08-03",
+    local_path: "docs-platform/working/capex-equipment-register.yaml", updated_at: "2026-08-05",
   });
   assert.deepEqual(dependencies.find(item => item.id === "DEP-CAPEX-SPEC-EQUIPMENT-REGISTER"), {
     id: "DEP-CAPEX-SPEC-EQUIPMENT-REGISTER", source_document_id: "DOC-CAPEX-EQUIPMENT-SPECIFICATION", priority: "governing_source",

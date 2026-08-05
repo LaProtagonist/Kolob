@@ -7,9 +7,9 @@ document:
   version: "0.1"
   status: research
   document_type: Working investment requirement model
-  decision_id: DEC-014
-  iteration_id: ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01
-  proposal_id: PROP-LAUNCH-PREMISES-PREPARATION-2026-08-05-01
+  decision_id: DEC-015
+  iteration_id: ITR-CAPEX-REMAINING-PRICES-2026-08-05-01
+  proposal_id: PROP-CAPEX-REMAINING-PRICES-2026-08-05-01
   updated_at: 2026-08-05
   disclaimer: Документ не является утверждённой финансовой моделью или окончательным инвестиционным предложением.
 basis:
@@ -25,7 +25,7 @@ basis:
       version: "0.1"
     - document_id: DOC-CAPEX-PRICE-RESEARCH
       title: CAPEX Price Research
-      version: "0.3"
+      version: "0.4"
   equipment_pipeline:
     - CAPEX Equipment Register
     - CAPEX Price Research
@@ -69,6 +69,9 @@ point_configuration:
   equipment_exclusions:
     - item_id_prefix: CAPEX-05-
       reason: Мебель и оснащение гостевой зоны рассчитываются по отдельной research-ставке на посадочное место и не должны учитываться второй раз через Equipment Register.
+    - item_id: CAPEX-01-012
+      reason: Вытяжные зонты уже входят в укрупнённую категорию подготовки помещения «Приточно-вытяжная вентиляция» и не прибавляются второй раз к стоимости оборудования на launch-budget.
+      included_in_preparation_category_id: PREP-VENTILATION
   incomplete_module_rule: Обязательный модуль со статусом not_started или без оценки показывается как «Не рассчитано» и не считается равным нулю.
 premises:
   default_scenario: rent
@@ -124,14 +127,17 @@ seating:
   default_profile: balanced
   profiles:
     - id: efficient
-      label: Эффективная посадка
+      label: Плотная
       square_metres_per_seat: 1.4
+      aria_label: Плотная посадка — 1,4 м² на место
     - id: balanced
-      label: Сбалансированная посадка
+      label: Сбалансированная
       square_metres_per_seat: 1.6
+      aria_label: Сбалансированная посадка — 1,6 м² на место
     - id: comfortable
-      label: Комфортная посадка
+      label: Комфортная
       square_metres_per_seat: 1.8
+      aria_label: Комфортная посадка — 1,8 м² на место
   seat_count_formula: floor(guest_area_m2 / square_metres_per_seat)
   caveat: Финальная вместимость определяется после разработки планировки, проверки проходов, эвакуационных требований и доступности.
 furniture:

@@ -1,0 +1,35 @@
+schema_version: 2
+iteration_id: ITR-CAPEX-REMAINING-PRICES-2026-08-05-01
+proposal_id: PROP-CAPEX-REMAINING-PRICES-2026-08-05-01
+decision_id: DEC-015
+change_set_id: CHG-030
+verified_at: 2026-08-05T19:23:29.000Z
+actor: Codex
+validation_status: passed
+approved_payload_sha256: 123b291763b8571d36a5650d9b49d8159839834b574895e666ed943f4089f6d1
+before_state_sha256: e3898936ddf6001ff9bc74404e18a6afe6a046dd892d0a6ffea34aac2c3cb4dc
+after_state_sha256: 472ddd000738831bca238fbf60f464baa0d1a339cb188fe36fa11d4d202774fb
+checks:
+  approved_payload_identity: passed
+  exact_eight_item_prices: passed
+  quote_required_preserved: passed
+  gas_grill_nomenclature: passed
+  no_fabricated_gas_grill_url: passed
+  alcohol_condition: passed
+  launch_budget_hood_deduplication: passed
+  seating_labels_and_aria: passed
+  eligible_price_coverage: 51_of_51
+  equipment_record_count: 160
+  snapshot_source_hashes: passed
+  google_sheet_readback: passed
+  google_sheet_readback_sha256: f9df132f8cb7a173387f075c5b89bd936d0e33353be223a58ee2d6441904ee44
+  docs_platform_tests: passed
+  site_route_and_ui_tests: passed
+  typescript_no_emit: passed
+  registry_validation: passed
+  timeline_validation: passed
+  reverse_preview: passed
+  reverse_preview_restores_original_hash: true
+  internet_research_performed: false
+rollback_payload: docs-platform/changelog/rollback-payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01/manifest.yaml
+summary: Восемь заданных владельцем research-цен перенесены без интернет-исследования; самостоятельных позиций без исследовательской цены в scope не осталось. Условия alcohol_enabled, исключение повторного учёта вытяжного зонта на launch-budget и новые подписи плотности проверены в данных, Google Sheet, snapshot и обеих страницах.

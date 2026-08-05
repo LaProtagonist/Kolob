@@ -71,11 +71,17 @@ function computedFromLinks(links: ModuleLink[], parameters: CapexParameters) {
   return { quantity: known[0].value, rule: known[0].link.quantityRuleType };
 }
 
+function linkConditionSatisfied(condition: string | null, parameters: CapexParameters) {
+  if (!condition) return true;
+  if (condition.trim() === "alcohol_enabled == true") return parameters.alcoholEnabled;
+  return true;
+}
+
 export function buildCapexRows(activeModuleIds: Set<string>, scenario: ScenarioId, parameters: CapexParameters): ComputedCapexRow[] {
   const itemById = new Map(capexData.items.map(item => [item.id, item]));
   const linksByItem = new Map<string, ModuleLink[]>();
   for (const link of capexData.moduleItems) {
-    if (!activeModuleIds.has(link.moduleId)) continue;
+    if (!activeModuleIds.has(link.moduleId) || !linkConditionSatisfied(link.condition, parameters)) continue;
     linksByItem.set(link.itemId, [...(linksByItem.get(link.itemId) ?? []), link]);
   }
   return [...linksByItem.entries()].map(([itemId, links]) => {
@@ -109,8 +115,9 @@ export function buildCapexRows(activeModuleIds: Set<string>, scenario: ScenarioI
   }).sort((a, b) => a.item.id.localeCompare(b.item.id));
 }
 
-export function summarizeEquipment(rows: ComputedCapexRow[], excludedItemPrefixes: string[] = []): EquipmentSummary {
-  const includedRows = rows.filter(row => !excludedItemPrefixes.some(prefix => row.item.id.startsWith(prefix)));
+export function summarizeEquipment(rows: ComputedCapexRow[], excludedItemPrefixes: string[] = [], excludedItemIds: string[] = []): EquipmentSummary {
+  const exact = new Set(excludedItemIds);
+  const includedRows = rows.filter(row => !exact.has(row.item.id) && !excludedItemPrefixes.some(prefix => row.item.id.startsWith(prefix)));
   const coverage = includedRows.filter(row => row.independentProcurement && row.quantity !== 0);
   const priced = coverage.filter(row => row.lineTotal !== null);
   return {

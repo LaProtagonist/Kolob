@@ -8,13 +8,13 @@ import YAML from "yaml";
 import {
   PILOT_CHANGE_ID,
   PILOT_DECISION_ID,
-  PILOT_ITERATION_ID,
   PILOT_PAYLOAD_PATH,
   PILOT_RECEIPT_PATH,
   previewPilotReverse,
 } from "../src/capex/pilot-expansion-workflow.js";
 import { buildEquipmentBom, readModularSources } from "../src/capex/modular.js";
 import { PRICE_SCENARIOS, readPriceResearch } from "../src/capex/price-research.js";
+import { REMAINING_PRICE_DECISION_ID } from "../src/capex/remaining-price-workflow.js";
 import { CAPEX_REGISTER_SOURCE_SHA256, readRegister, sha256 } from "../src/capex/register.js";
 import { buildWebSnapshot, checkWebSnapshot, WEB_SNAPSHOT_PATH } from "../src/capex/web-snapshot.js";
 
@@ -39,8 +39,7 @@ test("CAPEX-01-009 is one unit in the register, MOD-PREP rule and every research
   const oven = register.equipment.find(item => item.item_id === "CAPEX-01-009")!;
   const link = modular.module_items.links.find(item => item.module_id === "MOD-PREP" && item.item_id === oven.item_id)!;
   const price = research.items.find(item => item.item_id === oven.item_id)!;
-  assert.equal(register.document.decision_id, PILOT_DECISION_ID);
-  assert.equal(register.document.iteration_id, PILOT_ITERATION_ID);
+  assert.equal(register.document.decision_id, REMAINING_PRICE_DECISION_ID);
   assert.deepEqual([oven.quantity_min, oven.quantity_base, oven.quantity_scale_ready], [1, 1, 1]);
   assert.deepEqual([link.quantity_rule_type, link.quantity_rule_value, link.aggregation_rule], ["fixed", 1, "once"]);
   assert.deepEqual(PRICE_SCENARIOS.map(scenario => price.scenarios[scenario]?.quantity), [1, 1, 1]);
@@ -61,14 +60,15 @@ test("formats without MOD-PREP omit the oven and intersections count it once", (
   assert.equal(integrated.equipment.find(item => item.item_id === "CAPEX-01-009")?.calculated_quantity, 1);
 });
 
-test("scenario totals are recalculated from line items and unpriced records remain unknown", () => {
+test("scenario totals are recalculated from line items and all eligible records now have research prices", () => {
   for (const scenario of PRICE_SCENARIOS) {
     const calculated = research.items.reduce((sum, item) => sum + (item.scenarios[scenario]?.line_total_rub ?? 0), 0);
     assert.equal(Math.round(calculated * 100) / 100, research.summary.totals_rub[scenario]);
   }
-  assert.deepEqual(research.summary.totals_rub, { minimum: 3058399.33, base: 4150659.33, scale_ready: 5375662.79 });
+  assert.deepEqual(research.summary.totals_rub, { minimum: 4085990.33, base: 5488047.33, scale_ready: 6915980.79 });
   const unpriced = research.items.filter(item => item.valuation_status !== "priced");
   assert.equal(unpriced.length, research.summary.unpriced_record_count);
+  assert.equal(unpriced.length, 0);
   assert.equal(unpriced.every(item => PRICE_SCENARIOS.every(scenario => item.scenarios[scenario] === null)), true);
   assert.equal(register.equipment.filter(item => item.inclusion_status === "included_in_parent").every(item => item.price_base === null), true);
 });
@@ -81,7 +81,7 @@ test("the web snapshot is deterministic, current and derived from canonical sour
   assert.equal(built.meta.counts.formats, 7);
   assert.equal(built.meta.counts.pricedRecords, research.summary.priced_record_count);
   assert.equal(built.meta.counts.foodPriceScopeRecords, research.summary.eligible_procurement_record_count);
-  assert.equal(built.meta.decisionId, PILOT_DECISION_ID);
+  assert.equal(built.meta.decisionId, REMAINING_PRICE_DECISION_ID);
   assert.equal(built.items.find(item => item.id === "CAPEX-01-009")?.scenarios.base?.quantity, 1);
   assert.equal(built.scenarios.find(item => item.id === "minimum")?.availableInSelector, false);
   assert.equal(built.pilotConfiguration?.configuration_id, "CFG-PILOT-001");
@@ -105,7 +105,7 @@ test("the React page contains no manually duplicated register or hardcoded cover
   assert.doesNotMatch(component, /const\s+(?:equipment|items|formats|modules)\s*=\s*\[/i);
 });
 
-test("approved payload, applied hashes and governed reverse preview are exact", () => {
+test("historical pilot payload remains exact and its reverse preview detects later governed changes", () => {
   const payloadFile = path.join(project, PILOT_PAYLOAD_PATH);
   const receiptFile = path.join(project, PILOT_RECEIPT_PATH);
   const payloadText = fs.readFileSync(payloadFile, "utf8");
@@ -116,11 +116,12 @@ test("approved payload, applied hashes and governed reverse preview are exact", 
   assert.equal(change.change_id, PILOT_CHANGE_ID);
   assert.equal(change.decision_id, PILOT_DECISION_ID);
   assert.equal(receipt.approved_payload.sha256, sha256(payloadText));
-  assert.equal(receipt.after_files.every((entry: { path: string; sha256: string }) => sha256(fs.readFileSync(path.join(project, entry.path))) === entry.sha256), true);
+  assert.equal(receipt.after_files.every((entry: { path: string; sha256: string }) => sha256(fs.readFileSync(path.join(project, entry.path))) === entry.sha256), false);
   const original = console.log;
   console.log = () => undefined;
   try {
     const reverse = previewPilotReverse(receiptFile, "CHG-ROLLBACK-WEB-TEST", "DEC-ROLLBACK-WEB-TEST");
+    assert.equal(reverse.current_hash === reverse.expected_current_hash, false);
     assert.equal(reverse.restores_original_hash, true);
     assert.equal(reverse.apply_allowed, false);
     assert.equal(reverse.reverse_change_set.status, "proposed");

@@ -1,0 +1,403 @@
+schema_version: 1
+document:
+  project: Колобочная
+  document_id: DOC-INVESTOR-START-MODEL
+  title: Investor Start Model
+  russian_title: Модель стартовой потребности в инвестициях
+  version: "0.1"
+  status: research
+  document_type: Working investment requirement model
+  decision_id: DEC-014
+  iteration_id: ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01
+  proposal_id: PROP-LAUNCH-PREMISES-PREPARATION-2026-08-05-01
+  updated_at: 2026-08-05
+  disclaimer: Документ не является утверждённой финансовой моделью или окончательным инвестиционным предложением.
+basis:
+  documents:
+    - document_id: DOC-FOUNDATION
+      title: Foundation
+      version: "1.0"
+    - document_id: DOC-BUSINESS-MODEL-ARCHITECTURE
+      title: Business Model Architecture
+      version: "1.0"
+    - document_id: DOC-CAPEX-EQUIPMENT-REGISTER
+      title: CAPEX Equipment Register
+      version: "0.1"
+    - document_id: DOC-CAPEX-PRICE-RESEARCH
+      title: CAPEX Price Research
+      version: "0.3"
+  equipment_pipeline:
+    - CAPEX Equipment Register
+    - CAPEX Price Research
+    - CAPEX Modules
+    - CAPEX Point Format
+    - CAPEX Configuration
+    - CAPEX Configuration Overrides
+    - Deterministic web snapshot
+point_configuration:
+  format_id: FMT-INTEGRATED
+  format_name: Совмещённый объект
+  description: Заготовочное производство, торговая точка и собственный посадочный зал.
+  required_modules:
+    - MOD-PREP
+    - MOD-RETAIL-HOT
+    - MOD-POS
+    - MOD-KDS
+    - MOD-TAKEAWAY
+    - MOD-GUEST
+    - MOD-STORAGE
+    - MOD-WASH
+    - MOD-ENGINEERING
+  optional_modules:
+    - module_id: MOD-BAR
+      label: Бар и напитки
+      default_enabled: true
+    - module_id: MOD-GROW
+      label: Выращивание зелени и микрозелени
+      default_enabled: true
+  summary_modules:
+    - module_id: MOD-PREP
+      label: Заготовочное производство
+    - module_id: MOD-RETAIL-HOT
+      label: Торговая точка
+    - module_id: MOD-GUEST
+      label: Посадочный зал
+    - module_id: MOD-BAR
+      label: Бар и напитки
+    - module_id: MOD-GROW
+      label: Выращивание зелени
+  equipment_exclusions:
+    - item_id_prefix: CAPEX-05-
+      reason: Мебель и оснащение гостевой зоны рассчитываются по отдельной research-ставке на посадочное место и не должны учитываться второй раз через Equipment Register.
+  incomplete_module_rule: Обязательный модуль со статусом not_started или без оценки показывается как «Не рассчитано» и не считается равным нулю.
+premises:
+  default_scenario: rent
+  scenarios:
+    purchase:
+      label: Покупка
+      default_purchase_price_rub: 69000000
+      hint: Рабочий ориентир для помещения около 200 м².
+      required_fields:
+        - purchase_price_rub
+      entry_formula: purchase_price_rub
+      created_asset_formula: purchase_price_rub + evaluated_equipment_rub + furniture_rub
+    rent:
+      label: Аренда
+      default_monthly_rent_rub: 350000
+      required_fields:
+        - monthly_rent_rub
+        - prepayment_months
+        - security_deposit_months
+      prepayment_month_options:
+        - 1
+        - 3
+        - 12
+      default_prepayment_months: 12
+      security_deposit_month_options:
+        - 1
+        - 2
+        - 3
+      default_security_deposit_months: 2
+      entry_formula: monthly_rent_rub * prepayment_months + monthly_rent_rub * security_deposit_months
+      tied_funds_formula: monthly_rent_rub * security_deposit_months
+      created_asset_formula: evaluated_equipment_rub + furniture_rub
+area:
+  fields:
+    - total_area_m2
+    - kitchen_and_production_area_m2
+    - guest_area_m2
+  defaults:
+    total_area_m2: 200
+    kitchen_and_production_area_m2: 90
+    guest_area_m2: 80
+  other_area_formula: total_area_m2 - kitchen_and_production_area_m2 - guest_area_m2
+  other_area_includes:
+    - заказ и выдача
+    - склады
+    - санузлы
+    - проходы
+    - помещения персонала
+    - технические зоны
+  invalid_rule: kitchen_and_production_area_m2 + guest_area_m2 > total_area_m2
+  invalid_result: Итоговый расчёт не выполняется; отрицательная прочая площадь не используется.
+seating:
+  default_profile: balanced
+  profiles:
+    - id: efficient
+      label: Эффективная посадка
+      square_metres_per_seat: 1.4
+    - id: balanced
+      label: Сбалансированная посадка
+      square_metres_per_seat: 1.6
+    - id: comfortable
+      label: Комфортная посадка
+      square_metres_per_seat: 1.8
+  seat_count_formula: floor(guest_area_m2 / square_metres_per_seat)
+  caveat: Финальная вместимость определяется после разработки планировки, проверки проходов, эвакуационных требований и доступности.
+furniture:
+  status: research
+  marker: Рабочий ориентир
+  default_profile: balanced
+  profiles:
+    - id: functional
+      label: Функциональная комплектация
+      rub_per_seat: 4500
+    - id: balanced
+      label: Сбалансированная комплектация
+      rub_per_seat: 8500
+    - id: comfort
+      label: Повышенный комфорт
+      rub_per_seat: 12000
+  formula: preliminary_seat_count * rub_per_seat
+  double_count_rule: Позиции CAPEX-05 не увеличивают сумму оборудования, пока мебель рассчитывается по ставке на посадочное место.
+equipment:
+  status: research
+  default_scenario: BASE
+  scenarios:
+    - id: MINIMUM
+      snapshot_key: minimum
+      label: Минимальная комплектация
+    - id: BASE
+      snapshot_key: base
+      label: Базовая комплектация
+    - id: SCALE_READY
+      snapshot_key: scale_ready
+      label: С запасом для роста
+  source_rule: Стоимость рассчитывается только из детерминированного snapshot канонической CAPEX-архитектуры; суммы не хардкодятся в интерфейсе.
+  independent_procurement_rule: included_in_parent, component, engineering_connection и open_question не суммируются как самостоятельные покупки.
+  partial_total_rule: При наличии позиций без цены стоимость показывается как «от X ₽», а отсутствующие цены не считаются нулём.
+  combi_oven_rule:
+    item_id: CAPEX-01-009
+    module_id: MOD-PREP
+    quantity_rule_type: fixed
+    quantity: 1
+    aggregation_rule: once
+    without_module_quantity: 0
+preparation:
+  field: effective_preparation_amount_rub
+  title: Подготовка помещения
+  currency: RUB
+  baseline_area_m2: 200
+  status: research
+  default_mode: breakdown
+  default_total_rub: 11000000
+  collapsed_hint: Предварительная оценка адаптации помещения около 200 м² в Санкт-Петербурге.
+  area_note: Ориентир рассчитан для помещения около 200 м². Для объекта другой площади или состояния сумму можно скорректировать вручную.
+  accordion_label: Состав работ
+  manual_action_label: Указать общую сумму вручную
+  manual_field_label: Общая оценка подготовки помещения, ₽
+  manual_marker: Введено вручную
+  breakdown_action_label: Вернуться к расчёту по составу
+  breakdown_formula: sum(amount_rub for enabled categories)
+  effective_formula: "manual_mode ? manual_amount_rub : breakdown_amount_rub"
+  categories:
+    - id: PREP-BUILDING
+      name: Общестроительная адаптация
+      amount_rub: 3000000
+      enabled_by_default: true
+      description: Локальный демонтаж, перегородки, подготовка поверхностей, восстановление полов и потолков, отделка производственных и служебных зон.
+      boundaries:
+        - включает базовые строительные работы
+        - включает локальные перегородки
+        - включает подготовку и восстановление поверхностей
+        - включает износостойкую отделку кухни и служебных помещений
+        - не включает декоративную подготовку посадочного зала
+        - не включает свободно стоящую гостевую мебель
+        - не включает вентиляцию, электрику и сантехнику
+    - id: PREP-ELECTRICAL
+      name: Электроснабжение
+      amount_rub: 1200000
+      enabled_by_default: true
+      description: Модернизация щита, силовые линии, автоматы, розетки и подготовка подключений профессионального кухонного оборудования.
+      boundaries:
+        - включает внутренние электрические линии
+        - включает распределительный щит и защитную автоматику
+        - включает силовые подключения 220/380 В
+        - включает подготовку точек подключения оборудования
+        - не включает стоимость самого технологического оборудования
+        - не включает плату за внешнее увеличение выделенной мощности, если оно потребуется
+    - id: PREP-WATER-DRAINAGE
+      name: Водоснабжение и канализация
+      amount_rub: 800000
+      enabled_by_default: true
+      description: Разводка воды и канализации, подготовка моечных зон и подключений кухонного и производственного оборудования.
+      boundaries:
+        - включает внутреннюю разводку воды
+        - включает внутреннюю разводку канализации
+        - включает подготовку подключений моек, пароконвектомата, льдогенератора и другого оборудования
+        - не включает стоимость самого оборудования
+        - не включает сложный перенос общедомовых магистралей
+        - не включает внешнее строительство новых сетей
+    - id: PREP-VENTILATION
+      name: Приточно-вытяжная вентиляция
+      amount_rub: 2500000
+      enabled_by_default: true
+      description: Оборудование, воздуховоды, вытяжные зонты, автоматика, монтаж и пусконаладка системы вентиляции кухни и зала.
+      boundaries:
+        - включает приточную и вытяжную части
+        - включает воздуховоды
+        - включает вытяжные зонты
+        - включает вентиляционное оборудование
+        - включает автоматику
+        - включает монтаж
+        - включает пусконаладку
+        - проектная документация учитывается отдельно в категории проектирования
+        - не включает сложное строительство наружной шахты или реконструкцию общедомовой вентиляции
+    - id: PREP-LIGHTING
+      name: Освещение
+      amount_rub: 400000
+      enabled_by_default: true
+      description: Рабочее, гостевое и аварийное освещение, светильники, локальная подсветка и системы управления светом.
+      boundaries:
+        - включает светильники
+        - включает рабочее освещение кухни
+        - включает свет посадочного зала
+        - включает аварийное освещение
+        - включает локальную декоративную подсветку
+        - силовые линии и щит учитываются в категории электроснабжения
+    - id: PREP-GUEST-AREA
+      name: Подготовка торгового зала
+      amount_rub: 800000
+      enabled_by_default: true
+      description: Чистовая адаптация гостевой зоны, зонирование, оформление посадочного зала и подготовка зон заказа, ожидания и выдачи.
+      boundaries:
+        - включает чистовую адаптацию гостевой части
+        - включает визуальное зонирование
+        - включает подготовку зон заказа, ожидания и выдачи
+        - включает локальные декоративные элементы
+        - не включает свободно стоящие столы, стулья, диваны и банкетки
+        - не включает кассовую и выдачную стойки
+        - не дублирует общестроительную адаптацию производственных зон
+    - id: PREP-BUILT-IN
+      name: Стойки и встроенная мебель
+      amount_rub: 1300000
+      enabled_by_default: true
+      description: Стойки заказа и выдачи, встроенные шкафы, рабочие поверхности и другие стационарные элементы торгового зала.
+      boundaries:
+        - включает стойку заказа
+        - включает стойку выдачи
+        - включает встроенные шкафы
+        - включает стационарные рабочие поверхности
+        - включает встроенные элементы зонирования
+        - не включает свободно стоящие столы и стулья
+        - не дублирует расчёт гостевой мебели по количеству посадочных мест
+    - id: PREP-DESIGN
+      name: Проектирование и согласования
+      amount_rub: 1000000
+      enabled_by_default: true
+      description: Технологический, архитектурный и инженерные проекты, рабочая документация и необходимые согласовательные процедуры.
+      boundaries:
+        - включает технологический проект
+        - включает рабочую документацию
+        - включает проект электроснабжения
+        - включает проект вентиляции
+        - включает проект водоснабжения и канализации
+        - включает архитектурные и планировочные решения
+        - включает необходимые согласовательные процедуры
+        - не включает фактическое выполнение строительных и монтажных работ
+operating_reserve:
+  monthly_opex_field: monthly_opex_excluding_rent_rub
+  month_options:
+    - 3
+    - 6
+    - 9
+  default_months: 6
+  purchase_formula: monthly_opex_excluding_rent_rub * reserve_months
+  rent_formula: monthly_opex_excluding_rent_rub * reserve_months + monthly_rent_rub * max(reserve_months - prepayment_months, 0)
+  security_deposit_excluded: true
+  unknown_rule: Если ежемесячные операционные расходы не введены, операционный запас не рассчитывается и итог остаётся частичным.
+contingency:
+  percent_options:
+    - 5
+    - 10
+    - 15
+  default_percent: 10
+  formula: (evaluated_equipment_rub + furniture_rub + effective_preparation_amount_rub) * contingency_percent
+  included_categories:
+    - evaluated_equipment_rub
+    - furniture_rub
+    - effective_preparation_amount_rub
+  excluded_categories:
+    - property_purchase_rub
+    - rent_prepayment_rub
+    - security_deposit_rub
+    - operating_reserve_rub
+  partial_basis_rule: Если ручная оценка подготовки помещения не введена, резерв считается только по известным статьям и отмечается как частичный.
+totals:
+  financing_requirement_formula: premises_entry_rub + evaluated_equipment_rub + furniture_rub + effective_preparation_amount_rub + operating_reserve_rub + contingency_rub
+  partial_rule: Любая обязательная нерассчитанная статья или неполное ценовое покрытие оборудования переводит итог в формат «от X ₽» и добавляется в перечень отсутствующих статей.
+  created_assets:
+    purchase_formula: property_purchase_rub + evaluated_equipment_rub + furniture_rub
+    rent_formula: evaluated_equipment_rub + furniture_rub
+    preparation_excluded_reason: Бухгалтерская классификация подготовки помещения ещё не определена.
+  tied_or_conditionally_refundable_funds:
+    purchase_formula: null
+    rent_formula: security_deposit_rub
+missing_categories:
+  - инженерное обследование помещения
+  - проектирование и согласования
+  - итоговая стоимость ремонта
+  - доставка и монтаж оборудования
+  - коммерческие предложения по крупным позициям
+  - первоначальный запас сырья и упаковки
+  - полный расчёт операционных расходов
+documents_block:
+  public_documents: []
+  public_empty_message: Материалы проекта подготавливаются для предоставления в рамках дальнейшего обсуждения.
+  hidden_internal_document_ids:
+    - DOC-FOUNDATION
+    - DOC-BUSINESS-MODEL-ARCHITECTURE
+    - DOC-CAPEX-EQUIPMENT-SPECIFICATION
+    - DOC-CAPEX-EQUIPMENT-REGISTER
+    - DOC-CAPEX-PRICE-RESEARCH
+  public_bma_available: false
+  public_bma_note: Отдельная очищенная версия Business Model Architecture для внешнего чтения в registry не зарегистрирована.
+public_presentation:
+  page_title: Расчёт стоимости запуска
+  subtitle: "Первый совмещённый объект „Колобочной“: заготовочное производство, торговая точка и посадочный зал."
+  hero_summary_title: Что показывает расчёт
+  hero_summary: Предварительную стоимость запуска при покупке или аренде помещения — по известным статьям, с операционным запасом и резервом.
+  total_title: Стоимость запуска
+  total_partial_prefix: от
+  legal_disclaimer: Представленная информация носит предварительный характер и не является публичной офертой.
+  equipment_description: Стоимость оборудования рассчитывается на основании актуального состава оснащения и текущих цен поставщиков. Мебель посадочного зала учитывается отдельно.
+  equipment_double_count_note: Мебель посадочного зала учитывается по выбранной ставке на место и не добавляется к расчёту повторно через перечень оснащения.
+  current_configuration_title: Текущая конфигурация
+  next_steps_title: Следующие этапы расчёта
+  next_steps_intro: Эти статьи уточняются после выбора помещения и получения исходных данных. Они дополнят текущий расчёт на следующем этапе.
+  calculation_basis_title: Что учитывает расчёт
+  calculation_factors:
+    - выбранный способ использования помещения
+    - площадь объекта и посадочного зала
+    - актуальный состав оборудования
+    - уровень комплектации мебели
+    - подготовку помещения
+    - операционный запас
+    - резерв непредвиденных расходов
+  calculation_basis_note: Расчёт основан на текущей модели проекта и актуальных ценовых ориентирах. Все параметры могут быть уточнены в ходе обсуждения конкретного сценария запуска.
+form:
+  local_storage_key: kolobochnaya.launch-budget.v0.1
+  server_persistence: false
+  analytics_submission: false
+  reset_requires_confirmation: true
+decision_boundaries:
+  approved:
+    - восемь категорий подготовки помещения и их точные суммы
+    - общий базовый ориентир 11000000 RUB
+    - включённое состояние всех категорий по умолчанию
+    - возможность отключения отдельных категорий
+    - режим ручной общей оценки
+    - связь эффективной суммы подготовки с резервом и стоимостью запуска
+  not_approved:
+    - строительная смета
+    - конкретный подрядчик
+    - конкретное помещение
+    - окончательная стоимость работ
+    - нормативная стоимость
+    - финансовая модель
+    - инвестиционное предложение
+warning: |-
+  Расчёт показывает предварительную стоимость запуска выбранной конфигурации.
+  Итоговые значения уточняются после выбора помещения, обследования
+  инженерных систем, разработки планировки и получения коммерческих
+  предложений.

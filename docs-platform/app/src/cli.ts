@@ -7,6 +7,7 @@ import { applyModularIteration, applyModularReverse, buildConfiguration, listFor
 import { applyPriceIteration, previewPriceIteration, previewPriceReverse, writeApprovedPriceArtifacts } from "./capex/price-workflow.js";
 import { appendConfiguratorTimeline, applyConfiguratorAudit, previewConfiguratorAudit, previewConfiguratorReverse, writeConfiguratorAuditArtifacts } from "./capex/configurator-audit-workflow.js";
 import { appendPilotTimeline, applyPilotIteration, previewPilotIteration, previewPilotReverse, writePilotArtifacts } from "./capex/pilot-expansion-workflow.js";
+import { applyRemainingPriceIteration, previewRemainingPriceIteration, previewRemainingPriceReverse, writeRemainingPriceArtifacts } from "./capex/remaining-price-workflow.js";
 import { checkWebSnapshot, writeWebSnapshot } from "./capex/web-snapshot.js";
 import { readPriceResearch, validatePriceResearch } from "./capex/price-research.js";
 import { applyChange, loadRegistry, previewReverseChange, printChangePreview, readYaml, registryKinds, requireChange, validateRegistry, writeReverseChange } from "./governance/registry.js";
@@ -20,7 +21,7 @@ import { validateImmutability } from "./governance/immutability.js";
 import { historicalCompensationPreview, prepareRollbackLatest, rollbackLatestPreview } from "./governance/reversal.js";
 import { createRequiredHistoricalSnapshots, validateSnapshots } from "./governance/snapshots.js";
 import { authorizeInteractively, authorizeProjectFolderInteractively } from "./google/auth.js";
-import { applyCapexRegisterSheet, importCapexOverrides, previewCapexRegisterSheet } from "./google/capex-register-publisher.js";
+import { applyCapexRegisterSheet, finalizeCapexRegisterSheetReceipt, importCapexOverrides, previewCapexRegisterSheet } from "./google/capex-register-publisher.js";
 import { applyPublication, buildPublicationPreview } from "./google/publisher.js";
 import { cleanupTests, createTests, doctor, inspectFolder, readTests, updateTests } from "./google/workspace.js";
 import { applyInvestorStartModel, checkInvestorStartModel, previewInvestorStartModel, previewInvestorStartReverse } from "./investor/start-model.js";
@@ -148,6 +149,14 @@ try {
     console.log(JSON.stringify({ validation: "OK", ...research.summary }, null, 2));
   } else if (command === "capex:price:reverse:preview") {
     previewPriceReverse(args[0] ? path.resolve(args[0]) : undefined, flag(args, "--change-id"), flag(args, "--decision"));
+  } else if (command === "capex:remaining-prices:artifacts") {
+    writeRemainingPriceArtifacts();
+  } else if (command === "capex:remaining-prices:preview") {
+    previewRemainingPriceIteration();
+  } else if (command === "capex:remaining-prices:apply") {
+    applyRemainingPriceIteration(applyOptions(args));
+  } else if (command === "capex:remaining-prices:reverse:preview") {
+    previewRemainingPriceReverse(args[0] ? path.resolve(args[0]) : undefined, flag(args, "--change-id"), flag(args, "--decision"));
   } else if (command === "capex:configurator:artifacts") {
     writeConfiguratorAuditArtifacts();
   } else if (command === "capex:configurator:preview") {
@@ -194,6 +203,8 @@ try {
     await previewCapexRegisterSheet();
   } else if (command === "capex:sheet:apply") {
     await applyCapexRegisterSheet(applyOptions(args));
+  } else if (command === "capex:sheet:receipt:finalize") {
+    finalizeCapexRegisterSheetReceipt(flag(args, "--content-commit"));
   } else if (command === "google:capex:overrides:import") {
     await importCapexOverrides({ preview: args.includes("--preview"), apply: args.includes("--apply") });
   } else if (command === "google:doctor") await doctor();

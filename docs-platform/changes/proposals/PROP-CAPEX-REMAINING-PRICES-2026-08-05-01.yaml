@@ -1,0 +1,37 @@
+proposal_id: PROP-CAPEX-REMAINING-PRICES-2026-08-05-01
+iteration_id: ITR-CAPEX-REMAINING-PRICES-2026-08-05-01
+status: proposed
+created_at: 2026-08-05
+actor: project owner
+source_id: SRC-CAPEX-REMAINING-PRICE-IMPLEMENTATION-BRIEF
+scope: Реализовать точный approved payload восьми research-цен, условий BOM, launch-budget exclusion и публичных подписей плотности без исследования и без изменения прочих цен или оборудования.
+affected_document_ids:
+  - DOC-CAPEX-EQUIPMENT-REGISTER
+  - DOC-CAPEX-PRICE-RESEARCH
+  - DOC-CAPEX-MODULES
+  - DOC-INVESTOR-START-MODEL
+affected_item_ids:
+  - CAPEX-01-001
+  - CAPEX-01-002
+  - CAPEX-01-012
+  - CAPEX-02-001
+  - CAPEX-02-002
+  - CAPEX-02-003
+  - CAPEX-02-054
+  - CAPEX-02-055
+approved_payload_path: docs-platform/changelog/payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01-approved.yaml
+approved_payload_sha256: 123b291763b8571d36a5650d9b49d8159839834b574895e666ed943f4089f6d1
+boundaries:
+  approved:
+    - CAPEX-01-001
+    - CAPEX-01-002
+    - CAPEX-01-012
+    - CAPEX-02-001
+    - CAPEX-02-002
+    - CAPEX-02-003
+    - CAPEX-02-054
+    - CAPEX-02-055
+  not_approved:
+    - новые позиции
+    - новые рыночные данные
+    - окончательный CAPEX

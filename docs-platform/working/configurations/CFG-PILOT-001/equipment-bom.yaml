@@ -1532,36 +1532,6 @@ equipment:
     open_parameters: Виды, количество и формат обслуживания — tbd.
     specification: null
     notes: null
-  - item_id: CAPEX-02-054
-    name: Стеллажи или держатели для бутылок
-    modules: MOD-BAR
-    inclusion_source: bar_enabled
-    requirement: optional
-    calculated_quantity: null
-    unit: tbd
-    quantity_rule: tbd
-    calculation_status: Требует уточнения
-    override: null
-    inclusion_status: standalone
-    independent_procurement: true
-    open_parameters: Количество, размеры и размещение — tbd.
-    specification: null
-    notes: null
-  - item_id: CAPEX-02-055
-    name: Закрываемая зона хранения алкогольной продукции
-    modules: MOD-BAR
-    inclusion_source: bar_enabled
-    requirement: optional
-    calculated_quantity: null
-    unit: tbd
-    quantity_rule: tbd
-    calculation_status: Требует уточнения
-    override: null
-    inclusion_status: standalone
-    independent_procurement: true
-    open_parameters: Конфигурация и требования — tbd; зависит от отдельного решения и помещения.
-    specification: null
-    notes: null
   - item_id: CAPEX-04-001
     name: Кассовые POS-терминалы
     modules: MOD-POS

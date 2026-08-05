@@ -97,6 +97,7 @@
           "supplier_name": { "type": ["string", "null"] },
           "product_name": { "type": ["string", "null"] },
           "source_url": { "type": ["string", "null"] },
+          "price_source_type": { "type": ["string", "null"], "enum": ["supplier_product_card", "owner_approved_research_estimate", null] },
           "content_source_id": { "type": "string" },
           "price_min_source_id": { "type": ["string", "null"] },
           "price_base_source_id": { "type": ["string", "null"] },

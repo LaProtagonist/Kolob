@@ -309,7 +309,9 @@ async function inspectLaunchBudget(browser, baseUrl) {
     totalHeading: await page.locator(".launch-total-card h2").innerText(),
     legalCount: await page.getByText("Представленная информация носит предварительный характер и не является публичной офертой.", { exact: true }).count(),
   };
+  const seatingLabels = await page.locator('[data-control="seating-profile"] strong').allTextContents();
   const seatingHints = await page.locator('[data-control="seating-profile"] span').allTextContents();
+  const seatingAriaLabels = await page.locator('[data-control="seating-profile"]').evaluateAll(buttons => buttons.map(button => button.getAttribute("aria-label")));
   const internalDocumentMentions = ["Foundation", "Business Model Architecture", "CODEX_HANDOFF", "Equipment Register"].filter(term => bodyText.includes(term));
   const result = {
     robots,
@@ -340,7 +342,9 @@ async function inspectLaunchBudget(browser, baseUrl) {
     forbiddenDetail,
     forbiddenPublicCopy,
     titleAndMetadata,
+    seatingLabels,
     seatingHints,
+    seatingAriaLabels,
     internalDocumentMentions,
     consoleMessages,
     pageErrors,
@@ -390,6 +394,32 @@ async function inspectCapex(browser, baseUrl) {
     target: await ovenSource.getAttribute("target"),
     rel: await ovenSource.getAttribute("rel")
   };
+
+  const gasGrillRow = page.locator('tr[data-item-id="CAPEX-02-001"]');
+  const dosingRow = page.locator('tr[data-item-id="CAPEX-02-003"]');
+  const hoodRow = page.locator('tr[data-item-id="CAPEX-01-012"]');
+  const remainingPriceRows = {
+    unpricedCount: Number(await page.locator(".capex-live-summary dl > div").filter({ hasText: "Без цены" }).locator("dd").innerText()),
+    gasGrillName: await gasGrillRow.locator('td[data-label="Оборудование"] > strong').innerText(),
+    gasGrillQuantity: await gasGrillRow.locator('td[data-label="Количество"] > strong').innerText(),
+    gasGrillTotal: parseMoney(await gasGrillRow.locator('td[data-label="Сумма"] > strong').innerText()),
+    gasGrillQuoteWithoutUrl: await gasGrillRow.locator(".capex-quote-label").getByText("Требуется КП", { exact: true }).count(),
+    gasGrillProductLinkCount: await gasGrillRow.locator(".capex-product-link").count(),
+    dosingName: await dosingRow.locator('td[data-label="Оборудование"] > strong').innerText(),
+    dosingQuantity: await dosingRow.locator('td[data-label="Количество"] > strong').innerText(),
+    dosingUnitPrice: parseMoney(await dosingRow.locator('td[data-label="Цена за единицу"]').innerText()),
+    dosingTotal: parseMoney(await dosingRow.locator('td[data-label="Сумма"] > strong').innerText()),
+    dosingProductLinkCount: await dosingRow.locator(".capex-product-link").count(),
+    hoodVisible: await hoodRow.count(),
+  };
+
+  const alcoholToggle = page.locator(".capex-parameters-panel .capex-switch").filter({ hasText: "Алкогольное направление" });
+  const alcoholRowsBefore = await page.locator('tr[data-item-id="CAPEX-02-054"], tr[data-item-id="CAPEX-02-055"]').count();
+  await alcoholToggle.click();
+  const alcoholRowsAfter = await page.locator('tr[data-item-id="CAPEX-02-054"], tr[data-item-id="CAPEX-02-055"]').count();
+  const alcoholItemIds = await page.locator('tr[data-item-id="CAPEX-02-054"], tr[data-item-id="CAPEX-02-055"]').evaluateAll(rows => rows.map(row => row.getAttribute("data-item-id")));
+  await alcoholToggle.click();
+  const alcoholRowsRestored = await page.locator('tr[data-item-id="CAPEX-02-054"], tr[data-item-id="CAPEX-02-055"]').count();
 
   const search = page.locator('.capex-search input[type="search"]');
   await search.fill("CAPEX-01-009");
@@ -442,6 +472,11 @@ async function inspectCapex(browser, baseUrl) {
     scenarioTotals,
     ovenQuantity,
     ovenSourceAttrs,
+    remainingPriceRows,
+    alcoholRowsBefore,
+    alcoholRowsAfter,
+    alcoholRowsRestored,
+    alcoholItemIds,
     ovenSearchCount,
     otherSearchRows,
     ovenInFoodCourt,
@@ -519,6 +554,23 @@ async function inspectCapex(browser, baseUrl) {
     if (!(capex.scenarioTotals.base < capex.scenarioTotals.scale_ready)) failures.push(`CAPEX selectable scenario totals do not change monotonically: ${JSON.stringify(capex.scenarioTotals)}`);
     if (!/^1(?:[,.]0+)?\s*шт\./.test(capex.ovenQuantity)) failures.push(`oven quantity is not one: ${capex.ovenQuantity}`);
     if (!capex.ovenSourceAttrs.href || capex.ovenSourceAttrs.target !== "_blank" || !String(capex.ovenSourceAttrs.rel).includes("noopener") || !String(capex.ovenSourceAttrs.rel).includes("noreferrer")) failures.push("oven product link attributes are unsafe or missing");
+    if (capex.remainingPriceRows.unpricedCount !== 0) failures.push(`CAPEX still reports unpriced rows: ${capex.remainingPriceRows.unpricedCount}`);
+    if (capex.remainingPriceRows.gasGrillName !== "Газовый гриль для колобков"
+      || /такояки/i.test(capex.remainingPriceRows.gasGrillName)
+      || !/^2(?:[,.]0+)?\s*шт\./.test(capex.remainingPriceRows.gasGrillQuantity)
+      || capex.remainingPriceRows.gasGrillTotal !== 90000
+      || capex.remainingPriceRows.gasGrillQuoteWithoutUrl !== 1
+      || capex.remainingPriceRows.gasGrillProductLinkCount !== 0) failures.push(`gas grill UI is invalid: ${JSON.stringify(capex.remainingPriceRows)}`);
+    if (capex.remainingPriceRows.dosingName !== "Профессиональные ручные шприцы или пистолеты-дозаторы"
+      || !/^24(?:[,.]0+)?\s*шт\./.test(capex.remainingPriceRows.dosingQuantity)
+      || capex.remainingPriceRows.dosingUnitPrice !== 10000
+      || capex.remainingPriceRows.dosingTotal !== 240000
+      || capex.remainingPriceRows.dosingProductLinkCount !== 1) failures.push(`dosing equipment UI is invalid: ${JSON.stringify(capex.remainingPriceRows)}`);
+    if (capex.remainingPriceRows.hoodVisible !== 1) failures.push("priced extraction hood is missing from the working CAPEX register");
+    if (capex.alcoholRowsBefore !== 0
+      || capex.alcoholRowsAfter !== 2
+      || capex.alcoholRowsRestored !== 0
+      || capex.alcoholItemIds.join("|") !== "CAPEX-02-054|CAPEX-02-055") failures.push(`alcohol equipment condition is invalid: ${JSON.stringify({ before: capex.alcoholRowsBefore, after: capex.alcoholRowsAfter, restored: capex.alcoholRowsRestored, ids: capex.alcoholItemIds })}`);
     if (capex.ovenSearchCount !== 1 || capex.otherSearchRows !== 1) failures.push("CAPEX search does not isolate the oven row");
     if (capex.ovenInFoodCourt !== 0) failures.push("food-court format includes the oven without MOD-PREP");
     if (!capex.barModuleVisible) failures.push("optional bar module did not activate");
@@ -587,7 +639,9 @@ async function inspectCapex(browser, baseUrl) {
       || launchBudget.titleAndMetadata.totalHeading !== "Стоимость запуска"
       || launchBudget.titleAndMetadata.legalCount !== 1) failures.push(`launch-budget title or legal metadata invalid: ${JSON.stringify(launchBudget.titleAndMetadata)}`);
     if (launchBudget.forbiddenPublicCopy.length) failures.push(`launch-budget exposes forbidden internal wording: ${launchBudget.forbiddenPublicCopy.join(", ")}`);
+    if (launchBudget.seatingLabels.join("|") !== "Плотная|Сбалансированная|Комфортная") failures.push(`launch-budget seating labels invalid: ${launchBudget.seatingLabels.join(" | ")}`);
     if (launchBudget.seatingHints.join("|") !== "1,4 м² на место|1,6 м² на место|1,8 м² на место") failures.push(`launch-budget seating hints invalid: ${launchBudget.seatingHints.join(" | ")}`);
+    if (launchBudget.seatingAriaLabels.join("|") !== "Плотная посадка — 1,4 м² на место|Сбалансированная посадка — 1,6 м² на место|Комфортная посадка — 1,8 м² на место") failures.push(`launch-budget seating accessibility labels invalid: ${launchBudget.seatingAriaLabels.join(" | ")}`);
     if (!launchBudget.fullConfiguration.some(item => item.includes("Бар и напитки"))
       || !launchBudget.fullConfiguration.some(item => item.includes("Выращивание зелени"))
       || launchBudget.reducedConfiguration.some(item => item.includes("Бар и напитки") || item.includes("Выращивание зелени"))) failures.push(`launch-budget current configuration is not dynamic: ${JSON.stringify({ full: launchBudget.fullConfiguration, reduced: launchBudget.reducedConfiguration })}`);

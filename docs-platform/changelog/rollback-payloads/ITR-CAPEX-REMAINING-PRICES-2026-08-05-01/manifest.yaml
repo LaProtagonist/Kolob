@@ -1,0 +1,143 @@
+schema_version: 1
+iteration_id: ITR-CAPEX-REMAINING-PRICES-2026-08-05-01
+source_change_set: CHG-030
+captured_before_apply: true
+targets:
+  - path: docs-platform/working/capex-equipment-register.yaml
+    existed: true
+    before_sha256: e5e835ecae0d0d433afd24cff8923026097d115d87c234f1af475c463bb8f6e0
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01/files/docs-platform/working/capex-equipment-register.yaml
+  - path: docs-platform/working/capex-equipment-register.csv
+    existed: true
+    before_sha256: f3eaee8145728ac2e4b4c7269949fef921164ee6116371977255fb602e6a3d97
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01/files/docs-platform/working/capex-equipment-register.csv
+  - path: docs-platform/working/capex-price-research.yaml
+    existed: true
+    before_sha256: 96d2ba3e55b02843d05ebeffc6e8c3e3c400e82392a5d95b16cd321e4d5e5b3d
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01/files/docs-platform/working/capex-price-research.yaml
+  - path: docs-platform/working/capex-module-items.yaml
+    existed: true
+    before_sha256: 4b18b5c644293361c4901a58de7a9a6e96fbb08eb03c1e84aa91e66ac9db2b55
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01/files/docs-platform/working/capex-module-items.yaml
+  - path: docs-platform/working/investor-start-model.yaml
+    existed: true
+    before_sha256: 3bf792a1a0c0dfd21e7c87399025f51effde1f08c910c987003cd341472494b1
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01/files/docs-platform/working/investor-start-model.yaml
+  - path: docs-platform/working/configurations/CFG-PILOT-001/equipment-bom.yaml
+    existed: true
+    before_sha256: 671375dd8ac2a2387a9afa71104e08df21704493c67810f7d313d29ae0e38035
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01/files/docs-platform/working/configurations/CFG-PILOT-001/equipment-bom.yaml
+  - path: docs-platform/working/configurations/CFG-PILOT-001/equipment-bom.csv
+    existed: true
+    before_sha256: b3af34b3c022e127cf3a0bc3257e571a79fa7cf0b79d587842dee93c57f8f5ab
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01/files/docs-platform/working/configurations/CFG-PILOT-001/equipment-bom.csv
+  - path: docs-platform/app/package.json
+    existed: true
+    before_sha256: fd36c6eeb78daea815ff89bc065c18da6afef82adb7cd98c0670cc795c4013c5
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01/files/docs-platform/app/package.json
+  - path: docs-platform/app/scripts/run-tests.cjs
+    existed: false
+    before_sha256: null
+    rollback_payload_path: null
+  - path: docs-platform/app/src/capex/remaining-price-workflow.ts
+    existed: false
+    before_sha256: null
+    rollback_payload_path: null
+  - path: docs-platform/app/src/capex/price-research.ts
+    existed: true
+    before_sha256: 2ab1aa0ebb5e27bb4f14a76dfe9c994aa78733acb6583b711b31d1a174f57480
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01/files/docs-platform/app/src/capex/price-research.ts
+  - path: docs-platform/app/src/capex/register.ts
+    existed: true
+    before_sha256: 3c698112b14dfc4f1521e0d9da868aaf4117a5c3b1c25fcf9d48ab008be86aea
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01/files/docs-platform/app/src/capex/register.ts
+  - path: docs-platform/app/src/capex/modular.ts
+    existed: true
+    before_sha256: b42c121b92803326f46b5d65bed88f34ce02085267c5178ce2eb1d2528a6f404
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01/files/docs-platform/app/src/capex/modular.ts
+  - path: docs-platform/app/src/cli.ts
+    existed: true
+    before_sha256: bc642df102b15e3568a3d4f7aa390840bfeb79f29e8618d73f8b953a0e52d225
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01/files/docs-platform/app/src/cli.ts
+  - path: docs-platform/app/src/governance/git-workflow.ts
+    existed: true
+    before_sha256: a8164db0ca4d026b9f601dc4c356b7565a42942c539ed6f5cea2c1caec2cfe94
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01/files/docs-platform/app/src/governance/git-workflow.ts
+  - path: docs-platform/app/src/google/capex-register-publisher.ts
+    existed: true
+    before_sha256: 90b8ffab33f7affab6ce6324b62e71ebcdf962f9ea9d5f05367358f8619789dd
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01/files/docs-platform/app/src/google/capex-register-publisher.ts
+  - path: docs-platform/app/src/investor/start-model.ts
+    existed: true
+    before_sha256: e45df9de1dd8a4ca80a058e0a04cfacd110b6e957308f3ad3c8ed6805cc1026d
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01/files/docs-platform/app/src/investor/start-model.ts
+  - path: docs-platform/schemas/capex-price-research.schema.json
+    existed: true
+    before_sha256: 36c7de9fc42f7cea69925f006384774185e453ef24a7b97b4c29192187ec2fe4
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01/files/docs-platform/schemas/capex-price-research.schema.json
+  - path: docs-platform/schemas/capex-equipment-register.schema.json
+    existed: true
+    before_sha256: d4af08e4988616fd1cd33523cafc2b9f07758d704ac894a1096e1ee8330b53b2
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01/files/docs-platform/schemas/capex-equipment-register.schema.json
+  - path: src/lib/capex-runtime.ts
+    existed: true
+    before_sha256: 99ab3b58b32b370c9eb4cacab1e4d6c44d37f3a5067da9a2d106e1108854d29c
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01/files/src/lib/capex-runtime.ts
+  - path: src/lib/launch-budget.ts
+    existed: true
+    before_sha256: 369748d01e5fc86556fbada5d03b852511415eef6be9ec67589d62ddcd23f572
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01/files/src/lib/launch-budget.ts
+  - path: src/components/LaunchBudget.tsx
+    existed: true
+    before_sha256: 9698f6d6b964395d1e183aa959b864a30d3b5fd3099bef310d706f03b4350554
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01/files/src/components/LaunchBudget.tsx
+  - path: scripts/test-site.cjs
+    existed: true
+    before_sha256: 7eb0ea639c32e4254cbec0baed2355c1c24b3bd94fdb2f041ca70654605cfac7
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01/files/scripts/test-site.cjs
+  - path: docs-platform/app/test/capex-equipment-register.test.ts
+    existed: true
+    before_sha256: cf7a0e4bb5f99e34f00e9ae94f3c9db71139770a3d693352278c2dfdbc2e2361
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01/files/docs-platform/app/test/capex-equipment-register.test.ts
+  - path: docs-platform/app/test/capex-price-research.test.ts
+    existed: true
+    before_sha256: 914cc9e8bf86c9cf8c3c365b34f8cf051924a49c72b25da866aadb4251b5d211
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01/files/docs-platform/app/test/capex-price-research.test.ts
+  - path: docs-platform/app/test/capex-remaining-prices.test.ts
+    existed: false
+    before_sha256: null
+    rollback_payload_path: null
+  - path: docs-platform/app/test/capex-sheet-publisher.test.ts
+    existed: true
+    before_sha256: 5ff5058a8955c7198861c7b252abf17dd7080fb6fcbc87257fdc3407cb7c5b8d
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01/files/docs-platform/app/test/capex-sheet-publisher.test.ts
+  - path: docs-platform/app/test/capex-web-configurator.test.ts
+    existed: true
+    before_sha256: 9c00409e3929ba84640f53b40d751db8e1e00f347b381d879b285901d396e962
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01/files/docs-platform/app/test/capex-web-configurator.test.ts
+  - path: docs-platform/app/test/capex-modular-configurator.test.ts
+    existed: true
+    before_sha256: a3763ee334279da7b307b977a1468ca94eb982d9588198870016bc2fc0003955
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01/files/docs-platform/app/test/capex-modular-configurator.test.ts
+  - path: docs-platform/app/test/investor-start-model.test.ts
+    existed: true
+    before_sha256: 2d1a77a15fa943fb137e4c1fa3eeb54d845014a2d09c3ae5fc7ce86056523337
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01/files/docs-platform/app/test/investor-start-model.test.ts
+  - path: src/content/capex-configurator-data.json
+    existed: true
+    before_sha256: 9e686f09f901ad6cfdb12890b4866cb4b364986c8ea1f5b0da43090a1ac2393e
+    rollback_payload_path: docs-platform/changelog/rollback-payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01/files/src/content/capex-configurator-data.json
+registry_reverse_receipts:
+  - docs-platform/changelog/change-receipts/CHG-030.yaml
+  - docs-platform/changelog/change-receipts/CHG-029.yaml
+derived_refresh:
+  command: npm run capex:web:sync
+  target: src/content/capex-configurator-data.json
+reverse_operation_order:
+  - restore file targets
+  - refresh deterministic snapshot
+  - apply approved registry reverse change set
+  - validate
+  - verify
+preserves_history: true
+git_reset_forbidden: true

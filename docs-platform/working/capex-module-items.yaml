@@ -7,9 +7,9 @@ document:
   version: "0.1"
   status: research
   document_type: Generated module-to-equipment mapping
-  decision_id: DEC-011
-  iteration_id: ITR-PILOT-CAPEX-BASELINE-2026-08-03-01
-  proposal_id: PROP-PILOT-CAPEX-BASELINE-2026-08-03-01
+  decision_id: DEC-015
+  iteration_id: ITR-CAPEX-REMAINING-PRICES-2026-08-05-01
+  proposal_id: PROP-CAPEX-REMAINING-PRICES-2026-08-05-01
   generated_from:
     - docs-platform/working/capex-modules.yaml
     - docs-platform/working/capex-equipment-register.yaml
@@ -916,22 +916,22 @@ links:
     notes: null
   - module_id: MOD-BAR
     item_id: CAPEX-02-054
-    default_requirement: optional
+    default_requirement: conditional
     quantity_rule_type: tbd
     quantity_rule_value: null
     minimum_quantity: null
     aggregation_rule: manual
-    condition: Включается только при отдельном выборе опционального направления.
-    notes: null
+    condition: alcohol_enabled == true
+    notes: BAR без алкогольного направления позицию не включает.
   - module_id: MOD-BAR
     item_id: CAPEX-02-055
-    default_requirement: optional
-    quantity_rule_type: tbd
-    quantity_rule_value: null
+    default_requirement: conditional
+    quantity_rule_type: fixed
+    quantity_rule_value: 1
     minimum_quantity: null
-    aggregation_rule: manual
-    condition: Включается только при отдельном выборе опционального направления.
-    notes: null
+    aggregation_rule: once
+    condition: alcohol_enabled == true
+    notes: BAR без алкогольного направления позицию не включает.
   - module_id: MOD-GROW
     item_id: CAPEX-03-001
     default_requirement: tbd

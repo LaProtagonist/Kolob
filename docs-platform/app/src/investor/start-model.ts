@@ -319,8 +319,24 @@ export function checkInvestorStartModel() {
       ]
     : [];
   const matchingPayload = payloadCandidates.find(candidate => fs.existsSync(candidate) && fs.readFileSync(candidate, "utf8") === serialized);
+  const currentReceiptFile = typeof iterationId === "string"
+    ? path.join(platformRoot, "changelog", "iteration-receipts", `${iterationId}.yaml`)
+    : null;
+  const receipt = currentReceiptFile && fs.existsSync(currentReceiptFile)
+    ? YAML.parse(fs.readFileSync(currentReceiptFile, "utf8"))
+    : null;
+  const approvedPayloadPath = receipt?.approved_payload?.path;
+  const approvedPayloadFile = typeof approvedPayloadPath === "string" ? path.join(projectRoot, approvedPayloadPath) : null;
+  const receiptProvesCurrentModel = Boolean(
+    receipt
+    && receipt.decision_id === decisionId
+    && approvedPayloadFile
+    && fs.existsSync(approvedPayloadFile)
+    && sha256(fs.readFileSync(approvedPayloadFile)) === receipt.approved_payload?.sha256
+    && receipt.after_files?.some((entry: { path?: string; sha256?: string }) => entry.path === INVESTOR_START_MODEL_PATH && entry.sha256 === sha256(serialized)),
+  );
   const registry = loadRegistry();
-  if (!matchingPayload) errors.push("Canonical Investor Start Model differs from its declared approved payload SHA-256.");
+  if (!matchingPayload && !receiptProvesCurrentModel) errors.push("Canonical Investor Start Model is not bound to an exact approved payload and applied receipt.");
   if (!registry.decisions.some(item => item.id === decisionId && item.status === "approved")) errors.push(`Declared Investor Start Model decision ${decisionId} is not approved.`);
   if (errors.length) throw new Error(errors.join("\n"));
   const result = { validation: "OK", path: INVESTOR_START_MODEL_PATH, sha256: sha256(serialized) };

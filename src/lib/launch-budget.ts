@@ -58,7 +58,7 @@ type LaunchModel = {
     required_modules: string[];
     optional_modules: Array<{ module_id: string; default_enabled: boolean }>;
     summary_modules: Array<{ module_id: string; label: string }>;
-    equipment_exclusions: Array<{ item_id_prefix: string }>;
+    equipment_exclusions: Array<{ item_id_prefix?: string; item_id?: string; reason?: string; included_in_preparation_category_id?: string }>;
   };
   premises: {
     default_scenario: PremisesScenario;
@@ -83,7 +83,7 @@ type LaunchModel = {
   };
   seating: {
     default_profile: SeatingProfileId;
-    profiles: Array<{ id: SeatingProfileId; square_metres_per_seat: number }>;
+    profiles: Array<{ id: SeatingProfileId; label: string; aria_label?: string; square_metres_per_seat: number }>;
   };
   furniture: {
     default_profile: FurnitureProfileId;
@@ -248,7 +248,11 @@ export function calculateLaunchBudget(state: LaunchBudgetState, model = launchMo
     centralSupply: pilot?.central_supply_enabled ?? false,
   });
   const rows = buildCapexRows(activeModuleIds, equipmentScenario.snapshot_key, parameters);
-  const equipment = summarizeEquipment(rows, model.point_configuration.equipment_exclusions.map(item => item.item_id_prefix));
+  const equipment = summarizeEquipment(
+    rows,
+    model.point_configuration.equipment_exclusions.map(item => item.item_id_prefix).filter((value): value is string => Boolean(value)),
+    model.point_configuration.equipment_exclusions.map(item => item.item_id).filter((value): value is string => Boolean(value)),
+  );
   const incompleteRequiredModules = model.point_configuration.required_modules
     .map(id => capexData.modules.find(module => module.id === id))
     .filter(module => module?.status === "not_started")

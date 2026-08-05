@@ -83,6 +83,7 @@ export type EquipmentRecord = {
   supplier_name?: string | null;
   product_name?: string | null;
   source_url?: string | null;
+  price_source_type?: "supplier_product_card" | "owner_approved_research_estimate" | null;
   content_source_id?: string;
   price_min_source_id?: string | null;
   price_base_source_id?: string | null;
@@ -158,7 +159,7 @@ export type CapexRegister = {
 };
 
 export const EQUIPMENT_COLUMNS: Array<keyof EquipmentRecord> = [
-  "item_id", "module_id", "module_name", "category", "subcategory", "name", "record_type", "parent_item_id", "inclusion_status", "requirement", "lifecycle_status", "quantity_min", "quantity_base", "quantity_scale_ready", "unit", "source_quantity", "specification", "open_parameters", "premises_dependency", "procurement_mode", "existing_condition", "power_kw", "voltage", "water_required", "drainage_required", "gas_required", "extraction_required", "dimensions", "service_clearance", "price_min", "price_base", "price_max", "currency", "price_date", "supplier", "supplier_name", "product_name", "source_url", "content_source_id", "price_min_source_id", "price_base_source_id", "price_max_source_id", "availability_status", "checked_at", "price_includes_vat", "delivery_included", "confidence", "price_notes", "source_id", "quote_status", "notes", "source_section", "source_item_number", "source_record_sha256",
+  "item_id", "module_id", "module_name", "category", "subcategory", "name", "record_type", "parent_item_id", "inclusion_status", "requirement", "lifecycle_status", "quantity_min", "quantity_base", "quantity_scale_ready", "unit", "source_quantity", "specification", "open_parameters", "premises_dependency", "procurement_mode", "existing_condition", "power_kw", "voltage", "water_required", "drainage_required", "gas_required", "extraction_required", "dimensions", "service_clearance", "price_min", "price_base", "price_max", "currency", "price_date", "supplier", "supplier_name", "product_name", "source_url", "price_source_type", "content_source_id", "price_min_source_id", "price_base_source_id", "price_max_source_id", "availability_status", "checked_at", "price_includes_vat", "delivery_included", "confidence", "price_notes", "source_id", "quote_status", "notes", "source_section", "source_item_number", "source_record_sha256",
 ];
 
 export function sha256(value: string | Buffer) { return crypto.createHash("sha256").update(value).digest("hex"); }
@@ -687,7 +688,7 @@ export function validateRegister(register: CapexRegister, source?: string) {
     const priceValues = [item.price_min, item.price_base, item.price_max];
     const hasPrice = priceValues.some(value => value !== null);
     if (hasPrice && priceValues.some(value => value === null)) errors.push(`${item.item_id}: price research must provide all three unit-price scenarios or none.`);
-    if (hasPrice && (!item.source_id || !item.price_date || !item.source_url || !item.checked_at)) errors.push(`${item.item_id}: price requires source_id, source_url, price_date and checked_at.`);
+    if (hasPrice && (!item.source_id || !item.price_date || !item.checked_at || (!item.source_url && item.price_source_type !== "owner_approved_research_estimate"))) errors.push(`${item.item_id}: price requires source_id, price_date, checked_at and either source_url or owner-approved source attribution.`);
     if (hasPrice && (!item.price_min_source_id || !item.price_base_source_id || !item.price_max_source_id)) errors.push(`${item.item_id}: every price scenario requires a source ID.`);
     if (hasPrice && item.currency !== "RUB") errors.push(`${item.item_id}: preliminary price currency must be RUB.`);
     if (hasPrice && (item.inclusion_status === "included_in_parent" || ["component", "engineering_connection", "open_question"].includes(item.record_type))) errors.push(`${item.item_id}: non-purchasable/component record must not contain a price.`);

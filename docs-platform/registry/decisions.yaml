@@ -201,3 +201,19 @@ decisions:
     source_ids:
       - SRC-LAUNCH-PREMISES-PREPARATION-BRIEF
     updated_at: 2026-08-05
+  - id: DEC-015
+    title: Добавить утверждённые research-цены оставшихся позиций CAPEX
+    status: approved
+    decision: Добавить точные research-ориентиры восьми существующих позиций, сохранить quote_required, включать CAPEX-02-054 и CAPEX-02-055 только при alcohol_enabled == true, исключить повторное суммирование CAPEX-01-012 на launch-budget и заменить видимые подписи плотности посадки.
+    rationale: Прямое задание владельца проекта от 2026-08-05. Значения переносятся без интернет-исследования и не утверждают поставщиков, коммерческие предложения, окончательные цены или итоговый CAPEX.
+    affected_documents:
+      - DOC-CAPEX-EQUIPMENT-REGISTER
+      - DOC-CAPEX-PRICE-RESEARCH
+      - DOC-CAPEX-MODULES
+      - DOC-INVESTOR-START-MODEL
+    approved_by: project owner
+    approved_at: 2026-08-05
+    supersedes: null
+    source_ids:
+      - SRC-CAPEX-REMAINING-PRICE-IMPLEMENTATION-BRIEF
+    updated_at: 2026-08-05

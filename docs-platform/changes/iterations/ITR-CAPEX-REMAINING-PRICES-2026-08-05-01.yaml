@@ -1,0 +1,128 @@
+schema_version: 2
+iteration_id: ITR-CAPEX-REMAINING-PRICES-2026-08-05-01
+proposal_id: PROP-CAPEX-REMAINING-PRICES-2026-08-05-01
+decision_id: DEC-015
+change_set_id: CHG-030
+title: Remaining CAPEX research prices and web publication
+status: approved
+approved_by: project owner
+approved_at: 2026-08-05T18:23:17.476Z
+actor: Codex
+scope: Реализовать точный approved payload восьми research-цен, условий BOM, launch-budget exclusion и публичных подписей плотности без исследования и без изменения прочих цен или оборудования.
+approved_payload_path: docs-platform/changelog/payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01-approved.yaml
+approved_payload_sha256: 123b291763b8571d36a5650d9b49d8159839834b574895e666ed943f4089f6d1
+before_state_sha256: e3898936ddf6001ff9bc74404e18a6afe6a046dd892d0a6ffea34aac2c3cb4dc
+after_state_sha256: 472ddd000738831bca238fbf60f464baa0d1a339cb188fe36fa11d4d202774fb
+affected_document_ids:
+  - DOC-CAPEX-EQUIPMENT-REGISTER
+  - DOC-CAPEX-PRICE-RESEARCH
+  - DOC-CAPEX-MODULES
+  - DOC-INVESTOR-START-MODEL
+affected_section_ids:
+  - CAPEX-01-001
+  - CAPEX-01-002
+  - CAPEX-01-012
+  - CAPEX-02-001
+  - CAPEX-02-002
+  - CAPEX-02-003
+  - CAPEX-02-054
+  - CAPEX-02-055
+  - alcohol_enabled
+  - launch-budget-equipment-exclusions
+  - launch-budget-seating-labels
+state_hash_paths:
+  - docs-platform/app/package.json
+  - docs-platform/app/scripts/run-tests.cjs
+  - docs-platform/app/src/capex/modular.ts
+  - docs-platform/app/src/capex/price-research.ts
+  - docs-platform/app/src/capex/register.ts
+  - docs-platform/app/src/capex/remaining-price-workflow.ts
+  - docs-platform/app/src/cli.ts
+  - docs-platform/app/src/google/capex-register-publisher.ts
+  - docs-platform/app/src/governance/git-workflow.ts
+  - docs-platform/app/src/investor/start-model.ts
+  - docs-platform/app/test/capex-equipment-register.test.ts
+  - docs-platform/app/test/capex-modular-configurator.test.ts
+  - docs-platform/app/test/capex-price-research.test.ts
+  - docs-platform/app/test/capex-remaining-prices.test.ts
+  - docs-platform/app/test/capex-sheet-publisher.test.ts
+  - docs-platform/app/test/capex-web-configurator.test.ts
+  - docs-platform/app/test/investor-start-model.test.ts
+  - docs-platform/registry/decisions.yaml
+  - docs-platform/registry/documents.yaml
+  - docs-platform/registry/sources.yaml
+  - docs-platform/schemas/capex-equipment-register.schema.json
+  - docs-platform/schemas/capex-price-research.schema.json
+  - docs-platform/working/capex-equipment-register.csv
+  - docs-platform/working/capex-equipment-register.yaml
+  - docs-platform/working/capex-module-items.yaml
+  - docs-platform/working/capex-price-research.yaml
+  - docs-platform/working/configurations/CFG-PILOT-001/equipment-bom.csv
+  - docs-platform/working/configurations/CFG-PILOT-001/equipment-bom.yaml
+  - docs-platform/working/investor-start-model.yaml
+  - scripts/test-site.cjs
+  - src/components/LaunchBudget.tsx
+  - src/lib/capex-runtime.ts
+  - src/lib/launch-budget.ts
+content_paths:
+  - docs-platform/app/package.json
+  - docs-platform/app/scripts/run-tests.cjs
+  - docs-platform/app/src/capex/modular.ts
+  - docs-platform/app/src/capex/price-research.ts
+  - docs-platform/app/src/capex/register.ts
+  - docs-platform/app/src/capex/remaining-price-workflow.ts
+  - docs-platform/app/src/cli.ts
+  - docs-platform/app/src/google/capex-register-publisher.ts
+  - docs-platform/app/src/governance/git-workflow.ts
+  - docs-platform/app/src/investor/start-model.ts
+  - docs-platform/app/test/capex-equipment-register.test.ts
+  - docs-platform/app/test/capex-modular-configurator.test.ts
+  - docs-platform/app/test/capex-price-research.test.ts
+  - docs-platform/app/test/capex-remaining-prices.test.ts
+  - docs-platform/app/test/capex-sheet-publisher.test.ts
+  - docs-platform/app/test/capex-web-configurator.test.ts
+  - docs-platform/app/test/investor-start-model.test.ts
+  - docs-platform/changelog/2026-08-05T18-23-17-476Z-CHG-029.md
+  - docs-platform/changelog/2026-08-05T18-38-22-299Z-CHG-030.md
+  - docs-platform/changelog/change-receipts/CHG-029.yaml
+  - docs-platform/changelog/change-receipts/CHG-030.yaml
+  - docs-platform/changelog/changes.log
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/iteration-receipts/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01.yaml
+  - docs-platform/changelog/payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01-approved.yaml
+  - docs-platform/changelog/rollback-payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01/
+  - docs-platform/changelog/verification/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01.yaml
+  - docs-platform/changes/CHG-029-capex-remaining-prices-decision.yaml
+  - docs-platform/changes/CHG-030-capex-remaining-prices.yaml
+  - docs-platform/changes/iterations/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01.yaml
+  - docs-platform/changes/proposals/PROP-CAPEX-REMAINING-PRICES-2026-08-05-01.yaml
+  - docs-platform/registry/decisions.yaml
+  - docs-platform/registry/documents.yaml
+  - docs-platform/registry/sources.yaml
+  - docs-platform/schemas/capex-equipment-register.schema.json
+  - docs-platform/schemas/capex-price-research.schema.json
+  - docs-platform/working/capex-equipment-register.csv
+  - docs-platform/working/capex-equipment-register.yaml
+  - docs-platform/working/capex-module-items.yaml
+  - docs-platform/working/capex-price-research.yaml
+  - docs-platform/working/configurations/CFG-PILOT-001/equipment-bom.csv
+  - docs-platform/working/configurations/CFG-PILOT-001/equipment-bom.yaml
+  - docs-platform/working/investor-start-model.yaml
+  - scripts/test-site.cjs
+  - src/components/LaunchBudget.tsx
+  - src/content/capex-configurator-data.json
+  - src/lib/capex-runtime.ts
+  - src/lib/launch-budget.ts
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/google-sync/2026-08-05-DOC-CAPEX-EQUIPMENT-REGISTER-REMAINING-PRICES.yaml
+  - docs-platform/changelog/snapshots/
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+allowed_dirty_paths:
+  - output/pdf/launch-budget-review.pdf
+  - output/review/
+  - ocs-platform/app/package.json
+  - ocs-platform/changelog/TIMELINE.md
+rollback_payload: docs-platform/changelog/rollback-payloads/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01/manifest.yaml

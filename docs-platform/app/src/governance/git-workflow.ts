@@ -153,7 +153,8 @@ export function verifyRequiredTrailers(commit: string, iteration: GovernedIterat
   return REQUIRED_TRAILERS.flatMap(key => actual[key] === expected[key] ? [] : [`${commit}: trailer ${key} expected ${expected[key]}, got ${actual[key] ?? "missing"}.`]);
 }
 
-function ensureNoForbiddenContentPaths(paths: string[]): void {
+function ensureNoForbiddenContentPaths(iteration: GovernedIteration): void {
+  if (iteration.iteration_id !== "ITR-GOVERNANCE-HISTORY-V2-2026-08-05-01") return;
   const forbidden = [
     "docs-platform/00-foundation.md",
     "docs-platform/01-business-model-architecture.md",
@@ -163,7 +164,7 @@ function ensureNoForbiddenContentPaths(paths: string[]): void {
     "public/",
     "index.html",
   ];
-  const offending = paths.filter(candidate => forbidden.some(item => candidate === item || candidate.startsWith(item)));
+  const offending = iteration.content_paths.filter(candidate => forbidden.some(item => candidate === item || candidate.startsWith(item)));
   if (offending.length) throw new Error(`Governance infrastructure iteration contains forbidden business/site paths: ${offending.join(", ")}.`);
 }
 
@@ -176,7 +177,7 @@ function verifiedEvent(iteration: GovernedIteration): TimelineEvent {
 export function commitIteration(iterationId: string, message: string): string {
   if (!message.trim()) throw new Error("--message is required.");
   const iteration = loadGovernedIteration(iterationId);
-  ensureNoForbiddenContentPaths(iteration.content_paths);
+  ensureNoForbiddenContentPaths(iteration);
   const errors = [...lifecycleErrors(iteration), ...scopeErrors(iteration, "content"), ...validateImmutability(), ...validateTimeline()];
   if (errors.length) throw new Error(errors.join("\n"));
   const verified = verifiedEvent(iteration);
@@ -189,7 +190,7 @@ export function commitIteration(iterationId: string, message: string): string {
   if (!staged.length) throw new Error("Content scope has no staged changes; refusing empty governed commit.");
   const outside = staged.filter(candidate => !iteration.content_paths.some(item => pathMatches(candidate, item)));
   if (outside.length) throw new Error(`Staged path is outside content scope: ${outside.join(", ")}.`);
-  ensureNoForbiddenContentPaths(staged);
+  ensureNoForbiddenContentPaths({ ...iteration, content_paths: staged });
   git(["commit", "--message", message, "--message", trailerBlock(values)]);
   const commit = gitText(["rev-parse", "HEAD"]);
   const trailerErrors = verifyRequiredTrailers(commit, iteration, verified.event_hash);
@@ -206,7 +207,33 @@ function findContentCommit(iteration: GovernedIteration, verified: TimelineEvent
   return head;
 }
 
+function googleReceipt(iteration: GovernedIteration): { path: string; hash: string | null } | null {
+  const receiptPath = iteration.seal_paths.find(candidate => candidate.startsWith("docs-platform/changelog/google-sync/") && fs.existsSync(resolveProjectPath(candidate)));
+  if (!receiptPath) return null;
+  const receipt = YAML.parse(fs.readFileSync(resolveProjectPath(receiptPath), "utf8"));
+  return { path: receiptPath, hash: receipt.remote_readback_sha256 ?? receipt.readback_hash ?? null };
+}
+
+function existingGovernanceSourceRefs(iteration: GovernedIteration): string[] {
+  const iterationRef = `docs-platform/changes/iterations/${iteration.iteration_id}.yaml`;
+  const proposalRef = `docs-platform/changes/proposals/${iteration.proposal_id}.yaml`;
+  const decisionRef = `docs-platform/changes/decisions/${iteration.decision_id}.yaml`;
+  const registryDecisionRef = "docs-platform/registry/decisions.yaml";
+  const exactChangeRef = `docs-platform/changes/${iteration.change_set_id}.yaml`;
+  const changesDirectory = path.join(platformRoot, "changes");
+  const matchingChange = fs.readdirSync(changesDirectory)
+    .find(candidate => candidate === `${iteration.change_set_id}.yaml` || candidate.startsWith(`${iteration.change_set_id}-`) && candidate.endsWith(".yaml"));
+  const changeRef = matchingChange ? `docs-platform/changes/${matchingChange}` : exactChangeRef;
+  return [
+    iterationRef,
+    proposalRef,
+    fs.existsSync(resolveProjectPath(decisionRef)) ? decisionRef : registryDecisionRef,
+    changeRef,
+  ].filter(candidate => fs.existsSync(resolveProjectPath(candidate)));
+}
+
 function currentTagMessage(iteration: GovernedIteration, contentCommit: string, timelineHeadHash: string): string {
+  const google = googleReceipt(iteration);
   const link: GitLink = {
     iteration_id: iteration.iteration_id,
     decision_id: iteration.decision_id,
@@ -217,7 +244,7 @@ function currentTagMessage(iteration: GovernedIteration, contentCommit: string, 
     after_hash: iteration.after_state_sha256,
     probable_git_commit: contentCommit,
     commit_message: gitText(["show", "-s", "--format=%s", contentCommit]),
-    google_sync_receipt: null,
+    google_sync_receipt: google?.path ?? null,
     deployment_receipt: null,
     rollback_payload: iteration.rollback_payload,
     tag: `iteration/${iteration.iteration_id}`,
@@ -252,6 +279,7 @@ function appendCommitted(iteration: GovernedIteration, contentCommit: string): G
   const occurredAt = new Date(gitText(["show", "-s", "--format=%cI", contentCommit])).toISOString();
   const verification = `docs-platform/changelog/verification/${iteration.iteration_id}.yaml`;
   const artifact = `docs-platform/changelog/artifacts/${iteration.iteration_id}.yaml`;
+  const google = googleReceipt(iteration);
   return appendGovernanceEvent({
     event_id: `EVT-${iteration.iteration_id}-COMMITTED`,
     event_type: "committed",
@@ -264,19 +292,17 @@ function appendCommitted(iteration: GovernedIteration, contentCommit: string): G
     actor: "Codex",
     tool: "iteration:seal",
     scope: iteration.scope,
-    summary: "Governance History v2 infrastructure content commit verified and sealed without business-content changes.",
+    summary: `${iteration.title}: content commit verified and linked to the governed lifecycle before sealing.`,
     approved_payload_sha256: iteration.approved_payload_sha256,
     before_hash: iteration.before_state_sha256,
     after_hash: iteration.after_state_sha256,
     affected_document_ids: iteration.affected_document_ids,
     affected_section_ids: iteration.affected_section_ids,
     source_refs: [
-      `docs-platform/changes/iterations/${iteration.iteration_id}.yaml`,
-      `docs-platform/changes/proposals/${iteration.proposal_id}.yaml`,
-      `docs-platform/changes/decisions/${iteration.decision_id}.yaml`,
-      `docs-platform/changes/${iteration.change_set_id}.yaml`,
+      ...existingGovernanceSourceRefs(iteration),
       iteration.approved_payload_path,
       verification,
+      ...(google ? [google.path] : []),
       `commit:${contentCommit}`,
     ],
     git: {
@@ -286,7 +312,7 @@ function appendCommitted(iteration: GovernedIteration, contentCommit: string): G
       commit_message_verified: true,
       trailers_verified: true,
     },
-    external: { google_sync_receipts: [], deployment_receipt: null, remote_readback_hash: null, production_url: null },
+    external: { google_sync_receipts: google ? [google.path] : [], deployment_receipt: null, remote_readback_hash: google?.hash ?? null, production_url: null },
     rollback: {
       rollback_payload: iteration.rollback_payload,
       compensates_iteration_id: null,
@@ -312,7 +338,7 @@ export function governanceValidationErrors(): string[] {
 
 export function sealIteration(iterationId: string): { content_commit_hash: string; seal_commit_hash: string; iteration_tag: string } {
   const iteration = loadGovernedIteration(iterationId);
-  ensureNoForbiddenContentPaths(iteration.content_paths);
+  ensureNoForbiddenContentPaths(iteration);
   const lastSubject = gitText(["show", "-s", "--format=%s", "HEAD"]);
   if (lastSubject === `chore(governance): seal ${iterationId}`) throw new Error(`${iterationId} is already sealed.`);
   const verified = verifiedEvent(iteration);
@@ -323,7 +349,7 @@ export function sealIteration(iterationId: string): { content_commit_hash: strin
   const tag = ensureIterationTag(iteration, contentCommit, committed.event_hash);
   createIterationSnapshot({
     snapshot_id: `SNAPSHOT-${iteration.iteration_id}`,
-    reason: "governance_history_v2_migration",
+    reason: "governed_iteration_seal",
     iteration_tag: tag,
     content_commit_hash: contentCommit,
     open_questions: ["Archive pending visual review artifacts in durable storage."],

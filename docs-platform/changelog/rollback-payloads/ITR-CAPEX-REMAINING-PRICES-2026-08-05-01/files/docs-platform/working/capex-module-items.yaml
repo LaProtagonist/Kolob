@@ -1,0 +1,1474 @@
+schema_version: 1
+document:
+  project: Колобочная
+  document_id: DOC-CAPEX-MODULES
+  title: CAPEX Module Items
+  russian_title: CAPEX — Связи модулей и оснащения
+  version: "0.1"
+  status: research
+  document_type: Generated module-to-equipment mapping
+  decision_id: DEC-011
+  iteration_id: ITR-PILOT-CAPEX-BASELINE-2026-08-03-01
+  proposal_id: PROP-PILOT-CAPEX-BASELINE-2026-08-03-01
+  generated_from:
+    - docs-platform/working/capex-modules.yaml
+    - docs-platform/working/capex-equipment-register.yaml
+links:
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-001
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 1
+    minimum_quantity: null
+    aggregation_rule: once
+    condition: null
+    notes: null
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-002
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 1
+    minimum_quantity: null
+    aggregation_rule: once
+    condition: null
+    notes: null
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-003
+    default_requirement: tbd
+    quantity_rule_type: fixed
+    quantity_rule_value: 3
+    minimum_quantity: null
+    aggregation_rule: once
+    condition: null
+    notes: null
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-004
+    default_requirement: tbd
+    quantity_rule_type: fixed
+    quantity_rule_value: 1
+    minimum_quantity: null
+    aggregation_rule: once
+    condition: null
+    notes: null
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-005
+    default_requirement: tbd
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: null
+    notes: null
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-006
+    default_requirement: tbd
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: null
+    notes: null
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-007
+    default_requirement: tbd
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: null
+    notes: null
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-008
+    default_requirement: tbd
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: null
+    notes: null
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-009
+    default_requirement: tbd
+    quantity_rule_type: fixed
+    quantity_rule_value: 1
+    minimum_quantity: null
+    aggregation_rule: once
+    condition: null
+    notes: Одна единица для MOD-PREP по DEC-010; второй аппарат требует отдельного будущего решения.
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-010
+    default_requirement: tbd
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: null
+    notes: null
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-011
+    default_requirement: tbd
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: null
+    notes: null
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-012
+    default_requirement: conditional
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: Зависит от выбранного формата, параметров локации или отдельного решения.
+    notes: null
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-013
+    default_requirement: tbd
+    quantity_rule_type: fixed
+    quantity_rule_value: 1
+    minimum_quantity: null
+    aggregation_rule: once
+    condition: null
+    notes: null
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-014
+    default_requirement: tbd
+    quantity_rule_type: fixed
+    quantity_rule_value: 1
+    minimum_quantity: null
+    aggregation_rule: once
+    condition: null
+    notes: null
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-015
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 1
+    minimum_quantity: 1
+    aggregation_rule: once
+    condition: null
+    notes: Одна профессиональная мясорубка в BASE и SCALE_READY по DEC-011.
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-016
+    default_requirement: tbd
+    quantity_rule_type: fixed
+    quantity_rule_value: 1
+    minimum_quantity: null
+    aggregation_rule: once
+    condition: null
+    notes: null
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-017
+    default_requirement: tbd
+    quantity_rule_type: fixed
+    quantity_rule_value: 1
+    minimum_quantity: null
+    aggregation_rule: once
+    condition: null
+    notes: null
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-018
+    default_requirement: tbd
+    quantity_rule_type: fixed
+    quantity_rule_value: 1
+    minimum_quantity: null
+    aggregation_rule: once
+    condition: null
+    notes: null
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-019
+    default_requirement: tbd
+    quantity_rule_type: fixed
+    quantity_rule_value: 1
+    minimum_quantity: null
+    aggregation_rule: once
+    condition: null
+    notes: null
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-020
+    default_requirement: tbd
+    quantity_rule_type: fixed
+    quantity_rule_value: 1
+    minimum_quantity: null
+    aggregation_rule: once
+    condition: null
+    notes: null
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-021
+    default_requirement: tbd
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: null
+    notes: null
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-022
+    default_requirement: tbd
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: null
+    notes: null
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-023
+    default_requirement: tbd
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: null
+    notes: null
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-024
+    default_requirement: tbd
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: null
+    notes: null
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-025
+    default_requirement: tbd
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: null
+    notes: null
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-026
+    default_requirement: tbd
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: null
+    notes: null
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-027
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 6
+    minimum_quantity: 6
+    aggregation_rule: once
+    condition: null
+    notes: Компонент CAPEX-01-048; отдельно не суммируется.
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-028
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 4
+    minimum_quantity: 4
+    aggregation_rule: once
+    condition: null
+    notes: Компонент CAPEX-01-048; отдельно не суммируется.
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-029
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 8
+    minimum_quantity: 8
+    aggregation_rule: once
+    condition: null
+    notes: Компонент CAPEX-01-048; отдельно не суммируется.
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-030
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 12
+    minimum_quantity: 12
+    aggregation_rule: once
+    condition: null
+    notes: Компонент CAPEX-01-048; отдельно не суммируется.
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-031
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 4
+    minimum_quantity: 4
+    aggregation_rule: once
+    condition: null
+    notes: Компонент CAPEX-01-048; отдельно не суммируется.
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-032
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 8
+    minimum_quantity: 8
+    aggregation_rule: once
+    condition: null
+    notes: Компонент CAPEX-01-048; отдельно не суммируется.
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-033
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 8
+    minimum_quantity: 8
+    aggregation_rule: once
+    condition: null
+    notes: Компонент CAPEX-01-048; отдельно не суммируется.
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-034
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 4
+    minimum_quantity: 4
+    aggregation_rule: once
+    condition: null
+    notes: Компонент CAPEX-01-048; отдельно не суммируется.
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-035
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 6
+    minimum_quantity: 6
+    aggregation_rule: once
+    condition: null
+    notes: Компонент CAPEX-01-048; отдельно не суммируется.
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-036
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 4
+    minimum_quantity: 4
+    aggregation_rule: once
+    condition: null
+    notes: Компонент CAPEX-01-048; отдельно не суммируется.
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-037
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 6
+    minimum_quantity: 6
+    aggregation_rule: once
+    condition: null
+    notes: Компонент CAPEX-01-048; отдельно не суммируется.
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-038
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 6
+    minimum_quantity: 6
+    aggregation_rule: once
+    condition: null
+    notes: Компонент CAPEX-01-048; отдельно не суммируется.
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-039
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 8
+    minimum_quantity: 8
+    aggregation_rule: once
+    condition: null
+    notes: Компонент CAPEX-01-048; отдельно не суммируется.
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-040
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 36
+    minimum_quantity: 36
+    aggregation_rule: once
+    condition: null
+    notes: Компонент CAPEX-01-048; отдельно не суммируется.
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-041
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 30
+    minimum_quantity: 30
+    aggregation_rule: once
+    condition: null
+    notes: Компонент CAPEX-01-048; отдельно не суммируется.
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-042
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 1
+    minimum_quantity: 1
+    aggregation_rule: once
+    condition: null
+    notes: Компонент CAPEX-01-048; отдельно не суммируется.
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-043
+    default_requirement: tbd
+    quantity_rule_type: fixed
+    quantity_rule_value: 1
+    minimum_quantity: null
+    aggregation_rule: once
+    condition: null
+    notes: null
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-044
+    default_requirement: tbd
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: null
+    notes: null
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-045
+    default_requirement: conditional
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: Зависит от выбранного формата, параметров локации или отдельного решения.
+    notes: null
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-046
+    default_requirement: tbd
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: null
+    notes: null
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-047
+    default_requirement: required
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: null
+    notes: null
+  - module_id: MOD-RETAIL-HOT
+    item_id: CAPEX-02-001
+    default_requirement: tbd
+    quantity_rule_type: fixed
+    quantity_rule_value: 2
+    minimum_quantity: null
+    aggregation_rule: once
+    condition: null
+    notes: null
+  - module_id: MOD-RETAIL-HOT
+    item_id: CAPEX-02-002
+    default_requirement: tbd
+    quantity_rule_type: fixed
+    quantity_rule_value: 3
+    minimum_quantity: 3
+    aggregation_rule: once
+    condition: null
+    notes: null
+  - module_id: MOD-RETAIL-HOT
+    item_id: CAPEX-02-003
+    default_requirement: tbd
+    quantity_rule_type: fixed
+    quantity_rule_value: 24
+    minimum_quantity: null
+    aggregation_rule: once
+    condition: null
+    notes: null
+  - module_id: MOD-RETAIL-HOT
+    item_id: CAPEX-02-004
+    default_requirement: tbd
+    quantity_rule_type: fixed
+    quantity_rule_value: 1
+    minimum_quantity: null
+    aggregation_rule: once
+    condition: null
+    notes: null
+  - module_id: MOD-RETAIL-HOT
+    item_id: CAPEX-02-005
+    default_requirement: tbd
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: null
+    notes: null
+  - module_id: MOD-RETAIL-HOT
+    item_id: CAPEX-02-006
+    default_requirement: tbd
+    quantity_rule_type: fixed
+    quantity_rule_value: 2
+    minimum_quantity: 2
+    aggregation_rule: once
+    condition: null
+    notes: null
+  - module_id: MOD-RETAIL-HOT
+    item_id: CAPEX-02-007
+    default_requirement: tbd
+    quantity_rule_type: fixed
+    quantity_rule_value: 1
+    minimum_quantity: null
+    aggregation_rule: max
+    condition: null
+    notes: null
+  - module_id: MOD-RETAIL-HOT
+    item_id: CAPEX-02-008
+    default_requirement: tbd
+    quantity_rule_type: fixed
+    quantity_rule_value: 1
+    minimum_quantity: null
+    aggregation_rule: max
+    condition: null
+    notes: null
+  - module_id: MOD-RETAIL-HOT
+    item_id: CAPEX-02-009
+    default_requirement: tbd
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: null
+    notes: null
+  - module_id: MOD-RETAIL-HOT
+    item_id: CAPEX-02-014
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 4
+    minimum_quantity: 4
+    aggregation_rule: once
+    condition: null
+    notes: Компонент CAPEX-02-056; отдельно не суммируется.
+  - module_id: MOD-RETAIL-HOT
+    item_id: CAPEX-02-015
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 8
+    minimum_quantity: 8
+    aggregation_rule: once
+    condition: null
+    notes: Компонент CAPEX-02-056; отдельно не суммируется.
+  - module_id: MOD-RETAIL-HOT
+    item_id: CAPEX-02-016
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 4
+    minimum_quantity: 4
+    aggregation_rule: once
+    condition: null
+    notes: Компонент CAPEX-02-056; отдельно не суммируется.
+  - module_id: MOD-RETAIL-HOT
+    item_id: CAPEX-02-017
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 12
+    minimum_quantity: 12
+    aggregation_rule: once
+    condition: null
+    notes: Компонент CAPEX-02-056; отдельно не суммируется.
+  - module_id: MOD-RETAIL-HOT
+    item_id: CAPEX-02-018
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 12
+    minimum_quantity: 12
+    aggregation_rule: once
+    condition: null
+    notes: Компонент CAPEX-02-056; отдельно не суммируется.
+  - module_id: MOD-RETAIL-HOT
+    item_id: CAPEX-02-019
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 12
+    minimum_quantity: 12
+    aggregation_rule: once
+    condition: null
+    notes: Компонент CAPEX-02-056; отдельно не суммируется.
+  - module_id: MOD-RETAIL-HOT
+    item_id: CAPEX-02-020
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 8
+    minimum_quantity: 8
+    aggregation_rule: once
+    condition: null
+    notes: Компонент CAPEX-02-056; отдельно не суммируется.
+  - module_id: MOD-RETAIL-HOT
+    item_id: CAPEX-02-021
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 4
+    minimum_quantity: 4
+    aggregation_rule: once
+    condition: null
+    notes: Компонент CAPEX-02-056; отдельно не суммируется.
+  - module_id: MOD-RETAIL-HOT
+    item_id: CAPEX-02-022
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 12
+    minimum_quantity: 12
+    aggregation_rule: once
+    condition: null
+    notes: Компонент CAPEX-02-056; отдельно не суммируется.
+  - module_id: MOD-RETAIL-HOT
+    item_id: CAPEX-02-023
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 4
+    minimum_quantity: 4
+    aggregation_rule: once
+    condition: null
+    notes: Компонент CAPEX-02-056; отдельно не суммируется.
+  - module_id: MOD-RETAIL-HOT
+    item_id: CAPEX-02-024
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 8
+    minimum_quantity: 8
+    aggregation_rule: once
+    condition: null
+    notes: Компонент CAPEX-02-056; отдельно не суммируется.
+  - module_id: MOD-RETAIL-HOT
+    item_id: CAPEX-02-025
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 4
+    minimum_quantity: 4
+    aggregation_rule: once
+    condition: null
+    notes: Компонент CAPEX-02-056; отдельно не суммируется.
+  - module_id: MOD-RETAIL-HOT
+    item_id: CAPEX-02-026
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 12
+    minimum_quantity: 12
+    aggregation_rule: once
+    condition: null
+    notes: Компонент CAPEX-02-056; отдельно не суммируется.
+  - module_id: MOD-RETAIL-HOT
+    item_id: CAPEX-02-027
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 40
+    minimum_quantity: 40
+    aggregation_rule: once
+    condition: null
+    notes: Компонент CAPEX-02-056; отдельно не суммируется.
+  - module_id: MOD-RETAIL-HOT
+    item_id: CAPEX-02-028
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 25
+    minimum_quantity: 25
+    aggregation_rule: once
+    condition: null
+    notes: Компонент CAPEX-02-056; отдельно не суммируется.
+  - module_id: MOD-RETAIL-HOT
+    item_id: CAPEX-02-029
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 24
+    minimum_quantity: 24
+    aggregation_rule: once
+    condition: null
+    notes: Компонент CAPEX-02-056; отдельно не суммируется.
+  - module_id: MOD-RETAIL-HOT
+    item_id: CAPEX-02-030
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 6
+    minimum_quantity: 6
+    aggregation_rule: once
+    condition: null
+    notes: Компонент CAPEX-02-056; отдельно не суммируется.
+  - module_id: MOD-RETAIL-HOT
+    item_id: CAPEX-02-031
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 6
+    minimum_quantity: 6
+    aggregation_rule: once
+    condition: null
+    notes: Компонент CAPEX-02-056; отдельно не суммируется.
+  - module_id: MOD-BAR
+    item_id: CAPEX-02-010
+    default_requirement: tbd
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: null
+    notes: null
+  - module_id: MOD-BAR
+    item_id: CAPEX-02-011
+    default_requirement: tbd
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: null
+    notes: null
+  - module_id: MOD-BAR
+    item_id: CAPEX-02-012
+    default_requirement: tbd
+    quantity_rule_type: fixed
+    quantity_rule_value: 2
+    minimum_quantity: 2
+    aggregation_rule: once
+    condition: null
+    notes: null
+  - module_id: MOD-BAR
+    item_id: CAPEX-02-013
+    default_requirement: conditional
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: Зависит от выбранного формата, параметров локации или отдельного решения.
+    notes: null
+  - module_id: MOD-BAR
+    item_id: CAPEX-02-032
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 6
+    minimum_quantity: 6
+    aggregation_rule: once
+    condition: null
+    notes: Компонент CAPEX-02-057; отдельно не суммируется.
+  - module_id: MOD-BAR
+    item_id: CAPEX-02-033
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 6
+    minimum_quantity: 6
+    aggregation_rule: once
+    condition: null
+    notes: Компонент CAPEX-02-057; отдельно не суммируется.
+  - module_id: MOD-BAR
+    item_id: CAPEX-02-034
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 4
+    minimum_quantity: 4
+    aggregation_rule: once
+    condition: null
+    notes: Компонент CAPEX-02-057; отдельно не суммируется.
+  - module_id: MOD-BAR
+    item_id: CAPEX-02-035
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 24
+    minimum_quantity: 24
+    aggregation_rule: once
+    condition: null
+    notes: Компонент CAPEX-02-057; отдельно не суммируется.
+  - module_id: MOD-BAR
+    item_id: CAPEX-02-036
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 6
+    minimum_quantity: 6
+    aggregation_rule: once
+    condition: null
+    notes: Компонент CAPEX-02-057; отдельно не суммируется.
+  - module_id: MOD-BAR
+    item_id: CAPEX-02-037
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 4
+    minimum_quantity: 4
+    aggregation_rule: once
+    condition: null
+    notes: Компонент CAPEX-02-057; отдельно не суммируется.
+  - module_id: MOD-BAR
+    item_id: CAPEX-02-038
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 1
+    minimum_quantity: 1
+    aggregation_rule: once
+    condition: null
+    notes: Компонент CAPEX-02-057; отдельно не суммируется.
+  - module_id: MOD-BAR
+    item_id: CAPEX-02-039
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 2
+    minimum_quantity: 2
+    aggregation_rule: once
+    condition: null
+    notes: Компонент CAPEX-02-057; отдельно не суммируется.
+  - module_id: MOD-BAR
+    item_id: CAPEX-02-040
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 12
+    minimum_quantity: 12
+    aggregation_rule: once
+    condition: null
+    notes: Компонент CAPEX-02-057; отдельно не суммируется.
+  - module_id: MOD-BAR
+    item_id: CAPEX-02-041
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 4
+    minimum_quantity: 4
+    aggregation_rule: once
+    condition: null
+    notes: Компонент CAPEX-02-057; отдельно не суммируется.
+  - module_id: MOD-BAR
+    item_id: CAPEX-02-042
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 1
+    minimum_quantity: 1
+    aggregation_rule: once
+    condition: null
+    notes: Компонент CAPEX-02-057; отдельно не суммируется.
+  - module_id: MOD-BAR
+    item_id: CAPEX-02-043
+    default_requirement: tbd
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: null
+    notes: null
+  - module_id: MOD-BAR
+    item_id: CAPEX-02-044
+    default_requirement: optional
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: Включается только при отдельном выборе опционального направления.
+    notes: null
+  - module_id: MOD-BAR
+    item_id: CAPEX-02-045
+    default_requirement: optional
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: Включается только при отдельном выборе опционального направления.
+    notes: null
+  - module_id: MOD-BAR
+    item_id: CAPEX-02-046
+    default_requirement: optional
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: Включается только при отдельном выборе опционального направления.
+    notes: null
+  - module_id: MOD-BAR
+    item_id: CAPEX-02-047
+    default_requirement: optional
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: Включается только при отдельном выборе опционального направления.
+    notes: null
+  - module_id: MOD-BAR
+    item_id: CAPEX-02-048
+    default_requirement: optional
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: Включается только при отдельном выборе опционального направления.
+    notes: null
+  - module_id: MOD-BAR
+    item_id: CAPEX-02-049
+    default_requirement: optional
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: Включается только при отдельном выборе опционального направления.
+    notes: null
+  - module_id: MOD-BAR
+    item_id: CAPEX-02-050
+    default_requirement: optional
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: Включается только при отдельном выборе опционального направления.
+    notes: null
+  - module_id: MOD-BAR
+    item_id: CAPEX-02-051
+    default_requirement: optional
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: Включается только при отдельном выборе опционального направления.
+    notes: null
+  - module_id: MOD-BAR
+    item_id: CAPEX-02-052
+    default_requirement: optional
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: Включается только при отдельном выборе опционального направления.
+    notes: null
+  - module_id: MOD-BAR
+    item_id: CAPEX-02-053
+    default_requirement: optional
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: Включается только при отдельном выборе опционального направления.
+    notes: null
+  - module_id: MOD-BAR
+    item_id: CAPEX-02-054
+    default_requirement: optional
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: Включается только при отдельном выборе опционального направления.
+    notes: null
+  - module_id: MOD-BAR
+    item_id: CAPEX-02-055
+    default_requirement: optional
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: Включается только при отдельном выборе опционального направления.
+    notes: null
+  - module_id: MOD-GROW
+    item_id: CAPEX-03-001
+    default_requirement: tbd
+    quantity_rule_type: fixed
+    quantity_rule_value: 10
+    minimum_quantity: null
+    aggregation_rule: once
+    condition: null
+    notes: null
+  - module_id: MOD-GROW
+    item_id: CAPEX-03-002
+    default_requirement: tbd
+    quantity_rule_type: fixed
+    quantity_rule_value: 2
+    minimum_quantity: null
+    aggregation_rule: once
+    condition: null
+    notes: null
+  - module_id: MOD-GROW
+    item_id: CAPEX-03-003
+    default_requirement: tbd
+    quantity_rule_type: fixed
+    quantity_rule_value: 20
+    minimum_quantity: null
+    aggregation_rule: once
+    condition: null
+    notes: null
+  - module_id: MOD-GROW
+    item_id: CAPEX-03-004
+    default_requirement: tbd
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: null
+    notes: null
+  - module_id: MOD-GROW
+    item_id: CAPEX-03-005
+    default_requirement: tbd
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: null
+    notes: null
+  - module_id: MOD-GROW
+    item_id: CAPEX-03-006
+    default_requirement: tbd
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: null
+    notes: null
+  - module_id: MOD-GROW
+    item_id: CAPEX-03-007
+    default_requirement: tbd
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: null
+    notes: null
+  - module_id: MOD-GROW
+    item_id: CAPEX-03-008
+    default_requirement: tbd
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: null
+    notes: null
+  - module_id: MOD-GROW
+    item_id: CAPEX-03-009
+    default_requirement: tbd
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: null
+    notes: null
+  - module_id: MOD-GROW
+    item_id: CAPEX-03-010
+    default_requirement: tbd
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: null
+    notes: null
+  - module_id: MOD-GROW
+    item_id: CAPEX-03-011
+    default_requirement: tbd
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: null
+    notes: null
+  - module_id: MOD-GROW
+    item_id: CAPEX-03-012
+    default_requirement: tbd
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: null
+    notes: null
+  - module_id: MOD-GROW
+    item_id: CAPEX-03-013
+    default_requirement: tbd
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: null
+    notes: null
+  - module_id: MOD-GROW
+    item_id: CAPEX-03-014
+    default_requirement: tbd
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: null
+    notes: null
+  - module_id: MOD-GROW
+    item_id: CAPEX-03-015
+    default_requirement: tbd
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: null
+    notes: null
+  - module_id: MOD-GROW
+    item_id: CAPEX-03-016
+    default_requirement: tbd
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: null
+    notes: null
+  - module_id: MOD-GROW
+    item_id: CAPEX-03-017
+    default_requirement: tbd
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: null
+    notes: null
+  - module_id: MOD-GROW
+    item_id: CAPEX-03-018
+    default_requirement: tbd
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: null
+    notes: null
+  - module_id: MOD-GROW
+    item_id: CAPEX-03-019
+    default_requirement: tbd
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: null
+    notes: null
+  - module_id: MOD-POS
+    item_id: CAPEX-04-001
+    default_requirement: tbd
+    quantity_rule_type: fixed
+    quantity_rule_value: 2
+    minimum_quantity: null
+    aggregation_rule: once
+    condition: null
+    notes: null
+  - module_id: MOD-POS
+    item_id: CAPEX-04-002
+    default_requirement: tbd
+    quantity_rule_type: fixed
+    quantity_rule_value: 1
+    minimum_quantity: null
+    aggregation_rule: once
+    condition: null
+    notes: null
+  - module_id: MOD-KDS
+    item_id: CAPEX-04-003
+    default_requirement: tbd
+    quantity_rule_type: fixed
+    quantity_rule_value: 3
+    minimum_quantity: 3
+    aggregation_rule: once
+    condition: null
+    notes: null
+  - module_id: MOD-GUEST
+    item_id: CAPEX-05-001
+    default_requirement: conditional
+    quantity_rule_type: per_seat
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: sum
+    condition: Зависит от выбранного формата, параметров локации или отдельного решения.
+    notes: Расчёт по посадочным местам; коэффициент не определён.
+  - module_id: MOD-GUEST
+    item_id: CAPEX-05-002
+    default_requirement: conditional
+    quantity_rule_type: per_seat
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: sum
+    condition: Зависит от выбранного формата, параметров локации или отдельного решения.
+    notes: Расчёт по посадочным местам; коэффициент не определён.
+  - module_id: MOD-GUEST
+    item_id: CAPEX-05-003
+    default_requirement: conditional
+    quantity_rule_type: per_seat
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: sum
+    condition: Зависит от выбранного формата, параметров локации или отдельного решения.
+    notes: "Допустимые базы: погонный метр / посадочное место; коэффициент не определён."
+  - module_id: MOD-GUEST
+    item_id: CAPEX-05-004
+    default_requirement: conditional
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: Зависит от выбранного формата, параметров локации или отдельного решения.
+    notes: "Допустимые базы: посадочное место / погонный метр; конкретное правило не выбрано."
+  - module_id: MOD-GUEST
+    item_id: CAPEX-05-005
+    default_requirement: conditional
+    quantity_rule_type: per_seat
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: sum
+    condition: Зависит от выбранного формата, параметров локации или отдельного решения.
+    notes: Расчёт по посадочным местам; коэффициент не определён.
+  - module_id: MOD-GUEST
+    item_id: CAPEX-05-006
+    default_requirement: conditional
+    quantity_rule_type: per_seat
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: sum
+    condition: Зависит от выбранного формата, параметров локации или отдельного решения.
+    notes: Расчёт по посадочным местам; коэффициент не определён.
+  - module_id: MOD-GUEST
+    item_id: CAPEX-05-007
+    default_requirement: conditional
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: Зависит от выбранного формата, параметров локации или отдельного решения.
+    notes: "Допустимые базы: м² / человек пиковой очереди; конкретное правило не выбрано."
+  - module_id: MOD-GUEST
+    item_id: CAPEX-05-022
+    default_requirement: conditional
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: Зависит от выбранного формата, параметров локации или отдельного решения.
+    notes: "Допустимые базы: посетитель / погонный метр; конкретное правило не выбрано."
+  - module_id: MOD-GUEST
+    item_id: CAPEX-05-023
+    default_requirement: conditional
+    quantity_rule_type: per_guest_area_m2
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: sum
+    condition: Зависит от выбранного формата, параметров локации или отдельного решения.
+    notes: Расчёт по гостевой площади; коэффициент не определён.
+  - module_id: MOD-GUEST
+    item_id: CAPEX-05-024
+    default_requirement: conditional
+    quantity_rule_type: per_guest_area_m2
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: sum
+    condition: Зависит от выбранного формата, параметров локации или отдельного решения.
+    notes: Расчёт по гостевой площади; коэффициент не определён.
+  - module_id: MOD-GUEST
+    item_id: CAPEX-05-025
+    default_requirement: conditional
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: Зависит от выбранного формата, параметров локации или отдельного решения.
+    notes: "Допустимые базы: точка размещения / функциональная зона; конкретное правило не выбрано."
+  - module_id: MOD-GUEST
+    item_id: CAPEX-05-026
+    default_requirement: conditional
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: Зависит от выбранного формата, параметров локации или отдельного решения.
+    notes: Расчёт зависит от пиковой очереди; коэффициент не определён.
+  - module_id: MOD-GUEST
+    item_id: CAPEX-05-027
+    default_requirement: conditional
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: Зависит от выбранного формата, параметров локации или отдельного решения.
+    notes: Расчёт зависит от формата точки и требований доступной среды.
+  - module_id: MOD-TAKEAWAY
+    item_id: CAPEX-02-007
+    default_requirement: tbd
+    quantity_rule_type: fixed
+    quantity_rule_value: 1
+    minimum_quantity: null
+    aggregation_rule: max
+    condition: null
+    notes: null
+  - module_id: MOD-TAKEAWAY
+    item_id: CAPEX-02-008
+    default_requirement: tbd
+    quantity_rule_type: fixed
+    quantity_rule_value: 1
+    minimum_quantity: null
+    aggregation_rule: max
+    condition: null
+    notes: null
+  - module_id: MOD-TAKEAWAY
+    item_id: CAPEX-05-008
+    default_requirement: conditional
+    quantity_rule_type: per_cashier_post
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: sum
+    condition: Зависит от выбранного формата, параметров локации или отдельного решения.
+    notes: Расчёт по рабочему месту; длина стойки требует отдельного определения.
+  - module_id: MOD-TAKEAWAY
+    item_id: CAPEX-05-009
+    default_requirement: conditional
+    quantity_rule_type: per_cashier_post
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: sum
+    condition: Зависит от выбранного формата, параметров локации или отдельного решения.
+    notes: Расчёт по рабочим местам кассиров; коэффициент не определён.
+  - module_id: MOD-TAKEAWAY
+    item_id: CAPEX-05-010
+    default_requirement: conditional
+    quantity_rule_type: per_station
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: sum
+    condition: Зависит от выбранного формата, параметров локации или отдельного решения.
+    notes: Расчёт по посту выдачи; длина стойки требует отдельного определения.
+  - module_id: MOD-TAKEAWAY
+    item_id: CAPEX-05-011
+    default_requirement: conditional
+    quantity_rule_type: per_station
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: sum
+    condition: Зависит от выбранного формата, параметров локации или отдельного решения.
+    notes: Расчёт по постам выдачи; коэффициент не определён.
+  - module_id: MOD-TAKEAWAY
+    item_id: CAPEX-05-012
+    default_requirement: conditional
+    quantity_rule_type: per_station
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: sum
+    condition: Зависит от выбранного формата, параметров локации или отдельного решения.
+    notes: Расчёт по постам выдачи; коэффициент не определён.
+  - module_id: MOD-TAKEAWAY
+    item_id: CAPEX-05-013
+    default_requirement: conditional
+    quantity_rule_type: per_cashier_post
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: sum
+    condition: Зависит от выбранного формата, параметров локации или отдельного решения.
+    notes: Расчёт по рабочим местам; погонный метраж требует отдельного определения.
+  - module_id: MOD-TAKEAWAY
+    item_id: CAPEX-05-014
+    default_requirement: conditional
+    quantity_rule_type: per_cashier_post
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: sum
+    condition: Зависит от выбранного формата, параметров локации или отдельного решения.
+    notes: Расчёт по рабочим местам кассиров; коэффициент не определён.
+  - module_id: MOD-TAKEAWAY
+    item_id: CAPEX-05-015
+    default_requirement: conditional
+    quantity_rule_type: per_station
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: sum
+    condition: Зависит от выбранного формата, параметров локации или отдельного решения.
+    notes: Расчёт по станциям самообслуживания; коэффициент не определён.
+  - module_id: MOD-TAKEAWAY
+    item_id: CAPEX-05-016
+    default_requirement: conditional
+    quantity_rule_type: per_station
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: sum
+    condition: Зависит от выбранного формата, параметров локации или отдельного решения.
+    notes: Расчёт по станциям самообслуживания; коэффициент не определён.
+  - module_id: MOD-TAKEAWAY
+    item_id: CAPEX-05-017
+    default_requirement: conditional
+    quantity_rule_type: per_station
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: sum
+    condition: Зависит от выбранного формата, параметров локации или отдельного решения.
+    notes: Расчёт по станциям самообслуживания; коэффициент не определён.
+  - module_id: MOD-TAKEAWAY
+    item_id: CAPEX-05-018
+    default_requirement: conditional
+    quantity_rule_type: per_station
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: sum
+    condition: Зависит от выбранного формата, параметров локации или отдельного решения.
+    notes: Расчёт по станциям самообслуживания; коэффициент не определён.
+  - module_id: MOD-TAKEAWAY
+    item_id: CAPEX-05-019
+    default_requirement: conditional
+    quantity_rule_type: per_station
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: sum
+    condition: Зависит от выбранного формата, параметров локации или отдельного решения.
+    notes: Расчёт по станциям; коэффициент не определён.
+  - module_id: MOD-TAKEAWAY
+    item_id: CAPEX-05-020
+    default_requirement: conditional
+    quantity_rule_type: tbd
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: manual
+    condition: Зависит от выбранного формата, параметров локации или отдельного решения.
+    notes: "Допустимые базы: станция / м² гостевой площади; конкретное правило не выбрано."
+  - module_id: MOD-TAKEAWAY
+    item_id: CAPEX-05-021
+    default_requirement: conditional
+    quantity_rule_type: per_station
+    quantity_rule_value: null
+    minimum_quantity: null
+    aggregation_rule: sum
+    condition: Зависит от выбранного формата, параметров локации или отдельного решения.
+    notes: Расчёт по станциям возврата; коэффициент не определён.
+  - module_id: MOD-PREP
+    item_id: CAPEX-01-048
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 1
+    minimum_quantity: 1
+    aggregation_rule: once
+    condition: null
+    notes: Фиксированное research-количество по DEC-011; одинаковый item_id учитывается один раз.
+  - module_id: MOD-RETAIL-HOT
+    item_id: CAPEX-02-056
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 1
+    minimum_quantity: 1
+    aggregation_rule: once
+    condition: null
+    notes: Фиксированное research-количество по DEC-011; одинаковый item_id учитывается один раз.
+  - module_id: MOD-BAR
+    item_id: CAPEX-02-057
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 1
+    minimum_quantity: 1
+    aggregation_rule: once
+    condition: null
+    notes: Фиксированное research-количество по DEC-011; одинаковый item_id учитывается один раз.
+  - module_id: MOD-WASH
+    item_id: CAPEX-08-001
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 1
+    minimum_quantity: 1
+    aggregation_rule: once
+    condition: null
+    notes: Фиксированное research-количество по DEC-011; одинаковый item_id учитывается один раз.
+  - module_id: MOD-WASH
+    item_id: CAPEX-08-002
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 1
+    minimum_quantity: 1
+    aggregation_rule: once
+    condition: null
+    notes: Фиксированное research-количество по DEC-011; одинаковый item_id учитывается один раз.
+  - module_id: MOD-WASH
+    item_id: CAPEX-08-003
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 1
+    minimum_quantity: 1
+    aggregation_rule: once
+    condition: null
+    notes: Фиксированное research-количество по DEC-011; одинаковый item_id учитывается один раз.
+  - module_id: MOD-WASH
+    item_id: CAPEX-08-004
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 1
+    minimum_quantity: 1
+    aggregation_rule: once
+    condition: null
+    notes: Фиксированное research-количество по DEC-011; одинаковый item_id учитывается один раз.
+  - module_id: MOD-WASH
+    item_id: CAPEX-08-005
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 3
+    minimum_quantity: 3
+    aggregation_rule: once
+    condition: null
+    notes: Фиксированное research-количество по DEC-011; одинаковый item_id учитывается один раз.
+  - module_id: MOD-WASH
+    item_id: CAPEX-08-006
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 1
+    minimum_quantity: 1
+    aggregation_rule: once
+    condition: null
+    notes: Фиксированное research-количество по DEC-011; одинаковый item_id учитывается один раз.
