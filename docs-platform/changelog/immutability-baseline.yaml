@@ -1,0 +1,95 @@
+schema_version: 2
+concurrent_iteration_receipt_transition:
+  path: docs-platform/changelog/iteration-receipts/ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01.yaml
+  task_start_observation_sha256: b119d80d1779bbdd26180056ec5a88e8b2f761b20f8b95230f3f7b2a8a2b54c3
+  completed_commit: 4b5e51f52957a1a8055b704ba2a1ec7e46f2f44a
+  completed_commit_sha256: 7392429f4a30f39ebe33fa691c3cf8758bcf2166436261dfea5b113790690a83
+  note: The iteration was still being completed concurrently during the read-only audit; the immutable baseline begins at its committed version.
+events_prefixes:
+  - name: task_start
+    bytes: 70127
+    sha256: 9fc21e39b26a934e34f0e934ef33dc057f65f1b33e240f9567cd6cd444e8b076
+  - name: preimplementation_after_concurrent_iteration
+    bytes: 78847
+    sha256: c6d4fcd6796e513f3980ae044eae3a52564b1bba6f4a5b0417d7fcf0f21e2061
+immutable_receipts:
+  - path: docs-platform/changelog/change-receipts/CHG-011.yaml
+    sha256: 88932cc8d1e7d334b992f5073a88d718322e401d3e4ec981e3be178b8e099427
+  - path: docs-platform/changelog/change-receipts/CHG-012.yaml
+    sha256: a576b312ba124e0af3860b6d13bc1c8d28bb58735fb84b53a7cf16149a24b912
+  - path: docs-platform/changelog/change-receipts/CHG-013.yaml
+    sha256: d94839b01e56e07a6b8c4bbc280bc9928d6cb98fcc0d50817b522372e50c8a5c
+  - path: docs-platform/changelog/change-receipts/CHG-014.yaml
+    sha256: c36f132e34bf5796b5f9de6fb313266e574a6723271b83e63769433396929fa9
+  - path: docs-platform/changelog/change-receipts/CHG-015.yaml
+    sha256: 26fc913ab30287b7fb315405c3723a85706014c597dbc8a6da60753fbeb8cd80
+  - path: docs-platform/changelog/change-receipts/CHG-016.yaml
+    sha256: 64f601dff0bfb065349a4dfe5eb459d493ce433c3b14d35abbc372fef514d040
+  - path: docs-platform/changelog/change-receipts/CHG-017.yaml
+    sha256: e3d14b5b03cf292fe521d344b1f1c3e636b72f6a3761cb7ca59229da061591c4
+  - path: docs-platform/changelog/change-receipts/CHG-018.yaml
+    sha256: fb9d3e3c0d11cc8803a9fe509047cd38d4ef1ece85a39cd35890713e1e4de4e2
+  - path: docs-platform/changelog/change-receipts/CHG-019.yaml
+    sha256: 655f34dc1052a5f481efb98639dee9846ad1ea36d10555db3ceec6e5c4dc9193
+  - path: docs-platform/changelog/change-receipts/CHG-020.yaml
+    sha256: 19c924dd4e6d055877e6e0466c4fa20775018a6bdd9b013d3e09ebc1151cb642
+  - path: docs-platform/changelog/change-receipts/CHG-021.yaml
+    sha256: 716f70a246523ac17cd72ef9cbfa0765302ff8bcafa055d409cf8afda5fdb11e
+  - path: docs-platform/changelog/change-receipts/CHG-022.yaml
+    sha256: 2ffb5d46034c374d5f3dc513ad08db34bb44a3323dfbcd82cd285ad4d4dccd9d
+  - path: docs-platform/changelog/change-receipts/CHG-023.yaml
+    sha256: af424c921df2f1bcbc695c5da9c14ba379545651ce32585da287e6601b3faaa5
+  - path: docs-platform/changelog/change-receipts/CHG-024.yaml
+    sha256: 3e49d7277f83a8676cedabfa14541c5ee393f461b3d82e927dc43e2ee193fc03
+  - path: docs-platform/changelog/change-receipts/CHG-026.yaml
+    sha256: 955eed93217bce746e61fc0e917812af2580403bdde2b8137793288a72e76eac
+  - path: docs-platform/changelog/change-receipts/CHG-027.yaml
+    sha256: 33229443da6fe04633b60e9ccf329a2470c7e4c529aa6b7d8f3a5faecc1b649d
+  - path: docs-platform/changelog/google-sync/2026-08-01-DOC-BUSINESS-MODEL-ARCHITECTURE.yaml
+    sha256: d3b0164a12438b9bee8ff64bfc7d930fc81571e930e45cfef497c58de9d86bba
+  - path: docs-platform/changelog/google-sync/2026-08-01-DOC-CAPEX-EQUIPMENT-REGISTER-MODULAR-CONFIGURATOR.yaml
+    sha256: ff146164245ff97ad798604b046e9c325097148fe67758b2ce7525375372046b
+  - path: docs-platform/changelog/google-sync/2026-08-01-DOC-CAPEX-EQUIPMENT-REGISTER.yaml
+    sha256: 284c0f6257180616798120e746c1866e38ef18ee72ed36c29e20af90219a1941
+  - path: docs-platform/changelog/google-sync/2026-08-01-DOC-CAPEX-EQUIPMENT-SPECIFICATION.yaml
+    sha256: a0db4dc230efc37370b405c7637b66e936be7dc27a3c1adb4679b60d1f48ee11
+  - path: docs-platform/changelog/google-sync/2026-08-01-DOC-FOUNDATION.yaml
+    sha256: af6530fcbd88ac15d8415b368a17e84184965ad8dc252f47a106d8b1edb070de
+  - path: docs-platform/changelog/google-sync/2026-08-02-DOC-CAPEX-EQUIPMENT-REGISTER-PRICE-RESEARCH.yaml
+    sha256: 9d3bb7593b317cc311e94e8cb2a4b439bf2bc9a8a3ab497c4d7bbe3d3f68326c
+  - path: docs-platform/changelog/google-sync/2026-08-03-DOC-CAPEX-EQUIPMENT-REGISTER-PILOT-BASELINE.yaml
+    sha256: a2df1c6d4c1d7eac5c740860b3c55c079e88d8125946dc7e1b01b0b4c4e1d8b6
+  - path: docs-platform/changelog/google-sync/2026-08-03-DOC-CAPEX-EQUIPMENT-REGISTER-WEB-CONFIGURATOR.yaml
+    sha256: fcb8c47309a32c9dae08f6615aeeaace7c95a96a1fd5db7b1980a3732fd47c63
+  - path: docs-platform/changelog/iteration-receipts/ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01.yaml
+    sha256: ba6b0d4b0c7d8a25e99d970cc54c09bd9debb14337236447cfa6b9cdd63799c5
+  - path: docs-platform/changelog/iteration-receipts/ITR-CAPEX-PRICE-RESEARCH-2026-08-02-01.yaml
+    sha256: ae5a047b6867a5d256439df12d4693040e5f80633316c82da6b5fd72234fbc74
+  - path: docs-platform/changelog/iteration-receipts/ITR-CAPEX-REGISTER-2026-08-01-01.yaml
+    sha256: f534e54e355a3bb84daed2db2a13bb93a052b8d30be87f8ac45cbcb239a38776
+  - path: docs-platform/changelog/iteration-receipts/ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01.yaml
+    sha256: 1b20d9bd4ae352dcbd8d318fa2a1e9415aeb43220e54c77be83b01693edc2014
+  - path: docs-platform/changelog/iteration-receipts/ITR-INVESTOR-START-MODEL-2026-08-04-01.yaml
+    sha256: 1863cd4b68b74edf726c0c0993d02a031c4d641655017ffc5529227366ec8f41
+  - path: docs-platform/changelog/iteration-receipts/ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01.yaml
+    sha256: 558f38f2ec8cbc5b7681bf849d3eaa974667a396cc1439a8ca6fc15fd32d6f71
+  - path: docs-platform/changelog/iteration-receipts/ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01.yaml
+    sha256: 7392429f4a30f39ebe33fa691c3cf8758bcf2166436261dfea5b113790690a83
+  - path: docs-platform/changelog/iteration-receipts/ITR-PILOT-CAPEX-BASELINE-2026-08-03-01.yaml
+    sha256: 70884c988d196507073cdd7efa7daa2605e10627c70ba4c59371cdaa34a38ba5
+  - path: docs-platform/changelog/verification/ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01.yaml
+    sha256: eb1bc5afa3fdecb3ffad3a67b958d2de872d5bc47ebb7583e77af1d912bf8dca
+  - path: docs-platform/changelog/verification/ITR-CAPEX-PRICE-RESEARCH-2026-08-02-01.yaml
+    sha256: a8336d18d0bdcacea540141949a25818461579a2fc74b87c45dc81288520f243
+  - path: docs-platform/changelog/verification/ITR-CAPEX-REGISTER-2026-08-01-01.yaml
+    sha256: ab293fb5944147cb05644d33ae414ccae90cdf3dd057b58b78e76ed8bd7cb661
+  - path: docs-platform/changelog/verification/ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01-web-snapshot.yaml
+    sha256: 32cc8a2473ae00b69f5c5ea3bdc1a56b7cc9342493a5bfcdeca3a4949bd1d77a
+  - path: docs-platform/changelog/verification/ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01.yaml
+    sha256: bfe2b0a06c973e0201c6c4a179ed5f073fbc17d757d1f9ac09d29458b053eed9
+  - path: docs-platform/changelog/verification/ITR-INVESTOR-START-MODEL-2026-08-04-01.yaml
+    sha256: 6c32ebd4c8911a9d2bceb691ec9c858ed283530a7435f9b59002ba7a62c29939
+  - path: docs-platform/changelog/verification/ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01.yaml
+    sha256: 3c239536cb146f7f55b9ba8fe722286fff722559a48bcf1dd03d424fae245f0f
+  - path: docs-platform/changelog/verification/ITR-PILOT-CAPEX-BASELINE-2026-08-03-01.yaml
+    sha256: 26e45045231c08c0eee49bc2f330ae24e1cc07daa7073602af4dea0c8f3f05bb

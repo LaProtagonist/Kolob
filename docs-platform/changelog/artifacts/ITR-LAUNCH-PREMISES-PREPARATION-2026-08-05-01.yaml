@@ -1,0 +1,59 @@
+schema_version: 2
+iteration_id: ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01
+artifacts:
+  - artifact_id: ART-PREMISES-COLLAPSED
+    iteration_id: ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01
+    type: verification_screenshot
+    filename: analysis/screenshots/launch-preparation-collapsed.png
+    sha256: a7670aca0e7f948abd3844784d4f0ba0e771463e736d3669349f3ccee72c826e
+    size: 262135
+    created_at: 2026-08-05T05:24:31.000Z
+    purpose: Collapsed preparation UI visual verification evidence.
+    storage: local_ignored
+    remote_url: null
+    status: pending_archive
+  - artifact_id: ART-PREMISES-EXPANDED
+    iteration_id: ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01
+    type: verification_screenshot
+    filename: analysis/screenshots/launch-preparation-expanded.png
+    sha256: a07b2ec43f618fbdef136940afae388935567ac7bba13d38bae6b9c72cf3d659
+    size: 489579
+    created_at: 2026-08-05T05:24:46.000Z
+    purpose: Expanded preparation UI visual verification evidence.
+    storage: local_ignored
+    remote_url: null
+    status: pending_archive
+  - artifact_id: ART-PREMISES-NO-VENTILATION
+    iteration_id: ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01
+    type: verification_screenshot
+    filename: analysis/screenshots/launch-preparation-no-ventilation.png
+    sha256: 0597d11d563dc70c8d895d8def503bd8b4ae2c2ef5b208d158725d0538f1e300
+    size: 523129
+    created_at: 2026-08-05T05:25:16.000Z
+    purpose: Dependency calculation visual verification evidence.
+    storage: local_ignored
+    remote_url: null
+    status: pending_archive
+  - artifact_id: ART-PREMISES-MANUAL
+    iteration_id: ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01
+    type: verification_screenshot
+    filename: analysis/screenshots/launch-preparation-manual.png
+    sha256: 56f8402b4bd431f60f5b781f278c88cbbeeef00505fa84772a80449c6e5aa6b8
+    size: 484132
+    created_at: 2026-08-05T05:25:41.000Z
+    purpose: Manual-mode visual verification evidence.
+    storage: local_ignored
+    remote_url: null
+    status: pending_archive
+  - artifact_id: ART-PREMISES-MOBILE
+    iteration_id: ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01
+    type: verification_screenshot
+    filename: analysis/screenshots/launch-preparation-mobile.png
+    sha256: 3a521365a526e2ed11fb35084c71903e70d3c198778aa8000cfa735591d375f2
+    size: 339735
+    created_at: 2026-08-05T05:26:09.000Z
+    purpose: Mobile layout visual verification evidence.
+    storage: local_ignored
+    remote_url: null
+    status: pending_archive
+

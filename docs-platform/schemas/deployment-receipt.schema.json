@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["iteration_id", "content_commit_hash", "build_hash", "deployment_id", "production_url", "deployed_at", "smoke_test_result"],
+  "properties": {
+    "iteration_id": { "type": "string", "minLength": 1 },
+    "content_commit_hash": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "build_hash": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "deployment_id": { "type": "string", "minLength": 1 },
+    "production_url": { "type": "string", "minLength": 1 },
+    "deployed_at": { "type": "string", "minLength": 1 },
+    "smoke_test_result": { "enum": ["passed", "failed"] }
+  }
+}
+

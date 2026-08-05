@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "schema_version", "generated_at", "project", "branch", "latest_timeline_event_id", "latest_timeline_event_hash",
+    "latest_closed_iteration_id", "latest_iteration_tag", "latest_content_commit_hash", "registry_hash",
+    "canonical_document_hashes", "open_decisions", "open_change_sets", "open_questions", "current_workstream",
+    "next_task", "google_integration_status", "mcp_status", "deployment_status", "known_drift", "artifact_status"
+  ],
+  "properties": {
+    "schema_version": { "const": 2 },
+    "generated_at": { "type": "string", "minLength": 1 },
+    "project": { "const": "Колобочная" },
+    "branch": { "type": "string", "minLength": 1 },
+    "latest_timeline_event_id": { "type": "string", "minLength": 1 },
+    "latest_timeline_event_hash": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "latest_closed_iteration_id": { "type": ["string", "null"] },
+    "latest_iteration_tag": { "type": ["string", "null"] },
+    "latest_content_commit_hash": { "type": ["string", "null"], "pattern": "^[0-9a-f]{40}$" },
+    "registry_hash": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "canonical_document_hashes": { "type": "array" },
+    "open_decisions": { "type": "array", "items": { "type": "string" } },
+    "open_change_sets": { "type": "array", "items": { "type": "string" } },
+    "open_questions": { "type": "array", "items": { "type": "string" } },
+    "current_workstream": { "type": "string" },
+    "next_task": { "type": "string" },
+    "google_integration_status": { "type": "object" },
+    "mcp_status": { "type": "object" },
+    "deployment_status": { "type": "object" },
+    "known_drift": { "type": "array", "items": { "type": "string" } },
+    "artifact_status": { "type": "object" }
+  },
+  "additionalProperties": false
+}
+

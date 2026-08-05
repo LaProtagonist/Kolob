@@ -3,7 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import YAML from "yaml";
 import { platformRoot } from "../google/config.js";
-import { readTimelineEvents } from "../governance/timeline.js";
+import { effectiveOccurredAt, effectiveType, isV2, readTimelineEvents } from "../governance/timeline.js";
 import { readModularSources } from "./modular.js";
 import { readRegister, serializeRegister, sha256 } from "./register.js";
 import { PRICE_SCENARIOS, readPriceResearch } from "./price-research.js";
@@ -49,10 +49,10 @@ export function buildWebSnapshot() {
   const decisions = (readYaml("docs-platform/registry/decisions.yaml")?.decisions ?? []) as Array<Record<string, unknown>>;
   const events = readTimelineEvents();
   const currentDecision = decisions.find(item => item.id === register.document.decision_id) ?? decisions.at(-1) ?? null;
-  const currentEvent = [...events].reverse().find(event => event.decision_id === register.document.decision_id && event.lifecycle_status === "verified") ?? null;
+  const currentEvent = [...events].reverse().find(event => event.decision_id === register.document.decision_id && effectiveType(event) === "verified") ?? null;
   const currentManifestPath = path.join(platformRoot, "changes", "iterations", `${register.document.iteration_id}.yaml`);
   const currentManifest = fs.existsSync(currentManifestPath) ? YAML.parse(fs.readFileSync(currentManifestPath, "utf8")) : null;
-  const generatedAt = currentEvent?.timestamp ?? `${String((currentDecision?.updated_at as string | undefined) ?? "2026-08-03")}T00:00:00.000Z`;
+  const generatedAt = currentEvent ? effectiveOccurredAt(currentEvent) : `${String((currentDecision?.updated_at as string | undefined) ?? "2026-08-03")}T00:00:00.000Z`;
   const sourceHashes = Object.fromEntries(SOURCE_PATHS.map(relativePath => [relativePath, sha256(fs.readFileSync(path.join(projectRoot, relativePath)))]));
   const researchByItem = new Map(research.items.map(item => [item.item_id, item]));
   const linksByItem = new Map<string, typeof modular.module_items.links>();
@@ -219,7 +219,7 @@ export function buildWebSnapshot() {
     }),
     missingSections: register.missing_sections.map(section => ({ id: section.section_id, name: section.name, status: section.status, dependencies: section.dependencies, notes: section.notes })),
     documents: localDocuments,
-    timeline: events.slice(-8).map(event => ({ id: event.event_id, timestamp: event.timestamp, status: event.lifecycle_status, action: event.action, decisionId: event.decision_id, changeSetId: event.change_set_id, summary: event.summary })),
+    timeline: events.slice(-8).map(event => ({ id: event.event_id, timestamp: effectiveOccurredAt(event), status: effectiveType(event), action: isV2(event) ? event.event_type : event.action, decisionId: event.decision_id, changeSetId: event.change_set_id, summary: event.summary })),
   };
 }
 

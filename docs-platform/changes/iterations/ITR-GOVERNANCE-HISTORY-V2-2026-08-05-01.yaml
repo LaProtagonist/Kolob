@@ -1,0 +1,22 @@
+schema_version: 2
+iteration_id: ITR-GOVERNANCE-HISTORY-V2-2026-08-05-01
+proposal_id: PROP-GOVERNANCE-HISTORY-V2-2026-08-05-01
+decision_id: DEC-GOVERNANCE-HISTORY-V2-2026-08-05-01
+change_set_id: CHG-GOVERNANCE-HISTORY-V2-2026-08-05-01
+title: Governance History v2 and portable Codex context
+status: approved
+approved_by: project owner
+approved_at: 2026-08-05T18:31:01.000Z
+actor: Codex
+scope: Governance infrastructure only; no business, CAPEX, Investor Start Model, Google or published-site content is changed.
+approved_payload_path: docs-platform/changelog/payloads/ITR-GOVERNANCE-HISTORY-V2-2026-08-05-01-approved.yaml
+approved_payload_sha256: 873cd5b786b4a630435c8be2748e8d9b8e9d1d9ded9212ffd84bc8d79d3da646
+before_state_sha256: 10715cc7e2146cc261e6edc49681d0a30afbd243106a9e8bfb20a832fa070d0a
+after_state_sha256: ddccaac6e1b1f712e6331033cba2857378f8783cfcd3e5c279b4851aae6ae038
+affected_document_ids:
+  - DOC-AGENTS
+  - DOC-README
+affected_section_ids:
+  - governance-history-v2
+rollback_payload: docs-platform/changelog/rollback-payloads/ITR-GOVERNANCE-HISTORY-V2-2026-08-05-01/manifest.yaml
+

@@ -1,0 +1,21 @@
+schema_version: 2
+iteration_id: ITR-GOVERNANCE-HISTORY-V2-2026-08-05-01
+proposal_id: PROP-GOVERNANCE-HISTORY-V2-2026-08-05-01
+decision_id: DEC-GOVERNANCE-HISTORY-V2-2026-08-05-01
+change_set_id: CHG-GOVERNANCE-HISTORY-V2-2026-08-05-01
+verified_at: 2026-08-05T18:31:04.000Z
+actor: Codex
+validation_status: passed
+approved_payload_sha256: 873cd5b786b4a630435c8be2748e8d9b8e9d1d9ded9212ffd84bc8d79d3da646
+before_state_sha256: 10715cc7e2146cc261e6edc49681d0a30afbd243106a9e8bfb20a832fa070d0a
+after_state_sha256: ddccaac6e1b1f712e6331033cba2857378f8783cfcd3e5c279b4851aae6ae038
+checks:
+  governance_validation: passed
+  governance_history_v2_tests: 36_passed
+  historical_tags: passed
+  append_only_hash_chain: passed
+  generated_context: passed
+  business_content_unchanged: passed
+rollback_payload: docs-platform/changelog/rollback-payloads/ITR-GOVERNANCE-HISTORY-V2-2026-08-05-01/manifest.yaml
+summary: Governance History v2 added exact historical Git linkage, deterministic generated context, append-only lifecycle sealing, suffix-only rollback and historical compensation without changing project business content.
+

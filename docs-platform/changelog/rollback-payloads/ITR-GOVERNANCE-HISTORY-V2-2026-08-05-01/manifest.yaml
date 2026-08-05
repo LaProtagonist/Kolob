@@ -1,0 +1,14 @@
+schema_version: 2
+iteration_id: ITR-GOVERNANCE-HISTORY-V2-2026-08-05-01
+mode: governed_reverse_change_set
+status: prepared
+before_content_commit: 4b5e51f52957a1a8055b704ba2a1ec7e46f2f44a
+source_scope: docs-platform/changelog/payloads/ITR-GOVERNANCE-HISTORY-V2-2026-08-05-01-approved.yaml
+reverse_strategy:
+  modified_files: restore blobs from before_content_commit in a newly approved reverse change set
+  added_files: remove only through that approved reverse change set
+  events: append rollback_requested, rollback_approved and rolled_back; never delete committed events
+  tags: retain historical iteration tag
+  git_reset_forbidden: true
+dependency_check: required against every later sealed iteration before prepare/apply
+

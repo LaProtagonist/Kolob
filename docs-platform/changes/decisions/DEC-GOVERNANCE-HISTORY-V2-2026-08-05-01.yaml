@@ -1,0 +1,17 @@
+schema_version: 2
+decision_id: DEC-GOVERNANCE-HISTORY-V2-2026-08-05-01
+iteration_id: ITR-GOVERNANCE-HISTORY-V2-2026-08-05-01
+proposal_id: PROP-GOVERNANCE-HISTORY-V2-2026-08-05-01
+status: approved
+approved_by: project owner
+approved_at: 2026-08-05T18:31:01.000Z
+decision: Implement Governance History v2 as an infrastructure-only extension of the existing governed document system and preserve all historical evidence append-only.
+does_not_approve:
+  - business content
+  - CAPEX data or assumptions
+  - Investor Start Model data or assumptions
+  - Google writes
+  - deployment
+approved_payload_path: docs-platform/changelog/payloads/ITR-GOVERNANCE-HISTORY-V2-2026-08-05-01-approved.yaml
+approved_payload_sha256: 873cd5b786b4a630435c8be2748e8d9b8e9d1d9ded9212ffd84bc8d79d3da646
+

@@ -1,0 +1,127 @@
+schema_version: 2
+generated_from:
+  task_start_events_sha256: 9fc21e39b26a934e34f0e934ef33dc057f65f1b33e240f9567cd6cd444e8b076
+  task_start_events_bytes: 70127
+  preimplementation_events_sha256: c6d4fcd6796e513f3980ae044eae3a52564b1bba6f4a5b0417d7fcf0f21e2061
+  preimplementation_events_bytes: 78847
+iterations:
+  - iteration_id: ITR-CAPEX-REGISTER-2026-08-01-01
+    decision_id: DEC-007
+    change_set_id: CHG-012
+    verification_receipt: docs-platform/changelog/verification/ITR-CAPEX-REGISTER-2026-08-01-01.yaml
+    approved_payload_hash: 75698b54ff3819449239a62d535bf84c3ddb30a64b7b6a92076ee2f706775dec
+    before_hash: 84270f1dcbe6a999d67f8296e05a4b3eeded2c64e6afeaa6dbad1757339c51d9
+    after_hash: 5218ea9c5d4b3f2187a0a79d8e496c1e0ad243bedb3aae4e1b8e2a55d6b2e4c6
+    probable_git_commit: c228f8b69bbeed67b647f678d05ffe84daf15cf0
+    commit_message: "feat(docs-platform): add structured CAPEX equipment register"
+    google_sync_receipt: docs-platform/changelog/google-sync/2026-08-01-DOC-CAPEX-EQUIPMENT-REGISTER.yaml
+    deployment_receipt: null
+    rollback_payload: docs-platform/changelog/iteration-receipts/ITR-CAPEX-REGISTER-2026-08-01-01.yaml
+    tag: iteration/ITR-CAPEX-REGISTER-2026-08-01-01
+    confidence: exact
+    legacy_without_trailers: true
+  - iteration_id: ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01
+    decision_id: DEC-008
+    change_set_id: CHG-014
+    verification_receipt: docs-platform/changelog/verification/ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01.yaml
+    approved_payload_hash: 73f5a811214f548ba3c8e1cde8e16317e5bbc3b98cf3f5ecc67c4c12ffdb6453
+    before_hash: 3f685e309f39983385ca8a11a896798f1b4cf381f7533ab6df9dcd15d1ff3fae
+    after_hash: 338fab6a4b8d48d9002ff4748678ac06c059e33f8999e63f6d651f0340c5a806
+    probable_git_commit: d9f5fbda4afd2fd7e9513ff3fa41aa6817a8d788
+    commit_message: "feat(docs-platform): add modular CAPEX format configurator"
+    google_sync_receipt: docs-platform/changelog/google-sync/2026-08-01-DOC-CAPEX-EQUIPMENT-REGISTER-MODULAR-CONFIGURATOR.yaml
+    deployment_receipt: null
+    rollback_payload: docs-platform/changelog/iteration-receipts/ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01.yaml
+    tag: iteration/ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01
+    confidence: exact
+    legacy_without_trailers: true
+  - iteration_id: ITR-CAPEX-PRICE-RESEARCH-2026-08-02-01
+    decision_id: DEC-009
+    change_set_id: CHG-016
+    verification_receipt: docs-platform/changelog/verification/ITR-CAPEX-PRICE-RESEARCH-2026-08-02-01.yaml
+    approved_payload_hash: e1fff4414ce1e6769f8822900ba6153efe4e78520854d92f0a30f932237da0ff
+    before_hash: 60b26396dd9153d0a85f4f97e6c96d22ac5cab7ca4f36843e6c3544c0b25beac
+    after_hash: 134a9a1ebe6b379ced31f7eb01b63600223975dcd7fd9e640aac16d2fa9120f5
+    probable_git_commit: 8e01e675ebc739844202126e671620a7ad8cb7f9
+    commit_message: "docs(docs-platform): add preliminary CAPEX price research"
+    google_sync_receipt: docs-platform/changelog/google-sync/2026-08-02-DOC-CAPEX-EQUIPMENT-REGISTER-PRICE-RESEARCH.yaml
+    deployment_receipt: null
+    rollback_payload: docs-platform/changelog/iteration-receipts/ITR-CAPEX-PRICE-RESEARCH-2026-08-02-01.yaml
+    tag: iteration/ITR-CAPEX-PRICE-RESEARCH-2026-08-02-01
+    confidence: exact
+    legacy_without_trailers: true
+  - iteration_id: ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01
+    decision_id: DEC-010
+    change_set_id: CHG-018
+    verification_receipt: docs-platform/changelog/verification/ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01.yaml
+    approved_payload_hash: 16ccea27ec2b91b1eb4525ef33f3ccdb5eb54ec17ffe295b73f7f0c52a6f17fb
+    before_hash: 1a79a01465e934e55ce8fc6f7dbae5f7698c8b868a0905416d9a14c22934e0bf
+    after_hash: f43f73a59295324ad47b5f042408ac8f4ef1867e03b0c63b6fb95f9c072f3e51
+    probable_git_commit: 909eebf88b3612fb2958575cc847b4c82fab8da4
+    commit_message: "feat(capex): improve working equipment configurator"
+    google_sync_receipt: docs-platform/changelog/google-sync/2026-08-03-DOC-CAPEX-EQUIPMENT-REGISTER-WEB-CONFIGURATOR.yaml
+    deployment_receipt: null
+    rollback_payload: docs-platform/changelog/iteration-receipts/ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01.yaml
+    tag: iteration/ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01
+    confidence: exact
+    legacy_without_trailers: true
+  - iteration_id: ITR-PILOT-CAPEX-BASELINE-2026-08-03-01
+    decision_id: DEC-011
+    change_set_id: CHG-020
+    verification_receipt: docs-platform/changelog/verification/ITR-PILOT-CAPEX-BASELINE-2026-08-03-01.yaml
+    approved_payload_hash: f8af78bb762df25f08231936cfbf6eee3833bd96361d02228586fc979b754007
+    before_hash: c33eea5c6883c71c64c87bb08fc99a5116465af6734d5955fa9293d81cad2752
+    after_hash: 5772a81aa343d0c2ada21c8e4fbe5216a10a398dc4517bced3e5687ae2268b75
+    probable_git_commit: 3b94126eca0177761b481a68476a41879d7a3728
+    commit_message: "feat(capex): add pilot CAPEX baseline"
+    google_sync_receipt: docs-platform/changelog/google-sync/2026-08-03-DOC-CAPEX-EQUIPMENT-REGISTER-PILOT-BASELINE.yaml
+    deployment_receipt: null
+    rollback_payload: docs-platform/changelog/iteration-receipts/ITR-PILOT-CAPEX-BASELINE-2026-08-03-01.yaml
+    tag: iteration/ITR-PILOT-CAPEX-BASELINE-2026-08-03-01
+    confidence: exact
+    legacy_without_trailers: true
+  - iteration_id: ITR-INVESTOR-START-MODEL-2026-08-04-01
+    decision_id: DEC-012
+    change_set_id: CHG-022
+    verification_receipt: docs-platform/changelog/verification/ITR-INVESTOR-START-MODEL-2026-08-04-01.yaml
+    approved_payload_hash: 3d1cc27dbb4711852a6b34e524a637cbe65b05ae61da48c8ece5f0c7a08b5fe7
+    before_hash: null
+    after_hash: 3d1cc27dbb4711852a6b34e524a637cbe65b05ae61da48c8ece5f0c7a08b5fe7
+    probable_git_commit: 4e4e55b04e4952e44da0348b4df76b8f20174a2d
+    commit_message: "feat(investor): add launch budget calculator"
+    google_sync_receipt: null
+    deployment_receipt: null
+    rollback_payload: docs-platform/changelog/rollback-payloads/ITR-INVESTOR-START-MODEL-2026-08-04-01/manifest.yaml
+    tag: iteration/ITR-INVESTOR-START-MODEL-2026-08-04-01
+    confidence: exact
+    legacy_without_trailers: true
+  - iteration_id: ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01
+    decision_id: DEC-013
+    change_set_id: CHG-025
+    verification_receipt: docs-platform/changelog/verification/ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01.yaml
+    approved_payload_hash: d5b1f6c939f7067298769cd0faea75f853c7592c847b32a158bae32a7e91f257
+    before_hash: 3d1cc27dbb4711852a6b34e524a637cbe65b05ae61da48c8ece5f0c7a08b5fe7
+    after_hash: d5b1f6c939f7067298769cd0faea75f853c7592c847b32a158bae32a7e91f257
+    probable_git_commit: 5af3ea97f174509b24c232173278e85644d17e81
+    commit_message: "feat(investor): refine launch cost presentation"
+    google_sync_receipt: null
+    deployment_receipt: null
+    rollback_payload: docs-platform/changelog/rollback-payloads/ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01/manifest.yaml
+    tag: iteration/ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01
+    confidence: exact
+    legacy_without_trailers: true
+  - iteration_id: ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01
+    decision_id: DEC-014
+    change_set_id: CHG-028
+    verification_receipt: docs-platform/changelog/verification/ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01.yaml
+    approved_payload_hash: 3bf792a1a0c0dfd21e7c87399025f51effde1f08c910c987003cd341472494b1
+    before_hash: d5b1f6c939f7067298769cd0faea75f853c7592c847b32a158bae32a7e91f257
+    after_hash: 3bf792a1a0c0dfd21e7c87399025f51effde1f08c910c987003cd341472494b1
+    probable_git_commit: 4b5e51f52957a1a8055b704ba2a1ec7e46f2f44a
+    commit_message: "feat(investor): add premises preparation breakdown"
+    google_sync_receipt: null
+    deployment_receipt: null
+    rollback_payload: docs-platform/changelog/rollback-payloads/ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01/manifest.yaml
+    tag: iteration/ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01
+    confidence: exact
+    legacy_without_trailers: true

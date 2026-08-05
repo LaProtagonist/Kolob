@@ -1,0 +1,185 @@
+schema_version: 2
+imported_at: 2026-08-05T17:00:00.000Z
+entries:
+  - legacy_id: LEGACY-DEC-001-2026-07-21
+    occurred_at: 2026-07-21T17:32:46.000Z
+    recorded_at: 2026-08-05T17:00:00.000Z
+    decision_id: DEC-001
+    change_set_id: null
+    git_commit_hash: 428150abbf187337da5fd654f343f5b0c27f55e2
+    source_refs:
+      - docs-platform/registry/decisions.yaml
+      - "commit:428150abbf187337da5fd654f343f5b0c27f55e2"
+    summary: Initial registry commit contains the approved decision to create the locally governed documentation platform.
+    confidence: exact
+    affected_document_ids: [DOC-README, DOC-AGENTS, DOC-AUDIT]
+    missing_lifecycle_stages: [proposal, preview, apply_receipt, verification, approved_payload_hash]
+  - legacy_id: LEGACY-DEC-002-2026-07-21
+    occurred_at: 2026-07-21T17:32:46.000Z
+    recorded_at: 2026-08-05T17:00:00.001Z
+    decision_id: DEC-002
+    change_set_id: null
+    git_commit_hash: 428150abbf187337da5fd654f343f5b0c27f55e2
+    source_refs:
+      - docs-platform/registry/decisions.yaml
+      - "commit:428150abbf187337da5fd654f343f5b0c27f55e2"
+    summary: Initial registry commit contains the approved decision to compare premises-use scenarios without selecting a property.
+    confidence: exact
+    affected_document_ids: [DOC-INVESTMENT-MEMO]
+    missing_lifecycle_stages: [proposal, preview, apply_receipt, verification, approved_payload_hash]
+  - legacy_id: LEGACY-CHG-002
+    occurred_at: 2026-07-21T17:56:25.702Z
+    recorded_at: 2026-08-05T17:00:00.002Z
+    decision_id: DEC-002
+    change_set_id: CHG-002
+    git_commit_hash: 39c3caaefa24353ce40616b7e710655b2e5a5ebf
+    source_refs:
+      - docs-platform/changes/CHG-002.yaml
+      - docs-platform/changelog/2026-07-21T17-56-25-597Z-CHG-002.md
+      - docs-platform/changelog/changes.log
+      - "commit:39c3caaefa24353ce40616b7e710655b2e5a5ebf"
+    summary: Applied the research-only clarification for the premises purchase scenario.
+    confidence: exact
+    affected_document_ids: [DOC-INVESTMENT-MEMO]
+    missing_lifecycle_stages: [proposal, preview, verification, apply_receipt, approved_payload_hash]
+  - legacy_id: LEGACY-CHG-GOOGLE-TEST-DOCUMENTS
+    occurred_at: 2026-07-21T22:34:07.875Z
+    recorded_at: 2026-08-05T17:00:00.003Z
+    decision_id: DEC-002
+    change_set_id: CHG-GOOGLE-TEST-DOCUMENTS
+    git_commit_hash: 6079598fbc951ae0f335abfd142eadf03379cf8d
+    source_refs:
+      - docs-platform/changelog/2026-07-21T22-34-07-792Z-CHG-GOOGLE-TEST-DOCUMENTS.md
+      - docs-platform/changelog/changes.log
+      - "commit:6079598fbc951ae0f335abfd142eadf03379cf8d"
+    summary: Registered two Google sandbox test documents; the source change set is missing and DEC-002 is unrelated to this operation.
+    confidence: partial
+    affected_document_ids: [TEST-DOC-001, TEST-SHEET-001]
+    missing_lifecycle_stages: [proposal, approved_change_set, preview, verification, apply_receipt, approved_payload_hash, correct_decision_link]
+  - legacy_id: LEGACY-CHG-003
+    occurred_at: 2026-07-23T17:16:43.457Z
+    recorded_at: 2026-08-05T17:00:00.004Z
+    decision_id: DEC-001
+    change_set_id: CHG-003
+    git_commit_hash: 6da1821cad295d7cee2dfabd7837eb9438be91b7
+    source_refs:
+      - docs-platform/changes/CHG-003-foundation-decision.yaml
+      - docs-platform/changelog/2026-07-23T17-16-43-378Z-CHG-003.md
+      - docs-platform/changelog/changes.log
+      - "commit:6da1821cad295d7cee2dfabd7837eb9438be91b7"
+    summary: Registered the source and approved decision for Foundation v1.0.
+    confidence: exact
+    affected_document_ids: [DOC-FOUNDATION]
+    missing_lifecycle_stages: [proposal, preview, verification, apply_receipt, approved_payload_hash]
+  - legacy_id: LEGACY-CHG-004
+    occurred_at: 2026-07-23T17:19:16.430Z
+    recorded_at: 2026-08-05T17:00:00.005Z
+    decision_id: DEC-003
+    change_set_id: CHG-004
+    git_commit_hash: 6da1821cad295d7cee2dfabd7837eb9438be91b7
+    source_refs:
+      - docs-platform/changes/CHG-004-foundation-v1.yaml
+      - docs-platform/changelog/2026-07-23T17-19-16-336Z-CHG-004.md
+      - docs-platform/changelog/changes.log
+      - "commit:6da1821cad295d7cee2dfabd7837eb9438be91b7"
+    summary: Registered Foundation v1.0, seven governing principles and its dependency record.
+    confidence: exact
+    affected_document_ids: [DOC-FOUNDATION]
+    missing_lifecycle_stages: [proposal, preview, verification_receipt, apply_receipt, approved_payload_hash]
+  - legacy_id: LEGACY-CHG-005
+    occurred_at: 2026-08-01T12:39:40.243Z
+    recorded_at: 2026-08-05T17:00:00.006Z
+    decision_id: DEC-001
+    change_set_id: CHG-005
+    git_commit_hash: 827261bcd48ed1274a5a67eab6bf15c565133dc8
+    source_refs:
+      - docs-platform/changes/CHG-005-business-model-architecture-decision.yaml
+      - docs-platform/changelog/2026-08-01T12-39-40-136Z-CHG-005.md
+      - docs-platform/changelog/changes.log
+      - "commit:827261bcd48ed1274a5a67eab6bf15c565133dc8"
+    summary: Registered the source and approved decision for Business Model Architecture v1.0.
+    confidence: exact
+    affected_document_ids: [DOC-BUSINESS-MODEL-ARCHITECTURE]
+    missing_lifecycle_stages: [proposal, preview, verification, apply_receipt, approved_payload_hash]
+  - legacy_id: LEGACY-CHG-006
+    occurred_at: 2026-08-01T12:39:51.955Z
+    recorded_at: 2026-08-05T17:00:00.007Z
+    decision_id: DEC-004
+    change_set_id: CHG-006
+    git_commit_hash: 827261bcd48ed1274a5a67eab6bf15c565133dc8
+    source_refs:
+      - docs-platform/changes/CHG-006-business-model-architecture-v1.yaml
+      - docs-platform/changelog/2026-08-01T12-39-51-788Z-CHG-006.md
+      - docs-platform/changelog/changes.log
+      - "commit:827261bcd48ed1274a5a67eab6bf15c565133dc8"
+    summary: Registered Business Model Architecture v1.0, ten governing principles and dependency records.
+    confidence: exact
+    affected_document_ids: [DOC-BUSINESS-MODEL-ARCHITECTURE]
+    missing_lifecycle_stages: [proposal, preview, verification_receipt, apply_receipt, approved_payload_hash]
+  - legacy_id: LEGACY-CHG-007
+    occurred_at: 2026-08-01T13:03:12.645Z
+    recorded_at: 2026-08-05T17:00:00.008Z
+    decision_id: DEC-001
+    change_set_id: CHG-007
+    git_commit_hash: bfd26cce14efcd57b05a9ec6f8dae9c16b9bcbcb
+    source_refs:
+      - docs-platform/changes/CHG-007-capex-equipment-specification-decision.yaml
+      - docs-platform/changelog/2026-08-01T13-03-12-516Z-CHG-007.md
+      - docs-platform/changelog/changes.log
+      - "commit:bfd26cce14efcd57b05a9ec6f8dae9c16b9bcbcb"
+    summary: Registered the source and decision for the research CAPEX Equipment Specification v0.1.
+    confidence: exact
+    affected_document_ids: [DOC-CAPEX-EQUIPMENT-SPECIFICATION]
+    missing_lifecycle_stages: [proposal, preview, verification, apply_receipt, approved_payload_hash]
+  - legacy_id: LEGACY-CHG-008
+    occurred_at: 2026-08-01T13:03:25.676Z
+    recorded_at: 2026-08-05T17:00:00.009Z
+    decision_id: DEC-005
+    change_set_id: CHG-008
+    git_commit_hash: bfd26cce14efcd57b05a9ec6f8dae9c16b9bcbcb
+    source_refs:
+      - docs-platform/changes/CHG-008-capex-equipment-specification-v0-1.yaml
+      - docs-platform/changelog/2026-08-01T13-03-25-573Z-CHG-008.md
+      - docs-platform/changelog/changes.log
+      - "commit:bfd26cce14efcd57b05a9ec6f8dae9c16b9bcbcb"
+    summary: Registered the research CAPEX Equipment Specification without approving prices, models or final CAPEX.
+    confidence: exact
+    affected_document_ids: [DOC-CAPEX-EQUIPMENT-SPECIFICATION]
+    missing_lifecycle_stages: [proposal, preview, verification_receipt, apply_receipt, approved_payload_hash]
+  - legacy_id: LEGACY-CHG-009
+    occurred_at: 2026-08-01T14:29:53.935Z
+    recorded_at: 2026-08-05T17:00:00.010Z
+    decision_id: DEC-001
+    change_set_id: CHG-009
+    git_commit_hash: c228f8b69bbeed67b647f678d05ffe84daf15cf0
+    source_refs:
+      - docs-platform/changes/CHG-009-google-drive-publication-decision.yaml
+      - docs-platform/changelog/2026-08-01T14-29-53-780Z-CHG-009.md
+      - docs-platform/changelog/changes.log
+      - "commit:c228f8b69bbeed67b647f678d05ffe84daf15cf0"
+    summary: Registered the decision to publish three existing project documents to guarded Google Drive files.
+    confidence: exact
+    affected_document_ids: [DOC-FOUNDATION, DOC-BUSINESS-MODEL-ARCHITECTURE, DOC-CAPEX-EQUIPMENT-SPECIFICATION]
+    missing_lifecycle_stages: [proposal, preview_event, verification_event, apply_receipt, approved_payload_hash]
+  - legacy_id: LEGACY-CHG-010
+    occurred_at: 2026-08-01T14:33:12.272Z
+    recorded_at: 2026-08-05T17:00:00.011Z
+    decision_id: DEC-006
+    change_set_id: CHG-010
+    git_commit_hash: c228f8b69bbeed67b647f678d05ffe84daf15cf0
+    source_refs:
+      - docs-platform/changes/CHG-010-google-drive-publication.yaml
+      - docs-platform/changelog/2026-08-01T14-33-12-148Z-CHG-010.md
+      - docs-platform/changelog/google-sync/2026-08-01-DOC-FOUNDATION.yaml
+      - docs-platform/changelog/google-sync/2026-08-01-DOC-BUSINESS-MODEL-ARCHITECTURE.yaml
+      - docs-platform/changelog/google-sync/2026-08-01-DOC-CAPEX-EQUIPMENT-SPECIFICATION.yaml
+      - docs-platform/changelog/changes.log
+      - "commit:c228f8b69bbeed67b647f678d05ffe84daf15cf0"
+    summary: Registered three guarded Google document links after successful semantic readback.
+    confidence: exact
+    affected_document_ids: [DOC-FOUNDATION, DOC-BUSINESS-MODEL-ARCHITECTURE, DOC-CAPEX-EQUIPMENT-SPECIFICATION]
+    google_sync_receipts:
+      - docs-platform/changelog/google-sync/2026-08-01-DOC-FOUNDATION.yaml
+      - docs-platform/changelog/google-sync/2026-08-01-DOC-BUSINESS-MODEL-ARCHITECTURE.yaml
+      - docs-platform/changelog/google-sync/2026-08-01-DOC-CAPEX-EQUIPMENT-SPECIFICATION.yaml
+    missing_lifecycle_stages: [proposal, preview_event, verification_event, apply_receipt, approved_payload_hash, content_commit_in_sync_receipt]

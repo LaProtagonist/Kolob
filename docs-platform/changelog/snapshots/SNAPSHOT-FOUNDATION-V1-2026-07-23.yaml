@@ -1,0 +1,17 @@
+schema_version: 2
+snapshot_id: SNAPSHOT-FOUNDATION-V1-2026-07-23
+reason: after_foundation
+created_at: 2026-07-23T17:25:45.000Z
+timeline_event_id: EVT-LEGACY-CHG-004-IMPORTED
+timeline_event_hash: 01f44da40ab69d51fba6b3efdf50bc45de292b8781297ee2b03d8e8937161ae3
+iteration_tag: null
+content_commit_hash: 6da1821cad295d7cee2dfabd7837eb9438be91b7
+registry_hash: 6b9e4bf2f0c7bd251d8cdd640205137054d761855d01d821884f62e69caaeccf
+canonical_document_hashes:
+  - document_id: DOC-FOUNDATION
+    local_path: docs-platform/00-foundation.md
+    sha256: 5b4d457184c055ba11f8c4d05cc263139d2eb4f623981bcdc198c0114a50c0bb
+google_readback_hashes: []
+deployment_url: null
+open_questions:
+  - Historical snapshot is metadata-only; later dependent changes remain authoritative.

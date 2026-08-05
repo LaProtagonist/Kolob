@@ -1,0 +1,22 @@
+schema_version: 2
+snapshot_id: SNAPSHOT-CAPEX-REGISTER-V0-1-2026-08-01
+reason: after_major_capex_version
+created_at: 2026-08-01T18:10:48.000Z
+timeline_event_id: EVT-ITR-CAPEX-REGISTER-2026-08-01-01-COMMITTED-BACKFILL
+timeline_event_hash: d81d4fbdb95a1756460e5bdf4bd0639de4b89f071c0f4da492258883d6fdf08a
+iteration_tag: iteration/ITR-CAPEX-REGISTER-2026-08-01-01
+content_commit_hash: c228f8b69bbeed67b647f678d05ffe84daf15cf0
+registry_hash: b052ce10900884c1ad744e4bcc35fce165a546970d2ca8128611f973fcb4f1cc
+canonical_document_hashes:
+  - document_id: DOC-CAPEX-EQUIPMENT-SPECIFICATION
+    local_path: docs-platform/working/capex-equipment-specification.md
+    sha256: 2157364e09699173fecfbfe861edf4e6fac85a0437e23aebe100caebeab599d6
+  - document_id: DOC-CAPEX-EQUIPMENT-REGISTER
+    local_path: docs-platform/working/capex-equipment-register.yaml
+    sha256: 75698b54ff3819449239a62d535bf84c3ddb30a64b7b6a92076ee2f706775dec
+google_readback_hashes:
+  - receipt: docs-platform/changelog/google-sync/2026-08-01-DOC-CAPEX-EQUIPMENT-REGISTER.yaml
+    sha256: b6e6485482a2bcbc07058a922f60f175965178700a270f499e2589bb2daeb34e
+deployment_url: null
+open_questions:
+  - Historical snapshot is metadata-only; later dependent changes remain authoritative.

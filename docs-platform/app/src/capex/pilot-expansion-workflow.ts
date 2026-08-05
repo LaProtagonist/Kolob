@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import YAML from "yaml";
 import { platformRoot, writeSecretJson } from "../google/config.js";
-import { appendTimelineEvent, generateTimeline, readTimelineEvents, type IterationStatus, type TimelineEventInput } from "../governance/timeline.js";
+import { appendTimelineEvent, effectiveRecordedAt, generateTimeline, readTimelineEvents, type IterationStatus, type TimelineEventInput } from "../governance/timeline.js";
 import { loadRegistry, writeYaml } from "../governance/registry.js";
 import {
   buildEquipmentBom,
@@ -837,7 +837,7 @@ export function appendPilotTimeline() {
   const manifest = YAML.parse(fs.readFileSync(iterationFile, "utf8"));
   const receipt = YAML.parse(fs.readFileSync(receiptFile, "utf8"));
   const google = YAML.parse(fs.readFileSync(absolute(PILOT_GOOGLE_RECEIPT_PATH), "utf8"));
-  const start = Math.max(Date.now(), Date.parse(existing.at(-1)?.timestamp ?? "1970-01-01T00:00:00.000Z") + 1);
+  const start = Math.max(Date.now(), Date.parse(existing.at(-1) ? effectiveRecordedAt(existing.at(-1)!) : "1970-01-01T00:00:00.000Z") + 1);
   const statuses: Array<{ status: IterationStatus; action: string; actor: string; tool: string; validation: "pending" | "passed"; summary: string }> = [
     { status: "proposed", action: "proposal_recorded", actor: "project owner", tool: "user instruction / governed workflow", validation: "pending", summary: "Proposal зафиксировал пилотный формат, посудомоечную систему, мелкий инвентарь, ПО, food cost, штат и открытые бюджетные слои." },
     { status: "approved", action: "decision_approved", actor: "project owner", tool: `approved decision ${PILOT_DECISION_ID}`, validation: "pending", summary: "DEC-011 утвердил exact research-payload без утверждения помещения, полного CAPEX, поставщиков или финансовой модели." },

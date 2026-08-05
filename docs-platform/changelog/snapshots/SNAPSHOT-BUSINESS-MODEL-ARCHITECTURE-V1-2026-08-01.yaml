@@ -1,0 +1,20 @@
+schema_version: 2
+snapshot_id: SNAPSHOT-BUSINESS-MODEL-ARCHITECTURE-V1-2026-08-01
+reason: after_business_model_architecture
+created_at: 2026-08-01T12:48:41.000Z
+timeline_event_id: EVT-LEGACY-CHG-006-IMPORTED
+timeline_event_hash: 9e0311d1e09d60b870469bd78c3045c1dbb2954560a3fc8eecde5a78c044a103
+iteration_tag: null
+content_commit_hash: 827261bcd48ed1274a5a67eab6bf15c565133dc8
+registry_hash: 24a96683aa174be47674fc476f69a6ed9ce84ad82e884b1f752edd3aec70fa69
+canonical_document_hashes:
+  - document_id: DOC-FOUNDATION
+    local_path: docs-platform/00-foundation.md
+    sha256: 5b4d457184c055ba11f8c4d05cc263139d2eb4f623981bcdc198c0114a50c0bb
+  - document_id: DOC-BUSINESS-MODEL-ARCHITECTURE
+    local_path: docs-platform/01-business-model-architecture.md
+    sha256: 1584d836a159f6e3c5859ccf539830248b2cd782ed2c7005c5963ac8730c556b
+google_readback_hashes: []
+deployment_url: null
+open_questions:
+  - Historical snapshot is metadata-only; later dependent changes remain authoritative.

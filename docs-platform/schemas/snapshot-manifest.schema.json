@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["schema_version", "snapshot_id", "reason", "created_at", "timeline_event_id", "timeline_event_hash", "iteration_tag", "content_commit_hash", "registry_hash", "canonical_document_hashes", "google_readback_hashes", "deployment_url", "open_questions"],
+  "properties": {
+    "schema_version": { "const": 2 },
+    "snapshot_id": { "type": "string", "minLength": 1 },
+    "reason": { "type": "string", "minLength": 1 },
+    "created_at": { "type": "string", "minLength": 1 },
+    "timeline_event_id": { "type": "string", "minLength": 1 },
+    "timeline_event_hash": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "iteration_tag": { "type": ["string", "null"] },
+    "content_commit_hash": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "registry_hash": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "canonical_document_hashes": { "type": "array" },
+    "google_readback_hashes": { "type": "array" },
+    "deployment_url": { "type": ["string", "null"] },
+    "open_questions": { "type": "array", "items": { "type": "string" } }
+  },
+  "additionalProperties": false
+}
+

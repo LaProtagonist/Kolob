@@ -11,6 +11,14 @@ import { checkWebSnapshot, writeWebSnapshot } from "./capex/web-snapshot.js";
 import { readPriceResearch, validatePriceResearch } from "./capex/price-research.js";
 import { applyChange, loadRegistry, previewReverseChange, printChangePreview, readYaml, registryKinds, requireChange, validateRegistry, writeReverseChange } from "./governance/registry.js";
 import { appendTimelineEvent, generateTimeline, readTimelineEvents, renderTimeline, validateTimeline, type TimelineEventInput } from "./governance/timeline.js";
+import { validateArtifacts } from "./governance/artifacts.js";
+import { buildContext, onboardReport, validateContext } from "./governance/context.js";
+import { deploymentDriftCheck, googleDriftCheck } from "./governance/external.js";
+import { backfillCommittedEvents, createHistoricalIterationTags, importLegacyHistory, verifyHistoricalTags, writeGitLinkAuditMarkdown } from "./governance/history.js";
+import { commitIteration, finalizeIteration, governanceValidationErrors, sealIteration } from "./governance/git-workflow.js";
+import { validateImmutability } from "./governance/immutability.js";
+import { historicalCompensationPreview, prepareRollbackLatest, rollbackLatestPreview } from "./governance/reversal.js";
+import { createRequiredHistoricalSnapshots, validateSnapshots } from "./governance/snapshots.js";
 import { authorizeInteractively, authorizeProjectFolderInteractively } from "./google/auth.js";
 import { applyCapexRegisterSheet, importCapexOverrides, previewCapexRegisterSheet } from "./google/capex-register-publisher.js";
 import { applyPublication, buildPublicationPreview } from "./google/publisher.js";
@@ -55,6 +63,51 @@ try {
     console.log(`timeline generated: ${generateTimeline()}`);
   } else if (command === "timeline:preview") {
     console.log(renderTimeline());
+  } else if (command === "history:backfill") {
+    const imported = importLegacyHistory();
+    const committed = backfillCommittedEvents();
+    writeGitLinkAuditMarkdown();
+    const snapshots = createRequiredHistoricalSnapshots();
+    console.log(JSON.stringify({ legacy_imported: imported.length, committed_backfilled: committed.length, snapshots: snapshots.length }, null, 2));
+  } else if (command === "history:tags") {
+    console.log(JSON.stringify({ created: createHistoricalIterationTags() }, null, 2));
+  } else if (command === "history:validate") {
+    const errors = [...validateImmutability(), ...validateTimeline(), ...verifyHistoricalTags(), ...validateSnapshots()];
+    if (errors.length) throw new Error(errors.join("\n"));
+    console.log("governance history validation: OK");
+  } else if (command === "context:build") {
+    console.log(YAML.stringify(buildContext(), { lineWidth: 0 }));
+  } else if (command === "context:validate") {
+    validateContext();
+    console.log("context validation: OK");
+  } else if (command === "project:onboard") {
+    const report = onboardReport();
+    console.log(report.output);
+    if (report.errors.length) throw new Error(report.errors.join("\n"));
+  } else if (command === "iteration:commit") {
+    console.log(commitIteration(flag(args, "--iteration"), flag(args, "--message")));
+  } else if (command === "iteration:seal") {
+    console.log(JSON.stringify(sealIteration(flag(args, "--iteration")), null, 2));
+  } else if (command === "iteration:finalize") {
+    console.log(JSON.stringify(finalizeIteration(flag(args, "--iteration"), flag(args, "--message")), null, 2));
+  } else if (command === "iteration:rollback:preview") {
+    console.log(YAML.stringify(rollbackLatestPreview(Number(flag(args, "--steps"))), { lineWidth: 0 }));
+  } else if (command === "iteration:rollback:prepare") {
+    console.log(prepareRollbackLatest(Number(flag(args, "--steps"))));
+  } else if (command === "iteration:compensate:preview") {
+    console.log(YAML.stringify(historicalCompensationPreview(flag(args, "--iteration")), { lineWidth: 0 }));
+  } else if (command === "google:drift:check") {
+    console.log(JSON.stringify(googleDriftCheck(), null, 2));
+  } else if (command === "deployment:drift:check") {
+    console.log(JSON.stringify(deploymentDriftCheck(), null, 2));
+  } else if (command === "artifact:validate") {
+    const errors = validateArtifacts();
+    if (errors.length) throw new Error(errors.join("\n"));
+    console.log("artifact validation: OK");
+  } else if (command === "governance:validate") {
+    const errors = governanceValidationErrors();
+    if (errors.length) throw new Error(errors.join("\n"));
+    console.log("governance validation: OK");
   } else if (command === "capex:register:preview") {
     previewRegister();
   } else if (command === "capex:register:apply") {
@@ -153,7 +206,7 @@ try {
   else if (command === "google:test:read") await readTests();
   else if (command === "google:test:update") await updateTests(args);
   else if (command === "google:test:cleanup") await cleanupTests();
-  else throw new Error("commands: registry:*|change:*|timeline:*|capex:*|investor:start:*|google:*|documents:list|decisions:list");
+  else throw new Error("commands: registry:*|change:*|timeline:*|history:*|context:*|project:onboard|iteration:*|artifact:*|governance:*|capex:*|investor:start:*|google:*|deployment:*|documents:list|decisions:list");
 } catch (error) {
   console.error(`ERROR: ${(error as Error).message}`);
   process.exitCode = 1;

@@ -1,0 +1,70 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-START-MODEL-2026-08-04-01
+artifacts:
+  - artifact_id: ART-INVESTOR-START-REVIEW-PDF
+    iteration_id: ITR-INVESTOR-START-MODEL-2026-08-04-01
+    type: review_pdf
+    filename: output/pdf/launch-budget-review.pdf
+    sha256: c514f1e51ddd6680616c7d5bb5b64ebc43872e882a50b8c6f1be71105b3ea278
+    size: 1743361
+    created_at: 2026-08-05T02:04:50.000Z
+    purpose: Visual review evidence for the Investor Start Model at content commit 4e4e55b.
+    storage: local_ignored; preferred Google Drive folder is Колобочная — Investment / Audit Artifacts / ITR-INVESTOR-START-MODEL-2026-08-04-01
+    remote_url: null
+    status: pending_archive
+  - artifact_id: ART-INVESTOR-START-FULL-PAGE-JPG
+    iteration_id: ITR-INVESTOR-START-MODEL-2026-08-04-01
+    type: review_image
+    filename: output/review/launch-budget-page-full.jpg
+    sha256: 943db0f038b2a27c58378349b86978568021275cb3992b81e9e65ae6b0b67eb2
+    size: 619286
+    created_at: 2026-08-05T02:04:49.000Z
+    purpose: Full-page visual review evidence for the Investor Start Model at content commit 4e4e55b.
+    storage: local_ignored; preferred Google Drive folder is Колобочная — Investment / Audit Artifacts / ITR-INVESTOR-START-MODEL-2026-08-04-01
+    remote_url: null
+    status: pending_archive
+  - artifact_id: ART-INVESTOR-START-DESKTOP-EMPTY
+    iteration_id: ITR-INVESTOR-START-MODEL-2026-08-04-01
+    type: verification_screenshot
+    filename: analysis/screenshots/launch-budget-desktop-empty.png
+    sha256: 1dd08bc2526849d0444f08ecedd5f4e9c27ca9f7178e1fe501e90684a3a25cdb
+    size: 91478
+    created_at: 2026-08-05T00:30:29.000Z
+    purpose: Desktop visual verification evidence.
+    storage: local_ignored
+    remote_url: null
+    status: pending_archive
+  - artifact_id: ART-INVESTOR-START-DESKTOP-PURCHASE
+    iteration_id: ITR-INVESTOR-START-MODEL-2026-08-04-01
+    type: verification_screenshot
+    filename: analysis/screenshots/launch-budget-desktop-purchase.png
+    sha256: ccba33aa15204b09385619726bd7744e0a9f63840136890095fa0db62f817c64
+    size: 129858
+    created_at: 2026-08-05T00:36:01.000Z
+    purpose: Purchase scenario visual verification evidence.
+    storage: local_ignored
+    remote_url: null
+    status: pending_archive
+  - artifact_id: ART-INVESTOR-START-DESKTOP-RENT
+    iteration_id: ITR-INVESTOR-START-MODEL-2026-08-04-01
+    type: verification_screenshot
+    filename: analysis/screenshots/launch-budget-desktop-rent.png
+    sha256: bbd9e42141856b60fc72c08a72ff5c11dbd3f44f20fec7aa968a4c3fa51eb6b2
+    size: 107624
+    created_at: 2026-08-05T00:36:30.000Z
+    purpose: Rent scenario visual verification evidence.
+    storage: local_ignored
+    remote_url: null
+    status: pending_archive
+  - artifact_id: ART-INVESTOR-START-MOBILE
+    iteration_id: ITR-INVESTOR-START-MODEL-2026-08-04-01
+    type: verification_screenshot
+    filename: analysis/screenshots/launch-budget-mobile.png
+    sha256: 74d3e231e780326057d9552f66dd786e9f51bf88dfc204496d8f04d0bd72a2df
+    size: 44901
+    created_at: 2026-08-05T00:38:36.000Z
+    purpose: Mobile visual verification evidence.
+    storage: local_ignored
+    remote_url: null
+    status: pending_archive
+

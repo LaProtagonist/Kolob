@@ -1,0 +1,37 @@
+schema_version: 2
+iteration_id: ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01
+artifacts:
+  - artifact_id: ART-LAUNCH-COST-DESKTOP-RENT
+    iteration_id: ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01
+    type: verification_screenshot
+    filename: analysis/screenshots/launch-cost-desktop-rent.png
+    sha256: 26491df9bc15dc1ff813f857082b27bffa849a33931f8ad993ea556af20e21b5
+    size: 99762
+    created_at: 2026-08-05T03:22:09.000Z
+    purpose: Rent scenario visual verification evidence.
+    storage: local_ignored
+    remote_url: null
+    status: pending_archive
+  - artifact_id: ART-LAUNCH-COST-DESKTOP-PURCHASE
+    iteration_id: ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01
+    type: verification_screenshot
+    filename: analysis/screenshots/launch-cost-desktop-purchase.png
+    sha256: 99233993e5de48c31c50e3803804b8903922f58c17b6d0379dc059fba35d2519
+    size: 94206
+    created_at: 2026-08-05T03:22:34.000Z
+    purpose: Purchase scenario visual verification evidence.
+    storage: local_ignored
+    remote_url: null
+    status: pending_archive
+  - artifact_id: ART-LAUNCH-COST-MOBILE
+    iteration_id: ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01
+    type: verification_screenshot
+    filename: analysis/screenshots/launch-cost-mobile.png
+    sha256: 797eb173aaa417165492696716908763ae1665c141c80da4f9d988a692b1c9b5
+    size: 46889
+    created_at: 2026-08-05T03:27:00.000Z
+    purpose: Mobile visual verification evidence.
+    storage: local_ignored
+    remote_url: null
+    status: pending_archive
+
