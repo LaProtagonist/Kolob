@@ -9,16 +9,16 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 ## 2. Текущая ветка и governed iteration
 
 - Branch: `master`.
-- Latest closed iteration: `ITR-GOVERNANCE-HISTORY-V2-2026-08-05-01`.
-- Latest iteration tag: `iteration/ITR-GOVERNANCE-HISTORY-V2-2026-08-05-01`.
-- Latest content commit: `bcba7114dc62f6fbc8669a42dbbba49b7f8be77f`.
+- Latest closed iteration: `ITR-CAPEX-REMAINING-PRICES-2026-08-05-01`.
+- Latest iteration tag: `iteration/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01`.
+- Latest content commit: `2c5d7af60dc2ad8a3bc64689f0707b98f9e7655e`.
 - Текущий Git HEAD намеренно не записывается: его вычисляет `npm run project:onboard`.
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-GOVERNANCE-HISTORY-V2-2026-08-05-01-COMMITTED`.
-- Hash: `020f084e89321eab6a9db6afa14692aac6513c2f3cc72e993253e8b108d4c206`.
-- generated_from_event_hash: `020f084e89321eab6a9db6afa14692aac6513c2f3cc72e993253e8b108d4c206`.
+- Event: `EVT-ITR-CAPEX-REMAINING-PRICES-2026-08-05-01-COMMITTED`.
+- Hash: `02b90a7a38a3bbc056834c27dcf749442030b1b4823f7057e8469dde5e857db2`.
+- generated_from_event_hash: `02b90a7a38a3bbc056834c27dcf749442030b1b4823f7057e8469dde5e857db2`.
 
 ## 4. Канонические документы
 
@@ -28,21 +28,21 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 | DOC-AUDIT | approved | `docs-platform/AUDIT.md` | `f43cb183f4c025ba74d4f77c2a498cb0ad07e7b0622e47f38afd6212173689e7` |
 | DOC-BUSINESS-MODEL-ARCHITECTURE | approved | `docs-platform/01-business-model-architecture.md` | `1584d836a159f6e3c5859ccf539830248b2cd782ed2c7005c5963ac8730c556b` |
 | DOC-CAPEX-CONFIGURATIONS | research | `docs-platform/working/capex-configurations.yaml` | `3810fa84efa969d8d95e2f0b0b49ede044b854d9be21ac92f5787d9ff8369f3c` |
-| DOC-CAPEX-EQUIPMENT-REGISTER | research | `docs-platform/working/capex-equipment-register.yaml` | `e5e835ecae0d0d433afd24cff8923026097d115d87c234f1af475c463bb8f6e0` |
+| DOC-CAPEX-EQUIPMENT-REGISTER | research | `docs-platform/working/capex-equipment-register.yaml` | `c8853fe61ad8407ab96d0fbafb79702853842f970cbf699b6c2138b23f32c7aa` |
 | DOC-CAPEX-EQUIPMENT-SPECIFICATION | research | `docs-platform/working/capex-equipment-specification.md` | `2157364e09699173fecfbfe861edf4e6fac85a0437e23aebe100caebeab599d6` |
-| DOC-CAPEX-GENERATED-EQUIPMENT-BOM | research | `docs-platform/working/configurations/CFG-PILOT-001/equipment-bom.yaml` | `671375dd8ac2a2387a9afa71104e08df21704493c67810f7d313d29ae0e38035` |
+| DOC-CAPEX-GENERATED-EQUIPMENT-BOM | research | `docs-platform/working/configurations/CFG-PILOT-001/equipment-bom.yaml` | `d001d531247e1c64820a6bd00df1db755908d483358f5f677b3ca6acb6d8fa4a` |
 | DOC-CAPEX-MODULES | research | `docs-platform/working/capex-modules.yaml` | `2fb31d90b852a5aaae6500d99412c7fabba0bbe9187f08106e3f37c7a52ae33a` |
 | DOC-CAPEX-POINT-FORMATS | research | `docs-platform/working/capex-point-formats.yaml` | `4b6d5a8806f696f499dbbab8fa061020c7ba77b670eb2a1f7d3ccdcc78b2e523` |
-| DOC-CAPEX-PRICE-RESEARCH | research | `docs-platform/working/capex-price-research.yaml` | `96d2ba3e55b02843d05ebeffc6e8c3e3c400e82392a5d95b16cd321e4d5e5b3d` |
+| DOC-CAPEX-PRICE-RESEARCH | research | `docs-platform/working/capex-price-research.yaml` | `b2b752f1822db8b529d58d822b83b32d44bcba9a0110ae35062d3b561f08249d` |
 | DOC-FOUNDATION | approved | `docs-platform/00-foundation.md` | `5b4d457184c055ba11f8c4d05cc263139d2eb4f623981bcdc198c0114a50c0bb` |
 | DOC-INVESTMENT-MEMO | proposed | `docs-platform/templates/investment-memorandum.md` | `464e46d307aaa98e57cab3a098cd639e212d32b51f82a06688de228f0e7fb4cd` |
-| DOC-INVESTOR-START-MODEL | research | `docs-platform/working/investor-start-model.yaml` | `3bf792a1a0c0dfd21e7c87399025f51effde1f08c910c987003cd341472494b1` |
+| DOC-INVESTOR-START-MODEL | research | `docs-platform/working/investor-start-model.yaml` | `54eef39aa293fb63cd673fffe000b43c46d425e3be98174bced6bc2c7c854b27` |
 | DOC-PILOT-CAPEX-ASSUMPTIONS | research | `docs-platform/working/pilot-capex-assumptions.yaml` | `25e11d4db20050b3a95cab40797ef0a29e56fad93c73d33d4a39415a8071d4ac` |
 | DOC-README | approved | `docs-platform/README.md` | `04e947f296a158a1c37ceb8d4c959d1f4e31cf609d16c99bee2d3c3b79b824ab` |
 
 ## 5. Текущая рабочая тема
 
-Governance History v2 and portable Codex context
+Remaining CAPEX research prices and web publication
 
 ## 6. Decisions и change sets
 
@@ -57,7 +57,7 @@ Governance History v2 and portable Codex context
 
 ## 8. Google / MCP / deployment
 
-- Google: `{"configured":true,"historical_receipts":8,"receipts_with_machine_readback_hash":5,"live_drift_check":"not_run_by_context_build"}`.
+- Google: `{"configured":true,"historical_receipts":9,"receipts_with_machine_readback_hash":6,"live_drift_check":"not_run_by_context_build"}`.
 - MCP: `{"implementation_present":true,"canonical_access":"registry_document_ids_only","live_status":"not_probed_by_context_build"}`.
 - Deployment: `{"status":"not_configured","receipts":0,"production_url":null}`.
 

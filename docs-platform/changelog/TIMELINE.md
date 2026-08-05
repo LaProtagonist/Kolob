@@ -4,10 +4,10 @@
 
 ## 1. Current state
 
-- Events: 57.
-- Timeline head event: `EVT-ITR-GOVERNANCE-HISTORY-V2-2026-08-05-01-COMMITTED`.
-- Timeline head SHA-256: `020f084e89321eab6a9db6afa14692aac6513c2f3cc72e993253e8b108d4c206`.
-- Latest recorded iteration: `ITR-GOVERNANCE-HISTORY-V2-2026-08-05-01`.
+- Events: 62.
+- Timeline head event: `EVT-ITR-CAPEX-REMAINING-PRICES-2026-08-05-01-COMMITTED`.
+- Timeline head SHA-256: `02b90a7a38a3bbc056834c27dcf749442030b1b4823f7057e8469dde5e857db2`.
+- Latest recorded iteration: `ITR-CAPEX-REMAINING-PRICES-2026-08-05-01`.
 
 ## 2. Modern governed iterations
 
@@ -22,6 +22,7 @@
 | 2026-08-05T00:44:03.000Z | committed | ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01 | ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01 | DEC-013 | CHG-025 | 5af3ea97f174509b24c232173278e85644d17e81 | iteration/ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01 | — | — | — | Exact historical Git linkage backfilled for ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01; the original commit predates mandatory governance trailers. |
 | 2026-08-05T02:42:23.000Z | committed | ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01 | ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01 | DEC-014 | CHG-028 | 4b5e51f52957a1a8055b704ba2a1ec7e46f2f44a | iteration/ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01 | — | — | — | Exact historical Git linkage backfilled for ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01; the original commit predates mandatory governance trailers. |
 | 2026-08-05T18:34:51.000Z | committed | Governance History v2 and portable Codex context | ITR-GOVERNANCE-HISTORY-V2-2026-08-05-01 | DEC-GOVERNANCE-HISTORY-V2-2026-08-05-01 | CHG-GOVERNANCE-HISTORY-V2-2026-08-05-01 | bcba7114dc62f6fbc8669a42dbbba49b7f8be77f | iteration/ITR-GOVERNANCE-HISTORY-V2-2026-08-05-01 | — | — | — | Governance History v2 infrastructure content commit verified and sealed without business-content changes. |
+| 2026-08-05T19:31:04.000Z | committed | Remaining CAPEX research prices and web publication | ITR-CAPEX-REMAINING-PRICES-2026-08-05-01 | DEC-015 | CHG-030 | 2c5d7af60dc2ad8a3bc64689f0707b98f9e7655e | iteration/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01 | docs-platform/changelog/google-sync/2026-08-05-DOC-CAPEX-EQUIPMENT-REGISTER-REMAINING-PRICES.yaml | — | — | Remaining CAPEX research prices and web publication: content commit verified and linked to the governed lifecycle before sealing. |
 
 ## 3. Legacy imported history
 
@@ -64,6 +65,7 @@
 | 2026-08-01T23:17:47.000Z | ITR-CAPEX-PRICE-RESEARCH-2026-08-02-01 | committed | docs-platform/changelog/google-sync/2026-08-02-DOC-CAPEX-EQUIPMENT-REGISTER-PRICE-RESEARCH.yaml | — | — |
 | 2026-08-03T00:40:11.000Z | ITR-CAPEX-WEB-CONFIGURATOR-2026-08-03-01 | committed | docs-platform/changelog/google-sync/2026-08-03-DOC-CAPEX-EQUIPMENT-REGISTER-WEB-CONFIGURATOR.yaml | — | — |
 | 2026-08-04T20:43:14.000Z | ITR-PILOT-CAPEX-BASELINE-2026-08-03-01 | committed | docs-platform/changelog/google-sync/2026-08-03-DOC-CAPEX-EQUIPMENT-REGISTER-PILOT-BASELINE.yaml | — | — |
+| 2026-08-05T19:31:04.000Z | ITR-CAPEX-REMAINING-PRICES-2026-08-05-01 | committed | docs-platform/changelog/google-sync/2026-08-05-DOC-CAPEX-EQUIPMENT-REGISTER-REMAINING-PRICES.yaml | — | — |
 
 ## 6. Open issues
 

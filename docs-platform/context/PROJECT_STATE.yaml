@@ -1,13 +1,13 @@
 schema_version: 2
-generated_at: 2026-08-05T18:35:48.653Z
+generated_at: 2026-08-05T19:31:32.110Z
 project: Колобочная
 branch: master
-latest_timeline_event_id: EVT-ITR-GOVERNANCE-HISTORY-V2-2026-08-05-01-COMMITTED
-latest_timeline_event_hash: 020f084e89321eab6a9db6afa14692aac6513c2f3cc72e993253e8b108d4c206
-latest_closed_iteration_id: ITR-GOVERNANCE-HISTORY-V2-2026-08-05-01
-latest_iteration_tag: iteration/ITR-GOVERNANCE-HISTORY-V2-2026-08-05-01
-latest_content_commit_hash: bcba7114dc62f6fbc8669a42dbbba49b7f8be77f
-registry_hash: 4f3697fe200c3ef0cc25dc5f7668feaf511c3466c24a66a623116c3fa3d48a12
+latest_timeline_event_id: EVT-ITR-CAPEX-REMAINING-PRICES-2026-08-05-01-COMMITTED
+latest_timeline_event_hash: 02b90a7a38a3bbc056834c27dcf749442030b1b4823f7057e8469dde5e857db2
+latest_closed_iteration_id: ITR-CAPEX-REMAINING-PRICES-2026-08-05-01
+latest_iteration_tag: iteration/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01
+latest_content_commit_hash: 2c5d7af60dc2ad8a3bc64689f0707b98f9e7655e
+registry_hash: 47ea4f8a5ece3d8139da73b46366b6e49c8168cd8e8d382b124121dec00082a8
 canonical_document_hashes:
   - document_id: DOC-AGENTS
     local_path: docs-platform/AGENTS.md
@@ -27,7 +27,7 @@ canonical_document_hashes:
     status: research
   - document_id: DOC-CAPEX-EQUIPMENT-REGISTER
     local_path: docs-platform/working/capex-equipment-register.yaml
-    sha256: e5e835ecae0d0d433afd24cff8923026097d115d87c234f1af475c463bb8f6e0
+    sha256: c8853fe61ad8407ab96d0fbafb79702853842f970cbf699b6c2138b23f32c7aa
     status: research
   - document_id: DOC-CAPEX-EQUIPMENT-SPECIFICATION
     local_path: docs-platform/working/capex-equipment-specification.md
@@ -35,7 +35,7 @@ canonical_document_hashes:
     status: research
   - document_id: DOC-CAPEX-GENERATED-EQUIPMENT-BOM
     local_path: docs-platform/working/configurations/CFG-PILOT-001/equipment-bom.yaml
-    sha256: 671375dd8ac2a2387a9afa71104e08df21704493c67810f7d313d29ae0e38035
+    sha256: d001d531247e1c64820a6bd00df1db755908d483358f5f677b3ca6acb6d8fa4a
     status: research
   - document_id: DOC-CAPEX-MODULES
     local_path: docs-platform/working/capex-modules.yaml
@@ -47,7 +47,7 @@ canonical_document_hashes:
     status: research
   - document_id: DOC-CAPEX-PRICE-RESEARCH
     local_path: docs-platform/working/capex-price-research.yaml
-    sha256: 96d2ba3e55b02843d05ebeffc6e8c3e3c400e82392a5d95b16cd321e4d5e5b3d
+    sha256: b2b752f1822db8b529d58d822b83b32d44bcba9a0110ae35062d3b561f08249d
     status: research
   - document_id: DOC-FOUNDATION
     local_path: docs-platform/00-foundation.md
@@ -59,7 +59,7 @@ canonical_document_hashes:
     status: proposed
   - document_id: DOC-INVESTOR-START-MODEL
     local_path: docs-platform/working/investor-start-model.yaml
-    sha256: 3bf792a1a0c0dfd21e7c87399025f51effde1f08c910c987003cd341472494b1
+    sha256: 54eef39aa293fb63cd673fffe000b43c46d425e3be98174bced6bc2c7c854b27
     status: research
   - document_id: DOC-PILOT-CAPEX-ASSUMPTIONS
     local_path: docs-platform/working/pilot-capex-assumptions.yaml
@@ -76,12 +76,12 @@ open_questions:
   - Archive pending review artifacts in durable storage before treating visual verification as portable.
   - Create deployment receipts when the next governed deployment is performed.
   - Decide whether malformed superseded legacy YAML evidence should receive a separate correction event.
-current_workstream: Governance History v2 and portable Codex context
+current_workstream: Remaining CAPEX research prices and web publication
 next_task: Select the next task through a new governed proposal; no business task is pre-authorized.
 google_integration_status:
   configured: true
-  historical_receipts: 8
-  receipts_with_machine_readback_hash: 5
+  historical_receipts: 9
+  receipts_with_machine_readback_hash: 6
   live_drift_check: not_run_by_context_build
 mcp_status:
   implementation_present: true
