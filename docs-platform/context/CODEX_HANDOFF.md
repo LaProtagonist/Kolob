@@ -9,16 +9,16 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 ## 2. Текущая ветка и governed iteration
 
 - Branch: `master`.
-- Latest closed iteration: `ITR-CAPEX-REMAINING-PRICES-2026-08-05-01`.
-- Latest iteration tag: `iteration/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01`.
-- Latest content commit: `2c5d7af60dc2ad8a3bc64689f0707b98f9e7655e`.
+- Latest closed iteration: `ITR-GOVERNANCE-HISTORY-V2-CORRECTION-2026-08-05-01`.
+- Latest iteration tag: `iteration/ITR-GOVERNANCE-HISTORY-V2-CORRECTION-2026-08-05-01`.
+- Latest content commit: `a60da18ede3b8c626145410b65d04ffb836ca520`.
 - Текущий Git HEAD намеренно не записывается: его вычисляет `npm run project:onboard`.
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-CAPEX-REMAINING-PRICES-2026-08-05-01-COMMITTED`.
-- Hash: `02b90a7a38a3bbc056834c27dcf749442030b1b4823f7057e8469dde5e857db2`.
-- generated_from_event_hash: `02b90a7a38a3bbc056834c27dcf749442030b1b4823f7057e8469dde5e857db2`.
+- Event: `EVT-ITR-GOVERNANCE-HISTORY-V2-CORRECTION-2026-08-05-01-COMMITTED`.
+- Hash: `a9f374fc47ddebccc2c1cae1b03e1d385f7869e078a60e66031c0e9416b88249`.
+- generated_from_event_hash: `a9f374fc47ddebccc2c1cae1b03e1d385f7869e078a60e66031c0e9416b88249`.
 
 ## 4. Канонические документы
 
@@ -42,7 +42,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 5. Текущая рабочая тема
 
-Remaining CAPEX research prices and web publication
+Governance History v2 post-seal correction
 
 ## 6. Decisions и change sets
 

@@ -4,10 +4,10 @@
 
 ## 1. Current state
 
-- Events: 62.
-- Timeline head event: `EVT-ITR-CAPEX-REMAINING-PRICES-2026-08-05-01-COMMITTED`.
-- Timeline head SHA-256: `02b90a7a38a3bbc056834c27dcf749442030b1b4823f7057e8469dde5e857db2`.
-- Latest recorded iteration: `ITR-CAPEX-REMAINING-PRICES-2026-08-05-01`.
+- Events: 67.
+- Timeline head event: `EVT-ITR-GOVERNANCE-HISTORY-V2-CORRECTION-2026-08-05-01-COMMITTED`.
+- Timeline head SHA-256: `a9f374fc47ddebccc2c1cae1b03e1d385f7869e078a60e66031c0e9416b88249`.
+- Latest recorded iteration: `ITR-GOVERNANCE-HISTORY-V2-CORRECTION-2026-08-05-01`.
 
 ## 2. Modern governed iterations
 
@@ -23,6 +23,7 @@
 | 2026-08-05T02:42:23.000Z | committed | ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01 | ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01 | DEC-014 | CHG-028 | 4b5e51f52957a1a8055b704ba2a1ec7e46f2f44a | iteration/ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01 | — | — | — | Exact historical Git linkage backfilled for ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01; the original commit predates mandatory governance trailers. |
 | 2026-08-05T18:34:51.000Z | committed | Governance History v2 and portable Codex context | ITR-GOVERNANCE-HISTORY-V2-2026-08-05-01 | DEC-GOVERNANCE-HISTORY-V2-2026-08-05-01 | CHG-GOVERNANCE-HISTORY-V2-2026-08-05-01 | bcba7114dc62f6fbc8669a42dbbba49b7f8be77f | iteration/ITR-GOVERNANCE-HISTORY-V2-2026-08-05-01 | — | — | — | Governance History v2 infrastructure content commit verified and sealed without business-content changes. |
 | 2026-08-05T19:31:04.000Z | committed | Remaining CAPEX research prices and web publication | ITR-CAPEX-REMAINING-PRICES-2026-08-05-01 | DEC-015 | CHG-030 | 2c5d7af60dc2ad8a3bc64689f0707b98f9e7655e | iteration/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01 | docs-platform/changelog/google-sync/2026-08-05-DOC-CAPEX-EQUIPMENT-REGISTER-REMAINING-PRICES.yaml | — | — | Remaining CAPEX research prices and web publication: content commit verified and linked to the governed lifecycle before sealing. |
+| 2026-08-09T14:40:26.000Z | committed | Governance History v2 post-seal correction | ITR-GOVERNANCE-HISTORY-V2-CORRECTION-2026-08-05-01 | DEC-GOVERNANCE-HISTORY-V2-CORRECTION-2026-08-05-01 | CHG-GOVERNANCE-HISTORY-V2-CORRECTION-2026-08-05-01 | a60da18ede3b8c626145410b65d04ffb836ca520 | iteration/ITR-GOVERNANCE-HISTORY-V2-CORRECTION-2026-08-05-01 | — | — | — | Governance History v2 post-seal correction: content commit verified and linked to the governed lifecycle before sealing. |
 
 ## 3. Legacy imported history
 
