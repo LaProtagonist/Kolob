@@ -39,6 +39,19 @@ function gitBaseline(timestamp: string) {
   }
 }
 
+function snapshotEventPrefix(events: ReturnType<typeof readTimelineEvents>, decisionId: string) {
+  let lastVerified = -1;
+  for (let index = events.length - 1; index >= 0; index -= 1) {
+    if (events[index].decision_id === decisionId && effectiveType(events[index]) === "verified") { lastVerified = index; break; }
+  }
+  return lastVerified >= 0 ? events.slice(0, lastVerified + 1) : events;
+}
+
+function eventPrefixHash(eventCount: number) {
+  const lines = fs.readFileSync(path.join(projectRoot, "docs-platform/changelog/events.ndjson"), "utf8").split("\n");
+  return sha256(`${lines.slice(0, eventCount).join("\n")}\n`);
+}
+
 export function buildWebSnapshot() {
   const register = readRegister();
   const research = readPriceResearch();
@@ -48,12 +61,13 @@ export function buildWebSnapshot() {
   const documents = (readYaml("docs-platform/registry/documents.yaml")?.documents ?? []) as Array<Record<string, unknown>>;
   const decisions = (readYaml("docs-platform/registry/decisions.yaml")?.decisions ?? []) as Array<Record<string, unknown>>;
   const events = readTimelineEvents();
+  const contentEvents = snapshotEventPrefix(events, register.document.decision_id);
   const currentDecision = decisions.find(item => item.id === register.document.decision_id) ?? decisions.at(-1) ?? null;
-  const currentEvent = [...events].reverse().find(event => event.decision_id === register.document.decision_id && effectiveType(event) === "verified") ?? null;
+  const currentEvent = [...contentEvents].reverse().find(event => event.decision_id === register.document.decision_id && effectiveType(event) === "verified") ?? null;
   const currentManifestPath = path.join(platformRoot, "changes", "iterations", `${register.document.iteration_id}.yaml`);
   const currentManifest = fs.existsSync(currentManifestPath) ? YAML.parse(fs.readFileSync(currentManifestPath, "utf8")) : null;
   const generatedAt = currentEvent ? effectiveOccurredAt(currentEvent) : `${String((currentDecision?.updated_at as string | undefined) ?? "2026-08-03")}T00:00:00.000Z`;
-  const sourceHashes = Object.fromEntries(SOURCE_PATHS.map(relativePath => [relativePath, sha256(fs.readFileSync(path.join(projectRoot, relativePath)))]));
+  const sourceHashes = Object.fromEntries(SOURCE_PATHS.map(relativePath => [relativePath, relativePath === "docs-platform/changelog/events.ndjson" ? eventPrefixHash(contentEvents.length) : sha256(fs.readFileSync(path.join(projectRoot, relativePath)))]));
   const researchByItem = new Map(research.items.map(item => [item.item_id, item]));
   const linksByItem = new Map<string, typeof modular.module_items.links>();
   for (const link of modular.module_items.links) linksByItem.set(link.item_id, [...(linksByItem.get(link.item_id) ?? []), link]);
@@ -219,7 +233,7 @@ export function buildWebSnapshot() {
     }),
     missingSections: register.missing_sections.map(section => ({ id: section.section_id, name: section.name, status: section.status, dependencies: section.dependencies, notes: section.notes })),
     documents: localDocuments,
-    timeline: events.slice(-8).map(event => ({ id: event.event_id, timestamp: effectiveOccurredAt(event), status: effectiveType(event), action: isV2(event) ? event.event_type : event.action, decisionId: event.decision_id, changeSetId: event.change_set_id, summary: event.summary })),
+    timeline: contentEvents.slice(-8).map(event => ({ id: event.event_id, timestamp: effectiveOccurredAt(event), status: effectiveType(event), action: isV2(event) ? event.event_type : event.action, decisionId: event.decision_id, changeSetId: event.change_set_id, summary: event.summary })),
   };
 }
 

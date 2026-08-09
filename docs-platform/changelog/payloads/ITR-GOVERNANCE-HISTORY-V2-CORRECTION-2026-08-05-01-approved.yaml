@@ -1,0 +1,56 @@
+schema_version: 2
+payload_id: PAYLOAD-GOVERNANCE-HISTORY-V2-CORRECTION-2026-08-05-01
+iteration_id: ITR-GOVERNANCE-HISTORY-V2-CORRECTION-2026-08-05-01
+proposal_id: PROP-GOVERNANCE-HISTORY-V2-CORRECTION-2026-08-05-01
+decision_id: DEC-GOVERNANCE-HISTORY-V2-CORRECTION-2026-08-05-01
+change_set_id: CHG-GOVERNANCE-HISTORY-V2-CORRECTION-2026-08-05-01
+title: Seal-stable derived projections and complete latest-rollback discovery
+status: approved
+approved_by: project owner
+approved_at: 2026-08-05
+scope:
+  - Make CAPEX snapshot verification use the latest verified event for the canonical CAPEX decision, so a later committed seal event does not invalidate a content snapshot.
+  - Discover all exact committed iterations from the append-only timeline for rollback latest and historical compensation, including iterations sealed after the original Git-link backfill.
+  - Strengthen regression tests without changing the stored site snapshot, CAPEX data, business documents, Google state or deployment.
+forbidden_scope:
+  - site snapshot or interface files
+  - CAPEX data and financial assumptions
+  - Foundation, Business Model Architecture and Investor Start Model
+  - Google writes, deployment and secrets
+state_hash_paths:
+  - docs-platform/app/src/capex/web-snapshot.ts
+  - docs-platform/app/src/governance/reversal.ts
+  - docs-platform/app/test/capex-web-configurator.test.ts
+  - docs-platform/app/test/governance-history-v2.test.ts
+content_paths:
+  - docs-platform/app/src/capex/web-snapshot.ts
+  - docs-platform/app/src/governance/reversal.ts
+  - docs-platform/app/test/capex-web-configurator.test.ts
+  - docs-platform/app/test/governance-history-v2.test.ts
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/payloads/ITR-GOVERNANCE-HISTORY-V2-CORRECTION-2026-08-05-01-approved.yaml
+  - docs-platform/changelog/rollback-payloads/ITR-GOVERNANCE-HISTORY-V2-CORRECTION-2026-08-05-01/manifest.yaml
+  - docs-platform/changelog/verification/ITR-GOVERNANCE-HISTORY-V2-CORRECTION-2026-08-05-01.yaml
+  - docs-platform/changes/CHG-GOVERNANCE-HISTORY-V2-CORRECTION-2026-08-05-01.yaml
+  - docs-platform/changes/decisions/DEC-GOVERNANCE-HISTORY-V2-CORRECTION-2026-08-05-01.yaml
+  - docs-platform/changes/iterations/ITR-GOVERNANCE-HISTORY-V2-CORRECTION-2026-08-05-01.yaml
+  - docs-platform/changes/proposals/PROP-GOVERNANCE-HISTORY-V2-CORRECTION-2026-08-05-01.yaml
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+allowed_dirty_paths:
+  - output/pdf/launch-budget-review.pdf
+  - output/review/
+commit_contract:
+  content_subject: "fix(docs-platform): stabilize sealed projections and latest rollback"
+  mandatory_trailers: [Iteration-ID, Decision-ID, Change-Set-ID, Approved-Payload-SHA256, Before-State-SHA256, After-State-SHA256, Timeline-Head-SHA256]
+  separate_seal_commit: true
+  automatic_push: false
+rollback_contract:
+  latest_mode: suffix_only_reverse_change_set
+  historical_mode: compensating_change
+  git_reset_forbidden: true
+

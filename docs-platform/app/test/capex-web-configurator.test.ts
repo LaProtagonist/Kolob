@@ -87,7 +87,13 @@ test("the web snapshot is deterministic, current and derived from canonical sour
   assert.equal(built.pilotConfiguration?.configuration_id, "CFG-PILOT-001");
   assert.equal(built.pilotEconomics.software.amount_rub_per_year, 120000);
   for (const [relative, hash] of Object.entries(built.meta.sourceHashes)) {
-    assert.equal(sha256(fs.readFileSync(path.join(project, relative))), hash, relative);
+    if (relative === "docs-platform/changelog/events.ndjson") {
+      const lines = fs.readFileSync(path.join(project, relative), "utf8").split("\n");
+      const timelineHead = built.timeline.at(-1)?.id;
+      const eventIndex = lines.findIndex(line => line.includes(`\"event_id\":\"${timelineHead}\"`));
+      assert.ok(eventIndex >= 0, "snapshot timeline head must exist in events.ndjson");
+      assert.equal(sha256(Buffer.from(`${lines.slice(0, eventIndex + 1).join("\n")}\n`)), hash, relative);
+    } else assert.equal(sha256(fs.readFileSync(path.join(project, relative))), hash, relative);
   }
   const original = console.log;
   console.log = () => undefined;

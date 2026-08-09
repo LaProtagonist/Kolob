@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { platformRoot } from "../google/config.js";
 import { readGitLinkIndex, type GitLink } from "./history.js";
+import { effectiveCommit, effectiveTag, effectiveType, isV2, readTimelineEvents } from "./timeline.js";
 import { blobAt, gitText, projectRoot, sha256, writeYaml } from "./util.js";
 
 type Consequence = {
@@ -21,7 +22,39 @@ function hash(bytes: Buffer | null): string | null {
 }
 
 function exactIterations(): GitLink[] {
-  return readGitLinkIndex().iterations.filter(item => item.confidence === "exact");
+  const audited = new Map(readGitLinkIndex().iterations.filter(item => item.confidence === "exact").map(item => [item.iteration_id, item]));
+  const links: GitLink[] = [];
+  const seen = new Set<string>();
+  for (const event of readTimelineEvents()) {
+    if (effectiveType(event) !== "committed" || seen.has(event.iteration_id)) continue;
+    const indexed = audited.get(event.iteration_id);
+    if (indexed) {
+      links.push(indexed);
+      seen.add(event.iteration_id);
+      continue;
+    }
+    if (!isV2(event) || event.confidence !== "exact" || !event.git.content_commit_hash || !event.git.iteration_tag) continue;
+    const verification = event.source_refs.find(reference => reference.includes("/verification/")) ?? `docs-platform/changelog/verification/${event.iteration_id}.yaml`;
+    links.push({
+      iteration_id: event.iteration_id,
+      decision_id: event.decision_id ?? "null",
+      change_set_id: event.change_set_id ?? "null",
+      verification_receipt: verification,
+      approved_payload_hash: event.approved_payload_sha256 ?? "0".repeat(64),
+      before_hash: event.before_hash,
+      after_hash: event.after_hash ?? "0".repeat(64),
+      probable_git_commit: event.git.content_commit_hash,
+      commit_message: gitText(["show", "-s", "--format=%s", event.git.content_commit_hash]),
+      google_sync_receipt: event.external.google_sync_receipts[0] ?? null,
+      deployment_receipt: event.external.deployment_receipt,
+      rollback_payload: event.rollback.rollback_payload,
+      tag: event.git.iteration_tag,
+      confidence: "exact",
+      legacy_without_trailers: event.git.trailers_verified !== true,
+    });
+    seen.add(event.iteration_id);
+  }
+  return links;
 }
 
 export function rollbackLatestPreview(steps: number) {

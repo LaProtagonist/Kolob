@@ -159,8 +159,8 @@ test("18. sequential latest rollback remains available", () => {
 
 test("19. rollback cannot extract a middle iteration", () => {
   assert.throws(() => rollbackLatestPreview(0), /positive integer/);
-  const links = readGitLinkIndex().iterations;
-  assert.deepEqual(rollbackLatestPreview(1).order.map(item => item.iteration_id), [links.at(-1)!.iteration_id]);
+  const latestCommitted = [...readTimelineEvents()].reverse().find(event => effectiveType(event) === "committed")!;
+  assert.deepEqual(rollbackLatestPreview(1).order.map(item => item.iteration_id), [latestCommitted.iteration_id]);
 });
 
 test("20. historical compensation produces a new proposed change set", () => {

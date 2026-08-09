@@ -1,0 +1,12 @@
+schema_version: 2
+decision_id: DEC-GOVERNANCE-HISTORY-V2-CORRECTION-2026-08-05-01
+iteration_id: ITR-GOVERNANCE-HISTORY-V2-CORRECTION-2026-08-05-01
+title: Approve the exact Governance History v2 correction payload
+status: approved
+approved_by: project owner
+approved_at: 2026-08-05T19:45:01.000Z
+scope: Only seal-stable CAPEX snapshot verification and discovery of later exact committed iterations for rollback/compensation.
+excludes: [business documents, CAPEX data, Investor Start Model, site snapshot and interface, Google writes, deployment]
+approved_payload_path: docs-platform/changelog/payloads/ITR-GOVERNANCE-HISTORY-V2-CORRECTION-2026-08-05-01-approved.yaml
+approved_payload_sha256: 5ca79d640ea3fd1edeaa0398b06102c00717dbc2ca3d240fc5c77e4ba13f6ef4
+
