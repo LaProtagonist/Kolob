@@ -1,12 +1,12 @@
 schema_version: 2
-generated_at: 2026-08-09T14:41:09.969Z
+generated_at: 2026-08-10T20:14:30.791Z
 project: Колобочная
 branch: master
-latest_timeline_event_id: EVT-ITR-GOVERNANCE-HISTORY-V2-CORRECTION-2026-08-05-01-COMMITTED
-latest_timeline_event_hash: a9f374fc47ddebccc2c1cae1b03e1d385f7869e078a60e66031c0e9416b88249
-latest_closed_iteration_id: ITR-GOVERNANCE-HISTORY-V2-CORRECTION-2026-08-05-01
-latest_iteration_tag: iteration/ITR-GOVERNANCE-HISTORY-V2-CORRECTION-2026-08-05-01
-latest_content_commit_hash: a60da18ede3b8c626145410b65d04ffb836ca520
+latest_timeline_event_id: EVT-ITR-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01-COMMITTED
+latest_timeline_event_hash: 94d64d8df8b11e6a04410f6d0f7c3f0a66533277f28eebed0cad865058b388f7
+latest_closed_iteration_id: ITR-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01
+latest_iteration_tag: iteration/ITR-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01
+latest_content_commit_hash: 3f3b94cc5904dbb47584f182a094e35f589a9937
 registry_hash: 47ea4f8a5ece3d8139da73b46366b6e49c8168cd8e8d382b124121dec00082a8
 canonical_document_hashes:
   - document_id: DOC-AGENTS
@@ -76,7 +76,7 @@ open_questions:
   - Archive pending review artifacts in durable storage before treating visual verification as portable.
   - Create deployment receipts when the next governed deployment is performed.
   - Decide whether malformed superseded legacy YAML evidence should receive a separate correction event.
-current_workstream: Governance History v2 post-seal correction
+current_workstream: Status parser and snapshot decoupling seal correction
 next_task: Select the next task through a new governed proposal; no business task is pre-authorized.
 google_integration_status:
   configured: true

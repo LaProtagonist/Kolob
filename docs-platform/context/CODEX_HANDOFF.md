@@ -9,16 +9,16 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 ## 2. Текущая ветка и governed iteration
 
 - Branch: `master`.
-- Latest closed iteration: `ITR-GOVERNANCE-HISTORY-V2-CORRECTION-2026-08-05-01`.
-- Latest iteration tag: `iteration/ITR-GOVERNANCE-HISTORY-V2-CORRECTION-2026-08-05-01`.
-- Latest content commit: `a60da18ede3b8c626145410b65d04ffb836ca520`.
+- Latest closed iteration: `ITR-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01`.
+- Latest iteration tag: `iteration/ITR-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01`.
+- Latest content commit: `3f3b94cc5904dbb47584f182a094e35f589a9937`.
 - Текущий Git HEAD намеренно не записывается: его вычисляет `npm run project:onboard`.
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-GOVERNANCE-HISTORY-V2-CORRECTION-2026-08-05-01-COMMITTED`.
-- Hash: `a9f374fc47ddebccc2c1cae1b03e1d385f7869e078a60e66031c0e9416b88249`.
-- generated_from_event_hash: `a9f374fc47ddebccc2c1cae1b03e1d385f7869e078a60e66031c0e9416b88249`.
+- Event: `EVT-ITR-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01-COMMITTED`.
+- Hash: `94d64d8df8b11e6a04410f6d0f7c3f0a66533277f28eebed0cad865058b388f7`.
+- generated_from_event_hash: `94d64d8df8b11e6a04410f6d0f7c3f0a66533277f28eebed0cad865058b388f7`.
 
 ## 4. Канонические документы
 
@@ -42,7 +42,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 5. Текущая рабочая тема
 
-Governance History v2 post-seal correction
+Status parser and snapshot decoupling seal correction
 
 ## 6. Decisions и change sets
 
