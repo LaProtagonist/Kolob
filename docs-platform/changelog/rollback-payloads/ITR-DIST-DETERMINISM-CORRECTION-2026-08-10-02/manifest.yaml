@@ -1,0 +1,11 @@
+schema_version: 2
+iteration_id: ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-02
+mode: governed_reverse_change_set
+status: prepared
+before_content_commit: 2b141bce46066388e3891e2265a613e6d98fde12
+reverse_strategy:
+  prerender: restore the preceding single-reset implementation through a new approved reverse change set
+  diagnostics: restore the preceding repeated-build error through the same governed reversal
+  events: append rollback lifecycle; never remove convergence evidence
+  git_reset_forbidden: true
+dependency_check: required against every later sealed iteration

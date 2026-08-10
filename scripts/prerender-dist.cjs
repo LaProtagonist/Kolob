@@ -148,9 +148,16 @@ async function settlePage(page) {
     // Image decoding can change the document height after the first scroll reset.
     // Normalize the observable scroll-derived React state before serializing HTML
     // so repeated builds cannot alternate between header variants.
-    window.scrollTo(0, 0);
-    window.dispatchEvent(new Event("scroll"));
-    await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    const header = document.querySelector(".site-header");
+    for (let attempt = 0; attempt < 20; attempt += 1) {
+      window.scrollTo(0, 0);
+      window.dispatchEvent(new Event("scroll"));
+      await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+      if (window.scrollY === 0 && !header?.classList.contains("is-scrolled")) break;
+    }
+    if (window.scrollY !== 0 || header?.classList.contains("is-scrolled")) {
+      throw new Error("Prerender failed to normalize the top-of-page header state.");
+    }
   });
 }
 

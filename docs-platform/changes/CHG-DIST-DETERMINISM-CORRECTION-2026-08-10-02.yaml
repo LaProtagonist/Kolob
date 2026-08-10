@@ -1,0 +1,20 @@
+schema_version: 2
+change_id: CHG-DIST-DETERMINISM-CORRECTION-2026-08-10-02
+iteration_id: ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-02
+proposal_id: PROP-DIST-DETERMINISM-CORRECTION-2026-08-10-02
+decision_id: DEC-DIST-DETERMINISM-CORRECTION-2026-08-10-02
+title: Enforce top-state convergence and actionable dist diagnostics
+status: approved
+approved_payload_path: docs-platform/changelog/payloads/ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-02-approved.yaml
+approved_payload_sha256: 6bb01c476b583d428d14211cc625bbbdb15a5000e16964748956596a301f7c10
+operations:
+  - retry top-of-page normalization until scroll position and header state both converge
+  - fail prerender explicitly when convergence cannot be proven
+  - report exact changed deployable paths when repeated clean builds differ
+preview:
+  status: passed
+  mutation_performed: false
+  trigger: first post-seal repeated clean-build proof exposed a rare residual scroll-state race
+  public_content_state_before: 019867401744567473b35404bd3bb3b10b2fbf3e8a53abaedfb738b5881468e6
+  public_content_state_after: 019867401744567473b35404bd3bb3b10b2fbf3e8a53abaedfb738b5881468e6
+  business_or_google_changes: false

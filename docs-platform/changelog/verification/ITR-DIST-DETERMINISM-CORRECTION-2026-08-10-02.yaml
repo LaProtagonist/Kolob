@@ -1,0 +1,27 @@
+schema_version: 2
+iteration_id: ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-02
+proposal_id: PROP-DIST-DETERMINISM-CORRECTION-2026-08-10-02
+decision_id: DEC-DIST-DETERMINISM-CORRECTION-2026-08-10-02
+change_set_id: CHG-DIST-DETERMINISM-CORRECTION-2026-08-10-02
+verified_at: 2026-08-10T21:10:00.000Z
+actor: Codex
+validation_status: passed
+approved_payload_sha256: 6bb01c476b583d428d14211cc625bbbdb15a5000e16964748956596a301f7c10
+before_state_sha256: 0227e268c703a756ccfa06c34a05d2e1e56c5635e4bccf1d1de1875ef7e5c2f3
+after_state_sha256: 9b14bd80aacb77469aae8f88836e1b7f6ac375aceaaa651606eaaa649260707a
+content_state_sha256_before: 019867401744567473b35404bd3bb3b10b2fbf3e8a53abaedfb738b5881468e6
+content_state_sha256_after: 019867401744567473b35404bd3bb3b10b2fbf3e8a53abaedfb738b5881468e6
+checks:
+  top_of_page_scroll_state_converged: passed
+  header_scrolled_state_absent_before_serialization: passed
+  consecutive_local_build_one_dist_sha256: e9138433bfc7890fe07856f08a58c2e2cb0b43080556baac2d5185721b8ec79a
+  consecutive_local_build_two_dist_sha256: e9138433bfc7890fe07856f08a58c2e2cb0b43080556baac2d5185721b8ec79a
+  consecutive_local_build_hashes_identical: passed
+  mismatch_diagnostics_list_changed_deployable_paths: passed
+  content_snapshot_current_without_regeneration: passed
+  business_or_google_change: none
+post_seal_evidence:
+  clean_temporary_worktree_npm_ci_two_builds: pending_until_seal
+  deployment_smoke: pending_until_seal
+rollback_payload: docs-platform/changelog/rollback-payloads/ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-02/manifest.yaml
+summary: Prerender now proves top-state convergence before serialization, and consecutive local builds produce the same deployable dist SHA-256.

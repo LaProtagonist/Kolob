@@ -28,7 +28,7 @@ function canonical(value) {
 
 function sha256(value) { return crypto.createHash("sha256").update(value).digest("hex"); }
 
-function distSha256(directory) {
+function distManifest(directory) {
   const entries = [];
   function visit(current) {
     for (const entry of fs.readdirSync(current, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
@@ -44,7 +44,19 @@ function distSha256(directory) {
     }
   }
   visit(directory);
-  return sha256(canonical(entries.sort((left, right) => left.path.localeCompare(right.path))));
+  return entries.sort((left, right) => left.path.localeCompare(right.path));
+}
+
+function distSha256(directory) {
+  return sha256(canonical(distManifest(directory)));
+}
+
+function changedDistPaths(first, second) {
+  const firstByPath = new Map(first.map((entry) => [entry.path, entry]));
+  const secondByPath = new Map(second.map((entry) => [entry.path, entry]));
+  return [...new Set([...firstByPath.keys(), ...secondByPath.keys()])]
+    .sort()
+    .filter((file) => canonical(firstByPath.get(file) ?? null) !== canonical(secondByPath.get(file) ?? null));
 }
 
 let added = false;
@@ -55,11 +67,14 @@ try {
   const started = Date.now();
   run("npm", ["ci"], worktree);
   run("npm", ["run", "build"], worktree);
-  const firstDistSha256 = distSha256(path.join(worktree, "dist"));
+  const firstDistManifest = distManifest(path.join(worktree, "dist"));
+  const firstDistSha256 = sha256(canonical(firstDistManifest));
   run("npm", ["run", "build"], worktree);
-  const secondDistSha256 = distSha256(path.join(worktree, "dist"));
+  const secondDistManifest = distManifest(path.join(worktree, "dist"));
+  const secondDistSha256 = sha256(canonical(secondDistManifest));
   if (firstDistSha256 !== secondDistSha256) {
-    throw new Error(`Repeated sealed builds produced different dist hashes: ${firstDistSha256} != ${secondDistSha256}.`);
+    const changed = changedDistPaths(firstDistManifest, secondDistManifest);
+    throw new Error(`Repeated sealed builds produced different dist hashes: ${firstDistSha256} != ${secondDistSha256}. Changed deployable paths: ${changed.join(", ") || "unknown"}.`);
   }
   const snapshot = JSON.parse(fs.readFileSync(path.join(worktree, "src", "content", "capex-configurator-data.json"), "utf8"));
   const trackedChanges = run("git", ["status", "--short", "--untracked-files=no"], worktree).trim();

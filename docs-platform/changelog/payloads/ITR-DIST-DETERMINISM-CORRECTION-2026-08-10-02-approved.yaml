@@ -1,0 +1,48 @@
+schema_version: 2
+payload_id: PAYLOAD-DIST-DETERMINISM-CORRECTION-2026-08-10-02
+iteration_id: ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-02
+proposal_id: PROP-DIST-DETERMINISM-CORRECTION-2026-08-10-02
+decision_id: DEC-DIST-DETERMINISM-CORRECTION-2026-08-10-02
+change_set_id: CHG-DIST-DETERMINISM-CORRECTION-2026-08-10-02
+title: Make top-of-page prerender normalization convergence-checked
+status: approved
+approved_by: project owner
+approved_at: 2026-08-10T21:05:00.000Z
+scope:
+  - Wait until the prerendered page and its header both converge to the top-of-page state before HTML serialization.
+  - Fail explicitly if top-state normalization does not converge.
+  - Report exact changed deployable paths if two clean sealed builds differ.
+  - Preserve the existing public content state, business data, calculations, copy and design.
+forbidden_scope:
+  - business data, prices, equipment, scenarios or financial assumptions
+  - public page copy, layout, styles or calculations
+  - CAPEX or Investor Start Model sources
+  - Google files
+state_hash_paths:
+  - scripts/prerender-dist.cjs
+  - scripts/check-sealed-build.mjs
+content_paths:
+  - scripts/prerender-dist.cjs
+  - scripts/check-sealed-build.mjs
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/payloads/ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-02-approved.yaml
+  - docs-platform/changelog/rollback-payloads/ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-02/manifest.yaml
+  - docs-platform/changelog/verification/ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-02.yaml
+  - docs-platform/changes/CHG-DIST-DETERMINISM-CORRECTION-2026-08-10-02.yaml
+  - docs-platform/changes/decisions/DEC-DIST-DETERMINISM-CORRECTION-2026-08-10-02.yaml
+  - docs-platform/changes/iterations/ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-02.yaml
+  - docs-platform/changes/proposals/PROP-DIST-DETERMINISM-CORRECTION-2026-08-10-02.yaml
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+  - docs-platform/generated/capex-governance-projection.json
+allowed_dirty_paths:
+  - output/pdf/launch-budget-review.pdf
+  - output/review/
+rollback_contract:
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true

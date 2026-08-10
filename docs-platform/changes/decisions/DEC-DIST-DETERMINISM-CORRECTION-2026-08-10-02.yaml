@@ -1,0 +1,11 @@
+schema_version: 2
+decision_id: DEC-DIST-DETERMINISM-CORRECTION-2026-08-10-02
+iteration_id: ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-02
+title: Approve convergence-checked prerender normalization
+status: approved
+approved_by: project owner
+approved_at: 2026-08-10T21:05:00.000Z
+scope: Only convergence-checked top-state serialization and exact changed-path diagnostics for repeated clean builds.
+excludes: [business data, public copy, layout, financial values, Google writes]
+approved_payload_path: docs-platform/changelog/payloads/ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-02-approved.yaml
+approved_payload_sha256: 6bb01c476b583d428d14211cc625bbbdb15a5000e16964748956596a301f7c10
