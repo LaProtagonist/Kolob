@@ -1,0 +1,11 @@
+schema_version: 2
+iteration_id: ITR-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01
+mode: governed_reverse_change_set
+status: prepared
+before_content_commit: 4fa6af099c79fb32a55440b5d120e40125b3afa5
+reverse_strategy:
+  parser: restore the prior git-workflow and test blobs only through a new approved reverse change set
+  events: append rollback lifecycle; never remove the mismatch or correction events
+  deployment: deploy a restored content state only after new verification
+  git_reset_forbidden: true
+dependency_check: required against every later sealed iteration

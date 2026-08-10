@@ -75,14 +75,19 @@ export function loadGovernedIteration(iterationId: string): GovernedIteration {
   };
 }
 
-function statusPaths(): string[] {
-  const status = gitText(["status", "--porcelain=v1", "--untracked-files=all"], true);
+export function parsePorcelainPaths(status: string): string[] {
+  status = status.replace(/\r\n?/g, "\n").replace(/\n$/, "");
   if (!status) return [];
   return status.split("\n").filter(Boolean).map(line => {
     const raw = line.slice(3);
     const renamed = raw.includes(" -> ") ? raw.split(" -> ").at(-1)! : raw;
     return renamed.replace(/^"|"$/g, "");
   });
+}
+
+function statusPaths(): string[] {
+  const status = String(git(["status", "--porcelain=v1", "--untracked-files=all"], { encoding: "utf8", allowFailure: true }));
+  return parsePorcelainPaths(status);
 }
 
 function pathMatches(candidate: string, allowed: string): boolean {

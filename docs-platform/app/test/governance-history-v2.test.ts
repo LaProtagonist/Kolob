@@ -19,7 +19,7 @@ import {
 } from "../src/governance/context.js";
 import { deploymentDriftCheck, googleDriftCheck } from "../src/governance/external.js";
 import { createHistoricalIterationTags, readGitLinkIndex, verifyHistoricalTags } from "../src/governance/history.js";
-import { lifecycleErrors, REQUIRED_TRAILERS, verifyRequiredTrailers, type GovernedIteration } from "../src/governance/git-workflow.js";
+import { lifecycleErrors, parsePorcelainPaths, REQUIRED_TRAILERS, verifyRequiredTrailers, type GovernedIteration } from "../src/governance/git-workflow.js";
 import { readImmutabilityBaseline, validateImmutability } from "../src/governance/immutability.js";
 import { historicalCompensationPreview, rollbackLatestPreview } from "../src/governance/reversal.js";
 import {
@@ -222,6 +222,11 @@ test("29. context projection is deterministic", () => assert.equal(canonical(bui
 test("30. TIMELINE rendering is deterministic", () => assert.equal(renderTimeline(), renderTimeline()));
 
 test("31. mandatory trailers are enforced for future finalize", () => assert.deepEqual(REQUIRED_TRAILERS, ["Iteration-ID", "Decision-ID", "Change-Set-ID", "Approved-Payload-SHA256", "Before-State-SHA256", "After-State-SHA256", "Timeline-Head-SHA256"]));
+
+test("31a. porcelain parser preserves the first unstaged path and rename target", () => {
+  assert.deepEqual(parsePorcelainPaths(" M docs-platform/app/package.json\n?? output/review/file.jpg\n"), ["docs-platform/app/package.json", "output/review/file.jpg"]);
+  assert.deepEqual(parsePorcelainPaths("R  old-name -> new-name\n"), ["new-name"]);
+});
 
 test("32. seal validation fails without a verified event", () => {
   const fake = {

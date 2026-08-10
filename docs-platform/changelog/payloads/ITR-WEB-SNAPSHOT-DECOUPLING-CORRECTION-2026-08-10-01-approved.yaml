@@ -1,0 +1,48 @@
+schema_version: 2
+payload_id: PAYLOAD-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01
+iteration_id: ITR-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01
+proposal_id: PROP-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01
+decision_id: DEC-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01
+change_set_id: CHG-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01
+title: Correct governed status parsing and seal the verified snapshot decoupling state
+status: approved
+approved_by: project owner
+approved_at: 2026-08-10T20:10:00.000Z
+scope:
+  - Preserve the append-only evidence of the pre-seal infrastructure state-hash mismatch.
+  - Parse raw Git porcelain output without trimming the leading status column or first path character.
+  - Add a regression test for the first unstaged path and renamed paths.
+  - Seal and deploy the unchanged public content_state_sha256 through the governed lifecycle.
+forbidden_scope:
+  - business data, prices, equipment, scenarios or financial assumptions
+  - CAPEX or Investor Start Model YAML
+  - public page code, copy or design
+  - Google Docs or Google Sheets
+state_hash_paths:
+  - docs-platform/app/src/governance/git-workflow.ts
+  - docs-platform/app/test/governance-history-v2.test.ts
+content_paths:
+  - docs-platform/app/src/governance/git-workflow.ts
+  - docs-platform/app/test/governance-history-v2.test.ts
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/payloads/ITR-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01-approved.yaml
+  - docs-platform/changelog/rollback-payloads/ITR-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01/manifest.yaml
+  - docs-platform/changelog/verification/ITR-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01.yaml
+  - docs-platform/changes/CHG-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01.yaml
+  - docs-platform/changes/decisions/DEC-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01.yaml
+  - docs-platform/changes/iterations/ITR-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01.yaml
+  - docs-platform/changes/proposals/PROP-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01.yaml
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+  - docs-platform/generated/capex-governance-projection.json
+allowed_dirty_paths:
+  - output/pdf/launch-budget-review.pdf
+  - output/review/
+rollback_contract:
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true

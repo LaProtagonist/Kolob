@@ -1,0 +1,20 @@
+schema_version: 2
+change_id: CHG-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01
+iteration_id: ITR-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01
+proposal_id: PROP-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01
+decision_id: DEC-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01
+title: Preserve raw porcelain status columns and complete the seal
+status: approved
+approved_payload_path: docs-platform/changelog/payloads/ITR-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01-approved.yaml
+approved_payload_sha256: d86b8fed38b5443644dc514d3c32bb7d9796e57af99bdde6cda888eb4d5b85c3
+operations:
+  - parse raw git status output without trim
+  - test the first unstaged path and rename target
+  - preserve the original mismatch as an append-only event
+  - seal the unchanged content_state_sha256
+preview:
+  status: passed
+  mutation_performed: false
+  public_content_state_before: 019867401744567473b35404bd3bb3b10b2fbf3e8a53abaedfb738b5881468e6
+  public_content_state_after: 019867401744567473b35404bd3bb3b10b2fbf3e8a53abaedfb738b5881468e6
+  business_or_google_changes: false

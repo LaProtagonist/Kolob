@@ -1,0 +1,11 @@
+schema_version: 2
+decision_id: DEC-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01
+iteration_id: ITR-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01
+title: Approve append-only correction of status parsing and final seal
+status: approved
+approved_by: project owner
+approved_at: 2026-08-10T20:10:00.000Z
+scope: Only the status parser regression, corrected infrastructure hash evidence and final seal/deployment of unchanged public content.
+excludes: [business data, public pages, CAPEX values, Google writes]
+approved_payload_path: docs-platform/changelog/payloads/ITR-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01-approved.yaml
+approved_payload_sha256: d86b8fed38b5443644dc514d3c32bb7d9796e57af99bdde6cda888eb4d5b85c3

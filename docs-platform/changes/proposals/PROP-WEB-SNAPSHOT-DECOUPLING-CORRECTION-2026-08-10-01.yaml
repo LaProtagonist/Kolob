@@ -1,0 +1,9 @@
+schema_version: 2
+proposal_id: PROP-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01
+iteration_id: ITR-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01
+title: Correct status-path parsing discovered during snapshot decoupling seal
+status: proposed
+proposed_at: 2026-08-10T20:09:59.000Z
+scope: Infrastructure correction only; preserve prior events and seal the unchanged public content state.
+approved_payload_path: docs-platform/changelog/payloads/ITR-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01-approved.yaml
+approved_payload_sha256: d86b8fed38b5443644dc514d3c32bb7d9796e57af99bdde6cda888eb4d5b85c3

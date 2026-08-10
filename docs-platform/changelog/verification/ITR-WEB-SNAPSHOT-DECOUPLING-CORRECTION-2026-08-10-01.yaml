@@ -1,0 +1,24 @@
+schema_version: 2
+iteration_id: ITR-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01
+proposal_id: PROP-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01
+decision_id: DEC-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01
+change_set_id: CHG-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01
+verified_at: 2026-08-10T20:12:00.000Z
+actor: Codex
+validation_status: passed
+approved_payload_sha256: d86b8fed38b5443644dc514d3c32bb7d9796e57af99bdde6cda888eb4d5b85c3
+before_state_sha256: a98ebf4f8afcd2fb2db3032bdba968312f9556eb5a888ce1b665ee6ef0fd6918
+after_state_sha256: c4226e9f19e66f0293fc1e3f26a4fa164cbba9fa980dbc7158338a0118029f7e
+content_state_sha256_before: 019867401744567473b35404bd3bb3b10b2fbf3e8a53abaedfb738b5881468e6
+content_state_sha256_after: 019867401744567473b35404bd3bb3b10b2fbf3e8a53abaedfb738b5881468e6
+checks:
+  first_unstaged_path_preserved: passed
+  rename_target_preserved: passed
+  raw_porcelain_output_not_trimmed: passed
+  typescript: passed
+  targeted_governance_regression: passed
+  snapshot_current_without_regeneration: passed
+  governance_change_diagnostic: passed
+  business_or_google_change: none
+rollback_payload: docs-platform/changelog/rollback-payloads/ITR-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01/manifest.yaml
+summary: The correction preserves the exact public content state, fixes the pre-existing status-path parser defect and records the earlier infrastructure hash mismatch without editing history.
