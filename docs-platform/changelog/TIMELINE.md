@@ -4,10 +4,10 @@
 
 ## 1. Current state
 
-- Events: 78.
-- Timeline head event: `EVT-ITR-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01-COMMITTED`.
-- Timeline head SHA-256: `94d64d8df8b11e6a04410f6d0f7c3f0a66533277f28eebed0cad865058b388f7`.
-- Latest recorded iteration: `ITR-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01`.
+- Events: 84.
+- Timeline head event: `EVT-ITR-SEALED-BUILD-RUNTIME-2026-08-10-01-COMMITTED`.
+- Timeline head SHA-256: `cd406b5e9d155f1e84ee89348436a9d4ec529142e39b54a1fa94abf257a64e49`.
+- Latest recorded iteration: `ITR-SEALED-BUILD-RUNTIME-2026-08-10-01`.
 
 ## 2. Modern governed iterations
 
@@ -25,7 +25,8 @@
 | 2026-08-05T19:31:04.000Z | committed | Remaining CAPEX research prices and web publication | ITR-CAPEX-REMAINING-PRICES-2026-08-05-01 | DEC-015 | CHG-030 | 2c5d7af60dc2ad8a3bc64689f0707b98f9e7655e | iteration/ITR-CAPEX-REMAINING-PRICES-2026-08-05-01 | docs-platform/changelog/google-sync/2026-08-05-DOC-CAPEX-EQUIPMENT-REGISTER-REMAINING-PRICES.yaml | — | — | Remaining CAPEX research prices and web publication: content commit verified and linked to the governed lifecycle before sealing. |
 | 2026-08-09T14:40:26.000Z | committed | Governance History v2 post-seal correction | ITR-GOVERNANCE-HISTORY-V2-CORRECTION-2026-08-05-01 | DEC-GOVERNANCE-HISTORY-V2-CORRECTION-2026-08-05-01 | CHG-GOVERNANCE-HISTORY-V2-CORRECTION-2026-08-05-01 | a60da18ede3b8c626145410b65d04ffb836ca520 | iteration/ITR-GOVERNANCE-HISTORY-V2-CORRECTION-2026-08-05-01 | — | — | — | Governance History v2 post-seal correction: content commit verified and linked to the governed lifecycle before sealing. |
 | 2026-08-10T20:09:15.486Z | external_drift_detected | Web snapshot and governance seal decoupling | ITR-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01 | DEC-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01 | CHG-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01 | 4fa6af099c79fb32a55440b5d120e40125b3afa5 | iteration/ITR-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01 | — | — | — | Seal validation detected that whitespace cleanup in three technical files changed the governed infrastructure scope hash after verification. The mismatch is preserved as append-only evidence and will be corrected by a new governed correction iteration; no public content or deployment occurred. |
-| 2026-08-10T20:14:10.000Z | committed | Status parser and snapshot decoupling seal correction | ITR-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01 | DEC-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01 | CHG-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01 | 3f3b94cc5904dbb47584f182a094e35f589a9937 | iteration/ITR-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01 | — | — | — | Status parser and snapshot decoupling seal correction: content commit verified and linked to the governed lifecycle before sealing. |
+| 2026-08-10T20:19:03.048Z | external_drift_detected | Status parser and snapshot decoupling seal correction | ITR-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01 | DEC-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01 | CHG-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01 | 3f3b94cc5904dbb47584f182a094e35f589a9937 | iteration/ITR-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01 | — | — | — | A clean sealed checkout passed snapshot validation and SPA compilation but prerender failed because Chromium existed only in the main worktree untracked cache. A new governed correction will make npm ci install the required browser runtime. |
+| 2026-08-10T20:23:18.000Z | committed | Self-contained sealed checkout build runtime | ITR-SEALED-BUILD-RUNTIME-2026-08-10-01 | DEC-SEALED-BUILD-RUNTIME-2026-08-10-01 | CHG-SEALED-BUILD-RUNTIME-2026-08-10-01 | ea89b6ec1d023955a24242569ca589a4db161e5a | iteration/ITR-SEALED-BUILD-RUNTIME-2026-08-10-01 | — | — | — | Self-contained sealed checkout build runtime: content commit verified and linked to the governed lifecycle before sealing. |
 
 ## 3. Legacy imported history
 
@@ -70,6 +71,7 @@
 | 2026-08-04T20:43:14.000Z | ITR-PILOT-CAPEX-BASELINE-2026-08-03-01 | committed | docs-platform/changelog/google-sync/2026-08-03-DOC-CAPEX-EQUIPMENT-REGISTER-PILOT-BASELINE.yaml | — | — |
 | 2026-08-05T19:31:04.000Z | ITR-CAPEX-REMAINING-PRICES-2026-08-05-01 | committed | docs-platform/changelog/google-sync/2026-08-05-DOC-CAPEX-EQUIPMENT-REGISTER-REMAINING-PRICES.yaml | — | — |
 | 2026-08-10T20:09:15.486Z | ITR-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01 | external_drift_detected | — | — | — |
+| 2026-08-10T20:19:03.048Z | ITR-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01 | external_drift_detected | — | — | — |
 
 ## 6. Open issues
 
