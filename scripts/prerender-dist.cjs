@@ -144,6 +144,13 @@ async function settlePage(page) {
       Promise.all(Array.from(document.images).map((img) => img.decode().catch(() => undefined))),
       new Promise((resolve) => setTimeout(resolve, 3000))
     ]);
+
+    // Image decoding can change the document height after the first scroll reset.
+    // Normalize the observable scroll-derived React state before serializing HTML
+    // so repeated builds cannot alternate between header variants.
+    window.scrollTo(0, 0);
+    window.dispatchEvent(new Event("scroll"));
+    await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
   });
 }
 

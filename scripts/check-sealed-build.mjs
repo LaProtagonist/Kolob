@@ -55,6 +55,12 @@ try {
   const started = Date.now();
   run("npm", ["ci"], worktree);
   run("npm", ["run", "build"], worktree);
+  const firstDistSha256 = distSha256(path.join(worktree, "dist"));
+  run("npm", ["run", "build"], worktree);
+  const secondDistSha256 = distSha256(path.join(worktree, "dist"));
+  if (firstDistSha256 !== secondDistSha256) {
+    throw new Error(`Repeated sealed builds produced different dist hashes: ${firstDistSha256} != ${secondDistSha256}.`);
+  }
   const snapshot = JSON.parse(fs.readFileSync(path.join(worktree, "src", "content", "capex-configurator-data.json"), "utf8"));
   const trackedChanges = run("git", ["status", "--short", "--untracked-files=no"], worktree).trim();
   if (trackedChanges) throw new Error(`Build changed tracked files:\n${trackedChanges}`);
@@ -62,8 +68,9 @@ try {
     validation: "passed",
     commit,
     content_state_sha256: snapshot.meta.contentStateSha256,
-    dist_sha256: distSha256(path.join(worktree, "dist")),
+    dist_sha256: secondDistSha256,
     prebuilt_dist_used: false,
+    repeat_build_dist_sha256_identical: true,
     tracked_changes_after_build: false,
     elapsed_ms: Date.now() - started,
   }, null, 2));

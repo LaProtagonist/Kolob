@@ -1,0 +1,11 @@
+schema_version: 2
+iteration_id: ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-01
+mode: governed_reverse_change_set
+status: prepared
+before_content_commit: 2557559050a963bbac06621bc2507d6af9d92a0f
+reverse_strategy:
+  prerender: restore the previous scroll-settling implementation through a new approved reverse change set
+  reproduction: restore the previous single-build proof through the same governed reversal
+  events: append rollback lifecycle; never remove deterministic-build evidence
+  git_reset_forbidden: true
+dependency_check: required against every later sealed iteration

@@ -1,0 +1,9 @@
+schema_version: 2
+proposal_id: PROP-DIST-DETERMINISM-CORRECTION-2026-08-10-01
+iteration_id: ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-01
+title: Normalize prerender scroll state for deterministic sealed builds
+status: proposed
+proposed_at: 2026-08-10T20:39:59.000Z
+scope: Prerender and clean-build verification infrastructure only.
+approved_payload_path: docs-platform/changelog/payloads/ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-01-approved.yaml
+approved_payload_sha256: 8759c3682125630fe81272db2f98d94b4ffa19d80e41001d6e2bc1a902abe489

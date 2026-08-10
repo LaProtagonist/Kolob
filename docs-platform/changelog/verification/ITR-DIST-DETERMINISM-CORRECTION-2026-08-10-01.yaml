@@ -1,0 +1,27 @@
+schema_version: 2
+iteration_id: ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-01
+proposal_id: PROP-DIST-DETERMINISM-CORRECTION-2026-08-10-01
+decision_id: DEC-DIST-DETERMINISM-CORRECTION-2026-08-10-01
+change_set_id: CHG-DIST-DETERMINISM-CORRECTION-2026-08-10-01
+verified_at: 2026-08-10T20:47:00.000Z
+actor: Codex
+validation_status: passed
+approved_payload_sha256: 8759c3682125630fe81272db2f98d94b4ffa19d80e41001d6e2bc1a902abe489
+before_state_sha256: 11c970e917b9144f8f6517f7c70890cd0c6e9598d9680152a14320e27938b4c5
+after_state_sha256: 0227e268c703a756ccfa06c34a05d2e1e56c5635e4bccf1d1de1875ef7e5c2f3
+content_state_sha256_before: 019867401744567473b35404bd3bb3b10b2fbf3e8a53abaedfb738b5881468e6
+content_state_sha256_after: 019867401744567473b35404bd3bb3b10b2fbf3e8a53abaedfb738b5881468e6
+checks:
+  prerender_scroll_state_normalized_before_html_serialization: passed
+  consecutive_local_build_one_dist_sha256: f741e0814b8ae5a6a6616f5c0075dff393abaf23fe1e4d6c5155874855a6c3ec
+  consecutive_local_build_two_dist_sha256: f741e0814b8ae5a6a6616f5c0075dff393abaf23fe1e4d6c5155874855a6c3ec
+  consecutive_local_build_hashes_identical: passed
+  content_snapshot_current_without_regeneration: passed
+  business_or_google_change: none
+notes:
+  - An initial review-screenshot navigation exceeded its existing 15-second timeout; the immediately repeated full build passed and did not change source state.
+post_seal_evidence:
+  clean_temporary_worktree_npm_ci_two_builds: pending_until_seal
+  deployment_smoke: pending_until_seal
+rollback_payload: docs-platform/changelog/rollback-payloads/ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-01/manifest.yaml
+summary: Prerender now serializes a normalized top-of-page header state, and two consecutive builds produce the same deployable dist SHA-256.

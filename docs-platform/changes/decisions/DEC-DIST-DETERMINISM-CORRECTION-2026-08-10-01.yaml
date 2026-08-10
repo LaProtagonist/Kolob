@@ -1,0 +1,11 @@
+schema_version: 2
+decision_id: DEC-DIST-DETERMINISM-CORRECTION-2026-08-10-01
+iteration_id: ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-01
+title: Approve deterministic prerender normalization and repeated-build proof
+status: approved
+approved_by: project owner
+approved_at: 2026-08-10T20:40:00.000Z
+scope: Only scroll-state normalization before HTML serialization and an identical repeated-dist assertion in clean sealed builds.
+excludes: [business data, public copy, layout, financial values, Google writes]
+approved_payload_path: docs-platform/changelog/payloads/ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-01-approved.yaml
+approved_payload_sha256: 8759c3682125630fe81272db2f98d94b4ffa19d80e41001d6e2bc1a902abe489
