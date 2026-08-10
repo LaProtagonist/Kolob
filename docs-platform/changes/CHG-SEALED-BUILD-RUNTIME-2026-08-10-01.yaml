@@ -1,0 +1,20 @@
+schema_version: 2
+change_id: CHG-SEALED-BUILD-RUNTIME-2026-08-10-01
+iteration_id: ITR-SEALED-BUILD-RUNTIME-2026-08-10-01
+proposal_id: PROP-SEALED-BUILD-RUNTIME-2026-08-10-01
+decision_id: DEC-SEALED-BUILD-RUNTIME-2026-08-10-01
+title: Install prerender browser runtime and classify repository drift by path
+status: approved
+approved_payload_path: docs-platform/changelog/payloads/ITR-SEALED-BUILD-RUNTIME-2026-08-10-01-approved.yaml
+approved_payload_sha256: 4f0db934a9bd2591f9bf37e618efc2dc4c85f05917650a0ddf941b96b171f012
+operations:
+  - install Chromium into the ignored project-local Playwright cache during npm ci postinstall
+  - keep public content_state_sha256 unchanged
+  - treat page/source changes after seal as content drift
+  - treat receipts, timeline and context projections as governance-only drift
+preview:
+  status: passed
+  mutation_performed: false
+  public_content_state_before: 019867401744567473b35404bd3bb3b10b2fbf3e8a53abaedfb738b5881468e6
+  public_content_state_after: 019867401744567473b35404bd3bb3b10b2fbf3e8a53abaedfb738b5881468e6
+  business_or_google_changes: false

@@ -135,12 +135,24 @@ export function googleDriftCheck(remoteReadbacks: Record<string, string> = {}, a
 
 export type RemoteDeploymentState = string | { content_state_sha256: string; dist_sha256: string; seal_commit_hash?: string; repository_head_at_build?: string };
 
+export function governanceOnlyRepositoryPath(relativePath: string): boolean {
+  return [
+    "docs-platform/changelog/",
+    "docs-platform/context/",
+    "docs-platform/changes/",
+    "docs-platform/generated/capex-governance-projection.json",
+    "docs-platform/registry/decisions.yaml",
+    "docs-platform/registry/dependencies.yaml",
+  ].some(prefix => relativePath === prefix.replace(/\/$/, "") || relativePath.startsWith(prefix));
+}
+
 export function classifyDeploymentDrift(input: {
   receiptContentState: string;
   receiptDistSha256: string;
   receiptSealCommit: string;
   currentContentState: string;
   repositoryHead: string | null;
+  repositoryChangedPaths?: string[];
   remote: RemoteDeploymentState | null;
 }): { status: "match" | "drift" | "governance_only_drift" | "live_readback_unavailable"; drift_kind: "content" | "governance_only" | null; actual_dist_sha256: string | null; diff: string | null; action: string } {
   if (input.currentContentState !== input.receiptContentState) {
@@ -161,6 +173,14 @@ export function classifyDeploymentDrift(input: {
     };
   }
   if (input.repositoryHead && input.repositoryHead !== input.receiptSealCommit) {
+    const contentPaths = (input.repositoryChangedPaths ?? []).filter(relativePath => !governanceOnlyRepositoryPath(relativePath));
+    if (contentPaths.length) {
+      return {
+        status: "drift", drift_kind: "content", actual_dist_sha256: actualDist,
+        diff: `repository content paths changed after deployed seal: ${contentPaths.join(", ")}`,
+        action: "Build and deploy the changed public/source content through a new governed iteration.",
+      };
+    }
     return {
       status: "governance_only_drift", drift_kind: "governance_only", actual_dist_sha256: actualDist,
       diff: `repository HEAD ${input.repositoryHead} is newer than deployed seal ${input.receiptSealCommit} while content_state_sha256 is identical.`,
@@ -188,6 +208,9 @@ export function deploymentDriftCheck(remoteBuildHashes: Record<string, RemoteDep
       receiptSealCommit: value.seal_commit_hash,
       currentContentState,
       repositoryHead,
+      repositoryChangedPaths: repositoryHead && value.seal_commit_hash
+        ? gitText(["diff", "--name-only", `${value.seal_commit_hash}..${repositoryHead}`], true).split("\n").filter(Boolean)
+        : [],
       remote,
     });
     if (classification.status === "drift" && currentContentState !== expectedContent) {

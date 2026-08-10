@@ -1,0 +1,18 @@
+schema_version: 2
+iteration_id: ITR-SEALED-BUILD-RUNTIME-2026-08-10-01
+proposal_id: PROP-SEALED-BUILD-RUNTIME-2026-08-10-01
+decision_id: DEC-SEALED-BUILD-RUNTIME-2026-08-10-01
+change_set_id: CHG-SEALED-BUILD-RUNTIME-2026-08-10-01
+title: Self-contained sealed checkout build runtime
+status: approved
+approved_by: project owner
+approved_at: 2026-08-10T20:20:00.000Z
+actor: Codex
+scope: Build-runtime and deployment drift infrastructure only; public content_state_sha256 and business data remain unchanged.
+approved_payload_path: docs-platform/changelog/payloads/ITR-SEALED-BUILD-RUNTIME-2026-08-10-01-approved.yaml
+approved_payload_sha256: 4f0db934a9bd2591f9bf37e618efc2dc4c85f05917650a0ddf941b96b171f012
+before_state_sha256: 9b0e0d43ad42604d40662ce081ab539e2e57f017e813882737eab1aa56d41f33
+after_state_sha256: d19f891f19b5addba487e2f24ec687867bbb1b8380e1f31f7fedb1274f9b251a
+affected_document_ids: []
+affected_section_ids: [clean-sealed-build, playwright-runtime, deployment-drift-paths]
+rollback_payload: docs-platform/changelog/rollback-payloads/ITR-SEALED-BUILD-RUNTIME-2026-08-10-01/manifest.yaml

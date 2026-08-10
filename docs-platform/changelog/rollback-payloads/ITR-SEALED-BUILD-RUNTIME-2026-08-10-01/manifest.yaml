@@ -1,0 +1,11 @@
+schema_version: 2
+iteration_id: ITR-SEALED-BUILD-RUNTIME-2026-08-10-01
+mode: governed_reverse_change_set
+status: prepared
+before_content_commit: 1871ee9f4148bf5c173b6947e8d02166ee1b6ae4
+reverse_strategy:
+  runtime: restore package and install-script state through a new approved reverse change set
+  drift: restore drift-classifier and tests through the same governed reversal
+  events: append rollback lifecycle; never remove clean-build failure evidence
+  git_reset_forbidden: true
+dependency_check: required against every later sealed iteration

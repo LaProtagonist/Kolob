@@ -1,0 +1,27 @@
+schema_version: 2
+iteration_id: ITR-SEALED-BUILD-RUNTIME-2026-08-10-01
+proposal_id: PROP-SEALED-BUILD-RUNTIME-2026-08-10-01
+decision_id: DEC-SEALED-BUILD-RUNTIME-2026-08-10-01
+change_set_id: CHG-SEALED-BUILD-RUNTIME-2026-08-10-01
+verified_at: 2026-08-10T20:22:00.000Z
+actor: Codex
+validation_status: passed
+approved_payload_sha256: 4f0db934a9bd2591f9bf37e618efc2dc4c85f05917650a0ddf941b96b171f012
+before_state_sha256: 9b0e0d43ad42604d40662ce081ab539e2e57f017e813882737eab1aa56d41f33
+after_state_sha256: d19f891f19b5addba487e2f24ec687867bbb1b8380e1f31f7fedb1274f9b251a
+content_state_sha256_before: 019867401744567473b35404bd3bb3b10b2fbf3e8a53abaedfb738b5881468e6
+content_state_sha256_after: 019867401744567473b35404bd3bb3b10b2fbf3e8a53abaedfb738b5881468e6
+checks:
+  local_playwright_install_command: passed
+  ignored_browser_cache_used_by_prerender: passed
+  typescript: passed
+  deployment_drift_unit_tests: passed
+  page_source_change_classified_as_content_drift: passed
+  receipt_and_context_change_classified_as_governance_only: passed
+  snapshot_current_without_regeneration: passed
+  business_or_google_change: none
+post_seal_evidence:
+  clean_temporary_worktree_npm_ci_build: pending_until_seal
+  deployment_smoke: pending_until_seal
+rollback_payload: docs-platform/changelog/rollback-payloads/ITR-SEALED-BUILD-RUNTIME-2026-08-10-01/manifest.yaml
+summary: Root npm ci now provisions the browser required by prerender, while drift classification distinguishes public/source changes from append-only governance receipts.

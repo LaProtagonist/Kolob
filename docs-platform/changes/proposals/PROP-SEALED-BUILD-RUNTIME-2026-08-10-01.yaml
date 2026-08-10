@@ -1,0 +1,9 @@
+schema_version: 2
+proposal_id: PROP-SEALED-BUILD-RUNTIME-2026-08-10-01
+iteration_id: ITR-SEALED-BUILD-RUNTIME-2026-08-10-01
+title: Remove the untracked Playwright cache dependency from clean builds
+status: proposed
+proposed_at: 2026-08-10T20:19:59.000Z
+scope: Build-runtime and deployment-drift infrastructure only.
+approved_payload_path: docs-platform/changelog/payloads/ITR-SEALED-BUILD-RUNTIME-2026-08-10-01-approved.yaml
+approved_payload_sha256: 4f0db934a9bd2591f9bf37e618efc2dc4c85f05917650a0ddf941b96b171f012

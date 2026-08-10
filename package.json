@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "postinstall": "npm --prefix docs-platform/app ci --ignore-scripts",
+    "postinstall": "npm --prefix docs-platform/app ci --ignore-scripts && node scripts/install-playwright-browser.cjs",
     "dev": "vite --host 127.0.0.1",
     "build": "npm run build:spa && npm run prerender",
     "build:spa": "npm run investor:start:validate && npm run capex:web:check && tsc -b && vite build",

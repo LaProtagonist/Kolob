@@ -61,6 +61,11 @@ test("deployment drift distinguishes content drift from governance-only HEAD mov
   const governanceOnly = classifyDeploymentDrift({ receiptContentState: hash, receiptDistSha256: dist, receiptSealCommit: seal, currentContentState: hash, repositoryHead: "e".repeat(40), remote });
   assert.equal(governanceOnly.status, "governance_only_drift");
   assert.equal(governanceOnly.action.includes("No deployment required"), true);
+  const receiptOnly = classifyDeploymentDrift({ receiptContentState: hash, receiptDistSha256: dist, receiptSealCommit: seal, currentContentState: hash, repositoryHead: "e".repeat(40), repositoryChangedPaths: ["docs-platform/changelog/deployments/receipt.yaml", "docs-platform/context/PROJECT_STATE.yaml"], remote });
+  assert.equal(receiptOnly.status, "governance_only_drift");
+  const pageChange = classifyDeploymentDrift({ receiptContentState: hash, receiptDistSha256: dist, receiptSealCommit: seal, currentContentState: hash, repositoryHead: "e".repeat(40), repositoryChangedPaths: ["src/components/LaunchBudget.tsx"], remote });
+  assert.equal(pageChange.status, "drift");
+  assert.equal(pageChange.drift_kind, "content");
   assert.equal(classifyDeploymentDrift({ receiptContentState: hash, receiptDistSha256: dist, receiptSealCommit: seal, currentContentState: hash, repositoryHead: seal, remote: { ...remote, dist_sha256: "f".repeat(64) } }).drift_kind, "content");
 });
 

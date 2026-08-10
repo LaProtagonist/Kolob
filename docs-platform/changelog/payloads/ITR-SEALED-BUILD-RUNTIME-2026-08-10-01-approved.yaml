@@ -1,0 +1,52 @@
+schema_version: 2
+payload_id: PAYLOAD-SEALED-BUILD-RUNTIME-2026-08-10-01
+iteration_id: ITR-SEALED-BUILD-RUNTIME-2026-08-10-01
+proposal_id: PROP-SEALED-BUILD-RUNTIME-2026-08-10-01
+decision_id: DEC-SEALED-BUILD-RUNTIME-2026-08-10-01
+change_set_id: CHG-SEALED-BUILD-RUNTIME-2026-08-10-01
+title: Make the sealed checkout build self-contained after npm ci
+status: approved
+approved_by: project owner
+approved_at: 2026-08-10T20:20:00.000Z
+scope:
+  - Install the Chromium runtime required by prerender during the standard root npm postinstall.
+  - Keep the browser cache local and untracked.
+  - Classify repository changes after a deployed seal by path so public/source changes are content drift and receipt/timeline changes are governance-only drift.
+  - Re-run the clean temporary-worktree build and deploy only after it passes.
+forbidden_scope:
+  - business data, prices, equipment, scenarios or financial assumptions
+  - public page copy, layout or calculations
+  - CAPEX or Investor Start Model sources
+  - Google files
+state_hash_paths:
+  - package.json
+  - scripts/install-playwright-browser.cjs
+  - docs-platform/app/src/governance/external.ts
+  - docs-platform/app/test/deployment-state.test.ts
+content_paths:
+  - package.json
+  - scripts/install-playwright-browser.cjs
+  - docs-platform/app/src/governance/external.ts
+  - docs-platform/app/test/deployment-state.test.ts
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/payloads/ITR-SEALED-BUILD-RUNTIME-2026-08-10-01-approved.yaml
+  - docs-platform/changelog/rollback-payloads/ITR-SEALED-BUILD-RUNTIME-2026-08-10-01/manifest.yaml
+  - docs-platform/changelog/verification/ITR-SEALED-BUILD-RUNTIME-2026-08-10-01.yaml
+  - docs-platform/changes/CHG-SEALED-BUILD-RUNTIME-2026-08-10-01.yaml
+  - docs-platform/changes/decisions/DEC-SEALED-BUILD-RUNTIME-2026-08-10-01.yaml
+  - docs-platform/changes/iterations/ITR-SEALED-BUILD-RUNTIME-2026-08-10-01.yaml
+  - docs-platform/changes/proposals/PROP-SEALED-BUILD-RUNTIME-2026-08-10-01.yaml
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+  - docs-platform/generated/capex-governance-projection.json
+allowed_dirty_paths:
+  - output/pdf/launch-budget-review.pdf
+  - output/review/
+rollback_contract:
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true

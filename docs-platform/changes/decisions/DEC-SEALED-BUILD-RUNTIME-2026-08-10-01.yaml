@@ -1,0 +1,11 @@
+schema_version: 2
+decision_id: DEC-SEALED-BUILD-RUNTIME-2026-08-10-01
+iteration_id: ITR-SEALED-BUILD-RUNTIME-2026-08-10-01
+title: Approve self-contained clean-build runtime and path-aware drift
+status: approved
+approved_by: project owner
+approved_at: 2026-08-10T20:20:00.000Z
+scope: Only Playwright runtime installation, exact clean-build reproduction and content/governance drift path classification.
+excludes: [business data, page content, financial values, Google writes]
+approved_payload_path: docs-platform/changelog/payloads/ITR-SEALED-BUILD-RUNTIME-2026-08-10-01-approved.yaml
+approved_payload_sha256: 4f0db934a9bd2591f9bf37e618efc2dc4c85f05917650a0ddf941b96b171f012
