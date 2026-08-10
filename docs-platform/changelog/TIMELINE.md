@@ -4,10 +4,10 @@
 
 ## 1. Current state
 
-- Events: 89.
-- Timeline head event: `EVT-ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-01-COMMITTED`.
-- Timeline head SHA-256: `8bbdce633144b582edf856121b4233dd923e7900b583078c5f1f322a6d8f5aff`.
-- Latest recorded iteration: `ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-01`.
+- Events: 94.
+- Timeline head event: `EVT-ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-02-COMMITTED`.
+- Timeline head SHA-256: `6582e84fd9b025aec89f890ba3003d124e30544e96c9aaa59792a55fc495e652`.
+- Latest recorded iteration: `ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-02`.
 
 ## 2. Modern governed iterations
 
@@ -28,6 +28,7 @@
 | 2026-08-10T20:19:03.048Z | external_drift_detected | Status parser and snapshot decoupling seal correction | ITR-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01 | DEC-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01 | CHG-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01 | 3f3b94cc5904dbb47584f182a094e35f589a9937 | iteration/ITR-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01 | — | — | — | A clean sealed checkout passed snapshot validation and SPA compilation but prerender failed because Chromium existed only in the main worktree untracked cache. A new governed correction will make npm ci install the required browser runtime. |
 | 2026-08-10T20:23:18.000Z | committed | Self-contained sealed checkout build runtime | ITR-SEALED-BUILD-RUNTIME-2026-08-10-01 | DEC-SEALED-BUILD-RUNTIME-2026-08-10-01 | CHG-SEALED-BUILD-RUNTIME-2026-08-10-01 | ea89b6ec1d023955a24242569ca589a4db161e5a | iteration/ITR-SEALED-BUILD-RUNTIME-2026-08-10-01 | — | — | — | Self-contained sealed checkout build runtime: content commit verified and linked to the governed lifecycle before sealing. |
 | 2026-08-10T20:46:05.000Z | committed | Deterministic prerender output correction | ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-01 | DEC-DIST-DETERMINISM-CORRECTION-2026-08-10-01 | CHG-DIST-DETERMINISM-CORRECTION-2026-08-10-01 | b33f0a0a548bea1ae12463f78b75259a79886aaf | iteration/ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-01 | — | — | — | Deterministic prerender output correction: content commit verified and linked to the governed lifecycle before sealing. |
+| 2026-08-10T21:05:20.000Z | committed | Convergence-checked prerender determinism correction | ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-02 | DEC-DIST-DETERMINISM-CORRECTION-2026-08-10-02 | CHG-DIST-DETERMINISM-CORRECTION-2026-08-10-02 | 467b57fc0e2db6246316f4df0953b2ec3d809bc3 | iteration/ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-02 | — | — | — | Convergence-checked prerender determinism correction: content commit verified and linked to the governed lifecycle before sealing. |
 
 ## 3. Legacy imported history
 

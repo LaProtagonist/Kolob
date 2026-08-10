@@ -1,12 +1,12 @@
 schema_version: 2
-generated_at: 2026-08-10T20:47:00.001Z
+generated_at: 2026-08-10T21:10:00.001Z
 project: Колобочная
 branch: master
-latest_timeline_event_id: EVT-ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-01-COMMITTED
-latest_timeline_event_hash: 8bbdce633144b582edf856121b4233dd923e7900b583078c5f1f322a6d8f5aff
-latest_closed_iteration_id: ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-01
-latest_iteration_tag: iteration/ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-01
-latest_content_commit_hash: b33f0a0a548bea1ae12463f78b75259a79886aaf
+latest_timeline_event_id: EVT-ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-02-COMMITTED
+latest_timeline_event_hash: 6582e84fd9b025aec89f890ba3003d124e30544e96c9aaa59792a55fc495e652
+latest_closed_iteration_id: ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-02
+latest_iteration_tag: iteration/ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-02
+latest_content_commit_hash: 467b57fc0e2db6246316f4df0953b2ec3d809bc3
 registry_hash: 47ea4f8a5ece3d8139da73b46366b6e49c8168cd8e8d382b124121dec00082a8
 canonical_document_hashes:
   - document_id: DOC-AGENTS
@@ -76,7 +76,7 @@ open_questions:
   - Archive pending review artifacts in durable storage before treating visual verification as portable.
   - Create deployment receipts when the next governed deployment is performed.
   - Decide whether malformed superseded legacy YAML evidence should receive a separate correction event.
-current_workstream: Deterministic prerender output correction
+current_workstream: Convergence-checked prerender determinism correction
 next_task: Select the next task through a new governed proposal; no business task is pre-authorized.
 google_integration_status:
   configured: true

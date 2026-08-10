@@ -9,16 +9,16 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 ## 2. Текущая ветка и governed iteration
 
 - Branch: `master`.
-- Latest closed iteration: `ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-01`.
-- Latest iteration tag: `iteration/ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-01`.
-- Latest content commit: `b33f0a0a548bea1ae12463f78b75259a79886aaf`.
+- Latest closed iteration: `ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-02`.
+- Latest iteration tag: `iteration/ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-02`.
+- Latest content commit: `467b57fc0e2db6246316f4df0953b2ec3d809bc3`.
 - Текущий Git HEAD намеренно не записывается: его вычисляет `npm run project:onboard`.
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-01-COMMITTED`.
-- Hash: `8bbdce633144b582edf856121b4233dd923e7900b583078c5f1f322a6d8f5aff`.
-- generated_from_event_hash: `8bbdce633144b582edf856121b4233dd923e7900b583078c5f1f322a6d8f5aff`.
+- Event: `EVT-ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-02-COMMITTED`.
+- Hash: `6582e84fd9b025aec89f890ba3003d124e30544e96c9aaa59792a55fc495e652`.
+- generated_from_event_hash: `6582e84fd9b025aec89f890ba3003d124e30544e96c9aaa59792a55fc495e652`.
 
 ## 4. Канонические документы
 
@@ -42,7 +42,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 5. Текущая рабочая тема
 
-Deterministic prerender output correction
+Convergence-checked prerender determinism correction
 
 ## 6. Decisions и change sets
 
