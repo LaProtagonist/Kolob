@@ -9,16 +9,16 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 ## 2. Текущая ветка и governed iteration
 
 - Branch: `master`.
-- Latest closed iteration: `ITR-SEALED-BUILD-RUNTIME-2026-08-10-01`.
-- Latest iteration tag: `iteration/ITR-SEALED-BUILD-RUNTIME-2026-08-10-01`.
-- Latest content commit: `ea89b6ec1d023955a24242569ca589a4db161e5a`.
+- Latest closed iteration: `ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-01`.
+- Latest iteration tag: `iteration/ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-01`.
+- Latest content commit: `b33f0a0a548bea1ae12463f78b75259a79886aaf`.
 - Текущий Git HEAD намеренно не записывается: его вычисляет `npm run project:onboard`.
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-SEALED-BUILD-RUNTIME-2026-08-10-01-COMMITTED`.
-- Hash: `cd406b5e9d155f1e84ee89348436a9d4ec529142e39b54a1fa94abf257a64e49`.
-- generated_from_event_hash: `cd406b5e9d155f1e84ee89348436a9d4ec529142e39b54a1fa94abf257a64e49`.
+- Event: `EVT-ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-01-COMMITTED`.
+- Hash: `8bbdce633144b582edf856121b4233dd923e7900b583078c5f1f322a6d8f5aff`.
+- generated_from_event_hash: `8bbdce633144b582edf856121b4233dd923e7900b583078c5f1f322a6d8f5aff`.
 
 ## 4. Канонические документы
 
@@ -42,7 +42,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 5. Текущая рабочая тема
 
-Self-contained sealed checkout build runtime
+Deterministic prerender output correction
 
 ## 6. Decisions и change sets
 

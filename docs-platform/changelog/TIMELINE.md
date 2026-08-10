@@ -4,10 +4,10 @@
 
 ## 1. Current state
 
-- Events: 84.
-- Timeline head event: `EVT-ITR-SEALED-BUILD-RUNTIME-2026-08-10-01-COMMITTED`.
-- Timeline head SHA-256: `cd406b5e9d155f1e84ee89348436a9d4ec529142e39b54a1fa94abf257a64e49`.
-- Latest recorded iteration: `ITR-SEALED-BUILD-RUNTIME-2026-08-10-01`.
+- Events: 89.
+- Timeline head event: `EVT-ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-01-COMMITTED`.
+- Timeline head SHA-256: `8bbdce633144b582edf856121b4233dd923e7900b583078c5f1f322a6d8f5aff`.
+- Latest recorded iteration: `ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-01`.
 
 ## 2. Modern governed iterations
 
@@ -27,6 +27,7 @@
 | 2026-08-10T20:09:15.486Z | external_drift_detected | Web snapshot and governance seal decoupling | ITR-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01 | DEC-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01 | CHG-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01 | 4fa6af099c79fb32a55440b5d120e40125b3afa5 | iteration/ITR-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01 | — | — | — | Seal validation detected that whitespace cleanup in three technical files changed the governed infrastructure scope hash after verification. The mismatch is preserved as append-only evidence and will be corrected by a new governed correction iteration; no public content or deployment occurred. |
 | 2026-08-10T20:19:03.048Z | external_drift_detected | Status parser and snapshot decoupling seal correction | ITR-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01 | DEC-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01 | CHG-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01 | 3f3b94cc5904dbb47584f182a094e35f589a9937 | iteration/ITR-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01 | — | — | — | A clean sealed checkout passed snapshot validation and SPA compilation but prerender failed because Chromium existed only in the main worktree untracked cache. A new governed correction will make npm ci install the required browser runtime. |
 | 2026-08-10T20:23:18.000Z | committed | Self-contained sealed checkout build runtime | ITR-SEALED-BUILD-RUNTIME-2026-08-10-01 | DEC-SEALED-BUILD-RUNTIME-2026-08-10-01 | CHG-SEALED-BUILD-RUNTIME-2026-08-10-01 | ea89b6ec1d023955a24242569ca589a4db161e5a | iteration/ITR-SEALED-BUILD-RUNTIME-2026-08-10-01 | — | — | — | Self-contained sealed checkout build runtime: content commit verified and linked to the governed lifecycle before sealing. |
+| 2026-08-10T20:46:05.000Z | committed | Deterministic prerender output correction | ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-01 | DEC-DIST-DETERMINISM-CORRECTION-2026-08-10-01 | CHG-DIST-DETERMINISM-CORRECTION-2026-08-10-01 | b33f0a0a548bea1ae12463f78b75259a79886aaf | iteration/ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-01 | — | — | — | Deterministic prerender output correction: content commit verified and linked to the governed lifecycle before sealing. |
 
 ## 3. Legacy imported history
 
