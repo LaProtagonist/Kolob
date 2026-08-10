@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
+    "postinstall": "npm --prefix docs-platform/app ci --ignore-scripts",
     "dev": "vite --host 127.0.0.1",
     "build": "npm run build:spa && npm run prerender",
     "build:spa": "npm run investor:start:validate && npm run capex:web:check && tsc -b && vite build",
@@ -19,6 +20,7 @@
     "test": "npm run investor:start:validate && npm run capex:web:check && node scripts/test-site.cjs && npm --prefix docs-platform/app test",
     "capex:web:sync": "npm --prefix docs-platform/app run capex:web:sync",
     "capex:web:check": "npm --prefix docs-platform/app run capex:web:check",
+    "capex:governance:sync": "npm --prefix docs-platform/app run capex:governance:sync",
     "investor:start:validate": "npm --prefix docs-platform/app run investor:start:validate",
     "registry:validate": "npm --prefix docs-platform/app run registry:validate",
     "timeline:validate": "npm --prefix docs-platform/app run timeline:validate",
@@ -33,6 +35,9 @@
     "iteration:compensate:preview": "npm --prefix docs-platform/app run iteration:compensate:preview --",
     "google:drift:check": "npm --prefix docs-platform/app run google:drift:check",
     "deployment:drift:check": "npm --prefix docs-platform/app run deployment:drift:check",
+    "deployment:manifest:write": "npm --prefix docs-platform/app run deployment:manifest:write --",
+    "deployment:receipt:record": "npm --prefix docs-platform/app run deployment:receipt:record --",
+    "build:reproduce:sealed": "node scripts/check-sealed-build.mjs",
     "artifact:validate": "npm --prefix docs-platform/app run artifact:validate",
     "governance:validate": "npm --prefix docs-platform/app run governance:validate",
     "contact:server": "node server/contact-server.mjs"

@@ -1,0 +1,126 @@
+schema_version: 2
+payload_id: PAYLOAD-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01
+iteration_id: ITR-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01
+proposal_id: PROP-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01
+decision_id: DEC-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01
+change_set_id: CHG-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01
+title: Decouple CAPEX web content snapshots from governance seal and deployment history
+status: approved
+approved_by: project owner
+approved_at: 2026-08-10T19:12:13.000Z
+scope:
+  - Separate page-affecting content state from append-only governance and deployment state.
+  - Compute content_state_sha256 from normalized, ordered, relative content inputs without Git HEAD, seal data, timeline heads, receipts, generated timestamps or absolute paths.
+  - Keep the CAPEX content snapshot reproducible and stale only when page-affecting content, its schema or generator logic changes.
+  - Store live governance linkage in a separate non-build-critical projection.
+  - Distinguish content drift from governance-only drift in deployment receipts and checks.
+  - Extend deployment manifests with content, content-commit, seal-commit, build-head and dist hashes.
+  - Prove clean npm ci and npm run build from a temporary worktree at sealed HEAD.
+  - Preserve the current CAPEX values, launch-budget values, equipment names, page texts and page design byte-for-byte at the business-data level.
+forbidden_scope:
+  - equipment, prices, CAPEX scenarios or quantities
+  - Investor Start Model, Foundation or Business Model Architecture content
+  - Google Docs or Google Sheets writes
+  - launch-budget formulas, assumptions, texts or design
+  - capex-configurator calculations, texts or design
+content_state_sources:
+  data:
+    - docs-platform/working/capex-equipment-register.yaml
+    - docs-platform/working/capex-price-research.yaml
+    - docs-platform/working/capex-modules.yaml
+    - docs-platform/working/capex-module-items.yaml
+    - docs-platform/working/capex-point-formats.yaml
+    - docs-platform/working/capex-configurations.yaml
+    - docs-platform/working/capex-configuration-overrides.yaml
+    - docs-platform/working/pilot-capex-assumptions.yaml
+    - docs-platform/working/investor-start-model.yaml
+    - docs-platform/registry/documents.yaml#public-document-projection
+  generator_and_schema:
+    - docs-platform/app/src/capex/web-snapshot.ts
+    - docs-platform/app/src/capex/content-state.ts
+    - docs-platform/app/src/capex/register.ts
+    - docs-platform/app/src/capex/modular.ts
+    - docs-platform/app/src/capex/price-research.ts
+    - docs-platform/schemas/capex-web-snapshot.schema.json
+governance_state_excluded_from_content_fingerprint:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+  - decisions, change sets and approved payload files
+  - verification, Google sync and deployment receipts
+  - rollback payloads, artifact manifests and iteration tags
+  - Git HEAD, content commit, seal commit and deployment ID
+state_hash_paths:
+  - package.json
+  - docs-platform/app/package.json
+  - docs-platform/app/src/capex/content-state.ts
+  - docs-platform/app/src/capex/governance-projection.ts
+  - docs-platform/app/src/capex/web-snapshot.ts
+  - docs-platform/app/src/governance/deployment.ts
+  - docs-platform/app/src/governance/external.ts
+  - docs-platform/app/src/governance/git-workflow.ts
+  - docs-platform/app/src/governance/timeline.ts
+  - docs-platform/app/src/cli.ts
+  - docs-platform/app/test/capex-content-state.test.ts
+  - docs-platform/app/test/capex-web-configurator.test.ts
+  - docs-platform/app/test/deployment-state.test.ts
+  - docs-platform/app/test/governance-history-v2.test.ts
+  - docs-platform/schemas/capex-web-snapshot.schema.json
+  - docs-platform/schemas/deployment-receipt.schema.json
+  - docs-platform/schemas/timeline-event.schema.json
+  - scripts/check-sealed-build.mjs
+  - src/content/capex-configurator-data.json
+content_paths:
+  - package.json
+  - docs-platform/app/package.json
+  - docs-platform/app/src/capex/content-state.ts
+  - docs-platform/app/src/capex/governance-projection.ts
+  - docs-platform/app/src/capex/web-snapshot.ts
+  - docs-platform/app/src/governance/deployment.ts
+  - docs-platform/app/src/governance/external.ts
+  - docs-platform/app/src/governance/git-workflow.ts
+  - docs-platform/app/src/governance/timeline.ts
+  - docs-platform/app/src/cli.ts
+  - docs-platform/app/test/capex-content-state.test.ts
+  - docs-platform/app/test/capex-web-configurator.test.ts
+  - docs-platform/app/test/deployment-state.test.ts
+  - docs-platform/app/test/governance-history-v2.test.ts
+  - docs-platform/schemas/capex-web-snapshot.schema.json
+  - docs-platform/schemas/deployment-receipt.schema.json
+  - docs-platform/schemas/timeline-event.schema.json
+  - scripts/check-sealed-build.mjs
+  - src/content/capex-configurator-data.json
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/payloads/ITR-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01-approved.yaml
+  - docs-platform/changelog/rollback-payloads/ITR-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01/manifest.yaml
+  - docs-platform/changelog/verification/ITR-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01.yaml
+  - docs-platform/changes/CHG-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01.yaml
+  - docs-platform/changes/decisions/DEC-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01.yaml
+  - docs-platform/changes/iterations/ITR-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01.yaml
+  - docs-platform/changes/proposals/PROP-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01.yaml
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+  - docs-platform/generated/capex-governance-projection.json
+allowed_dirty_paths:
+  - output/pdf/launch-budget-review.pdf
+  - output/review/
+commit_contract:
+  content_subject: "fix(docs-platform): decouple web snapshots from governance seal"
+  mandatory_trailers: [Iteration-ID, Decision-ID, Change-Set-ID, Approved-Payload-SHA256, Before-State-SHA256, After-State-SHA256, Timeline-Head-SHA256]
+  separate_seal_commit: true
+  push_branch_and_annotated_tag: true
+deployment_contract:
+  build_from_sealed_head: true
+  receipt_after_smoke_test: true
+  governance_only_receipt_commit: true
+  repeated_deploy_not_required_when_content_state_sha256_is_unchanged: true
+rollback_contract:
+  mode: governed_reverse_change_set
+  historical_mode: compensating_change
+  git_reset_forbidden: true
+

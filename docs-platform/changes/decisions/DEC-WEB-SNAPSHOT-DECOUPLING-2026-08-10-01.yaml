@@ -1,0 +1,11 @@
+schema_version: 2
+decision_id: DEC-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01
+iteration_id: ITR-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01
+title: Approve the exact web snapshot decoupling payload
+status: approved
+approved_by: project owner
+approved_at: 2026-08-10T19:12:13.000Z
+scope: Only content/governance fingerprint separation, reproducible sealed builds, deployment provenance and drift classification.
+excludes: [business data, CAPEX values, Investor Start Model content, page texts and design, Google writes]
+approved_payload_path: docs-platform/changelog/payloads/ITR-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01-approved.yaml
+approved_payload_sha256: e7a0822f9c4820539998ac9aea4cd52f1dac8b965f30fb065f46e35a077d324d

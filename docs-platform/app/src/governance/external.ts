@@ -2,12 +2,14 @@ import fs from "node:fs";
 import path from "node:path";
 import YAML from "yaml";
 import { platformRoot } from "../google/config.js";
+import { buildContentStateManifest } from "../capex/content-state.js";
 import { appendGovernanceEvent, effectiveType, isV2, readTimelineEvents, type GovernanceEventInputV2 } from "./timeline.js";
-import { fileSha256, readYaml, resolveProjectPath } from "./util.js";
+import { fileSha256, gitText, readYaml, resolveProjectPath } from "./util.js";
 
 export type DriftResult = {
   system: "google" | "deployment";
-  status: "match" | "drift" | "not_configured" | "live_readback_unavailable" | "local_source_changed";
+  status: "match" | "drift" | "governance_only_drift" | "not_configured" | "live_readback_unavailable" | "local_source_changed";
+  drift_kind?: "content" | "governance_only" | null;
   receipt: string | null;
   iteration_id: string | null;
   expected_hash: string | null;
@@ -131,19 +133,84 @@ export function googleDriftCheck(remoteReadbacks: Record<string, string> = {}, a
   return results;
 }
 
-export function deploymentDriftCheck(remoteBuildHashes: Record<string, string> = {}, appendEvents = true): DriftResult[] {
+export type RemoteDeploymentState = string | { content_state_sha256: string; dist_sha256: string; seal_commit_hash?: string; repository_head_at_build?: string };
+
+export function classifyDeploymentDrift(input: {
+  receiptContentState: string;
+  receiptDistSha256: string;
+  receiptSealCommit: string;
+  currentContentState: string;
+  repositoryHead: string | null;
+  remote: RemoteDeploymentState | null;
+}): { status: "match" | "drift" | "governance_only_drift" | "live_readback_unavailable"; drift_kind: "content" | "governance_only" | null; actual_dist_sha256: string | null; diff: string | null; action: string } {
+  if (input.currentContentState !== input.receiptContentState) {
+    return {
+      status: "drift", drift_kind: "content", actual_dist_sha256: null,
+      diff: `content_state_sha256: ${input.receiptContentState} -> ${input.currentContentState}`,
+      action: "Regenerate the content snapshot, build and deploy through a new governed iteration.",
+    };
+  }
+  if (!input.remote) return { status: "live_readback_unavailable", drift_kind: null, actual_dist_sha256: null, diff: null, action: "No deployment performed; provide the read-only production deployment manifest." };
+  const actualDist = typeof input.remote === "string" ? input.remote : input.remote.dist_sha256;
+  const actualContent = typeof input.remote === "string" ? input.receiptContentState : input.remote.content_state_sha256;
+  if (actualContent !== input.receiptContentState || actualDist !== input.receiptDistSha256) {
+    return {
+      status: "drift", drift_kind: "content", actual_dist_sha256: actualDist,
+      diff: `production content/dist: ${input.receiptContentState}/${input.receiptDistSha256} -> ${actualContent}/${actualDist}`,
+      action: "Review the production manifest and perform a governed deployment or rollback; no automatic overwrite.",
+    };
+  }
+  if (input.repositoryHead && input.repositoryHead !== input.receiptSealCommit) {
+    return {
+      status: "governance_only_drift", drift_kind: "governance_only", actual_dist_sha256: actualDist,
+      diff: `repository HEAD ${input.repositoryHead} is newer than deployed seal ${input.receiptSealCommit} while content_state_sha256 is identical.`,
+      action: "No deployment required. Repository HEAD is newer due to governance-only commits; public content state is identical.",
+    };
+  }
+  return { status: "match", drift_kind: null, actual_dist_sha256: actualDist, diff: null, action: "None." };
+}
+
+export function deploymentDriftCheck(remoteBuildHashes: Record<string, RemoteDeploymentState> = {}, appendEvents = true): DriftResult[] {
   const directory = path.join(platformRoot, "changelog", "deployments");
   const files = receiptFiles(directory);
   if (!files.length) return [{ system: "deployment", status: "not_configured", receipt: null, iteration_id: null, expected_hash: null, actual_hash: null, diff: null, action: "Create a deployment receipt during the next governed deployment." }];
+  const currentContentState = buildContentStateManifest().content_state_sha256;
+  const repositoryHead = gitText(["rev-parse", "HEAD"], true) || null;
   return files.map(file => {
     const value = readYaml<any>(file);
     const relative = receiptRelative(file);
-    const expected = value.build_hash as string;
-    const actual = remoteBuildHashes[value.deployment_id];
-    if (!actual) return { system: "deployment", status: "live_readback_unavailable", receipt: relative, iteration_id: value.iteration_id, expected_hash: expected, actual_hash: null, diff: null, action: "No deployment performed; provide a read-only production build hash." };
-    if (actual === expected) return { system: "deployment", status: "match", receipt: relative, iteration_id: value.iteration_id, expected_hash: expected, actual_hash: actual, diff: null, action: "None." };
-    if (appendEvents) appendDriftOnce({ system: "deployment", iterationId: value.iteration_id, receipt: relative, expected, actual, productionUrl: value.production_url });
-    return { system: "deployment", status: "drift", receipt: relative, iteration_id: value.iteration_id, expected_hash: expected, actual_hash: actual, diff: `build_hash: ${expected} -> ${actual}`, action: "Review restore preview or a new governed deployment; no automatic overwrite." };
+    const expectedDist = (value.dist_sha256 ?? value.build_hash) as string;
+    const expectedContent = value.content_state_sha256 as string;
+    const remote = remoteBuildHashes[value.deployment_id] ?? null;
+    const classification = classifyDeploymentDrift({
+      receiptContentState: expectedContent,
+      receiptDistSha256: expectedDist,
+      receiptSealCommit: value.seal_commit_hash,
+      currentContentState,
+      repositoryHead,
+      remote,
+    });
+    if (classification.status === "drift" && currentContentState !== expectedContent) {
+      const diff = classification.diff!;
+      if (appendEvents) appendDriftOnce({ system: "deployment", iterationId: value.iteration_id, receipt: relative, expected: expectedContent, actual: currentContentState, productionUrl: value.production_url });
+      return { system: "deployment", status: "drift", drift_kind: "content", receipt: relative, iteration_id: value.iteration_id, expected_hash: expectedContent, actual_hash: currentContentState, diff, action: classification.action };
+    }
+    if (classification.status === "live_readback_unavailable") return { system: "deployment", status: classification.status, drift_kind: classification.drift_kind, receipt: relative, iteration_id: value.iteration_id, expected_hash: expectedDist, actual_hash: null, diff: null, action: classification.action };
+    if (classification.status === "drift") {
+      const expected = expectedDist;
+      const actual = classification.actual_dist_sha256 ?? "0".repeat(64);
+      const diff = classification.diff!;
+      if (appendEvents && /^[0-9a-f]{64}$/.test(actual)) appendDriftOnce({ system: "deployment", iterationId: value.iteration_id, receipt: relative, expected, actual, productionUrl: value.production_url });
+      return { system: "deployment", status: "drift", drift_kind: "content", receipt: relative, iteration_id: value.iteration_id, expected_hash: expected, actual_hash: classification.actual_dist_sha256, diff, action: classification.action };
+    }
+    if (classification.status === "governance_only_drift") {
+      return {
+        system: "deployment", status: "governance_only_drift", drift_kind: "governance_only", receipt: relative, iteration_id: value.iteration_id,
+        expected_hash: expectedDist, actual_hash: classification.actual_dist_sha256, diff: classification.diff,
+        action: classification.action,
+      };
+    }
+    return { system: "deployment", status: "match", drift_kind: null, receipt: relative, iteration_id: value.iteration_id, expected_hash: expectedDist, actual_hash: classification.actual_dist_sha256, diff: null, action: classification.action };
   });
 }
 
@@ -159,10 +226,9 @@ export function validateExternalReceipts(): string[] {
   }
   for (const file of receiptFiles(path.join(platformRoot, "changelog", "deployments"))) {
     const value = readYaml<any>(file);
-    for (const field of ["iteration_id", "content_commit_hash", "build_hash", "deployment_id", "production_url", "deployed_at", "smoke_test_result"]) {
+    for (const field of ["iteration_id", "content_state_sha256", "content_commit_hash", "seal_commit_hash", "repository_head_at_build", "dist_sha256", "deployment_id", "production_url", "built_at", "deployed_at", "smoke_test_result"]) {
       if (value[field] === undefined || value[field] === null) errors.push(`${receiptRelative(file)}: missing ${field}.`);
     }
   }
   return errors;
 }
-

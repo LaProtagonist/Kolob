@@ -1,0 +1,62 @@
+schema_version: 2
+iteration_id: ITR-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01
+proposal_id: PROP-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01
+decision_id: DEC-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01
+change_set_id: CHG-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01
+verified_at: 2026-08-10T19:53:27.000Z
+actor: Codex
+validation_status: passed
+approved_payload_sha256: e7a0822f9c4820539998ac9aea4cd52f1dac8b965f30fb065f46e35a077d324d
+before_state_sha256: 1318afe1fb010b1d87064d7f01dbe185d232602f8fdc902b0c4a87c41ad9e1f3
+after_state_sha256: 49f500bb1050732955d4fb58dda45c7b4efeb146ee8239f3a9c6a5efd196ee59
+old_source_bundle_sha256: 4d0f6c079262df0c2946efdd7c0bff75920f3b420c27ec6ae6fe160c7d9681c8
+content_state_sha256: 019867401744567473b35404bd3bb3b10b2fbf3e8a53abaedfb738b5881468e6
+snapshot_sha256: b916327ff895c06734390692d417459f75abc01a7f8f0dab78064e72be1e35cf
+root_cause:
+  stale_source: docs-platform/changelog/events.ndjson
+  content_commit_event_count: 61
+  sealed_event_count: 62
+  content_commit_events_sha256: 462a4d154e6ca24546c41d577ef83f3a583c0b75b714917c6939b9b92ba97dd5
+  sealed_events_sha256: 2ecedae911d3962d4e0a978f8a910709735ddf4ecaf23d203b041ff8b0b13888
+  explanation: The seal appended the committed event to a file included in the old snapshot source bundle, so the sealed checkout could not reproduce the pre-seal source hash.
+checks:
+  exact_root_cause_audit_before_changes: passed
+  content_fingerprint_normalization_and_ordering: passed
+  governance_only_sources_excluded: passed
+  snapshot_schema_and_source_hash_manifest: passed
+  snapshot_determinism: passed
+  snapshot_current_after_applied_governance_event: passed_without_snapshot_write
+  typescript_root_and_docs_platform: passed
+  targeted_content_snapshot_deployment_capex_and_investor_tests: passed
+  site_route_mobile_seo_and_ui_regression: passed
+  docs_platform_full_suite_after_projection_refresh: passed
+  production_build_before_seal: passed
+  append_only_timeline_and_hash_chain: passed
+  business_snapshot_payload_equal_to_before: passed
+  scenario_totals_unchanged: passed
+  equipment_coverage_unchanged: passed
+  google_write: not_performed
+business_invariants:
+  research_totals_rub:
+    minimum: 4085990.33
+    base: 5488047.33
+    scale_ready: 6915980.79
+  launch_budget_equipment_totals_rub:
+    minimum: 3979339.33
+    base: 5298993.33
+    scale_ready: 6659540.79
+  priced_procurement_records: 51
+  eligible_procurement_records: 51
+  quote_required_records: 27
+  launch_base_quote_required_without_alcohol: 23
+post_seal_evidence:
+  clean_temporary_worktree_build: pending_until_seal
+  build_after_seal: pending_until_seal
+  deployment_and_smoke_test: pending_until_seal
+  build_after_deployment_receipt: pending_until_deployment_receipt
+review_artifacts:
+  output/pdf/launch-budget-review.pdf: pre_existing_untracked_untouched
+  output/review/: pre_existing_untracked_untouched
+  durable_archive_manifest: not_found_for_these_untracked_paths
+rollback_payload: docs-platform/changelog/rollback-payloads/ITR-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01/manifest.yaml
+summary: Content snapshot freshness is now derived from normalized page-affecting sources only. Governance history, seal linkage and deployment evidence remain append-only but cannot invalidate or alter public CAPEX data.

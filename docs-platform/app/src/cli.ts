@@ -9,12 +9,14 @@ import { appendConfiguratorTimeline, applyConfiguratorAudit, previewConfigurator
 import { appendPilotTimeline, applyPilotIteration, previewPilotIteration, previewPilotReverse, writePilotArtifacts } from "./capex/pilot-expansion-workflow.js";
 import { applyRemainingPriceIteration, previewRemainingPriceIteration, previewRemainingPriceReverse, writeRemainingPriceArtifacts } from "./capex/remaining-price-workflow.js";
 import { checkWebSnapshot, writeWebSnapshot } from "./capex/web-snapshot.js";
+import { writeCapexGovernanceProjection } from "./capex/governance-projection.js";
 import { readPriceResearch, validatePriceResearch } from "./capex/price-research.js";
 import { applyChange, loadRegistry, previewReverseChange, printChangePreview, readYaml, registryKinds, requireChange, validateRegistry, writeReverseChange } from "./governance/registry.js";
 import { appendTimelineEvent, generateTimeline, readTimelineEvents, renderTimeline, validateTimeline, type TimelineEventInput } from "./governance/timeline.js";
 import { validateArtifacts } from "./governance/artifacts.js";
 import { buildContext, onboardReport, validateContext } from "./governance/context.js";
 import { deploymentDriftCheck, googleDriftCheck } from "./governance/external.js";
+import { readDeploymentManifest, recordDeploymentReceipt, writeDeploymentManifest } from "./governance/deployment.js";
 import { backfillCommittedEvents, createHistoricalIterationTags, importLegacyHistory, verifyHistoricalTags, writeGitLinkAuditMarkdown } from "./governance/history.js";
 import { commitIteration, finalizeIteration, governanceValidationErrors, sealIteration } from "./governance/git-workflow.js";
 import { validateImmutability } from "./governance/immutability.js";
@@ -100,7 +102,24 @@ try {
   } else if (command === "google:drift:check") {
     console.log(JSON.stringify(googleDriftCheck(), null, 2));
   } else if (command === "deployment:drift:check") {
-    console.log(JSON.stringify(deploymentDriftCheck(), null, 2));
+    const remoteManifestPath = flag(args, "--remote-manifest");
+    const remote = remoteManifestPath ? readDeploymentManifest(path.resolve(remoteManifestPath)) : null;
+    console.log(JSON.stringify(deploymentDriftCheck(remote ? { [remote.deployment_id]: remote } : {}, false), null, 2));
+  } else if (command === "deployment:manifest:write") {
+    console.log(JSON.stringify(writeDeploymentManifest({
+      iterationId: flag(args, "--iteration"),
+      contentCommitHash: flag(args, "--content-commit"),
+      sealCommitHash: flag(args, "--seal-commit"),
+      deploymentId: flag(args, "--deployment-id"),
+      productionUrl: flag(args, "--production-url") || undefined,
+      builtAt: flag(args, "--built-at"),
+      deployedAt: flag(args, "--deployed-at"),
+    }), null, 2));
+  } else if (command === "deployment:receipt:record") {
+    console.log(YAML.stringify(recordDeploymentReceipt({
+      manifestPath: path.resolve(flag(args, "--manifest") || path.join("dist", "deployment-manifest.json")),
+      smokeTestResult: (flag(args, "--smoke") || "failed") as "passed" | "failed",
+    }), { lineWidth: 0 }));
   } else if (command === "artifact:validate") {
     const errors = validateArtifacts();
     if (errors.length) throw new Error(errors.join("\n"));
@@ -181,6 +200,8 @@ try {
     writeWebSnapshot();
   } else if (command === "capex:web:check") {
     checkWebSnapshot();
+  } else if (command === "capex:governance:sync") {
+    console.log(JSON.stringify(writeCapexGovernanceProjection(), null, 2));
   } else if (command === "investor:start:preview") {
     previewInvestorStartModel();
   } else if (command === "investor:start:apply") {

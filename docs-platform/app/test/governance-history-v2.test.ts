@@ -190,11 +190,11 @@ test("23. Governance v2 Google receipt schema requires local and remote hashes",
   assert.equal(validate({ receipt_version: 2 }), false);
 });
 
-test("24. deployment receipt schema requires the content commit", () => {
+test("24. deployment receipt schema requires separated content, seal and dist provenance", () => {
   const schema = JSON.parse(fs.readFileSync(path.join(platform, "schemas", "deployment-receipt.schema.json"), "utf8"));
   const validate = new Ajv2020({ strict: false }).compile(schema);
-  assert.equal(validate({ iteration_id: "ITR", content_commit_hash: "a".repeat(40), build_hash: "b".repeat(64), deployment_id: "dep", production_url: "https://example.invalid", deployed_at: "2026-08-05T00:00:00.000Z", smoke_test_result: "passed" }), true);
-  assert.equal(deploymentDriftCheck({}, false)[0].status, "not_configured");
+  assert.equal(validate({ schema_version: 2, iteration_id: "ITR", content_state_sha256: "a".repeat(64), content_commit_hash: "b".repeat(40), seal_commit_hash: "c".repeat(40), repository_head_at_build: "c".repeat(40), dist_sha256: "d".repeat(64), deployment_id: "dep", production_url: "https://example.invalid", built_at: "2026-08-10T00:00:00.000Z", deployed_at: "2026-08-10T00:00:01.000Z", smoke_test_result: "passed" }), true);
+  assert.equal(validate({ schema_version: 2, iteration_id: "ITR" }), false);
 });
 
 test("25. artifact manifests validate SHA-256 and size", () => assert.deepEqual(validateArtifacts(), []));

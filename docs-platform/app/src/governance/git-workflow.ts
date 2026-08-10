@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import YAML from "yaml";
 import { platformRoot } from "../google/config.js";
+import { CAPEX_GOVERNANCE_PROJECTION_PATH, writeCapexGovernanceProjection } from "../capex/governance-projection.js";
 import { validateArtifacts } from "./artifacts.js";
 import { buildContext, commitTrailers, contextValidationErrors } from "./context.js";
 import { validateExternalReceipts } from "./external.js";
@@ -355,11 +356,12 @@ export function sealIteration(iterationId: string): { content_commit_hash: strin
     open_questions: ["Archive pending visual review artifacts in durable storage."],
   });
   buildContext();
+  if (iteration.seal_paths.some(relative => resolveProjectPath(relative) === CAPEX_GOVERNANCE_PROJECTION_PATH)) writeCapexGovernanceProjection();
   const errors = governanceValidationErrors();
   if (errors.length) throw new Error(errors.join("\n"));
   const sealCandidates = iteration.seal_paths.filter(relative => fs.existsSync(resolveProjectPath(relative)) || gitText(["ls-files", "--error-unmatch", relative], true));
   for (const candidate of sealCandidates) {
-    if (!candidate.startsWith("docs-platform/changelog/") && !candidate.startsWith("docs-platform/context/")) {
+    if (!candidate.startsWith("docs-platform/changelog/") && !candidate.startsWith("docs-platform/context/") && !candidate.startsWith("docs-platform/generated/")) {
       throw new Error(`Seal path is outside governance projections: ${candidate}.`);
     }
   }

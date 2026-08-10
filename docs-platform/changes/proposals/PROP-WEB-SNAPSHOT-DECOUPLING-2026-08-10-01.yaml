@@ -1,0 +1,9 @@
+schema_version: 2
+proposal_id: PROP-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01
+iteration_id: ITR-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01
+title: Decouple web snapshots from governance seal and deployment history
+status: proposed
+proposed_at: 2026-08-10T19:12:12.000Z
+scope: Infrastructure-only correction of content fingerprints, snapshot freshness, deployment provenance and sealed-build reproducibility.
+approved_payload_path: docs-platform/changelog/payloads/ITR-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01-approved.yaml
+approved_payload_sha256: e7a0822f9c4820539998ac9aea4cd52f1dac8b965f30fb065f46e35a077d324d

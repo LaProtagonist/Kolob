@@ -12,7 +12,7 @@ export const ITERATION_STATUSES = ["proposed", "approved", "applied", "verified"
 export type IterationStatus = typeof ITERATION_STATUSES[number];
 
 export const EVENT_TYPES = [
-  "proposed", "approved", "previewed", "applied", "verified", "committed", "published", "synced", "closed",
+  "proposed", "approved", "previewed", "applied", "verified", "committed", "deployed", "published", "synced", "closed",
   "rejected", "failed", "superseded", "rollback_requested", "rollback_approved", "rolled_back",
   "compensation_proposed", "compensated", "external_drift_detected", "legacy_imported",
 ] as const;
@@ -111,7 +111,8 @@ const modernTransitions: Record<GovernanceEventType, GovernanceEventType[]> = {
   previewed: ["applied", "failed", "superseded"],
   applied: ["verified", "rollback_requested", "failed"],
   verified: ["committed", "published", "synced", "rollback_requested", "superseded", "failed", "external_drift_detected"],
-  committed: ["published", "synced", "closed", "rollback_requested", "external_drift_detected", "compensation_proposed"],
+  committed: ["deployed", "published", "synced", "closed", "rollback_requested", "external_drift_detected", "compensation_proposed"],
+  deployed: ["deployed", "closed", "rollback_requested", "external_drift_detected", "compensation_proposed"],
   published: ["synced", "closed", "rollback_requested", "external_drift_detected"],
   synced: ["published", "closed", "rollback_requested", "external_drift_detected"],
   closed: ["rollback_requested", "compensation_proposed", "external_drift_detected"],

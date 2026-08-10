@@ -1,44 +1,23 @@
-import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
+import { Ajv2020 } from "ajv/dist/2020.js";
 import YAML from "yaml";
 import { platformRoot } from "../google/config.js";
 import { effectiveOccurredAt, effectiveType, isV2, readTimelineEvents } from "../governance/timeline.js";
+import { buildContentStateManifest, changedContentSources, sourceHashMap, type ContentStateManifest } from "./content-state.js";
+import { capexGovernanceProjectionIsCurrent } from "./governance-projection.js";
 import { readModularSources } from "./modular.js";
-import { readRegister, serializeRegister, sha256 } from "./register.js";
+import { readRegister, sha256 } from "./register.js";
 import { PRICE_SCENARIOS, readPriceResearch } from "./price-research.js";
 
 const projectRoot = path.resolve(platformRoot, "..");
 export const WEB_SNAPSHOT_PATH = path.join(projectRoot, "src", "content", "capex-configurator-data.json");
-
-const SOURCE_PATHS = [
-  "docs-platform/working/capex-equipment-register.yaml",
-  "docs-platform/working/capex-price-research.yaml",
-  "docs-platform/working/capex-modules.yaml",
-  "docs-platform/working/capex-module-items.yaml",
-  "docs-platform/working/capex-point-formats.yaml",
-  "docs-platform/working/capex-configurations.yaml",
-  "docs-platform/working/capex-configuration-overrides.yaml",
-  "docs-platform/working/pilot-capex-assumptions.yaml",
-  "docs-platform/working/investor-start-model.yaml",
-  "docs-platform/registry/documents.yaml",
-  "docs-platform/registry/decisions.yaml",
-  "docs-platform/changelog/events.ndjson",
-] as const;
 
 function readYaml(relativePath: string) { return YAML.parse(fs.readFileSync(path.join(projectRoot, relativePath), "utf8")); }
 function googleLink(id: string, type: string) {
   if (type === "spreadsheet") return `https://docs.google.com/spreadsheets/d/${id}/preview`;
   return `https://docs.google.com/document/d/${id}/preview`;
 }
-function gitBaseline(timestamp: string) {
-  try {
-    return execFileSync("git", ["log", "-1", "--format=%H", `--before=${timestamp}`], { cwd: projectRoot, encoding: "utf8" }).trim() || null;
-  } catch {
-    return null;
-  }
-}
-
 function snapshotEventPrefix(events: ReturnType<typeof readTimelineEvents>, decisionId: string) {
   let lastVerified = -1;
   for (let index = events.length - 1; index >= 0; index -= 1) {
@@ -47,27 +26,19 @@ function snapshotEventPrefix(events: ReturnType<typeof readTimelineEvents>, deci
   return lastVerified >= 0 ? events.slice(0, lastVerified + 1) : events;
 }
 
-function eventPrefixHash(eventCount: number) {
-  const lines = fs.readFileSync(path.join(projectRoot, "docs-platform/changelog/events.ndjson"), "utf8").split("\n");
-  return sha256(`${lines.slice(0, eventCount).join("\n")}\n`);
-}
-
 export function buildWebSnapshot() {
+  const contentState = buildContentStateManifest(projectRoot);
+  const sourceHashes = sourceHashMap(contentState);
   const register = readRegister();
   const research = readPriceResearch();
   const modular = readModularSources();
   const pilotAssumptions = readYaml("docs-platform/working/pilot-capex-assumptions.yaml");
   const investorStartModel = readYaml("docs-platform/working/investor-start-model.yaml");
   const documents = (readYaml("docs-platform/registry/documents.yaml")?.documents ?? []) as Array<Record<string, unknown>>;
-  const decisions = (readYaml("docs-platform/registry/decisions.yaml")?.decisions ?? []) as Array<Record<string, unknown>>;
   const events = readTimelineEvents();
   const contentEvents = snapshotEventPrefix(events, register.document.decision_id);
-  const currentDecision = decisions.find(item => item.id === register.document.decision_id) ?? decisions.at(-1) ?? null;
   const currentEvent = [...contentEvents].reverse().find(event => event.decision_id === register.document.decision_id && effectiveType(event) === "verified") ?? null;
-  const currentManifestPath = path.join(platformRoot, "changes", "iterations", `${register.document.iteration_id}.yaml`);
-  const currentManifest = fs.existsSync(currentManifestPath) ? YAML.parse(fs.readFileSync(currentManifestPath, "utf8")) : null;
-  const generatedAt = currentEvent ? effectiveOccurredAt(currentEvent) : `${String((currentDecision?.updated_at as string | undefined) ?? "2026-08-03")}T00:00:00.000Z`;
-  const sourceHashes = Object.fromEntries(SOURCE_PATHS.map(relativePath => [relativePath, relativePath === "docs-platform/changelog/events.ndjson" ? eventPrefixHash(contentEvents.length) : sha256(fs.readFileSync(path.join(projectRoot, relativePath)))]));
+  const generatedAt = currentEvent ? effectiveOccurredAt(currentEvent) : research.document.checked_at;
   const researchByItem = new Map(research.items.map(item => [item.item_id, item]));
   const linksByItem = new Map<string, typeof modular.module_items.links>();
   for (const link of modular.module_items.links) linksByItem.set(link.item_id, [...(linksByItem.get(link.item_id) ?? []), link]);
@@ -105,6 +76,7 @@ export function buildWebSnapshot() {
 
   return {
     meta: {
+      schemaVersion: contentState.snapshot_schema_version,
       project: "Колобочная",
       title: "CAPEX-конфигуратор",
       status: "research",
@@ -114,12 +86,15 @@ export function buildWebSnapshot() {
       priceCheckedAt: research.document.checked_at,
       currency: research.document.currency,
       decisionId: register.document.decision_id,
-      changeSetId: currentEvent?.change_set_id ?? currentManifest?.change_set_id ?? null,
+      changeSetId: currentEvent?.change_set_id ?? null,
       iterationId: register.document.iteration_id,
-      gitBaselineCommit: gitBaseline(generatedAt),
+      approvedPayloadSha256: currentEvent ? (isV2(currentEvent) ? currentEvent.approved_payload_sha256 : currentEvent.approved_payload.sha256) : null,
+      gitBaselineCommit: "не зафиксирован",
       warning: "В сумму включены только оценённые позиции выбранной комплектации оборудования. Инженерные работы, подготовка помещения, монтаж, расходы запуска, первоначальный запас, оборотный капитал и резерв бюджета пока не рассчитаны.",
+      contentState,
+      contentStateSha256: contentState.content_state_sha256,
       sourceHashes,
-      sourceBundleSha256: sha256(JSON.stringify(sourceHashes)),
+      sourceBundleSha256: contentState.content_state_sha256,
       counts: {
         equipmentRecords: register.equipment.length,
         independentProcurementRecords: procurement.length,
@@ -169,7 +144,7 @@ export function buildWebSnapshot() {
     pilotEconomics: pilotAssumptions,
     investorStartModel: {
       ...investorStartModel,
-      source_sha256: sourceHashes["docs-platform/working/investor-start-model.yaml"],
+      source_sha256: sha256(fs.readFileSync(path.join(projectRoot, "docs-platform/working/investor-start-model.yaml"))),
     },
     overrides: modular.configuration_overrides.overrides,
     items: register.equipment.map(item => {
@@ -239,8 +214,34 @@ export function buildWebSnapshot() {
 
 function serializedSnapshot() { return `${JSON.stringify(buildWebSnapshot(), null, 2)}\n`; }
 
+function validateSnapshotSchema(value: unknown): string[] {
+  const schema = JSON.parse(fs.readFileSync(path.join(projectRoot, "docs-platform/schemas/capex-web-snapshot.schema.json"), "utf8"));
+  const validate = new Ajv2020({ allErrors: true, strict: false }).compile(schema);
+  return validate(value) ? [] : (validate.errors ?? []).map(error => `${error.instancePath || "/"} ${error.message}`);
+}
+
+function storedManifest(value: any): ContentStateManifest | null {
+  const manifest = value?.meta?.contentState;
+  return manifest && Array.isArray(manifest.source_files) && typeof manifest.content_state_sha256 === "string" ? manifest as ContentStateManifest : null;
+}
+
+function staleDiagnostic(stored: any, current: ContentStateManifest): string {
+  const previous = storedManifest(stored);
+  if (!previous) return "Snapshot stale because:\n- stored snapshot has no content_state_sha256 manifest\n- expected hash: missing\n- actual hash: " + current.content_state_sha256;
+  const changes = changedContentSources(previous, current);
+  return [
+    "Snapshot stale because:",
+    ...changes.flatMap(change => [`- ${change.path}`, `  expected hash: ${change.expected ?? "missing"}`, `  actual hash: ${change.actual ?? "missing"}`]),
+    `- expected content_state_sha256: ${previous.content_state_sha256}`,
+    `- actual content_state_sha256: ${current.content_state_sha256}`,
+  ].join("\n");
+}
+
 export function writeWebSnapshot() {
   const content = serializedSnapshot();
+  const parsed = JSON.parse(content);
+  const schemaErrors = validateSnapshotSchema(parsed);
+  if (schemaErrors.length) throw new Error(`CAPEX web snapshot schema failed:\n${schemaErrors.join("\n")}`);
   fs.mkdirSync(path.dirname(WEB_SNAPSHOT_PATH), { recursive: true });
   fs.writeFileSync(WEB_SNAPSHOT_PATH, content);
   const result = { path: path.relative(projectRoot, WEB_SNAPSHOT_PATH).replaceAll(path.sep, "/"), sha256: sha256(content), bytes: Buffer.byteLength(content) };
@@ -250,10 +251,19 @@ export function writeWebSnapshot() {
 
 export function checkWebSnapshot() {
   if (!fs.existsSync(WEB_SNAPSHOT_PATH)) throw new Error("CAPEX web snapshot is missing. Run npm run capex:web:sync.");
-  const expected = serializedSnapshot();
+  const currentManifest = buildContentStateManifest(projectRoot);
   const actual = fs.readFileSync(WEB_SNAPSHOT_PATH, "utf8");
-  if (actual !== expected) throw new Error("CAPEX web snapshot is stale. Run npm run capex:web:sync and review the generated diff.");
-  const result = { validation: "OK", path: path.relative(projectRoot, WEB_SNAPSHOT_PATH).replaceAll(path.sep, "/"), sha256: sha256(actual), source_bundle_sha256: buildWebSnapshot().meta.sourceBundleSha256 };
+  const stored = JSON.parse(actual);
+  if (stored?.meta?.contentStateSha256 !== currentManifest.content_state_sha256) {
+    throw new Error(`${staleDiagnostic(stored, currentManifest)}\nRun npm run capex:web:sync and review the generated diff.`);
+  }
+  const schemaErrors = validateSnapshotSchema(stored);
+  if (schemaErrors.length) throw new Error(`CAPEX web snapshot schema failed:\n${schemaErrors.join("\n")}`);
+  const expected = serializedSnapshot();
+  if (actual !== expected) throw new Error("CAPEX web snapshot content differs despite an identical content_state_sha256; generator output is not deterministic.");
+  console.log("Content snapshot is current.");
+  if (!capexGovernanceProjectionIsCurrent()) console.log("Governance state changed without content changes.");
+  const result = { validation: "OK", path: path.relative(projectRoot, WEB_SNAPSHOT_PATH).replaceAll(path.sep, "/"), sha256: sha256(actual), content_state_sha256: currentManifest.content_state_sha256, source_bundle_sha256: currentManifest.content_state_sha256 };
   console.log(JSON.stringify(result, null, 2));
   return result;
 }

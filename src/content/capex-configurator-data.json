@@ -1,5 +1,6 @@
 {
   "meta": {
+    "schemaVersion": 2,
     "project": "Колобочная",
     "title": "CAPEX-конфигуратор",
     "status": "research",
@@ -11,23 +12,116 @@
     "decisionId": "DEC-015",
     "changeSetId": "CHG-030",
     "iterationId": "ITR-CAPEX-REMAINING-PRICES-2026-08-05-01",
-    "gitBaselineCommit": "4d7f86bef1a7fe985c0dacdf71fcd094215959bf",
+    "approvedPayloadSha256": "123b291763b8571d36a5650d9b49d8159839834b574895e666ed943f4089f6d1",
+    "gitBaselineCommit": "не зафиксирован",
     "warning": "В сумму включены только оценённые позиции выбранной комплектации оборудования. Инженерные работы, подготовка помещения, монтаж, расходы запуска, первоначальный запас, оборотный капитал и резерв бюджета пока не рассчитаны.",
-    "sourceHashes": {
-      "docs-platform/working/capex-equipment-register.yaml": "c8853fe61ad8407ab96d0fbafb79702853842f970cbf699b6c2138b23f32c7aa",
-      "docs-platform/working/capex-price-research.yaml": "b2b752f1822db8b529d58d822b83b32d44bcba9a0110ae35062d3b561f08249d",
-      "docs-platform/working/capex-modules.yaml": "2fb31d90b852a5aaae6500d99412c7fabba0bbe9187f08106e3f37c7a52ae33a",
-      "docs-platform/working/capex-module-items.yaml": "dba6b2989a951c5edab8a84cde5eef86de0ad409eedea17535b53a259d2b7e1b",
-      "docs-platform/working/capex-point-formats.yaml": "4b6d5a8806f696f499dbbab8fa061020c7ba77b670eb2a1f7d3ccdcc78b2e523",
-      "docs-platform/working/capex-configurations.yaml": "3810fa84efa969d8d95e2f0b0b49ede044b854d9be21ac92f5787d9ff8369f3c",
-      "docs-platform/working/capex-configuration-overrides.yaml": "de97265a2e2a0bdb5ae67fcf74ffd368f1fa7f4243c4d1b78a6ecad8e12b1df4",
-      "docs-platform/working/pilot-capex-assumptions.yaml": "25e11d4db20050b3a95cab40797ef0a29e56fad93c73d33d4a39415a8071d4ac",
-      "docs-platform/working/investor-start-model.yaml": "54eef39aa293fb63cd673fffe000b43c46d425e3be98174bced6bc2c7c854b27",
-      "docs-platform/registry/documents.yaml": "e3a1bf9a433a3c0b473d41ed1fdaf12750dbe3974e65608b60908eb44a999d58",
-      "docs-platform/registry/decisions.yaml": "73a4cd8dbef9dedb21c2e055d5f713dfb26fd289db9118eaca8f13c683f86352",
-      "docs-platform/changelog/events.ndjson": "462a4d154e6ca24546c41d577ef83f3a583c0b75b714917c6939b9b92ba97dd5"
+    "contentState": {
+      "schema_version": 1,
+      "snapshot_schema_version": 2,
+      "source_files": [
+        {
+          "path": "docs-platform/working/capex-equipment-register.yaml",
+          "sha256": "f095aaaf5ba6500636d5982966a95f3f675319912d6b8523d4a93cbfbf7c908b",
+          "normalization": "yaml_canonical_nfc"
+        },
+        {
+          "path": "docs-platform/working/capex-price-research.yaml",
+          "sha256": "efd3da7b0cdb9ad8bbd6b6adb96db79b23c3348c2e8012e44e141dd1774b1e02",
+          "normalization": "yaml_canonical_nfc"
+        },
+        {
+          "path": "docs-platform/working/capex-modules.yaml",
+          "sha256": "1a30bb6c704d4be612e9af85d10ab9802a90721231178e2676ea12a10ca6ddb4",
+          "normalization": "yaml_canonical_nfc"
+        },
+        {
+          "path": "docs-platform/working/capex-module-items.yaml",
+          "sha256": "3ae07752491dacad1af1985874f0fe597b331a79f58efdb22f2e48e9a739f443",
+          "normalization": "yaml_canonical_nfc"
+        },
+        {
+          "path": "docs-platform/working/capex-point-formats.yaml",
+          "sha256": "ed1c5d1cb46558cab7a1b18576f576d58bbec88cd753d52cb23665a37308c55f",
+          "normalization": "yaml_canonical_nfc"
+        },
+        {
+          "path": "docs-platform/working/capex-configurations.yaml",
+          "sha256": "acfb1665162cc663fd987fa0877be579df6884aecad0dfbf8aa6b5daad0cb9fa",
+          "normalization": "yaml_canonical_nfc"
+        },
+        {
+          "path": "docs-platform/working/capex-configuration-overrides.yaml",
+          "sha256": "3d425fb54554816595c5788875d1e34a9e838d5c615e31b1044fdc82e779561a",
+          "normalization": "yaml_canonical_nfc"
+        },
+        {
+          "path": "docs-platform/working/pilot-capex-assumptions.yaml",
+          "sha256": "c000b07214cf0fb239adad1815d0bc3de2cbe95a8fca309ed0a7d8ef5a5db0c8",
+          "normalization": "yaml_canonical_nfc"
+        },
+        {
+          "path": "docs-platform/working/investor-start-model.yaml",
+          "sha256": "aa55fd675006e1d2a58b6ee20765f5c2e15f6f52f398612c6924b8818a9f9849",
+          "normalization": "yaml_canonical_nfc"
+        },
+        {
+          "path": "docs-platform/registry/documents.yaml",
+          "sha256": "64159ad1868dff174b21ebc0953e5a1793526b78aa0bcbd340ffbe6194290ed5",
+          "normalization": "public_document_projection"
+        },
+        {
+          "path": "docs-platform/app/src/capex/web-snapshot.ts",
+          "sha256": "e2d1f83ae5084fcd74485e84223c4151dee7542133aff37f3baf18fd812352ff",
+          "normalization": "text_lf_nfc"
+        },
+        {
+          "path": "docs-platform/app/src/capex/content-state.ts",
+          "sha256": "65e00bdf29366e2950b4048eaeea7f35a9cbf23689b64baa28ed24d0682171e4",
+          "normalization": "text_lf_nfc"
+        },
+        {
+          "path": "docs-platform/app/src/capex/register.ts",
+          "sha256": "00969d3047f046efd76c3b267722eb40b6215431d6d1f50dfb0b6950ac30b652",
+          "normalization": "text_lf_nfc"
+        },
+        {
+          "path": "docs-platform/app/src/capex/modular.ts",
+          "sha256": "886bd8a48c17af6859bdf5c61fec1048c3f855113bf39e33d94f1dc20e84f84d",
+          "normalization": "text_lf_nfc"
+        },
+        {
+          "path": "docs-platform/app/src/capex/price-research.ts",
+          "sha256": "3eb4da773f7f6b5f43c7301ed4ce427329f4172e8af6ee10c603978e654fc945",
+          "normalization": "text_lf_nfc"
+        },
+        {
+          "path": "docs-platform/schemas/capex-web-snapshot.schema.json",
+          "sha256": "8bb5bf8c512bc3c8d14ed010ef9567778ae667ed048013ce5f00880264045874",
+          "normalization": "json_canonical_nfc"
+        }
+      ],
+      "content_state_sha256": "019867401744567473b35404bd3bb3b10b2fbf3e8a53abaedfb738b5881468e6"
     },
-    "sourceBundleSha256": "4d0f6c079262df0c2946efdd7c0bff75920f3b420c27ec6ae6fe160c7d9681c8",
+    "contentStateSha256": "019867401744567473b35404bd3bb3b10b2fbf3e8a53abaedfb738b5881468e6",
+    "sourceHashes": {
+      "docs-platform/working/capex-equipment-register.yaml": "f095aaaf5ba6500636d5982966a95f3f675319912d6b8523d4a93cbfbf7c908b",
+      "docs-platform/working/capex-price-research.yaml": "efd3da7b0cdb9ad8bbd6b6adb96db79b23c3348c2e8012e44e141dd1774b1e02",
+      "docs-platform/working/capex-modules.yaml": "1a30bb6c704d4be612e9af85d10ab9802a90721231178e2676ea12a10ca6ddb4",
+      "docs-platform/working/capex-module-items.yaml": "3ae07752491dacad1af1985874f0fe597b331a79f58efdb22f2e48e9a739f443",
+      "docs-platform/working/capex-point-formats.yaml": "ed1c5d1cb46558cab7a1b18576f576d58bbec88cd753d52cb23665a37308c55f",
+      "docs-platform/working/capex-configurations.yaml": "acfb1665162cc663fd987fa0877be579df6884aecad0dfbf8aa6b5daad0cb9fa",
+      "docs-platform/working/capex-configuration-overrides.yaml": "3d425fb54554816595c5788875d1e34a9e838d5c615e31b1044fdc82e779561a",
+      "docs-platform/working/pilot-capex-assumptions.yaml": "c000b07214cf0fb239adad1815d0bc3de2cbe95a8fca309ed0a7d8ef5a5db0c8",
+      "docs-platform/working/investor-start-model.yaml": "aa55fd675006e1d2a58b6ee20765f5c2e15f6f52f398612c6924b8818a9f9849",
+      "docs-platform/registry/documents.yaml": "64159ad1868dff174b21ebc0953e5a1793526b78aa0bcbd340ffbe6194290ed5",
+      "docs-platform/app/src/capex/web-snapshot.ts": "e2d1f83ae5084fcd74485e84223c4151dee7542133aff37f3baf18fd812352ff",
+      "docs-platform/app/src/capex/content-state.ts": "65e00bdf29366e2950b4048eaeea7f35a9cbf23689b64baa28ed24d0682171e4",
+      "docs-platform/app/src/capex/register.ts": "00969d3047f046efd76c3b267722eb40b6215431d6d1f50dfb0b6950ac30b652",
+      "docs-platform/app/src/capex/modular.ts": "886bd8a48c17af6859bdf5c61fec1048c3f855113bf39e33d94f1dc20e84f84d",
+      "docs-platform/app/src/capex/price-research.ts": "3eb4da773f7f6b5f43c7301ed4ce427329f4172e8af6ee10c603978e654fc945",
+      "docs-platform/schemas/capex-web-snapshot.schema.json": "8bb5bf8c512bc3c8d14ed010ef9567778ae667ed048013ce5f00880264045874"
+    },
+    "sourceBundleSha256": "019867401744567473b35404bd3bb3b10b2fbf3e8a53abaedfb738b5881468e6",
     "counts": {
       "equipmentRecords": 160,
       "independentProcurementRecords": 51,

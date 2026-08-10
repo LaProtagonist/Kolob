@@ -1,0 +1,14 @@
+schema_version: 2
+iteration_id: ITR-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01
+mode: governed_reverse_change_set
+status: prepared
+before_content_commit: d928ec0c7604dc879911ef6c2a2e0a37a300b438
+source_scope: docs-platform/changelog/payloads/ITR-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01-approved.yaml
+reverse_strategy:
+  modified_files: restore blobs from before_content_commit through a newly approved reverse change set
+  added_files: remove only through an explicit approved reverse operation
+  deployment: publish the restored content state only after reverse validation and a new deployment receipt
+  events: append rollback lifecycle; never delete decoupling or deployment evidence
+  tags: retain historical iteration tag
+  git_reset_forbidden: true
+dependency_check: required against every later sealed iteration

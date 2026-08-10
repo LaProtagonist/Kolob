@@ -13,6 +13,7 @@ import {
   previewPilotReverse,
 } from "../src/capex/pilot-expansion-workflow.js";
 import { buildEquipmentBom, readModularSources } from "../src/capex/modular.js";
+import { buildContentStateManifest, sourceHashMap } from "../src/capex/content-state.js";
 import { PRICE_SCENARIOS, readPriceResearch } from "../src/capex/price-research.js";
 import { REMAINING_PRICE_DECISION_ID } from "../src/capex/remaining-price-workflow.js";
 import { CAPEX_REGISTER_SOURCE_SHA256, readRegister, sha256 } from "../src/capex/register.js";
@@ -86,15 +87,11 @@ test("the web snapshot is deterministic, current and derived from canonical sour
   assert.equal(built.scenarios.find(item => item.id === "minimum")?.availableInSelector, false);
   assert.equal(built.pilotConfiguration?.configuration_id, "CFG-PILOT-001");
   assert.equal(built.pilotEconomics.software.amount_rub_per_year, 120000);
-  for (const [relative, hash] of Object.entries(built.meta.sourceHashes)) {
-    if (relative === "docs-platform/changelog/events.ndjson") {
-      const lines = fs.readFileSync(path.join(project, relative), "utf8").split("\n");
-      const timelineHead = built.timeline.at(-1)?.id;
-      const eventIndex = lines.findIndex(line => line.includes(`\"event_id\":\"${timelineHead}\"`));
-      assert.ok(eventIndex >= 0, "snapshot timeline head must exist in events.ndjson");
-      assert.equal(sha256(Buffer.from(`${lines.slice(0, eventIndex + 1).join("\n")}\n`)), hash, relative);
-    } else assert.equal(sha256(fs.readFileSync(path.join(project, relative))), hash, relative);
-  }
+  const contentState = buildContentStateManifest(project);
+  assert.deepEqual(built.meta.contentState, contentState);
+  assert.deepEqual(built.meta.sourceHashes, sourceHashMap(contentState));
+  assert.equal(built.meta.contentStateSha256, contentState.content_state_sha256);
+  assert.equal(Object.keys(built.meta.sourceHashes).some(relative => /events|decisions/.test(relative)), false);
   const original = console.log;
   console.log = () => undefined;
   try { assert.equal(checkWebSnapshot().validation, "OK"); }

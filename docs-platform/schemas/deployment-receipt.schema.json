@@ -1,15 +1,22 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
-  "required": ["iteration_id", "content_commit_hash", "build_hash", "deployment_id", "production_url", "deployed_at", "smoke_test_result"],
+  "required": ["schema_version", "iteration_id", "content_state_sha256", "content_commit_hash", "seal_commit_hash", "repository_head_at_build", "dist_sha256", "deployment_id", "production_url", "built_at", "deployed_at", "smoke_test_result"],
   "properties": {
+    "schema_version": { "const": 2 },
     "iteration_id": { "type": "string", "minLength": 1 },
+    "content_state_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
     "content_commit_hash": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "seal_commit_hash": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "repository_head_at_build": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "dist_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
     "build_hash": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
     "deployment_id": { "type": "string", "minLength": 1 },
     "production_url": { "type": "string", "minLength": 1 },
+    "built_at": { "type": "string", "minLength": 1 },
     "deployed_at": { "type": "string", "minLength": 1 },
-    "smoke_test_result": { "enum": ["passed", "failed"] }
-  }
+    "smoke_test_result": { "enum": ["passed", "failed"] },
+    "recorded_at": { "type": "string" }
+  },
+  "additionalProperties": false
 }
-

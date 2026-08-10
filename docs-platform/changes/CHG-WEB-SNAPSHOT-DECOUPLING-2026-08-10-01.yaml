@@ -1,0 +1,28 @@
+schema_version: 2
+change_id: CHG-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01
+iteration_id: ITR-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01
+proposal_id: PROP-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01
+decision_id: DEC-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01
+title: Separate CAPEX content state from governance and deployment state
+status: approved
+created_at: 2026-08-10
+approved_payload_path: docs-platform/changelog/payloads/ITR-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01-approved.yaml
+approved_payload_sha256: e7a0822f9c4820539998ac9aea4cd52f1dac8b965f30fb065f46e35a077d324d
+governance_operations:
+  - replace the mixed snapshot source bundle with content_state_sha256 over normalized content-only inputs
+  - project timeline, commit, seal and deployment linkage separately from the public content snapshot
+  - classify deployment drift as content or governance-only
+  - prove npm ci and npm run build from sealed HEAD in a temporary worktree
+operations: []
+preview:
+  status: passed
+  mutation_performed: false
+  old_source_bundle_sha256: 4d0f6c079262df0c2946efdd7c0bff75920f3b420c27ec6ae6fe160c7d9681c8
+  expected_content_state_sha256: 019867401744567473b35404bd3bb3b10b2fbf3e8a53abaedfb738b5881468e6
+  affected_runtime_files:
+    - src/content/capex-configurator-data.json
+    - docs-platform/app/src/capex/content-state.ts
+    - docs-platform/app/src/capex/web-snapshot.ts
+  excluded_business_sources_changed: []
+  google_writes: false
+  public_copy_or_design_changes: false

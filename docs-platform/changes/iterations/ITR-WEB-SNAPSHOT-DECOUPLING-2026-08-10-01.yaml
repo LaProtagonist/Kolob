@@ -1,0 +1,24 @@
+schema_version: 2
+iteration_id: ITR-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01
+proposal_id: PROP-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01
+decision_id: DEC-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01
+change_set_id: CHG-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01
+title: Web snapshot and governance seal decoupling
+status: approved
+approved_by: project owner
+approved_at: 2026-08-10T19:12:13.000Z
+actor: Codex
+scope: Infrastructure-only separation of page-affecting content state from append-only governance and deployment state; no business data, public copy, Google or financial change.
+approved_payload_path: docs-platform/changelog/payloads/ITR-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01-approved.yaml
+approved_payload_sha256: e7a0822f9c4820539998ac9aea4cd52f1dac8b965f30fb065f46e35a077d324d
+before_state_sha256: 1318afe1fb010b1d87064d7f01dbe185d232602f8fdc902b0c4a87c41ad9e1f3
+after_state_sha256: 49f500bb1050732955d4fb58dda45c7b4efeb146ee8239f3a9c6a5efd196ee59
+affected_document_ids: []
+affected_section_ids:
+  - content-fingerprint
+  - governance-projection
+  - snapshot-freshness
+  - deployment-provenance
+  - deployment-drift
+  - sealed-build-reproduction
+rollback_payload: docs-platform/changelog/rollback-payloads/ITR-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01/manifest.yaml

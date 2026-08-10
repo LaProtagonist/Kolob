@@ -67,7 +67,7 @@
         "sequence": { "type": "integer", "minimum": 1 },
         "event_id": { "type": "string", "minLength": 1 },
         "event_type": { "enum": [
-          "proposed", "approved", "previewed", "applied", "verified", "committed", "published", "synced", "closed",
+          "proposed", "approved", "previewed", "applied", "verified", "committed", "deployed", "published", "synced", "closed",
           "rejected", "failed", "superseded", "rollback_requested", "rollback_approved", "rolled_back",
           "compensation_proposed", "compensated", "external_drift_detected", "legacy_imported"
         ] },
