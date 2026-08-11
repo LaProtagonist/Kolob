@@ -1,0 +1,14 @@
+schema_version: 2
+iteration_id: ITR-LAUNCH-BUDGET-COPY-2026-08-11-01
+mode: governed_reverse_change_set
+status: prepared
+before_content_commit: 18114cd47f4d0bc859f77a3174734391d136d41d
+before_state_sha256: dacb8dc45b89c47fa14293aaf64f70dc4cac8cfcdc3db58b30fd3db976df95f8
+after_state_sha256: 34957e2482d200d1b040e06099ab5e2cd1f6ae57a60df9cf7ce43b7d24dc974f
+reverse_strategy:
+  public_copy: restore every before value recorded in docs-platform/changelog/audit/ITR-LAUNCH-BUDGET-COPY-2026-08-11-01.yaml through a new approved reverse change set
+  visibility: restore the unconditional «Без цены» metric and the removed technical note only if explicitly approved by that reverse decision
+  tests: restore the preceding route assertions together with the public copy
+  events: append rollback lifecycle events; never delete this iteration or its before/after record
+  git_reset_forbidden: true
+dependency_check: required against every later applied or sealed iteration

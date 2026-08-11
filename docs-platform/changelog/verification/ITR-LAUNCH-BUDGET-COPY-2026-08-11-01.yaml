@@ -1,0 +1,99 @@
+schema_version: 2
+iteration_id: ITR-LAUNCH-BUDGET-COPY-2026-08-11-01
+proposal_id: PROP-LAUNCH-BUDGET-COPY-2026-08-11-01
+decision_id: DEC-LAUNCH-BUDGET-COPY-2026-08-11-01
+change_set_id: CHG-LAUNCH-BUDGET-COPY-2026-08-11-01
+verified_at: 2026-08-11T01:03:00.000Z
+actor: Codex
+validation_status: passed
+approved_payload:
+  preserved_initial_path: docs-platform/changelog/payloads/ITR-LAUNCH-BUDGET-COPY-2026-08-11-01-approved.yaml
+  preserved_initial_sha256: 6a7549edae382177def8da765ab270f7f08d0d1901723ae7db6add86e1523382
+  validated_yaml_projection_path: docs-platform/changelog/payloads/ITR-LAUNCH-BUDGET-COPY-2026-08-11-01-approved-v2.yaml
+  validated_yaml_projection_sha256: 249b71a96972399b1cb4772f808ca5cdeec63e152f0fa3eccd6da53dc90f3afd
+  projection_semantics_changed: false
+  note: The initial byte record is retained append-only; v2 adds only YAML quoting required for two colon-bearing strings.
+state:
+  algorithm: SHA-256 over ordered relative path and file bytes
+  before_state_sha256: dacb8dc45b89c47fa14293aaf64f70dc4cac8cfcdc3db58b30fd3db976df95f8
+  after_state_sha256: 34957e2482d200d1b040e06099ab5e2cd1f6ae57a60df9cf7ce43b7d24dc974f
+  launch_budget_component_sha256: 46d40f88b208004fa7dbfb99e6298360ab5243f344a56778014826a58897d276
+  route_test_sha256: 57b0b9be1c08f89910a71f2a5c82b0a36736beea58fd9b29ed462c4836b2cbc1
+business_source_invariants:
+  capex_equipment_register:
+    before_sha256: c8853fe61ad8407ab96d0fbafb79702853842f970cbf699b6c2138b23f32c7aa
+    after_sha256: c8853fe61ad8407ab96d0fbafb79702853842f970cbf699b6c2138b23f32c7aa
+  capex_price_research:
+    before_sha256: b2b752f1822db8b529d58d822b83b32d44bcba9a0110ae35062d3b561f08249d
+    after_sha256: b2b752f1822db8b529d58d822b83b32d44bcba9a0110ae35062d3b561f08249d
+  investor_start_model:
+    before_sha256: 54eef39aa293fb63cd673fffe000b43c46d425e3be98174bced6bc2c7c854b27
+    after_sha256: 54eef39aa293fb63cd673fffe000b43c46d425e3be98174bced6bc2c7c854b27
+  capex_web_snapshot:
+    before_sha256: b916327ff895c06734390692d417459f75abc01a7f8f0dab78064e72be1e35cf
+    after_sha256: b916327ff895c06734390692d417459f75abc01a7f8f0dab78064e72be1e35cf
+    content_state_sha256: 019867401744567473b35404bd3bb3b10b2fbf3e8a53abaedfb738b5881468e6
+  launch_budget_calculation_library:
+    before_sha256: 8e70725e17c85d6e5ee13be1d1db185acbe4f67c3439dbe193b74064646b33e9
+    after_sha256: 8e70725e17c85d6e5ee13be1d1db185acbe4f67c3439dbe193b74064646b33e9
+  calculations_changed: false
+  formulas_changed: false
+  numeric_values_changed: false
+  google_files_changed: false
+route_verification:
+  route: /launch-budget
+  status: passed
+  approved_copy_missing: 0
+  superseded_copy_found: 0
+  zero_unpriced_metric_visible: false
+  technical_double_count_note_visible: false
+  console_errors: 0
+  page_errors: 0
+  horizontal_overflow:
+    desktop_1440x900: false
+    tablet_768x1024: false
+    mobile_390x844: false
+  deterministic_calculation_regression:
+    default_premises_entry_rub: 4900000
+    default_preparation_rub: 11000000
+    default_equipment_base_rub: 5298993
+    equipment_minimum_rub: 3979339
+    equipment_scale_ready_rub: 6659541
+    annual_rent_prepayment_duplicated: false
+    preparation_and_reserve_interaction: passed
+    local_storage_and_reset: passed
+  in_app_browser:
+    title: Расчёт стоимости запуска — Колобочная
+    approved_hero_found: true
+    approved_principle_heading_found: true
+    old_premises_copy_found: false
+    horizontal_overflow: false
+    browser_logs: []
+validation:
+  typescript_no_emit: passed
+  production_build_node_25_9_0: passed
+  content_snapshot_check: passed
+  deterministic_route_and_interaction_test: passed; 11 routes, 0 failures
+  timeline_before_verified_event: passed; 97 events
+  timeline_final: passed; 98 events
+  chronological_timeline_projection: generated
+  project_context_validation: passed
+  registry_validation: passed
+  governance_yaml_v2_projection: passed
+  git_diff_check: passed
+audit:
+  receipt: docs-platform/changelog/audit/ITR-LAUNCH-BUDGET-COPY-2026-08-11-01.yaml
+  receipt_sha256: f2403a92c4f42c9add5c16a5be40ddc3b06ec01a9908808fc9305b129387f174
+  reason: перевод внутренней технической подачи в деловой инвесторский формат
+rollback:
+  payload: docs-platform/changelog/rollback-payloads/ITR-LAUNCH-BUDGET-COPY-2026-08-11-01/manifest.yaml
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true
+git_and_delivery:
+  staged: false
+  committed: false
+  tagged: false
+  pushed: false
+  deployed: false
+summary: Exact approved copy is visible across all eight launch-budget blocks; the prior calculation results, business source hashes, responsive layout and internal data pipeline remain unchanged.

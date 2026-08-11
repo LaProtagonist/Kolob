@@ -156,7 +156,7 @@ async function inspectLaunchBudget(browser, baseUrl) {
     otherArea: await page.locator(".launch-inline-result").filter({ hasText: "Прочая площадь" }).locator("strong").innerText(),
     seats: await page.locator(".launch-seat-result strong").innerText(),
     furniture: await money(page.locator(".launch-research-line strong")),
-    premisesEntry: await money(page.locator(".launch-total-breakdown > div").filter({ hasText: "Вход в помещение" }).locator("dd")),
+    premisesEntry: await money(page.locator(".launch-total-breakdown > div").filter({ hasText: "Первоначальные платежи по аренде" }).locator("dd")),
     tiedFunds: await money(page.locator(".launch-tied-funds strong")),
     baseSelected: await page.locator('[data-control="equipment-scenario"][data-option="BASE"]').getAttribute("aria-pressed"),
     barEnabled: await page.locator("#bar-enabled").getAttribute("aria-checked"),
@@ -230,7 +230,7 @@ async function inspectLaunchBudget(browser, baseUrl) {
   await page.locator("#monthly-opex").fill("2000000");
   const purchase = {
     total: await money(total),
-    entry: await money(page.locator(".launch-total-breakdown > div").filter({ hasText: "Вход в помещение" }).locator("dd")),
+    entry: await money(page.locator(".launch-total-breakdown > div").filter({ hasText: "Стоимость покупки помещения" }).locator("dd")),
     reserve: await money(page.locator(".launch-total-breakdown > div").filter({ hasText: "Операционный запас" }).locator("dd")),
     assets: await money(page.locator(".launch-assets strong")),
   };
@@ -240,7 +240,7 @@ async function inspectLaunchBudget(browser, baseUrl) {
   await page.locator("#prepayment-months").selectOption("3");
   await page.locator("#security-deposit-months").selectOption("2");
   const rent = {
-    entry: await money(page.locator(".launch-total-breakdown > div").filter({ hasText: "Вход в помещение" }).locator("dd")),
+    entry: await money(page.locator(".launch-total-breakdown > div").filter({ hasText: "Первоначальные платежи по аренде" }).locator("dd")),
     reserve: await money(page.locator(".launch-total-breakdown > div").filter({ hasText: "Операционный запас" }).locator("dd")),
     tied: await money(page.locator(".launch-tied-funds strong")),
   };
@@ -300,6 +300,60 @@ async function inspectLaunchBudget(browser, baseUrl) {
   });
 
   const bodyText = await page.locator("body").innerText();
+  const sourceText = await page.locator("body").textContent();
+  const approvedCopy = [
+    "Модель совмещённого объекта «Колобочной»: заготовочное производство и торговая точка с посадочным залом.",
+    "Возможности расчёта",
+    "Расчёт позволяет сравнить сценарии запуска при аренде или покупке помещения и увидеть, как площадь, состав оснащения, подготовка объекта и запас на запуск влияют на итоговую стоимость. Базовые параметры уже заданы и могут быть изменены под конкретный вариант.",
+    "Расчёт предусматривает два сценария: приобретение помещения в собственность или аренду. Параметры каждого сценария можно изменить под рассматриваемый объект.",
+    "Ежемесячная арендная плата",
+    "Предоплата аренды",
+    "Первоначальные платежи по аренде",
+    "Предоплата аренды и обеспечительный платёж.",
+    "Распределение площади определяет предварительную вместимость зала и стоимость его оснащения.",
+    "Кухня и заготовочное производство",
+    "Чистая площадь посадочного зала",
+    "Зоны заказа и выдачи, склады, санузлы, проходы, служебные и технические помещения.",
+    "Предварительная вместимость",
+    "Окончательная вместимость определяется после разработки планировки с учётом проходов, эвакуационных требований и доступной среды.",
+    "Оснащение и мебель",
+    "Выберите комплектацию оборудования и уровень мебели для посадочного зала.",
+    "Предварительная стоимость мебели",
+    "Стоимость рассчитана по текущим ценовым ориентирам. Часть позиций требует подтверждения коммерческими предложениями.",
+    "Требуют подтверждения коммерческими предложениями",
+    "Предварительная оценка адаптации помещения около 200 м² в Санкт-Петербурге.",
+    "Базовая оценка",
+    "Все основные категории включены; состав работ можно скорректировать.",
+    "Запас и резерв",
+    "Операционный запас покрывает расходы первых месяцев работы. До формирования полной операционной модели его основа рассчитывается по расходам на персонал, а остальные ежемесячные затраты задаются укрупнённо.",
+    "До появления полной операционной модели сумма вводится укрупнённо.",
+    "Предоплаченные месяцы аренды не учитываются повторно. Обеспечительный платёж показан отдельно.",
+    "Рассчитывается от стоимости оборудования, мебели и подготовки помещения.",
+    "Следующие этапы расчёта",
+    "После выбора конкретного помещения расчёт уточняется на основании технического обследования, планировки и коммерческих предложений поставщиков.",
+    "Инженерное обследование помещения",
+    "Детализация планировки и технологических решений",
+    "Подтверждение стоимости подготовки помещения",
+    "Коммерческие предложения по оборудованию и монтажу",
+    "Расчёт операционных расходов и финансовой модели",
+    "Формирование окончательного инвестиционного бюджета",
+    "Принцип расчёта",
+    "Расчёт показывает ориентировочную стоимость запуска выбранной конфигурации объекта. Сумма формируется из стоимости помещения, оборудования, мебели, подготовки объекта, операционного запаса и резерва.",
+    "Если часть данных требует уточнения, она отображается отдельно и не уменьшает итоговую оценку.",
+    "Связанные платежи по аренде учитываются отдельно от безвозвратных расходов.",
+  ];
+  const approvedCopyMissing = approvedCopy.filter(copy => !sourceText.includes(copy));
+  const supersededCopyFound = [
+    "Вход в помещение",
+    "Что показывает расчёт",
+    "Первый совмещённый объект „Колобочной“",
+    "Комплектация оборудования и мебель",
+    "Мебель посадочного зала учитывается по выбранной ставке на место и не добавляется к расчёту повторно через перечень оснащения.",
+    "Что учитывает расчёт",
+  ].filter(copy => bodyText.includes(copy));
+  const equipmentLabels = await page.locator('[data-control="equipment-scenario"] strong').allTextContents();
+  const furnitureLabels = await page.locator('[data-control="furniture-profile"] strong').allTextContents();
+  const zeroUnpricedLabelCount = await page.locator(".launch-equipment-summary dl > div").filter({ hasText: /^Без цены\s*0$/ }).count();
   const forbiddenDetail = ["EBITDA", "Окупаемость", "Доходность инвестора", "Точка безубыточности"].filter(term => bodyText.includes(term));
   const forbiddenPublicCopy = ["потребност", "стартовый раунд", "исследование", "research", "approved", "v0.1", "prp-", "canonical", "snapshot", "registry", "payload", "change set", "decision id", "source hash"].filter(term => bodyText.toLowerCase().includes(term));
   const titleAndMetadata = {
@@ -345,6 +399,11 @@ async function inspectLaunchBudget(browser, baseUrl) {
     seatingLabels,
     seatingHints,
     seatingAriaLabels,
+    equipmentLabels,
+    furnitureLabels,
+    approvedCopyMissing,
+    supersededCopyFound,
+    zeroUnpricedLabelCount,
     internalDocumentMentions,
     consoleMessages,
     pageErrors,
@@ -642,6 +701,11 @@ async function inspectCapex(browser, baseUrl) {
     if (launchBudget.seatingLabels.join("|") !== "Плотная|Сбалансированная|Комфортная") failures.push(`launch-budget seating labels invalid: ${launchBudget.seatingLabels.join(" | ")}`);
     if (launchBudget.seatingHints.join("|") !== "1,4 м² на место|1,6 м² на место|1,8 м² на место") failures.push(`launch-budget seating hints invalid: ${launchBudget.seatingHints.join(" | ")}`);
     if (launchBudget.seatingAriaLabels.join("|") !== "Плотная посадка — 1,4 м² на место|Сбалансированная посадка — 1,6 м² на место|Комфортная посадка — 1,8 м² на место") failures.push(`launch-budget seating accessibility labels invalid: ${launchBudget.seatingAriaLabels.join(" | ")}`);
+    if (launchBudget.equipmentLabels.join("|") !== "Минимальная|Базовая|Рост") failures.push(`launch-budget equipment labels invalid: ${launchBudget.equipmentLabels.join(" | ")}`);
+    if (launchBudget.furnitureLabels.join("|") !== "Функциональная|Сбалансированная|Комфорт") failures.push(`launch-budget furniture labels invalid: ${launchBudget.furnitureLabels.join(" | ")}`);
+    if (launchBudget.approvedCopyMissing.length) failures.push(`launch-budget approved copy missing: ${launchBudget.approvedCopyMissing.join(" | ")}`);
+    if (launchBudget.supersededCopyFound.length) failures.push(`launch-budget superseded copy remains: ${launchBudget.supersededCopyFound.join(" | ")}`);
+    if (launchBudget.zeroUnpricedLabelCount !== 0) failures.push("launch-budget renders 'Без цены — 0'");
     if (!launchBudget.fullConfiguration.some(item => item.includes("Бар и напитки"))
       || !launchBudget.fullConfiguration.some(item => item.includes("Выращивание зелени"))
       || launchBudget.reducedConfiguration.some(item => item.includes("Бар и напитки") || item.includes("Выращивание зелени"))) failures.push(`launch-budget current configuration is not dynamic: ${JSON.stringify({ full: launchBudget.fullConfiguration, reduced: launchBudget.reducedConfiguration })}`);

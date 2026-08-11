@@ -189,11 +189,11 @@ export function LaunchBudgetPage() {
         <div className="section-inner launch-hero-inner">
           <div>
             <h1 id="launch-budget-title">{rawModel.public_presentation.page_title}</h1>
-            <p className="launch-subtitle">{rawModel.public_presentation.subtitle}</p>
+            <p className="launch-subtitle">Модель совмещённого объекта «Колобочной»: заготовочное производство и торговая точка с посадочным залом.</p>
           </div>
           <aside>
-            <strong>{rawModel.public_presentation.hero_summary_title}</strong>
-            <p>{rawModel.public_presentation.hero_summary}</p>
+            <strong>Возможности расчёта</strong>
+            <p>Расчёт позволяет сравнить сценарии запуска при аренде или покупке помещения и увидеть, как площадь, состав оснащения, подготовка объекта и запас на запуск влияют на итоговую стоимость. Базовые параметры уже заданы и могут быть изменены под конкретный вариант.</p>
           </aside>
         </div>
       </section>
@@ -202,7 +202,7 @@ export function LaunchBudgetPage() {
         <div className="section-inner launch-workspace-grid">
           <div className="launch-form-column">
             <section className="launch-card" aria-labelledby="launch-premises-title">
-              <SectionHeading number="01" title="Помещение" text="Сравните два базовых сценария входа в объект." />
+              <SectionHeading number="01" title="Помещение" text="Расчёт предусматривает два сценария: приобретение помещения в собственность или аренду. Параметры каждого сценария можно изменить под рассматриваемый объект." />
               <Segmented
                 label="Сценарий помещения"
                 value={state.premisesScenario}
@@ -211,26 +211,26 @@ export function LaunchBudgetPage() {
                 onChange={value => update("premisesScenario", value as PremisesScenario)}
               />
               {state.premisesScenario === "purchase" ? (
-                <NumberField id="purchase-price" label="Стоимость помещения" suffix="₽" value={state.purchasePriceRub} onChange={value => update("purchasePriceRub", value)} hint={rawModel.premises.scenarios.purchase.hint} required />
+                <NumberField id="purchase-price" label="Стоимость покупки помещения" suffix="₽" value={state.purchasePriceRub} onChange={value => update("purchasePriceRub", value)} hint="Предварительный ориентир для помещения площадью около 200 м²." required />
               ) : (
                 <div className="launch-fields-grid">
-                  <NumberField id="monthly-rent" label="Аренда в месяц" suffix="₽" value={state.monthlyRentRub} onChange={value => update("monthlyRentRub", value)} required />
-                  <label className="launch-field" htmlFor="prepayment-months"><span>Предоплата</span><span className="launch-input-wrap"><select id="prepayment-months" value={state.prepaymentMonths} onChange={event => update("prepaymentMonths", Number(event.target.value))}>{rawModel.premises.scenarios.rent.prepayment_month_options.map(value => <option key={value} value={value}>{value} мес.</option>)}</select></span></label>
+                  <NumberField id="monthly-rent" label="Ежемесячная арендная плата" suffix="₽" value={state.monthlyRentRub} onChange={value => update("monthlyRentRub", value)} required />
+                  <label className="launch-field" htmlFor="prepayment-months"><span>Предоплата аренды</span><span className="launch-input-wrap"><select id="prepayment-months" value={state.prepaymentMonths} onChange={event => update("prepaymentMonths", Number(event.target.value))}>{rawModel.premises.scenarios.rent.prepayment_month_options.map(value => <option key={value} value={value}>{value} мес.</option>)}</select></span></label>
                   <label className="launch-field" htmlFor="security-deposit-months"><span>Обеспечительный платёж</span><span className="launch-input-wrap"><select id="security-deposit-months" value={state.securityDepositMonths} onChange={event => update("securityDepositMonths", Number(event.target.value))}>{rawModel.premises.scenarios.rent.security_deposit_month_options.map(value => <option key={value} value={value}>{value} мес.</option>)}</select></span></label>
                 </div>
               )}
-              <div className="launch-inline-result"><span>Вход в помещение</span><strong>{formatRub(result.premisesEntryRub)}</strong>{state.premisesScenario === "rent" ? <small>Включает предоплату и обеспечительный платёж.</small> : null}</div>
+              <div className="launch-inline-result"><span>{state.premisesScenario === "purchase" ? "Стоимость покупки помещения" : "Первоначальные платежи по аренде"}</span><strong>{formatRub(result.premisesEntryRub)}</strong>{state.premisesScenario === "rent" ? <small>Предоплата аренды и обеспечительный платёж.</small> : null}</div>
             </section>
 
             <section className="launch-card" aria-labelledby="launch-area-title">
-              <SectionHeading number="02" title="Площадь и посадочные места" text="Параметры нужны только для предварительной вместимости и мебели." />
+              <SectionHeading number="02" title="Площадь и посадочные места" text="Распределение площади определяет предварительную вместимость зала и стоимость его оснащения." />
               <div className="launch-fields-grid launch-fields-three">
                 <NumberField id="total-area" label="Общая площадь" suffix="м²" value={state.totalAreaM2} onChange={value => update("totalAreaM2", value)} />
-                <NumberField id="kitchen-area" label="Кухня и производство" suffix="м²" value={state.kitchenAreaM2} onChange={value => update("kitchenAreaM2", value)} />
-                <NumberField id="guest-area" label="Посадочный зал" suffix="м²" value={state.guestAreaM2} onChange={value => update("guestAreaM2", value)} />
+                <NumberField id="kitchen-area" label="Кухня и заготовочное производство" suffix="м²" value={state.kitchenAreaM2} onChange={value => update("kitchenAreaM2", value)} />
+                <NumberField id="guest-area" label="Чистая площадь посадочного зала" suffix="м²" value={state.guestAreaM2} onChange={value => update("guestAreaM2", value)} />
               </div>
               {result.areaInvalid ? <p className="launch-error" role="alert">Площадь кухни и посадочного зала не может превышать общую площадь. Итоговый расчёт приостановлен.</p> : null}
-              <div className="launch-inline-result"><span>Прочая площадь</span><strong>{result.otherAreaM2 === null ? "Не рассчитано" : `${numberFormatter.format(result.otherAreaM2)} м²`}</strong><small>Заказ и выдача, склады, санузлы, коридоры, помещения персонала и технические зоны.</small></div>
+              <div className="launch-inline-result"><span>Прочая площадь</span><strong>{result.otherAreaM2 === null ? "Не рассчитано" : `${numberFormatter.format(result.otherAreaM2)} м²`}</strong><small>Зоны заказа и выдачи, склады, санузлы, проходы, служебные и технические помещения.</small></div>
               <h3 className="launch-control-title">Плотность посадки</h3>
               <Segmented
                 label="Плотность посадки"
@@ -239,20 +239,20 @@ export function LaunchBudgetPage() {
                 options={rawModel.seating.profiles.map(profile => ({ value: profile.id, label: profile.label, hint: `${String(profile.square_metres_per_seat).replace(".", ",")} м² на место`, ariaLabel: profile.aria_label }))}
                 onChange={value => update("seatingProfileId", value as SeatingProfileId)}
               />
-              <div className="launch-seat-result"><span>Предварительно</span><strong>{result.seatCount === null ? "Не рассчитано" : `${result.seatCount} мест`}</strong><p>{rawModel.seating.caveat}</p></div>
+              <div className="launch-seat-result"><span>Предварительная вместимость</span><strong>{result.seatCount === null ? "Не рассчитано" : `${result.seatCount} мест`}</strong><p>Окончательная вместимость определяется после разработки планировки с учётом проходов, эвакуационных требований и доступной среды.</p></div>
             </section>
 
             <section className="launch-card" aria-labelledby="launch-equipment-title">
-              <SectionHeading number="03" title="Комплектация оборудования и мебель" text={rawModel.public_presentation.equipment_description} />
+              <SectionHeading number="03" title="Оснащение и мебель" text="Выберите комплектацию оборудования и уровень мебели для посадочного зала." />
               <h3 className="launch-control-title">Мебель посадочного зала</h3>
               <Segmented
                 label="Комплектация мебели"
                 value={state.furnitureProfileId}
                 dataName="furniture-profile"
-                options={rawModel.furniture.profiles.map(profile => ({ value: profile.id, label: profile.label, hint: `${rubFormatter.format(profile.rub_per_seat)} / место` }))}
+                options={rawModel.furniture.profiles.map(profile => ({ value: profile.id, label: profile.id === "functional" ? "Функциональная" : profile.id === "balanced" ? "Сбалансированная" : "Комфорт", hint: `${rubFormatter.format(profile.rub_per_seat)} / место` }))}
                 onChange={value => update("furnitureProfileId", value as FurnitureProfileId)}
               />
-              <div className="launch-research-line"><span>{rawModel.furniture.marker}</span><strong>{formatRub(result.furnitureRub)}</strong><p>{result.seatCount === null ? "Сначала укажите площадь посадочного зала." : `${result.seatCount} мест × ${formatRub(furnitureProfile.rub_per_seat)}`}</p></div>
+              <div className="launch-research-line"><span>Предварительная стоимость мебели</span><strong>{formatRub(result.furnitureRub)}</strong><p>{result.seatCount === null ? "Сначала укажите площадь посадочного зала." : `${result.seatCount} мест × ${formatRub(furnitureProfile.rub_per_seat)}`}</p></div>
 
               <div className="launch-divider" />
               <h3 className="launch-control-title">Стоимость текущей комплектации оборудования</h3>
@@ -260,7 +260,7 @@ export function LaunchBudgetPage() {
                 label="Сценарий оборудования"
                 value={state.equipmentScenarioId}
                 dataName="equipment-scenario"
-                options={rawModel.equipment.scenarios.map(scenario => ({ value: scenario.id, label: scenario.label }))}
+                options={rawModel.equipment.scenarios.map(scenario => ({ value: scenario.id, label: scenario.id === "MINIMUM" ? "Минимальная" : scenario.id === "BASE" ? "Базовая" : "Рост" }))}
                 onChange={value => update("equipmentScenarioId", value as EquipmentScenarioId)}
               />
               <div className="launch-module-toggles">
@@ -268,19 +268,18 @@ export function LaunchBudgetPage() {
                 <CompactToggle id="grow-enabled" checked={state.growEnabled} onChange={() => update("growEnabled", !state.growEnabled)}>Выращивание зелени</CompactToggle>
               </div>
               <div className="launch-equipment-summary" aria-live="polite">
-                <div><span>{equipmentProfile.label}</span><strong>{equipmentPartial ? "от " : ""}{formatRub(result.equipment.total)}</strong></div>
-                <dl><div><dt>Оценено позиций</dt><dd>{result.equipment.pricedCount}</dd></div><div><dt>Без цены</dt><dd>{result.equipment.unpricedCount}</dd></div><div><dt>Требуется КП</dt><dd>{result.equipment.quoteRequiredCount}</dd></div></dl>
-                <p>В сумму включены только оценённые позиции выбранной комплектации оборудования.</p>
+                <div><span>{equipmentProfile.id === "MINIMUM" ? "Минимальная" : equipmentProfile.id === "BASE" ? "Базовая" : "Рост"}</span><strong>{equipmentPartial ? "от " : ""}{formatRub(result.equipment.total)}</strong></div>
+                <dl><div><dt>Оценено</dt><dd>{result.equipment.pricedCount}</dd></div>{result.equipment.unpricedCount > 0 ? <div><dt>Без цены</dt><dd>{result.equipment.unpricedCount}</dd></div> : null}<div><dt>Требуют подтверждения коммерческими предложениями</dt><dd>{result.equipment.quoteRequiredCount}</dd></div></dl>
+                <p>Стоимость рассчитана по текущим ценовым ориентирам. Часть позиций требует подтверждения коммерческими предложениями.</p>
               </div>
-              <p className="launch-double-count-note">{rawModel.public_presentation.equipment_double_count_note}</p>
             </section>
 
             <section className="launch-card" aria-labelledby="launch-preparation-title">
-              <SectionHeading number="04" title={rawModel.preparation.title} text={rawModel.preparation.collapsed_hint} />
+              <SectionHeading number="04" title={rawModel.preparation.title} text="Предварительная оценка адаптации помещения около 200 м² в Санкт-Петербурге." />
               <div className="launch-preparation-summary" aria-live="polite">
-                <span>{rawModel.preparation.title}</span>
+                <span>Базовая оценка</span>
                 <strong>{formatRub(result.effectivePreparationRub)}</strong>
-                <small>{state.preparationMode === "manual" ? rawModel.preparation.manual_marker : rawModel.preparation.collapsed_hint}</small>
+                <small>Все основные категории включены; состав работ можно скорректировать.</small>
               </div>
               <button
                 type="button"
@@ -289,7 +288,7 @@ export function LaunchBudgetPage() {
                 aria-controls="launch-preparation-details"
                 onClick={() => update("preparationAccordionOpen", !state.preparationAccordionOpen)}
               >
-                <span>{rawModel.preparation.accordion_label}</span>
+                <span>Состав работ</span>
                 <span aria-hidden="true">{state.preparationAccordionOpen ? "−" : "+"}</span>
               </button>
               {state.preparationAccordionOpen ? (
@@ -325,14 +324,14 @@ export function LaunchBudgetPage() {
             </section>
 
             <section className="launch-card" aria-labelledby="launch-reserve-title">
-              <SectionHeading number="05" title="Запас на запуск" text="Значение уточняется после подготовки полного расчёта операционных расходов." />
-              <NumberField id="monthly-opex" label="Ежемесячные операционные расходы без аренды" suffix="₽" value={state.monthlyOpexExcludingRentRub} onChange={value => update("monthlyOpexExcludingRentRub", value)} />
+              <SectionHeading number="05" title="Запас и резерв" text="Операционный запас покрывает расходы первых месяцев работы. До формирования полной операционной модели его основа рассчитывается по расходам на персонал, а остальные ежемесячные затраты задаются укрупнённо." />
+              <NumberField id="monthly-opex" label="Ежемесячные операционные расходы без аренды" suffix="₽" value={state.monthlyOpexExcludingRentRub} onChange={value => update("monthlyOpexExcludingRentRub", value)} hint="До появления полной операционной модели сумма вводится укрупнённо." />
               <h3 className="launch-control-title">Операционный запас</h3>
-              <Segmented label="Месяцы операционного запаса" value={state.operatingReserveMonths} dataName="reserve-months" options={rawModel.operating_reserve.month_options.map(value => ({ value, label: `${value} месяцев` }))} onChange={value => update("operatingReserveMonths", Number(value))} />
-              <div className="launch-inline-result"><span>Операционный запас</span><strong>{formatRub(result.operatingReserveRub)}</strong>{state.premisesScenario === "rent" ? <small>Предоплаченная аренда не учитывается второй раз; обеспечительный платёж исключён.</small> : null}</div>
-              <h3 className="launch-control-title">Резерв непредвиденных расходов</h3>
+              <Segmented label="Месяцы операционного запаса" value={state.operatingReserveMonths} dataName="reserve-months" options={rawModel.operating_reserve.month_options.map(value => ({ value, label: value === 3 ? "3 месяца" : `${value} месяцев` }))} onChange={value => update("operatingReserveMonths", Number(value))} />
+              <div className="launch-inline-result"><span>Операционный запас</span><strong>{formatRub(result.operatingReserveRub)}</strong>{state.premisesScenario === "rent" ? <small>Предоплаченные месяцы аренды не учитываются повторно. Обеспечительный платёж показан отдельно.</small> : null}</div>
+              <h3 className="launch-control-title">Резерв</h3>
               <Segmented label="Процент резерва" value={state.contingencyPercent} dataName="contingency-percent" options={rawModel.contingency.percent_options.map(value => ({ value, label: `${value}%` }))} onChange={value => update("contingencyPercent", Number(value))} />
-              <div className="launch-inline-result"><span>Резерв</span><strong>{formatRub(result.contingencyRub)}</strong>{result.contingencyPartial ? <small>Резерв рассчитан только по известным статьям.</small> : null}</div>
+              <div className="launch-inline-result"><span>Резерв</span><strong>{formatRub(result.contingencyRub)}</strong><small>Рассчитывается от стоимости оборудования, мебели и подготовки помещения.</small></div>
             </section>
 
             <button className="launch-reset" type="button" onClick={reset}>Сбросить расчёт</button>
@@ -350,7 +349,7 @@ export function LaunchBudgetPage() {
               <ul>{currentConfiguration.map(item => <li key={item.module_id}><span aria-hidden="true">✓</span>{item.label}</li>)}</ul>
             </div>
             <dl className="launch-total-breakdown">
-              <SummaryRow label="Вход в помещение" value={result.premisesEntryRub} />
+              <SummaryRow label={state.premisesScenario === "purchase" ? "Стоимость покупки помещения" : "Первоначальные платежи по аренде"} value={result.premisesEntryRub} />
               <SummaryRow label="Стоимость текущей комплектации оборудования" value={result.equipment.total} partial={equipmentPartial} />
               <SummaryRow label="Мебель посадочного зала" value={result.furnitureRub} />
               <SummaryRow label="Подготовка помещения и монтаж" value={result.effectivePreparationRub} />
@@ -381,15 +380,16 @@ export function LaunchBudgetPage() {
         <div className="section-inner launch-lower-grid">
           <article className="launch-boundaries">
             <p className="launch-section-kicker">Уточнение бюджета</p>
-            <h2>{rawModel.public_presentation.next_steps_title}</h2>
-            <p>{rawModel.public_presentation.next_steps_intro}</p>
-            <ul>{rawModel.missing_categories.map(item => <li key={item}>{item}</li>)}</ul>
+            <h2>Следующие этапы расчёта</h2>
+            <p>После выбора конкретного помещения расчёт уточняется на основании технического обследования, планировки и коммерческих предложений поставщиков.</p>
+            <ul>{["Инженерное обследование помещения", "Детализация планировки и технологических решений", "Подтверждение стоимости подготовки помещения", "Коммерческие предложения по оборудованию и монтажу", "Расчёт операционных расходов и финансовой модели", "Формирование окончательного инвестиционного бюджета"].map(item => <li key={item}>{item}</li>)}</ul>
           </article>
           <article className="launch-basis">
             <p className="launch-section-kicker">Состав расчёта</p>
-            <h2>{rawModel.public_presentation.calculation_basis_title}</h2>
-            <ul>{rawModel.public_presentation.calculation_factors.map(item => <li key={item}>{item}</li>)}</ul>
-            <p>{rawModel.public_presentation.calculation_basis_note}</p>
+            <h2>Принцип расчёта</h2>
+            <p>Расчёт показывает ориентировочную стоимость запуска выбранной конфигурации объекта. Сумма формируется из стоимости помещения, оборудования, мебели, подготовки объекта, операционного запаса и резерва.</p>
+            <p>Если часть данных требует уточнения, она отображается отдельно и не уменьшает итоговую оценку.</p>
+            <p>Связанные платежи по аренде учитываются отдельно от безвозвратных расходов.</p>
           </article>
         </div>
       </section>

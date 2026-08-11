@@ -1,0 +1,140 @@
+schema_version: 2
+payload_id: PAYLOAD-LAUNCH-BUDGET-COPY-2026-08-11-01
+iteration_id: ITR-LAUNCH-BUDGET-COPY-2026-08-11-01
+proposal_id: PROP-LAUNCH-BUDGET-COPY-2026-08-11-01
+decision_id: DEC-LAUNCH-BUDGET-COPY-2026-08-11-01
+change_set_id: CHG-LAUNCH-BUDGET-COPY-2026-08-11-01
+title: Final approved public copy for launch-budget
+status: approved
+approved_by: project owner
+approved_at: 2026-08-11T00:53:55.000Z
+reason: перевод внутренней технической подачи в деловой инвесторский формат
+scope:
+  - Replace only visible user-facing copy on /launch-budget with the exact approved Russian wording below.
+  - Remove the explicitly identified technical double-count explanation from the public interface.
+  - Hide the «Без цены» metric only when its calculated value equals zero.
+  - Preserve every calculation, formula, value, data source, layout, block order, component contract and internal identifier.
+copy_blocks:
+  TXT-LB-001:
+    page_subtitle: Модель совмещённого объекта «Колобочной»: заготовочное производство и торговая точка с посадочным залом.
+  TXT-LB-002:
+    title: Возможности расчёта
+    text: Расчёт позволяет сравнить сценарии запуска при аренде или покупке помещения и увидеть, как площадь, состав оснащения, подготовка объекта и запас на запуск влияют на итоговую стоимость. Базовые параметры уже заданы и могут быть изменены под конкретный вариант.
+  TXT-LB-003:
+    section_text: Расчёт предусматривает два сценария: приобретение помещения в собственность или аренду. Параметры каждого сценария можно изменить под рассматриваемый объект.
+    purchase_field: Стоимость покупки помещения
+    purchase_hint: Предварительный ориентир для помещения площадью около 200 м².
+    purchase_total: Стоимость покупки помещения
+    rent_monthly_field: Ежемесячная арендная плата
+    rent_prepayment_field: Предоплата аренды
+    rent_deposit_field: Обеспечительный платёж
+    rent_total: Первоначальные платежи по аренде
+    rent_hint: Предоплата аренды и обеспечительный платёж.
+    forbidden_public_copy: Вход в помещение
+  TXT-LB-004:
+    section_text: Распределение площади определяет предварительную вместимость зала и стоимость его оснащения.
+    fields:
+      - Общая площадь
+      - Кухня и заготовочное производство
+      - Чистая площадь посадочного зала
+      - Прочая площадь
+    other_area_description: Зоны заказа и выдачи, склады, санузлы, проходы, служебные и технические помещения.
+    density_title: Плотность посадки
+    density_options:
+      - name: Плотная
+        hint: 1,4 м² на место
+      - name: Сбалансированная
+        hint: 1,6 м² на место
+      - name: Комфортная
+        hint: 1,8 м² на место
+    result_title: Предварительная вместимость
+    caveat: Окончательная вместимость определяется после разработки планировки с учётом проходов, эвакуационных требований и доступной среды.
+  TXT-LB-005:
+    section_title: Оснащение и мебель
+    section_text: Выберите комплектацию оборудования и уровень мебели для посадочного зала.
+    furniture_options:
+      - Функциональная
+      - Сбалансированная
+      - Комфорт
+    furniture_total: Предварительная стоимость мебели
+    equipment_options:
+      - Минимальная
+      - Базовая
+      - Рост
+    switches:
+      - Бар и напитки
+      - Выращивание зелени
+    equipment_total: Стоимость текущей комплектации оборудования
+    equipment_text: Стоимость рассчитана по текущим ценовым ориентирам. Часть позиций требует подтверждения коммерческими предложениями.
+    metrics:
+      - Оценено
+      - Требуют подтверждения коммерческими предложениями
+    hide_zero_unpriced_metric: true
+    remove_public_double_count_explanation: true
+  TXT-LB-006:
+    section_text: Предварительная оценка адаптации помещения около 200 м² в Санкт-Петербурге.
+    result_title: Базовая оценка
+    result_text: Все основные категории включены; состав работ можно скорректировать.
+    accordion_button: Состав работ
+  TXT-LB-007:
+    section_title: Запас и резерв
+    section_text: Операционный запас покрывает расходы первых месяцев работы. До формирования полной операционной модели его основа рассчитывается по расходам на персонал, а остальные ежемесячные затраты задаются укрупнённо.
+    monthly_opex_field: Ежемесячные операционные расходы без аренды
+    monthly_opex_hint: До появления полной операционной модели сумма вводится укрупнённо.
+    reserve_periods:
+      - 3 месяца
+      - 6 месяцев
+      - 9 месяцев
+    rent_hint: Предоплаченные месяцы аренды не учитываются повторно. Обеспечительный платёж показан отдельно.
+    contingency_title: Резерв
+    contingency_hint: Рассчитывается от стоимости оборудования, мебели и подготовки помещения.
+    self_employed_model_forbidden: true
+  TXT-LB-008:
+    next_steps_title: Следующие этапы расчёта
+    next_steps_text: После выбора конкретного помещения расчёт уточняется на основании технического обследования, планировки и коммерческих предложений поставщиков.
+    next_steps:
+      - Инженерное обследование помещения
+      - Детализация планировки и технологических решений
+      - Подтверждение стоимости подготовки помещения
+      - Коммерческие предложения по оборудованию и монтажу
+      - Расчёт операционных расходов и финансовой модели
+      - Формирование окончательного инвестиционного бюджета
+    principle_title: Принцип расчёта
+    principle_text: Расчёт показывает ориентировочную стоимость запуска выбранной конфигурации объекта. Сумма формируется из стоимости помещения, оборудования, мебели, подготовки объекта, операционного запаса и резерва.
+    incomplete_data_text: Если часть данных требует уточнения, она отображается отдельно и не уменьшает итоговую оценку.
+    rent_payments_text: Связанные платежи по аренде учитываются отдельно от безвозвратных расходов.
+forbidden_scope:
+  - research or internet access
+  - calculation, formula or value changes
+  - CAPEX, Investor Start Model, web snapshot or Google Sheet changes
+  - design, layout, block order or variable name changes
+  - Git staging, commit, tag, push or deployment
+state_hash_paths:
+  - src/components/LaunchBudget.tsx
+  - scripts/test-site.cjs
+content_paths:
+  - src/components/LaunchBudget.tsx
+  - scripts/test-site.cjs
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/audit/ITR-LAUNCH-BUDGET-COPY-2026-08-11-01.yaml
+  - docs-platform/changelog/payloads/ITR-LAUNCH-BUDGET-COPY-2026-08-11-01-approved.yaml
+  - docs-platform/changelog/rollback-payloads/ITR-LAUNCH-BUDGET-COPY-2026-08-11-01/manifest.yaml
+  - docs-platform/changelog/verification/ITR-LAUNCH-BUDGET-COPY-2026-08-11-01.yaml
+  - docs-platform/changes/CHG-LAUNCH-BUDGET-COPY-2026-08-11-01.yaml
+  - docs-platform/changes/decisions/DEC-LAUNCH-BUDGET-COPY-2026-08-11-01.yaml
+  - docs-platform/changes/iterations/ITR-LAUNCH-BUDGET-COPY-2026-08-11-01.yaml
+  - docs-platform/changes/proposals/PROP-LAUNCH-BUDGET-COPY-2026-08-11-01.yaml
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+  - docs-platform/generated/capex-governance-projection.json
+allowed_dirty_paths:
+  - output/pdf/launch-budget-review.pdf
+  - output/review/
+rollback_contract:
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true

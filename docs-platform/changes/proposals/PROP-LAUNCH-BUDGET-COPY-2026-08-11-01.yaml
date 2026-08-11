@@ -1,0 +1,9 @@
+schema_version: 2
+proposal_id: PROP-LAUNCH-BUDGET-COPY-2026-08-11-01
+iteration_id: ITR-LAUNCH-BUDGET-COPY-2026-08-11-01
+title: Replace launch-budget public copy with final approved wording
+status: proposed
+proposed_at: 2026-08-11T00:53:54.000Z
+scope: User-facing text on /launch-budget only; calculations, data, design and block structure remain unchanged.
+approved_payload_path: docs-platform/changelog/payloads/ITR-LAUNCH-BUDGET-COPY-2026-08-11-01-approved.yaml
+approved_payload_sha256: 6a7549edae382177def8da765ab270f7f08d0d1901723ae7db6add86e1523382

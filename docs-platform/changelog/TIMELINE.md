@@ -4,10 +4,10 @@
 
 ## 1. Current state
 
-- Events: 94.
-- Timeline head event: `EVT-ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-02-COMMITTED`.
-- Timeline head SHA-256: `6582e84fd9b025aec89f890ba3003d124e30544e96c9aaa59792a55fc495e652`.
-- Latest recorded iteration: `ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-02`.
+- Events: 98.
+- Timeline head event: `EVT-ITR-LAUNCH-BUDGET-COPY-2026-08-11-01-VERIFIED`.
+- Timeline head SHA-256: `21db2e8170128f9314a1080462b5e369046adc65af813440803eb272a3c2b420`.
+- Latest recorded iteration: `ITR-LAUNCH-BUDGET-COPY-2026-08-11-01`.
 
 ## 2. Modern governed iterations
 
@@ -29,6 +29,7 @@
 | 2026-08-10T20:23:18.000Z | committed | Self-contained sealed checkout build runtime | ITR-SEALED-BUILD-RUNTIME-2026-08-10-01 | DEC-SEALED-BUILD-RUNTIME-2026-08-10-01 | CHG-SEALED-BUILD-RUNTIME-2026-08-10-01 | ea89b6ec1d023955a24242569ca589a4db161e5a | iteration/ITR-SEALED-BUILD-RUNTIME-2026-08-10-01 | — | — | — | Self-contained sealed checkout build runtime: content commit verified and linked to the governed lifecycle before sealing. |
 | 2026-08-10T20:46:05.000Z | committed | Deterministic prerender output correction | ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-01 | DEC-DIST-DETERMINISM-CORRECTION-2026-08-10-01 | CHG-DIST-DETERMINISM-CORRECTION-2026-08-10-01 | b33f0a0a548bea1ae12463f78b75259a79886aaf | iteration/ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-01 | — | — | — | Deterministic prerender output correction: content commit verified and linked to the governed lifecycle before sealing. |
 | 2026-08-10T21:05:20.000Z | committed | Convergence-checked prerender determinism correction | ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-02 | DEC-DIST-DETERMINISM-CORRECTION-2026-08-10-02 | CHG-DIST-DETERMINISM-CORRECTION-2026-08-10-02 | 467b57fc0e2db6246316f4df0953b2ec3d809bc3 | iteration/ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-02 | — | — | — | Convergence-checked prerender determinism correction: content commit verified and linked to the governed lifecycle before sealing. |
+| 2026-08-11T01:03:00.000Z | verified | Final approved launch-budget copy | ITR-LAUNCH-BUDGET-COPY-2026-08-11-01 | DEC-LAUNCH-BUDGET-COPY-2026-08-11-01 | CHG-LAUNCH-BUDGET-COPY-2026-08-11-01 | — | — | — | — | — | Verified every approved public phrase, absence of superseded technical wording, unchanged calculation outputs and source hashes, correct desktop/tablet/mobile behavior, and a prepared governed reverse change set; no Git or deployment action was performed. |
 
 ## 3. Legacy imported history
 

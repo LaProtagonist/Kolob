@@ -1,0 +1,18 @@
+schema_version: 2
+iteration_id: ITR-LAUNCH-BUDGET-COPY-2026-08-11-01
+proposal_id: PROP-LAUNCH-BUDGET-COPY-2026-08-11-01
+decision_id: DEC-LAUNCH-BUDGET-COPY-2026-08-11-01
+change_set_id: CHG-LAUNCH-BUDGET-COPY-2026-08-11-01
+title: Final approved launch-budget copy
+status: approved
+approved_by: project owner
+approved_at: 2026-08-11T00:53:55.000Z
+actor: Codex
+scope: Public copy and its route assertions only; all calculations, values, data sources, design and structure are preserved.
+approved_payload_path: docs-platform/changelog/payloads/ITR-LAUNCH-BUDGET-COPY-2026-08-11-01-approved.yaml
+approved_payload_sha256: 6a7549edae382177def8da765ab270f7f08d0d1901723ae7db6add86e1523382
+before_state_sha256: dacb8dc45b89c47fa14293aaf64f70dc4cac8cfcdc3db58b30fd3db976df95f8
+after_state_sha256: 34957e2482d200d1b040e06099ab5e2cd1f6ae57a60df9cf7ce43b7d24dc974f
+affected_document_ids: []
+affected_section_ids: [TXT-LB-001, TXT-LB-002, TXT-LB-003, TXT-LB-004, TXT-LB-005, TXT-LB-006, TXT-LB-007, TXT-LB-008]
+rollback_payload: docs-platform/changelog/rollback-payloads/ITR-LAUNCH-BUDGET-COPY-2026-08-11-01/manifest.yaml
