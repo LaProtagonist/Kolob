@@ -9,16 +9,16 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 ## 2. Текущая ветка и governed iteration
 
 - Branch: `master`.
-- Latest closed iteration: `ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-02`.
-- Latest iteration tag: `iteration/ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-02`.
-- Latest content commit: `467b57fc0e2db6246316f4df0953b2ec3d809bc3`.
+- Latest closed iteration: `ITR-REVENUE-MODEL-2026-08-14-01`.
+- Latest iteration tag: `iteration/ITR-REVENUE-MODEL-2026-08-14-01`.
+- Latest content commit: `7012c506d863dc680a8f9aafeda066c37d30b03f`.
 - Текущий Git HEAD намеренно не записывается: его вычисляет `npm run project:onboard`.
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-REVENUE-MODEL-2026-08-14-01-VERIFIED`.
-- Hash: `1ae12a8e57716537208ea2b030b32794ce40133a82d77e11743eef2db88c580d`.
-- generated_from_event_hash: `1ae12a8e57716537208ea2b030b32794ce40133a82d77e11743eef2db88c580d`.
+- Event: `EVT-ITR-REVENUE-MODEL-2026-08-14-01-COMMITTED`.
+- Hash: `5a285cf352717774bfbca5bfc6090851f496105a730b49bdcbba39f90cece8e9`.
+- generated_from_event_hash: `5a285cf352717774bfbca5bfc6090851f496105a730b49bdcbba39f90cece8e9`.
 
 ## 4. Канонические документы
 
@@ -43,7 +43,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 5. Текущая рабочая тема
 
-Convergence-checked prerender determinism correction
+Create Revenue Model and the direct-review sales-volume page
 
 ## 6. Decisions и change sets
 

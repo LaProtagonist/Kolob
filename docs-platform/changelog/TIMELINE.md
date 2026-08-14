@@ -4,9 +4,9 @@
 
 ## 1. Current state
 
-- Events: 114.
-- Timeline head event: `EVT-ITR-REVENUE-MODEL-2026-08-14-01-VERIFIED`.
-- Timeline head SHA-256: `1ae12a8e57716537208ea2b030b32794ce40133a82d77e11743eef2db88c580d`.
+- Events: 115.
+- Timeline head event: `EVT-ITR-REVENUE-MODEL-2026-08-14-01-COMMITTED`.
+- Timeline head SHA-256: `5a285cf352717774bfbca5bfc6090851f496105a730b49bdcbba39f90cece8e9`.
 - Latest recorded iteration: `ITR-REVENUE-MODEL-2026-08-14-01`.
 
 ## 2. Modern governed iterations
@@ -33,7 +33,7 @@
 | 2026-08-11T03:15:35.000Z | verified | Structured operating reserve for launch-budget | ITR-INVESTOR-OPERATING-RESERVE-2026-08-11-01 | DEC-016 | CHG-032 | — | — | — | — | — | Verified seven exact monthly categories totaling 2,650,000 RUB, the 7,950,000 / 15,900,000 / 23,850,000 RUB period results, separate contingency behavior, local persistence and responsive rendering. CAPEX, equipment, Google files and all other launch-budget blocks remained unchanged; no commit or deployment action was performed. |
 | 2026-08-11T08:04:45.000Z | verified | Clean input controls for launch-budget | ITR-LAUNCH-INPUT-CONTROLS-2026-08-11-01 | DEC-LAUNCH-INPUT-CONTROLS-2026-08-11-01 | CHG-LAUNCH-INPUT-CONTROLS-2026-08-11-01 | — | — | — | — | — | Verified spinner-free numeric fields, matching 52-pixel selectors, working 12→3→12 month selection, clean browser rendering and unchanged calculations and canonical hashes. The change remains unstaged and undeployed, with a prepared governed reverse payload. |
 | 2026-08-11T15:14:11.000Z | verified | Add baseline and custom operating-expense modes | ITR-INVESTOR-OPEX-MODE-2026-08-11-01 | DEC-INVESTOR-OPEX-MODE-2026-08-11-01 | CHG-INVESTOR-OPEX-MODE-2026-08-11-01 | — | — | — | — | — | Verified the unchanged 2,650,000 RUB baseline and 7,950,000 / 15,900,000 / 23,850,000 RUB period totals, the 2,000,000 RUB custom examples, blank-custom lower-bound behavior, reset and reload persistence, unchanged contingency basis, no area scaling, hidden internal module status, responsive layouts and zero console or hydration errors. The work remains unstaged and undeployed. |
-| 2026-08-14T18:22:41.000Z | verified | Create Revenue Model and the direct-review sales-volume page | ITR-REVENUE-MODEL-2026-08-14-01 | DEC-REVENUE-MODEL-2026-08-14-01 | CHG-REVENUE-MODEL-2026-08-14-01 | — | — | — | — | — | Verified the exact 632.50 RUB weighted kolobok price, 636 RUB average food price, 1,165.40 RUB average check and 6,992,400 / 10,488,600 / 15,732,900 RUB monthly scenarios. Custom traffic, hourly load, capacity copy, noindex isolation, local reset/persistence and 1440/768/390 rendering passed with no console, hydration or overflow errors. CAPEX, Investor Start Model, Google files and existing investor pages remain unchanged; no commit or deployment was performed. |
+| 2026-08-14T18:42:42.000Z | committed | Create Revenue Model and the direct-review sales-volume page | ITR-REVENUE-MODEL-2026-08-14-01 | DEC-REVENUE-MODEL-2026-08-14-01 | CHG-REVENUE-MODEL-2026-08-14-01 | 7012c506d863dc680a8f9aafeda066c37d30b03f | iteration/ITR-REVENUE-MODEL-2026-08-14-01 | — | — | — | Create Revenue Model and the direct-review sales-volume page: content commit verified and linked to the governed lifecycle before sealing. |
 
 ## 3. Legacy imported history
 

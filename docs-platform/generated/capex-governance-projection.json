@@ -1,21 +1,21 @@
 {
   "schema_version": 1,
-  "generated_from_event_id": "EVT-ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-02-COMMITTED",
-  "generated_from_event_hash": "6582e84fd9b025aec89f890ba3003d124e30544e96c9aaa59792a55fc495e652",
-  "content_state_sha256": "019867401744567473b35404bd3bb3b10b2fbf3e8a53abaedfb738b5881468e6",
+  "generated_from_event_id": "EVT-ITR-REVENUE-MODEL-2026-08-14-01-COMMITTED",
+  "generated_from_event_hash": "5a285cf352717774bfbca5bfc6090851f496105a730b49bdcbba39f90cece8e9",
+  "content_state_sha256": "a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239",
   "latest_committed_iteration": {
-    "iteration_id": "ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-02",
-    "decision_id": "DEC-DIST-DETERMINISM-CORRECTION-2026-08-10-02",
-    "change_set_id": "CHG-DIST-DETERMINISM-CORRECTION-2026-08-10-02",
-    "content_commit_hash": "467b57fc0e2db6246316f4df0953b2ec3d809bc3",
+    "iteration_id": "ITR-REVENUE-MODEL-2026-08-14-01",
+    "decision_id": "DEC-REVENUE-MODEL-2026-08-14-01",
+    "change_set_id": "CHG-REVENUE-MODEL-2026-08-14-01",
+    "content_commit_hash": "7012c506d863dc680a8f9aafeda066c37d30b03f",
     "seal_commit_hash": null,
-    "iteration_tag": "iteration/ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-02"
+    "iteration_tag": "iteration/ITR-REVENUE-MODEL-2026-08-14-01"
   },
   "latest_deployment_event": null,
-  "repository_head": "467b57fc0e2db6246316f4df0953b2ec3d809bc3",
+  "repository_head": "7012c506d863dc680a8f9aafeda066c37d30b03f",
   "timeline_head": {
-    "event_id": "EVT-ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-02-COMMITTED",
-    "event_hash": "6582e84fd9b025aec89f890ba3003d124e30544e96c9aaa59792a55fc495e652"
+    "event_id": "EVT-ITR-REVENUE-MODEL-2026-08-14-01-COMMITTED",
+    "event_hash": "5a285cf352717774bfbca5bfc6090851f496105a730b49bdcbba39f90cece8e9"
   },
   "deployment_receipts": []
 }

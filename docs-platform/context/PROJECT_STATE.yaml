@@ -1,12 +1,12 @@
 schema_version: 2
-generated_at: 2026-08-14T18:22:41.000Z
+generated_at: 2026-08-14T18:43:01.185Z
 project: Колобочная
 branch: master
-latest_timeline_event_id: EVT-ITR-REVENUE-MODEL-2026-08-14-01-VERIFIED
-latest_timeline_event_hash: 1ae12a8e57716537208ea2b030b32794ce40133a82d77e11743eef2db88c580d
-latest_closed_iteration_id: ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-02
-latest_iteration_tag: iteration/ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-02
-latest_content_commit_hash: 467b57fc0e2db6246316f4df0953b2ec3d809bc3
+latest_timeline_event_id: EVT-ITR-REVENUE-MODEL-2026-08-14-01-COMMITTED
+latest_timeline_event_hash: 5a285cf352717774bfbca5bfc6090851f496105a730b49bdcbba39f90cece8e9
+latest_closed_iteration_id: ITR-REVENUE-MODEL-2026-08-14-01
+latest_iteration_tag: iteration/ITR-REVENUE-MODEL-2026-08-14-01
+latest_content_commit_hash: 7012c506d863dc680a8f9aafeda066c37d30b03f
 registry_hash: 5102a3e5da0751c970a3d7b4a7536e1bdb0a51a1cfa9fe9354c6313c05759e23
 canonical_document_hashes:
   - document_id: DOC-AGENTS
@@ -80,7 +80,7 @@ open_questions:
   - Archive pending review artifacts in durable storage before treating visual verification as portable.
   - Create deployment receipts when the next governed deployment is performed.
   - Decide whether malformed superseded legacy YAML evidence should receive a separate correction event.
-current_workstream: Convergence-checked prerender determinism correction
+current_workstream: Create Revenue Model and the direct-review sales-volume page
 next_task: Select the next task through a new governed proposal; no business task is pre-authorized.
 google_integration_status:
   configured: true
