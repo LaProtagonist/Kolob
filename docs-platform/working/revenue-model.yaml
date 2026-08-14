@@ -1,0 +1,223 @@
+document:
+  id: DOC-REVENUE-MODEL
+  title: Revenue Model
+  title_ru: Модель объёма продаж
+  version: "0.1"
+  status: research
+  type: working_sales_volume_model
+  iteration_id: ITR-REVENUE-MODEL-2026-08-14-01
+  decision_id: DEC-REVENUE-MODEL-2026-08-14-01
+  change_set_id: CHG-REVENUE-MODEL-2026-08-14-01
+  source_ids:
+    - SRC-REVENUE-MODEL-BRIEF
+  foundations:
+    - DOC-FOUNDATION
+    - DOC-BUSINESS-MODEL-ARCHITECTURE
+  note: Документ является рабочей сценарной моделью потенциального объёма продаж и не утверждает гарантированную выручку или финансовый прогноз.
+
+public_presentation:
+  route: /revenue-model
+  page_title: Расчёт объёма продаж
+  subtitle: "Модель потенциального объёма продаж совмещённого объекта «Колобочной»: поток заказов, структура среднего чека и производственная нагрузка."
+  capabilities_title: Возможности расчёта
+  capabilities_text: Расчёт позволяет оценить потенциальный объём продаж при разном потоке заказов и увидеть, как количество чеков, структура среднего чека и производственная нагрузка влияют на результат.
+  traffic_title: Поток заказов
+  traffic_description: Три сценария позволяют оценить объём продаж при разной интенсивности потока. Значение можно заменить на собственное.
+  traffic_mode_labels:
+    scenario: Сценарии
+    custom: Другое значение
+  custom_checks_label: Чеков в день
+  average_check_title: Средний чек
+  average_check_description: Средний чек рассчитывается из количества порций еды и напитков в одном заказе и их средней реализованной стоимости.
+  average_check_breakdown_label: Состав среднего чека
+  food_price_breakdown_label: Как рассчитана средняя цена еды
+  sales_title: Расчётный объём продаж
+  month_note: Расчётный месяц — 30 дней.
+  production_title: Производственная нагрузка
+  production_description: Расчёт показывает, какой объём продукции необходимо приготовить и выдать при выбранном потоке заказов.
+  capacity_title: Проверка мощности
+  capacity_basis_label: Основа расчёта
+  summary_warning: Расчёт показывает потенциальный объём продаж при заданном потоке заказов и не является прогнозом гарантированной выручки.
+  next_title: Что будет уточнено далее
+  next_text: Следующий уровень модели учитывает себестоимость продукции, сезонность, период выхода объекта на рабочий режим, налоги и другие переменные расходы.
+  next_items:
+    - Себестоимость продукции
+    - Структура валовой маржи
+    - Сезонность
+    - Период выхода на рабочий режим
+    - Налоги и эквайринг
+    - Полная операционная модель
+  principle_title: Принцип расчёта
+  principle_text: Объём продаж рассчитывается из количества чеков, структуры среднего чека и условного 30-дневного месяца. Производственная нагрузка используется для проверки физической реализуемости выбранного сценария.
+  principle_note: Показатели являются рабочими ориентирами и уточняются после запуска объекта и накопления фактической статистики.
+  not_calculated_label: Не рассчитано
+
+product_model:
+  categories:
+    - id: KOLOBKI
+      name: Колобки
+    - id: MANCHES
+      name: Манчесы
+    - id: DRINKS
+      name: Напитки
+  kolobok_portion:
+    units: 7
+    approximate_weight_g: 300
+    additions:
+      - салат
+      - соус
+      - зелень
+      - фрукты
+      - топпинги
+    description: Порция является полноценным самостоятельным блюдом. Сладкие колобки входят в общую категорию продаж колобков.
+  food_mix:
+    kolobok_share: 0.8
+    manches_share: 0.2
+  kolobok_price_segments:
+    - id: BUDGET
+      name: Бюджетные
+      price_rub: 425
+      share: 0.15
+    - id: CORE
+      name: Основные
+      price_rub: 550
+      share: 0.4
+    - id: ABOVE_AVERAGE
+      name: Выше среднего
+      price_rub: 700
+      share: 0.3
+    - id: PREMIUM
+      name: Премиальные
+      price_rub: 925
+      share: 0.15
+  weighted_kolobok_price_rub: 632.5
+  manches:
+    price_range_rub:
+      min: 500
+      max: 800
+    realized_price_rub: 650
+    description: Манчес является самостоятельным основным блюдом. Колобки и манчесы преимущественно являются альтернативными вариантами основного блюда.
+  average_food_portion_price_rub: 636
+  drinks:
+    average_price_rub: 275
+    per_check: 1
+    production_note: Напитки технологически считаются предварительно подготовленными и не являются основным ограничением производительности кухни.
+  food_portions_per_check: 1.4
+  average_check_rub: 1165.4
+
+traffic:
+  default_mode: scenario
+  default_scenario: realistic
+  custom_default_checks_per_day: null
+  scenarios:
+    - id: pessimistic
+      name: Пессимистичный
+      checks_per_day: 200
+      capacity_statement: Сценарий оставляет значительный резерв производственной мощности.
+    - id: realistic
+      name: Реалистичный
+      checks_per_day: 300
+      capacity_statement: Реалистичный сценарий находится ниже расчётной пиковой мощности кухни.
+    - id: optimistic
+      name: Оптимистичный
+      checks_per_day: 450
+      capacity_statement: Сценарий достижим при усилении комплектации и выдачи в часы максимальной нагрузки.
+
+sales_calculation:
+  currency: RUB
+  days_per_month: 30
+  formulas:
+    food_portions_per_day: checks_per_day * food_portions_per_check
+    kolobok_portions_per_day: food_portions_per_day * kolobok_share
+    manches_per_day: food_portions_per_day * manches_share
+    drinks_per_day: checks_per_day * drinks_per_check
+    sales_per_day_rub: checks_per_day * average_check_rub
+    sales_per_month_rub: sales_per_day_rub * days_per_month
+
+production_load:
+  trading_hours_per_day: 12
+  peak_share: 0.65
+  peak_hours: 6
+  maximum_hour_multiplier: 1.4
+  display_rounding:
+    average_aggregate: nearest_integer
+    peak_aggregate: ceiling_integer
+    maximum_aggregate: ceiling_integer
+    product_split: nearest_integer_from_displayed_aggregate
+  formulas:
+    average_checks_per_hour: checks_per_day / trading_hours_per_day
+    average_food_portions_per_hour: food_portions_per_day / trading_hours_per_day
+    peak_checks_per_hour: checks_per_day * peak_share / peak_hours
+    peak_food_portions_per_hour: food_portions_per_day * peak_share / peak_hours
+    maximum_checks_per_hour: peak_checks_per_hour * maximum_hour_multiplier
+    maximum_food_portions_per_hour: peak_food_portions_per_hour * maximum_hour_multiplier
+
+capacity:
+  kolobok_line:
+    serving_time_minutes:
+      min: 3
+      max: 8
+    prepared_serving_time_minutes:
+      min: 2
+      max: 3
+    calculation_cycle_minutes: 5
+    grills: 2
+    sections_per_grill: 2
+    cavities_per_section: 32
+    total_cavities: 128
+    units_per_portion: 7
+    mathematical_simultaneous_portions: 18
+    working_simultaneous_portions:
+      min: 13
+      max: 14
+    cooks: 2
+    portions_per_cook_in_process:
+      min: 4
+      max: 6
+    sustainable_portions_per_hour:
+      min: 60
+      max: 90
+  manches_line:
+    grill_time_minutes: 3
+    assembly_time_minutes: 1
+    total_time_minutes: 4
+    base_grills: 3
+    growth_grills: 4
+    mathematical_portions_per_hour_with_base_grills: 60
+    sustainable_portions_per_hour: 36
+  assembly:
+    primary_line_cooks: 2
+    regular_staff: 1
+    peak_staff: 2
+    reinforcement_threshold_food_portions_per_hour:
+      min: 60
+      max: 65
+  checkout:
+    regular_cashiers: 1
+    peak_cashiers: 2
+  public_basis:
+    - label: Колобки
+      value: 3–8 минут на отдачу
+      secondary: ≈5 минут — средний расчётный цикл
+    - label: Манчес
+      value: ≈4 минуты
+      secondary: null
+    - label: Основная линия
+      value: 2 повара
+      secondary: null
+    - label: Комплектация
+      value: 1 сотрудник
+      secondary: 2 сотрудника при высокой пиковой нагрузке
+    - label: Касса
+      value: до 2 кассиров в пиковые часы
+      secondary: null
+
+form:
+  local_storage_key: kolob.revenue-model.v1
+  schema_version: 1
+  persist_fields:
+    - trafficMode
+    - trafficScenario
+    - customChecksPerDay
+  server_persistence: false
+  analytics_submission: false

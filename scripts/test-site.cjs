@@ -9,6 +9,7 @@ const { chromium } = require("playwright");
 
 const distDir = path.join(projectRoot, "dist");
 const capexSnapshot = JSON.parse(fs.readFileSync(path.join(projectRoot, "src", "content", "capex-configurator-data.json"), "utf8"));
+const revenueSnapshot = JSON.parse(fs.readFileSync(path.join(projectRoot, "src", "content", "revenue-model-data.json"), "utf8"));
 const routes = [
   { path: "/", must: ["Еда в пути.", "Всё внутри."] },
   { path: "/concept", must: ["Колобок — полноценная еда, собранная в удобную форму."] },
@@ -20,6 +21,7 @@ const routes = [
   { path: "/privacy", must: ["Политика обработки персональных данных"] },
   { path: "/capex-configurator", must: ["CAPEX-конфигуратор", "Стоимость текущей комплектации оборудования"], internal: true },
   { path: "/launch-budget", must: ["Расчёт стоимости запуска", "Стоимость запуска"], internal: true },
+  { path: "/revenue-model", must: ["Расчёт объёма продаж", "Производственная нагрузка"], internal: true },
   { path: "/404", must: ["Страница не найдена"] }
 ];
 
@@ -123,8 +125,91 @@ async function inspectRoute(browser, baseUrl, route) {
     forbiddenFound: route.internal ? [] : forbiddenPublic.filter(phrase => text.includes(phrase)),
     hiddenCapexRouteLinkCount: await page.locator('a[href="/capex-configurator"]').count(),
     hiddenLaunchRouteLinkCount: await page.locator('a[href="/launch-budget"]').count(),
+    hiddenRevenueRouteLinkCount: await page.locator('a[href="/revenue-model"]').count(),
     consoleMessages,
     pageErrors
+  };
+  await page.close();
+  return result;
+}
+
+async function inspectRevenueModel(browser, baseUrl) {
+  const page = await browser.newPage({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 });
+  const consoleMessages = [];
+  const pageErrors = [];
+  page.on("console", message => { if (["error", "warning"].includes(message.type())) consoleMessages.push(message.text()); });
+  page.on("pageerror", error => pageErrors.push(error.message));
+  await page.goto(`${baseUrl}/revenue-model`, { waitUntil: "networkidle" });
+  await page.evaluate(() => localStorage.clear());
+  await page.reload({ waitUntil: "networkidle" });
+
+  const text = () => page.locator("body").innerText();
+  const summary = page.locator('[data-testid="revenue-summary"]');
+  const summaryMoney = async () => parseMoney(await summary.locator(".launch-total-value").innerText());
+  const summaryValue = label => summary.locator(".revenue-summary-list dt").filter({ hasText: new RegExp(`^${label}$`) }).locator("xpath=..").locator("dd");
+  const scenarioButton = label => page.getByRole("button", { name: new RegExp(label) });
+  const defaultState = {
+    title: await page.locator("h1").innerText(),
+    documentTitle: await page.title(),
+    robots: await page.locator('meta[name="robots"]').getAttribute("content"),
+    realisticSelected: await scenarioButton("Реалистичный").getAttribute("aria-pressed"),
+    monthly: await summaryMoney(),
+    daily: parseMoney(await summaryValue("В день").innerText()),
+    averageCheck: parseMoney(await summaryValue("Средний чек").innerText()),
+    checks: await summaryValue("Чеков в день").innerText(),
+    food: await summaryValue("Порций еды").innerText(),
+    drinks: await summaryValue("Напитков").innerText(),
+    scenario: await summaryValue("Сценарий").innerText(),
+  };
+
+  const loads = async () => ({
+    average: await page.locator(".revenue-hour-grid article").filter({ hasText: "Средний час" }).locator("strong").innerText(),
+    peak: await page.locator(".revenue-hour-grid article").filter({ hasText: "Пиковый час" }).locator("strong").innerText(),
+    maximum: await page.locator(".revenue-hour-grid article").filter({ hasText: "Максимальный час" }).locator("strong").innerText(),
+    maximumDetail: await page.locator(".revenue-hour-grid article").filter({ hasText: "Максимальный час" }).locator("small").innerText(),
+  });
+  const realisticLoads = await loads();
+
+  await scenarioButton("Пессимистичный").click();
+  const pessimistic = { monthly: await summaryMoney(), daily: parseMoney(await summaryValue("В день").innerText()), loads: await loads(), statement: await page.locator("#revenue-capacity-title").locator("xpath=..").locator("p").innerText() };
+  await scenarioButton("Оптимистичный").click();
+  const optimistic = { monthly: await summaryMoney(), daily: parseMoney(await summaryValue("В день").innerText()), loads: await loads(), statement: await page.locator("#revenue-capacity-title").locator("xpath=..").locator("p").innerText() };
+
+  await page.getByRole("button", { name: "Другое значение", exact: true }).click();
+  const customEmpty = { value: await page.locator("#custom-checks-per-day").inputValue(), monthly: await summary.locator(".launch-total-value").innerText(), scenario: await summaryValue("Сценарий").innerText() };
+  await page.locator("#custom-checks-per-day").fill("0");
+  const customZeroAlert = await page.locator('[role="alert"]').count();
+  await page.locator("#custom-checks-per-day").fill("250");
+  const custom = { monthly: await summaryMoney(), daily: parseMoney(await summaryValue("В день").innerText()), checks: await summaryValue("Чеков в день").innerText(), scenario: await summaryValue("Сценарий").innerText() };
+  await page.reload({ waitUntil: "networkidle" });
+  const persisted = { modeSelected: await page.getByRole("button", { name: "Другое значение", exact: true }).getAttribute("aria-pressed"), value: await page.locator("#custom-checks-per-day").inputValue(), monthly: await summaryMoney() };
+  await page.getByRole("button", { name: "Сбросить расчёт" }).click();
+  const reset = { realisticSelected: await scenarioButton("Реалистичный").getAttribute("aria-pressed"), customFieldCount: await page.locator("#custom-checks-per-day").count(), monthly: await summaryMoney(), storage: await page.evaluate(key => localStorage.getItem(key), revenueSnapshot.model.form.local_storage_key) };
+
+  await page.getByRole("button", { name: "Состав среднего чека" }).click();
+  await page.getByRole("button", { name: "Как рассчитана средняя цена еды" }).click();
+  const breakdown = {
+    averageCheck: parseMoney(await page.locator('[data-testid="average-check"] strong').innerText()),
+    rows: await page.locator(".revenue-detail-list > div").count(),
+    priceSegments: await page.locator(".revenue-segment-list > div").count(),
+    text: await page.locator("#revenue-food-details").innerText(),
+  };
+
+  const overflow = {};
+  for (const viewport of [{ key: "desktop", width: 1440, height: 900 }, { key: "tablet", width: 768, height: 1024 }, { key: "mobile", width: 390, height: 844 }]) {
+    await page.setViewportSize({ width: viewport.width, height: viewport.height });
+    overflow[viewport.key] = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth + 2);
+  }
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.keyboard.press("Tab");
+  const focus = await page.evaluate(() => { const active = document.activeElement; const style = active ? getComputedStyle(active) : null; return { tag: active?.tagName ?? null, outlineStyle: style?.outlineStyle ?? null, outlineWidth: style?.outlineWidth ?? null }; });
+  const bodyText = await text();
+  const forbiddenTechnical = ["research", "v0.1", "registry", "decision id", "change set", "snapshot", "yaml", "approved", "canonical"].filter(term => bodyText.toLowerCase().includes(term));
+  const forbiddenFinancial = ["EBITDA", "окупаемость", "break-even", "Гарантированная выручка", "Прогноз выручки", "Ожидаемая выручка"].filter(term => bodyText.includes(term));
+  const result = {
+    defaultState, realisticLoads, pessimistic, optimistic, customEmpty, customZeroAlert, custom, persisted, reset, breakdown, overflow, focus,
+    noLinks: { capex: await page.locator('a[href="/capex-configurator"]').count(), launch: await page.locator('a[href="/launch-budget"]').count() },
+    forbiddenTechnical, forbiddenFinancial, consoleMessages, pageErrors,
   };
   await page.close();
   return result;
@@ -707,6 +792,7 @@ async function inspectCapex(browser, baseUrl) {
 
     const capex = await inspectCapex(browser, baseUrl);
     const launchBudget = await inspectLaunchBudget(browser, baseUrl);
+    const revenueModel = await inspectRevenueModel(browser, baseUrl);
     const mobile = await browser.newPage({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 1 });
     await mobile.goto(`${baseUrl}/`, { waitUntil: "networkidle" });
     await mobile.locator(".menu-toggle").click();
@@ -734,6 +820,7 @@ async function inspectCapex(browser, baseUrl) {
       if (result.forbiddenFound.length) failures.push(`${result.path}: forbidden ${result.forbiddenFound.join(", ")}`);
       if (!result.internal && result.hiddenCapexRouteLinkCount > 0) failures.push(`${result.path}: exposes hidden CAPEX route`);
       if (!result.internal && result.hiddenLaunchRouteLinkCount > 0) failures.push(`${result.path}: exposes hidden launch-budget route`);
+      if (!result.internal && result.hiddenRevenueRouteLinkCount > 0) failures.push(`${result.path}: exposes hidden revenue-model route`);
       if (result.consoleMessages.length) failures.push(`${result.path}: console ${result.consoleMessages.join(" | ")}`);
       if (result.pageErrors.length) failures.push(`${result.path}: page errors ${result.pageErrors.join(" | ")}`);
     }
@@ -741,6 +828,7 @@ async function inspectCapex(browser, baseUrl) {
     if (!mobileMenuOpen) failures.push("mobile menu did not open");
     if (sitemap.includes("capex-configurator")) failures.push("sitemap exposes hidden CAPEX route");
     if (sitemap.includes("launch-budget")) failures.push("sitemap exposes hidden launch-budget route");
+    if (sitemap.includes("revenue-model")) failures.push("sitemap exposes hidden revenue-model route");
     if (!String(capex.robots).includes("noindex") || !String(capex.robots).includes("nofollow")) failures.push(`CAPEX robots: ${capex.robots}`);
     if (capex.formatIds.length !== 7 || capex.formatIds.join("|") !== capexSnapshot.formats.map(item => item.id).join("|")) failures.push("CAPEX formats do not match snapshot");
     const selectableScenarioIds = capexSnapshot.scenarios.filter(item => item.availableInSelector !== false).map(item => item.id);
@@ -915,9 +1003,25 @@ async function inspectCapex(browser, baseUrl) {
     if (launchBudget.forbiddenDetail.length) failures.push(`launch-budget contains forbidden detailed metrics: ${launchBudget.forbiddenDetail.join(", ")}`);
     if (launchBudget.consoleMessages.length) failures.push(`launch-budget console: ${launchBudget.consoleMessages.join(" | ")}`);
     if (launchBudget.pageErrors.length) failures.push(`launch-budget page errors: ${launchBudget.pageErrors.join(" | ")}`);
+    if (!String(revenueModel.defaultState.robots).includes("noindex") || !String(revenueModel.defaultState.robots).includes("nofollow")) failures.push(`revenue-model robots: ${revenueModel.defaultState.robots}`);
+    if (revenueModel.defaultState.title !== "Расчёт объёма продаж" || revenueModel.defaultState.documentTitle !== "Расчёт объёма продаж — Колобочная") failures.push(`revenue-model metadata invalid: ${JSON.stringify(revenueModel.defaultState)}`);
+    if (revenueModel.defaultState.realisticSelected !== "true" || revenueModel.defaultState.monthly !== 10488600 || revenueModel.defaultState.daily !== 349620 || revenueModel.defaultState.averageCheck !== 1165 || revenueModel.defaultState.checks !== "300" || revenueModel.defaultState.food !== "420" || revenueModel.defaultState.drinks !== "300" || revenueModel.defaultState.scenario !== "Реалистичный") failures.push(`revenue-model realistic defaults invalid: ${JSON.stringify(revenueModel.defaultState)}`);
+    if (!revenueModel.realisticLoads.average.includes("35 порций еды") || !revenueModel.realisticLoads.peak.includes("46 порций еды") || !revenueModel.realisticLoads.maximum.includes("64 порции еды") || !revenueModel.realisticLoads.maximumDetail.includes("51 порция колобков") || !revenueModel.realisticLoads.maximumDetail.includes("13 манчесов")) failures.push(`revenue-model realistic load invalid: ${JSON.stringify(revenueModel.realisticLoads)}`);
+    if (revenueModel.pessimistic.monthly !== 6992400 || revenueModel.pessimistic.daily !== 233080 || !revenueModel.pessimistic.loads.maximum.includes("43 порции еды") || revenueModel.pessimistic.statement !== "Сценарий оставляет значительный резерв производственной мощности.") failures.push(`revenue-model pessimistic scenario invalid: ${JSON.stringify(revenueModel.pessimistic)}`);
+    if (revenueModel.optimistic.monthly !== 15732900 || revenueModel.optimistic.daily !== 524430 || !revenueModel.optimistic.loads.maximum.includes("96 порций еды") || !revenueModel.optimistic.loads.maximumDetail.includes("77 порций колобков") || !revenueModel.optimistic.loads.maximumDetail.includes("19 манчесов") || revenueModel.optimistic.statement !== "Сценарий достижим при усилении комплектации и выдачи в часы максимальной нагрузки.") failures.push(`revenue-model optimistic scenario invalid: ${JSON.stringify(revenueModel.optimistic)}`);
+    if (revenueModel.customEmpty.value !== "" || revenueModel.customEmpty.monthly !== "Не рассчитано" || revenueModel.customEmpty.scenario !== "Другое значение" || revenueModel.customZeroAlert !== 1) failures.push(`revenue-model empty/zero custom invalid: ${JSON.stringify({ empty: revenueModel.customEmpty, alert: revenueModel.customZeroAlert })}`);
+    if (revenueModel.custom.monthly !== 8740500 || revenueModel.custom.daily !== 291350 || revenueModel.custom.checks !== "250" || revenueModel.custom.scenario !== "Другое значение") failures.push(`revenue-model custom flow invalid: ${JSON.stringify(revenueModel.custom)}`);
+    if (revenueModel.persisted.modeSelected !== "true" || revenueModel.persisted.value !== "250" || revenueModel.persisted.monthly !== 8740500 || revenueModel.reset.realisticSelected !== "true" || revenueModel.reset.customFieldCount !== 0 || revenueModel.reset.monthly !== 10488600 || revenueModel.reset.storage === null) failures.push(`revenue-model persistence/reset invalid: ${JSON.stringify({ persisted: revenueModel.persisted, reset: revenueModel.reset })}`);
+    if (revenueModel.breakdown.averageCheck !== 1165 || revenueModel.breakdown.rows !== 4 || revenueModel.breakdown.priceSegments !== 4 || !revenueModel.breakdown.text.includes("Средняя цена порции еды") || !revenueModel.breakdown.text.includes("Манчесы — 20%")) failures.push(`revenue-model average-check breakdown invalid: ${JSON.stringify(revenueModel.breakdown)}`);
+    if (Object.values(revenueModel.overflow).some(Boolean)) failures.push(`revenue-model overflow: ${JSON.stringify(revenueModel.overflow)}`);
+    if (!revenueModel.focus.tag || revenueModel.focus.outlineStyle === "none" || revenueModel.focus.outlineWidth === "0px") failures.push(`revenue-model keyboard focus is not visible: ${JSON.stringify(revenueModel.focus)}`);
+    if (revenueModel.noLinks.capex || revenueModel.noLinks.launch) failures.push(`revenue-model exposes internal cross-links: ${JSON.stringify(revenueModel.noLinks)}`);
+    if (revenueModel.forbiddenTechnical.length || revenueModel.forbiddenFinancial.length) failures.push(`revenue-model forbidden copy: ${[...revenueModel.forbiddenTechnical, ...revenueModel.forbiddenFinancial].join(", ")}`);
+    if (revenueModel.consoleMessages.length) failures.push(`revenue-model console: ${revenueModel.consoleMessages.join(" | ")}`);
+    if (revenueModel.pageErrors.length) failures.push(`revenue-model page errors: ${revenueModel.pageErrors.join(" | ")}`);
     if (formStatus.includes("Спасибо")) failures.push("form showed false success without endpoint");
 
-    const report = { baseUrl, checkedAt: new Date().toISOString(), results, mobileMenuOpen, capex, launchBudget, formStatus, failures };
+    const report = { baseUrl, checkedAt: new Date().toISOString(), results, mobileMenuOpen, capex, launchBudget, revenueModel, formStatus, failures };
     console.log(JSON.stringify(report, null, 2));
     if (failures.length) process.exit(1);
   } finally {

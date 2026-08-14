@@ -1,0 +1,15 @@
+schema_version: 2
+proposal_id: PROP-REVENUE-MODEL-2026-08-14-01
+iteration_id: ITR-REVENUE-MODEL-2026-08-14-01
+title: Create a working sales-volume model and direct-review page
+status: proposed
+proposed_at: 2026-08-14T17:00:00.000Z
+scope: Revenue Model v0.1, its deterministic content snapshot, calculations, direct route /revenue-model, tests and internal governance records only.
+approved_payload_path: docs-platform/changelog/payloads/ITR-REVENUE-MODEL-2026-08-14-01-approved.yaml
+approved_payload_sha256: 0f1ed916d013fb9e3956617694792bb9dbbf80df6d6bfaf9b0a6992bdc0898ea
+excludes:
+  - research or modification of supplied values
+  - CAPEX or Investor Start Model changes
+  - profit, COGS, taxes, EBITDA, payback, seasonality or ramp-up
+  - public navigation, sitemap and links between investor pages
+  - commit, seal, tag, push and deployment

@@ -1,0 +1,61 @@
+schema_version: 2
+iteration_id: ITR-REVENUE-MODEL-2026-08-14-01
+mode: governed_reverse_change_set
+status: prepared
+before_content_commit: d378d8486f02900103fa130ce692ed4c07944f1a
+before_state_sha256: d6465a88e3311cb7b3d878cc7435d0cf960bc12c5130b94911ca24334799a52d
+after_state_sha256: 288cb6605a9a324990eb61e5ce8d5beb35139bb0524113f468c45411a98d3ba1
+source_change_sets:
+  - CHG-035
+  - CHG-036
+  - CHG-REVENUE-MODEL-2026-08-14-01
+reverse_order:
+  - Remove the /revenue-model route, component, library, styles, Revenue Model snapshot, model, schemas and tests that did not exist before this iteration.
+  - Restore App routing, route types, page metadata, prerender list, package scripts and deterministic site tests from the pre-iteration content commit.
+  - Apply the approved registry reversals for CHG-036 and then CHG-035 using their receipts.
+  - Re-run registry, Revenue Model, route, snapshot, timeline and restored-state checks.
+  - Append rollback lifecycle events and preserve every proposal, decision, receipt and event from this iteration.
+new_paths_to_remove_by_reverse_change:
+  - docs-platform/working/revenue-model.yaml
+  - docs-platform/schemas/revenue-model.schema.json
+  - docs-platform/schemas/revenue-web-snapshot.schema.json
+  - docs-platform/app/src/investor/revenue-model.ts
+  - docs-platform/app/test/revenue-model.test.ts
+  - src/content/revenue-model-data.json
+  - src/lib/revenue-model.ts
+  - src/components/RevenueModel.tsx
+  - src/components/RevenueModel.css
+paths_to_restore_from_before_content_commit:
+  - src/App.tsx
+  - src/content/site.ts
+  - src/types.ts
+  - scripts/prerender-dist.cjs
+  - scripts/test-site.cjs
+  - package.json
+  - docs-platform/app/package.json
+  - docs-platform/app/src/cli.ts
+before_file_sha256:
+  src/App.tsx: cfdaddc6c4eefb0023dfa7dab353ecdf724684430305322615b225e2efb3f7a0
+  src/content/site.ts: 534c864870072dc5b3f15fd629ea96231015681fc017773509c7fd66fdf6b17c
+  src/types.ts: aae08b95f360c68684cfb0b26ce43e153f4d05689093327cab8c9f0ca60aa349
+  scripts/prerender-dist.cjs: 1e246a661169c54d85a2e63c37123a7ac690d46a66f2252816369d87dcc7aabc
+  scripts/test-site.cjs: c9229e5e93ba63b8835c9880da68996f27dd3c87ad202e002e64712228e88837
+  package.json: b7c8667120081b9ebf139b047fd3fd98c5c610455861b511c3a145a2dc9d8f03
+  docs-platform/app/package.json: fb9d553a15d25d5dc4637b5f33f796ee9ac63051fd80705ce37e0d7335de0024
+  docs-platform/app/src/cli.ts: 224125e58e5b3d0664368fe02b07f9a0ea682a505ddfc89992961464cb33a313
+after_file_sha256:
+  docs-platform/working/revenue-model.yaml: ab68399813d62d861522752c8e94df9cfc5d5a48e9b7723c60f2c968c4cba721
+  src/content/revenue-model-data.json: 6dacd7aab33fcc139a05f6ac2eee5319c6107a6153d4a3a92ffee8d82406139a
+  src/components/RevenueModel.tsx: cf28196bc8daf3628dd79f37c24e98636c1ce7d24cbdacc094b8cf44bae0346e
+  src/components/RevenueModel.css: f43cc49db967ba68b821ffdd45b83083b4a5aff3c15038aa2f115818b83c695a
+  src/lib/revenue-model.ts: 3ade849d5b01da449721460a2caf93a324774fe462175ef13554ae543ed52d81
+  scripts/test-site.cjs: c28f0baacbe6e0eb694925b1ce8bf859b7dee396c51e8d8b4508882d47953474
+registry_receipts:
+  - docs-platform/changelog/change-receipts/CHG-036.yaml
+  - docs-platform/changelog/change-receipts/CHG-035.yaml
+audit_reference: docs-platform/changelog/audit/ITR-REVENUE-MODEL-2026-08-14-01.yaml
+reverse_strategy:
+  requirement: A new rollback request, reverse preview and approved rollback decision are mandatory before apply.
+  history: Append rollback events; never delete or rewrite this iteration's events or receipts.
+  git_reset_forbidden: true
+  dependency_check: required against every later applied iteration

@@ -1,0 +1,22 @@
+schema_version: 2
+decision_id: DEC-REVENUE-MODEL-2026-08-14-01
+iteration_id: ITR-REVENUE-MODEL-2026-08-14-01
+title: Approve Revenue Model v0.1 and the direct-review sales-volume page
+status: approved
+approved_by: project owner
+approved_at: 2026-08-14T17:00:01.000Z
+scope: Exact product mix, prices, average check, 200/300/450 traffic scenarios, production-load coefficients, capacity statements and /revenue-model implementation from the approved payload.
+reason: The owner supplied a complete working scenario model for investor discussion and explicitly authorized implementation without external research or independent adjustment.
+approves:
+  - Revenue Model v0.1 as a research-status working model
+  - exact average check of 1165.40 RUB
+  - exact traffic scenarios and sales-volume calculations
+  - exact production-load and capacity assumptions
+  - direct noindex, nofollow page /revenue-model
+excludes:
+  - guaranteed revenue or a financial forecast
+  - COGS, EBITDA, profit, taxes, payback and investor return
+  - seasonality, ramp-up and an approved final menu
+  - changes to CAPEX, Investor Start Model or other investor pages
+approved_payload_path: docs-platform/changelog/payloads/ITR-REVENUE-MODEL-2026-08-14-01-approved.yaml
+approved_payload_sha256: 0f1ed916d013fb9e3956617694792bb9dbbf80df6d6bfaf9b0a6992bdc0898ea

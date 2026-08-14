@@ -357,3 +357,95 @@ assumptions:
       - SRC-INVESTOR-OPERATING-RESERVE-BRIEF
     decision_id: DEC-016
     updated_at: 2026-08-11
+  - id: ASM-REVENUE-PRODUCT-MIX
+    title: Структура продаж еды Revenue Model
+    value:
+      kolobok_share: 0.8
+      manches_share: 0.2
+    unit: share
+    status: research
+    rationale: Точные доли заданы владельцем проекта для рабочей сценарной модели и не являются фактической статистикой продаж.
+    scenario: REVENUE_MODEL_V0_1
+    applies_to:
+      - DOC-REVENUE-MODEL
+    source_ids:
+      - SRC-REVENUE-MODEL-BRIEF
+    decision_id: DEC-REVENUE-MODEL-2026-08-14-01
+    updated_at: 2026-08-14
+  - id: ASM-REVENUE-AVERAGE-CHECK
+    title: Структура среднего чека Revenue Model
+    value:
+      weighted_kolobok_price_rub: 632.5
+      average_food_price_rub: 636
+      food_portions_per_check: 1.4
+      drinks_per_check: 1
+      average_drink_price_rub: 275
+      average_check_rub: 1165.4
+    unit: RUB
+    status: research
+    rationale: Все значения и структура расчёта дословно заданы владельцем проекта и не являются гарантированным фактическим средним чеком.
+    scenario: REVENUE_MODEL_V0_1
+    applies_to:
+      - DOC-REVENUE-MODEL
+    source_ids:
+      - SRC-REVENUE-MODEL-BRIEF
+    decision_id: DEC-REVENUE-MODEL-2026-08-14-01
+    updated_at: 2026-08-14
+  - id: ASM-REVENUE-TRAFFIC-SCENARIOS
+    title: Сценарии потока заказов Revenue Model
+    value:
+      pessimistic: 200
+      realistic: 300
+      optimistic: 450
+      unit: checks_per_day
+    unit: checks_per_day
+    status: research
+    rationale: Три точных сценария заданы владельцем проекта для сравнения потенциального объёма продаж.
+    scenario: REVENUE_MODEL_V0_1
+    applies_to:
+      - DOC-REVENUE-MODEL
+    source_ids:
+      - SRC-REVENUE-MODEL-BRIEF
+    decision_id: DEC-REVENUE-MODEL-2026-08-14-01
+    updated_at: 2026-08-14
+  - id: ASM-REVENUE-LOAD-COEFFICIENTS
+    title: Коэффициенты производственной нагрузки Revenue Model
+    value:
+      trading_hours_per_day: 12
+      peak_share: 0.65
+      peak_hours: 6
+      maximum_hour_multiplier: 1.4
+    unit: mixed
+    status: research
+    rationale: Рабочие коэффициенты заданы владельцем проекта для проверки мощности и не являются отраслевыми нормативами.
+    scenario: REVENUE_MODEL_V0_1
+    applies_to:
+      - DOC-REVENUE-MODEL
+    source_ids:
+      - SRC-REVENUE-MODEL-BRIEF
+    decision_id: DEC-REVENUE-MODEL-2026-08-14-01
+    updated_at: 2026-08-14
+  - id: ASM-REVENUE-CAPACITY
+    title: Рабочая оценка мощности кухни Revenue Model
+    value:
+      kolobok_sustainable_portions_per_hour:
+        min: 60
+        max: 90
+      manches_sustainable_portions_per_hour: 36
+      primary_line_cooks: 2
+      assembly_staff:
+        regular: 1
+        peak: 2
+      cashiers:
+        regular: 1
+        peak: 2
+    unit: portions_per_hour
+    status: research
+    rationale: Значения являются заданными расчётными ориентирами реализуемости сценария, а не доказанной производительностью.
+    scenario: REVENUE_MODEL_V0_1
+    applies_to:
+      - DOC-REVENUE-MODEL
+    source_ids:
+      - SRC-REVENUE-MODEL-BRIEF
+    decision_id: DEC-REVENUE-MODEL-2026-08-14-01
+    updated_at: 2026-08-14

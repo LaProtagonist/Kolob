@@ -1,0 +1,34 @@
+preview_version: 1
+iteration_id: ITR-REVENUE-MODEL-2026-08-14-01
+proposal_id: PROP-REVENUE-MODEL-2026-08-14-01
+decision_id: DEC-REVENUE-MODEL-2026-08-14-01
+change_set_id: CHG-REVENUE-MODEL-2026-08-14-01
+created_at: 2026-08-14T17:45:00.000Z
+actor: Codex
+tool: exact approved payload preview
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-REVENUE-MODEL-2026-08-14-01-approved.yaml
+  sha256: 0f1ed916d013fb9e3956617694792bb9dbbf80df6d6bfaf9b0a6992bdc0898ea
+before_state_sha256: d6465a88e3311cb7b3d878cc7435d0cf960bc12c5130b94911ca24334799a52d
+target:
+  route: /revenue-model
+  source_path: docs-platform/working/revenue-model.yaml
+scope:
+  average_check_rub: 1165.40
+  scenario_checks_per_day: [200, 300, 450]
+  default_scenario: realistic
+  month_days: 30
+  editable_inputs: [trafficMode, trafficScenario, customChecksPerDay]
+  noindex_nofollow: true
+out_of_scope:
+  - external research and independent coefficients
+  - costs, EBITDA, profit, taxes, payback and investor return
+  - CAPEX, Investor Start Model and Google files
+  - public navigation, sitemap and investor-page cross-links
+  - Git commit, seal, tag, push and deployment
+writes: false
+validation:
+  arithmetic_consistency: passed
+  traffic_scenarios: passed
+  approved_copy: passed
+  mutation_performed: false

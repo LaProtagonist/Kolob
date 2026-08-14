@@ -243,3 +243,16 @@ decisions:
     source_ids:
       - SRC-INVESTOR-OPEX-MODE-BRIEF
     updated_at: 2026-08-11
+  - id: DEC-REVENUE-MODEL-2026-08-14-01
+    title: Создать Revenue Model v0.1 и страницу расчёта объёма продаж
+    status: approved
+    decision: Зафиксировать заданную владельцем рабочую модель потенциального объёма продаж с точным средним чеком 1165.40 RUB, сценариями 200/300/450 чеков, производственной нагрузкой и прямой страницей /revenue-model без публичной навигации.
+    rationale: Прямое задание владельца проекта от 2026-08-14; решение не является прогнозом гарантированной выручки и не утверждает полную финансовую модель.
+    affected_documents:
+      - DOC-REVENUE-MODEL
+    approved_by: project owner
+    approved_at: 2026-08-14
+    supersedes: null
+    source_ids:
+      - SRC-REVENUE-MODEL-BRIEF
+    updated_at: 2026-08-14

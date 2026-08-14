@@ -1,0 +1,27 @@
+schema_version: 2
+change_id: CHG-REVENUE-MODEL-2026-08-14-01
+iteration_id: ITR-REVENUE-MODEL-2026-08-14-01
+proposal_id: PROP-REVENUE-MODEL-2026-08-14-01
+decision_id: DEC-REVENUE-MODEL-2026-08-14-01
+title: Apply the approved Revenue Model and direct-review page
+status: approved
+approved_payload_path: docs-platform/changelog/payloads/ITR-REVENUE-MODEL-2026-08-14-01-approved.yaml
+approved_payload_sha256: 0f1ed916d013fb9e3956617694792bb9dbbf80df6d6bfaf9b0a6992bdc0898ea
+operations:
+  - register Revenue Model, its approved source, decision, assumptions and governing dependencies
+  - create the structured Revenue Model and its schema validator
+  - generate a deterministic revenue-only web snapshot without governance state
+  - implement the /revenue-model route with scenario and custom traffic modes
+  - calculate average check, sales volume, product load and hourly capacity checks from the structured source
+  - preserve only trafficMode, trafficScenario and customChecksPerDay in localStorage
+  - add route, SEO, arithmetic, snapshot, responsive and regression tests
+  - preserve /launch-budget, /capex-configurator, public navigation, footer and sitemap
+preview:
+  status: passed
+  mutation_performed: false
+  arithmetic_validation: passed
+  research_performed: false
+  capex_changed: false
+  investor_start_model_changed: false
+  google_changes: false
+  delivery_changes: false

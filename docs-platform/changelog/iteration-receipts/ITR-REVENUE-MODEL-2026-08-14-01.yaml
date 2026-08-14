@@ -1,0 +1,43 @@
+schema_version: 2
+iteration_id: ITR-REVENUE-MODEL-2026-08-14-01
+proposal_id: PROP-REVENUE-MODEL-2026-08-14-01
+decision_id: DEC-REVENUE-MODEL-2026-08-14-01
+change_set_id: CHG-REVENUE-MODEL-2026-08-14-01
+status: verified
+applied_at: 2026-08-14T18:08:00.000Z
+actor: Codex
+tool: exact approved payload implementation + docs-platform change:apply + revenue:web:sync
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-REVENUE-MODEL-2026-08-14-01-approved.yaml
+  sha256: 0f1ed916d013fb9e3956617694792bb9dbbf80df6d6bfaf9b0a6992bdc0898ea
+before_state_sha256: d6465a88e3311cb7b3d878cc7435d0cf960bc12c5130b94911ca24334799a52d
+after_state_sha256: 288cb6605a9a324990eb61e5ce8d5beb35139bb0524113f468c45411a98d3ba1
+model:
+  path: docs-platform/working/revenue-model.yaml
+  sha256: ab68399813d62d861522752c8e94df9cfc5d5a48e9b7723c60f2c968c4cba721
+snapshot:
+  path: src/content/revenue-model-data.json
+  sha256: 6dacd7aab33fcc139a05f6ac2eee5319c6107a6153d4a3a92ffee8d82406139a
+  content_state_sha256: 90727a6c51f959b617d6c972b898593a1b6dba6742d51b30bb75230f3f606c38
+registry_receipts:
+  - docs-platform/changelog/change-receipts/CHG-035.yaml
+  - docs-platform/changelog/change-receipts/CHG-036.yaml
+implementation:
+  route: /revenue-model
+  traffic_modes: [scenario, custom]
+  default_scenario: realistic
+  local_storage_fields: [trafficMode, trafficScenario, customChecksPerDay]
+  derived_values_persisted: false
+  public_navigation_changed: false
+  capex_changed: false
+  investor_start_model_changed: false
+  google_files_changed: false
+git_commit_hash: null
+validation_result: passed
+verified_at: 2026-08-14T18:22:40.000Z
+verification_receipt: docs-platform/changelog/verification/ITR-REVENUE-MODEL-2026-08-14-01.yaml
+rollback:
+  mode: governed_reverse_change_set
+  payload: docs-platform/changelog/rollback-payloads/ITR-REVENUE-MODEL-2026-08-14-01/manifest.yaml
+  preserves_history: true
+  git_reset_forbidden: true

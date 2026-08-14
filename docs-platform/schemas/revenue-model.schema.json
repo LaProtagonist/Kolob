@@ -1,0 +1,150 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["document", "public_presentation", "product_model", "traffic", "sales_calculation", "production_load", "capacity", "form"],
+  "properties": {
+    "document": {
+      "type": "object",
+      "required": ["id", "title", "title_ru", "version", "status", "type", "iteration_id", "decision_id", "change_set_id", "source_ids", "foundations", "note"],
+      "properties": {
+        "id": { "const": "DOC-REVENUE-MODEL" },
+        "title": { "const": "Revenue Model" },
+        "title_ru": { "const": "Модель объёма продаж" },
+        "version": { "const": "0.1" },
+        "status": { "const": "research" },
+        "type": { "const": "working_sales_volume_model" },
+        "iteration_id": { "const": "ITR-REVENUE-MODEL-2026-08-14-01" },
+        "decision_id": { "const": "DEC-REVENUE-MODEL-2026-08-14-01" },
+        "change_set_id": { "const": "CHG-REVENUE-MODEL-2026-08-14-01" },
+        "source_ids": { "type": "array", "const": ["SRC-REVENUE-MODEL-BRIEF"] },
+        "foundations": { "type": "array", "const": ["DOC-FOUNDATION", "DOC-BUSINESS-MODEL-ARCHITECTURE"] },
+        "note": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "public_presentation": {
+      "type": "object",
+      "required": ["route", "page_title", "subtitle", "capabilities_title", "capabilities_text", "traffic_title", "traffic_description", "traffic_mode_labels", "custom_checks_label", "average_check_title", "average_check_description", "average_check_breakdown_label", "food_price_breakdown_label", "sales_title", "month_note", "production_title", "production_description", "capacity_title", "capacity_basis_label", "summary_warning", "next_title", "next_text", "next_items", "principle_title", "principle_text", "principle_note", "not_calculated_label"],
+      "properties": {
+        "route": { "const": "/revenue-model" },
+        "page_title": { "type": "string", "minLength": 1 },
+        "subtitle": { "type": "string", "minLength": 1 },
+        "capabilities_title": { "type": "string" },
+        "capabilities_text": { "type": "string" },
+        "traffic_title": { "type": "string" },
+        "traffic_description": { "type": "string" },
+        "traffic_mode_labels": { "type": "object", "required": ["scenario", "custom"], "properties": { "scenario": { "type": "string" }, "custom": { "type": "string" } }, "additionalProperties": false },
+        "custom_checks_label": { "type": "string" },
+        "average_check_title": { "type": "string" },
+        "average_check_description": { "type": "string" },
+        "average_check_breakdown_label": { "type": "string" },
+        "food_price_breakdown_label": { "type": "string" },
+        "sales_title": { "type": "string" },
+        "month_note": { "type": "string" },
+        "production_title": { "type": "string" },
+        "production_description": { "type": "string" },
+        "capacity_title": { "type": "string" },
+        "capacity_basis_label": { "type": "string" },
+        "summary_warning": { "type": "string" },
+        "next_title": { "type": "string" },
+        "next_text": { "type": "string" },
+        "next_items": { "type": "array", "minItems": 6, "maxItems": 6, "items": { "type": "string" } },
+        "principle_title": { "type": "string" },
+        "principle_text": { "type": "string" },
+        "principle_note": { "type": "string" },
+        "not_calculated_label": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "product_model": {
+      "type": "object",
+      "required": ["categories", "kolobok_portion", "food_mix", "kolobok_price_segments", "weighted_kolobok_price_rub", "manches", "average_food_portion_price_rub", "drinks", "food_portions_per_check", "average_check_rub"],
+      "properties": {
+        "categories": { "type": "array", "minItems": 3, "maxItems": 3, "items": { "type": "object", "required": ["id", "name"], "properties": { "id": { "type": "string" }, "name": { "type": "string" } }, "additionalProperties": false } },
+        "kolobok_portion": { "type": "object", "required": ["units", "approximate_weight_g", "additions", "description"], "properties": { "units": { "type": "integer", "minimum": 1 }, "approximate_weight_g": { "type": "integer", "minimum": 1 }, "additions": { "type": "array", "items": { "type": "string" } }, "description": { "type": "string" } }, "additionalProperties": false },
+        "food_mix": { "type": "object", "required": ["kolobok_share", "manches_share"], "properties": { "kolobok_share": { "type": "number", "minimum": 0, "maximum": 1 }, "manches_share": { "type": "number", "minimum": 0, "maximum": 1 } }, "additionalProperties": false },
+        "kolobok_price_segments": { "type": "array", "minItems": 4, "maxItems": 4, "items": { "type": "object", "required": ["id", "name", "price_rub", "share"], "properties": { "id": { "type": "string" }, "name": { "type": "string" }, "price_rub": { "type": "number", "minimum": 0 }, "share": { "type": "number", "minimum": 0, "maximum": 1 } }, "additionalProperties": false } },
+        "weighted_kolobok_price_rub": { "type": "number" },
+        "manches": { "type": "object", "required": ["price_range_rub", "realized_price_rub", "description"], "properties": { "price_range_rub": { "type": "object", "required": ["min", "max"], "properties": { "min": { "type": "number" }, "max": { "type": "number" } }, "additionalProperties": false }, "realized_price_rub": { "type": "number" }, "description": { "type": "string" } }, "additionalProperties": false },
+        "average_food_portion_price_rub": { "type": "number" },
+        "drinks": { "type": "object", "required": ["average_price_rub", "per_check", "production_note"], "properties": { "average_price_rub": { "type": "number" }, "per_check": { "type": "number" }, "production_note": { "type": "string" } }, "additionalProperties": false },
+        "food_portions_per_check": { "type": "number" },
+        "average_check_rub": { "type": "number" }
+      },
+      "additionalProperties": false
+    },
+    "traffic": {
+      "type": "object",
+      "required": ["default_mode", "default_scenario", "custom_default_checks_per_day", "scenarios"],
+      "properties": {
+        "default_mode": { "const": "scenario" },
+        "default_scenario": { "const": "realistic" },
+        "custom_default_checks_per_day": { "type": "null" },
+        "scenarios": { "type": "array", "minItems": 3, "maxItems": 3, "items": { "type": "object", "required": ["id", "name", "checks_per_day", "capacity_statement"], "properties": { "id": { "enum": ["pessimistic", "realistic", "optimistic"] }, "name": { "type": "string" }, "checks_per_day": { "type": "integer", "minimum": 1 }, "capacity_statement": { "type": "string" } }, "additionalProperties": false } }
+      },
+      "additionalProperties": false
+    },
+    "sales_calculation": {
+      "type": "object",
+      "required": ["currency", "days_per_month", "formulas"],
+      "properties": {
+        "currency": { "const": "RUB" },
+        "days_per_month": { "const": 30 },
+        "formulas": { "type": "object" }
+      },
+      "additionalProperties": false
+    },
+    "production_load": {
+      "type": "object",
+      "required": ["trading_hours_per_day", "peak_share", "peak_hours", "maximum_hour_multiplier", "display_rounding", "formulas"],
+      "properties": {
+        "trading_hours_per_day": { "const": 12 },
+        "peak_share": { "const": 0.65 },
+        "peak_hours": { "const": 6 },
+        "maximum_hour_multiplier": { "const": 1.4 },
+        "display_rounding": { "type": "object" },
+        "formulas": { "type": "object" }
+      },
+      "additionalProperties": false
+    },
+    "capacity": {
+      "type": "object",
+      "required": ["kolobok_line", "manches_line", "assembly", "checkout", "public_basis"],
+      "properties": {
+        "kolobok_line": { "type": "object" },
+        "manches_line": { "type": "object" },
+        "assembly": { "type": "object" },
+        "checkout": { "type": "object" },
+        "public_basis": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "items": {
+            "type": "object",
+            "required": ["label", "value", "secondary"],
+            "properties": {
+              "label": { "type": "string" },
+              "value": { "type": "string" },
+              "secondary": { "type": ["string", "null"] }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "form": {
+      "type": "object",
+      "required": ["local_storage_key", "schema_version", "persist_fields", "server_persistence", "analytics_submission"],
+      "properties": {
+        "local_storage_key": { "type": "string" },
+        "schema_version": { "const": 1 },
+        "persist_fields": { "type": "array", "const": ["trafficMode", "trafficScenario", "customChecksPerDay"] },
+        "server_persistence": { "const": false },
+        "analytics_submission": { "const": false }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

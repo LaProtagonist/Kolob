@@ -1,0 +1,228 @@
+receipt_version: 2
+change_id: CHG-036
+iteration_id: ITR-REVENUE-MODEL-2026-08-14-01
+proposal_id: PROP-REVENUE-MODEL-2026-08-14-01
+decision_id: DEC-REVENUE-MODEL-2026-08-14-01
+source_change_set: docs-platform/changes/CHG-036-revenue-model-registration.yaml
+status: applied
+applied_at: 2026-08-14T17:49:59.227Z
+actor: Codex
+tool: docs-platform change:apply
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-REVENUE-MODEL-2026-08-14-01-approved.yaml
+  sha256: 0f1ed916d013fb9e3956617694792bb9dbbf80df6d6bfaf9b0a6992bdc0898ea
+before_hash: 0f04c7582d7b77ec6c82ddd1564abf57a1fe270d452117e9c1e424ec9d424a23
+after_hash: 7aec54813c7deb7baf79f931b1f6983c1c12bed6a4135e15c5e79e7f645485d9
+touched_registry_files:
+  - path: docs-platform/registry/assumptions.yaml
+    backup_path: docs-platform/changelog/backups/2026-08-14T17-49-59-227Z-CHG-036/assumptions.yaml
+  - path: docs-platform/registry/dependencies.yaml
+    backup_path: docs-platform/changelog/backups/2026-08-14T17-49-59-227Z-CHG-036/dependencies.yaml
+operations:
+  - type: add
+    entity: assumptions
+    id: ASM-REVENUE-PRODUCT-MIX
+    before: null
+    after:
+      id: ASM-REVENUE-PRODUCT-MIX
+      title: Структура продаж еды Revenue Model
+      value:
+        kolobok_share: 0.8
+        manches_share: 0.2
+      unit: share
+      status: research
+      rationale: Точные доли заданы владельцем проекта для рабочей сценарной модели и не являются фактической статистикой продаж.
+      scenario: REVENUE_MODEL_V0_1
+      applies_to:
+        - DOC-REVENUE-MODEL
+      source_ids:
+        - SRC-REVENUE-MODEL-BRIEF
+      decision_id: DEC-REVENUE-MODEL-2026-08-14-01
+      updated_at: 2026-08-14
+    before_index: null
+    after_index: 19
+    before_sha256: null
+    after_sha256: d86bf46c3d35fbf7e3c5b02c9cc47a389302e6ac2dec7804da5526cc3c6a5bb6
+    reverse_operation:
+      type: remove
+      entity: assumptions
+      id: ASM-REVENUE-PRODUCT-MIX
+  - type: add
+    entity: assumptions
+    id: ASM-REVENUE-AVERAGE-CHECK
+    before: null
+    after:
+      id: ASM-REVENUE-AVERAGE-CHECK
+      title: Структура среднего чека Revenue Model
+      value:
+        weighted_kolobok_price_rub: 632.5
+        average_food_price_rub: 636
+        food_portions_per_check: 1.4
+        drinks_per_check: 1
+        average_drink_price_rub: 275
+        average_check_rub: 1165.4
+      unit: RUB
+      status: research
+      rationale: Все значения и структура расчёта дословно заданы владельцем проекта и не являются гарантированным фактическим средним чеком.
+      scenario: REVENUE_MODEL_V0_1
+      applies_to:
+        - DOC-REVENUE-MODEL
+      source_ids:
+        - SRC-REVENUE-MODEL-BRIEF
+      decision_id: DEC-REVENUE-MODEL-2026-08-14-01
+      updated_at: 2026-08-14
+    before_index: null
+    after_index: 20
+    before_sha256: null
+    after_sha256: d3f9f78d56dcfca316cd4f6a1126643ef99f4cfe741b0b6e9f142eccfc44f9f4
+    reverse_operation:
+      type: remove
+      entity: assumptions
+      id: ASM-REVENUE-AVERAGE-CHECK
+  - type: add
+    entity: assumptions
+    id: ASM-REVENUE-TRAFFIC-SCENARIOS
+    before: null
+    after:
+      id: ASM-REVENUE-TRAFFIC-SCENARIOS
+      title: Сценарии потока заказов Revenue Model
+      value:
+        pessimistic: 200
+        realistic: 300
+        optimistic: 450
+        unit: checks_per_day
+      unit: checks_per_day
+      status: research
+      rationale: Три точных сценария заданы владельцем проекта для сравнения потенциального объёма продаж.
+      scenario: REVENUE_MODEL_V0_1
+      applies_to:
+        - DOC-REVENUE-MODEL
+      source_ids:
+        - SRC-REVENUE-MODEL-BRIEF
+      decision_id: DEC-REVENUE-MODEL-2026-08-14-01
+      updated_at: 2026-08-14
+    before_index: null
+    after_index: 21
+    before_sha256: null
+    after_sha256: a33ef160b4b26b9213d019c2a91fb103e3553d4acf6e47068482d8d8b867ab13
+    reverse_operation:
+      type: remove
+      entity: assumptions
+      id: ASM-REVENUE-TRAFFIC-SCENARIOS
+  - type: add
+    entity: assumptions
+    id: ASM-REVENUE-LOAD-COEFFICIENTS
+    before: null
+    after:
+      id: ASM-REVENUE-LOAD-COEFFICIENTS
+      title: Коэффициенты производственной нагрузки Revenue Model
+      value:
+        trading_hours_per_day: 12
+        peak_share: 0.65
+        peak_hours: 6
+        maximum_hour_multiplier: 1.4
+      unit: mixed
+      status: research
+      rationale: Рабочие коэффициенты заданы владельцем проекта для проверки мощности и не являются отраслевыми нормативами.
+      scenario: REVENUE_MODEL_V0_1
+      applies_to:
+        - DOC-REVENUE-MODEL
+      source_ids:
+        - SRC-REVENUE-MODEL-BRIEF
+      decision_id: DEC-REVENUE-MODEL-2026-08-14-01
+      updated_at: 2026-08-14
+    before_index: null
+    after_index: 22
+    before_sha256: null
+    after_sha256: 5849106ad66b6ccabd81eec54748e0aba4dedd91f090e769a3fb4f4f2b25e02d
+    reverse_operation:
+      type: remove
+      entity: assumptions
+      id: ASM-REVENUE-LOAD-COEFFICIENTS
+  - type: add
+    entity: assumptions
+    id: ASM-REVENUE-CAPACITY
+    before: null
+    after:
+      id: ASM-REVENUE-CAPACITY
+      title: Рабочая оценка мощности кухни Revenue Model
+      value:
+        kolobok_sustainable_portions_per_hour:
+          min: 60
+          max: 90
+        manches_sustainable_portions_per_hour: 36
+        primary_line_cooks: 2
+        assembly_staff:
+          regular: 1
+          peak: 2
+        cashiers:
+          regular: 1
+          peak: 2
+      unit: portions_per_hour
+      status: research
+      rationale: Значения являются заданными расчётными ориентирами реализуемости сценария, а не доказанной производительностью.
+      scenario: REVENUE_MODEL_V0_1
+      applies_to:
+        - DOC-REVENUE-MODEL
+      source_ids:
+        - SRC-REVENUE-MODEL-BRIEF
+      decision_id: DEC-REVENUE-MODEL-2026-08-14-01
+      updated_at: 2026-08-14
+    before_index: null
+    after_index: 23
+    before_sha256: null
+    after_sha256: 6a19b286779a97a10a2c419b152a246881315e9342433411e16976864052a112
+    reverse_operation:
+      type: remove
+      entity: assumptions
+      id: ASM-REVENUE-CAPACITY
+  - type: add
+    entity: dependencies
+    id: DEP-FOUNDATION-REVENUE-MODEL
+    before: null
+    after:
+      id: DEP-FOUNDATION-REVENUE-MODEL
+      source_document_id: DOC-FOUNDATION
+      priority: governing_source
+      status: research
+      version: "1.0"
+      target_documents:
+        - title: Revenue Model
+          document_id: DOC-REVENUE-MODEL
+      updated_at: 2026-08-14
+    before_index: null
+    after_index: 15
+    before_sha256: null
+    after_sha256: 5980d4d0e01e08c87553faa783d091cee81690f7f43167c92a60a8d66f195351
+    reverse_operation:
+      type: remove
+      entity: dependencies
+      id: DEP-FOUNDATION-REVENUE-MODEL
+  - type: add
+    entity: dependencies
+    id: DEP-BMA-REVENUE-MODEL
+    before: null
+    after:
+      id: DEP-BMA-REVENUE-MODEL
+      source_document_id: DOC-BUSINESS-MODEL-ARCHITECTURE
+      priority: governing_source
+      status: research
+      version: "1.0"
+      target_documents:
+        - title: Revenue Model
+          document_id: DOC-REVENUE-MODEL
+      updated_at: 2026-08-14
+    before_index: null
+    after_index: 16
+    before_sha256: null
+    after_sha256: f68b25f157c97c0fbbf86d2018b84a0104b26ef24f5eff1aed38694b475cdd2b
+    reverse_operation:
+      type: remove
+      entity: dependencies
+      id: DEP-BMA-REVENUE-MODEL
+validation_result: passed
+git_commit_hash: null
+rollback:
+  source_receipt: docs-platform/changelog/change-receipts/CHG-036.yaml
+  command: npm run change:reverse:preview -- ../changelog/change-receipts/CHG-036.yaml --change-id CHG-ROLLBACK-XXX --decision DEC-ROLLBACK-XXX
+  rollback_of: CHG-036

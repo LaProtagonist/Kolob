@@ -102,6 +102,15 @@ export const pages: PageMeta[] = [
     description: "Предварительный расчёт стоимости запуска первого совмещённого объекта «Колобочной» при покупке или аренде помещения.",
     ogImage: "/media/hero-kolobok-1200.webp",
     noindex: true
+  },
+  {
+    id: "revenueModel",
+    path: "/revenue-model",
+    label: "Расчёт объёма продаж",
+    title: "Расчёт объёма продаж — Колобочная",
+    description: "Модель потенциального объёма продаж совмещённого объекта «Колобочной»: поток заказов, структура среднего чека и производственная нагрузка.",
+    ogImage: "/media/hero-kolobok-1200.webp",
+    noindex: true
   }
 ];
 

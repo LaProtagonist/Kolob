@@ -267,3 +267,21 @@ documents:
     governance_level: working
     local_path: docs-platform/working/investor-start-model.yaml
     updated_at: 2026-08-11
+  - id: DOC-REVENUE-MODEL
+    title: Revenue Model
+    type: working_sales_volume_model
+    status: research
+    google_file_id: null
+    template: null
+    sections:
+      - Продуктовая структура
+      - Средний чек
+      - Сценарии потока
+      - Расчётный объём продаж
+      - Производственная нагрузка
+      - Проверка мощности
+      - Публичная страница
+    version: "0.1"
+    governance_level: working
+    local_path: docs-platform/working/revenue-model.yaml
+    updated_at: 2026-08-14

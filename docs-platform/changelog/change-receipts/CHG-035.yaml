@@ -1,0 +1,108 @@
+receipt_version: 2
+change_id: CHG-035
+iteration_id: ITR-REVENUE-MODEL-2026-08-14-01
+proposal_id: PROP-REVENUE-MODEL-2026-08-14-01
+decision_id: DEC-001
+source_change_set: docs-platform/changes/CHG-035-revenue-model-decision.yaml
+status: applied
+applied_at: 2026-08-14T17:49:33.165Z
+actor: Codex
+tool: docs-platform change:apply
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-REVENUE-MODEL-2026-08-14-01-approved.yaml
+  sha256: 0f1ed916d013fb9e3956617694792bb9dbbf80df6d6bfaf9b0a6992bdc0898ea
+before_hash: ecdf0331cbc47b9fa746c8f776c32c9015863552a0ba6f54740500449748ab31
+after_hash: 0f04c7582d7b77ec6c82ddd1564abf57a1fe270d452117e9c1e424ec9d424a23
+touched_registry_files:
+  - path: docs-platform/registry/documents.yaml
+    backup_path: docs-platform/changelog/backups/2026-08-14T17-49-33-165Z-CHG-035/documents.yaml
+  - path: docs-platform/registry/sources.yaml
+    backup_path: docs-platform/changelog/backups/2026-08-14T17-49-33-165Z-CHG-035/sources.yaml
+  - path: docs-platform/registry/decisions.yaml
+    backup_path: docs-platform/changelog/backups/2026-08-14T17-49-33-165Z-CHG-035/decisions.yaml
+operations:
+  - type: add
+    entity: documents
+    id: DOC-REVENUE-MODEL
+    before: null
+    after:
+      id: DOC-REVENUE-MODEL
+      title: Revenue Model
+      type: working_sales_volume_model
+      status: research
+      google_file_id: null
+      template: null
+      sections:
+        - Продуктовая структура
+        - Средний чек
+        - Сценарии потока
+        - Расчётный объём продаж
+        - Производственная нагрузка
+        - Проверка мощности
+        - Публичная страница
+      version: "0.1"
+      governance_level: working
+      local_path: docs-platform/working/revenue-model.yaml
+      updated_at: 2026-08-14
+    before_index: null
+    after_index: 17
+    before_sha256: null
+    after_sha256: ff675bf464ccd93736267233df21df3a359f99591b0464383531a3e1222753b8
+    reverse_operation:
+      type: remove
+      entity: documents
+      id: DOC-REVENUE-MODEL
+  - type: add
+    entity: sources
+    id: SRC-REVENUE-MODEL-BRIEF
+    before: null
+    after:
+      id: SRC-REVENUE-MODEL-BRIEF
+      title: Утверждённая модель потенциального объёма продаж
+      type: instruction
+      location: User instruction, 2026-08-14
+      publisher: project owner
+      publication_date: 2026-08-14
+      accessed_at: 2026-08-14
+      reliability: primary
+      notes: Содержит точные продуктовые доли, цены, средний чек, сценарии 200/300/450 чеков, коэффициенты нагрузки, формулировки мощности и публичные тексты страницы. Внешнее исследование запрещено и не выполнялось.
+    before_index: null
+    after_index: 155
+    before_sha256: null
+    after_sha256: 8fb46c89a2aff9809920cdcec6b638f3092e1e8867ec0665754452991af94095
+    reverse_operation:
+      type: remove
+      entity: sources
+      id: SRC-REVENUE-MODEL-BRIEF
+  - type: add
+    entity: decisions
+    id: DEC-REVENUE-MODEL-2026-08-14-01
+    before: null
+    after:
+      id: DEC-REVENUE-MODEL-2026-08-14-01
+      title: Создать Revenue Model v0.1 и страницу расчёта объёма продаж
+      status: approved
+      decision: Зафиксировать заданную владельцем рабочую модель потенциального объёма продаж с точным средним чеком 1165.40 RUB, сценариями 200/300/450 чеков, производственной нагрузкой и прямой страницей /revenue-model без публичной навигации.
+      rationale: Прямое задание владельца проекта от 2026-08-14; решение не является прогнозом гарантированной выручки и не утверждает полную финансовую модель.
+      affected_documents:
+        - DOC-REVENUE-MODEL
+      approved_by: project owner
+      approved_at: 2026-08-14
+      supersedes: null
+      source_ids:
+        - SRC-REVENUE-MODEL-BRIEF
+      updated_at: 2026-08-14
+    before_index: null
+    after_index: 17
+    before_sha256: null
+    after_sha256: 3f5c593b109b7b10598cdb17e0c2a7b61d6a2e54c858ffb1ec46d9f96e752d0b
+    reverse_operation:
+      type: remove
+      entity: decisions
+      id: DEC-REVENUE-MODEL-2026-08-14-01
+validation_result: passed
+git_commit_hash: null
+rollback:
+  source_receipt: docs-platform/changelog/change-receipts/CHG-035.yaml
+  command: npm run change:reverse:preview -- ../changelog/change-receipts/CHG-035.yaml --change-id CHG-ROLLBACK-XXX --decision DEC-ROLLBACK-XXX
+  rollback_of: CHG-035

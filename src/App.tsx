@@ -61,6 +61,10 @@ const LaunchBudgetPage = lazy(() =>
   import("./components/LaunchBudget").then((module) => ({ default: module.LaunchBudgetPage }))
 );
 
+const RevenueModelPage = lazy(() =>
+  import("./components/RevenueModel").then((module) => ({ default: module.RevenueModelPage }))
+);
+
 function normalizePath(pathname: string) {
   return pathname === "" ? "/" : pathname.replace(/\/+$/, "") || "/";
 }
@@ -785,6 +789,12 @@ function renderPage(path: string) {
       return (
         <Suspense fallback={<main className="plain-page"><div className="section-inner"><p>Загружается расчёт стоимости запуска…</p></div></main>}>
           <LaunchBudgetPage />
+        </Suspense>
+      );
+    case "/revenue-model":
+      return (
+        <Suspense fallback={<main className="plain-page"><div className="section-inner"><p>Загружается расчёт объёма продаж…</p></div></main>}>
+          <RevenueModelPage />
         </Suspense>
       );
     case "/404":

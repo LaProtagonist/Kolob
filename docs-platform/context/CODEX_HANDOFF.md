@@ -16,9 +16,9 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-INVESTOR-OPEX-MODE-2026-08-11-01-VERIFIED`.
-- Hash: `76056adc4d3f77bcc6cbdcd523b4b51735735151e59da9a0a835325d8eec8c83`.
-- generated_from_event_hash: `76056adc4d3f77bcc6cbdcd523b4b51735735151e59da9a0a835325d8eec8c83`.
+- Event: `EVT-ITR-REVENUE-MODEL-2026-08-14-01-VERIFIED`.
+- Hash: `1ae12a8e57716537208ea2b030b32794ce40133a82d77e11743eef2db88c580d`.
+- generated_from_event_hash: `1ae12a8e57716537208ea2b030b32794ce40133a82d77e11743eef2db88c580d`.
 
 ## 4. Канонические документы
 
@@ -39,6 +39,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 | DOC-INVESTOR-START-MODEL | research | `docs-platform/working/investor-start-model.yaml` | `b81a6c4e8988a4532c9ba2749d492b3f96e37d83af822396afc82930244b2985` |
 | DOC-PILOT-CAPEX-ASSUMPTIONS | research | `docs-platform/working/pilot-capex-assumptions.yaml` | `25e11d4db20050b3a95cab40797ef0a29e56fad93c73d33d4a39415a8071d4ac` |
 | DOC-README | approved | `docs-platform/README.md` | `04e947f296a158a1c37ceb8d4c959d1f4e31cf609d16c99bee2d3c3b79b824ab` |
+| DOC-REVENUE-MODEL | research | `docs-platform/working/revenue-model.yaml` | `ab68399813d62d861522752c8e94df9cfc5d5a48e9b7723c60f2c968c4cba721` |
 
 ## 5. Текущая рабочая тема
 

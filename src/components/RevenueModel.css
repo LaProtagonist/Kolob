@@ -1,0 +1,74 @@
+.revenue-model-page {
+  --revenue-blue: #e7eef0;
+}
+
+.revenue-hero {
+  background:
+    radial-gradient(circle at 84% 14%, rgba(247, 185, 30, 0.28), transparent 29%),
+    linear-gradient(137deg, #0c0d0d 0%, #181b1a 65%, #283833 100%);
+}
+
+.revenue-hero h1 { max-width: 800px; }
+.revenue-segmented + .revenue-scenario-control { margin-top: 14px; }
+.revenue-custom-field { max-width: 420px; }
+.revenue-field-error { color: #8a331f !important; font-weight: 800 !important; }
+
+.revenue-number-card > strong { font-size: clamp(1.8rem, 4vw, 3.2rem); }
+.revenue-breakdown { padding-top: 8px; }
+.revenue-detail-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; margin: 0; overflow: hidden; border: 1px solid var(--launch-line); border-radius: 12px; background: var(--launch-line); }
+.revenue-detail-list > div { padding: 15px; background: #fff; }
+.revenue-detail-list dt { color: var(--launch-muted); font-size: .74rem; }
+.revenue-detail-list dd { margin: 5px 0 0; font-size: 1rem; font-weight: 900; }
+.revenue-inner-accordion { display: flex; justify-content: space-between; width: 100%; margin-top: 10px; padding: 13px 15px; border: 1px solid var(--launch-line); border-radius: 10px; background: #fff9e7; cursor: pointer; font-weight: 900; }
+.revenue-food-details { margin-top: 10px; padding: 14px; border: 1px solid var(--launch-line); border-radius: 12px; background: #fff; }
+.revenue-food-mix { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.revenue-food-mix > div { padding: 13px; border-radius: 10px; background: #f5f1e7; }
+.revenue-food-mix strong, .revenue-food-mix span { display: block; }
+.revenue-food-mix span { margin-top: 4px; color: var(--launch-muted); font-size: .76rem; }
+.revenue-segment-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 10px; }
+.revenue-segment-list > div { display: flex; gap: 12px; justify-content: space-between; padding: 10px 12px; border-bottom: 1px solid var(--launch-line); font-size: .76rem; }
+.revenue-segment-list span { color: var(--launch-muted); }
+
+.revenue-sales-card { padding: clamp(22px, 4vw, 36px); border-radius: 18px; color: #fff; background: #191813; }
+.revenue-sales-card > span { color: rgba(255,255,255,.58); font-size: .76rem; font-weight: 900; letter-spacing: .05em; text-transform: uppercase; }
+.revenue-sales-card > strong { display: block; margin: 12px 0 8px; color: var(--launch-yellow); font-size: clamp(2rem, 5vw, 4rem); line-height: .98; letter-spacing: -.04em; overflow-wrap: anywhere; }
+.revenue-sales-card p { margin: 0 0 12px; font-size: 1.15rem; font-weight: 900; }
+.revenue-sales-card small { color: rgba(255,255,255,.56); }
+
+.revenue-metric-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1px; margin: 0; overflow: hidden; border: 1px solid var(--launch-line); border-radius: 14px; background: var(--launch-line); }
+.revenue-metric-grid > div { min-width: 0; padding: 15px 13px; background: #fff; }
+.revenue-metric-grid dt { min-height: 34px; color: var(--launch-muted); font-size: .7rem; line-height: 1.35; }
+.revenue-metric-grid dd { margin: 7px 0 0; font-size: clamp(.94rem, 1.8vw, 1.2rem); font-weight: 900; overflow-wrap: anywhere; }
+.revenue-hour-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 16px; }
+.revenue-hour-grid article { padding: 17px; border: 1px solid var(--launch-line); border-radius: 13px; background: #f5f1e7; }
+.revenue-hour-grid article.is-accent { border-color: rgba(247,185,30,.6); background: #fff1c7; }
+.revenue-hour-grid span, .revenue-hour-grid strong, .revenue-hour-grid small { display: block; }
+.revenue-hour-grid span { color: var(--launch-muted); font-size: .72rem; font-weight: 900; text-transform: uppercase; }
+.revenue-hour-grid strong { margin-top: 8px; font-size: 1.08rem; }
+.revenue-hour-grid small { margin-top: 5px; color: var(--launch-muted); font-size: .7rem; line-height: 1.4; }
+
+.revenue-capacity-band { display: flex; gap: 20px; align-items: center; justify-content: space-between; padding: 17px; border-left: 4px solid var(--launch-yellow); background: #eee8da; }
+.revenue-capacity-band span { color: var(--launch-muted); font-size: .78rem; font-weight: 800; }
+.revenue-capacity-band strong { text-align: right; }
+.revenue-capacity-details { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 12px; }
+.revenue-capacity-details > div { padding: 13px; border: 1px solid var(--launch-line); border-radius: 11px; background: #fff; }
+.revenue-capacity-details strong, .revenue-capacity-details span, .revenue-capacity-details small { display: block; }
+.revenue-capacity-details span { margin-top: 4px; font-weight: 800; }
+.revenue-capacity-details small { margin-top: 3px; color: var(--launch-muted); }
+
+.revenue-total-card .launch-total-value { font-size: clamp(1.9rem, 3.7vw, 3.15rem); }
+.revenue-summary-list > div { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 15px; padding: 9px 0; border-bottom: 1px solid rgba(255,255,255,.09); }
+.revenue-summary-list dt { color: rgba(255,255,255,.57); font-size: .76rem; }
+.revenue-summary-list dd { margin: 0; font-size: .79rem; font-weight: 900; text-align: right; }
+
+@media (max-width: 900px) {
+  .revenue-metric-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 680px) {
+  .revenue-detail-list, .revenue-food-mix, .revenue-segment-list, .revenue-capacity-details { grid-template-columns: 1fr; }
+  .revenue-metric-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .revenue-hour-grid { grid-template-columns: 1fr; }
+  .revenue-capacity-band { align-items: flex-start; flex-direction: column; }
+  .revenue-capacity-band strong { text-align: left; }
+}

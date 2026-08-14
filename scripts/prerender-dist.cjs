@@ -21,6 +21,7 @@ const routes = [
   { name: "privacy", label: "Privacy", path: "/privacy" },
   { name: "capex-configurator", label: "CAPEX configurator", path: "/capex-configurator" },
   { name: "launch-budget", label: "Launch budget", path: "/launch-budget" },
+  { name: "revenue-model", label: "Revenue model", path: "/revenue-model" },
   { name: "not-found", label: "Not found", path: "/404" }
 ];
 

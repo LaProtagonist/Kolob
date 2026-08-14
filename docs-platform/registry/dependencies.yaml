@@ -157,3 +157,21 @@ dependencies:
       - title: Investor Start Model
         document_id: DOC-INVESTOR-START-MODEL
     updated_at: 2026-08-04
+  - id: DEP-FOUNDATION-REVENUE-MODEL
+    source_document_id: DOC-FOUNDATION
+    priority: governing_source
+    status: research
+    version: "1.0"
+    target_documents:
+      - title: Revenue Model
+        document_id: DOC-REVENUE-MODEL
+    updated_at: 2026-08-14
+  - id: DEP-BMA-REVENUE-MODEL
+    source_document_id: DOC-BUSINESS-MODEL-ARCHITECTURE
+    priority: governing_source
+    status: research
+    version: "1.0"
+    target_documents:
+      - title: Revenue Model
+        document_id: DOC-REVENUE-MODEL
+    updated_at: 2026-08-14
