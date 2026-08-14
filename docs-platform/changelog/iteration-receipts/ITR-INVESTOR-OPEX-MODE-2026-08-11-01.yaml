@@ -1,0 +1,35 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-OPEX-MODE-2026-08-11-01
+proposal_id: PROP-INVESTOR-OPEX-MODE-2026-08-11-01
+decision_id: DEC-INVESTOR-OPEX-MODE-2026-08-11-01
+change_set_id: CHG-INVESTOR-OPEX-MODE-2026-08-11-01
+status: verified
+applied_at: 2026-08-11T15:05:00.000Z
+actor: Codex
+tool: exact approved payload implementation + docs-platform change:apply + capex:web:sync
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-INVESTOR-OPEX-MODE-2026-08-11-01-approved.yaml
+  sha256: d4be21c5cf3b7828707172d870e6baba584165fa933fa4a3c72c74563f5e16cf
+before_files:
+  - path: docs-platform/working/investor-start-model.yaml
+    sha256: fe95e27f127ada0659983726c67e84791359209fb41598ac6b47c6ebc642a7e3
+  - path: src/content/capex-configurator-data.json
+    sha256: 16ec6426fecd35c6a08c3d026edf07e9e76192a324403f634f64f8a7b1a6ebe4
+after_files:
+  - path: docs-platform/working/investor-start-model.yaml
+    sha256: b81a6c4e8988a4532c9ba2749d492b3f96e37d83af822396afc82930244b2985
+  - path: src/content/capex-configurator-data.json
+    sha256: 862e67c73159833740c9d626f8262143cec767d18a76ad1f18ce81a79fdafe7c
+registry_receipts:
+  - docs-platform/changelog/change-receipts/CHG-033.yaml
+  - docs-platform/changelog/change-receipts/CHG-034.yaml
+content_state_sha256: a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239
+validation_result: passed
+verified_at: 2026-08-11T15:14:11.000Z
+verification_receipt: docs-platform/changelog/verification/ITR-INVESTOR-OPEX-MODE-2026-08-11-01.yaml
+git_commit_hash: null
+rollback:
+  mode: governed_reverse_change_set
+  payload: docs-platform/changelog/rollback-payloads/ITR-INVESTOR-OPEX-MODE-2026-08-11-01/manifest.yaml
+  preserves_history: true
+  git_reset_forbidden: true

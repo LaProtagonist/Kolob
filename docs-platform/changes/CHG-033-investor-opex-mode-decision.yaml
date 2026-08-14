@@ -1,0 +1,38 @@
+change_id: CHG-033
+title: Зафиксировать решение о режимах расчёта операционных расходов
+status: approved
+created_at: 2026-08-11
+decision_id: DEC-001
+iteration_id: ITR-INVESTOR-OPEX-MODE-2026-08-11-01
+proposal_id: PROP-INVESTOR-OPEX-MODE-2026-08-11-01
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-OPEX-MODE-2026-08-11-01-approved.yaml
+approved_payload_sha256: d4be21c5cf3b7828707172d870e6baba584165fa933fa4a3c72c74563f5e16cf
+operations:
+  - type: add
+    entity: sources
+    value:
+      id: SRC-INVESTOR-OPEX-MODE-BRIEF
+      title: Утверждённые режимы расчёта операционных расходов
+      type: instruction
+      location: User instruction, 2026-08-11
+      publisher: project owner
+      publication_date: 2026-08-11
+      accessed_at: 2026-08-11
+      reliability: primary
+      notes: Содержит точные публичные названия baseline/custom режимов, nullable-поведение другой суммы, запрет масштабирования OPEX по площади и требование скрыть внутренние статусы MOD-STORAGE и MOD-ENGINEERING с инвесторской страницы. Исследование не выполнялось.
+  - type: add
+    entity: decisions
+    value:
+      id: DEC-INVESTOR-OPEX-MODE-2026-08-11-01
+      title: Добавить базовый расчёт и другую сумму операционных расходов
+      status: approved
+      decision: Сохранить базовую модель 2650000 RUB в месяц для объекта около 200 м² и добавить локальный режим другой ежемесячной суммы без автоматического масштабирования по площади; внутренние incomplete-module статусы не выводить в публичной итоговой панели.
+      rationale: Прямое задание владельца проекта от 2026-08-11. Решение расширяет прозрачность существующей укрупнённой модели и не утверждает полноценную OPEX-модель или новые финансовые допущения.
+      affected_documents:
+        - DOC-INVESTOR-START-MODEL
+      approved_by: project owner
+      approved_at: 2026-08-11
+      supersedes: null
+      source_ids:
+        - SRC-INVESTOR-OPEX-MODE-BRIEF
+      updated_at: 2026-08-11

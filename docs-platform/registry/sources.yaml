@@ -1377,3 +1377,21 @@ sources:
     accessed_at: 2026-08-05T18:14:24.000Z
     reliability: medium
     notes: "Research-ориентир из утверждённого payload ITR-CAPEX-REMAINING-PRICES-2026-08-05-01. Цена единицы: 116874 RUB; количество: 1; сумма строки: 116874 RUB. Статус: quote_required. Наличие: quote_required; availability_not_checked. Переданная владельцем техническая ссылка: https://www.klenmarket.ru/shop/equipment/neutral-equipment/wardrobes-for-clothes-and-bags/stellazh-stk-363500-zakrytyi/. Одна единица. Перед закупкой подтвердить наличие замка или возможность установки замка, соответствующего принятой схеме хранения алкогольной продукции. Включается только при alcohol_enabled == true."
+  - id: SRC-INVESTOR-OPERATING-RESERVE-BRIEF
+    title: Утверждённая структура операционного запаса
+    type: instruction
+    location: User instruction, 2026-08-11
+    publisher: project owner
+    publication_date: 2026-08-11
+    accessed_at: 2026-08-11
+    reliability: primary
+    notes: Содержит точные семь категорий ежемесячных расходов, исправленную сумму прочих расходов 66500 RUB, итог 2650000 RUB и расчёт операционного запаса на 3, 6 и 9 месяцев. Исследование и самостоятельный подбор значений не выполнялись.
+  - id: SRC-INVESTOR-OPEX-MODE-BRIEF
+    title: Утверждённые режимы расчёта операционных расходов
+    type: instruction
+    location: User instruction, 2026-08-11
+    publisher: project owner
+    publication_date: 2026-08-11
+    accessed_at: 2026-08-11
+    reliability: primary
+    notes: Содержит точные публичные названия baseline/custom режимов, nullable-поведение другой суммы, запрет масштабирования OPEX по площади и требование скрыть внутренние статусы MOD-STORAGE и MOD-ENGINEERING с инвесторской страницы. Исследование не выполнялось.

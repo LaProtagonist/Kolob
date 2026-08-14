@@ -1,0 +1,75 @@
+receipt_version: 2
+change_id: CHG-031
+iteration_id: ITR-INVESTOR-OPERATING-RESERVE-2026-08-11-01
+proposal_id: PROP-INVESTOR-OPERATING-RESERVE-2026-08-11-01
+decision_id: DEC-001
+source_change_set: docs-platform/changes/CHG-031-investor-operating-reserve-decision.yaml
+status: applied
+applied_at: 2026-08-11T02:47:07.518Z
+actor: Codex
+tool: docs-platform change:apply
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-INVESTOR-OPERATING-RESERVE-2026-08-11-01-approved.yaml
+  sha256: b342ab965971bfd7dc485024dd6a373a8b5c12f704474971f9bfb567d7021ce2
+before_hash: a60a08f5990e9a3850aecf7d5c5cc1af684eac9a98a99578ffbc3f5c6f223303
+after_hash: a7978b42c203a5e24f7fe1d6268f5ce6f943fb11287dd7687f81d81f2f6842e9
+touched_registry_files:
+  - path: docs-platform/registry/sources.yaml
+    backup_path: docs-platform/changelog/backups/2026-08-11T02-47-07-518Z-CHG-031/sources.yaml
+  - path: docs-platform/registry/decisions.yaml
+    backup_path: docs-platform/changelog/backups/2026-08-11T02-47-07-518Z-CHG-031/decisions.yaml
+operations:
+  - type: add
+    entity: sources
+    id: SRC-INVESTOR-OPERATING-RESERVE-BRIEF
+    before: null
+    after:
+      id: SRC-INVESTOR-OPERATING-RESERVE-BRIEF
+      title: Утверждённая структура операционного запаса
+      type: instruction
+      location: User instruction, 2026-08-11
+      publisher: project owner
+      publication_date: 2026-08-11
+      accessed_at: 2026-08-11
+      reliability: primary
+      notes: Содержит точные семь категорий ежемесячных расходов, исправленную сумму прочих расходов 66500 RUB, итог 2650000 RUB и расчёт операционного запаса на 3, 6 и 9 месяцев. Исследование и самостоятельный подбор значений не выполнялись.
+    before_index: null
+    after_index: 153
+    before_sha256: null
+    after_sha256: dfd2742c0625116cefa60754cc76dda035c61ad1a5a85317d2fa40fbe3ed64e6
+    reverse_operation:
+      type: remove
+      entity: sources
+      id: SRC-INVESTOR-OPERATING-RESERVE-BRIEF
+  - type: add
+    entity: decisions
+    id: DEC-016
+    before: null
+    after:
+      id: DEC-016
+      title: Добавить структурированный расчёт операционного запаса
+      status: approved
+      decision: Перевести блок операционного запаса из ручного общего значения в семь точно заданных ежемесячных категорий общей суммой 2650000 RUB; рассчитывать запас на 3, 6 или 9 месяцев, по умолчанию на 6 месяцев, сохраняя резерв запуска отдельным расчётом.
+      rationale: Прямое задание владельца проекта от 2026-08-11. Значения являются заданной укрупнённой моделью запуска и не утверждают полную OPEX-модель, штатную оптимизацию или финансовую модель.
+      affected_documents:
+        - DOC-INVESTOR-START-MODEL
+      approved_by: project owner
+      approved_at: 2026-08-11
+      supersedes: null
+      source_ids:
+        - SRC-INVESTOR-OPERATING-RESERVE-BRIEF
+      updated_at: 2026-08-11
+    before_index: null
+    after_index: 15
+    before_sha256: null
+    after_sha256: 8eedc16bbffc37679164e85ff4fe3ce4ef1268607efecea7fd4779fbc003cd8d
+    reverse_operation:
+      type: remove
+      entity: decisions
+      id: DEC-016
+validation_result: passed
+git_commit_hash: null
+rollback:
+  source_receipt: docs-platform/changelog/change-receipts/CHG-031.yaml
+  command: npm run change:reverse:preview -- ../changelog/change-receipts/CHG-031.yaml --change-id CHG-ROLLBACK-XXX --decision DEC-ROLLBACK-XXX
+  rollback_of: CHG-031

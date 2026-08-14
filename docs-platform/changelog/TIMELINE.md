@@ -4,10 +4,10 @@
 
 ## 1. Current state
 
-- Events: 98.
-- Timeline head event: `EVT-ITR-LAUNCH-BUDGET-COPY-2026-08-11-01-VERIFIED`.
-- Timeline head SHA-256: `21db2e8170128f9314a1080462b5e369046adc65af813440803eb272a3c2b420`.
-- Latest recorded iteration: `ITR-LAUNCH-BUDGET-COPY-2026-08-11-01`.
+- Events: 110.
+- Timeline head event: `EVT-ITR-INVESTOR-OPEX-MODE-2026-08-11-01-VERIFIED`.
+- Timeline head SHA-256: `76056adc4d3f77bcc6cbdcd523b4b51735735151e59da9a0a835325d8eec8c83`.
+- Latest recorded iteration: `ITR-INVESTOR-OPEX-MODE-2026-08-11-01`.
 
 ## 2. Modern governed iterations
 
@@ -30,6 +30,9 @@
 | 2026-08-10T20:46:05.000Z | committed | Deterministic prerender output correction | ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-01 | DEC-DIST-DETERMINISM-CORRECTION-2026-08-10-01 | CHG-DIST-DETERMINISM-CORRECTION-2026-08-10-01 | b33f0a0a548bea1ae12463f78b75259a79886aaf | iteration/ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-01 | — | — | — | Deterministic prerender output correction: content commit verified and linked to the governed lifecycle before sealing. |
 | 2026-08-10T21:05:20.000Z | committed | Convergence-checked prerender determinism correction | ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-02 | DEC-DIST-DETERMINISM-CORRECTION-2026-08-10-02 | CHG-DIST-DETERMINISM-CORRECTION-2026-08-10-02 | 467b57fc0e2db6246316f4df0953b2ec3d809bc3 | iteration/ITR-DIST-DETERMINISM-CORRECTION-2026-08-10-02 | — | — | — | Convergence-checked prerender determinism correction: content commit verified and linked to the governed lifecycle before sealing. |
 | 2026-08-11T01:03:00.000Z | verified | Final approved launch-budget copy | ITR-LAUNCH-BUDGET-COPY-2026-08-11-01 | DEC-LAUNCH-BUDGET-COPY-2026-08-11-01 | CHG-LAUNCH-BUDGET-COPY-2026-08-11-01 | — | — | — | — | — | Verified every approved public phrase, absence of superseded technical wording, unchanged calculation outputs and source hashes, correct desktop/tablet/mobile behavior, and a prepared governed reverse change set; no Git or deployment action was performed. |
+| 2026-08-11T03:15:35.000Z | verified | Structured operating reserve for launch-budget | ITR-INVESTOR-OPERATING-RESERVE-2026-08-11-01 | DEC-016 | CHG-032 | — | — | — | — | — | Verified seven exact monthly categories totaling 2,650,000 RUB, the 7,950,000 / 15,900,000 / 23,850,000 RUB period results, separate contingency behavior, local persistence and responsive rendering. CAPEX, equipment, Google files and all other launch-budget blocks remained unchanged; no commit or deployment action was performed. |
+| 2026-08-11T08:04:45.000Z | verified | Clean input controls for launch-budget | ITR-LAUNCH-INPUT-CONTROLS-2026-08-11-01 | DEC-LAUNCH-INPUT-CONTROLS-2026-08-11-01 | CHG-LAUNCH-INPUT-CONTROLS-2026-08-11-01 | — | — | — | — | — | Verified spinner-free numeric fields, matching 52-pixel selectors, working 12→3→12 month selection, clean browser rendering and unchanged calculations and canonical hashes. The change remains unstaged and undeployed, with a prepared governed reverse payload. |
+| 2026-08-11T15:14:11.000Z | verified | Add baseline and custom operating-expense modes | ITR-INVESTOR-OPEX-MODE-2026-08-11-01 | DEC-INVESTOR-OPEX-MODE-2026-08-11-01 | CHG-INVESTOR-OPEX-MODE-2026-08-11-01 | — | — | — | — | — | Verified the unchanged 2,650,000 RUB baseline and 7,950,000 / 15,900,000 / 23,850,000 RUB period totals, the 2,000,000 RUB custom examples, blank-custom lower-bound behavior, reset and reload persistence, unchanged contingency basis, no area scaling, hidden internal module status, responsive layouts and zero console or hydration errors. The work remains unstaged and undeployed. |
 
 ## 3. Legacy imported history
 

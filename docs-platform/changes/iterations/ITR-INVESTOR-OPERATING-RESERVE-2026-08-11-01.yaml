@@ -1,0 +1,22 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-OPERATING-RESERVE-2026-08-11-01
+proposal_id: PROP-INVESTOR-OPERATING-RESERVE-2026-08-11-01
+decision_id: DEC-016
+change_set_id: CHG-032
+title: Structured operating reserve for launch-budget
+status: approved
+approved_by: project owner
+approved_at: 2026-08-11T02:37:20.000Z
+actor: Codex
+scope: Investor Start Model and the «Запас и резерв» block on /launch-budget only; all other page sections, CAPEX data and Google files are preserved.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-OPERATING-RESERVE-2026-08-11-01-approved.yaml
+approved_payload_sha256: b342ab965971bfd7dc485024dd6a373a8b5c12f704474971f9bfb567d7021ce2
+before_state_sha256: bdc5f9d289b145f2f31b476348408dad089d5f774b1a49542379926d465954d7
+after_state_sha256: 99408bbf4a0be5db4b3a347681f8305190cb07002e4274788b4bb693e784bbc4
+affected_document_ids:
+  - DOC-INVESTOR-START-MODEL
+affected_section_ids:
+  - operating_reserve
+  - contingency
+  - launch-budget.reserve-block
+rollback_payload: docs-platform/changelog/rollback-payloads/ITR-INVESTOR-OPERATING-RESERVE-2026-08-11-01/manifest.yaml

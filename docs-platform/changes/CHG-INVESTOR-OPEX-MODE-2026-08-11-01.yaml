@@ -1,0 +1,23 @@
+schema_version: 2
+change_id: CHG-INVESTOR-OPEX-MODE-2026-08-11-01
+iteration_id: ITR-INVESTOR-OPEX-MODE-2026-08-11-01
+proposal_id: PROP-INVESTOR-OPEX-MODE-2026-08-11-01
+decision_id: DEC-INVESTOR-OPEX-MODE-2026-08-11-01
+title: Apply approved operating-expense modes and public completeness cleanup
+status: approved
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-OPEX-MODE-2026-08-11-01-approved.yaml
+approved_payload_sha256: d4be21c5cf3b7828707172d870e6baba584165fa933fa4a3c72c74563f5e16cf
+operations:
+  - extend Investor Start Model with exact baseline/custom mode copy and baseline area metadata
+  - extend local launch-budget state with operatingExpenseMode and customMonthlyOpexRub while safely migrating older state
+  - calculate the effective monthly OPEX and operating reserve from baseline or custom mode without area scaling
+  - hide the baseline expense accordion in custom mode and show the approved numeric field and hint
+  - remove incomplete-module status and names from the public completeness panel while preserving internal modules
+  - update deterministic structured-data, calculation, persistence and responsive route assertions
+preview:
+  status: passed
+  mutation_performed: false
+  canonical_business_data_changes: Investor Start Model receives mode metadata and exact approved public copy only; baseline amounts remain unchanged.
+  capex_or_equipment_changes: false
+  google_changes: false
+  contingency_formula_changes: false

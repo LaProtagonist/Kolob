@@ -1,0 +1,36 @@
+preview_version: 1
+iteration_id: ITR-INVESTOR-OPERATING-RESERVE-2026-08-11-01
+proposal_id: PROP-INVESTOR-OPERATING-RESERVE-2026-08-11-01
+decision_id: DEC-016
+change_set_id: CHG-032
+created_at: 2026-08-11T02:37:30.000Z
+actor: Codex
+tool: exact approved payload preview
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-INVESTOR-OPERATING-RESERVE-2026-08-11-01-approved.yaml
+  sha256: b342ab965971bfd7dc485024dd6a373a8b5c12f704474971f9bfb567d7021ce2
+target:
+  route: /launch-budget
+  source_path: docs-platform/working/investor-start-model.yaml
+  source_before_sha256: 54eef39aa293fb63cd673fffe000b43c46d425e3be98174bced6bc2c7c854b27
+  snapshot_before_sha256: b916327ff895c06734390692d417459f75abc01a7f8f0dab78064e72be1e35cf
+scope:
+  section: Запас и резерв
+  monthly_category_count: 7
+  monthly_total_rub: 2650000
+  default_months: 6
+  default_operating_reserve_rub: 15900000
+  periods_rub:
+    3: 7950000
+    6: 15900000
+    9: 23850000
+  contingency_kept_separate: true
+out_of_scope:
+  - остальные блоки /launch-budget
+  - CAPEX Equipment Register
+  - CAPEX Price Research
+  - оборудование
+  - Google Docs и Google Sheets
+  - commit, tag, push, seal и deployment
+writes: false
+validation: passed

@@ -1,0 +1,62 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-OPEX-MODE-2026-08-11-01
+mode: governed_reverse_change_set
+status: prepared
+before_content_commit: a5563637d830bfff0b5779df9e158c51858e5f1d
+before_state_sha256: 9a4b63cc50fa5c56e77738ae9669e815879ccd1436e4a544ec5675b7a2589167
+after_state_sha256: 341c2193bd4591ca84f2b264d83cffd6e5e3b8b2ab0886adf06cfbbf1667ea4d
+source_change_sets:
+  - CHG-033
+  - CHG-034
+  - CHG-INVESTOR-OPEX-MODE-2026-08-11-01
+reverse_order:
+  - Remove only the baseline/custom selector metadata from Investor Start Model while preserving all seven approved baseline categories and their 2650000 RUB total.
+  - Restore the launch-budget state to baseline-only operating expenses by removing operatingExpenseMode and customMonthlyOpexRub, retaining the existing six-month default and accordion state.
+  - Restore the previous public completeness presentation of incomplete required modules without changing MOD-STORAGE or MOD-ENGINEERING themselves.
+  - Restore the prior schema, validator, unit and route assertions, then regenerate the deterministic web snapshot.
+  - Apply approved registry reversals for CHG-034 and then CHG-033 using their receipts.
+  - Re-run calculation, localStorage, route, timeline and restored-state checks, then append rollback lifecycle events without deleting this history.
+before_payload:
+  investor_start_model:
+    operating_reserve:
+      public_modes: absent
+      baseline_area_metadata: absent
+      monthly_total_rub: 2650000
+      categories: 7
+      default_months: 6
+      default_total_rub: 15900000
+  launch_budget_state:
+    operatingExpenseMode: absent
+    customMonthlyOpexRub: absent
+    effective_monthly_opex: always from Investor Start Model baseline
+  public_block:
+    mode_selector: absent
+    custom_monthly_field: absent
+    baseline_breakdown: available
+  completeness:
+    incomplete_required_modules: visible in the prior presentation
+before_file_sha256:
+  docs-platform/working/investor-start-model.yaml: fe95e27f127ada0659983726c67e84791359209fb41598ac6b47c6ebc642a7e3
+  src/components/LaunchBudget.tsx: c3c15bade0825a07c0c3418bd2433234fb3a7787c73826d57565f6272e99b807
+  src/components/LaunchBudget.css: 7da8119340c3e2a66eb058c0381113c13f9d4d719a787fa4bcdbf6941a531352
+  src/content/capex-configurator-data.json: 16ec6426fecd35c6a08c3d026edf07e9e76192a324403f634f64f8a7b1a6ebe4
+  scripts/test-site.cjs: 42e1d2d29c17280c2fe69b39477b78f268a1f6860ceac5ced704ae762d766950
+after_file_sha256:
+  docs-platform/working/investor-start-model.yaml: b81a6c4e8988a4532c9ba2749d492b3f96e37d83af822396afc82930244b2985
+  docs-platform/schemas/investor-start-model.schema.json: c7987cd4623ccc21210616e3de09816630444e22f10ae608f3d6799d843a1d43
+  docs-platform/app/src/investor/start-model.ts: a33c135a3891a50cb5b7cd98c0e1270529609c858ab4d6a81d6d259fb5c5c00b
+  docs-platform/app/test/investor-start-model.test.ts: 40b91dc03751dc8c05e97f65b0b909f4f1d1ff43ee15db56a010d0857d341f2c
+  src/lib/launch-budget.ts: e7e95edc79cfc8c9c0f5abad0e7e2b261d4d6687095668e743238203d43e32c8
+  src/components/LaunchBudget.tsx: fa01e57179c8d8fd1a33ff8adf2d46f58938974dc73f9450f4e933cda23c9fa3
+  src/components/LaunchBudget.css: 8306ffe385b717643e9b02aac1f50b7c90620301f3896971029a9bb3854237c8
+  src/content/capex-configurator-data.json: 862e67c73159833740c9d626f8262143cec767d18a76ad1f18ce81a79fdafe7c
+  scripts/test-site.cjs: c9229e5e93ba63b8835c9880da68996f27dd3c87ad202e002e64712228e88837
+registry_receipts:
+  - docs-platform/changelog/change-receipts/CHG-034.yaml
+  - docs-platform/changelog/change-receipts/CHG-033.yaml
+audit_reference: docs-platform/changelog/audit/ITR-INVESTOR-OPEX-MODE-2026-08-11-01.yaml
+reverse_strategy:
+  requirement: A new rollback request, reverse preview and approved rollback decision are mandatory before apply.
+  history: Append rollback events; never delete or rewrite this iteration's events or receipts.
+  git_reset_forbidden: true
+  dependency_check: required against every later applied iteration

@@ -1,0 +1,104 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-OPERATING-RESERVE-2026-08-11-01
+proposal_id: PROP-INVESTOR-OPERATING-RESERVE-2026-08-11-01
+decision_id: DEC-016
+change_set_id: CHG-032
+verified_at: 2026-08-11T03:15:35.000Z
+actor: Codex
+validation_status: passed
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-INVESTOR-OPERATING-RESERVE-2026-08-11-01-approved.yaml
+  sha256: b342ab965971bfd7dc485024dd6a373a8b5c12f704474971f9bfb567d7021ce2
+state:
+  algorithm: SHA-256 over ordered relative path and file bytes
+  before_state_sha256: bdc5f9d289b145f2f31b476348408dad089d5f774b1a49542379926d465954d7
+  after_state_sha256: 99408bbf4a0be5db4b3a347681f8305190cb07002e4274788b4bb693e784bbc4
+  investor_start_model_sha256: fe95e27f127ada0659983726c67e84791359209fb41598ac6b47c6ebc642a7e3
+  web_snapshot_sha256: 16ec6426fecd35c6a08c3d026edf07e9e76192a324403f634f64f8a7b1a6ebe4
+  content_state_sha256: 86c7d9a48d23df015d7b243b5eda7ad6c8b0b67df7d72e87f865f9e4be3fffa5
+structured_data_verification:
+  category_count: 7
+  category_ids_unique: true
+  monthly_total_rub: 2650000
+  exact_category_sum: true
+  personnel_rub: 2073500
+  other_expenses_rub: 66500
+  period_totals_rub:
+    3: 7950000
+    6: 15900000
+    9: 23850000
+  default_months: 6
+  default_reserve_rub: 15900000
+  values_centrally_sourced: true
+  react_price_or_opex_duplication: false
+calculation_verification:
+  operating_reserve_formula: monthly_total_rub * reserve_months
+  contingency_formula: (equipment_rub + furniture_rub + effective_preparation_amount_rub) * contingency_percent
+  contingency_separate: true
+  property_purchase_in_contingency_basis: false
+  security_deposit_in_contingency_basis: false
+  operating_reserve_in_contingency_basis: false
+  annual_rent_prepayment_duplicated: false
+local_storage_verification:
+  reserve_period_persisted: true
+  accordion_state_persisted: true
+  reset_months: 6
+  reset_accordion_open: false
+  stale_manual_opex_state_safe: true
+route_verification:
+  route: /launch-budget
+  routes_checked: 11
+  browser_failures: 0
+  console_errors: 0
+  page_errors: 0
+  hydration_errors: 0
+  horizontal_overflow:
+    desktop_1440x900: false
+    tablet_768x1024: false
+    mobile_390x844: false
+  reserve_accordion_default_open: false
+  reserve_accordion_interaction: passed
+  exact_category_rows: passed
+  period_switching: passed
+  reset_and_reload: passed
+validation:
+  npm_test: passed
+  docs_platform_tests: passed
+  investor_start_model_tests: 52 passed, 0 failed
+  deterministic_route_test: 11 routes, 0 failures
+  typescript_no_emit: passed
+  production_build: passed; 11 routes prerendered
+  content_snapshot_check: passed
+  timeline_before_verified_event: passed; 101 events
+  timeline_final: passed; 102 events
+  context_projection: passed; latest event is the verified event
+  registry_validation_in_full_suite: passed
+  reverse_preview_chg_032: passed; simulated registry hash restores exactly
+  git_diff_check: passed
+business_source_invariants:
+  capex_equipment_register:
+    sha256: c8853fe61ad8407ab96d0fbafb79702853842f970cbf699b6c2138b23f32c7aa
+    changed: false
+  capex_price_research:
+    sha256: b2b752f1822db8b529d58d822b83b32d44bcba9a0110ae35062d3b561f08249d
+    changed: false
+  equipment_changed: false
+  google_files_changed: false
+  other_launch_budget_blocks_changed: false
+audit:
+  receipt: docs-platform/changelog/audit/ITR-INVESTOR-OPERATING-RESERVE-2026-08-11-01.yaml
+  receipt_sha256: 7ec18ffc9687915e5b58bce2e5a1a9fe9d57359962173b9843c406f56b1b5c83
+rollback:
+  payload: docs-platform/changelog/rollback-payloads/ITR-INVESTOR-OPERATING-RESERVE-2026-08-11-01/manifest.yaml
+  payload_sha256: 1374d49c78076f3a616c19d88c1e14bf57f92fa077fa54429bb924ff267a6a0b
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true
+git_and_delivery:
+  staged: false
+  committed: false
+  tagged: false
+  pushed: false
+  sealed: false
+  deployed: false
+summary: The operating reserve now derives from seven exact centrally stored monthly categories totaling 2,650,000 RUB, exposes a transparent accordion and calculates 3/6/9-month scenarios while keeping the launch contingency separate and preserving all out-of-scope project data.

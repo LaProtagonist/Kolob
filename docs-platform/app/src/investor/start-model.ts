@@ -44,6 +44,16 @@ const preparationCategoryAmounts = new Map([
   ["PREP-DESIGN", 1_000_000],
 ]);
 
+const operatingExpenseCategories = new Map([
+  ["OPEX-PERSONNEL", { name: "Персонал", amount: 2_073_500, description: "Фонд оплаты труда с учётом обязательных начислений и резерва на замещение сотрудников." }],
+  ["OPEX-UTILITIES", { name: "Коммунальные услуги", amount: 200_000, description: "Электроэнергия, вода, водоотведение и вывоз отходов." }],
+  ["OPEX-EQUIPMENT-MAINTENANCE", { name: "Обслуживание оборудования", amount: 100_000, description: "Техническое обслуживание оборудования, холодильных систем, вентиляции и мелкие ремонты." }],
+  ["OPEX-HOUSEHOLD", { name: "Хозяйственные расходы", amount: 80_000, description: "Расходные материалы, хозяйственные товары и текущие закупки." }],
+  ["OPEX-SOFTWARE-COMMS", { name: "ПО и связь", amount: 30_000, description: "Кассовые системы, учёт, интернет и сервисные подписки." }],
+  ["OPEX-LAUNCH-MARKETING", { name: "Маркетинг запуска", amount: 100_000, description: "Локальное продвижение, акции и поддержка открытия." }],
+  ["OPEX-OTHER", { name: "Прочие расходы", amount: 66_500, description: "Дополнительные регулярные расходы, возникающие в процессе работы." }],
+]);
+
 function fileHash(file: string) {
   return fs.existsSync(file) ? sha256(fs.readFileSync(file)) : null;
 }
@@ -133,6 +143,42 @@ export function validateInvestorStartModel(model?: any) {
     if (value.preparation?.baseline_area_m2 !== 200 || value.preparation?.currency !== "RUB" || value.preparation?.default_mode !== "breakdown") {
       errors.push("Premises preparation defaults must remain 200 m2, RUB and breakdown mode.");
     }
+  }
+  const operatingCategories = value.operating_reserve?.categories ?? [];
+  const operatingIds = operatingCategories.map((item: any) => item.id);
+  const operatingTotal = operatingCategories.reduce((sum: number, item: any) => sum + Number(item.amount_rub ?? 0), 0);
+  if (operatingCategories.length !== operatingExpenseCategories.size) errors.push("Operating reserve must contain exactly seven monthly expense categories.");
+  if (new Set(operatingIds).size !== operatingIds.length) errors.push("Operating expense category IDs must be unique.");
+  for (const [id, expected] of operatingExpenseCategories) {
+    const category = operatingCategories.find((item: any) => item.id === id);
+    if (!category) errors.push(`Missing operating expense category ${id}.`);
+    else {
+      if (category.name !== expected.name) errors.push(`${id}.name must equal the approved public name.`);
+      if (category.amount_rub !== expected.amount) errors.push(`${id} must equal ${expected.amount} RUB per month.`);
+      if (category.description !== expected.description) errors.push(`${id}.description must equal the approved public copy.`);
+    }
+  }
+  if (operatingTotal !== 2_650_000 || value.operating_reserve?.monthly_total_rub !== 2_650_000) {
+    errors.push("Monthly operating expense categories must total exactly 2650000 RUB.");
+  }
+  if (value.operating_reserve?.default_total_rub !== 15_900_000
+    || value.operating_reserve?.default_months !== 6
+    || JSON.stringify(value.operating_reserve?.month_options) !== JSON.stringify([3, 6, 9])
+    || value.operating_reserve?.default_accordion_open !== false
+    || value.operating_reserve?.reserve_formula !== "monthly_total_rub * reserve_months") {
+    errors.push("Operating reserve defaults must remain 15900000 RUB, six months, closed accordion and the approved formula.");
+  }
+  if (value.operating_reserve?.mode_selector_title !== "Расчёт операционных расходов"
+    || value.operating_reserve?.default_mode !== "baseline"
+    || value.operating_reserve?.baseline_area_m2 !== 200
+    || JSON.stringify(value.operating_reserve?.modes) !== JSON.stringify([
+      { id: "baseline", title: "Базовый расчёт", description: "Ориентир для объекта площадью около 200 м²" },
+      { id: "custom", title: "Другая сумма", description: "Укажите ежемесячные операционные расходы" },
+    ])
+    || value.operating_reserve?.custom_field_label !== "Ежемесячные операционные расходы"
+    || value.operating_reserve?.custom_field_hint !== "Укажите общую сумму регулярных расходов объекта за один месяц."
+    || value.operating_reserve?.custom_reserve_formula !== "custom_monthly_opex_rub * reserve_months") {
+    errors.push("Operating expense modes must match the approved baseline/custom copy, 200 m2 baseline and custom reserve formula.");
   }
   const publicCopy = JSON.stringify(value.public_presentation ?? {});
   for (const forbidden of ["потребност", "стартов", "research", "approved", "v0.1", "snapshot", "registry", "payload", "change set"]) {

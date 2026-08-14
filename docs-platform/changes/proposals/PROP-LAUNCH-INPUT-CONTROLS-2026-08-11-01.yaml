@@ -1,0 +1,9 @@
+schema_version: 2
+proposal_id: PROP-LAUNCH-INPUT-CONTROLS-2026-08-11-01
+iteration_id: ITR-LAUNCH-INPUT-CONTROLS-2026-08-11-01
+title: Restore clean numeric inputs and consistent rent selectors on launch-budget
+status: proposed
+proposed_at: 2026-08-11T07:48:00.000Z
+scope: Presentation and deterministic UI verification of numeric inputs and the two rent-month selectors on /launch-budget only.
+approved_payload_path: docs-platform/changelog/payloads/ITR-LAUNCH-INPUT-CONTROLS-2026-08-11-01-approved.yaml
+approved_payload_sha256: 4a52a9935c040cdfbb4e25e8ae9c7253ae2c622c5a375084c9ea20be1b1de83c

@@ -1,0 +1,23 @@
+schema_version: 2
+change_id: CHG-LAUNCH-INPUT-CONTROLS-2026-08-11-01
+iteration_id: ITR-LAUNCH-INPUT-CONTROLS-2026-08-11-01
+proposal_id: PROP-LAUNCH-INPUT-CONTROLS-2026-08-11-01
+decision_id: DEC-LAUNCH-INPUT-CONTROLS-2026-08-11-01
+title: Apply approved launch-budget input presentation
+status: approved
+approved_payload_path: docs-platform/changelog/payloads/ITR-LAUNCH-INPUT-CONTROLS-2026-08-11-01-approved.yaml
+approved_payload_sha256: 4a52a9935c040cdfbb4e25e8ae9c7253ae2c622c5a375084c9ea20be1b1de83c
+operations:
+  - hide native browser spinner controls on launch-budget numeric inputs without changing input type or behavior
+  - retain the two rent-month option lists and apply one consistent 52-pixel white field treatment with a custom chevron
+  - add deterministic route assertions for computed appearance, field height and selector interaction
+preview:
+  status: passed
+  mutation_performed: false
+  affected_site_files:
+    - src/components/LaunchBudget.tsx
+    - src/components/LaunchBudget.css
+    - scripts/test-site.cjs
+  canonical_business_data_changes: false
+  google_changes: false
+  calculation_or_formula_changes: false

@@ -1,0 +1,30 @@
+preview_version: 1
+iteration_id: ITR-INVESTOR-OPEX-MODE-2026-08-11-01
+proposal_id: PROP-INVESTOR-OPEX-MODE-2026-08-11-01
+decision_id: DEC-INVESTOR-OPEX-MODE-2026-08-11-01
+change_set_id: CHG-INVESTOR-OPEX-MODE-2026-08-11-01
+created_at: 2026-08-11T14:39:00.000Z
+actor: Codex
+tool: exact approved payload preview
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-INVESTOR-OPEX-MODE-2026-08-11-01-approved.yaml
+  sha256: d4be21c5cf3b7828707172d870e6baba584165fa933fa4a3c72c74563f5e16cf
+before_state_sha256: 9a4b63cc50fa5c56e77738ae9669e815879ccd1436e4a544ec5675b7a2589167
+target:
+  route: /launch-budget
+  source_path: docs-platform/working/investor-start-model.yaml
+scope:
+  default_mode: baseline
+  baseline_area_m2: 200
+  baseline_monthly_rub: 2650000
+  custom_monthly_default: null
+  month_options: [3, 6, 9]
+  contingency_changed: false
+  public_incomplete_module_status_removed: true
+out_of_scope:
+  - all seven baseline amounts and category descriptions
+  - CAPEX, equipment and internal module status
+  - other launch-budget blocks
+  - Google files and delivery actions
+writes: false
+validation: passed

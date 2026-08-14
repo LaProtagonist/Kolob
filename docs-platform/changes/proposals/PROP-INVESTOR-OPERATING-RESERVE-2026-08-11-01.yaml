@@ -1,0 +1,9 @@
+schema_version: 2
+proposal_id: PROP-INVESTOR-OPERATING-RESERVE-2026-08-11-01
+iteration_id: ITR-INVESTOR-OPERATING-RESERVE-2026-08-11-01
+title: Structure the launch-budget operating reserve from seven monthly expense categories
+status: proposed
+proposed_at: 2026-08-11T02:37:10.000Z
+scope: Investor Start Model and the «Запас и резерв» block on /launch-budget only.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-OPERATING-RESERVE-2026-08-11-01-approved.yaml
+approved_payload_sha256: b342ab965971bfd7dc485024dd6a373a8b5c12f704474971f9bfb567d7021ce2

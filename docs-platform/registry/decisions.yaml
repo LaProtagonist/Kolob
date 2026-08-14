@@ -217,3 +217,29 @@ decisions:
     source_ids:
       - SRC-CAPEX-REMAINING-PRICE-IMPLEMENTATION-BRIEF
     updated_at: 2026-08-05
+  - id: DEC-016
+    title: Добавить структурированный расчёт операционного запаса
+    status: approved
+    decision: Перевести блок операционного запаса из ручного общего значения в семь точно заданных ежемесячных категорий общей суммой 2650000 RUB; рассчитывать запас на 3, 6 или 9 месяцев, по умолчанию на 6 месяцев, сохраняя резерв запуска отдельным расчётом.
+    rationale: Прямое задание владельца проекта от 2026-08-11. Значения являются заданной укрупнённой моделью запуска и не утверждают полную OPEX-модель, штатную оптимизацию или финансовую модель.
+    affected_documents:
+      - DOC-INVESTOR-START-MODEL
+    approved_by: project owner
+    approved_at: 2026-08-11
+    supersedes: null
+    source_ids:
+      - SRC-INVESTOR-OPERATING-RESERVE-BRIEF
+    updated_at: 2026-08-11
+  - id: DEC-INVESTOR-OPEX-MODE-2026-08-11-01
+    title: Добавить базовый расчёт и другую сумму операционных расходов
+    status: approved
+    decision: Сохранить базовую модель 2650000 RUB в месяц для объекта около 200 м² и добавить локальный режим другой ежемесячной суммы без автоматического масштабирования по площади; внутренние incomplete-module статусы не выводить в публичной итоговой панели.
+    rationale: Прямое задание владельца проекта от 2026-08-11. Решение расширяет прозрачность существующей укрупнённой модели и не утверждает полноценную OPEX-модель или новые финансовые допущения.
+    affected_documents:
+      - DOC-INVESTOR-START-MODEL
+    approved_by: project owner
+    approved_at: 2026-08-11
+    supersedes: null
+    source_ids:
+      - SRC-INVESTOR-OPEX-MODE-BRIEF
+    updated_at: 2026-08-11

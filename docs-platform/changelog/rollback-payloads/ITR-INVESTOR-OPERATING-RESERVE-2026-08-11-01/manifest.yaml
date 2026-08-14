@@ -1,0 +1,65 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-OPERATING-RESERVE-2026-08-11-01
+mode: governed_reverse_change_set
+status: prepared
+before_content_commit: a5563637d830bfff0b5779df9e158c51858e5f1d
+before_state_sha256: bdc5f9d289b145f2f31b476348408dad089d5f774b1a49542379926d465954d7
+after_state_sha256: 99408bbf4a0be5db4b3a347681f8305190cb07002e4274788b4bb693e784bbc4
+source_change_sets:
+  - CHG-031
+  - CHG-032
+reverse_order:
+  - Restore the prior launch-budget reserve component, state and formula recorded under before_payload.
+  - Restore the prior Investor Start Model operating_reserve payload and its schema/validator expectations.
+  - Regenerate the deterministic web snapshot from the restored structured source.
+  - Apply approved registry reversals for CHG-032 and then CHG-031 using their receipts.
+  - Validate the restored state hash and append rollback lifecycle events.
+before_payload:
+  investor_start_model:
+    operating_reserve:
+      monthly_opex_field: monthly_opex_excluding_rent_rub
+      month_options: [3, 6, 9]
+      default_months: 6
+      purchase_formula: monthly_opex_excluding_rent_rub * reserve_months
+      rent_formula: monthly_opex_excluding_rent_rub * reserve_months + monthly_rent_rub * max(reserve_months - prepayment_months, 0)
+      security_deposit_excluded: true
+      unknown_rule: Если ежемесячные операционные расходы не введены, операционный запас не рассчитывается и итог остаётся частичным.
+  launch_budget_state:
+    add_field: monthlyOpexExcludingRentRub
+    default_value: null
+    remove_field: operatingReserveAccordionOpen
+  public_block:
+    structure: Restore the manual monthly OPEX NumberField, period selector, operating reserve result and prior separate contingency controls.
+    title: Запас и резерв
+    section_description: Операционный запас покрывает расходы первых месяцев работы. До формирования полной операционной модели его основа рассчитывается по расходам на персонал, а остальные ежемесячные затраты задаются укрупнённо.
+    monthly_field: Ежемесячные операционные расходы без аренды
+    monthly_hint: До появления полной операционной модели сумма вводится укрупнённо.
+    contingency_title: Резерв
+before_file_blobs:
+  - path: docs-platform/working/investor-start-model.yaml
+    git_blob_oid: b2e4e982d43e707d9c7383271873d68597bf8325
+  - path: docs-platform/schemas/investor-start-model.schema.json
+    git_blob_oid: 023e623d638d4fb13d23e72042a17f7aeb66aa59
+  - path: docs-platform/app/src/investor/start-model.ts
+    git_blob_oid: 300ba558d8fb59ab275a033b68675cb53684a512
+  - path: docs-platform/app/test/investor-start-model.test.ts
+    git_blob_oid: 9b0724f9502e88b9470698c65eaf1846eab334fb
+  - path: src/lib/launch-budget.ts
+    git_blob_oid: 04fc3e904be40194d072e9c9275146567b13795a
+  - path: src/components/LaunchBudget.tsx
+    git_blob_oid: 7139f04ac68e0e80770523430fc4708284b46a10
+  - path: src/components/LaunchBudget.css
+    git_blob_oid: 52f99d6e53aff3348a6f3c66ff060a4ed83be4ff
+  - path: scripts/test-site.cjs
+    git_blob_oid: d7d26644060be555d6d94db6b830e3632a557053
+  - path: src/content/capex-configurator-data.json
+    git_blob_oid: d170914b61aaab8c056ba71e2b0df5358c90b08f
+registry_receipts:
+  - docs-platform/changelog/change-receipts/CHG-032.yaml
+  - docs-platform/changelog/change-receipts/CHG-031.yaml
+audit_reference: docs-platform/changelog/audit/ITR-INVESTOR-OPERATING-RESERVE-2026-08-11-01.yaml
+reverse_strategy:
+  requirement: A new rollback request, reverse preview and approved rollback decision are mandatory before apply.
+  history: Append rollback events; never delete or rewrite this iteration's events or receipts.
+  git_reset_forbidden: true
+  dependency_check: required against every later applied iteration

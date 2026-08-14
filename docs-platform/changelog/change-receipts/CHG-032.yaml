@@ -1,0 +1,141 @@
+receipt_version: 2
+change_id: CHG-032
+iteration_id: ITR-INVESTOR-OPERATING-RESERVE-2026-08-11-01
+proposal_id: PROP-INVESTOR-OPERATING-RESERVE-2026-08-11-01
+decision_id: DEC-016
+source_change_set: docs-platform/changes/CHG-032-investor-operating-reserve.yaml
+status: applied
+applied_at: 2026-08-11T02:47:42.615Z
+actor: Codex
+tool: docs-platform change:apply
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-INVESTOR-OPERATING-RESERVE-2026-08-11-01-approved.yaml
+  sha256: b342ab965971bfd7dc485024dd6a373a8b5c12f704474971f9bfb567d7021ce2
+before_hash: a7978b42c203a5e24f7fe1d6268f5ce6f943fb11287dd7687f81d81f2f6842e9
+after_hash: 9b73757c7ef29b3d4190b65dc9855dc41b772a478e87fcaa7bd6fb534fad670e
+touched_registry_files:
+  - path: docs-platform/registry/assumptions.yaml
+    backup_path: docs-platform/changelog/backups/2026-08-11T02-47-42-615Z-CHG-032/assumptions.yaml
+  - path: docs-platform/registry/documents.yaml
+    backup_path: docs-platform/changelog/backups/2026-08-11T02-47-42-615Z-CHG-032/documents.yaml
+operations:
+  - type: add
+    entity: assumptions
+    id: ASM-INVESTOR-OPERATING-RESERVE
+    before: null
+    after:
+      id: ASM-INVESTOR-OPERATING-RESERVE
+      title: Структура ежемесячных расходов операционного запаса
+      value:
+        monthly_total_rub: 2650000
+        default_months: 6
+        month_options:
+          - 3
+          - 6
+          - 9
+        period_totals_rub:
+          "3": 7950000
+          "6": 15900000
+          "9": 23850000
+        categories:
+          - id: OPEX-PERSONNEL
+            amount_rub: 2073500
+          - id: OPEX-UTILITIES
+            amount_rub: 200000
+          - id: OPEX-EQUIPMENT-MAINTENANCE
+            amount_rub: 100000
+          - id: OPEX-HOUSEHOLD
+            amount_rub: 80000
+          - id: OPEX-SOFTWARE-COMMS
+            amount_rub: 30000
+          - id: OPEX-LAUNCH-MARKETING
+            amount_rub: 100000
+          - id: OPEX-OTHER
+            amount_rub: 66500
+      unit: RUB
+      status: research
+      rationale: Все значения дословно заданы владельцем проекта для прозрачного укрупнённого расчёта операционного запаса; это не полноценная OPEX-модель и не финансовая модель.
+      scenario: INVESTOR_START_V0_1
+      applies_to:
+        - DOC-INVESTOR-START-MODEL
+      source_ids:
+        - SRC-INVESTOR-OPERATING-RESERVE-BRIEF
+      decision_id: DEC-016
+      updated_at: 2026-08-11
+    before_index: null
+    after_index: 18
+    before_sha256: null
+    after_sha256: 6f7c50bf779016d78bf5df8f96632d192acbcb559f6f8ba67b82143c18f8183a
+    reverse_operation:
+      type: remove
+      entity: assumptions
+      id: ASM-INVESTOR-OPERATING-RESERVE
+  - type: update
+    entity: documents
+    id: DOC-INVESTOR-START-MODEL
+    before: &a1
+      id: DOC-INVESTOR-START-MODEL
+      title: Investor Start Model
+      type: working_investment_requirement_model
+      status: research
+      google_file_id: null
+      template: null
+      sections:
+        - Помещение
+        - Площадь объекта
+        - Посадочные места
+        - Мебель посадочного зала
+        - Комплектация оборудования
+        - Подготовка помещения
+        - Операционный запас
+        - Резерв
+        - Стоимость запуска
+        - Текущая конфигурация
+        - Полнота расчёта
+        - Следующие этапы расчёта
+        - Что учитывает расчёт
+      version: "0.1"
+      governance_level: working
+      local_path: docs-platform/working/investor-start-model.yaml
+      updated_at: 2026-08-05
+    after:
+      id: DOC-INVESTOR-START-MODEL
+      title: Investor Start Model
+      type: working_investment_requirement_model
+      status: research
+      google_file_id: null
+      template: null
+      sections:
+        - Помещение
+        - Площадь объекта
+        - Посадочные места
+        - Мебель посадочного зала
+        - Комплектация оборудования
+        - Подготовка помещения
+        - Операционный запас
+        - Состав операционных расходов
+        - Резерв запуска
+        - Стоимость запуска
+        - Текущая конфигурация
+        - Полнота расчёта
+        - Следующие этапы расчёта
+        - Что учитывает расчёт
+      version: "0.1"
+      governance_level: working
+      local_path: docs-platform/working/investor-start-model.yaml
+      updated_at: 2026-08-11
+    before_index: 16
+    after_index: 16
+    before_sha256: d9ee23ff81aa289f5ccd7918e7f4eb1897378fe25901a6da91667cd25935bbd0
+    after_sha256: f30ee6822c1f5cdb7acaf57c3953004760b8423ef0ed3c8173a808f072f05222
+    reverse_operation:
+      type: replace
+      entity: documents
+      id: DOC-INVESTOR-START-MODEL
+      value: *a1
+validation_result: passed
+git_commit_hash: null
+rollback:
+  source_receipt: docs-platform/changelog/change-receipts/CHG-032.yaml
+  command: npm run change:reverse:preview -- ../changelog/change-receipts/CHG-032.yaml --change-id CHG-ROLLBACK-XXX --decision DEC-ROLLBACK-XXX
+  rollback_of: CHG-032

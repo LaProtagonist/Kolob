@@ -7,10 +7,10 @@ document:
   version: "0.1"
   status: research
   document_type: Working investment requirement model
-  decision_id: DEC-015
-  iteration_id: ITR-CAPEX-REMAINING-PRICES-2026-08-05-01
-  proposal_id: PROP-CAPEX-REMAINING-PRICES-2026-08-05-01
-  updated_at: 2026-08-05
+  decision_id: DEC-INVESTOR-OPEX-MODE-2026-08-11-01
+  iteration_id: ITR-INVESTOR-OPEX-MODE-2026-08-11-01
+  proposal_id: PROP-INVESTOR-OPEX-MODE-2026-08-11-01
+  updated_at: 2026-08-11
   disclaimer: Документ не является утверждённой финансовой моделью или окончательным инвестиционным предложением.
 basis:
   documents:
@@ -302,17 +302,75 @@ preparation:
         - включает необходимые согласовательные процедуры
         - не включает фактическое выполнение строительных и монтажных работ
 operating_reserve:
-  monthly_opex_field: monthly_opex_excluding_rent_rub
+  section_title: Запас и резерв
+  section_description: Оценка средств, необходимых для стабильного запуска и работы объекта в первые месяцы.
+  title: Операционный запас
+  currency: RUB
+  status: research
+  mode_selector_title: Расчёт операционных расходов
+  default_mode: baseline
+  baseline_area_m2: 200
+  modes:
+    - id: baseline
+      title: Базовый расчёт
+      description: Ориентир для объекта площадью около 200 м²
+    - id: custom
+      title: Другая сумма
+      description: Укажите ежемесячные операционные расходы
+  custom_field_label: Ежемесячные операционные расходы
+  custom_field_hint: Укажите общую сумму регулярных расходов объекта за один месяц.
+  monthly_total_label: Ежемесячные операционные расходы
+  monthly_total_rub: 2650000
+  default_total_rub: 15900000
+  accordion_label: Состав операционных расходов
+  default_accordion_open: false
   month_options:
     - 3
     - 6
     - 9
   default_months: 6
-  purchase_formula: monthly_opex_excluding_rent_rub * reserve_months
-  rent_formula: monthly_opex_excluding_rent_rub * reserve_months + monthly_rent_rub * max(reserve_months - prepayment_months, 0)
-  security_deposit_excluded: true
-  unknown_rule: Если ежемесячные операционные расходы не введены, операционный запас не рассчитывается и итог остаётся частичным.
+  monthly_total_formula: sum(amount_rub for categories)
+  reserve_formula: monthly_total_rub * reserve_months
+  custom_reserve_formula: custom_monthly_opex_rub * reserve_months
+  categories:
+    - id: OPEX-PERSONNEL
+      name: Персонал
+      amount_rub: 2073500
+      description: Фонд оплаты труда с учётом обязательных начислений и резерва на замещение сотрудников.
+      includes:
+        - повара-заготовщики
+        - повара кухни
+        - сотрудники выдачи
+        - кассиры и бар
+        - мойщики и технические сотрудники
+    - id: OPEX-UTILITIES
+      name: Коммунальные услуги
+      amount_rub: 200000
+      description: Электроэнергия, вода, водоотведение и вывоз отходов.
+    - id: OPEX-EQUIPMENT-MAINTENANCE
+      name: Обслуживание оборудования
+      amount_rub: 100000
+      description: Техническое обслуживание оборудования, холодильных систем, вентиляции и мелкие ремонты.
+    - id: OPEX-HOUSEHOLD
+      name: Хозяйственные расходы
+      amount_rub: 80000
+      description: Расходные материалы, хозяйственные товары и текущие закупки.
+    - id: OPEX-SOFTWARE-COMMS
+      name: ПО и связь
+      amount_rub: 30000
+      description: Кассовые системы, учёт, интернет и сервисные подписки.
+    - id: OPEX-LAUNCH-MARKETING
+      name: Маркетинг запуска
+      amount_rub: 100000
+      description: Локальное продвижение, акции и поддержка открытия.
+    - id: OPEX-OTHER
+      name: Прочие расходы
+      amount_rub: 66500
+      description: Дополнительные регулярные расходы, возникающие в процессе работы.
 contingency:
+  title: Резерв запуска
+  description: Дополнительный запас на непредвиденные расходы в процессе запуска проекта.
+  hint: Рассчитывается от стоимости оборудования, мебели и подготовки помещения.
   percent_options:
     - 5
     - 10
@@ -394,6 +452,10 @@ decision_boundaries:
     - возможность отключения отдельных категорий
     - режим ручной общей оценки
     - связь эффективной суммы подготовки с резервом и стоимостью запуска
+    - семь категорий ежемесячных операционных расходов и их точные суммы
+    - ежемесячный итог операционных расходов 2650000 RUB
+    - операционный запас на 3, 6 или 9 месяцев с базовым периодом 6 месяцев
+    - отдельный расчёт резерва запуска по действующей формуле
   not_approved:
     - строительная смета
     - конкретный подрядчик

@@ -9,6 +9,7 @@ import {
   type EquipmentScenarioId,
   type FurnitureProfileId,
   type LaunchBudgetState,
+  type OperatingExpenseMode,
   type PremisesScenario,
   type SeatingProfileId,
 } from "../lib/launch-budget";
@@ -55,7 +56,7 @@ function Segmented({ label, value, options, onChange, dataName }: {
   );
 }
 
-function NumberField({ id, label, value, onChange, suffix, hint, required = false }: {
+function NumberField({ id, label, value, onChange, suffix, hint, required = false, integer = false }: {
   id: string;
   label: string;
   value: number | null;
@@ -63,6 +64,7 @@ function NumberField({ id, label, value, onChange, suffix, hint, required = fals
   suffix?: string;
   hint?: string;
   required?: boolean;
+  integer?: boolean;
 }) {
   return (
     <label className="launch-field" htmlFor={id}>
@@ -73,12 +75,15 @@ function NumberField({ id, label, value, onChange, suffix, hint, required = fals
           name={id}
           type="number"
           min="0"
-          step="any"
-          inputMode="decimal"
+          step={integer ? "1" : "any"}
+          inputMode={integer ? "numeric" : "decimal"}
           value={value ?? ""}
           placeholder="Не указано"
           aria-required={required}
-          onChange={event => onChange(parseNumber(event.target.value))}
+          onChange={event => {
+            const parsed = parseNumber(event.target.value);
+            onChange(parsed === null || !integer ? parsed : Math.floor(parsed));
+          }}
         />
         {suffix ? <b>{suffix}</b> : null}
       </span>
@@ -131,6 +136,25 @@ function PreparationCategoryRow({ category, enabled, onChange }: {
   );
 }
 
+function OperatingExpenseRow({ category }: {
+  category: { id: string; name: string; amount_rub: number; description: string };
+}) {
+  return (
+    <div className="launch-opex-category" data-opex-id={category.id}>
+      <div className="launch-opex-category-inner">
+        <span className="launch-opex-category-copy">
+          <strong>{category.name}</strong>
+          <small>{category.description}</small>
+        </span>
+        <span className="launch-opex-category-value">
+          <b>{formatRub(category.amount_rub)}</b>
+          <small>в месяц</small>
+        </span>
+      </div>
+    </div>
+  );
+}
+
 export function LaunchBudgetPage() {
   const rawModel = capexData.investorStartModel;
   const defaults = useMemo(() => defaultLaunchBudgetState(), []);
@@ -161,7 +185,6 @@ export function LaunchBudgetPage() {
     ...(result.effectivePreparationRub === null ? ["подготовка помещения"] : []),
     ...(result.operatingReserveRub === null ? ["операционный запас"] : []),
     ...(result.equipment.unpricedCount > 0 ? ["часть оборудования"] : []),
-    ...(result.incompleteRequiredModules.length > 0 ? ["часть обязательного оснащения"] : []),
   ];
 
   function update<K extends keyof LaunchBudgetState>(key: K, value: LaunchBudgetState[K]) {
@@ -215,8 +238,8 @@ export function LaunchBudgetPage() {
               ) : (
                 <div className="launch-fields-grid">
                   <NumberField id="monthly-rent" label="Ежемесячная арендная плата" suffix="₽" value={state.monthlyRentRub} onChange={value => update("monthlyRentRub", value)} required />
-                  <label className="launch-field" htmlFor="prepayment-months"><span>Предоплата аренды</span><span className="launch-input-wrap"><select id="prepayment-months" value={state.prepaymentMonths} onChange={event => update("prepaymentMonths", Number(event.target.value))}>{rawModel.premises.scenarios.rent.prepayment_month_options.map(value => <option key={value} value={value}>{value} мес.</option>)}</select></span></label>
-                  <label className="launch-field" htmlFor="security-deposit-months"><span>Обеспечительный платёж</span><span className="launch-input-wrap"><select id="security-deposit-months" value={state.securityDepositMonths} onChange={event => update("securityDepositMonths", Number(event.target.value))}>{rawModel.premises.scenarios.rent.security_deposit_month_options.map(value => <option key={value} value={value}>{value} мес.</option>)}</select></span></label>
+                  <label className="launch-field" htmlFor="prepayment-months"><span>Предоплата аренды</span><span className="launch-input-wrap launch-select-wrap"><select id="prepayment-months" value={state.prepaymentMonths} onChange={event => update("prepaymentMonths", Number(event.target.value))}>{rawModel.premises.scenarios.rent.prepayment_month_options.map(value => <option key={value} value={value}>{value} мес.</option>)}</select></span></label>
+                  <label className="launch-field" htmlFor="security-deposit-months"><span>Обеспечительный платёж</span><span className="launch-input-wrap launch-select-wrap"><select id="security-deposit-months" value={state.securityDepositMonths} onChange={event => update("securityDepositMonths", Number(event.target.value))}>{rawModel.premises.scenarios.rent.security_deposit_month_options.map(value => <option key={value} value={value}>{value} мес.</option>)}</select></span></label>
                 </div>
               )}
               <div className="launch-inline-result"><span>{state.premisesScenario === "purchase" ? "Стоимость покупки помещения" : "Первоначальные платежи по аренде"}</span><strong>{formatRub(result.premisesEntryRub)}</strong>{state.premisesScenario === "rent" ? <small>Предоплата аренды и обеспечительный платёж.</small> : null}</div>
@@ -276,7 +299,7 @@ export function LaunchBudgetPage() {
 
             <section className="launch-card" aria-labelledby="launch-preparation-title">
               <SectionHeading number="04" title={rawModel.preparation.title} text="Предварительная оценка адаптации помещения около 200 м² в Санкт-Петербурге." />
-              <div className="launch-preparation-summary" aria-live="polite">
+              <div className="launch-preparation-summary" data-testid="preparation-summary" aria-live="polite">
                 <span>Базовая оценка</span>
                 <strong>{formatRub(result.effectivePreparationRub)}</strong>
                 <small>Все основные категории включены; состав работ можно скорректировать.</small>
@@ -324,14 +347,65 @@ export function LaunchBudgetPage() {
             </section>
 
             <section className="launch-card" aria-labelledby="launch-reserve-title">
-              <SectionHeading number="05" title="Запас и резерв" text="Операционный запас покрывает расходы первых месяцев работы. До формирования полной операционной модели его основа рассчитывается по расходам на персонал, а остальные ежемесячные затраты задаются укрупнённо." />
-              <NumberField id="monthly-opex" label="Ежемесячные операционные расходы без аренды" suffix="₽" value={state.monthlyOpexExcludingRentRub} onChange={value => update("monthlyOpexExcludingRentRub", value)} hint="До появления полной операционной модели сумма вводится укрупнённо." />
-              <h3 className="launch-control-title">Операционный запас</h3>
+              <SectionHeading number="05" title={rawModel.operating_reserve.section_title} text={rawModel.operating_reserve.section_description} />
+              <h3 className="launch-control-title">{rawModel.operating_reserve.mode_selector_title}</h3>
+              <Segmented
+                label={rawModel.operating_reserve.mode_selector_title}
+                value={state.operatingExpenseMode}
+                dataName="operating-expense-mode"
+                options={rawModel.operating_reserve.modes.map(mode => ({ value: mode.id, label: mode.title, hint: mode.description }))}
+                onChange={value => update("operatingExpenseMode", value as OperatingExpenseMode)}
+              />
+              {state.operatingExpenseMode === "custom" ? (
+                <div className="launch-opex-custom">
+                  <NumberField
+                    id="custom-monthly-opex"
+                    label={rawModel.operating_reserve.custom_field_label}
+                    suffix="₽"
+                    value={state.customMonthlyOpexRub}
+                    onChange={value => update("customMonthlyOpexRub", value)}
+                    hint={rawModel.operating_reserve.custom_field_hint}
+                    integer
+                  />
+                </div>
+              ) : null}
+              <div className="launch-preparation-summary launch-opex-summary" data-testid="operating-reserve-summary" aria-live="polite">
+                <span>{rawModel.operating_reserve.title}</span>
+                <strong>{formatRub(result.operatingReserveRub)}</strong>
+                {result.monthlyOperatingExpensesRub === null ? null : <small>{state.operatingReserveMonths} {state.operatingReserveMonths === 3 ? "месяца" : "месяцев"} × {formatRub(result.monthlyOperatingExpensesRub)} в месяц</small>}
+              </div>
+              {state.operatingExpenseMode === "baseline" ? (
+                <>
+                  <button
+                    type="button"
+                    className="launch-preparation-accordion-button"
+                    data-opex-accordion
+                    aria-expanded={state.operatingReserveAccordionOpen}
+                    aria-controls="launch-operating-expense-details"
+                    onClick={() => update("operatingReserveAccordionOpen", !state.operatingReserveAccordionOpen)}
+                  >
+                    <span>{rawModel.operating_reserve.accordion_label}</span>
+                    <span aria-hidden="true">{state.operatingReserveAccordionOpen ? "−" : "+"}</span>
+                  </button>
+                  {state.operatingReserveAccordionOpen ? (
+                    <div className="launch-preparation-details" id="launch-operating-expense-details">
+                      <div className="launch-opex-categories">
+                        {rawModel.operating_reserve.categories.map(category => <OperatingExpenseRow key={category.id} category={category} />)}
+                      </div>
+                      <div className="launch-inline-result launch-opex-monthly-total">
+                        <span>{rawModel.operating_reserve.monthly_total_label}</span>
+                        <strong>{formatRub(result.monthlyOperatingExpensesRub)}</strong>
+                      </div>
+                    </div>
+                  ) : null}
+                </>
+              ) : null}
+              <h3 className="launch-control-title">Период операционного запаса</h3>
               <Segmented label="Месяцы операционного запаса" value={state.operatingReserveMonths} dataName="reserve-months" options={rawModel.operating_reserve.month_options.map(value => ({ value, label: value === 3 ? "3 месяца" : `${value} месяцев` }))} onChange={value => update("operatingReserveMonths", Number(value))} />
-              <div className="launch-inline-result"><span>Операционный запас</span><strong>{formatRub(result.operatingReserveRub)}</strong>{state.premisesScenario === "rent" ? <small>Предоплаченные месяцы аренды не учитываются повторно. Обеспечительный платёж показан отдельно.</small> : null}</div>
-              <h3 className="launch-control-title">Резерв</h3>
+              <h3 className="launch-control-title">{rawModel.contingency.title}</h3>
+              <p className="launch-control-description">{rawModel.contingency.description}</p>
               <Segmented label="Процент резерва" value={state.contingencyPercent} dataName="contingency-percent" options={rawModel.contingency.percent_options.map(value => ({ value, label: `${value}%` }))} onChange={value => update("contingencyPercent", Number(value))} />
-              <div className="launch-inline-result"><span>Резерв</span><strong>{formatRub(result.contingencyRub)}</strong><small>Рассчитывается от стоимости оборудования, мебели и подготовки помещения.</small></div>
+              <div className="launch-inline-result"><span>{rawModel.contingency.title}</span><strong>{formatRub(result.contingencyRub)}</strong><small>{rawModel.contingency.hint}</small></div>
             </section>
 
             <button className="launch-reset" type="button" onClick={reset}>Сбросить расчёт</button>
@@ -361,14 +435,12 @@ export function LaunchBudgetPage() {
             <div className="launch-completeness">
               <h3>Полнота расчёта</h3>
               <ul>
-                <li><span>Оценено оборудование</span><strong>{result.equipment.pricedCount} из {result.equipment.coverageCount}</strong></li>
-                <li><span>Не имеют цены</span><strong>{result.equipment.unpricedCount}</strong></li>
+                <li><span>Оборудование оценено</span><strong>{result.equipment.pricedCount} из {result.equipment.coverageCount}</strong></li>
+                {result.equipment.unpricedCount > 0 ? <li><span>Не имеют цены</span><strong>{result.equipment.unpricedCount}</strong></li> : null}
                 <li><span>Требуют КП</span><strong>{result.equipment.quoteRequiredCount}</strong></li>
                 <li><span>Подготовка помещения</span><strong>{result.effectivePreparationRub === null ? "не рассчитана" : "рассчитана"}</strong></li>
                 <li><span>Операционный запас</span><strong>{result.operatingReserveRub === null ? "не рассчитан" : "рассчитан"}</strong></li>
-                <li><span>Обязательные части объекта</span><strong>{result.incompleteRequiredModules.length ? "не сформированы полностью" : "сформированы"}</strong></li>
               </ul>
-              {result.incompleteRequiredModules.length ? <p>{result.incompleteRequiredModules.map(module => module.name).join(" · ")}</p> : null}
             </div>
             <p className="launch-warning">{rawModel.warning}</p>
             <p className="launch-legal">{rawModel.public_presentation.legal_disclaimer}</p>

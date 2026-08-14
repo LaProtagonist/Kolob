@@ -1,0 +1,70 @@
+schema_version: 2
+iteration_id: ITR-LAUNCH-INPUT-CONTROLS-2026-08-11-01
+proposal_id: PROP-LAUNCH-INPUT-CONTROLS-2026-08-11-01
+decision_id: DEC-LAUNCH-INPUT-CONTROLS-2026-08-11-01
+change_set_id: CHG-LAUNCH-INPUT-CONTROLS-2026-08-11-01
+timestamp: 2026-08-11T07:58:00.000Z
+actor: Codex
+type: Launch-budget UI refinement
+reason: Restore a calm, consistent field presentation without changing input semantics or page calculations.
+route: /launch-budget
+before:
+  numeric_inputs:
+    input_type: number
+    presentation: Native browser increment and decrement arrows could be shown inside purchase, rent, area and manual preparation fields.
+  rent_selects:
+    fields:
+      - Предоплата аренды
+      - Обеспечительный платёж
+    presentation: Native select appearance could add gray inner browser chrome inconsistent with adjacent fields.
+  file_sha256:
+    src/components/LaunchBudget.tsx: 6b8e950c247a193baa5953517fcdc6b37f81e5d9ca483fdc68b27ed52e46630f
+    src/components/LaunchBudget.css: d0bf29b4373ed033b6f82ef7308eb992e022f13edb33efa0dc94e487356d1ffd
+    scripts/test-site.cjs: 0828e6ca8531b1c97b8022522444f99fb98901eed16bbbf25f9264dd46e6cf50
+  state_sha256: 6620d5742cd598371cd9305e7d0851eb4de4a87cf04a23c0997322cf972f0b3f
+after:
+  numeric_inputs:
+    input_type: number
+    direct_entry: preserved
+    mobile_numeric_keyboard: preserved
+    computed_appearance: textfield
+    native_spinner_controls: hidden in WebKit and Chromium
+  rent_selects:
+    fields:
+      - Предоплата аренды
+      - Обеспечительный платёж
+    option_lists: preserved
+    computed_appearance: none
+    field_height_px: 52
+    background: white
+    custom_chevron: one
+    keyboard_access: preserved
+  file_sha256:
+    src/components/LaunchBudget.tsx: c3c15bade0825a07c0c3418bd2433234fb3a7787c73826d57565f6272e99b807
+    src/components/LaunchBudget.css: 7da8119340c3e2a66eb058c0381113c13f9d4d719a787fa4bcdbf6941a531352
+    scripts/test-site.cjs: 42e1d2d29c17280c2fe69b39477b78f268a1f6860ceac5ced704ae762d766950
+  state_sha256: 286556da57d296e4cc3bddb92f4d80b4b3032d6fdbabaa8d357ac271f9a218f0
+changed_files:
+  - src/components/LaunchBudget.tsx
+  - src/components/LaunchBudget.css
+  - scripts/test-site.cjs
+implementation:
+  - Added the launch-select-wrap presentation hook to the two existing rent selectors.
+  - Suppressed native number-input spinner controls with cross-browser CSS while retaining type=number.
+  - Replaced native select chrome with an accessible styled select and a pointer-events-free CSS chevron.
+  - Added deterministic computed-style, size and option-change assertions.
+calculation_and_data_invariants:
+  calculations_changed: false
+  formulas_changed: false
+  numeric_values_changed: false
+  defaults_changed: false
+  capex_changed: false
+  investor_start_model_changed: false
+  google_files_changed: false
+  page_structure_changed: false
+delivery:
+  committed: false
+  tagged: false
+  pushed: false
+  sealed: false
+  deployed: false

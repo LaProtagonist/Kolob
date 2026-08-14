@@ -135,7 +135,105 @@
       },
       "additionalProperties": false
     },
-    "operating_reserve": { "type": "object" },
+    "operating_reserve": {
+      "type": "object",
+      "required": [
+        "section_title",
+        "section_description",
+        "title",
+        "currency",
+        "status",
+        "mode_selector_title",
+        "default_mode",
+        "baseline_area_m2",
+        "modes",
+        "custom_field_label",
+        "custom_field_hint",
+        "monthly_total_label",
+        "monthly_total_rub",
+        "default_total_rub",
+        "accordion_label",
+        "default_accordion_open",
+        "month_options",
+        "default_months",
+        "monthly_total_formula",
+        "reserve_formula",
+        "custom_reserve_formula",
+        "categories"
+      ],
+      "properties": {
+        "section_title": { "const": "Запас и резерв" },
+        "section_description": { "const": "Оценка средств, необходимых для стабильного запуска и работы объекта в первые месяцы." },
+        "title": { "const": "Операционный запас" },
+        "currency": { "const": "RUB" },
+        "status": { "const": "research" },
+        "mode_selector_title": { "const": "Расчёт операционных расходов" },
+        "default_mode": { "const": "baseline" },
+        "baseline_area_m2": { "const": 200 },
+        "modes": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "object",
+              "required": ["id", "title", "description"],
+              "properties": {
+                "id": { "const": "baseline" },
+                "title": { "const": "Базовый расчёт" },
+                "description": { "const": "Ориентир для объекта площадью около 200 м²" }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": ["id", "title", "description"],
+              "properties": {
+                "id": { "const": "custom" },
+                "title": { "const": "Другая сумма" },
+                "description": { "const": "Укажите ежемесячные операционные расходы" }
+              },
+              "additionalProperties": false
+            }
+          ],
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "custom_field_label": { "const": "Ежемесячные операционные расходы" },
+        "custom_field_hint": { "const": "Укажите общую сумму регулярных расходов объекта за один месяц." },
+        "monthly_total_label": { "const": "Ежемесячные операционные расходы" },
+        "monthly_total_rub": { "const": 2650000 },
+        "default_total_rub": { "const": 15900000 },
+        "accordion_label": { "const": "Состав операционных расходов" },
+        "default_accordion_open": { "const": false },
+        "month_options": {
+          "type": "array",
+          "prefixItems": [{ "const": 3 }, { "const": 6 }, { "const": 9 }],
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "default_months": { "const": 6 },
+        "monthly_total_formula": { "const": "sum(amount_rub for categories)" },
+        "reserve_formula": { "const": "monthly_total_rub * reserve_months" },
+        "custom_reserve_formula": { "const": "custom_monthly_opex_rub * reserve_months" },
+        "categories": {
+          "type": "array",
+          "minItems": 7,
+          "maxItems": 7,
+          "items": {
+            "type": "object",
+            "required": ["id", "name", "amount_rub", "description"],
+            "properties": {
+              "id": { "type": "string", "pattern": "^OPEX-[A-Z-]+$" },
+              "name": { "type": "string", "minLength": 1 },
+              "amount_rub": { "type": "integer", "minimum": 0 },
+              "description": { "type": "string", "minLength": 1 },
+              "includes": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
     "contingency": { "type": "object" },
     "totals": { "type": "object" },
     "missing_categories": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string" } },

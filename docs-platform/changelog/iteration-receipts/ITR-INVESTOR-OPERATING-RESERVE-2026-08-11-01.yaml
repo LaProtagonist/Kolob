@@ -1,0 +1,34 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-OPERATING-RESERVE-2026-08-11-01
+proposal_id: PROP-INVESTOR-OPERATING-RESERVE-2026-08-11-01
+decision_id: DEC-016
+change_set_id: CHG-032
+status: applied
+applied_at: 2026-08-11T02:43:00.000Z
+actor: Codex
+tool: exact approved payload implementation + docs-platform change:apply + capex:web:sync
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-INVESTOR-OPERATING-RESERVE-2026-08-11-01-approved.yaml
+  sha256: b342ab965971bfd7dc485024dd6a373a8b5c12f704474971f9bfb567d7021ce2
+before_files:
+  - path: docs-platform/working/investor-start-model.yaml
+    sha256: 54eef39aa293fb63cd673fffe000b43c46d425e3be98174bced6bc2c7c854b27
+  - path: src/content/capex-configurator-data.json
+    sha256: b916327ff895c06734390692d417459f75abc01a7f8f0dab78064e72be1e35cf
+after_files:
+  - path: docs-platform/working/investor-start-model.yaml
+    sha256: fe95e27f127ada0659983726c67e84791359209fb41598ac6b47c6ebc642a7e3
+  - path: src/content/capex-configurator-data.json
+    sha256: 16ec6426fecd35c6a08c3d026edf07e9e76192a324403f634f64f8a7b1a6ebe4
+registry_receipts:
+  - docs-platform/changelog/change-receipts/CHG-031.yaml
+  - docs-platform/changelog/change-receipts/CHG-032.yaml
+content_state_sha256: 86c7d9a48d23df015d7b243b5eda7ad6c8b0b67df7d72e87f865f9e4be3fffa5
+validation_result: passed
+verification_receipt: docs-platform/changelog/verification/ITR-INVESTOR-OPERATING-RESERVE-2026-08-11-01.yaml
+git_commit_hash: null
+rollback:
+  mode: governed_reverse_change_set
+  payload: docs-platform/changelog/rollback-payloads/ITR-INVESTOR-OPERATING-RESERVE-2026-08-11-01/manifest.yaml
+  preserves_history: true
+  git_reset_forbidden: true

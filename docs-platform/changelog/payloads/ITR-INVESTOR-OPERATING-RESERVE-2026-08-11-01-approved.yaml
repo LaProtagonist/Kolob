@@ -1,0 +1,91 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-OPERATING-RESERVE-2026-08-11-01
+type: Investor Start Model update
+status: approved
+approved_by: project owner
+approved_at: 2026-08-11T02:37:00.000Z
+scope:
+  section: Запас и резерв
+  summary: Блок операционного запаса переведён из одного общего значения в структурированную модель ежемесячных расходов с прозрачным расчётом периода запаса.
+operating_reserve:
+  section_title: Запас и резерв
+  section_description: Оценка средств, необходимых для стабильного запуска и работы объекта в первые месяцы.
+  title: Операционный запас
+  currency: RUB
+  monthly_total_label: Ежемесячные операционные расходы
+  monthly_total_rub: 2650000
+  default_total_rub: 15900000
+  accordion_label: Состав операционных расходов
+  default_accordion_open: false
+  month_options:
+    - 3
+    - 6
+    - 9
+  default_months: 6
+  formula: monthly_total_rub * reserve_months
+  categories:
+    - id: OPEX-PERSONNEL
+      name: Персонал
+      amount_rub: 2073500
+      description: Фонд оплаты труда с учётом обязательных начислений и резерва на замещение сотрудников.
+    - id: OPEX-UTILITIES
+      name: Коммунальные услуги
+      amount_rub: 200000
+      description: Электроэнергия, вода, водоотведение и вывоз отходов.
+    - id: OPEX-EQUIPMENT-MAINTENANCE
+      name: Обслуживание оборудования
+      amount_rub: 100000
+      description: Техническое обслуживание оборудования, холодильных систем, вентиляции и мелкие ремонты.
+    - id: OPEX-HOUSEHOLD
+      name: Хозяйственные расходы
+      amount_rub: 80000
+      description: Расходные материалы, хозяйственные товары и текущие закупки.
+    - id: OPEX-SOFTWARE-COMMS
+      name: ПО и связь
+      amount_rub: 30000
+      description: Кассовые системы, учёт, интернет и сервисные подписки.
+    - id: OPEX-LAUNCH-MARKETING
+      name: Маркетинг запуска
+      amount_rub: 100000
+      description: Локальное продвижение, акции и поддержка открытия.
+    - id: OPEX-OTHER
+      name: Прочие расходы
+      amount_rub: 66500
+      description: Дополнительные регулярные расходы, возникающие в процессе работы.
+period_totals_rub:
+  3: 7950000
+  6: 15900000
+  9: 23850000
+contingency:
+  title: Резерв запуска
+  description: Дополнительный запас на непредвиденные расходы в процессе запуска проекта.
+  percent_options:
+    - 5
+    - 10
+    - 15
+  default_percent: 10
+  formula: (equipment_rub + furniture_rub + effective_preparation_amount_rub) * contingency_percent
+  hint: Рассчитывается от стоимости оборудования, мебели и подготовки помещения.
+local_storage:
+  preserve:
+    - operatingReserveMonths
+    - operatingReserveAccordionOpen
+  server_persistence: false
+boundaries:
+  changes:
+    - Investor Start Model operating reserve data
+    - launch-budget operating reserve calculation and visible block
+    - deterministic web snapshot
+    - directly affected validation and route tests
+  unchanged:
+    - all other launch-budget blocks
+    - CAPEX Equipment Register
+    - CAPEX Price Research
+    - equipment, premises preparation, rent, purchase, furniture and seating data
+    - Google files
+    - public deployment state
+delivery:
+  commit: forbidden_in_this_iteration_step
+  push: forbidden
+  seal: forbidden
+  deployment: forbidden

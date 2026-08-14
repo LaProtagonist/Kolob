@@ -61,7 +61,7 @@
         },
         {
           "path": "docs-platform/working/investor-start-model.yaml",
-          "sha256": "aa55fd675006e1d2a58b6ee20765f5c2e15f6f52f398612c6924b8818a9f9849",
+          "sha256": "ac83ec0506b535b58078a2b111f6303fa6ee5548a09bbc65dbd254a36227efd3",
           "normalization": "yaml_canonical_nfc"
         },
         {
@@ -100,9 +100,9 @@
           "normalization": "json_canonical_nfc"
         }
       ],
-      "content_state_sha256": "019867401744567473b35404bd3bb3b10b2fbf3e8a53abaedfb738b5881468e6"
+      "content_state_sha256": "a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239"
     },
-    "contentStateSha256": "019867401744567473b35404bd3bb3b10b2fbf3e8a53abaedfb738b5881468e6",
+    "contentStateSha256": "a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239",
     "sourceHashes": {
       "docs-platform/working/capex-equipment-register.yaml": "f095aaaf5ba6500636d5982966a95f3f675319912d6b8523d4a93cbfbf7c908b",
       "docs-platform/working/capex-price-research.yaml": "efd3da7b0cdb9ad8bbd6b6adb96db79b23c3348c2e8012e44e141dd1774b1e02",
@@ -112,7 +112,7 @@
       "docs-platform/working/capex-configurations.yaml": "acfb1665162cc663fd987fa0877be579df6884aecad0dfbf8aa6b5daad0cb9fa",
       "docs-platform/working/capex-configuration-overrides.yaml": "3d425fb54554816595c5788875d1e34a9e838d5c615e31b1044fdc82e779561a",
       "docs-platform/working/pilot-capex-assumptions.yaml": "c000b07214cf0fb239adad1815d0bc3de2cbe95a8fca309ed0a7d8ef5a5db0c8",
-      "docs-platform/working/investor-start-model.yaml": "aa55fd675006e1d2a58b6ee20765f5c2e15f6f52f398612c6924b8818a9f9849",
+      "docs-platform/working/investor-start-model.yaml": "ac83ec0506b535b58078a2b111f6303fa6ee5548a09bbc65dbd254a36227efd3",
       "docs-platform/registry/documents.yaml": "64159ad1868dff174b21ebc0953e5a1793526b78aa0bcbd340ffbe6194290ed5",
       "docs-platform/app/src/capex/web-snapshot.ts": "e2d1f83ae5084fcd74485e84223c4151dee7542133aff37f3baf18fd812352ff",
       "docs-platform/app/src/capex/content-state.ts": "65e00bdf29366e2950b4048eaeea7f35a9cbf23689b64baa28ed24d0682171e4",
@@ -121,7 +121,7 @@
       "docs-platform/app/src/capex/price-research.ts": "3eb4da773f7f6b5f43c7301ed4ce427329f4172e8af6ee10c603978e654fc945",
       "docs-platform/schemas/capex-web-snapshot.schema.json": "8bb5bf8c512bc3c8d14ed010ef9567778ae667ed048013ce5f00880264045874"
     },
-    "sourceBundleSha256": "019867401744567473b35404bd3bb3b10b2fbf3e8a53abaedfb738b5881468e6",
+    "sourceBundleSha256": "a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239",
     "counts": {
       "equipmentRecords": 160,
       "independentProcurementRecords": 51,
@@ -2495,10 +2495,10 @@
       "version": "0.1",
       "status": "research",
       "document_type": "Working investment requirement model",
-      "decision_id": "DEC-015",
-      "iteration_id": "ITR-CAPEX-REMAINING-PRICES-2026-08-05-01",
-      "proposal_id": "PROP-CAPEX-REMAINING-PRICES-2026-08-05-01",
-      "updated_at": "2026-08-05",
+      "decision_id": "DEC-INVESTOR-OPEX-MODE-2026-08-11-01",
+      "iteration_id": "ITR-INVESTOR-OPEX-MODE-2026-08-11-01",
+      "proposal_id": "PROP-INVESTOR-OPEX-MODE-2026-08-11-01",
+      "updated_at": "2026-08-11",
       "disclaimer": "Документ не является утверждённой финансовой моделью или окончательным инвестиционным предложением."
     },
     "basis": {
@@ -2888,19 +2888,98 @@
       ]
     },
     "operating_reserve": {
-      "monthly_opex_field": "monthly_opex_excluding_rent_rub",
+      "section_title": "Запас и резерв",
+      "section_description": "Оценка средств, необходимых для стабильного запуска и работы объекта в первые месяцы.",
+      "title": "Операционный запас",
+      "currency": "RUB",
+      "status": "research",
+      "mode_selector_title": "Расчёт операционных расходов",
+      "default_mode": "baseline",
+      "baseline_area_m2": 200,
+      "modes": [
+        {
+          "id": "baseline",
+          "title": "Базовый расчёт",
+          "description": "Ориентир для объекта площадью около 200 м²"
+        },
+        {
+          "id": "custom",
+          "title": "Другая сумма",
+          "description": "Укажите ежемесячные операционные расходы"
+        }
+      ],
+      "custom_field_label": "Ежемесячные операционные расходы",
+      "custom_field_hint": "Укажите общую сумму регулярных расходов объекта за один месяц.",
+      "monthly_total_label": "Ежемесячные операционные расходы",
+      "monthly_total_rub": 2650000,
+      "default_total_rub": 15900000,
+      "accordion_label": "Состав операционных расходов",
+      "default_accordion_open": false,
       "month_options": [
         3,
         6,
         9
       ],
       "default_months": 6,
-      "purchase_formula": "monthly_opex_excluding_rent_rub * reserve_months",
-      "rent_formula": "monthly_opex_excluding_rent_rub * reserve_months + monthly_rent_rub * max(reserve_months - prepayment_months, 0)",
-      "security_deposit_excluded": true,
-      "unknown_rule": "Если ежемесячные операционные расходы не введены, операционный запас не рассчитывается и итог остаётся частичным."
+      "monthly_total_formula": "sum(amount_rub for categories)",
+      "reserve_formula": "monthly_total_rub * reserve_months",
+      "custom_reserve_formula": "custom_monthly_opex_rub * reserve_months",
+      "categories": [
+        {
+          "id": "OPEX-PERSONNEL",
+          "name": "Персонал",
+          "amount_rub": 2073500,
+          "description": "Фонд оплаты труда с учётом обязательных начислений и резерва на замещение сотрудников.",
+          "includes": [
+            "повара-заготовщики",
+            "повара кухни",
+            "сотрудники выдачи",
+            "кассиры и бар",
+            "мойщики и технические сотрудники"
+          ]
+        },
+        {
+          "id": "OPEX-UTILITIES",
+          "name": "Коммунальные услуги",
+          "amount_rub": 200000,
+          "description": "Электроэнергия, вода, водоотведение и вывоз отходов."
+        },
+        {
+          "id": "OPEX-EQUIPMENT-MAINTENANCE",
+          "name": "Обслуживание оборудования",
+          "amount_rub": 100000,
+          "description": "Техническое обслуживание оборудования, холодильных систем, вентиляции и мелкие ремонты."
+        },
+        {
+          "id": "OPEX-HOUSEHOLD",
+          "name": "Хозяйственные расходы",
+          "amount_rub": 80000,
+          "description": "Расходные материалы, хозяйственные товары и текущие закупки."
+        },
+        {
+          "id": "OPEX-SOFTWARE-COMMS",
+          "name": "ПО и связь",
+          "amount_rub": 30000,
+          "description": "Кассовые системы, учёт, интернет и сервисные подписки."
+        },
+        {
+          "id": "OPEX-LAUNCH-MARKETING",
+          "name": "Маркетинг запуска",
+          "amount_rub": 100000,
+          "description": "Локальное продвижение, акции и поддержка открытия."
+        },
+        {
+          "id": "OPEX-OTHER",
+          "name": "Прочие расходы",
+          "amount_rub": 66500,
+          "description": "Дополнительные регулярные расходы, возникающие в процессе работы."
+        }
+      ]
     },
     "contingency": {
+      "title": "Резерв запуска",
+      "description": "Дополнительный запас на непредвиденные расходы в процессе запуска проекта.",
+      "hint": "Рассчитывается от стоимости оборудования, мебели и подготовки помещения.",
       "percent_options": [
         5,
         10,
@@ -2994,7 +3073,11 @@
         "включённое состояние всех категорий по умолчанию",
         "возможность отключения отдельных категорий",
         "режим ручной общей оценки",
-        "связь эффективной суммы подготовки с резервом и стоимостью запуска"
+        "связь эффективной суммы подготовки с резервом и стоимостью запуска",
+        "семь категорий ежемесячных операционных расходов и их точные суммы",
+        "ежемесячный итог операционных расходов 2650000 RUB",
+        "операционный запас на 3, 6 или 9 месяцев с базовым периодом 6 месяцев",
+        "отдельный расчёт резерва запуска по действующей формуле"
       ],
       "not_approved": [
         "строительная смета",
@@ -3007,7 +3090,7 @@
       ]
     },
     "warning": "Расчёт показывает предварительную стоимость запуска выбранной конфигурации.\nИтоговые значения уточняются после выбора помещения, обследования\nинженерных систем, разработки планировки и получения коммерческих\nпредложений.",
-    "source_sha256": "54eef39aa293fb63cd673fffe000b43c46d425e3be98174bced6bc2c7c854b27"
+    "source_sha256": "b81a6c4e8988a4532c9ba2749d492b3f96e37d83af822396afc82930244b2985"
   },
   "overrides": [],
   "items": [

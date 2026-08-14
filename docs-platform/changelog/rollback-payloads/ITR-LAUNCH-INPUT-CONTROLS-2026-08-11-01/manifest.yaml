@@ -1,0 +1,39 @@
+schema_version: 2
+iteration_id: ITR-LAUNCH-INPUT-CONTROLS-2026-08-11-01
+mode: governed_reverse_change_set
+status: prepared
+before_content_commit: a5563637d830bfff0b5779df9e158c51858e5f1d
+before_state_sha256: 6620d5742cd598371cd9305e7d0851eb4de4a87cf04a23c0997322cf972f0b3f
+after_state_sha256: 286556da57d296e4cc3bddb92f4d80b4b3032d6fdbabaa8d357ac271f9a218f0
+source_change_sets:
+  - CHG-LAUNCH-INPUT-CONTROLS-2026-08-11-01
+reverse_order:
+  - Remove only the input-presentation assertions added by this iteration from scripts/test-site.cjs.
+  - Remove launch-select-wrap from the two existing select wrappers without changing their option lists or handlers.
+  - Remove only the number-spinner suppression and styled-select CSS rules added by this iteration.
+  - Re-run TypeScript, build and deterministic route verification, then confirm the restored composite state hash.
+  - Append rollback lifecycle events without rewriting or deleting this iteration's history.
+before_payload:
+  component:
+    prepayment_wrapper_class: launch-input-wrap
+    security_deposit_wrapper_class: launch-input-wrap
+  stylesheet:
+    number_input_appearance_override: absent
+    webkit_spinner_suppression: absent
+    launch_select_wrap_rules: absent
+  route_test:
+    computed_input_presentation_assertion: absent
+before_file_sha256:
+  src/components/LaunchBudget.tsx: 6b8e950c247a193baa5953517fcdc6b37f81e5d9ca483fdc68b27ed52e46630f
+  src/components/LaunchBudget.css: d0bf29b4373ed033b6f82ef7308eb992e022f13edb33efa0dc94e487356d1ffd
+  scripts/test-site.cjs: 0828e6ca8531b1c97b8022522444f99fb98901eed16bbbf25f9264dd46e6cf50
+after_file_sha256:
+  src/components/LaunchBudget.tsx: c3c15bade0825a07c0c3418bd2433234fb3a7787c73826d57565f6272e99b807
+  src/components/LaunchBudget.css: 7da8119340c3e2a66eb058c0381113c13f9d4d719a787fa4bcdbf6941a531352
+  scripts/test-site.cjs: 42e1d2d29c17280c2fe69b39477b78f268a1f6860ceac5ced704ae762d766950
+audit_reference: docs-platform/changelog/audit/ITR-LAUNCH-INPUT-CONTROLS-2026-08-11-01.yaml
+reverse_strategy:
+  requirement: A new rollback request, reverse preview and approved rollback decision are mandatory before apply.
+  history: Append rollback events; never delete or rewrite this iteration's events or receipts.
+  git_reset_forbidden: true
+  dependency_check: required against every later applied iteration

@@ -1,0 +1,94 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-OPEX-MODE-2026-08-11-01
+proposal_id: PROP-INVESTOR-OPEX-MODE-2026-08-11-01
+decision_id: DEC-INVESTOR-OPEX-MODE-2026-08-11-01
+change_set_id: CHG-INVESTOR-OPEX-MODE-2026-08-11-01
+timestamp: 2026-08-11T15:07:31.000Z
+actor: Codex
+type: Investor Start Model update
+reason: Let a user retain the approved 200 m2 baseline or enter a different monthly operating expense without implying linear area scaling, while removing internal module status from the investor-facing panel.
+route: /launch-budget
+before:
+  operating_expenses:
+    mode: baseline only
+    monthly_total_rub: 2650000
+    reserve_formula: monthly_total_rub * reserve_months
+    custom_monthly_amount: unavailable
+  public_completeness:
+    internal_required_module_status: visible
+    internal_module_names:
+      - Складское оснащение
+      - Инженерная инфраструктура
+  state_sha256: 9a4b63cc50fa5c56e77738ae9669e815879ccd1436e4a544ec5675b7a2589167
+after:
+  operating_expenses:
+    mode_options:
+      - id: baseline
+        title: Базовый расчёт
+        description: Ориентир для объекта площадью около 200 м²
+      - id: custom
+        title: Другая сумма
+        description: Укажите ежемесячные операционные расходы
+    default_mode: baseline
+    baseline_area_m2: 200
+    baseline_monthly_total_rub: 2650000
+    custom_monthly_default: null
+    effective_formula: baseline mode uses Investor Start Model monthly total; custom mode uses customMonthlyOpexRub
+    reserve_formula: effective monthly OPEX * reserve months
+    area_scaling: absent
+  local_storage:
+    persisted:
+      - operatingExpenseMode
+      - customMonthlyOpexRub
+      - operatingReserveMonths
+    baseline_value_duplicated_as_source: false
+    incompatible_state_handling: safe normalization to baseline and null custom value
+  public_completeness:
+    internal_required_module_status: hidden
+    zero_unpriced_row: hidden
+    MOD-STORAGE_internal_status: not_started
+    MOD-ENGINEERING_internal_status: not_started
+  state_sha256: 341c2193bd4591ca84f2b264d83cffd6e5e3b8b2ab0886adf06cfbbf1667ea4d
+changed_files:
+  - docs-platform/working/investor-start-model.yaml
+  - docs-platform/schemas/investor-start-model.schema.json
+  - docs-platform/app/src/investor/start-model.ts
+  - docs-platform/app/test/investor-start-model.test.ts
+  - src/lib/launch-budget.ts
+  - src/components/LaunchBudget.tsx
+  - src/components/LaunchBudget.css
+  - src/content/capex-configurator-data.json
+  - scripts/test-site.cjs
+implementation:
+  - Added exact baseline/custom selector metadata to the existing Investor Start Model operating_reserve section.
+  - Added nullable local custom monthly OPEX and a deterministic effective-monthly selector without any area coefficient.
+  - Kept the seven-category breakdown visible only in baseline mode and preserved the last custom value across mode switches.
+  - Propagated a blank custom amount as unknown so the operating reserve is not treated as zero and the launch total remains a lower bound.
+  - Removed only the internal incomplete-module presentation from the right completeness panel; internal modules and their status remain unchanged.
+  - Regenerated the existing deterministic site snapshot; no parallel data source was introduced.
+calculation_and_data_invariants:
+  baseline_category_count: 7
+  baseline_monthly_total_rub: 2650000
+  baseline_period_totals_rub:
+    3: 7950000
+    6: 15900000
+    9: 23850000
+  custom_example_period_totals_rub:
+    monthly: 2000000
+    3: 6000000
+    6: 12000000
+    9: 18000000
+  contingency_formula_changed: false
+  contingency_independent_of_opex_mode: true
+  area_scaling_added: false
+  capex_changed: false
+  equipment_changed: false
+  google_files_changed: false
+  other_launch_budget_blocks_changed: false
+delivery:
+  staged: false
+  committed: false
+  tagged: false
+  pushed: false
+  sealed: false
+  deployed: false

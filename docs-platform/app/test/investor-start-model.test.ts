@@ -9,6 +9,8 @@ import { checkInvestorStartModel, INVESTOR_START_PAYLOAD_PATH, previewInvestorSt
 import {
   calculateLaunchBudget,
   calculateEffectivePreparationAmount,
+  calculateEffectiveMonthlyOperatingExpenses,
+  calculateMonthlyOperatingExpenses,
   calculateOperatingReserve,
   calculateOtherArea,
   calculatePreparationBreakdown,
@@ -34,7 +36,6 @@ function filled(overrides: Partial<LaunchBudgetState> = {}): LaunchBudgetState {
     guestAreaM2: 100,
     preparationMode: "manual",
     preparationManualRub: 4_000_000,
-    monthlyOpexExcludingRentRub: 2_000_000,
     ...overrides,
   };
 }
@@ -48,7 +49,7 @@ test("current canonical model preserves the approved preparation payload and rec
   const current = YAML.parse(fs.readFileSync(modelPath, "utf8"));
   const preparationPayload = YAML.parse(fs.readFileSync(payloadPath, "utf8"));
   assert.deepEqual(current.preparation, preparationPayload.preparation);
-  assert.equal(current.document.decision_id, "DEC-015");
+  assert.equal(current.document.decision_id, "DEC-INVESTOR-OPEX-MODE-2026-08-11-01");
   assert.deepEqual(current.seating.profiles.map((profile: any) => profile.label), ["Плотная", "Сбалансированная", "Комфортная"]);
   assert.equal(current.point_configuration.equipment_exclusions.some((item: any) => item.item_id === "CAPEX-01-012" && item.included_in_preparation_category_id === "PREP-VENTILATION"), true);
 });
@@ -95,19 +96,20 @@ test("9. rent deposit is separated as tied or conditionally refundable funds", (
   assert.equal(result.tiedFundsRub, 1_000_000);
 });
 
-test("10. prepaid rent is not duplicated in operating reserve", () => {
-  const state = filled({ premisesScenario: "rent", monthlyRentRub: 500_000, prepaymentMonths: 3, operatingReserveMonths: 6, monthlyOpexExcludingRentRub: 2_000_000 });
-  assert.equal(calculateOperatingReserve(state), 2_000_000 * 6 + 500_000 * 3);
+test("10. operating reserve uses the canonical monthly OPEX without duplicating premises rent", () => {
+  const state = filled({ premisesScenario: "rent", monthlyRentRub: 500_000, prepaymentMonths: 3, operatingReserveMonths: 6 });
+  assert.equal(calculateOperatingReserve(state), 15_900_000);
 });
 
 test("11. purchase operating reserve excludes rent", () => {
-  const state = filled({ premisesScenario: "purchase", monthlyRentRub: 9_000_000, operatingReserveMonths: 6, monthlyOpexExcludingRentRub: 2_000_000 });
-  assert.equal(calculateOperatingReserve(state), 12_000_000);
+  const state = filled({ premisesScenario: "purchase", monthlyRentRub: 9_000_000, operatingReserveMonths: 6 });
+  assert.equal(calculateOperatingReserve(state), 15_900_000);
 });
 
-test("12. rent reserve uses max(months minus prepayment, zero)", () => {
-  const state = filled({ premisesScenario: "rent", monthlyRentRub: 500_000, prepaymentMonths: 12, operatingReserveMonths: 6, monthlyOpexExcludingRentRub: 2_000_000 });
-  assert.equal(calculateOperatingReserve(state), 12_000_000);
+test("12. operating reserve supports the approved 3, 6 and 9 month periods", () => {
+  assert.equal(calculateOperatingReserve(filled({ operatingReserveMonths: 3 })), 7_950_000);
+  assert.equal(calculateOperatingReserve(filled({ operatingReserveMonths: 6 })), 15_900_000);
+  assert.equal(calculateOperatingReserve(filled({ operatingReserveMonths: 9 })), 23_850_000);
 });
 
 test("13. contingency does not apply to property purchase", () => {
@@ -123,8 +125,8 @@ test("14. contingency does not apply to security deposit", () => {
 });
 
 test("15. contingency does not apply to operating reserve", () => {
-  const first = calculateLaunchBudget(filled({ monthlyOpexExcludingRentRub: 1_000_000 }));
-  const second = calculateLaunchBudget(filled({ monthlyOpexExcludingRentRub: 5_000_000 }));
+  const first = calculateLaunchBudget(filled({ operatingReserveMonths: 3 }));
+  const second = calculateLaunchBudget(filled({ operatingReserveMonths: 9 }));
   assert.equal(first.contingencyRub, second.contingencyRub);
 });
 
@@ -140,10 +142,11 @@ test("17. unknown preparation is not silently treated as complete zero", () => {
   assert.ok(result.missing.some(item => item.includes("Подготовка помещения")));
 });
 
-test("18. unknown OPEX leaves operating reserve unknown", () => {
-  const result = calculateLaunchBudget(filled({ monthlyOpexExcludingRentRub: null }));
-  assert.equal(result.operatingReserveRub, null);
-  assert.equal(result.partial, true);
+test("18. canonical monthly OPEX is always calculated from the seven structured categories", () => {
+  const result = calculateLaunchBudget(filled());
+  assert.equal(calculateMonthlyOperatingExpenses(), 2_650_000);
+  assert.equal(result.monthlyOperatingExpensesRub, 2_650_000);
+  assert.equal(result.operatingReserveRub, 15_900_000);
 });
 
 test("19. incomplete data produces a lower-bound partial total", () => {
@@ -211,6 +214,8 @@ test("27. reset restores the governed demonstration scenario and leaves canonica
   assert.equal(reset.preparationManualRub, null);
   assert.equal(reset.preparationAccordionOpen, false);
   assert.deepEqual(reset.preparationEnabledCategoryIds, capexData.investorStartModel.preparation.categories.map(category => category.id));
+  assert.equal(reset.operatingReserveMonths, 6);
+  assert.equal(reset.operatingReserveAccordionOpen, false);
   assert.equal(JSON.stringify(capexData.investorStartModel), before);
 });
 
@@ -235,9 +240,8 @@ test("29. annual default rent prepayment is not repeated in a six-month operatin
     prepaymentMonths: 12,
     securityDepositMonths: 2,
     operatingReserveMonths: 6,
-    monthlyOpexExcludingRentRub: 2_000_000,
   });
-  assert.equal(calculateOperatingReserve(state), 12_000_000);
+  assert.equal(calculateOperatingReserve(state), 15_900_000);
   const result = calculateLaunchBudget(state);
   assert.equal(result.premisesEntryRub, 4_900_000);
   assert.equal(result.tiedFundsRub, 700_000);
@@ -377,4 +381,135 @@ test("45. legacy preparation amount migrates to manual mode and stale values are
   const stale = restoreLaunchBudgetState({ preparationMode: "obsolete", preparationEnabledCategoryIds: ["UNKNOWN"] });
   assert.equal(stale.preparationMode, "breakdown");
   assert.deepEqual(stale.preparationEnabledCategoryIds, []);
+});
+
+test("46. operating reserve contains exactly seven approved monthly expense categories totaling 2650000 RUB", () => {
+  const categories = capexData.investorStartModel.operating_reserve.categories;
+  assert.equal(categories.length, 7);
+  assert.equal(new Set(categories.map(category => category.id)).size, 7);
+  assert.deepEqual(Object.fromEntries(categories.map(category => [category.id, category.amount_rub])), {
+    "OPEX-PERSONNEL": 2_073_500,
+    "OPEX-UTILITIES": 200_000,
+    "OPEX-EQUIPMENT-MAINTENANCE": 100_000,
+    "OPEX-HOUSEHOLD": 80_000,
+    "OPEX-SOFTWARE-COMMS": 30_000,
+    "OPEX-LAUNCH-MARKETING": 100_000,
+    "OPEX-OTHER": 66_500,
+  });
+  assert.equal(categories.reduce((sum, category) => sum + category.amount_rub, 0), 2_650_000);
+  assert.equal(capexData.investorStartModel.operating_reserve.monthly_total_rub, 2_650_000);
+});
+
+test("47. OPEX snapshot matches canonical YAML and public category descriptions are not duplicated in React", () => {
+  const canonical = YAML.parse(fs.readFileSync(modelPath, "utf8"));
+  assert.deepEqual(capexData.investorStartModel.operating_reserve, canonical.operating_reserve);
+  const component = fs.readFileSync(path.join(projectRoot, "src/components/LaunchBudget.tsx"), "utf8");
+  for (const category of canonical.operating_reserve.categories) assert.equal(component.includes(category.description), false, category.id);
+});
+
+test("48. default operating reserve is six months, 15900000 RUB and a closed accordion", () => {
+  const state = defaultLaunchBudgetState();
+  const result = calculateLaunchBudget(state);
+  assert.equal(state.operatingExpenseMode, "baseline");
+  assert.equal(state.customMonthlyOpexRub, null);
+  assert.equal(state.operatingReserveMonths, 6);
+  assert.equal(state.operatingReserveAccordionOpen, false);
+  assert.equal(result.operatingReserveRub, 15_900_000);
+});
+
+test("49. local persistence restores the reserve period and accordion state", () => {
+  const restored = restoreLaunchBudgetState({ operatingExpenseMode: "custom", customMonthlyOpexRub: 2_000_000, operatingReserveMonths: 9, operatingReserveAccordionOpen: true });
+  assert.equal(restored.operatingExpenseMode, "custom");
+  assert.equal(restored.customMonthlyOpexRub, 2_000_000);
+  assert.equal(restored.operatingReserveMonths, 9);
+  assert.equal(restored.operatingReserveAccordionOpen, true);
+  assert.equal(calculateOperatingReserve(restored), 18_000_000);
+});
+
+test("50. stale manual-OPEX local state is ignored without breaking canonical defaults", () => {
+  const restored = restoreLaunchBudgetState({ monthlyOpexExcludingRentRub: 1, operatingReserveMonths: 6 } as unknown);
+  assert.equal(restored.operatingReserveMonths, 6);
+  assert.equal(calculateOperatingReserve(restored), 15_900_000);
+  assert.equal("monthlyOpexExcludingRentRub" in restored, false);
+});
+
+test("51. operating-expense modes and baseline area match the approved structured source", () => {
+  const operatingReserve = capexData.investorStartModel.operating_reserve;
+  assert.equal(operatingReserve.mode_selector_title, "Расчёт операционных расходов");
+  assert.equal(operatingReserve.default_mode, "baseline");
+  assert.equal(operatingReserve.baseline_area_m2, 200);
+  assert.deepEqual(operatingReserve.modes, [
+    { id: "baseline", title: "Базовый расчёт", description: "Ориентир для объекта площадью около 200 м²" },
+    { id: "custom", title: "Другая сумма", description: "Укажите ежемесячные операционные расходы" },
+  ]);
+});
+
+test("52. custom monthly OPEX supports the approved 3, 6 and 9 month examples", () => {
+  for (const [months, expected] of [[3, 6_000_000], [6, 12_000_000], [9, 18_000_000]] as const) {
+    const state = filled({ operatingExpenseMode: "custom", customMonthlyOpexRub: 2_000_000, operatingReserveMonths: months });
+    assert.equal(calculateEffectiveMonthlyOperatingExpenses(state), 2_000_000);
+    assert.equal(calculateOperatingReserve(state), expected);
+  }
+});
+
+test("53. an empty custom OPEX remains unknown and makes the launch total partial", () => {
+  const state = filled({ operatingExpenseMode: "custom", customMonthlyOpexRub: null });
+  const result = calculateLaunchBudget(state);
+  assert.equal(calculateEffectiveMonthlyOperatingExpenses(state), null);
+  assert.equal(result.monthlyOperatingExpensesRub, null);
+  assert.equal(result.operatingReserveRub, null);
+  assert.equal(result.partial, true);
+  assert.ok(result.financingRequirementRub !== null && result.financingRequirementRub > 0);
+  assert.ok(result.missing.includes("Операционный запас"));
+});
+
+test("54. baseline and custom state switching preserves the last custom amount", () => {
+  const saved = normalizeLaunchBudgetState({ operatingExpenseMode: "custom", customMonthlyOpexRub: 2_000_000, operatingReserveMonths: 6 });
+  const baseline = { ...saved, operatingExpenseMode: "baseline" as const };
+  assert.equal(calculateEffectiveMonthlyOperatingExpenses(baseline), 2_650_000);
+  assert.equal(baseline.customMonthlyOpexRub, 2_000_000);
+  const custom = { ...baseline, operatingExpenseMode: "custom" as const };
+  assert.equal(calculateEffectiveMonthlyOperatingExpenses(custom), 2_000_000);
+});
+
+test("55. reset returns baseline mode, six months and an empty custom amount", () => {
+  const reset = defaultLaunchBudgetState();
+  assert.equal(reset.operatingExpenseMode, "baseline");
+  assert.equal(reset.customMonthlyOpexRub, null);
+  assert.equal(reset.operatingReserveMonths, 6);
+  assert.equal(calculateOperatingReserve(reset), 15_900_000);
+});
+
+test("56. changing area does not scale baseline monthly OPEX", () => {
+  const compact = calculateLaunchBudget(filled({ totalAreaM2: 160, kitchenAreaM2: 70, guestAreaM2: 60 }));
+  const large = calculateLaunchBudget(filled({ totalAreaM2: 400, kitchenAreaM2: 180, guestAreaM2: 160 }));
+  assert.equal(compact.monthlyOperatingExpensesRub, 2_650_000);
+  assert.equal(large.monthlyOperatingExpensesRub, 2_650_000);
+  assert.equal(compact.operatingReserveRub, 15_900_000);
+  assert.equal(large.operatingReserveRub, 15_900_000);
+});
+
+test("57. custom OPEX changes operating reserve but not launch contingency", () => {
+  const baseline = calculateLaunchBudget(filled({ operatingExpenseMode: "baseline", contingencyPercent: 10 }));
+  const custom = calculateLaunchBudget(filled({ operatingExpenseMode: "custom", customMonthlyOpexRub: 2_000_000, contingencyPercent: 10 }));
+  assert.equal(baseline.operatingReserveRub, 15_900_000);
+  assert.equal(custom.operatingReserveRub, 12_000_000);
+  assert.equal(custom.contingencyRub, baseline.contingencyRub);
+});
+
+test("58. local-state migration validates custom mode and nonnegative integer input", () => {
+  const compatible = restoreLaunchBudgetState({ totalAreaM2: 321, operatingExpenseMode: "custom", customMonthlyOpexRub: 2_000_000.75, operatingReserveMonths: 9 });
+  assert.equal(compatible.totalAreaM2, 321);
+  assert.equal(compatible.operatingExpenseMode, "custom");
+  assert.equal(compatible.customMonthlyOpexRub, 2_000_000);
+  const stale = restoreLaunchBudgetState({ operatingExpenseMode: "obsolete", customMonthlyOpexRub: -1 } as unknown);
+  assert.equal(stale.operatingExpenseMode, "baseline");
+  assert.equal(stale.customMonthlyOpexRub, null);
+});
+
+test("59. internal storage and engineering modules remain unchanged", () => {
+  const storage = capexData.modules.find(module => module.id === "MOD-STORAGE");
+  const engineering = capexData.modules.find(module => module.id === "MOD-ENGINEERING");
+  assert.equal(storage?.status, "not_started");
+  assert.equal(engineering?.status, "not_started");
 });

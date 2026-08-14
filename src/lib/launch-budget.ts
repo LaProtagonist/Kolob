@@ -5,6 +5,7 @@ export type SeatingProfileId = "efficient" | "balanced" | "comfortable";
 export type FurnitureProfileId = "functional" | "balanced" | "comfort";
 export type EquipmentScenarioId = "MINIMUM" | "BASE" | "SCALE_READY";
 export type PreparationMode = "breakdown" | "manual";
+export type OperatingExpenseMode = "baseline" | "custom";
 
 export type LaunchBudgetState = {
   premisesScenario: PremisesScenario;
@@ -24,8 +25,10 @@ export type LaunchBudgetState = {
   preparationEnabledCategoryIds: string[];
   preparationManualRub: number | null;
   preparationAccordionOpen: boolean;
-  monthlyOpexExcludingRentRub: number | null;
+  operatingExpenseMode: OperatingExpenseMode;
+  customMonthlyOpexRub: number | null;
   operatingReserveMonths: number;
+  operatingReserveAccordionOpen: boolean;
   contingencyPercent: number;
 };
 
@@ -40,6 +43,7 @@ export type LaunchBudgetResult = {
   premisesEntryRub: number | null;
   securityDepositRub: number | null;
   operatingReserveRub: number | null;
+  monthlyOperatingExpensesRub: number | null;
   preparationBreakdownRub: number;
   effectivePreparationRub: number | null;
   contingencyRub: number;
@@ -104,7 +108,18 @@ type LaunchModel = {
       description: string;
     }>;
   };
-  operating_reserve: { default_months: number };
+  operating_reserve: {
+    mode_selector_title: string;
+    default_mode: OperatingExpenseMode;
+    baseline_area_m2: number;
+    modes: Array<{ id: OperatingExpenseMode; title: string; description: string }>;
+    custom_field_label: string;
+    custom_field_hint: string;
+    default_months: number;
+    default_accordion_open: boolean;
+    monthly_total_rub: number;
+    categories: Array<{ id: string; name: string; amount_rub: number; description: string }>;
+  };
   contingency: { default_percent: number };
   form: { local_storage_key: string };
 };
@@ -130,14 +145,21 @@ export function defaultLaunchBudgetState(model = launchModel): LaunchBudgetState
     preparationEnabledCategoryIds: model.preparation.categories.filter(item => item.enabled_by_default).map(item => item.id),
     preparationManualRub: null,
     preparationAccordionOpen: false,
-    monthlyOpexExcludingRentRub: null,
+    operatingExpenseMode: model.operating_reserve.default_mode,
+    customMonthlyOpexRub: null,
     operatingReserveMonths: model.operating_reserve.default_months,
+    operatingReserveAccordionOpen: model.operating_reserve.default_accordion_open,
     contingencyPercent: model.contingency.default_percent,
   };
 }
 
 function finiteOrNull(value: unknown) {
   return typeof value === "number" && Number.isFinite(value) && value >= 0 ? value : null;
+}
+
+function nonnegativeIntegerOrNull(value: unknown) {
+  const finite = finiteOrNull(value);
+  return finite === null ? null : Math.floor(finite);
 }
 
 export function normalizeLaunchBudgetState(value: unknown, model = launchModel): LaunchBudgetState {
@@ -169,8 +191,10 @@ export function normalizeLaunchBudgetState(value: unknown, model = launchModel):
       : defaults.preparationEnabledCategoryIds,
     preparationManualRub: finiteOrNull(input.preparationManualRub),
     preparationAccordionOpen: typeof input.preparationAccordionOpen === "boolean" ? input.preparationAccordionOpen : defaults.preparationAccordionOpen,
-    monthlyOpexExcludingRentRub: finiteOrNull(input.monthlyOpexExcludingRentRub),
+    operatingExpenseMode: input.operatingExpenseMode === "baseline" || input.operatingExpenseMode === "custom" ? input.operatingExpenseMode : defaults.operatingExpenseMode,
+    customMonthlyOpexRub: nonnegativeIntegerOrNull(input.customMonthlyOpexRub),
     operatingReserveMonths: [3, 6, 9].includes(Number(input.operatingReserveMonths)) ? Number(input.operatingReserveMonths) : defaults.operatingReserveMonths,
+    operatingReserveAccordionOpen: typeof input.operatingReserveAccordionOpen === "boolean" ? input.operatingReserveAccordionOpen : defaults.operatingReserveAccordionOpen,
     contingencyPercent: [5, 10, 15].includes(Number(input.contingencyPercent)) ? Number(input.contingencyPercent) : defaults.contingencyPercent,
   };
 }
@@ -207,12 +231,17 @@ export function calculateSeatCount(guestAreaM2: number | null, squareMetresPerSe
   return Math.floor(guestAreaM2 / squareMetresPerSeat);
 }
 
-export function calculateOperatingReserve(state: LaunchBudgetState) {
-  if (state.monthlyOpexExcludingRentRub === null) return null;
-  if (state.premisesScenario === "purchase") return state.monthlyOpexExcludingRentRub * state.operatingReserveMonths;
-  if (state.monthlyRentRub === null) return null;
-  return state.monthlyOpexExcludingRentRub * state.operatingReserveMonths
-    + state.monthlyRentRub * Math.max(state.operatingReserveMonths - state.prepaymentMonths, 0);
+export function calculateMonthlyOperatingExpenses(model = launchModel) {
+  return Math.max(0, model.operating_reserve.categories.reduce((sum, category) => sum + category.amount_rub, 0));
+}
+
+export function calculateEffectiveMonthlyOperatingExpenses(state: LaunchBudgetState, model = launchModel) {
+  return state.operatingExpenseMode === "custom" ? state.customMonthlyOpexRub : calculateMonthlyOperatingExpenses(model);
+}
+
+export function calculateOperatingReserve(state: LaunchBudgetState, model = launchModel) {
+  const monthlyOperatingExpensesRub = calculateEffectiveMonthlyOperatingExpenses(state, model);
+  return monthlyOperatingExpensesRub === null ? null : monthlyOperatingExpensesRub * state.operatingReserveMonths;
 }
 
 export function calculatePreparationBreakdown(state: LaunchBudgetState, model = launchModel) {
@@ -264,7 +293,8 @@ export function calculateLaunchBudget(state: LaunchBudgetState, model = launchMo
   const securityDepositRub = state.premisesScenario === "rent" && state.monthlyRentRub !== null
     ? state.monthlyRentRub * state.securityDepositMonths
     : null;
-  const operatingReserveRub = calculateOperatingReserve(state);
+  const monthlyOperatingExpensesRub = calculateEffectiveMonthlyOperatingExpenses(state, model);
+  const operatingReserveRub = calculateOperatingReserve(state, model);
   const preparationBreakdownRub = calculatePreparationBreakdown(state, model);
   const effectivePreparationAmount = calculateEffectivePreparationAmount(state, model);
   const contingencyBasis = equipment.total + (furnitureRub ?? 0) + (effectivePreparationAmount ?? 0);
@@ -275,7 +305,7 @@ export function calculateLaunchBudget(state: LaunchBudgetState, model = launchMo
   if (premisesEntryRub === null) missing.push(state.premisesScenario === "purchase" ? "Стоимость помещения" : "Аренда в месяц");
   if (furnitureRub === null) missing.push("Площадь посадочного зала и мебель");
   if (effectivePreparationAmount === null) missing.push("Подготовка помещения, инженерные работы и монтаж");
-  if (operatingReserveRub === null) missing.push("Полный расчёт операционных расходов и операционный запас");
+  if (operatingReserveRub === null) missing.push("Операционный запас");
   if (equipment.unpricedCount > 0) missing.push(`Позиции оборудования без цены: ${equipment.unpricedCount}`);
   if (equipment.quoteRequiredCount > 0) missing.push(`Коммерческие предложения по крупным позициям: ${equipment.quoteRequiredCount}`);
   for (const module of incompleteRequiredModules) missing.push(`Обязательный модуль не сформирован: ${module.name}`);
@@ -297,6 +327,7 @@ export function calculateLaunchBudget(state: LaunchBudgetState, model = launchMo
     premisesEntryRub,
     securityDepositRub,
     operatingReserveRub,
+    monthlyOperatingExpensesRub,
     preparationBreakdownRub,
     effectivePreparationRub: effectivePreparationAmount,
     contingencyRub,

@@ -1,0 +1,31 @@
+change_id: CHG-034
+title: Зарегистрировать режимы расчёта операционных расходов в Investor Start Model
+status: approved
+created_at: 2026-08-11
+decision_id: DEC-INVESTOR-OPEX-MODE-2026-08-11-01
+iteration_id: ITR-INVESTOR-OPEX-MODE-2026-08-11-01
+proposal_id: PROP-INVESTOR-OPEX-MODE-2026-08-11-01
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-OPEX-MODE-2026-08-11-01-approved.yaml
+approved_payload_sha256: d4be21c5cf3b7828707172d870e6baba584165fa933fa4a3c72c74563f5e16cf
+operations:
+  - type: update
+    entity: documents
+    id: DOC-INVESTOR-START-MODEL
+    value:
+      sections:
+        - Помещение
+        - Площадь объекта
+        - Посадочные места
+        - Мебель посадочного зала
+        - Комплектация оборудования
+        - Подготовка помещения
+        - Операционный запас
+        - Режим расчёта операционных расходов
+        - Состав операционных расходов
+        - Резерв запуска
+        - Стоимость запуска
+        - Текущая конфигурация
+        - Полнота расчёта
+        - Следующие этапы расчёта
+        - Что учитывает расчёт
+      updated_at: 2026-08-11

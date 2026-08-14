@@ -1,0 +1,75 @@
+schema_version: 2
+iteration_id: ITR-LAUNCH-INPUT-CONTROLS-2026-08-11-01
+proposal_id: PROP-LAUNCH-INPUT-CONTROLS-2026-08-11-01
+decision_id: DEC-LAUNCH-INPUT-CONTROLS-2026-08-11-01
+change_set_id: CHG-LAUNCH-INPUT-CONTROLS-2026-08-11-01
+verified_at: 2026-08-11T08:04:45.000Z
+actor: Codex
+validation_status: passed
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-LAUNCH-INPUT-CONTROLS-2026-08-11-01-approved.yaml
+  sha256: 4a52a9935c040cdfbb4e25e8ae9c7253ae2c622c5a375084c9ea20be1b1de83c
+state:
+  algorithm: SHA-256 over ordered relative path, NUL, file SHA-256 and NUL
+  before_state_sha256: 6620d5742cd598371cd9305e7d0851eb4de4a87cf04a23c0997322cf972f0b3f
+  after_state_sha256: 286556da57d296e4cc3bddb92f4d80b4b3032d6fdbabaa8d357ac271f9a218f0
+  component_sha256: c3c15bade0825a07c0c3418bd2433234fb3a7787c73826d57565f6272e99b807
+  stylesheet_sha256: 7da8119340c3e2a66eb058c0381113c13f9d4d719a787fa4bcdbf6941a531352
+  route_test_sha256: 42e1d2d29c17280c2fe69b39477b78f268a1f6860ceac5ced704ae762d766950
+ui_verification:
+  numeric_inputs:
+    tested_count_minimum: 4
+    computed_appearance: textfield
+    rendered_height_px: 52
+    native_spinner_controls_visible: false
+    direct_typing_preserved: true
+  rent_selects:
+    tested_count: 2
+    computed_appearance: none
+    rendered_height_px: 52
+    option_change_12_to_3: passed
+    option_restore_3_to_12: passed
+    custom_chevron_visible: true
+    native_grey_inner_chrome_visible: false
+  in_app_browser:
+    route: http://192.168.50.97:5174/launch-budget
+    desktop_visual_check: passed
+    console_errors: 0
+    page_errors: 0
+    horizontal_overflow: false
+calculation_and_data_invariants:
+  calculations_changed: false
+  formulas_changed: false
+  values_or_defaults_changed: false
+  investor_start_model_sha256: fe95e27f127ada0659983726c67e84791359209fb41598ac6b47c6ebc642a7e3
+  capex_web_snapshot_sha256: 16ec6426fecd35c6a08c3d026edf07e9e76192a324403f634f64f8a7b1a6ebe4
+  capex_equipment_register_sha256: c8853fe61ad8407ab96d0fbafb79702853842f970cbf699b6c2138b23f32c7aa
+  capex_price_research_sha256: b2b752f1822db8b529d58d822b83b32d44bcba9a0110ae35062d3b561f08249d
+  google_files_changed: false
+validation:
+  typescript_no_emit: passed
+  production_build: passed; 11 routes prerendered
+  deterministic_route_and_interaction_test: passed; 11 routes, 0 failures
+  content_snapshot_check: passed; governance-only state change did not stale the snapshot
+  timeline_final: passed; 106 events
+  chronological_timeline_projection: generated
+  project_context_validation: passed
+  registry_validation: passed
+  git_diff_check: passed
+audit:
+  receipt: docs-platform/changelog/audit/ITR-LAUNCH-INPUT-CONTROLS-2026-08-11-01.yaml
+  receipt_sha256: 2dec9fe785ec4cb1be445e747fa048a7709e6af5167d91b9a25d2fd3bf63f14f
+rollback:
+  payload: docs-platform/changelog/rollback-payloads/ITR-LAUNCH-INPUT-CONTROLS-2026-08-11-01/manifest.yaml
+  payload_sha256: 4a4475f5ce3e7c5f2ece5ff9e5d36b31978bd856f9e67739b5f46aeba1712014
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true
+git_and_delivery:
+  staged: false
+  committed: false
+  tagged: false
+  pushed: false
+  sealed: false
+  deployed: false
+summary: Numeric fields retain direct entry but no longer expose native increment and decrement controls; the two rent-month selectors retain their options and now use a consistent clean field treatment. Calculations, values and canonical business data were not changed.

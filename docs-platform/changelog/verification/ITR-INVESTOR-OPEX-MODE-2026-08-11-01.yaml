@@ -1,0 +1,112 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-OPEX-MODE-2026-08-11-01
+proposal_id: PROP-INVESTOR-OPEX-MODE-2026-08-11-01
+decision_id: DEC-INVESTOR-OPEX-MODE-2026-08-11-01
+change_set_id: CHG-INVESTOR-OPEX-MODE-2026-08-11-01
+verified_at: 2026-08-11T15:14:11.000Z
+actor: Codex
+validation_status: passed
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-INVESTOR-OPEX-MODE-2026-08-11-01-approved.yaml
+  sha256: d4be21c5cf3b7828707172d870e6baba584165fa933fa4a3c72c74563f5e16cf
+state:
+  algorithm: SHA-256 over ordered relative path, NUL, file SHA-256 and NUL
+  before_state_sha256: 9a4b63cc50fa5c56e77738ae9669e815879ccd1436e4a544ec5675b7a2589167
+  after_state_sha256: 341c2193bd4591ca84f2b264d83cffd6e5e3b8b2ab0886adf06cfbbf1667ea4d
+  investor_start_model_sha256: b81a6c4e8988a4532c9ba2749d492b3f96e37d83af822396afc82930244b2985
+  web_snapshot_sha256: 862e67c73159833740c9d626f8262143cec767d18a76ad1f18ce81a79fdafe7c
+  content_state_sha256: a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239
+operating_expense_verification:
+  default_mode: baseline
+  baseline_area_m2: 200
+  baseline_monthly_rub: 2650000
+  baseline_categories: 7
+  baseline_period_totals_rub:
+    3: 7950000
+    6: 15900000
+    9: 23850000
+  custom_example_monthly_rub: 2000000
+  custom_example_period_totals_rub:
+    3: 6000000
+    6: 12000000
+    9: 18000000
+  blank_custom_reserve: Не рассчитано
+  blank_custom_total_mode: lower_bound
+  custom_value_preserved_across_switches: true
+  reset_mode: baseline
+  reset_custom_value: null
+  area_scaling: absent
+  structured_breakdown_hidden_in_custom_mode: true
+contingency_verification:
+  formula: (equipment_rub + furniture_rub + effective_preparation_amount_rub) * contingency_percent
+  changed_by_operating_expense_mode: false
+  changed_by_custom_monthly_value: false
+public_completeness_verification:
+  equipment_coverage: 47 из 47
+  quote_required: 23
+  zero_unpriced_row_visible: false
+  internal_required_parts_label_visible: false
+  internal_incomplete_status_visible: false
+  internal_module_names_visible: false
+  MOD-STORAGE_internal_status: not_started
+  MOD-ENGINEERING_internal_status: not_started
+local_storage_verification:
+  operatingExpenseMode_persisted: true
+  customMonthlyOpexRub_persisted: true
+  operatingReserveMonths_persisted: true
+  baseline_value_duplicated_as_source: false
+  custom_2000000_and_9_months_reload_to_rub: 18000000
+  incompatible_state_is_safely_normalized: true
+route_verification:
+  route: /launch-budget
+  routes_checked: 11
+  browser_failures: 0
+  console_errors: 0
+  page_errors: 0
+  hydration_errors: 0
+  horizontal_overflow:
+    desktop_1440x900: false
+    tablet_768x1024: false
+    mobile_390x844: false
+  keyboard_focus_visible: true
+  baseline_mode_visual_check: passed
+  custom_mode_visual_check: passed
+validation:
+  npm_test: passed
+  investor_start_model_tests: 61 passed, 0 failed
+  deterministic_route_test: 11 routes, 0 failures
+  docs_platform_tests: passed
+  typescript_and_vite_build: passed with Node.js 25.9.0; 11 routes prerendered
+  content_snapshot_check: passed; governance-only state did not stale the snapshot
+  timeline_final: passed; 110 events
+  context_projection: passed; latest event is the verified event
+  registry_validation: passed in the complete docs-platform suite
+  reverse_preview_CHG_034: passed; restores the exact pre-CHG-034 registry hash without applying
+  git_diff_check: passed
+business_source_invariants:
+  capex_equipment_register:
+    sha256: c8853fe61ad8407ab96d0fbafb79702853842f970cbf699b6c2138b23f32c7aa
+    changed: false
+  capex_price_research:
+    sha256: b2b752f1822db8b529d58d822b83b32d44bcba9a0110ae35062d3b561f08249d
+    changed: false
+  equipment_changed: false
+  google_files_changed: false
+  other_launch_budget_blocks_changed: false
+audit:
+  receipt: docs-platform/changelog/audit/ITR-INVESTOR-OPEX-MODE-2026-08-11-01.yaml
+  receipt_sha256: fd4ef4ea1369418e1440b4d0fba2b17097a3f46d8043f120ef30bb4fcc0ccb8b
+rollback:
+  payload: docs-platform/changelog/rollback-payloads/ITR-INVESTOR-OPEX-MODE-2026-08-11-01/manifest.yaml
+  payload_sha256: 3d12995df97637939f799de21128882717d6f96cb784d6f71a691cc91b931f9a
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true
+git_and_delivery:
+  staged: false
+  committed: false
+  tagged: false
+  pushed: false
+  sealed: false
+  deployed: false
+summary: The launch-budget page now offers the approved baseline and nullable custom monthly operating-expense modes without area scaling. The baseline seven-category model and contingency formula remain unchanged, blank custom input remains unknown, local state is safely preserved, and internal storage or engineering module status is no longer exposed to investors.

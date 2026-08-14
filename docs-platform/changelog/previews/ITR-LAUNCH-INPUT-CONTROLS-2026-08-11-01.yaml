@@ -1,0 +1,32 @@
+preview_version: 1
+iteration_id: ITR-LAUNCH-INPUT-CONTROLS-2026-08-11-01
+proposal_id: PROP-LAUNCH-INPUT-CONTROLS-2026-08-11-01
+decision_id: DEC-LAUNCH-INPUT-CONTROLS-2026-08-11-01
+change_set_id: CHG-LAUNCH-INPUT-CONTROLS-2026-08-11-01
+created_at: 2026-08-11T07:50:00.000Z
+actor: Codex
+tool: exact approved payload preview
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-LAUNCH-INPUT-CONTROLS-2026-08-11-01-approved.yaml
+  sha256: 4a52a9935c040cdfbb4e25e8ae9c7253ae2c622c5a375084c9ea20be1b1de83c
+target:
+  route: /launch-budget
+  component: src/components/LaunchBudget.tsx
+  stylesheet: src/components/LaunchBudget.css
+scope:
+  numeric_inputs:
+    browser_spinner_controls_before: visible according to native browser rendering
+    browser_spinner_controls_after: hidden
+    direct_numeric_entry_preserved: true
+  rent_selects:
+    option_lists_preserved: true
+    native_grey_chrome_after: removed
+    visual_height_after_px: 52
+    custom_chevron_after: true
+out_of_scope:
+  - calculations, formulas, values and defaults
+  - CAPEX and Investor Start Model data
+  - other launch-budget sections
+  - Google files and delivery actions
+writes: false
+validation: passed
