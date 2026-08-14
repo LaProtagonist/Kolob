@@ -16,9 +16,9 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-REVENUE-MODEL-2026-08-14-01-COMMITTED`.
-- Hash: `5a285cf352717774bfbca5bfc6090851f496105a730b49bdcbba39f90cece8e9`.
-- generated_from_event_hash: `5a285cf352717774bfbca5bfc6090851f496105a730b49bdcbba39f90cece8e9`.
+- Event: `EVT-ITR-REVENUE-MODEL-2026-08-14-01-DEPLOYED-DEPLOY-REVENUE-MODEL-2026-08-14-01`.
+- Hash: `f7a0b82119881608fba5091db1adb74a7d523f2ce45534f5a2f9607d6ca24bad`.
+- generated_from_event_hash: `f7a0b82119881608fba5091db1adb74a7d523f2ce45534f5a2f9607d6ca24bad`.
 
 ## 4. Канонические документы
 
@@ -60,7 +60,7 @@ Create Revenue Model and the direct-review sales-volume page
 
 - Google: `{"configured":true,"historical_receipts":9,"receipts_with_machine_readback_hash":6,"live_drift_check":"not_run_by_context_build"}`.
 - MCP: `{"implementation_present":true,"canonical_access":"registry_document_ids_only","live_status":"not_probed_by_context_build"}`.
-- Deployment: `{"status":"not_configured","receipts":0,"production_url":null}`.
+- Deployment: `{"status":"receipts_present","receipts":1,"production_url":null}`.
 
 ## 9. Команды проверки
 

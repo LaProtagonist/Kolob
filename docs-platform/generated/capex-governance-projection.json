@@ -1,21 +1,38 @@
 {
   "schema_version": 1,
-  "generated_from_event_id": "EVT-ITR-REVENUE-MODEL-2026-08-14-01-COMMITTED",
-  "generated_from_event_hash": "5a285cf352717774bfbca5bfc6090851f496105a730b49bdcbba39f90cece8e9",
+  "generated_from_event_id": "EVT-ITR-REVENUE-MODEL-2026-08-14-01-DEPLOYED-DEPLOY-REVENUE-MODEL-2026-08-14-01",
+  "generated_from_event_hash": "f7a0b82119881608fba5091db1adb74a7d523f2ce45534f5a2f9607d6ca24bad",
   "content_state_sha256": "a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239",
   "latest_committed_iteration": {
     "iteration_id": "ITR-REVENUE-MODEL-2026-08-14-01",
     "decision_id": "DEC-REVENUE-MODEL-2026-08-14-01",
     "change_set_id": "CHG-REVENUE-MODEL-2026-08-14-01",
     "content_commit_hash": "7012c506d863dc680a8f9aafeda066c37d30b03f",
-    "seal_commit_hash": null,
+    "seal_commit_hash": "bf4151b69ace7fc8d239d2dee7472c7c694623eb",
     "iteration_tag": "iteration/ITR-REVENUE-MODEL-2026-08-14-01"
   },
-  "latest_deployment_event": null,
-  "repository_head": "7012c506d863dc680a8f9aafeda066c37d30b03f",
-  "timeline_head": {
-    "event_id": "EVT-ITR-REVENUE-MODEL-2026-08-14-01-COMMITTED",
-    "event_hash": "5a285cf352717774bfbca5bfc6090851f496105a730b49bdcbba39f90cece8e9"
+  "latest_deployment_event": {
+    "event_id": "EVT-ITR-REVENUE-MODEL-2026-08-14-01-DEPLOYED-DEPLOY-REVENUE-MODEL-2026-08-14-01",
+    "iteration_id": "ITR-REVENUE-MODEL-2026-08-14-01",
+    "deployment_receipt": "docs-platform/changelog/deployments/DEPLOY-REVENUE-MODEL-2026-08-14-01.yaml",
+    "production_url": "https://colob.spi.ski"
   },
-  "deployment_receipts": []
+  "repository_head": "1b0156521b523fa71433c9a9a9a3db0375054b4e",
+  "timeline_head": {
+    "event_id": "EVT-ITR-REVENUE-MODEL-2026-08-14-01-DEPLOYED-DEPLOY-REVENUE-MODEL-2026-08-14-01",
+    "event_hash": "f7a0b82119881608fba5091db1adb74a7d523f2ce45534f5a2f9607d6ca24bad"
+  },
+  "deployment_receipts": [
+    {
+      "path": "docs-platform/changelog/deployments/DEPLOY-REVENUE-MODEL-2026-08-14-01.yaml",
+      "deployment_id": "DEPLOY-REVENUE-MODEL-2026-08-14-01",
+      "content_state_sha256": "a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239",
+      "content_commit_hash": "7012c506d863dc680a8f9aafeda066c37d30b03f",
+      "seal_commit_hash": "bf4151b69ace7fc8d239d2dee7472c7c694623eb",
+      "dist_sha256": "56f9f9646725edc0a9dbbc1bd8577c07bacb7817134de48c2e9590b372045446",
+      "production_url": "https://colob.spi.ski",
+      "deployed_at": "2026-08-14T18:59:28.000Z",
+      "result": "passed"
+    }
+  ]
 }

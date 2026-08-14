@@ -1,0 +1,14 @@
+schema_version: 2
+iteration_id: ITR-REVENUE-MODEL-2026-08-14-01
+content_state_sha256: a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239
+content_commit_hash: 7012c506d863dc680a8f9aafeda066c37d30b03f
+seal_commit_hash: bf4151b69ace7fc8d239d2dee7472c7c694623eb
+repository_head_at_build: bf4151b69ace7fc8d239d2dee7472c7c694623eb
+dist_sha256: 56f9f9646725edc0a9dbbc1bd8577c07bacb7817134de48c2e9590b372045446
+deployment_id: DEPLOY-REVENUE-MODEL-2026-08-14-01
+production_url: https://colob.spi.ski
+built_at: 2026-08-14T18:54:09.000Z
+deployed_at: 2026-08-14T18:59:28.000Z
+build_hash: 56f9f9646725edc0a9dbbc1bd8577c07bacb7817134de48c2e9590b372045446
+smoke_test_result: passed
+recorded_at: 2026-08-14T19:01:17.401Z
