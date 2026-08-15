@@ -1,0 +1,66 @@
+schema_version: 2
+iteration_id: ITR-FINANCIAL-MODEL-2026-08-16-01
+mode: governed_reverse_change_set
+status: prepared
+before_content_commit: 7732c8711f6f2c3f56e9e6e52788dfa66f86733d
+before_state_sha256: d3fbeebf7a8278521806c229adccde4c12349eb04b03ee688f3540cfe4501823
+after_state_sha256: 16e12dc3e9df2df7d2703fd8b7a4252ccf854b779e210cf04d6a208e79fc773e
+source_change_sets:
+  - CHG-037
+  - CHG-038
+  - CHG-039
+  - CHG-FINANCIAL-MODEL-2026-08-16-01
+reverse_order:
+  - Preserve the append-only proposal, decision, audit, receipts and timeline events for this iteration.
+  - If a Google Sheet has been published, require a separately approved external reverse action; never delete it implicitly.
+  - Remove the Financial Model source, schemas, projections, publisher, targeted tests and generated Google payload through a new governed reverse change set.
+  - Restore package scripts and CLI from the pre-iteration content commit.
+  - Apply the approved registry reversals for CHG-039, CHG-038 and then CHG-037 using their receipts.
+  - Re-run registry, Financial Model, source-linkage, timeline and restored-state checks.
+new_paths_to_remove_by_reverse_change:
+  - docs-platform/working/financial-model.yaml
+  - docs-platform/schemas/financial-model.schema.json
+  - docs-platform/schemas/financial-projection.schema.json
+  - docs-platform/schemas/financial-google-sheets-payload.schema.json
+  - docs-platform/app/src/financial/financial-model.ts
+  - docs-platform/app/src/financial/google-sheet.ts
+  - docs-platform/app/src/google/financial-model-publisher.ts
+  - docs-platform/app/test/financial-model.test.ts
+  - docs-platform/app/test/financial-sheet-publisher.test.ts
+  - docs-platform/generated/financial-model-projection.json
+  - docs-platform/generated/financial-google-sheets-payload.json
+paths_to_restore_from_before_content_commit:
+  - docs-platform/app/src/cli.ts
+  - docs-platform/app/package.json
+  - package.json
+before_file_sha256:
+  docs-platform/app/src/cli.ts: 04df4ce8048462fbbe3f265f8ac2230fd57de20f6889cf768bddc65416433fdb
+  docs-platform/app/package.json: 4ec8cd0538cb72df04bd102829a093d6bf99cba9174622687623ad943606e395
+  package.json: a4981390913ec382cf2faaee35084baeadb100edcdb76a79cd75db229fd13554
+  docs-platform/registry/documents.yaml: fad25b4bcdf405ea52ad52e08830121c6dbc298083ae65edbc0e15e4eab2651c
+  docs-platform/registry/sources.yaml: 491701c2c9b8a03ae2adc9a0ef4456a67685415651c5d6020509dfe1923a43db
+  docs-platform/registry/decisions.yaml: 113828141cd6a7083bb8cf201b34e7c563729337262d6e98fffe233774c2bb97
+  docs-platform/registry/assumptions.yaml: 87cb84fbd725347921ad9efec7aace2787777651c09945a990519fd2a85483fd
+  docs-platform/registry/dependencies.yaml: 4359c010c4567b29f02cd0414f74b42df4fda15bc3783b9208a3cdd40cf0681c
+after_file_sha256:
+  docs-platform/working/financial-model.yaml: bb61e57b9b65ec2961f5d16a2065b5937d803a5772cdef172716ec952daf6bb4
+  docs-platform/generated/financial-model-projection.json: aa494d3c03d57d11a6c57c126046576d0cf7440387adc54688ad4ca6c6552324
+  docs-platform/generated/financial-google-sheets-payload.json: cde9d85aadef88696378a978a50c3b510989bd7e8be77fc7582731a8289e6d10
+  docs-platform/app/src/financial/financial-model.ts: d807c814bd7980f35eb25f443e8d3d127219e3fb323709601237248935f4e29e
+  docs-platform/app/src/financial/google-sheet.ts: 8f196d6d614f302c265c2ffb61cd886630eb780701d8d67299f5ec2734919fad
+  docs-platform/app/src/google/financial-model-publisher.ts: 63c7aca765f5c3f799226c8f036af385d9e1132bec2b2b69d74b47e3f28a9432
+  docs-platform/app/test/financial-sheet-publisher.test.ts: 91a1b06d3f94ab31cc402e8cbdd1adf8ff361ecb2f6e30b4aee03ddab801294d
+  docs-platform/registry/documents.yaml: effa387248716a885864197d13217fc27c5e530bf4f164cf00e08ac72d9f9188
+registry_receipts:
+  - docs-platform/changelog/change-receipts/CHG-039.yaml
+  - docs-platform/changelog/change-receipts/CHG-038.yaml
+  - docs-platform/changelog/change-receipts/CHG-037.yaml
+google_reverse_strategy:
+  requirement: A new owner-approved external reverse action is mandatory after publication.
+  default_action: retain the working Sheet and mark it superseded; do not delete automatically.
+audit_reference: docs-platform/changelog/audit/ITR-FINANCIAL-MODEL-2026-08-16-01.yaml
+reverse_strategy:
+  requirement: A new rollback request, reverse preview and approved rollback decision are mandatory before apply.
+  history: Append rollback events; never delete or rewrite this iteration's events or receipts.
+  git_reset_forbidden: true
+  dependency_check: required against every later applied iteration

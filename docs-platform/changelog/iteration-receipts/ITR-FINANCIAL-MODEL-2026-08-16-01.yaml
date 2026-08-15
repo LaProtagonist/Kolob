@@ -1,0 +1,48 @@
+schema_version: 2
+iteration_id: ITR-FINANCIAL-MODEL-2026-08-16-01
+proposal_id: PROP-FINANCIAL-MODEL-2026-08-16-01
+decision_id: DEC-FINANCIAL-MODEL-2026-08-16-01
+change_set_id: CHG-FINANCIAL-MODEL-2026-08-16-01
+status: verified
+applied_at: 2026-08-15T22:55:00.000Z
+verified_at: 2026-08-15T23:05:00.000Z
+actor: Codex
+tool: apply_patch + canonical formula engine + existing Google OAuth workflow + Sheets API readback
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-FINANCIAL-MODEL-2026-08-16-01-approved.yaml
+  sha256: 6bbc48bf3fb713412870fce0d3702d989ce012f82959b9ce4b3d0e11c143fdcd
+before_state_sha256: d3fbeebf7a8278521806c229adccde4c12349eb04b03ee688f3540cfe4501823
+after_state_sha256: 16e12dc3e9df2df7d2703fd8b7a4252ccf854b779e210cf04d6a208e79fc773e
+implementation:
+  registry_id: DOC-FINANCIAL-MODEL
+  canonical_path: docs-platform/working/financial-model.yaml
+  version: "0.1"
+  status: research
+  projection_path: docs-platform/generated/financial-model-projection.json
+  google_payload_path: docs-platform/generated/financial-google-sheets-payload.json
+  google_sheet_receipt: docs-platform/changelog/google-sync/2026-08-16-DOC-FINANCIAL-MODEL.yaml
+  google_file_id: 1C5rxrxCxXq6q2D3Nm5sF7CHNMVlS3FddK8hPxV8DiCk
+  google_sheet_count: 1
+  google_tab_count: 16
+  google_formula_errors: 0
+  financial_content_state_sha256: 18e56ce33cc19540ff9540d05a35c24284534fdfd89a6b74e59ff5a394980ae4
+  default_capex_configuration: BASE + BAR + GROW - alcohol - hood double count
+  default_real_estate_scenario: rent
+  default_tax_scenario: base_food_service_vat_exemption_requires_confirmation
+  default_operating_reserve: six_month_fixed_opex
+  horizon_months: 60
+  month_60_terminal_recovery_rub: 0
+git_commit_hash: null
+validation_result: passed
+verification_receipt: docs-platform/changelog/verification/ITR-FINANCIAL-MODEL-2026-08-16-01.yaml
+rollback:
+  mode: governed_reverse_change_set
+  payload: docs-platform/changelog/rollback-payloads/ITR-FINANCIAL-MODEL-2026-08-16-01/manifest.yaml
+  preserves_history: true
+  git_reset_forbidden: true
+delivery:
+  committed: false
+  sealed: false
+  tagged: false
+  pushed: false
+  deployed: false

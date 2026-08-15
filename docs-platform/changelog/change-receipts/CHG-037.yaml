@@ -1,0 +1,117 @@
+receipt_version: 2
+change_id: CHG-037
+iteration_id: ITR-FINANCIAL-MODEL-2026-08-16-01
+proposal_id: PROP-FINANCIAL-MODEL-2026-08-16-01
+decision_id: DEC-001
+source_change_set: docs-platform/changes/CHG-037-financial-model-decision.yaml
+status: applied
+applied_at: 2026-08-15T21:52:49.468Z
+actor: Codex
+tool: docs-platform change:apply
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-FINANCIAL-MODEL-2026-08-16-01-approved.yaml
+  sha256: 6bbc48bf3fb713412870fce0d3702d989ce012f82959b9ce4b3d0e11c143fdcd
+before_hash: 7aec54813c7deb7baf79f931b1f6983c1c12bed6a4135e15c5e79e7f645485d9
+after_hash: a040908fcf9f6f04c0f8dc06cc34918f1e93c7fc872da8f6c05caf7ff9ac7c29
+touched_registry_files:
+  - path: docs-platform/registry/documents.yaml
+    backup_path: docs-platform/changelog/backups/2026-08-15T21-52-49-468Z-CHG-037/documents.yaml
+  - path: docs-platform/registry/sources.yaml
+    backup_path: docs-platform/changelog/backups/2026-08-15T21-52-49-468Z-CHG-037/sources.yaml
+  - path: docs-platform/registry/decisions.yaml
+    backup_path: docs-platform/changelog/backups/2026-08-15T21-52-49-468Z-CHG-037/decisions.yaml
+operations:
+  - type: add
+    entity: documents
+    id: DOC-FINANCIAL-MODEL
+    before: null
+    after:
+      id: DOC-FINANCIAL-MODEL
+      title: Financial Model
+      type: working_pilot_financial_model
+      status: research
+      google_file_id: null
+      template: null
+      sections:
+        - Описание
+        - Допущения
+        - Продажи
+        - Меню и себестоимость
+        - Персонал
+        - OPEX
+        - CAPEX
+        - P&L
+        - Денежный поток
+        - Инвестиции
+        - Сценарии
+        - Чувствительность
+        - Недвижимость
+        - Производственный центр
+        - Источники
+        - Проверки
+      version: "0.1"
+      governance_level: working
+      local_path: docs-platform/working/financial-model.yaml
+      updated_at: 2026-08-16
+    before_index: null
+    after_index: 18
+    before_sha256: null
+    after_sha256: 53a7c842e4ed3a6d791f4a96d9c5361d5c8f621dd565c75b283e34c1e8eda199
+    reverse_operation:
+      type: remove
+      entity: documents
+      id: DOC-FINANCIAL-MODEL
+  - type: add
+    entity: sources
+    id: SRC-FINANCIAL-MODEL-BRIEF-2026-08-16
+    before: null
+    after:
+      id: SRC-FINANCIAL-MODEL-BRIEF-2026-08-16
+      title: Утверждённые допущения Financial Model v0.1
+      type: instruction
+      location: User instructions, 2026-08-16
+      publisher: project owner
+      publication_date: 2026-08-16
+      accessed_at: 2026-08-16
+      reliability: primary
+      notes: Содержит точные рабочие допущения, формулы, приоритет derived values, CAPEX-конфигурацию, налоговый proxy, резерв, terminal treatment и Google scope. Новое исследование запрещено и не выполнялось.
+    before_index: null
+    after_index: 156
+    before_sha256: null
+    after_sha256: c2fed1c664d5e77079554da64d030b75a3de02966972366ab35c0a2733b6bac6
+    reverse_operation:
+      type: remove
+      entity: sources
+      id: SRC-FINANCIAL-MODEL-BRIEF-2026-08-16
+  - type: add
+    entity: decisions
+    id: DEC-FINANCIAL-MODEL-2026-08-16-01
+    before: null
+    after:
+      id: DEC-FINANCIAL-MODEL-2026-08-16-01
+      title: Создать Financial Model v0.1 и нативную Google Sheets-проекцию
+      status: approved
+      decision: Создать консолидированную рабочую финансовую модель первого собственного совмещённого объекта по точным допущениям владельца, импортировать Revenue Model, Investor Start Model и generated Equipment BOM, рассчитывать P&L, денежный поток, инвестиционные показатели, недвижимость и чувствительность формулами и опубликовать один нативный Google Sheet после проверки.
+      rationale: Прямое решение владельца проекта от 2026-08-16; модель имеет статус research и не утверждает окончательный бизнес-план, налоговую схему, закупки, valuation или гарантированную доходность.
+      affected_documents:
+        - DOC-FINANCIAL-MODEL
+      approved_by: project owner
+      approved_at: 2026-08-16
+      supersedes: null
+      source_ids:
+        - SRC-FINANCIAL-MODEL-BRIEF-2026-08-16
+      updated_at: 2026-08-16
+    before_index: null
+    after_index: 18
+    before_sha256: null
+    after_sha256: af4522d09a821a65b298143bb0170f2846427326869879ea853eb20bab7db1fe
+    reverse_operation:
+      type: remove
+      entity: decisions
+      id: DEC-FINANCIAL-MODEL-2026-08-16-01
+validation_result: passed
+git_commit_hash: null
+rollback:
+  source_receipt: docs-platform/changelog/change-receipts/CHG-037.yaml
+  command: npm run change:reverse:preview -- ../changelog/change-receipts/CHG-037.yaml --change-id CHG-ROLLBACK-XXX --decision DEC-ROLLBACK-XXX
+  rollback_of: CHG-037

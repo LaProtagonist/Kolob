@@ -1,0 +1,28 @@
+schema_version: 2
+change_id: CHG-FINANCIAL-MODEL-2026-08-16-01
+iteration_id: ITR-FINANCIAL-MODEL-2026-08-16-01
+proposal_id: PROP-FINANCIAL-MODEL-2026-08-16-01
+decision_id: DEC-FINANCIAL-MODEL-2026-08-16-01
+title: Apply Financial Model v0.1 and prepare its native Google Sheets projection
+status: approved
+approved_payload_path: docs-platform/changelog/payloads/ITR-FINANCIAL-MODEL-2026-08-16-01-approved.yaml
+approved_payload_sha256: 6bbc48bf3fb713412870fce0d3702d989ce012f82959b9ce4b3d0e11c143fdcd
+operations:
+  - register Financial Model, owner-approved source, decision, assumptions and canonical dependencies
+  - create the structured Financial Model and schemas
+  - import Revenue Model, Investor Start Model and generated Equipment BOM with stale-input detection
+  - calculate food cost, staffing, OPEX, P&L, taxes, cash flow, investments and sensitivity from formulas
+  - separate restaurant, real-estate and combined investor returns
+  - preserve going-concern Month 60 with no restaurant terminal recovery
+  - generate deterministic financial projection and prepared Google Sheets payload
+  - publish exactly one native Google Sheet only through existing OAuth after successful authorization
+  - perform Sheets API readback and record the publication receipt
+  - add targeted formula, provenance, stale-source and regression validations
+preview:
+  status: passed
+  mutation_performed: false
+  formulas_validated: passed
+  research_performed: false
+  source_business_data_changed: false
+  website_changed: false
+  google_publication_status: pending_existing_oauth

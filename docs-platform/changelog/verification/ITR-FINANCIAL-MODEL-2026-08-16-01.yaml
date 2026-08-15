@@ -1,0 +1,158 @@
+schema_version: 2
+iteration_id: ITR-FINANCIAL-MODEL-2026-08-16-01
+proposal_id: PROP-FINANCIAL-MODEL-2026-08-16-01
+decision_id: DEC-FINANCIAL-MODEL-2026-08-16-01
+change_set_id: CHG-FINANCIAL-MODEL-2026-08-16-01
+verified_at: 2026-08-15T23:05:00.000Z
+actor: Codex
+validation_status: passed
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-FINANCIAL-MODEL-2026-08-16-01-approved.yaml
+  sha256: 6bbc48bf3fb713412870fce0d3702d989ce012f82959b9ce4b3d0e11c143fdcd
+state:
+  before_state_sha256: d3fbeebf7a8278521806c229adccde4c12349eb04b03ee688f3540cfe4501823
+  after_state_sha256: 16e12dc3e9df2df7d2703fd8b7a4252ccf854b779e210cf04d6a208e79fc773e
+  financial_source_sha256: bb61e57b9b65ec2961f5d16a2065b5937d803a5772cdef172716ec952daf6bb4
+  financial_projection_sha256: aa494d3c03d57d11a6c57c126046576d0cf7440387adc54688ad4ca6c6552324
+  google_payload_sha256: cde9d85aadef88696378a978a50c3b510989bd7e8be77fc7582731a8289e6d10
+  financial_content_state_sha256: 18e56ce33cc19540ff9540d05a35c24284534fdfd89a6b74e59ff5a394980ae4
+imported_sources:
+  revenue_model_content_state_sha256: 90727a6c51f959b617d6c972b898593a1b6dba6742d51b30bb75230f3f606c38
+  capex_content_state_sha256: a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239
+  equipment_bom_sha256: d001d531247e1c64820a6bd00df1db755908d483358f5f677b3ca6acb6d8fa4a
+  investor_start_model_sha256: b81a6c4e8988a4532c9ba2749d492b3f96e37d83af822396afc82930244b2985
+formula_verification:
+  average_kolobok_cost_rub: 175.7625
+  average_food_portion_cost_rub: 177.01
+  average_check_rub: 1165.40
+  labor_baseline_16_rub_per_month: 2396938.28
+  labor_optimistic_20_rub_per_month: 2955060.35
+  base_equipment_rub_exact: 5298993.33
+  base_equipment_control_rub_rounded: 5298993
+  vat_conservative: gross_revenue * 5 / 105
+  fixed_reserve_default_months: 6
+  terminal_recovery_month_60_rub: 0
+scenario_verification:
+  pessimistic:
+    checks_per_day: 200
+    revenue_month_rub: 6992400
+    ebitda_rub: 1525887.69
+    ebitda_margin: 0.218221
+    free_cash_flow_rub: 1389512.33
+    fixed_opex_reserve_rub: 18458629.68
+    full_operating_reserve_rub: 31431466.13
+    invested_capital_rub: 43040022.34
+    break_even_checks_per_day: 140.36
+    payback_month: 28
+    roi_annual_fcf: 0.387410
+    irr_annual: 0.404717
+    npv_60_month_rub: 15056815.29
+  realistic:
+    checks_per_day: 300
+    revenue_month_rub: 10488600
+    ebitda_rub: 4002050.68
+    ebitda_margin: 0.381562
+    free_cash_flow_rub: 3692343.91
+    fixed_opex_reserve_rub: 18458629.68
+    full_operating_reserve_rub: 38591676.67
+    invested_capital_rub: 43040022.34
+    break_even_checks_per_day: 140.36
+    payback_month: 11
+    roi_annual_fcf: 1.029463
+    irr_annual: 1.830537
+    npv_60_month_rub: 105025649.67
+  optimistic:
+    checks_per_day: 450
+    revenue_month_rub: 15732900
+    ebitda_rub: 7158173.09
+    ebitda_margin: 0.454981
+    free_cash_flow_rub: 6623986.06
+    fixed_opex_reserve_rub: 21807362.10
+    full_operating_reserve_rub: 52467623.73
+    invested_capital_rub: 46388754.76
+    break_even_checks_per_day: 163.22
+    payback_month: 7
+    roi_annual_fcf: 1.713515
+    irr_annual: 4.287861
+    npv_60_month_rub: 216212617.28
+tax_verification:
+  base:
+    vat_exemption_status: requires_confirmation
+    usn_rate: 0.07
+    realistic_tax_due_rub: 295396.79
+  conservative:
+    gross_consumer_prices: true
+    realistic_vat_rub: 499457.14
+    realistic_net_revenue_rub: 9989142.86
+    realistic_tax_due_rub: 260434.79
+    realistic_ebitda_rub: 3502593.54
+real_estate_verification:
+  rent_realistic:
+    monthly_rent_rub: 350000
+    restaurant_ebitda_rub: 4002050.68
+    total_invested_capital_rub: 43040022.34
+  purchase_realistic:
+    monthly_rent_rub: 0
+    restaurant_ebitda_rub: 4352050.68
+    restaurant_invested_capital_rub: 38140022.34
+    real_estate_investment_rub: 69000000
+    total_invested_capital_rub: 107140022.34
+    base_appreciation: 0
+    property_residual_value_rub: 69000000
+    restaurant_payback_month: 10
+    combined_payback_month: 27
+google_verification:
+  receipt: docs-platform/changelog/google-sync/2026-08-16-DOC-FINANCIAL-MODEL.yaml
+  google_file_id: 1C5rxrxCxXq6q2D3Nm5sF7CHNMVlS3FddK8hPxV8DiCk
+  native_sheet: true
+  exact_single_file: true
+  tab_count: 16
+  readback_sha256: c44e09779be49f0546b42aa821f21d71398a4d7896bc2628861f6d3964851351
+  google_checks: 11
+  formula_errors: 0
+  exact_tab_order: passed
+  duplicate_files_created: 0
+validation:
+  npm_test: passed; all site routes and docs-platform suites completed with zero failures
+  deterministic_route_checks: 12 passed, 0 failed
+  financial_model_tests: 20 passed, 0 failed
+  financial_sheet_publisher_tests: 6 passed, 0 failed
+  governance_history_tests: 37 passed, 0 failed
+  typescript_no_emit: passed
+  production_build: passed; Node 22.15.1, 12 prerendered routes
+  registry_validation: passed
+  timeline_validation: passed; 134 append-only events
+  context_validation: passed
+  governance_validation: passed
+  project_onboard: passed; dirty worktree and review artifacts reported transparently
+  git_diff_check: passed
+  financial_model_validation: passed
+  financial_projection_check: passed
+  financial_google_payload_check: passed
+  google_api_readback: passed
+  capex_snapshot_check: passed and unchanged
+  revenue_snapshot_check: passed and unchanged
+business_source_invariants:
+  research_performed: false
+  revenue_model_changed: false
+  capex_sources_changed: false
+  investor_start_model_changed: false
+  websites_changed: false
+  existing_google_files_changed: false
+audit:
+  receipt: docs-platform/changelog/audit/ITR-FINANCIAL-MODEL-2026-08-16-01.yaml
+  receipt_sha256: 234aaefdd6688b0e0efd8fad78997c89c5b4950439395db56588c731a64d19a5
+rollback:
+  payload: docs-platform/changelog/rollback-payloads/ITR-FINANCIAL-MODEL-2026-08-16-01/manifest.yaml
+  payload_sha256: 1b59049343a629e1ee4d6e80d02e7ad3e0f0be91a0e7f867bdfb54e9110f3400
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true
+git_and_delivery:
+  staged: false
+  committed: false
+  tagged: false
+  pushed: false
+  sealed: false
+  deployed: false
+summary: Financial Model v0.1 is formula-derived from the existing Revenue Model, CAPEX and Investor Start Model; it validates the approved scenario economics, publishes one native 16-tab Google Sheet and verifies exact formula readback without changing any website or existing Google file.

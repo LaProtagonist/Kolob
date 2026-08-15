@@ -1,0 +1,172 @@
+schema_version: 2
+iteration_id: ITR-FINANCIAL-MODEL-2026-08-16-01
+proposal_id: PROP-FINANCIAL-MODEL-2026-08-16-01
+decision_id: DEC-FINANCIAL-MODEL-2026-08-16-01
+change_set_id: CHG-FINANCIAL-MODEL-2026-08-16-01
+approved_by: project owner
+approved_at: 2026-08-15T21:45:00.000Z
+source: Direct owner instructions of 2026-08-16; no external research is authorized or used.
+document:
+  id: DOC-FINANCIAL-MODEL
+  title: Financial Model
+  russian_title: Финансовая модель пилотного объекта
+  google_title: 04 — Финансовая модель пилотного объекта
+  version: "0.1"
+  status: research
+  local_path: docs-platform/working/financial-model.yaml
+  google_format: native Google Sheets
+scope:
+  object: Первый собственный совмещённый объект — заготовочное производство, торговая точка и посадочный зал.
+  consolidation: Внутреннее перемещение продукции в собственную торговую точку не является выручкой группы.
+  deferred:
+    - { id: master_lease_sublease, status: not_started }
+    - { id: external_supply_chain_revenue, status: not_started }
+    - { id: franchise_economics, status: not_started }
+    - { id: future_intercompany_sales, status: not_started }
+    - { id: detailed_functional_contour_pnl, status: not_started }
+    - { id: exit_terminal_recovery, status: not_started }
+    - { id: tax_capex_schedule, status: tbd }
+    - { id: seasonality, status: not_applied_v0.1 }
+    - { id: ramp_up_profile, status: tbd, simplification: 100% выбранного сценария с первого полного расчётного месяца }
+imports:
+  revenue_model:
+    id: DOC-REVENUE-MODEL
+    content_state_sha256: 90727a6c51f959b617d6c972b898593a1b6dba6742d51b30bb75230f3f606c38
+    average_check_rub: 1165.40
+    scenarios: { pessimistic: 200, realistic: 300, optimistic: 450, days_per_month: 30 }
+  capex:
+    id: DOC-CAPEX-GENERATED-EQUIPMENT-BOM
+    content_state_sha256: a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239
+    equipment_bom_sha256: d001d531247e1c64820a6bd00df1db755908d483358f5f677b3ca6acb6d8fa4a
+    scenario: BASE
+    bar_enabled: true
+    grow_enabled: true
+    alcohol_enabled: false
+    hood_double_count: excluded
+    control_total_rub_rounded: 5298993
+  investor_start_model:
+    id: DOC-INVESTOR-START-MODEL
+    file_sha256: b81a6c4e8988a4532c9ba2749d492b3f96e37d83af822396afc82930244b2985
+food_cost:
+  kolobok_segments:
+    - { name: Бюджетные, price_rub: 425, sales_share: 0.15, food_cost_rate: 0.25 }
+    - { name: Основные, price_rub: 550, sales_share: 0.40, food_cost_rate: 0.27 }
+    - { name: Выше среднего, price_rub: 700, sales_share: 0.30, food_cost_rate: 0.28 }
+    - { name: Премиальные, price_rub: 925, sales_share: 0.15, food_cost_rate: 0.30 }
+  average_kolobok_cost_formula_result_rub: 175.7625
+  manches: { price_rub: 650, food_cost_rate: 0.28, cost_rub: 182 }
+  average_food_portion_cost_formula_result_rub: 177.01
+  drinks: { price_rub: 275, cost_rub: 30 }
+  waste: { basis: raw_material_cost, default_rate: 0.04, sensitivity: [0.02, 0.04, 0.07] }
+  packaging: { baseline_checks_per_day: 300, baseline_monthly_rub: 250000, sensitivity_monthly_rub: [200000, 250000, 300000], scales_with_checks: true }
+staffing:
+  roles:
+    - { role: Су-шеф, headcount: [1, 1, 1], gross_salary_rub: 150000 }
+    - { role: Повар-заготовщик, headcount: [2, 2, 4], gross_salary_rub: 120000 }
+    - { role: Повар основной линии, headcount: [4, 4, 4], gross_salary_rub: 115000 }
+    - { role: Сервировка, headcount: [2, 2, 2], gross_salary_rub: 95000 }
+    - { role: Кассир / бар, headcount: [2, 2, 2], gross_salary_rub: 95000 }
+    - { role: Администратор, headcount: [2, 2, 2], gross_salary_rub: 125000 }
+    - { role: Технический сотрудник / мойщик, headcount: [2, 2, 4], gross_salary_rub: 90000 }
+    - { role: Управляющий, headcount: [1, 1, 1], gross_salary_rub: 150000 }
+  scenario_order: [pessimistic, realistic, optimistic]
+  reduced_contributions:
+    status: requires_confirmation
+    mrot_rub: 27093
+    threshold_rub: 40639.50
+    rate_below_threshold: 0.30
+    rate_above_threshold: 0.15
+  standard_contributions_rate: 0.30
+  personnel_reserve_rate: 0.10
+  formula_results:
+    baseline_16_rub_per_month: 2396938.28
+    optimistic_20_rub_per_month: 2955060.35
+opex:
+  fixed_monthly_rub:
+    rent: 350000
+    utilities: 200000
+    advertising: 100000
+    smm: 50000
+    equipment_service: 100000
+    household: 80000
+    accounting: 25000
+    ventilation_and_grease: 15000
+    uniform_renewal: 15000
+    music_rights: 7000
+    pest_control: 6000
+    yuma: 6000
+    medical: 5000
+    security_monitoring: 4000
+    banking: { amount_rub: 0, status: tbd }
+    other: 66500
+  variable:
+    acquiring: { default_rate: 0.02, sensitivity: [0.007, 0.012, 0.02] }
+    aggregators: { default_share: 0, share_sensitivity: [0, 0.10, 0.20, 0.30], commission_rate: 0.2917 }
+    supplier_delivery: { amount_rub: 0, status: included_in_purchase_price }
+tax:
+  base: { regime: УСН Доходы минус расходы, rate: 0.07, vat: food_service_exemption, status: requires_confirmation }
+  conservative: { regime: УСН Доходы минус расходы, rate: 0.07, vat_rate: 0.05, vat_formula: gross_revenue * 5 / 105 }
+  management_proxy: taxable_base = revenue_excluding_VAT - eligible_operating_cash_expenses
+  minimum_usn: { rate: 0.01, formula: tax_due = max(regular_USN, minimum_USN) }
+  excluded_from_proxy: [restaurant_capex, real_estate_purchase, security_deposit, initial_inventory_balance, management_depreciation, maintenance_capex, personnel_reserve]
+investment:
+  preparation_rub: 11000000
+  initial_inventory_rub: 1000000
+  video_surveillance_rub: 70000
+  alarm_rub: 35000
+  initial_uniform_rub: 180000
+  contingency: { default_rate: 0.10, options: [0.05, 0.10, 0.15], basis: equipment_plus_furniture_plus_preparation }
+  operating_reserve:
+    default: fixed_opex_reserve
+    months: 6
+    options: [3, 6, 9]
+    initial_inventory_separate: true
+    full_operating_reserve_secondary: true
+  maintenance_capex: { annual_rate: 0.03, basis: equipment_plus_furniture, excluded_from_ebitda: true }
+real_estate:
+  rent: { monthly_rub: 350000, prepayment_months: 12, deposit_months: 2 }
+  purchase: { price_rub: 69000000, monthly_rent_rub: 0 }
+  appreciation: { default: 0, sensitivity: [0, 0.03, 0.05] }
+  separation: [restaurant_return, real_estate_return, combined_investor_return]
+depreciation:
+  type: management_only
+  straight_line: true
+  useful_life_years: { POS_KDS_IT_SMALL: 3, MAIN_KITCHEN: 5, GROW: 5, FURNITURE: 5, COLD_FREEZER: 10, ENGINEERING: 10, FIT_OUT: 7, UNCLASSIFIED: 5 }
+  unclassified_status: mapping_requires_review
+terminal:
+  going_concern: true
+  month_60_deposit_recovery_rub: 0
+  month_60_inventory_recovery_rub: 0
+  restaurant_equipment_salvage_rub: 0
+  brand_value_rub: 0
+  exit_scenario_status: not_started
+metrics:
+  horizon_months: 60
+  detailed_months: 12
+  payback: first month where cumulative free cash flow is non-negative
+  roi: annual operating free cash flow / restaurant invested capital
+  irr: monthly cash-flow IRR annualized
+  npv: monthly cash flows discounted from annual 20 percent working rate
+  discount_rate_annual: { value: 0.20, status: tbd_investor_hurdle_rate }
+sensitivity:
+  checks_per_day: [150, 200, 300, 450]
+  average_check_multipliers: [0.85, 1, 1.15]
+  overall_food_cost_rates: [0.25, 0.30, 0.35]
+  labor_multipliers: [1, 1.10, 1.20]
+  rent_rub: [350000, 500000, 750000]
+  capex_multipliers: [1, 1.15, 1.30]
+  aggregator_shares: [0, 0.10, 0.20, 0.30]
+  vat_modes: [exemption, vat_5_included]
+  contribution_modes: [reduced, standard]
+google:
+  folder: Колобочная — Investment
+  title: 04 — Финансовая модель пилотного объекта
+  existing_oauth_workflow_only: true
+  create_exactly_one_native_sheet: true
+  readback_required: true
+explicit_exclusions:
+  - new external research
+  - guaranteed revenue, final business plan or final investment proposal
+  - final tax eligibility or final recipe costs
+  - site or investor-page changes
+  - Financial Model commit, seal, tag, push or deployment

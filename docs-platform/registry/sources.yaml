@@ -1404,3 +1404,12 @@ sources:
     accessed_at: 2026-08-14
     reliability: primary
     notes: Содержит точные продуктовые доли, цены, средний чек, сценарии 200/300/450 чеков, коэффициенты нагрузки, формулировки мощности и публичные тексты страницы. Внешнее исследование запрещено и не выполнялось.
+  - id: SRC-FINANCIAL-MODEL-BRIEF-2026-08-16
+    title: Утверждённые допущения Financial Model v0.1
+    type: instruction
+    location: User instructions, 2026-08-16
+    publisher: project owner
+    publication_date: 2026-08-16
+    accessed_at: 2026-08-16
+    reliability: primary
+    notes: Содержит точные рабочие допущения, формулы, приоритет derived values, CAPEX-конфигурацию, налоговый proxy, резерв, terminal treatment и Google scope. Новое исследование запрещено и не выполнялось.

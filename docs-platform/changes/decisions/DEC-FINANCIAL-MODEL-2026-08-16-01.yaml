@@ -1,0 +1,24 @@
+schema_version: 2
+decision_id: DEC-FINANCIAL-MODEL-2026-08-16-01
+iteration_id: ITR-FINANCIAL-MODEL-2026-08-16-01
+title: Approve Financial Model v0.1 architecture, assumptions and Google Sheets publication
+status: approved
+approved_by: project owner
+approved_at: 2026-08-15T21:45:01.000Z
+scope: The exact imported Revenue/CAPEX/Investor Start configuration, food-cost, staffing, OPEX, tax proxy, investment, cash-flow, real-estate, sensitivity and terminal rules in the approved payload.
+reason: The owner supplied the complete working assumptions, resolved formula priorities and authorized implementation without new research.
+approves:
+  - consolidated Financial Model v0.1 for the first owned combined object
+  - formula-derived costs and labor budgets
+  - BASE CAPEX with BAR and GROW enabled, alcohol disabled and hood double count excluded
+  - fixed six-month operating reserve as the default invested-capital reserve
+  - management tax proxy and VAT 5/105 conservative scenario
+  - 60-month cash flow, payback, defined ROI, IRR, NPV and sensitivity architecture
+  - one native Google Sheet after successful existing-workflow OAuth authorization and full readback
+excludes:
+  - final business plan, guaranteed returns or final tax eligibility
+  - final recipes, salaries, CAPEX, valuation or investment offer
+  - franchise, external supply-chain, intercompany and terminal exit models
+  - website changes and Financial Model Git delivery
+approved_payload_path: docs-platform/changelog/payloads/ITR-FINANCIAL-MODEL-2026-08-16-01-approved.yaml
+approved_payload_sha256: 6bbc48bf3fb713412870fce0d3702d989ce012f82959b9ce4b3d0e11c143fdcd

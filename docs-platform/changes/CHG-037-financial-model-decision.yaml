@@ -1,0 +1,66 @@
+change_id: CHG-037
+title: Зарегистрировать источник, документ и решение Financial Model v0.1
+status: approved
+created_at: 2026-08-16
+decision_id: DEC-001
+iteration_id: ITR-FINANCIAL-MODEL-2026-08-16-01
+proposal_id: PROP-FINANCIAL-MODEL-2026-08-16-01
+approved_payload_path: docs-platform/changelog/payloads/ITR-FINANCIAL-MODEL-2026-08-16-01-approved.yaml
+approved_payload_sha256: 6bbc48bf3fb713412870fce0d3702d989ce012f82959b9ce4b3d0e11c143fdcd
+operations:
+  - type: add
+    entity: documents
+    value:
+      id: DOC-FINANCIAL-MODEL
+      title: Financial Model
+      type: working_pilot_financial_model
+      status: research
+      google_file_id: null
+      template: null
+      sections:
+        - Описание
+        - Допущения
+        - Продажи
+        - Меню и себестоимость
+        - Персонал
+        - OPEX
+        - CAPEX
+        - P&L
+        - Денежный поток
+        - Инвестиции
+        - Сценарии
+        - Чувствительность
+        - Недвижимость
+        - Производственный центр
+        - Источники
+        - Проверки
+      version: "0.1"
+      governance_level: working
+      local_path: docs-platform/working/financial-model.yaml
+      updated_at: 2026-08-16
+  - type: add
+    entity: sources
+    value:
+      id: SRC-FINANCIAL-MODEL-BRIEF-2026-08-16
+      title: Утверждённые допущения Financial Model v0.1
+      type: instruction
+      location: User instructions, 2026-08-16
+      publisher: project owner
+      publication_date: 2026-08-16
+      accessed_at: 2026-08-16
+      reliability: primary
+      notes: Содержит точные рабочие допущения, формулы, приоритет derived values, CAPEX-конфигурацию, налоговый proxy, резерв, terminal treatment и Google scope. Новое исследование запрещено и не выполнялось.
+  - type: add
+    entity: decisions
+    value:
+      id: DEC-FINANCIAL-MODEL-2026-08-16-01
+      title: Создать Financial Model v0.1 и нативную Google Sheets-проекцию
+      status: approved
+      decision: Создать консолидированную рабочую финансовую модель первого собственного совмещённого объекта по точным допущениям владельца, импортировать Revenue Model, Investor Start Model и generated Equipment BOM, рассчитывать P&L, денежный поток, инвестиционные показатели, недвижимость и чувствительность формулами и опубликовать один нативный Google Sheet после проверки.
+      rationale: Прямое решение владельца проекта от 2026-08-16; модель имеет статус research и не утверждает окончательный бизнес-план, налоговую схему, закупки, valuation или гарантированную доходность.
+      affected_documents: [DOC-FINANCIAL-MODEL]
+      approved_by: project owner
+      approved_at: 2026-08-16
+      supersedes: null
+      source_ids: [SRC-FINANCIAL-MODEL-BRIEF-2026-08-16]
+      updated_at: 2026-08-16

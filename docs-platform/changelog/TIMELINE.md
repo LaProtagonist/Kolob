@@ -4,10 +4,10 @@
 
 ## 1. Current state
 
-- Events: 127.
-- Timeline head event: `EVT-ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01-COMMITTED`.
-- Timeline head SHA-256: `ea3da82f96e2f813d1265968afb205356bd23841f11df798ae0f21ce7ba3f758`.
-- Latest recorded iteration: `ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01`.
+- Events: 134.
+- Timeline head event: `EVT-ITR-FINANCIAL-MODEL-2026-08-16-01-SYNCED`.
+- Timeline head SHA-256: `d91307b7d95dc19090b2702324e012f08d2e0575f9672d2594fe007733b109e7`.
+- Latest recorded iteration: `ITR-FINANCIAL-MODEL-2026-08-16-01`.
 
 ## 2. Modern governed iterations
 
@@ -36,6 +36,7 @@
 | 2026-08-14T18:59:28.000Z | deployed | Create Revenue Model and the direct-review sales-volume page | ITR-REVENUE-MODEL-2026-08-14-01 | DEC-REVENUE-MODEL-2026-08-14-01 | CHG-REVENUE-MODEL-2026-08-14-01 | 7012c506d863dc680a8f9aafeda066c37d30b03f | iteration/ITR-REVENUE-MODEL-2026-08-14-01 | — | docs-platform/changelog/deployments/DEPLOY-REVENUE-MODEL-2026-08-14-01.yaml | — | Sealed content state a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239 deployed to https://colob.spi.ski; smoke test passed. |
 | 2026-08-15T13:14:11.000Z | superseded | Refine Revenue Model production-load presentation | ITR-REVENUE-MODEL-PRESENTATION-2026-08-14-01 | DEC-REVENUE-MODEL-PRESENTATION-2026-08-14-01 | CHG-REVENUE-MODEL-PRESENTATION-2026-08-14-01 | — | — | — | — | — | The verified presentation iteration was not committed and is superseded as a delivery unit by the next approved Revenue Model UI iteration. Its short summary copy, serving terminology, food hierarchy, unified hourly cards and capacity-only 51/13 split remain preserved as the succeeding iteration's baseline; no old event was edited. |
 | 2026-08-15T21:31:42.000Z | committed | Refine Revenue Model section flow and daily-load card balance | ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01 | DEC-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01 | CHG-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01 | f67920077a9ba7b07cc20ecc7be34b72dee4b4a5 | iteration/ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01 | — | — | — | Refine Revenue Model section flow and daily-load card balance: content commit verified and linked to the governed lifecycle before sealing. |
+| 2026-08-15T22:51:53.913Z | synced | Create Financial Model v0.1 and its Google Sheets working projection | ITR-FINANCIAL-MODEL-2026-08-16-01 | DEC-FINANCIAL-MODEL-2026-08-16-01 | CHG-FINANCIAL-MODEL-2026-08-16-01 | — | — | docs-platform/changelog/google-sync/2026-08-16-DOC-FINANCIAL-MODEL.yaml | — | — | Sheets API readback confirmed the exact 16-tab order, eleven control checks, preserved formulas and zero formula errors. |
 
 ## 3. Legacy imported history
 
@@ -82,6 +83,9 @@
 | 2026-08-10T20:09:15.486Z | ITR-WEB-SNAPSHOT-DECOUPLING-2026-08-10-01 | external_drift_detected | — | — | — |
 | 2026-08-10T20:19:03.048Z | ITR-WEB-SNAPSHOT-DECOUPLING-CORRECTION-2026-08-10-01 | external_drift_detected | — | — | — |
 | 2026-08-14T18:59:28.000Z | ITR-REVENUE-MODEL-2026-08-14-01 | deployed | — | docs-platform/changelog/deployments/DEPLOY-REVENUE-MODEL-2026-08-14-01.yaml | https://colob.spi.ski |
+| 2026-08-15T23:05:00.000Z | ITR-FINANCIAL-MODEL-2026-08-16-01 | verified | docs-platform/changelog/google-sync/2026-08-16-DOC-FINANCIAL-MODEL.yaml | — | — |
+| 2026-08-15T22:51:53.913Z | ITR-FINANCIAL-MODEL-2026-08-16-01 | published | docs-platform/changelog/google-sync/2026-08-16-DOC-FINANCIAL-MODEL.yaml | — | — |
+| 2026-08-15T22:51:53.913Z | ITR-FINANCIAL-MODEL-2026-08-16-01 | synced | docs-platform/changelog/google-sync/2026-08-16-DOC-FINANCIAL-MODEL.yaml | — | — |
 
 ## 6. Open issues
 

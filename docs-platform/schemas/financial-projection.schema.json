@@ -1,0 +1,206 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "financial-projection.schema.json",
+  "type": "object",
+  "required": ["meta", "derived_food_cost", "launch_capital", "scenarios", "sensitivity", "deferred"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": [
+        "schema_version",
+        "document_id",
+        "version",
+        "status",
+        "content_state",
+        "imported_revenue_content_state_sha256",
+        "imported_capex_content_state_sha256",
+        "imported_investor_start_model_sha256",
+        "imported_equipment_bom_sha256"
+      ],
+      "properties": {
+        "schema_version": { "const": 1 },
+        "document_id": { "const": "DOC-FINANCIAL-MODEL" },
+        "version": { "const": "0.1" },
+        "status": { "const": "research" },
+        "content_state": {
+          "type": "object",
+          "required": ["schema_version", "source_files", "content_state_sha256"],
+          "properties": {
+            "schema_version": { "const": 1 },
+            "source_files": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": ["path", "sha256"],
+                "properties": {
+                  "path": { "type": "string", "minLength": 1 },
+                  "sha256": { "$ref": "#/$defs/sha256" }
+                },
+                "additionalProperties": false
+              }
+            },
+            "content_state_sha256": { "$ref": "#/$defs/sha256" }
+          },
+          "additionalProperties": false
+        },
+        "imported_revenue_content_state_sha256": { "$ref": "#/$defs/sha256" },
+        "imported_capex_content_state_sha256": { "$ref": "#/$defs/sha256" },
+        "imported_investor_start_model_sha256": { "$ref": "#/$defs/sha256" },
+        "imported_equipment_bom_sha256": { "$ref": "#/$defs/sha256" }
+      },
+      "additionalProperties": false
+    },
+    "derived_food_cost": {
+      "type": "object",
+      "required": ["average_kolobok_cost_rub", "average_food_portion_cost_rub", "manches_cost_rub", "drink_cost_rub", "drink_food_cost_rate"],
+      "properties": {
+        "average_kolobok_cost_rub": { "const": 175.7625 },
+        "average_food_portion_cost_rub": { "const": 177.01 },
+        "manches_cost_rub": { "const": 182 },
+        "drink_cost_rub": { "const": 30 },
+        "drink_food_cost_rate": { "type": "number", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "launch_capital": { "$ref": "#/$defs/launchCapital" },
+    "scenarios": {
+      "type": "object",
+      "required": ["rent", "purchase"],
+      "properties": {
+        "rent": { "$ref": "#/$defs/scenarioSet" },
+        "purchase": { "$ref": "#/$defs/scenarioSet" }
+      },
+      "additionalProperties": false
+    },
+    "sensitivity": { "type": "object" },
+    "deferred": { "type": "array", "minItems": 1 }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "nullableNumber": { "type": ["number", "null"] },
+    "launchCapital": {
+      "type": "object",
+      "required": [
+        "equipment_rub",
+        "equipment_control_rub_rounded",
+        "equipment_bom_configuration_id",
+        "equipment_active_module_ids",
+        "equipment_coverage_count",
+        "equipment_unpriced_count",
+        "equipment_quote_required_count",
+        "furniture_rub",
+        "preparation_rub",
+        "contingency_rub",
+        "seat_count",
+        "depreciation_assets",
+        "monthly_depreciation_rub",
+        "mapping_requires_review_count"
+      ],
+      "properties": {
+        "equipment_rub": { "type": "number" },
+        "equipment_control_rub_rounded": { "const": 5298993 },
+        "equipment_bom_configuration_id": { "const": "CFG-PILOT-001" },
+        "equipment_active_module_ids": { "type": "array", "minItems": 1, "items": { "type": "string" }, "uniqueItems": true },
+        "equipment_coverage_count": { "type": "integer", "minimum": 0 },
+        "equipment_unpriced_count": { "const": 0 },
+        "equipment_quote_required_count": { "type": "integer", "minimum": 0 },
+        "furniture_rub": { "type": "number" },
+        "preparation_rub": { "type": "number" },
+        "contingency_rub": { "type": "number" },
+        "seat_count": { "type": "number" },
+        "depreciation_assets": { "type": "array", "minItems": 1 },
+        "monthly_depreciation_rub": { "type": "number" },
+        "mapping_requires_review_count": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "scenarioSet": {
+      "type": "object",
+      "required": ["pessimistic", "realistic", "optimistic"],
+      "properties": {
+        "pessimistic": { "$ref": "#/$defs/scenario" },
+        "realistic": { "$ref": "#/$defs/scenario" },
+        "optimistic": { "$ref": "#/$defs/scenario" }
+      },
+      "additionalProperties": false
+    },
+    "scenario": {
+      "type": "object",
+      "required": [
+        "scenario",
+        "checks_per_day",
+        "gross_revenue_rub",
+        "raw_materials_rub",
+        "waste_rub",
+        "packaging_rub",
+        "gross_profit_rub",
+        "gross_margin",
+        "staffing",
+        "labor_rub",
+        "ebitda_rub",
+        "ebitda_margin",
+        "depreciation_rub",
+        "ebit_rub",
+        "tax_due_rub",
+        "net_operating_result_rub",
+        "maintenance_capex_rub",
+        "operating_free_cash_flow_rub",
+        "fixed_opex_reserve_rub",
+        "full_operating_reserve_rub",
+        "restaurant_invested_capital_rub",
+        "real_estate_investment_rub",
+        "total_invested_capital_rub",
+        "break_even_checks_per_day",
+        "restaurant_payback_month",
+        "restaurant_roi_annual",
+        "restaurant_irr_annual",
+        "restaurant_npv_rub",
+        "property_residual_value_rub",
+        "combined_payback_month",
+        "combined_irr_annual",
+        "combined_npv_rub",
+        "restaurant_cash_flows",
+        "combined_cash_flows"
+      ],
+      "properties": {
+        "scenario": { "enum": ["pessimistic", "realistic", "optimistic"] },
+        "checks_per_day": { "type": "number", "exclusiveMinimum": 0 },
+        "gross_revenue_rub": { "type": "number" },
+        "raw_materials_rub": { "type": "number" },
+        "waste_rub": { "type": "number" },
+        "packaging_rub": { "type": "number" },
+        "gross_profit_rub": { "type": "number" },
+        "gross_margin": { "type": "number" },
+        "staffing": { "type": "object" },
+        "labor_rub": { "type": "number" },
+        "ebitda_rub": { "type": "number" },
+        "ebitda_margin": { "type": "number" },
+        "depreciation_rub": { "type": "number" },
+        "ebit_rub": { "type": "number" },
+        "tax_due_rub": { "type": "number" },
+        "net_operating_result_rub": { "type": "number" },
+        "maintenance_capex_rub": { "type": "number" },
+        "operating_free_cash_flow_rub": { "type": "number" },
+        "fixed_opex_reserve_rub": { "type": "number" },
+        "full_operating_reserve_rub": { "type": "number" },
+        "restaurant_invested_capital_rub": { "type": "number" },
+        "real_estate_investment_rub": { "type": "number" },
+        "total_invested_capital_rub": { "type": "number" },
+        "break_even_checks_per_day": { "type": "number" },
+        "restaurant_payback_month": { "type": ["integer", "null"] },
+        "restaurant_roi_annual": { "type": "number" },
+        "restaurant_irr_annual": { "$ref": "#/$defs/nullableNumber" },
+        "restaurant_npv_rub": { "type": "number" },
+        "property_residual_value_rub": { "type": "number" },
+        "combined_payback_month": { "type": ["integer", "null"] },
+        "combined_irr_annual": { "$ref": "#/$defs/nullableNumber" },
+        "combined_npv_rub": { "type": "number" },
+        "restaurant_cash_flows": { "type": "array", "minItems": 61, "maxItems": 61, "items": { "type": "number" } },
+        "combined_cash_flows": { "type": "array", "minItems": 61, "maxItems": 61, "items": { "type": "number" } }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

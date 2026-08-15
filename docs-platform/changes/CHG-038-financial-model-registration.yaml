@@ -1,0 +1,137 @@
+change_id: CHG-038
+title: Зарегистрировать assumptions и зависимости Financial Model v0.1
+status: approved
+created_at: 2026-08-16
+decision_id: DEC-FINANCIAL-MODEL-2026-08-16-01
+iteration_id: ITR-FINANCIAL-MODEL-2026-08-16-01
+proposal_id: PROP-FINANCIAL-MODEL-2026-08-16-01
+approved_payload_path: docs-platform/changelog/payloads/ITR-FINANCIAL-MODEL-2026-08-16-01-approved.yaml
+approved_payload_sha256: 6bbc48bf3fb713412870fce0d3702d989ce012f82959b9ce4b3d0e11c143fdcd
+operations:
+  - type: add
+    entity: assumptions
+    value:
+      id: ASM-FINANCIAL-FOOD-COST
+      title: Себестоимость еды, напитков, списаний и упаковки Financial Model v0.1
+      value: { average_kolobok_cost_rub: 175.7625, average_food_portion_cost_rub: 177.01, drink_cost_rub: 30, waste_rate: 0.04, packaging_base_rub: 250000, packaging_base_checks: 300 }
+      unit: mixed
+      status: research
+      rationale: Исходные ставки и доли заданы владельцем; средние значения получаются формулами и не являются фактической рецептурной себестоимостью.
+      scenario: FINANCIAL_MODEL_V0_1
+      applies_to: [DOC-FINANCIAL-MODEL]
+      source_ids: [SRC-FINANCIAL-MODEL-BRIEF-2026-08-16]
+      decision_id: DEC-FINANCIAL-MODEL-2026-08-16-01
+      updated_at: 2026-08-16
+  - type: add
+    entity: assumptions
+    value:
+      id: ASM-FINANCIAL-STAFFING
+      title: Штат и labor budget Financial Model v0.1
+      value: { baseline_headcount: 16, optimistic_headcount: 20, baseline_payroll_rub: 1810000, optimistic_payroll_rub: 2230000, baseline_labor_rub: 2396938.28, optimistic_labor_rub: 2955060.35, personnel_reserve_rate: 0.10 }
+      unit: RUB/month and headcount
+      status: research
+      rationale: Роли, ставки и льготная формула начислений заданы владельцем; применимость льготы требует подтверждения.
+      scenario: FINANCIAL_MODEL_V0_1
+      applies_to: [DOC-FINANCIAL-MODEL]
+      source_ids: [SRC-FINANCIAL-MODEL-BRIEF-2026-08-16]
+      decision_id: DEC-FINANCIAL-MODEL-2026-08-16-01
+      updated_at: 2026-08-16
+  - type: add
+    entity: assumptions
+    value:
+      id: ASM-FINANCIAL-OPEX
+      title: OPEX Financial Model v0.1
+      value: { rent_rub: 350000, utilities_rub: 200000, acquiring_rate: 0.02, advertising_rub: 100000, smm_rub: 50000, service_rub: 100000, household_rub: 80000, accounting_rub: 25000, other_rub: 66500 }
+      unit: RUB/month and share
+      status: research
+      rationale: Точные рабочие ставки заданы владельцем; банковское обслуживание остаётся tbd, доставка сырья включена в закупочную цену.
+      scenario: FINANCIAL_MODEL_V0_1
+      applies_to: [DOC-FINANCIAL-MODEL]
+      source_ids: [SRC-FINANCIAL-MODEL-BRIEF-2026-08-16]
+      decision_id: DEC-FINANCIAL-MODEL-2026-08-16-01
+      updated_at: 2026-08-16
+  - type: add
+    entity: assumptions
+    value:
+      id: ASM-FINANCIAL-TAX-PROXY
+      title: Налоговый management proxy Financial Model v0.1
+      value: { usn_rate: 0.07, minimum_usn_rate: 0.01, base_vat: exemption_requires_confirmation, conservative_vat_rate: 0.05, conservative_vat_formula: gross_revenue_x_5_div_105, tax_capex_schedule: tbd }
+      unit: share
+      status: research
+      rationale: Налоговая модель является управленческим proxy; применимость льгот и налоговый учёт CAPEX требуют отдельного подтверждения.
+      scenario: FINANCIAL_MODEL_V0_1
+      applies_to: [DOC-FINANCIAL-MODEL]
+      source_ids: [SRC-FINANCIAL-MODEL-BRIEF-2026-08-16]
+      decision_id: DEC-FINANCIAL-MODEL-2026-08-16-01
+      updated_at: 2026-08-16
+  - type: add
+    entity: assumptions
+    value:
+      id: ASM-FINANCIAL-CAPEX-CONFIG
+      title: Импортируемая CAPEX-конфигурация Financial Model v0.1
+      value: { scenario: BASE, bar_enabled: true, grow_enabled: true, alcohol_enabled: false, hood_double_count: excluded, rounded_control_rub: 5298993 }
+      unit: RUB and configuration
+      status: research
+      rationale: Комплектация рассчитывается из generated Equipment BOM и канонического CAPEX; контрольное значение служит stale-guard, а не новым независимым CAPEX.
+      scenario: FINANCIAL_MODEL_V0_1
+      applies_to: [DOC-FINANCIAL-MODEL]
+      source_ids: [SRC-FINANCIAL-MODEL-BRIEF-2026-08-16]
+      decision_id: DEC-FINANCIAL-MODEL-2026-08-16-01
+      updated_at: 2026-08-16
+  - type: add
+    entity: assumptions
+    value:
+      id: ASM-FINANCIAL-RESERVE-TERMINAL
+      title: Operating Reserve и terminal treatment Financial Model v0.1
+      value: { fixed_reserve_months: 6, initial_inventory_rub: 1000000, full_reserve_default: false, month_60_deposit_recovery_rub: 0, month_60_inventory_recovery_rub: 0, restaurant_salvage_rub: 0, brand_value_rub: 0 }
+      unit: mixed
+      status: research
+      rationale: Основной invested capital использует Fixed OPEX Reserve; модель является going concern без автоматической ликвидации в Month 60.
+      scenario: FINANCIAL_MODEL_V0_1
+      applies_to: [DOC-FINANCIAL-MODEL]
+      source_ids: [SRC-FINANCIAL-MODEL-BRIEF-2026-08-16]
+      decision_id: DEC-FINANCIAL-MODEL-2026-08-16-01
+      updated_at: 2026-08-16
+  - type: add
+    entity: assumptions
+    value:
+      id: ASM-FINANCIAL-REAL-ESTATE
+      title: Недвижимость Financial Model v0.1
+      value: { purchase_price_rub: 69000000, base_appreciation: 0, appreciation_sensitivity: [0, 0.03, 0.05], restaurant_equipment_residual_rub: 0 }
+      unit: RUB and share
+      status: research
+      rationale: Недвижимость и её изменение стоимости отделены от restaurant EBITDA и restaurant return.
+      scenario: FINANCIAL_MODEL_V0_1
+      applies_to: [DOC-FINANCIAL-MODEL]
+      source_ids: [SRC-FINANCIAL-MODEL-BRIEF-2026-08-16]
+      decision_id: DEC-FINANCIAL-MODEL-2026-08-16-01
+      updated_at: 2026-08-16
+  - type: add
+    entity: assumptions
+    value:
+      id: ASM-FINANCIAL-INVESTMENT-METRICS
+      title: Investment metrics Financial Model v0.1
+      value: { horizon_months: 60, payback_method: cumulative_fcf, roi_definition: annual_fcf_div_restaurant_invested_capital, discount_rate: 0.20, discount_rate_status: tbd_investor_hurdle_rate }
+      unit: mixed
+      status: research
+      rationale: Метрики рассчитываются по 60-месячному cash flow; ставка дисконтирования 20% является только рабочей ставкой модели.
+      scenario: FINANCIAL_MODEL_V0_1
+      applies_to: [DOC-FINANCIAL-MODEL]
+      source_ids: [SRC-FINANCIAL-MODEL-BRIEF-2026-08-16]
+      decision_id: DEC-FINANCIAL-MODEL-2026-08-16-01
+      updated_at: 2026-08-16
+  - type: add
+    entity: dependencies
+    value: { id: DEP-FOUNDATION-FINANCIAL-MODEL, source_document_id: DOC-FOUNDATION, priority: governing_source, status: research, version: "1.0", target_documents: [{ title: Financial Model, document_id: DOC-FINANCIAL-MODEL }], updated_at: 2026-08-16 }
+  - type: add
+    entity: dependencies
+    value: { id: DEP-BMA-FINANCIAL-MODEL, source_document_id: DOC-BUSINESS-MODEL-ARCHITECTURE, priority: governing_source, status: research, version: "1.0", target_documents: [{ title: Financial Model, document_id: DOC-FINANCIAL-MODEL }], updated_at: 2026-08-16 }
+  - type: add
+    entity: dependencies
+    value: { id: DEP-REVENUE-FINANCIAL-MODEL, source_document_id: DOC-REVENUE-MODEL, priority: governing_source, status: research, version: "0.1", target_documents: [{ title: Financial Model, document_id: DOC-FINANCIAL-MODEL }], updated_at: 2026-08-16 }
+  - type: add
+    entity: dependencies
+    value: { id: DEP-INVESTOR-START-FINANCIAL-MODEL, source_document_id: DOC-INVESTOR-START-MODEL, priority: governing_source, status: research, version: "0.1", target_documents: [{ title: Financial Model, document_id: DOC-FINANCIAL-MODEL }], updated_at: 2026-08-16 }
+  - type: add
+    entity: dependencies
+    value: { id: DEP-CAPEX-BOM-FINANCIAL-MODEL, source_document_id: DOC-CAPEX-GENERATED-EQUIPMENT-BOM, priority: governing_source, status: research, version: "0.1", target_documents: [{ title: Financial Model, document_id: DOC-FINANCIAL-MODEL }], updated_at: 2026-08-16 }

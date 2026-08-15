@@ -175,3 +175,48 @@ dependencies:
       - title: Revenue Model
         document_id: DOC-REVENUE-MODEL
     updated_at: 2026-08-14
+  - id: DEP-FOUNDATION-FINANCIAL-MODEL
+    source_document_id: DOC-FOUNDATION
+    priority: governing_source
+    status: research
+    version: "1.0"
+    target_documents:
+      - title: Financial Model
+        document_id: DOC-FINANCIAL-MODEL
+    updated_at: 2026-08-16
+  - id: DEP-BMA-FINANCIAL-MODEL
+    source_document_id: DOC-BUSINESS-MODEL-ARCHITECTURE
+    priority: governing_source
+    status: research
+    version: "1.0"
+    target_documents:
+      - title: Financial Model
+        document_id: DOC-FINANCIAL-MODEL
+    updated_at: 2026-08-16
+  - id: DEP-REVENUE-FINANCIAL-MODEL
+    source_document_id: DOC-REVENUE-MODEL
+    priority: governing_source
+    status: research
+    version: "0.1"
+    target_documents:
+      - title: Financial Model
+        document_id: DOC-FINANCIAL-MODEL
+    updated_at: 2026-08-16
+  - id: DEP-INVESTOR-START-FINANCIAL-MODEL
+    source_document_id: DOC-INVESTOR-START-MODEL
+    priority: governing_source
+    status: research
+    version: "0.1"
+    target_documents:
+      - title: Financial Model
+        document_id: DOC-FINANCIAL-MODEL
+    updated_at: 2026-08-16
+  - id: DEP-CAPEX-BOM-FINANCIAL-MODEL
+    source_document_id: DOC-CAPEX-GENERATED-EQUIPMENT-BOM
+    priority: governing_source
+    status: research
+    version: "0.1"
+    target_documents:
+      - title: Financial Model
+        document_id: DOC-FINANCIAL-MODEL
+    updated_at: 2026-08-16

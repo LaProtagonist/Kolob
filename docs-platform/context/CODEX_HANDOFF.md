@@ -16,9 +16,9 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01-COMMITTED`.
-- Hash: `ea3da82f96e2f813d1265968afb205356bd23841f11df798ae0f21ce7ba3f758`.
-- generated_from_event_hash: `ea3da82f96e2f813d1265968afb205356bd23841f11df798ae0f21ce7ba3f758`.
+- Event: `EVT-ITR-FINANCIAL-MODEL-2026-08-16-01-SYNCED`.
+- Hash: `d91307b7d95dc19090b2702324e012f08d2e0575f9672d2594fe007733b109e7`.
+- generated_from_event_hash: `d91307b7d95dc19090b2702324e012f08d2e0575f9672d2594fe007733b109e7`.
 
 ## 4. Канонические документы
 
@@ -34,6 +34,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 | DOC-CAPEX-MODULES | research | `docs-platform/working/capex-modules.yaml` | `2fb31d90b852a5aaae6500d99412c7fabba0bbe9187f08106e3f37c7a52ae33a` |
 | DOC-CAPEX-POINT-FORMATS | research | `docs-platform/working/capex-point-formats.yaml` | `4b6d5a8806f696f499dbbab8fa061020c7ba77b670eb2a1f7d3ccdcc78b2e523` |
 | DOC-CAPEX-PRICE-RESEARCH | research | `docs-platform/working/capex-price-research.yaml` | `b2b752f1822db8b529d58d822b83b32d44bcba9a0110ae35062d3b561f08249d` |
+| DOC-FINANCIAL-MODEL | research | `docs-platform/working/financial-model.yaml` | `bb61e57b9b65ec2961f5d16a2065b5937d803a5772cdef172716ec952daf6bb4` |
 | DOC-FOUNDATION | approved | `docs-platform/00-foundation.md` | `5b4d457184c055ba11f8c4d05cc263139d2eb4f623981bcdc198c0114a50c0bb` |
 | DOC-INVESTMENT-MEMO | proposed | `docs-platform/templates/investment-memorandum.md` | `464e46d307aaa98e57cab3a098cd639e212d32b51f82a06688de228f0e7fb4cd` |
 | DOC-INVESTOR-START-MODEL | research | `docs-platform/working/investor-start-model.yaml` | `b81a6c4e8988a4532c9ba2749d492b3f96e37d83af822396afc82930244b2985` |
@@ -58,7 +59,7 @@ Refine Revenue Model section flow and daily-load card balance
 
 ## 8. Google / MCP / deployment
 
-- Google: `{"configured":true,"historical_receipts":9,"receipts_with_machine_readback_hash":6,"live_drift_check":"not_run_by_context_build"}`.
+- Google: `{"configured":true,"historical_receipts":10,"receipts_with_machine_readback_hash":7,"live_drift_check":"not_run_by_context_build"}`.
 - MCP: `{"implementation_present":true,"canonical_access":"registry_document_ids_only","live_status":"not_probed_by_context_build"}`.
 - Deployment: `{"status":"receipts_present","receipts":1,"production_url":null}`.
 

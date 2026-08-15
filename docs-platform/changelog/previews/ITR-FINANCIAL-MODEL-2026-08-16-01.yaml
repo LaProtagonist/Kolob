@@ -1,0 +1,44 @@
+preview_version: 1
+iteration_id: ITR-FINANCIAL-MODEL-2026-08-16-01
+proposal_id: PROP-FINANCIAL-MODEL-2026-08-16-01
+decision_id: DEC-FINANCIAL-MODEL-2026-08-16-01
+change_set_id: CHG-FINANCIAL-MODEL-2026-08-16-01
+created_at: 2026-08-15T21:45:02.000Z
+actor: Codex
+tool: exact approved payload preview and canonical import inspection
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-FINANCIAL-MODEL-2026-08-16-01-approved.yaml
+  sha256: 6bbc48bf3fb713412870fce0d3702d989ce012f82959b9ce4b3d0e11c143fdcd
+before_state_sha256: d3fbeebf7a8278521806c229adccde4c12349eb04b03ee688f3540cfe4501823
+target:
+  source_path: docs-platform/working/financial-model.yaml
+  projection_path: docs-platform/generated/financial-model-projection.json
+  google_payload_path: docs-platform/generated/financial-google-sheets-payload.json
+  google_title: 04 — Финансовая модель пилотного объекта
+scope:
+  object: Первый собственный совмещённый объект
+  status: research
+  version: "0.1"
+  revenue_scenarios: [pessimistic, realistic, optimistic]
+  capex_configuration: { scenario: BASE, bar_enabled: true, grow_enabled: true, alcohol_enabled: false, hood_double_count: excluded }
+  horizon_months: 60
+  default_reserve: fixed_opex_6_months
+  google_native_sheet_count: 1
+out_of_scope:
+  - external research and independent replacement assumptions
+  - website or investor-page changes
+  - franchise, external supply-chain and intercompany economics
+  - terminal exit recovery or brand value
+  - final tax advice, guaranteed returns or investment offer
+  - Financial Model commit, seal, tag, push and deployment
+writes: false
+validation:
+  arithmetic_consistency: passed
+  imported_revenue_hash: passed
+  imported_capex_hash: passed
+  capex_control_total_rub: 5298993
+  formula_architecture: passed
+  google_payload_prepared: passed
+  google_publication: pending_existing_oauth
+  mutation_performed: false
+  research_performed: false

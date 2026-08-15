@@ -1,0 +1,15 @@
+schema_version: 2
+proposal_id: PROP-FINANCIAL-MODEL-2026-08-16-01
+iteration_id: ITR-FINANCIAL-MODEL-2026-08-16-01
+title: Create Financial Model v0.1 and its Google Sheets working projection
+status: proposed
+proposed_at: 2026-08-15T21:45:00.000Z
+scope: Canonical Financial Model v0.1, formula engine, deterministic projection, validations, one prepared native Google Sheets publication and append-only governance records.
+approved_payload_path: docs-platform/changelog/payloads/ITR-FINANCIAL-MODEL-2026-08-16-01-approved.yaml
+approved_payload_sha256: 6bbc48bf3fb713412870fce0d3702d989ce012f82959b9ce4b3d0e11c143fdcd
+excludes:
+  - external research or independent replacement of owner-approved assumptions
+  - guaranteed returns, final tax advice, final business plan or investment offer
+  - franchise, external supply-chain and terminal exit economics
+  - website changes
+  - Financial Model commit, seal, tag, push or deployment

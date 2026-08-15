@@ -285,3 +285,30 @@ documents:
     governance_level: working
     local_path: docs-platform/working/revenue-model.yaml
     updated_at: 2026-08-14
+  - id: DOC-FINANCIAL-MODEL
+    title: Financial Model
+    type: working_pilot_financial_model
+    status: research
+    google_file_id: 1C5rxrxCxXq6q2D3Nm5sF7CHNMVlS3FddK8hPxV8DiCk
+    template: null
+    sections:
+      - Описание
+      - Допущения
+      - Продажи
+      - Меню и себестоимость
+      - Персонал
+      - OPEX
+      - CAPEX
+      - P&L
+      - Денежный поток
+      - Инвестиции
+      - Сценарии
+      - Чувствительность
+      - Недвижимость
+      - Производственный центр
+      - Источники
+      - Проверки
+    version: "0.1"
+    governance_level: working
+    local_path: docs-platform/working/financial-model.yaml
+    updated_at: 2026-08-16

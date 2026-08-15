@@ -1,13 +1,13 @@
 schema_version: 2
-generated_at: 2026-08-15T21:31:50.801Z
+generated_at: 2026-08-15T23:05:04.000Z
 project: Колобочная
 branch: master
-latest_timeline_event_id: EVT-ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01-COMMITTED
-latest_timeline_event_hash: ea3da82f96e2f813d1265968afb205356bd23841f11df798ae0f21ce7ba3f758
+latest_timeline_event_id: EVT-ITR-FINANCIAL-MODEL-2026-08-16-01-SYNCED
+latest_timeline_event_hash: d91307b7d95dc19090b2702324e012f08d2e0575f9672d2594fe007733b109e7
 latest_closed_iteration_id: ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01
 latest_iteration_tag: iteration/ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01
 latest_content_commit_hash: f67920077a9ba7b07cc20ecc7be34b72dee4b4a5
-registry_hash: 5102a3e5da0751c970a3d7b4a7536e1bdb0a51a1cfa9fe9354c6313c05759e23
+registry_hash: ac6e2d9de09be7d092a2b9917da7f5ecdf76d94462a9b025832572c52594021c
 canonical_document_hashes:
   - document_id: DOC-AGENTS
     local_path: docs-platform/AGENTS.md
@@ -49,6 +49,10 @@ canonical_document_hashes:
     local_path: docs-platform/working/capex-price-research.yaml
     sha256: b2b752f1822db8b529d58d822b83b32d44bcba9a0110ae35062d3b561f08249d
     status: research
+  - document_id: DOC-FINANCIAL-MODEL
+    local_path: docs-platform/working/financial-model.yaml
+    sha256: bb61e57b9b65ec2961f5d16a2065b5937d803a5772cdef172716ec952daf6bb4
+    status: research
   - document_id: DOC-FOUNDATION
     local_path: docs-platform/00-foundation.md
     sha256: 5b4d457184c055ba11f8c4d05cc263139d2eb4f623981bcdc198c0114a50c0bb
@@ -84,8 +88,8 @@ current_workstream: Refine Revenue Model section flow and daily-load card balanc
 next_task: Select the next task through a new governed proposal; no business task is pre-authorized.
 google_integration_status:
   configured: true
-  historical_receipts: 9
-  receipts_with_machine_readback_hash: 6
+  historical_receipts: 10
+  receipts_with_machine_readback_hash: 7
   live_drift_check: not_run_by_context_build
 mcp_status:
   implementation_present: true

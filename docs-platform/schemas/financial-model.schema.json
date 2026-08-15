@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "financial-model.schema.json",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "document",
+    "scope",
+    "imports",
+    "model",
+    "food_cost",
+    "packaging",
+    "staffing",
+    "opex",
+    "tax",
+    "real_estate",
+    "launch_investment",
+    "operating_reserve",
+    "depreciation",
+    "maintenance_capex",
+    "terminal",
+    "investment_metrics",
+    "sensitivity",
+    "google_sheet"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "document": {
+      "type": "object",
+      "required": ["id", "title", "title_ru", "google_title", "version", "status", "type", "iteration_id", "decision_id", "change_set_id", "source_ids", "note"],
+      "properties": {
+        "id": { "const": "DOC-FINANCIAL-MODEL" },
+        "title": { "const": "Financial Model" },
+        "title_ru": { "const": "Финансовая модель пилотного объекта" },
+        "google_title": { "const": "04 — Финансовая модель пилотного объекта" },
+        "version": { "const": "0.1" },
+        "status": { "const": "research" },
+        "type": { "const": "working_pilot_financial_model" },
+        "iteration_id": { "const": "ITR-FINANCIAL-MODEL-2026-08-16-01" },
+        "decision_id": { "const": "DEC-FINANCIAL-MODEL-2026-08-16-01" },
+        "change_set_id": { "const": "CHG-FINANCIAL-MODEL-2026-08-16-01" },
+        "source_ids": { "type": "array", "const": ["SRC-FINANCIAL-MODEL-BRIEF-2026-08-16"] },
+        "note": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "scope": { "type": "object", "required": ["object", "components", "consolidation_rule", "deferred"] },
+    "imports": {
+      "type": "object",
+      "required": ["revenue_model", "capex", "investor_start_model"],
+      "properties": {
+        "revenue_model": { "$ref": "#/$defs/import" },
+        "investor_start_model": { "$ref": "#/$defs/import" },
+        "capex": {
+          "type": "object",
+          "required": ["document_id", "snapshot_path", "content_state_sha256", "equipment_bom_path", "equipment_bom_sha256", "scenario", "bar_enabled", "grow_enabled", "alcohol_enabled", "excluded_item_ids", "excluded_item_prefixes", "control_total_rub_rounded", "provenance"],
+          "properties": {
+            "equipment_bom_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+            "scenario": { "const": "BASE" },
+            "bar_enabled": { "const": true },
+            "grow_enabled": { "const": true },
+            "alcohol_enabled": { "const": false },
+            "control_total_rub_rounded": { "const": 5298993 }
+          },
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "model": {
+      "type": "object",
+      "required": ["currency", "horizon_months", "detailed_months", "days_per_month", "default_sales_scenario", "default_real_estate_scenario", "default_tax_scenario", "default_contribution_scenario", "default_aggregator_share", "discount_rate_annual", "discount_rate_status"],
+      "properties": {
+        "currency": { "const": "RUB" },
+        "horizon_months": { "const": 60 },
+        "days_per_month": { "const": 30 },
+        "discount_rate_annual": { "const": 0.2 }
+      },
+      "additionalProperties": true
+    },
+    "food_cost": { "type": "object", "required": ["kolobok_segments", "manches", "drinks", "waste"] },
+    "packaging": { "type": "object", "required": ["baseline_checks_per_day", "baseline_monthly_rub", "sensitivity_monthly_rub", "scaling_formula", "provenance"] },
+    "staffing": { "type": "object", "required": ["roles", "employer_contributions", "personnel_reserve_rate", "personnel_reserve_basis"] },
+    "opex": { "type": "object", "required": ["entries"] },
+    "tax": { "type": "object", "required": ["scenarios", "management_proxy"] },
+    "real_estate": { "type": "object", "required": ["scenarios", "appreciation_default", "appreciation_sensitivity", "restaurant_ebitda_includes_appreciation"] },
+    "launch_investment": { "type": "object" },
+    "operating_reserve": { "type": "object" },
+    "depreciation": { "type": "object" },
+    "maintenance_capex": { "type": "object" },
+    "terminal": { "type": "object" },
+    "investment_metrics": { "type": "object" },
+    "sensitivity": { "type": "object" },
+    "google_sheet": {
+      "type": "object",
+      "required": ["folder_name", "title", "native_google_sheet", "sheets"],
+      "properties": {
+        "folder_name": { "const": "Колобочная — Investment" },
+        "title": { "const": "04 — Финансовая модель пилотного объекта" },
+        "native_google_sheet": { "const": true },
+        "sheets": { "type": "array", "minItems": 16, "maxItems": 16, "items": { "type": "string", "minLength": 1 }, "uniqueItems": true }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$defs": {
+    "import": {
+      "type": "object",
+      "required": ["document_id", "path", "provenance"],
+      "properties": {
+        "document_id": { "type": "string" },
+        "path": { "type": "string" },
+        "content_state_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "file_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "provenance": { "const": "imported_canonical" }
+      },
+      "additionalProperties": false,
+      "anyOf": [
+        { "required": ["content_state_sha256"] },
+        { "required": ["file_sha256"] }
+      ]
+    }
+  },
+  "additionalProperties": false
+}

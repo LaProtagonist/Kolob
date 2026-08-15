@@ -1,0 +1,5140 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "document_id": "DOC-FINANCIAL-MODEL",
+    "version": "0.1",
+    "status": "research",
+    "content_state": {
+      "schema_version": 1,
+      "source_files": [
+        {
+          "path": "docs-platform/working/financial-model.yaml",
+          "sha256": "3bdbcb787bcba4b625c152ce6c9071a45c8b3c527a89deb0a1a57749ac857164"
+        },
+        {
+          "path": "docs-platform/schemas/financial-model.schema.json",
+          "sha256": "a476fbc50670e93897b57fc3d002d6fbb6ecfdc213ef0f35a451266275737a4f"
+        },
+        {
+          "path": "docs-platform/schemas/financial-projection.schema.json",
+          "sha256": "51c9d4c832cc95c11098eb368521f88ff7986a3dfe5514866103984a9e9a7909"
+        },
+        {
+          "path": "docs-platform/app/src/financial/financial-model.ts",
+          "sha256": "d807c814bd7980f35eb25f443e8d3d127219e3fb323709601237248935f4e29e"
+        },
+        {
+          "path": "docs-platform/app/src/financial/google-sheet.ts",
+          "sha256": "8f196d6d614f302c265c2ffb61cd886630eb780701d8d67299f5ec2734919fad"
+        },
+        {
+          "path": "docs-platform/schemas/financial-google-sheets-payload.schema.json",
+          "sha256": "a04fe4655cf520552fc759624397b11637cebd492a8b58cdfc4c9b6eadec8e01"
+        },
+        {
+          "path": "docs-platform/working/revenue-model.yaml",
+          "sha256": "bb8f97c95b18024ed5c60aa2f71c3c44bf83e8e5932b1eb781c82c31f89817f8"
+        },
+        {
+          "path": "docs-platform/working/investor-start-model.yaml",
+          "sha256": "ac83ec0506b535b58078a2b111f6303fa6ee5548a09bbc65dbd254a36227efd3"
+        },
+        {
+          "path": "docs-platform/working/configurations/CFG-PILOT-001/equipment-bom.yaml",
+          "sha256": "b050658078cff37c8bed904d56dca1ba3e40570f4e13f795594c5f821cbd14f8"
+        },
+        {
+          "path": "src/content/capex-configurator-data.json",
+          "sha256": "7e578f410623f1ef49d29ffc8b0c5a301b484d327c0c893c0602d11d0f0684b4"
+        },
+        {
+          "path": "src/lib/capex-runtime.ts",
+          "sha256": "b4b2ff89e9f589d93d2ddc0e3909d59588bfb8c1aa09f8fbdcbb7ac428474501"
+        },
+        {
+          "path": "src/lib/launch-budget.ts",
+          "sha256": "e7e95edc79cfc8c9c0f5abad0e7e2b261d4d6687095668e743238203d43e32c8"
+        }
+      ],
+      "content_state_sha256": "18e56ce33cc19540ff9540d05a35c24284534fdfd89a6b74e59ff5a394980ae4"
+    },
+    "imported_revenue_content_state_sha256": "90727a6c51f959b617d6c972b898593a1b6dba6742d51b30bb75230f3f606c38",
+    "imported_capex_content_state_sha256": "a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239",
+    "imported_investor_start_model_sha256": "b81a6c4e8988a4532c9ba2749d492b3f96e37d83af822396afc82930244b2985",
+    "imported_equipment_bom_sha256": "d001d531247e1c64820a6bd00df1db755908d483358f5f677b3ca6acb6d8fa4a"
+  },
+  "derived_food_cost": {
+    "average_kolobok_cost_rub": 175.7625,
+    "average_food_portion_cost_rub": 177.01,
+    "manches_cost_rub": 182,
+    "drink_cost_rub": 30,
+    "drink_food_cost_rate": 0.10909090909090909
+  },
+  "launch_capital": {
+    "equipment_rub": 5298993.33,
+    "equipment_control_rub_rounded": 5298993,
+    "equipment_bom_configuration_id": "CFG-PILOT-001",
+    "equipment_active_module_ids": [
+      "MOD-BAR",
+      "MOD-ENGINEERING",
+      "MOD-GROW",
+      "MOD-GUEST",
+      "MOD-KDS",
+      "MOD-POS",
+      "MOD-PREP",
+      "MOD-RETAIL-HOT",
+      "MOD-STAFF",
+      "MOD-STORAGE",
+      "MOD-TAKEAWAY",
+      "MOD-WASH"
+    ],
+    "equipment_coverage_count": 47,
+    "equipment_unpriced_count": 0,
+    "equipment_quote_required_count": 23,
+    "furniture_rub": 425000,
+    "preparation_rub": 11000000,
+    "contingency_rub": 1672399.33,
+    "seat_count": 50,
+    "depreciation_assets": [
+      {
+        "item_id": "CAPEX-01-001",
+        "name": "Холодильная камера",
+        "amount_rub": 328655,
+        "category": "COLD_FREEZER",
+        "useful_life_years": 10,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-01-002",
+        "name": "Морозильная камера",
+        "amount_rub": 429679,
+        "category": "COLD_FREEZER",
+        "useful_life_years": 10,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-01-003",
+        "name": "Производственные столы из пищевой нержавеющей стали",
+        "amount_rub": 77688,
+        "category": "MAIN_KITCHEN",
+        "useful_life_years": 5,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-01-004",
+        "name": "Стол из пищевой нержавейки с отверстием для отходов",
+        "amount_rub": 24187,
+        "category": "MAIN_KITCHEN",
+        "useful_life_years": 5,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-01-005",
+        "name": "Настенные полки из пищевой нержавеющей стали",
+        "amount_rub": 9840,
+        "category": "MAIN_KITCHEN",
+        "useful_life_years": 5,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-01-006",
+        "name": "Стеллажи и подтоварники из нержавеющей стали",
+        "amount_rub": 64902,
+        "category": "MAIN_KITCHEN",
+        "useful_life_years": 5,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-01-007",
+        "name": "Стеллаж или шкаф для сушки и хранения чистого инвентаря",
+        "amount_rub": 25727,
+        "category": "MAIN_KITCHEN",
+        "useful_life_years": 5,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-01-008",
+        "name": "Урны и закрываемые контейнеры для отходов",
+        "amount_rub": 19014,
+        "category": "MAIN_KITCHEN",
+        "useful_life_years": 5,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-01-009",
+        "name": "Профессиональный пароконвектомат",
+        "amount_rub": 436564,
+        "category": "MAIN_KITCHEN",
+        "useful_life_years": 5,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-01-010",
+        "name": "Профессиональный аппарат су-вид",
+        "amount_rub": 121852,
+        "category": "MAIN_KITCHEN",
+        "useful_life_years": 5,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-01-011",
+        "name": "Профессиональная индукционная плита",
+        "amount_rub": 84752,
+        "category": "MAIN_KITCHEN",
+        "useful_life_years": 5,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-01-013",
+        "name": "Профессиональный вакуумный упаковщик",
+        "amount_rub": 69161,
+        "category": "MAIN_KITCHEN",
+        "useful_life_years": 5,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-01-014",
+        "name": "Robot Coupe или профессиональный аналог",
+        "amount_rub": 472582,
+        "category": "MAIN_KITCHEN",
+        "useful_life_years": 5,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-01-015",
+        "name": "Профессиональная электрическая мясорубка",
+        "amount_rub": 24253,
+        "category": "MAIN_KITCHEN",
+        "useful_life_years": 5,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-01-016",
+        "name": "Профессиональный кухонный блендер со стаканом",
+        "amount_rub": 60116,
+        "category": "MAIN_KITCHEN",
+        "useful_life_years": 5,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-01-017",
+        "name": "Профессиональный погружной блендер",
+        "amount_rub": 62832,
+        "category": "MAIN_KITCHEN",
+        "useful_life_years": 5,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-01-018",
+        "name": "Профессиональный планетарный миксер",
+        "amount_rub": 44704,
+        "category": "MAIN_KITCHEN",
+        "useful_life_years": 5,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-01-019",
+        "name": "Двухсекционная производственная мойка",
+        "amount_rub": 58798,
+        "category": "MAIN_KITCHEN",
+        "useful_life_years": 5,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-01-020",
+        "name": "Отдельная раковина для мытья рук персонала",
+        "amount_rub": 10943,
+        "category": "MAIN_KITCHEN",
+        "useful_life_years": 5,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-01-021",
+        "name": "Дозаторы моечной зоны",
+        "amount_rub": 6615,
+        "category": "MAIN_KITCHEN",
+        "useful_life_years": 5,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-01-022",
+        "name": "Производственные настольные весы",
+        "amount_rub": 22533,
+        "category": "MAIN_KITCHEN",
+        "useful_life_years": 5,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-01-023",
+        "name": "Точные порционные весы",
+        "amount_rub": 16448,
+        "category": "MAIN_KITCHEN",
+        "useful_life_years": 5,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-01-024",
+        "name": "Термощупы для продуктов",
+        "amount_rub": 612,
+        "category": "MAIN_KITCHEN",
+        "useful_life_years": 5,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-01-025",
+        "name": "Термометры для холодильной и морозильной камер",
+        "amount_rub": 1560,
+        "category": "MAIN_KITCHEN",
+        "useful_life_years": 5,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-01-026",
+        "name": "Производственные таймеры",
+        "amount_rub": 2536,
+        "category": "MAIN_KITCHEN",
+        "useful_life_years": 5,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-01-043",
+        "name": "Профессиональный льдогенератор повышенной производительности",
+        "amount_rub": 234270,
+        "category": "MAIN_KITCHEN",
+        "useful_life_years": 5,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-01-045",
+        "name": "Ёмкости или ванны для охлаждения продуктов во льду",
+        "amount_rub": 13700,
+        "category": "MAIN_KITCHEN",
+        "useful_life_years": 5,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-01-048",
+        "name": "Комплект мелкого инвентаря заготовочного цеха",
+        "amount_rub": 295020,
+        "category": "MAIN_KITCHEN",
+        "useful_life_years": 5,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-02-001",
+        "name": "Газовый гриль для колобков",
+        "amount_rub": 90000,
+        "category": "MAIN_KITCHEN",
+        "useful_life_years": 5,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-02-002",
+        "name": "Гриль для Манчеса",
+        "amount_rub": 60000,
+        "category": "MAIN_KITCHEN",
+        "useful_life_years": 5,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-02-003",
+        "name": "Профессиональные ручные шприцы или пистолеты-дозаторы",
+        "amount_rub": 240000,
+        "category": "MAIN_KITCHEN",
+        "useful_life_years": 5,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-02-004",
+        "name": "Холодильный стол-саладетта",
+        "amount_rub": 153287,
+        "category": "MAIN_KITCHEN",
+        "useful_life_years": 5,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-02-005",
+        "name": "Пластиковые гастроёмкости и контейнеры с плотными крышками",
+        "amount_rub": 9648,
+        "category": "MAIN_KITCHEN",
+        "useful_life_years": 5,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-02-006",
+        "name": "Столы под горячее оборудование",
+        "amount_rub": 40640,
+        "category": "MAIN_KITCHEN",
+        "useful_life_years": 5,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-02-007",
+        "name": "Стол для сортировки и сборки заказов",
+        "amount_rub": 20320,
+        "category": "MAIN_KITCHEN",
+        "useful_life_years": 5,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-02-008",
+        "name": "Стол для сервировки и выдачи",
+        "amount_rub": 20320,
+        "category": "MAIN_KITCHEN",
+        "useful_life_years": 5,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-02-009",
+        "name": "Стеллажи для хранения чистой посуды и рабочего инвентаря",
+        "amount_rub": 64902,
+        "category": "MAIN_KITCHEN",
+        "useful_life_years": 5,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-02-010",
+        "name": "Профессиональная post-mix система для лимонадов",
+        "amount_rub": 199000,
+        "category": "MAIN_KITCHEN",
+        "useful_life_years": 5,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-02-011",
+        "name": "Кеги для собственных сиропов",
+        "amount_rub": 84640,
+        "category": "MAIN_KITCHEN",
+        "useful_life_years": 5,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-02-012",
+        "name": "Профессиональные энергоэффективные термопоты",
+        "amount_rub": 17072,
+        "category": "MAIN_KITCHEN",
+        "useful_life_years": 5,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-02-056",
+        "name": "Комплект мелкого инвентаря торговой кухни",
+        "amount_rub": 309760,
+        "category": "MAIN_KITCHEN",
+        "useful_life_years": 5,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-02-057",
+        "name": "Комплект базового барного инвентаря",
+        "amount_rub": 122760,
+        "category": "MAIN_KITCHEN",
+        "useful_life_years": 5,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-03-001",
+        "name": "Многоярусная стойка",
+        "amount_rub": 258000,
+        "category": "GROW",
+        "useful_life_years": 5,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-04-001",
+        "name": "Кассовые POS-терминалы",
+        "amount_rub": 95000,
+        "category": "POS_KDS_IT_SMALL",
+        "useful_life_years": 3,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-04-002",
+        "name": "Терминал складского и производственного учёта в заготовочном цехе",
+        "amount_rub": 47500,
+        "category": "POS_KDS_IT_SMALL",
+        "useful_life_years": 3,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-04-003",
+        "name": "KDS-экраны или закреплённые планшеты",
+        "amount_rub": 142500,
+        "category": "POS_KDS_IT_SMALL",
+        "useful_life_years": 3,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "CAPEX-08-001",
+        "name": "Комплект профессиональной посудомоечной зоны",
+        "amount_rub": 304101.33,
+        "category": "MAIN_KITCHEN",
+        "useful_life_years": 5,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "FURNITURE",
+        "name": "Мебель посадочного зала",
+        "amount_rub": 425000,
+        "category": "FURNITURE",
+        "useful_life_years": 5,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "PREP-ENGINEERING",
+        "name": "Инженерные системы подготовки помещения",
+        "amount_rub": 4900000,
+        "category": "ENGINEERING",
+        "useful_life_years": 10,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "PREP-FIT-OUT",
+        "name": "Подготовка помещения / fit-out",
+        "amount_rub": 6100000,
+        "category": "FIT_OUT",
+        "useful_life_years": 7,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "LAUNCH-VIDEO",
+        "name": "Видеонаблюдение",
+        "amount_rub": 70000,
+        "category": "POS_KDS_IT_SMALL",
+        "useful_life_years": 3,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "LAUNCH-ALARM",
+        "name": "Охранная сигнализация",
+        "amount_rub": 35000,
+        "category": "POS_KDS_IT_SMALL",
+        "useful_life_years": 3,
+        "mapping_status": "mapped"
+      }
+    ],
+    "monthly_depreciation_rub": 208616.15,
+    "mapping_requires_review_count": 0
+  },
+  "scenarios": {
+    "rent": {
+      "pessimistic": {
+        "scenario": "pessimistic",
+        "checks_per_day": 200,
+        "average_check_rub": 1165.4,
+        "gross_revenue_rub": 6992400,
+        "vat_rub": 0,
+        "net_revenue_rub": 6992400,
+        "food_portions_per_month": 8400,
+        "drinks_per_month": 6000,
+        "raw_materials_rub": 1666884,
+        "waste_rub": 66675.36,
+        "packaging_rub": 166666.67,
+        "gross_profit_rub": 5092173.97,
+        "gross_margin": 0.728244089773659,
+        "staffing": {
+          "headcount": 16,
+          "payroll_rub": 1810000,
+          "employer_contributions_rub": 369034.8,
+          "personnel_reserve_rub": 217903.48,
+          "total_labor_rub": 2396938.28,
+          "rows": [
+            {
+              "id": "SOUS_CHEF",
+              "role": "Су-шеф",
+              "headcount": 1,
+              "gross_salary_rub": 150000,
+              "payroll_rub": 150000,
+              "schedule": "5/2, 8 часов",
+              "function": "Кухня, качество, стандарты, заготовки, остатки, обучение и усиление основной линии в пик."
+            },
+            {
+              "id": "PREP_COOK",
+              "role": "Повар-заготовщик",
+              "headcount": 2,
+              "gross_salary_rub": 120000,
+              "payroll_rub": 240000,
+              "schedule": "сменный",
+              "function": "Заготовочное производство."
+            },
+            {
+              "id": "LINE_COOK",
+              "role": "Повар основной линии",
+              "headcount": 4,
+              "gross_salary_rub": 115000,
+              "payroll_rub": 460000,
+              "schedule": "сменный, 2 одновременно",
+              "function": "Основная горячая линия."
+            },
+            {
+              "id": "SERVING",
+              "role": "Сервировка",
+              "headcount": 2,
+              "gross_salary_rub": 95000,
+              "payroll_rub": 190000,
+              "schedule": "сменный, 1 одновременно",
+              "function": "Сервировка и выдача; усиление другими сотрудниками при высокой нагрузке."
+            },
+            {
+              "id": "CASHIER_BAR",
+              "role": "Кассир / бар",
+              "headcount": 2,
+              "gross_salary_rub": 95000,
+              "payroll_rub": 190000,
+              "schedule": "сменный",
+              "function": "Касса и бар."
+            },
+            {
+              "id": "ADMINISTRATOR",
+              "role": "Администратор",
+              "headcount": 2,
+              "gross_salary_rub": 125000,
+              "payroll_rub": 250000,
+              "schedule": "сменный",
+              "function": "Зал, смена, сервис, касса, бар и помощь операционной работе в пик."
+            },
+            {
+              "id": "TECHNICAL",
+              "role": "Технический сотрудник / мойщик",
+              "headcount": 2,
+              "gross_salary_rub": 90000,
+              "payroll_rub": 180000,
+              "schedule": "сменный",
+              "function": "Мойка, уборка, движение сырья и отходов."
+            },
+            {
+              "id": "MANAGER",
+              "role": "Управляющий",
+              "headcount": 1,
+              "gross_salary_rub": 150000,
+              "payroll_rub": 150000,
+              "schedule": "5/2",
+              "function": "Поставщики, экономика точки, объект, подрядчики, бухгалтерия, локальный маркетинг, SMM, остатки и списания."
+            }
+          ]
+        },
+        "labor_rub": 2396938.28,
+        "rent_rub": 350000,
+        "acquiring_rub": 139848,
+        "aggregator_rub": 0,
+        "fixed_opex_without_labor_rent_rub": 679500,
+        "opex_entries_rub": {
+          "UTILITIES": 200000,
+          "ADVERTISING": 100000,
+          "SMM": 50000,
+          "EQUIPMENT_SERVICE": 100000,
+          "HOUSEHOLD": 80000,
+          "ACCOUNTING": 25000,
+          "VENT_GREASE": 15000,
+          "UNIFORM_RENEWAL": 15000,
+          "MUSIC_RIGHTS": 7000,
+          "PEST": 6000,
+          "YUMA": 6000,
+          "MEDICAL": 5000,
+          "SECURITY_MONITORING": 4000,
+          "BANKING": 0,
+          "OTHER": 66500
+        },
+        "ebitda_rub": 1525887.69,
+        "ebitda_margin": 0.21822088171919993,
+        "depreciation_rub": 208616.15,
+        "ebit_rub": 1317271.54,
+        "taxable_base_management_proxy_rub": 1743791.17,
+        "regular_usn_rub": 122065.38,
+        "minimum_usn_rub": 69924,
+        "tax_due_rub": 122065.38,
+        "net_operating_result_rub": 1195206.16,
+        "maintenance_capex_rub": 14309.98,
+        "operating_free_cash_flow_rub": 1389512.33,
+        "fixed_opex_reserve_rub": 18458629.68,
+        "full_operating_reserve_rub": 31431466.13,
+        "initial_inventory_rub": 1000000,
+        "capex": {
+          "equipment_rub": 5298993.33,
+          "equipment_control_rub_rounded": 5298993,
+          "equipment_bom_configuration_id": "CFG-PILOT-001",
+          "equipment_active_module_ids": [
+            "MOD-BAR",
+            "MOD-ENGINEERING",
+            "MOD-GROW",
+            "MOD-GUEST",
+            "MOD-KDS",
+            "MOD-POS",
+            "MOD-PREP",
+            "MOD-RETAIL-HOT",
+            "MOD-STAFF",
+            "MOD-STORAGE",
+            "MOD-TAKEAWAY",
+            "MOD-WASH"
+          ],
+          "equipment_coverage_count": 47,
+          "equipment_unpriced_count": 0,
+          "equipment_quote_required_count": 23,
+          "furniture_rub": 425000,
+          "preparation_rub": 11000000,
+          "contingency_rub": 1672399.33,
+          "seat_count": 50,
+          "depreciation_assets": [
+            {
+              "item_id": "CAPEX-01-001",
+              "name": "Холодильная камера",
+              "amount_rub": 328655,
+              "category": "COLD_FREEZER",
+              "useful_life_years": 10,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-002",
+              "name": "Морозильная камера",
+              "amount_rub": 429679,
+              "category": "COLD_FREEZER",
+              "useful_life_years": 10,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-003",
+              "name": "Производственные столы из пищевой нержавеющей стали",
+              "amount_rub": 77688,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-004",
+              "name": "Стол из пищевой нержавейки с отверстием для отходов",
+              "amount_rub": 24187,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-005",
+              "name": "Настенные полки из пищевой нержавеющей стали",
+              "amount_rub": 9840,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-006",
+              "name": "Стеллажи и подтоварники из нержавеющей стали",
+              "amount_rub": 64902,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-007",
+              "name": "Стеллаж или шкаф для сушки и хранения чистого инвентаря",
+              "amount_rub": 25727,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-008",
+              "name": "Урны и закрываемые контейнеры для отходов",
+              "amount_rub": 19014,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-009",
+              "name": "Профессиональный пароконвектомат",
+              "amount_rub": 436564,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-010",
+              "name": "Профессиональный аппарат су-вид",
+              "amount_rub": 121852,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-011",
+              "name": "Профессиональная индукционная плита",
+              "amount_rub": 84752,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-013",
+              "name": "Профессиональный вакуумный упаковщик",
+              "amount_rub": 69161,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-014",
+              "name": "Robot Coupe или профессиональный аналог",
+              "amount_rub": 472582,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-015",
+              "name": "Профессиональная электрическая мясорубка",
+              "amount_rub": 24253,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-016",
+              "name": "Профессиональный кухонный блендер со стаканом",
+              "amount_rub": 60116,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-017",
+              "name": "Профессиональный погружной блендер",
+              "amount_rub": 62832,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-018",
+              "name": "Профессиональный планетарный миксер",
+              "amount_rub": 44704,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-019",
+              "name": "Двухсекционная производственная мойка",
+              "amount_rub": 58798,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-020",
+              "name": "Отдельная раковина для мытья рук персонала",
+              "amount_rub": 10943,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-021",
+              "name": "Дозаторы моечной зоны",
+              "amount_rub": 6615,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-022",
+              "name": "Производственные настольные весы",
+              "amount_rub": 22533,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-023",
+              "name": "Точные порционные весы",
+              "amount_rub": 16448,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-024",
+              "name": "Термощупы для продуктов",
+              "amount_rub": 612,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-025",
+              "name": "Термометры для холодильной и морозильной камер",
+              "amount_rub": 1560,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-026",
+              "name": "Производственные таймеры",
+              "amount_rub": 2536,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-043",
+              "name": "Профессиональный льдогенератор повышенной производительности",
+              "amount_rub": 234270,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-045",
+              "name": "Ёмкости или ванны для охлаждения продуктов во льду",
+              "amount_rub": 13700,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-048",
+              "name": "Комплект мелкого инвентаря заготовочного цеха",
+              "amount_rub": 295020,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-001",
+              "name": "Газовый гриль для колобков",
+              "amount_rub": 90000,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-002",
+              "name": "Гриль для Манчеса",
+              "amount_rub": 60000,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-003",
+              "name": "Профессиональные ручные шприцы или пистолеты-дозаторы",
+              "amount_rub": 240000,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-004",
+              "name": "Холодильный стол-саладетта",
+              "amount_rub": 153287,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-005",
+              "name": "Пластиковые гастроёмкости и контейнеры с плотными крышками",
+              "amount_rub": 9648,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-006",
+              "name": "Столы под горячее оборудование",
+              "amount_rub": 40640,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-007",
+              "name": "Стол для сортировки и сборки заказов",
+              "amount_rub": 20320,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-008",
+              "name": "Стол для сервировки и выдачи",
+              "amount_rub": 20320,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-009",
+              "name": "Стеллажи для хранения чистой посуды и рабочего инвентаря",
+              "amount_rub": 64902,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-010",
+              "name": "Профессиональная post-mix система для лимонадов",
+              "amount_rub": 199000,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-011",
+              "name": "Кеги для собственных сиропов",
+              "amount_rub": 84640,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-012",
+              "name": "Профессиональные энергоэффективные термопоты",
+              "amount_rub": 17072,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-056",
+              "name": "Комплект мелкого инвентаря торговой кухни",
+              "amount_rub": 309760,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-057",
+              "name": "Комплект базового барного инвентаря",
+              "amount_rub": 122760,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-03-001",
+              "name": "Многоярусная стойка",
+              "amount_rub": 258000,
+              "category": "GROW",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-04-001",
+              "name": "Кассовые POS-терминалы",
+              "amount_rub": 95000,
+              "category": "POS_KDS_IT_SMALL",
+              "useful_life_years": 3,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-04-002",
+              "name": "Терминал складского и производственного учёта в заготовочном цехе",
+              "amount_rub": 47500,
+              "category": "POS_KDS_IT_SMALL",
+              "useful_life_years": 3,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-04-003",
+              "name": "KDS-экраны или закреплённые планшеты",
+              "amount_rub": 142500,
+              "category": "POS_KDS_IT_SMALL",
+              "useful_life_years": 3,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-08-001",
+              "name": "Комплект профессиональной посудомоечной зоны",
+              "amount_rub": 304101.33,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "FURNITURE",
+              "name": "Мебель посадочного зала",
+              "amount_rub": 425000,
+              "category": "FURNITURE",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-ENGINEERING",
+              "name": "Инженерные системы подготовки помещения",
+              "amount_rub": 4900000,
+              "category": "ENGINEERING",
+              "useful_life_years": 10,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-FIT-OUT",
+              "name": "Подготовка помещения / fit-out",
+              "amount_rub": 6100000,
+              "category": "FIT_OUT",
+              "useful_life_years": 7,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "LAUNCH-VIDEO",
+              "name": "Видеонаблюдение",
+              "amount_rub": 70000,
+              "category": "POS_KDS_IT_SMALL",
+              "useful_life_years": 3,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "LAUNCH-ALARM",
+              "name": "Охранная сигнализация",
+              "amount_rub": 35000,
+              "category": "POS_KDS_IT_SMALL",
+              "useful_life_years": 3,
+              "mapping_status": "mapped"
+            }
+          ],
+          "monthly_depreciation_rub": 208616.15,
+          "mapping_requires_review_count": 0
+        },
+        "restaurant_invested_capital_rub": 43040022.34,
+        "real_estate_investment_rub": 0,
+        "total_invested_capital_rub": 43040022.34,
+        "break_even_revenue_rub": 4907221.31,
+        "break_even_checks_per_day": 140.36,
+        "restaurant_payback_month": 28,
+        "restaurant_roi_annual": 0.38741029922378467,
+        "restaurant_irr_annual": 0.40471740448212357,
+        "restaurant_npv_rub": 15056815.29,
+        "property_appreciation": 0,
+        "property_residual_value_rub": 0,
+        "real_estate_return": null,
+        "real_estate_irr_annual": null,
+        "combined_payback_month": 28,
+        "combined_irr_annual": 0.40471740448212357,
+        "combined_npv_rub": 15056815.29,
+        "restaurant_cash_flows": [
+          -43040022.34,
+          1739512.33,
+          1739512.33,
+          1739512.33,
+          1739512.33,
+          1739512.33,
+          1739512.33,
+          1739512.33,
+          1739512.33,
+          1739512.33,
+          1739512.33,
+          1739512.33,
+          1739512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33
+        ],
+        "combined_cash_flows": [
+          -43040022.34,
+          1739512.33,
+          1739512.33,
+          1739512.33,
+          1739512.33,
+          1739512.33,
+          1739512.33,
+          1739512.33,
+          1739512.33,
+          1739512.33,
+          1739512.33,
+          1739512.33,
+          1739512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33,
+          1389512.33
+        ],
+        "tax_scenario": "base",
+        "contribution_scenario": "reduced",
+        "real_estate_scenario": "rent",
+        "aggregator_share": 0
+      },
+      "realistic": {
+        "scenario": "realistic",
+        "checks_per_day": 300,
+        "average_check_rub": 1165.4,
+        "gross_revenue_rub": 10488600,
+        "vat_rub": 0,
+        "net_revenue_rub": 10488600,
+        "food_portions_per_month": 12600,
+        "drinks_per_month": 9000,
+        "raw_materials_rub": 2500326,
+        "waste_rub": 100013.04,
+        "packaging_rub": 250000,
+        "gross_profit_rub": 7638260.96,
+        "gross_margin": 0.7282440897736591,
+        "staffing": {
+          "headcount": 16,
+          "payroll_rub": 1810000,
+          "employer_contributions_rub": 369034.8,
+          "personnel_reserve_rub": 217903.48,
+          "total_labor_rub": 2396938.28,
+          "rows": [
+            {
+              "id": "SOUS_CHEF",
+              "role": "Су-шеф",
+              "headcount": 1,
+              "gross_salary_rub": 150000,
+              "payroll_rub": 150000,
+              "schedule": "5/2, 8 часов",
+              "function": "Кухня, качество, стандарты, заготовки, остатки, обучение и усиление основной линии в пик."
+            },
+            {
+              "id": "PREP_COOK",
+              "role": "Повар-заготовщик",
+              "headcount": 2,
+              "gross_salary_rub": 120000,
+              "payroll_rub": 240000,
+              "schedule": "сменный",
+              "function": "Заготовочное производство."
+            },
+            {
+              "id": "LINE_COOK",
+              "role": "Повар основной линии",
+              "headcount": 4,
+              "gross_salary_rub": 115000,
+              "payroll_rub": 460000,
+              "schedule": "сменный, 2 одновременно",
+              "function": "Основная горячая линия."
+            },
+            {
+              "id": "SERVING",
+              "role": "Сервировка",
+              "headcount": 2,
+              "gross_salary_rub": 95000,
+              "payroll_rub": 190000,
+              "schedule": "сменный, 1 одновременно",
+              "function": "Сервировка и выдача; усиление другими сотрудниками при высокой нагрузке."
+            },
+            {
+              "id": "CASHIER_BAR",
+              "role": "Кассир / бар",
+              "headcount": 2,
+              "gross_salary_rub": 95000,
+              "payroll_rub": 190000,
+              "schedule": "сменный",
+              "function": "Касса и бар."
+            },
+            {
+              "id": "ADMINISTRATOR",
+              "role": "Администратор",
+              "headcount": 2,
+              "gross_salary_rub": 125000,
+              "payroll_rub": 250000,
+              "schedule": "сменный",
+              "function": "Зал, смена, сервис, касса, бар и помощь операционной работе в пик."
+            },
+            {
+              "id": "TECHNICAL",
+              "role": "Технический сотрудник / мойщик",
+              "headcount": 2,
+              "gross_salary_rub": 90000,
+              "payroll_rub": 180000,
+              "schedule": "сменный",
+              "function": "Мойка, уборка, движение сырья и отходов."
+            },
+            {
+              "id": "MANAGER",
+              "role": "Управляющий",
+              "headcount": 1,
+              "gross_salary_rub": 150000,
+              "payroll_rub": 150000,
+              "schedule": "5/2",
+              "function": "Поставщики, экономика точки, объект, подрядчики, бухгалтерия, локальный маркетинг, SMM, остатки и списания."
+            }
+          ]
+        },
+        "labor_rub": 2396938.28,
+        "rent_rub": 350000,
+        "acquiring_rub": 209772,
+        "aggregator_rub": 0,
+        "fixed_opex_without_labor_rent_rub": 679500,
+        "opex_entries_rub": {
+          "UTILITIES": 200000,
+          "ADVERTISING": 100000,
+          "SMM": 50000,
+          "EQUIPMENT_SERVICE": 100000,
+          "HOUSEHOLD": 80000,
+          "ACCOUNTING": 25000,
+          "VENT_GREASE": 15000,
+          "UNIFORM_RENEWAL": 15000,
+          "MUSIC_RIGHTS": 7000,
+          "PEST": 6000,
+          "YUMA": 6000,
+          "MEDICAL": 5000,
+          "SECURITY_MONITORING": 4000,
+          "BANKING": 0,
+          "OTHER": 66500
+        },
+        "ebitda_rub": 4002050.68,
+        "ebitda_margin": 0.38156195107068624,
+        "depreciation_rub": 208616.15,
+        "ebit_rub": 3793434.53,
+        "taxable_base_management_proxy_rub": 4219954.16,
+        "regular_usn_rub": 295396.79,
+        "minimum_usn_rub": 104886,
+        "tax_due_rub": 295396.79,
+        "net_operating_result_rub": 3498037.74,
+        "maintenance_capex_rub": 14309.98,
+        "operating_free_cash_flow_rub": 3692343.91,
+        "fixed_opex_reserve_rub": 18458629.68,
+        "full_operating_reserve_rub": 38591676.67,
+        "initial_inventory_rub": 1000000,
+        "capex": {
+          "equipment_rub": 5298993.33,
+          "equipment_control_rub_rounded": 5298993,
+          "equipment_bom_configuration_id": "CFG-PILOT-001",
+          "equipment_active_module_ids": [
+            "MOD-BAR",
+            "MOD-ENGINEERING",
+            "MOD-GROW",
+            "MOD-GUEST",
+            "MOD-KDS",
+            "MOD-POS",
+            "MOD-PREP",
+            "MOD-RETAIL-HOT",
+            "MOD-STAFF",
+            "MOD-STORAGE",
+            "MOD-TAKEAWAY",
+            "MOD-WASH"
+          ],
+          "equipment_coverage_count": 47,
+          "equipment_unpriced_count": 0,
+          "equipment_quote_required_count": 23,
+          "furniture_rub": 425000,
+          "preparation_rub": 11000000,
+          "contingency_rub": 1672399.33,
+          "seat_count": 50,
+          "depreciation_assets": [
+            {
+              "item_id": "CAPEX-01-001",
+              "name": "Холодильная камера",
+              "amount_rub": 328655,
+              "category": "COLD_FREEZER",
+              "useful_life_years": 10,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-002",
+              "name": "Морозильная камера",
+              "amount_rub": 429679,
+              "category": "COLD_FREEZER",
+              "useful_life_years": 10,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-003",
+              "name": "Производственные столы из пищевой нержавеющей стали",
+              "amount_rub": 77688,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-004",
+              "name": "Стол из пищевой нержавейки с отверстием для отходов",
+              "amount_rub": 24187,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-005",
+              "name": "Настенные полки из пищевой нержавеющей стали",
+              "amount_rub": 9840,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-006",
+              "name": "Стеллажи и подтоварники из нержавеющей стали",
+              "amount_rub": 64902,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-007",
+              "name": "Стеллаж или шкаф для сушки и хранения чистого инвентаря",
+              "amount_rub": 25727,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-008",
+              "name": "Урны и закрываемые контейнеры для отходов",
+              "amount_rub": 19014,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-009",
+              "name": "Профессиональный пароконвектомат",
+              "amount_rub": 436564,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-010",
+              "name": "Профессиональный аппарат су-вид",
+              "amount_rub": 121852,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-011",
+              "name": "Профессиональная индукционная плита",
+              "amount_rub": 84752,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-013",
+              "name": "Профессиональный вакуумный упаковщик",
+              "amount_rub": 69161,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-014",
+              "name": "Robot Coupe или профессиональный аналог",
+              "amount_rub": 472582,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-015",
+              "name": "Профессиональная электрическая мясорубка",
+              "amount_rub": 24253,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-016",
+              "name": "Профессиональный кухонный блендер со стаканом",
+              "amount_rub": 60116,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-017",
+              "name": "Профессиональный погружной блендер",
+              "amount_rub": 62832,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-018",
+              "name": "Профессиональный планетарный миксер",
+              "amount_rub": 44704,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-019",
+              "name": "Двухсекционная производственная мойка",
+              "amount_rub": 58798,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-020",
+              "name": "Отдельная раковина для мытья рук персонала",
+              "amount_rub": 10943,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-021",
+              "name": "Дозаторы моечной зоны",
+              "amount_rub": 6615,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-022",
+              "name": "Производственные настольные весы",
+              "amount_rub": 22533,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-023",
+              "name": "Точные порционные весы",
+              "amount_rub": 16448,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-024",
+              "name": "Термощупы для продуктов",
+              "amount_rub": 612,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-025",
+              "name": "Термометры для холодильной и морозильной камер",
+              "amount_rub": 1560,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-026",
+              "name": "Производственные таймеры",
+              "amount_rub": 2536,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-043",
+              "name": "Профессиональный льдогенератор повышенной производительности",
+              "amount_rub": 234270,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-045",
+              "name": "Ёмкости или ванны для охлаждения продуктов во льду",
+              "amount_rub": 13700,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-048",
+              "name": "Комплект мелкого инвентаря заготовочного цеха",
+              "amount_rub": 295020,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-001",
+              "name": "Газовый гриль для колобков",
+              "amount_rub": 90000,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-002",
+              "name": "Гриль для Манчеса",
+              "amount_rub": 60000,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-003",
+              "name": "Профессиональные ручные шприцы или пистолеты-дозаторы",
+              "amount_rub": 240000,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-004",
+              "name": "Холодильный стол-саладетта",
+              "amount_rub": 153287,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-005",
+              "name": "Пластиковые гастроёмкости и контейнеры с плотными крышками",
+              "amount_rub": 9648,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-006",
+              "name": "Столы под горячее оборудование",
+              "amount_rub": 40640,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-007",
+              "name": "Стол для сортировки и сборки заказов",
+              "amount_rub": 20320,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-008",
+              "name": "Стол для сервировки и выдачи",
+              "amount_rub": 20320,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-009",
+              "name": "Стеллажи для хранения чистой посуды и рабочего инвентаря",
+              "amount_rub": 64902,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-010",
+              "name": "Профессиональная post-mix система для лимонадов",
+              "amount_rub": 199000,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-011",
+              "name": "Кеги для собственных сиропов",
+              "amount_rub": 84640,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-012",
+              "name": "Профессиональные энергоэффективные термопоты",
+              "amount_rub": 17072,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-056",
+              "name": "Комплект мелкого инвентаря торговой кухни",
+              "amount_rub": 309760,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-057",
+              "name": "Комплект базового барного инвентаря",
+              "amount_rub": 122760,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-03-001",
+              "name": "Многоярусная стойка",
+              "amount_rub": 258000,
+              "category": "GROW",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-04-001",
+              "name": "Кассовые POS-терминалы",
+              "amount_rub": 95000,
+              "category": "POS_KDS_IT_SMALL",
+              "useful_life_years": 3,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-04-002",
+              "name": "Терминал складского и производственного учёта в заготовочном цехе",
+              "amount_rub": 47500,
+              "category": "POS_KDS_IT_SMALL",
+              "useful_life_years": 3,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-04-003",
+              "name": "KDS-экраны или закреплённые планшеты",
+              "amount_rub": 142500,
+              "category": "POS_KDS_IT_SMALL",
+              "useful_life_years": 3,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-08-001",
+              "name": "Комплект профессиональной посудомоечной зоны",
+              "amount_rub": 304101.33,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "FURNITURE",
+              "name": "Мебель посадочного зала",
+              "amount_rub": 425000,
+              "category": "FURNITURE",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-ENGINEERING",
+              "name": "Инженерные системы подготовки помещения",
+              "amount_rub": 4900000,
+              "category": "ENGINEERING",
+              "useful_life_years": 10,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-FIT-OUT",
+              "name": "Подготовка помещения / fit-out",
+              "amount_rub": 6100000,
+              "category": "FIT_OUT",
+              "useful_life_years": 7,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "LAUNCH-VIDEO",
+              "name": "Видеонаблюдение",
+              "amount_rub": 70000,
+              "category": "POS_KDS_IT_SMALL",
+              "useful_life_years": 3,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "LAUNCH-ALARM",
+              "name": "Охранная сигнализация",
+              "amount_rub": 35000,
+              "category": "POS_KDS_IT_SMALL",
+              "useful_life_years": 3,
+              "mapping_status": "mapped"
+            }
+          ],
+          "monthly_depreciation_rub": 208616.15,
+          "mapping_requires_review_count": 0
+        },
+        "restaurant_invested_capital_rub": 43040022.34,
+        "real_estate_investment_rub": 0,
+        "total_invested_capital_rub": 43040022.34,
+        "break_even_revenue_rub": 4907221.31,
+        "break_even_checks_per_day": 140.36,
+        "restaurant_payback_month": 11,
+        "restaurant_roi_annual": 1.029463379749064,
+        "restaurant_irr_annual": 1.8305365233082607,
+        "restaurant_npv_rub": 105025649.67,
+        "property_appreciation": 0,
+        "property_residual_value_rub": 0,
+        "real_estate_return": null,
+        "real_estate_irr_annual": null,
+        "combined_payback_month": 11,
+        "combined_irr_annual": 1.8305365233082607,
+        "combined_npv_rub": 105025649.67,
+        "restaurant_cash_flows": [
+          -43040022.34,
+          4042343.91,
+          4042343.91,
+          4042343.91,
+          4042343.91,
+          4042343.91,
+          4042343.91,
+          4042343.91,
+          4042343.91,
+          4042343.91,
+          4042343.91,
+          4042343.91,
+          4042343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91
+        ],
+        "combined_cash_flows": [
+          -43040022.34,
+          4042343.91,
+          4042343.91,
+          4042343.91,
+          4042343.91,
+          4042343.91,
+          4042343.91,
+          4042343.91,
+          4042343.91,
+          4042343.91,
+          4042343.91,
+          4042343.91,
+          4042343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91,
+          3692343.91
+        ],
+        "tax_scenario": "base",
+        "contribution_scenario": "reduced",
+        "real_estate_scenario": "rent",
+        "aggregator_share": 0
+      },
+      "optimistic": {
+        "scenario": "optimistic",
+        "checks_per_day": 450,
+        "average_check_rub": 1165.4,
+        "gross_revenue_rub": 15732900,
+        "vat_rub": 0,
+        "net_revenue_rub": 15732900,
+        "food_portions_per_month": 18900,
+        "drinks_per_month": 13500,
+        "raw_materials_rub": 3750489,
+        "waste_rub": 150019.56,
+        "packaging_rub": 375000,
+        "gross_profit_rub": 11457391.44,
+        "gross_margin": 0.7282440897736591,
+        "staffing": {
+          "headcount": 20,
+          "payroll_rub": 2230000,
+          "employer_contributions_rub": 456418.5,
+          "personnel_reserve_rub": 268641.85,
+          "total_labor_rub": 2955060.35,
+          "rows": [
+            {
+              "id": "SOUS_CHEF",
+              "role": "Су-шеф",
+              "headcount": 1,
+              "gross_salary_rub": 150000,
+              "payroll_rub": 150000,
+              "schedule": "5/2, 8 часов",
+              "function": "Кухня, качество, стандарты, заготовки, остатки, обучение и усиление основной линии в пик."
+            },
+            {
+              "id": "PREP_COOK",
+              "role": "Повар-заготовщик",
+              "headcount": 4,
+              "gross_salary_rub": 120000,
+              "payroll_rub": 480000,
+              "schedule": "сменный",
+              "function": "Заготовочное производство."
+            },
+            {
+              "id": "LINE_COOK",
+              "role": "Повар основной линии",
+              "headcount": 4,
+              "gross_salary_rub": 115000,
+              "payroll_rub": 460000,
+              "schedule": "сменный, 2 одновременно",
+              "function": "Основная горячая линия."
+            },
+            {
+              "id": "SERVING",
+              "role": "Сервировка",
+              "headcount": 2,
+              "gross_salary_rub": 95000,
+              "payroll_rub": 190000,
+              "schedule": "сменный, 1 одновременно",
+              "function": "Сервировка и выдача; усиление другими сотрудниками при высокой нагрузке."
+            },
+            {
+              "id": "CASHIER_BAR",
+              "role": "Кассир / бар",
+              "headcount": 2,
+              "gross_salary_rub": 95000,
+              "payroll_rub": 190000,
+              "schedule": "сменный",
+              "function": "Касса и бар."
+            },
+            {
+              "id": "ADMINISTRATOR",
+              "role": "Администратор",
+              "headcount": 2,
+              "gross_salary_rub": 125000,
+              "payroll_rub": 250000,
+              "schedule": "сменный",
+              "function": "Зал, смена, сервис, касса, бар и помощь операционной работе в пик."
+            },
+            {
+              "id": "TECHNICAL",
+              "role": "Технический сотрудник / мойщик",
+              "headcount": 4,
+              "gross_salary_rub": 90000,
+              "payroll_rub": 360000,
+              "schedule": "сменный",
+              "function": "Мойка, уборка, движение сырья и отходов."
+            },
+            {
+              "id": "MANAGER",
+              "role": "Управляющий",
+              "headcount": 1,
+              "gross_salary_rub": 150000,
+              "payroll_rub": 150000,
+              "schedule": "5/2",
+              "function": "Поставщики, экономика точки, объект, подрядчики, бухгалтерия, локальный маркетинг, SMM, остатки и списания."
+            }
+          ]
+        },
+        "labor_rub": 2955060.35,
+        "rent_rub": 350000,
+        "acquiring_rub": 314658,
+        "aggregator_rub": 0,
+        "fixed_opex_without_labor_rent_rub": 679500,
+        "opex_entries_rub": {
+          "UTILITIES": 200000,
+          "ADVERTISING": 100000,
+          "SMM": 50000,
+          "EQUIPMENT_SERVICE": 100000,
+          "HOUSEHOLD": 80000,
+          "ACCOUNTING": 25000,
+          "VENT_GREASE": 15000,
+          "UNIFORM_RENEWAL": 15000,
+          "MUSIC_RIGHTS": 7000,
+          "PEST": 6000,
+          "YUMA": 6000,
+          "MEDICAL": 5000,
+          "SECURITY_MONITORING": 4000,
+          "BANKING": 0,
+          "OTHER": 66500
+        },
+        "ebitda_rub": 7158173.09,
+        "ebitda_margin": 0.4549811598624539,
+        "depreciation_rub": 208616.15,
+        "ebit_rub": 6949556.94,
+        "taxable_base_management_proxy_rub": 7426814.94,
+        "regular_usn_rub": 519877.05,
+        "minimum_usn_rub": 157329,
+        "tax_due_rub": 519877.05,
+        "net_operating_result_rub": 6429679.89,
+        "maintenance_capex_rub": 14309.98,
+        "operating_free_cash_flow_rub": 6623986.06,
+        "fixed_opex_reserve_rub": 21807362.1,
+        "full_operating_reserve_rub": 52467623.73,
+        "initial_inventory_rub": 1000000,
+        "capex": {
+          "equipment_rub": 5298993.33,
+          "equipment_control_rub_rounded": 5298993,
+          "equipment_bom_configuration_id": "CFG-PILOT-001",
+          "equipment_active_module_ids": [
+            "MOD-BAR",
+            "MOD-ENGINEERING",
+            "MOD-GROW",
+            "MOD-GUEST",
+            "MOD-KDS",
+            "MOD-POS",
+            "MOD-PREP",
+            "MOD-RETAIL-HOT",
+            "MOD-STAFF",
+            "MOD-STORAGE",
+            "MOD-TAKEAWAY",
+            "MOD-WASH"
+          ],
+          "equipment_coverage_count": 47,
+          "equipment_unpriced_count": 0,
+          "equipment_quote_required_count": 23,
+          "furniture_rub": 425000,
+          "preparation_rub": 11000000,
+          "contingency_rub": 1672399.33,
+          "seat_count": 50,
+          "depreciation_assets": [
+            {
+              "item_id": "CAPEX-01-001",
+              "name": "Холодильная камера",
+              "amount_rub": 328655,
+              "category": "COLD_FREEZER",
+              "useful_life_years": 10,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-002",
+              "name": "Морозильная камера",
+              "amount_rub": 429679,
+              "category": "COLD_FREEZER",
+              "useful_life_years": 10,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-003",
+              "name": "Производственные столы из пищевой нержавеющей стали",
+              "amount_rub": 77688,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-004",
+              "name": "Стол из пищевой нержавейки с отверстием для отходов",
+              "amount_rub": 24187,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-005",
+              "name": "Настенные полки из пищевой нержавеющей стали",
+              "amount_rub": 9840,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-006",
+              "name": "Стеллажи и подтоварники из нержавеющей стали",
+              "amount_rub": 64902,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-007",
+              "name": "Стеллаж или шкаф для сушки и хранения чистого инвентаря",
+              "amount_rub": 25727,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-008",
+              "name": "Урны и закрываемые контейнеры для отходов",
+              "amount_rub": 19014,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-009",
+              "name": "Профессиональный пароконвектомат",
+              "amount_rub": 436564,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-010",
+              "name": "Профессиональный аппарат су-вид",
+              "amount_rub": 121852,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-011",
+              "name": "Профессиональная индукционная плита",
+              "amount_rub": 84752,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-013",
+              "name": "Профессиональный вакуумный упаковщик",
+              "amount_rub": 69161,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-014",
+              "name": "Robot Coupe или профессиональный аналог",
+              "amount_rub": 472582,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-015",
+              "name": "Профессиональная электрическая мясорубка",
+              "amount_rub": 24253,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-016",
+              "name": "Профессиональный кухонный блендер со стаканом",
+              "amount_rub": 60116,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-017",
+              "name": "Профессиональный погружной блендер",
+              "amount_rub": 62832,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-018",
+              "name": "Профессиональный планетарный миксер",
+              "amount_rub": 44704,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-019",
+              "name": "Двухсекционная производственная мойка",
+              "amount_rub": 58798,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-020",
+              "name": "Отдельная раковина для мытья рук персонала",
+              "amount_rub": 10943,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-021",
+              "name": "Дозаторы моечной зоны",
+              "amount_rub": 6615,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-022",
+              "name": "Производственные настольные весы",
+              "amount_rub": 22533,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-023",
+              "name": "Точные порционные весы",
+              "amount_rub": 16448,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-024",
+              "name": "Термощупы для продуктов",
+              "amount_rub": 612,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-025",
+              "name": "Термометры для холодильной и морозильной камер",
+              "amount_rub": 1560,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-026",
+              "name": "Производственные таймеры",
+              "amount_rub": 2536,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-043",
+              "name": "Профессиональный льдогенератор повышенной производительности",
+              "amount_rub": 234270,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-045",
+              "name": "Ёмкости или ванны для охлаждения продуктов во льду",
+              "amount_rub": 13700,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-048",
+              "name": "Комплект мелкого инвентаря заготовочного цеха",
+              "amount_rub": 295020,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-001",
+              "name": "Газовый гриль для колобков",
+              "amount_rub": 90000,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-002",
+              "name": "Гриль для Манчеса",
+              "amount_rub": 60000,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-003",
+              "name": "Профессиональные ручные шприцы или пистолеты-дозаторы",
+              "amount_rub": 240000,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-004",
+              "name": "Холодильный стол-саладетта",
+              "amount_rub": 153287,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-005",
+              "name": "Пластиковые гастроёмкости и контейнеры с плотными крышками",
+              "amount_rub": 9648,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-006",
+              "name": "Столы под горячее оборудование",
+              "amount_rub": 40640,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-007",
+              "name": "Стол для сортировки и сборки заказов",
+              "amount_rub": 20320,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-008",
+              "name": "Стол для сервировки и выдачи",
+              "amount_rub": 20320,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-009",
+              "name": "Стеллажи для хранения чистой посуды и рабочего инвентаря",
+              "amount_rub": 64902,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-010",
+              "name": "Профессиональная post-mix система для лимонадов",
+              "amount_rub": 199000,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-011",
+              "name": "Кеги для собственных сиропов",
+              "amount_rub": 84640,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-012",
+              "name": "Профессиональные энергоэффективные термопоты",
+              "amount_rub": 17072,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-056",
+              "name": "Комплект мелкого инвентаря торговой кухни",
+              "amount_rub": 309760,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-057",
+              "name": "Комплект базового барного инвентаря",
+              "amount_rub": 122760,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-03-001",
+              "name": "Многоярусная стойка",
+              "amount_rub": 258000,
+              "category": "GROW",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-04-001",
+              "name": "Кассовые POS-терминалы",
+              "amount_rub": 95000,
+              "category": "POS_KDS_IT_SMALL",
+              "useful_life_years": 3,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-04-002",
+              "name": "Терминал складского и производственного учёта в заготовочном цехе",
+              "amount_rub": 47500,
+              "category": "POS_KDS_IT_SMALL",
+              "useful_life_years": 3,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-04-003",
+              "name": "KDS-экраны или закреплённые планшеты",
+              "amount_rub": 142500,
+              "category": "POS_KDS_IT_SMALL",
+              "useful_life_years": 3,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-08-001",
+              "name": "Комплект профессиональной посудомоечной зоны",
+              "amount_rub": 304101.33,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "FURNITURE",
+              "name": "Мебель посадочного зала",
+              "amount_rub": 425000,
+              "category": "FURNITURE",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-ENGINEERING",
+              "name": "Инженерные системы подготовки помещения",
+              "amount_rub": 4900000,
+              "category": "ENGINEERING",
+              "useful_life_years": 10,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-FIT-OUT",
+              "name": "Подготовка помещения / fit-out",
+              "amount_rub": 6100000,
+              "category": "FIT_OUT",
+              "useful_life_years": 7,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "LAUNCH-VIDEO",
+              "name": "Видеонаблюдение",
+              "amount_rub": 70000,
+              "category": "POS_KDS_IT_SMALL",
+              "useful_life_years": 3,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "LAUNCH-ALARM",
+              "name": "Охранная сигнализация",
+              "amount_rub": 35000,
+              "category": "POS_KDS_IT_SMALL",
+              "useful_life_years": 3,
+              "mapping_status": "mapped"
+            }
+          ],
+          "monthly_depreciation_rub": 208616.15,
+          "mapping_requires_review_count": 0
+        },
+        "restaurant_invested_capital_rub": 46388754.76,
+        "real_estate_investment_rub": 0,
+        "total_invested_capital_rub": 46388754.76,
+        "break_even_revenue_rub": 5706543.61,
+        "break_even_checks_per_day": 163.22,
+        "restaurant_payback_month": 7,
+        "restaurant_roi_annual": 1.7135151209943682,
+        "restaurant_irr_annual": 4.287861396730415,
+        "restaurant_npv_rub": 216212617.28,
+        "property_appreciation": 0,
+        "property_residual_value_rub": 0,
+        "real_estate_return": null,
+        "real_estate_irr_annual": null,
+        "combined_payback_month": 7,
+        "combined_irr_annual": 4.287861396730415,
+        "combined_npv_rub": 216212617.28,
+        "restaurant_cash_flows": [
+          -46388754.76,
+          6973986.06,
+          6973986.06,
+          6973986.06,
+          6973986.06,
+          6973986.06,
+          6973986.06,
+          6973986.06,
+          6973986.06,
+          6973986.06,
+          6973986.06,
+          6973986.06,
+          6973986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06
+        ],
+        "combined_cash_flows": [
+          -46388754.76,
+          6973986.06,
+          6973986.06,
+          6973986.06,
+          6973986.06,
+          6973986.06,
+          6973986.06,
+          6973986.06,
+          6973986.06,
+          6973986.06,
+          6973986.06,
+          6973986.06,
+          6973986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06,
+          6623986.06
+        ],
+        "tax_scenario": "base",
+        "contribution_scenario": "reduced",
+        "real_estate_scenario": "rent",
+        "aggregator_share": 0
+      }
+    },
+    "purchase": {
+      "pessimistic": {
+        "scenario": "pessimistic",
+        "checks_per_day": 200,
+        "average_check_rub": 1165.4,
+        "gross_revenue_rub": 6992400,
+        "vat_rub": 0,
+        "net_revenue_rub": 6992400,
+        "food_portions_per_month": 8400,
+        "drinks_per_month": 6000,
+        "raw_materials_rub": 1666884,
+        "waste_rub": 66675.36,
+        "packaging_rub": 166666.67,
+        "gross_profit_rub": 5092173.97,
+        "gross_margin": 0.728244089773659,
+        "staffing": {
+          "headcount": 16,
+          "payroll_rub": 1810000,
+          "employer_contributions_rub": 369034.8,
+          "personnel_reserve_rub": 217903.48,
+          "total_labor_rub": 2396938.28,
+          "rows": [
+            {
+              "id": "SOUS_CHEF",
+              "role": "Су-шеф",
+              "headcount": 1,
+              "gross_salary_rub": 150000,
+              "payroll_rub": 150000,
+              "schedule": "5/2, 8 часов",
+              "function": "Кухня, качество, стандарты, заготовки, остатки, обучение и усиление основной линии в пик."
+            },
+            {
+              "id": "PREP_COOK",
+              "role": "Повар-заготовщик",
+              "headcount": 2,
+              "gross_salary_rub": 120000,
+              "payroll_rub": 240000,
+              "schedule": "сменный",
+              "function": "Заготовочное производство."
+            },
+            {
+              "id": "LINE_COOK",
+              "role": "Повар основной линии",
+              "headcount": 4,
+              "gross_salary_rub": 115000,
+              "payroll_rub": 460000,
+              "schedule": "сменный, 2 одновременно",
+              "function": "Основная горячая линия."
+            },
+            {
+              "id": "SERVING",
+              "role": "Сервировка",
+              "headcount": 2,
+              "gross_salary_rub": 95000,
+              "payroll_rub": 190000,
+              "schedule": "сменный, 1 одновременно",
+              "function": "Сервировка и выдача; усиление другими сотрудниками при высокой нагрузке."
+            },
+            {
+              "id": "CASHIER_BAR",
+              "role": "Кассир / бар",
+              "headcount": 2,
+              "gross_salary_rub": 95000,
+              "payroll_rub": 190000,
+              "schedule": "сменный",
+              "function": "Касса и бар."
+            },
+            {
+              "id": "ADMINISTRATOR",
+              "role": "Администратор",
+              "headcount": 2,
+              "gross_salary_rub": 125000,
+              "payroll_rub": 250000,
+              "schedule": "сменный",
+              "function": "Зал, смена, сервис, касса, бар и помощь операционной работе в пик."
+            },
+            {
+              "id": "TECHNICAL",
+              "role": "Технический сотрудник / мойщик",
+              "headcount": 2,
+              "gross_salary_rub": 90000,
+              "payroll_rub": 180000,
+              "schedule": "сменный",
+              "function": "Мойка, уборка, движение сырья и отходов."
+            },
+            {
+              "id": "MANAGER",
+              "role": "Управляющий",
+              "headcount": 1,
+              "gross_salary_rub": 150000,
+              "payroll_rub": 150000,
+              "schedule": "5/2",
+              "function": "Поставщики, экономика точки, объект, подрядчики, бухгалтерия, локальный маркетинг, SMM, остатки и списания."
+            }
+          ]
+        },
+        "labor_rub": 2396938.28,
+        "rent_rub": 0,
+        "acquiring_rub": 139848,
+        "aggregator_rub": 0,
+        "fixed_opex_without_labor_rent_rub": 679500,
+        "opex_entries_rub": {
+          "UTILITIES": 200000,
+          "ADVERTISING": 100000,
+          "SMM": 50000,
+          "EQUIPMENT_SERVICE": 100000,
+          "HOUSEHOLD": 80000,
+          "ACCOUNTING": 25000,
+          "VENT_GREASE": 15000,
+          "UNIFORM_RENEWAL": 15000,
+          "MUSIC_RIGHTS": 7000,
+          "PEST": 6000,
+          "YUMA": 6000,
+          "MEDICAL": 5000,
+          "SECURITY_MONITORING": 4000,
+          "BANKING": 0,
+          "OTHER": 66500
+        },
+        "ebitda_rub": 1875887.69,
+        "ebitda_margin": 0.2682752264363214,
+        "depreciation_rub": 208616.15,
+        "ebit_rub": 1667271.54,
+        "taxable_base_management_proxy_rub": 2093791.17,
+        "regular_usn_rub": 146565.38,
+        "minimum_usn_rub": 69924,
+        "tax_due_rub": 146565.38,
+        "net_operating_result_rub": 1520706.16,
+        "maintenance_capex_rub": 14309.98,
+        "operating_free_cash_flow_rub": 1715012.33,
+        "fixed_opex_reserve_rub": 18458629.68,
+        "full_operating_reserve_rub": 31578466.13,
+        "initial_inventory_rub": 1000000,
+        "capex": {
+          "equipment_rub": 5298993.33,
+          "equipment_control_rub_rounded": 5298993,
+          "equipment_bom_configuration_id": "CFG-PILOT-001",
+          "equipment_active_module_ids": [
+            "MOD-BAR",
+            "MOD-ENGINEERING",
+            "MOD-GROW",
+            "MOD-GUEST",
+            "MOD-KDS",
+            "MOD-POS",
+            "MOD-PREP",
+            "MOD-RETAIL-HOT",
+            "MOD-STAFF",
+            "MOD-STORAGE",
+            "MOD-TAKEAWAY",
+            "MOD-WASH"
+          ],
+          "equipment_coverage_count": 47,
+          "equipment_unpriced_count": 0,
+          "equipment_quote_required_count": 23,
+          "furniture_rub": 425000,
+          "preparation_rub": 11000000,
+          "contingency_rub": 1672399.33,
+          "seat_count": 50,
+          "depreciation_assets": [
+            {
+              "item_id": "CAPEX-01-001",
+              "name": "Холодильная камера",
+              "amount_rub": 328655,
+              "category": "COLD_FREEZER",
+              "useful_life_years": 10,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-002",
+              "name": "Морозильная камера",
+              "amount_rub": 429679,
+              "category": "COLD_FREEZER",
+              "useful_life_years": 10,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-003",
+              "name": "Производственные столы из пищевой нержавеющей стали",
+              "amount_rub": 77688,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-004",
+              "name": "Стол из пищевой нержавейки с отверстием для отходов",
+              "amount_rub": 24187,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-005",
+              "name": "Настенные полки из пищевой нержавеющей стали",
+              "amount_rub": 9840,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-006",
+              "name": "Стеллажи и подтоварники из нержавеющей стали",
+              "amount_rub": 64902,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-007",
+              "name": "Стеллаж или шкаф для сушки и хранения чистого инвентаря",
+              "amount_rub": 25727,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-008",
+              "name": "Урны и закрываемые контейнеры для отходов",
+              "amount_rub": 19014,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-009",
+              "name": "Профессиональный пароконвектомат",
+              "amount_rub": 436564,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-010",
+              "name": "Профессиональный аппарат су-вид",
+              "amount_rub": 121852,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-011",
+              "name": "Профессиональная индукционная плита",
+              "amount_rub": 84752,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-013",
+              "name": "Профессиональный вакуумный упаковщик",
+              "amount_rub": 69161,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-014",
+              "name": "Robot Coupe или профессиональный аналог",
+              "amount_rub": 472582,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-015",
+              "name": "Профессиональная электрическая мясорубка",
+              "amount_rub": 24253,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-016",
+              "name": "Профессиональный кухонный блендер со стаканом",
+              "amount_rub": 60116,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-017",
+              "name": "Профессиональный погружной блендер",
+              "amount_rub": 62832,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-018",
+              "name": "Профессиональный планетарный миксер",
+              "amount_rub": 44704,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-019",
+              "name": "Двухсекционная производственная мойка",
+              "amount_rub": 58798,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-020",
+              "name": "Отдельная раковина для мытья рук персонала",
+              "amount_rub": 10943,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-021",
+              "name": "Дозаторы моечной зоны",
+              "amount_rub": 6615,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-022",
+              "name": "Производственные настольные весы",
+              "amount_rub": 22533,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-023",
+              "name": "Точные порционные весы",
+              "amount_rub": 16448,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-024",
+              "name": "Термощупы для продуктов",
+              "amount_rub": 612,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-025",
+              "name": "Термометры для холодильной и морозильной камер",
+              "amount_rub": 1560,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-026",
+              "name": "Производственные таймеры",
+              "amount_rub": 2536,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-043",
+              "name": "Профессиональный льдогенератор повышенной производительности",
+              "amount_rub": 234270,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-045",
+              "name": "Ёмкости или ванны для охлаждения продуктов во льду",
+              "amount_rub": 13700,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-048",
+              "name": "Комплект мелкого инвентаря заготовочного цеха",
+              "amount_rub": 295020,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-001",
+              "name": "Газовый гриль для колобков",
+              "amount_rub": 90000,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-002",
+              "name": "Гриль для Манчеса",
+              "amount_rub": 60000,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-003",
+              "name": "Профессиональные ручные шприцы или пистолеты-дозаторы",
+              "amount_rub": 240000,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-004",
+              "name": "Холодильный стол-саладетта",
+              "amount_rub": 153287,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-005",
+              "name": "Пластиковые гастроёмкости и контейнеры с плотными крышками",
+              "amount_rub": 9648,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-006",
+              "name": "Столы под горячее оборудование",
+              "amount_rub": 40640,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-007",
+              "name": "Стол для сортировки и сборки заказов",
+              "amount_rub": 20320,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-008",
+              "name": "Стол для сервировки и выдачи",
+              "amount_rub": 20320,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-009",
+              "name": "Стеллажи для хранения чистой посуды и рабочего инвентаря",
+              "amount_rub": 64902,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-010",
+              "name": "Профессиональная post-mix система для лимонадов",
+              "amount_rub": 199000,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-011",
+              "name": "Кеги для собственных сиропов",
+              "amount_rub": 84640,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-012",
+              "name": "Профессиональные энергоэффективные термопоты",
+              "amount_rub": 17072,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-056",
+              "name": "Комплект мелкого инвентаря торговой кухни",
+              "amount_rub": 309760,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-057",
+              "name": "Комплект базового барного инвентаря",
+              "amount_rub": 122760,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-03-001",
+              "name": "Многоярусная стойка",
+              "amount_rub": 258000,
+              "category": "GROW",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-04-001",
+              "name": "Кассовые POS-терминалы",
+              "amount_rub": 95000,
+              "category": "POS_KDS_IT_SMALL",
+              "useful_life_years": 3,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-04-002",
+              "name": "Терминал складского и производственного учёта в заготовочном цехе",
+              "amount_rub": 47500,
+              "category": "POS_KDS_IT_SMALL",
+              "useful_life_years": 3,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-04-003",
+              "name": "KDS-экраны или закреплённые планшеты",
+              "amount_rub": 142500,
+              "category": "POS_KDS_IT_SMALL",
+              "useful_life_years": 3,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-08-001",
+              "name": "Комплект профессиональной посудомоечной зоны",
+              "amount_rub": 304101.33,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "FURNITURE",
+              "name": "Мебель посадочного зала",
+              "amount_rub": 425000,
+              "category": "FURNITURE",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-ENGINEERING",
+              "name": "Инженерные системы подготовки помещения",
+              "amount_rub": 4900000,
+              "category": "ENGINEERING",
+              "useful_life_years": 10,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-FIT-OUT",
+              "name": "Подготовка помещения / fit-out",
+              "amount_rub": 6100000,
+              "category": "FIT_OUT",
+              "useful_life_years": 7,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "LAUNCH-VIDEO",
+              "name": "Видеонаблюдение",
+              "amount_rub": 70000,
+              "category": "POS_KDS_IT_SMALL",
+              "useful_life_years": 3,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "LAUNCH-ALARM",
+              "name": "Охранная сигнализация",
+              "amount_rub": 35000,
+              "category": "POS_KDS_IT_SMALL",
+              "useful_life_years": 3,
+              "mapping_status": "mapped"
+            }
+          ],
+          "monthly_depreciation_rub": 208616.15,
+          "mapping_requires_review_count": 0
+        },
+        "restaurant_invested_capital_rub": 38140022.34,
+        "real_estate_investment_rub": 69000000,
+        "total_invested_capital_rub": 107140022.34,
+        "break_even_revenue_rub": 4405963.94,
+        "break_even_checks_per_day": 126.02,
+        "restaurant_payback_month": 23,
+        "restaurant_roi_annual": 0.5395945432181208,
+        "restaurant_irr_annual": 0.6179299225430395,
+        "restaurant_npv_rub": 28863427.51,
+        "property_appreciation": 0,
+        "property_residual_value_rub": 69000000,
+        "real_estate_return": 0,
+        "real_estate_irr_annual": 0,
+        "combined_payback_month": 60,
+        "combined_irr_annual": 0.15266179182446482,
+        "combined_npv_rub": -12407020.02,
+        "restaurant_cash_flows": [
+          -38140022.34,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33
+        ],
+        "combined_cash_flows": [
+          -107140022.34,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          1715012.33,
+          70715012.33
+        ],
+        "tax_scenario": "base",
+        "contribution_scenario": "reduced",
+        "real_estate_scenario": "purchase",
+        "aggregator_share": 0
+      },
+      "realistic": {
+        "scenario": "realistic",
+        "checks_per_day": 300,
+        "average_check_rub": 1165.4,
+        "gross_revenue_rub": 10488600,
+        "vat_rub": 0,
+        "net_revenue_rub": 10488600,
+        "food_portions_per_month": 12600,
+        "drinks_per_month": 9000,
+        "raw_materials_rub": 2500326,
+        "waste_rub": 100013.04,
+        "packaging_rub": 250000,
+        "gross_profit_rub": 7638260.96,
+        "gross_margin": 0.7282440897736591,
+        "staffing": {
+          "headcount": 16,
+          "payroll_rub": 1810000,
+          "employer_contributions_rub": 369034.8,
+          "personnel_reserve_rub": 217903.48,
+          "total_labor_rub": 2396938.28,
+          "rows": [
+            {
+              "id": "SOUS_CHEF",
+              "role": "Су-шеф",
+              "headcount": 1,
+              "gross_salary_rub": 150000,
+              "payroll_rub": 150000,
+              "schedule": "5/2, 8 часов",
+              "function": "Кухня, качество, стандарты, заготовки, остатки, обучение и усиление основной линии в пик."
+            },
+            {
+              "id": "PREP_COOK",
+              "role": "Повар-заготовщик",
+              "headcount": 2,
+              "gross_salary_rub": 120000,
+              "payroll_rub": 240000,
+              "schedule": "сменный",
+              "function": "Заготовочное производство."
+            },
+            {
+              "id": "LINE_COOK",
+              "role": "Повар основной линии",
+              "headcount": 4,
+              "gross_salary_rub": 115000,
+              "payroll_rub": 460000,
+              "schedule": "сменный, 2 одновременно",
+              "function": "Основная горячая линия."
+            },
+            {
+              "id": "SERVING",
+              "role": "Сервировка",
+              "headcount": 2,
+              "gross_salary_rub": 95000,
+              "payroll_rub": 190000,
+              "schedule": "сменный, 1 одновременно",
+              "function": "Сервировка и выдача; усиление другими сотрудниками при высокой нагрузке."
+            },
+            {
+              "id": "CASHIER_BAR",
+              "role": "Кассир / бар",
+              "headcount": 2,
+              "gross_salary_rub": 95000,
+              "payroll_rub": 190000,
+              "schedule": "сменный",
+              "function": "Касса и бар."
+            },
+            {
+              "id": "ADMINISTRATOR",
+              "role": "Администратор",
+              "headcount": 2,
+              "gross_salary_rub": 125000,
+              "payroll_rub": 250000,
+              "schedule": "сменный",
+              "function": "Зал, смена, сервис, касса, бар и помощь операционной работе в пик."
+            },
+            {
+              "id": "TECHNICAL",
+              "role": "Технический сотрудник / мойщик",
+              "headcount": 2,
+              "gross_salary_rub": 90000,
+              "payroll_rub": 180000,
+              "schedule": "сменный",
+              "function": "Мойка, уборка, движение сырья и отходов."
+            },
+            {
+              "id": "MANAGER",
+              "role": "Управляющий",
+              "headcount": 1,
+              "gross_salary_rub": 150000,
+              "payroll_rub": 150000,
+              "schedule": "5/2",
+              "function": "Поставщики, экономика точки, объект, подрядчики, бухгалтерия, локальный маркетинг, SMM, остатки и списания."
+            }
+          ]
+        },
+        "labor_rub": 2396938.28,
+        "rent_rub": 0,
+        "acquiring_rub": 209772,
+        "aggregator_rub": 0,
+        "fixed_opex_without_labor_rent_rub": 679500,
+        "opex_entries_rub": {
+          "UTILITIES": 200000,
+          "ADVERTISING": 100000,
+          "SMM": 50000,
+          "EQUIPMENT_SERVICE": 100000,
+          "HOUSEHOLD": 80000,
+          "ACCOUNTING": 25000,
+          "VENT_GREASE": 15000,
+          "UNIFORM_RENEWAL": 15000,
+          "MUSIC_RIGHTS": 7000,
+          "PEST": 6000,
+          "YUMA": 6000,
+          "MEDICAL": 5000,
+          "SECURITY_MONITORING": 4000,
+          "BANKING": 0,
+          "OTHER": 66500
+        },
+        "ebitda_rub": 4352050.68,
+        "ebitda_margin": 0.4149315142154339,
+        "depreciation_rub": 208616.15,
+        "ebit_rub": 4143434.53,
+        "taxable_base_management_proxy_rub": 4569954.16,
+        "regular_usn_rub": 319896.79,
+        "minimum_usn_rub": 104886,
+        "tax_due_rub": 319896.79,
+        "net_operating_result_rub": 3823537.74,
+        "maintenance_capex_rub": 14309.98,
+        "operating_free_cash_flow_rub": 4017843.91,
+        "fixed_opex_reserve_rub": 18458629.68,
+        "full_operating_reserve_rub": 38738676.67,
+        "initial_inventory_rub": 1000000,
+        "capex": {
+          "equipment_rub": 5298993.33,
+          "equipment_control_rub_rounded": 5298993,
+          "equipment_bom_configuration_id": "CFG-PILOT-001",
+          "equipment_active_module_ids": [
+            "MOD-BAR",
+            "MOD-ENGINEERING",
+            "MOD-GROW",
+            "MOD-GUEST",
+            "MOD-KDS",
+            "MOD-POS",
+            "MOD-PREP",
+            "MOD-RETAIL-HOT",
+            "MOD-STAFF",
+            "MOD-STORAGE",
+            "MOD-TAKEAWAY",
+            "MOD-WASH"
+          ],
+          "equipment_coverage_count": 47,
+          "equipment_unpriced_count": 0,
+          "equipment_quote_required_count": 23,
+          "furniture_rub": 425000,
+          "preparation_rub": 11000000,
+          "contingency_rub": 1672399.33,
+          "seat_count": 50,
+          "depreciation_assets": [
+            {
+              "item_id": "CAPEX-01-001",
+              "name": "Холодильная камера",
+              "amount_rub": 328655,
+              "category": "COLD_FREEZER",
+              "useful_life_years": 10,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-002",
+              "name": "Морозильная камера",
+              "amount_rub": 429679,
+              "category": "COLD_FREEZER",
+              "useful_life_years": 10,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-003",
+              "name": "Производственные столы из пищевой нержавеющей стали",
+              "amount_rub": 77688,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-004",
+              "name": "Стол из пищевой нержавейки с отверстием для отходов",
+              "amount_rub": 24187,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-005",
+              "name": "Настенные полки из пищевой нержавеющей стали",
+              "amount_rub": 9840,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-006",
+              "name": "Стеллажи и подтоварники из нержавеющей стали",
+              "amount_rub": 64902,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-007",
+              "name": "Стеллаж или шкаф для сушки и хранения чистого инвентаря",
+              "amount_rub": 25727,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-008",
+              "name": "Урны и закрываемые контейнеры для отходов",
+              "amount_rub": 19014,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-009",
+              "name": "Профессиональный пароконвектомат",
+              "amount_rub": 436564,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-010",
+              "name": "Профессиональный аппарат су-вид",
+              "amount_rub": 121852,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-011",
+              "name": "Профессиональная индукционная плита",
+              "amount_rub": 84752,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-013",
+              "name": "Профессиональный вакуумный упаковщик",
+              "amount_rub": 69161,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-014",
+              "name": "Robot Coupe или профессиональный аналог",
+              "amount_rub": 472582,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-015",
+              "name": "Профессиональная электрическая мясорубка",
+              "amount_rub": 24253,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-016",
+              "name": "Профессиональный кухонный блендер со стаканом",
+              "amount_rub": 60116,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-017",
+              "name": "Профессиональный погружной блендер",
+              "amount_rub": 62832,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-018",
+              "name": "Профессиональный планетарный миксер",
+              "amount_rub": 44704,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-019",
+              "name": "Двухсекционная производственная мойка",
+              "amount_rub": 58798,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-020",
+              "name": "Отдельная раковина для мытья рук персонала",
+              "amount_rub": 10943,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-021",
+              "name": "Дозаторы моечной зоны",
+              "amount_rub": 6615,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-022",
+              "name": "Производственные настольные весы",
+              "amount_rub": 22533,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-023",
+              "name": "Точные порционные весы",
+              "amount_rub": 16448,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-024",
+              "name": "Термощупы для продуктов",
+              "amount_rub": 612,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-025",
+              "name": "Термометры для холодильной и морозильной камер",
+              "amount_rub": 1560,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-026",
+              "name": "Производственные таймеры",
+              "amount_rub": 2536,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-043",
+              "name": "Профессиональный льдогенератор повышенной производительности",
+              "amount_rub": 234270,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-045",
+              "name": "Ёмкости или ванны для охлаждения продуктов во льду",
+              "amount_rub": 13700,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-048",
+              "name": "Комплект мелкого инвентаря заготовочного цеха",
+              "amount_rub": 295020,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-001",
+              "name": "Газовый гриль для колобков",
+              "amount_rub": 90000,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-002",
+              "name": "Гриль для Манчеса",
+              "amount_rub": 60000,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-003",
+              "name": "Профессиональные ручные шприцы или пистолеты-дозаторы",
+              "amount_rub": 240000,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-004",
+              "name": "Холодильный стол-саладетта",
+              "amount_rub": 153287,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-005",
+              "name": "Пластиковые гастроёмкости и контейнеры с плотными крышками",
+              "amount_rub": 9648,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-006",
+              "name": "Столы под горячее оборудование",
+              "amount_rub": 40640,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-007",
+              "name": "Стол для сортировки и сборки заказов",
+              "amount_rub": 20320,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-008",
+              "name": "Стол для сервировки и выдачи",
+              "amount_rub": 20320,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-009",
+              "name": "Стеллажи для хранения чистой посуды и рабочего инвентаря",
+              "amount_rub": 64902,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-010",
+              "name": "Профессиональная post-mix система для лимонадов",
+              "amount_rub": 199000,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-011",
+              "name": "Кеги для собственных сиропов",
+              "amount_rub": 84640,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-012",
+              "name": "Профессиональные энергоэффективные термопоты",
+              "amount_rub": 17072,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-056",
+              "name": "Комплект мелкого инвентаря торговой кухни",
+              "amount_rub": 309760,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-057",
+              "name": "Комплект базового барного инвентаря",
+              "amount_rub": 122760,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-03-001",
+              "name": "Многоярусная стойка",
+              "amount_rub": 258000,
+              "category": "GROW",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-04-001",
+              "name": "Кассовые POS-терминалы",
+              "amount_rub": 95000,
+              "category": "POS_KDS_IT_SMALL",
+              "useful_life_years": 3,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-04-002",
+              "name": "Терминал складского и производственного учёта в заготовочном цехе",
+              "amount_rub": 47500,
+              "category": "POS_KDS_IT_SMALL",
+              "useful_life_years": 3,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-04-003",
+              "name": "KDS-экраны или закреплённые планшеты",
+              "amount_rub": 142500,
+              "category": "POS_KDS_IT_SMALL",
+              "useful_life_years": 3,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-08-001",
+              "name": "Комплект профессиональной посудомоечной зоны",
+              "amount_rub": 304101.33,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "FURNITURE",
+              "name": "Мебель посадочного зала",
+              "amount_rub": 425000,
+              "category": "FURNITURE",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-ENGINEERING",
+              "name": "Инженерные системы подготовки помещения",
+              "amount_rub": 4900000,
+              "category": "ENGINEERING",
+              "useful_life_years": 10,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-FIT-OUT",
+              "name": "Подготовка помещения / fit-out",
+              "amount_rub": 6100000,
+              "category": "FIT_OUT",
+              "useful_life_years": 7,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "LAUNCH-VIDEO",
+              "name": "Видеонаблюдение",
+              "amount_rub": 70000,
+              "category": "POS_KDS_IT_SMALL",
+              "useful_life_years": 3,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "LAUNCH-ALARM",
+              "name": "Охранная сигнализация",
+              "amount_rub": 35000,
+              "category": "POS_KDS_IT_SMALL",
+              "useful_life_years": 3,
+              "mapping_status": "mapped"
+            }
+          ],
+          "monthly_depreciation_rub": 208616.15,
+          "mapping_requires_review_count": 0
+        },
+        "restaurant_invested_capital_rub": 38140022.34,
+        "real_estate_investment_rub": 69000000,
+        "total_invested_capital_rub": 107140022.34,
+        "break_even_revenue_rub": 4405963.94,
+        "break_even_checks_per_day": 126.02,
+        "restaurant_payback_month": 10,
+        "restaurant_roi_annual": 1.2641347304965318,
+        "restaurant_irr_annual": 2.3169192136430787,
+        "restaurant_npv_rub": 118832261.89,
+        "property_appreciation": 0,
+        "property_residual_value_rub": 69000000,
+        "real_estate_return": 0,
+        "real_estate_irr_annual": 0,
+        "combined_payback_month": 27,
+        "combined_irr_annual": 0.5240748912262472,
+        "combined_npv_rub": 77561814.36,
+        "restaurant_cash_flows": [
+          -38140022.34,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91
+        ],
+        "combined_cash_flows": [
+          -107140022.34,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          4017843.91,
+          73017843.91
+        ],
+        "tax_scenario": "base",
+        "contribution_scenario": "reduced",
+        "real_estate_scenario": "purchase",
+        "aggregator_share": 0
+      },
+      "optimistic": {
+        "scenario": "optimistic",
+        "checks_per_day": 450,
+        "average_check_rub": 1165.4,
+        "gross_revenue_rub": 15732900,
+        "vat_rub": 0,
+        "net_revenue_rub": 15732900,
+        "food_portions_per_month": 18900,
+        "drinks_per_month": 13500,
+        "raw_materials_rub": 3750489,
+        "waste_rub": 150019.56,
+        "packaging_rub": 375000,
+        "gross_profit_rub": 11457391.44,
+        "gross_margin": 0.7282440897736591,
+        "staffing": {
+          "headcount": 20,
+          "payroll_rub": 2230000,
+          "employer_contributions_rub": 456418.5,
+          "personnel_reserve_rub": 268641.85,
+          "total_labor_rub": 2955060.35,
+          "rows": [
+            {
+              "id": "SOUS_CHEF",
+              "role": "Су-шеф",
+              "headcount": 1,
+              "gross_salary_rub": 150000,
+              "payroll_rub": 150000,
+              "schedule": "5/2, 8 часов",
+              "function": "Кухня, качество, стандарты, заготовки, остатки, обучение и усиление основной линии в пик."
+            },
+            {
+              "id": "PREP_COOK",
+              "role": "Повар-заготовщик",
+              "headcount": 4,
+              "gross_salary_rub": 120000,
+              "payroll_rub": 480000,
+              "schedule": "сменный",
+              "function": "Заготовочное производство."
+            },
+            {
+              "id": "LINE_COOK",
+              "role": "Повар основной линии",
+              "headcount": 4,
+              "gross_salary_rub": 115000,
+              "payroll_rub": 460000,
+              "schedule": "сменный, 2 одновременно",
+              "function": "Основная горячая линия."
+            },
+            {
+              "id": "SERVING",
+              "role": "Сервировка",
+              "headcount": 2,
+              "gross_salary_rub": 95000,
+              "payroll_rub": 190000,
+              "schedule": "сменный, 1 одновременно",
+              "function": "Сервировка и выдача; усиление другими сотрудниками при высокой нагрузке."
+            },
+            {
+              "id": "CASHIER_BAR",
+              "role": "Кассир / бар",
+              "headcount": 2,
+              "gross_salary_rub": 95000,
+              "payroll_rub": 190000,
+              "schedule": "сменный",
+              "function": "Касса и бар."
+            },
+            {
+              "id": "ADMINISTRATOR",
+              "role": "Администратор",
+              "headcount": 2,
+              "gross_salary_rub": 125000,
+              "payroll_rub": 250000,
+              "schedule": "сменный",
+              "function": "Зал, смена, сервис, касса, бар и помощь операционной работе в пик."
+            },
+            {
+              "id": "TECHNICAL",
+              "role": "Технический сотрудник / мойщик",
+              "headcount": 4,
+              "gross_salary_rub": 90000,
+              "payroll_rub": 360000,
+              "schedule": "сменный",
+              "function": "Мойка, уборка, движение сырья и отходов."
+            },
+            {
+              "id": "MANAGER",
+              "role": "Управляющий",
+              "headcount": 1,
+              "gross_salary_rub": 150000,
+              "payroll_rub": 150000,
+              "schedule": "5/2",
+              "function": "Поставщики, экономика точки, объект, подрядчики, бухгалтерия, локальный маркетинг, SMM, остатки и списания."
+            }
+          ]
+        },
+        "labor_rub": 2955060.35,
+        "rent_rub": 0,
+        "acquiring_rub": 314658,
+        "aggregator_rub": 0,
+        "fixed_opex_without_labor_rent_rub": 679500,
+        "opex_entries_rub": {
+          "UTILITIES": 200000,
+          "ADVERTISING": 100000,
+          "SMM": 50000,
+          "EQUIPMENT_SERVICE": 100000,
+          "HOUSEHOLD": 80000,
+          "ACCOUNTING": 25000,
+          "VENT_GREASE": 15000,
+          "UNIFORM_RENEWAL": 15000,
+          "MUSIC_RIGHTS": 7000,
+          "PEST": 6000,
+          "YUMA": 6000,
+          "MEDICAL": 5000,
+          "SECURITY_MONITORING": 4000,
+          "BANKING": 0,
+          "OTHER": 66500
+        },
+        "ebitda_rub": 7508173.09,
+        "ebitda_margin": 0.4772275352922856,
+        "depreciation_rub": 208616.15,
+        "ebit_rub": 7299556.94,
+        "taxable_base_management_proxy_rub": 7776814.94,
+        "regular_usn_rub": 544377.05,
+        "minimum_usn_rub": 157329,
+        "tax_due_rub": 544377.05,
+        "net_operating_result_rub": 6755179.89,
+        "maintenance_capex_rub": 14309.98,
+        "operating_free_cash_flow_rub": 6949486.06,
+        "fixed_opex_reserve_rub": 21807362.1,
+        "full_operating_reserve_rub": 52614623.73,
+        "initial_inventory_rub": 1000000,
+        "capex": {
+          "equipment_rub": 5298993.33,
+          "equipment_control_rub_rounded": 5298993,
+          "equipment_bom_configuration_id": "CFG-PILOT-001",
+          "equipment_active_module_ids": [
+            "MOD-BAR",
+            "MOD-ENGINEERING",
+            "MOD-GROW",
+            "MOD-GUEST",
+            "MOD-KDS",
+            "MOD-POS",
+            "MOD-PREP",
+            "MOD-RETAIL-HOT",
+            "MOD-STAFF",
+            "MOD-STORAGE",
+            "MOD-TAKEAWAY",
+            "MOD-WASH"
+          ],
+          "equipment_coverage_count": 47,
+          "equipment_unpriced_count": 0,
+          "equipment_quote_required_count": 23,
+          "furniture_rub": 425000,
+          "preparation_rub": 11000000,
+          "contingency_rub": 1672399.33,
+          "seat_count": 50,
+          "depreciation_assets": [
+            {
+              "item_id": "CAPEX-01-001",
+              "name": "Холодильная камера",
+              "amount_rub": 328655,
+              "category": "COLD_FREEZER",
+              "useful_life_years": 10,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-002",
+              "name": "Морозильная камера",
+              "amount_rub": 429679,
+              "category": "COLD_FREEZER",
+              "useful_life_years": 10,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-003",
+              "name": "Производственные столы из пищевой нержавеющей стали",
+              "amount_rub": 77688,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-004",
+              "name": "Стол из пищевой нержавейки с отверстием для отходов",
+              "amount_rub": 24187,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-005",
+              "name": "Настенные полки из пищевой нержавеющей стали",
+              "amount_rub": 9840,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-006",
+              "name": "Стеллажи и подтоварники из нержавеющей стали",
+              "amount_rub": 64902,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-007",
+              "name": "Стеллаж или шкаф для сушки и хранения чистого инвентаря",
+              "amount_rub": 25727,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-008",
+              "name": "Урны и закрываемые контейнеры для отходов",
+              "amount_rub": 19014,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-009",
+              "name": "Профессиональный пароконвектомат",
+              "amount_rub": 436564,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-010",
+              "name": "Профессиональный аппарат су-вид",
+              "amount_rub": 121852,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-011",
+              "name": "Профессиональная индукционная плита",
+              "amount_rub": 84752,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-013",
+              "name": "Профессиональный вакуумный упаковщик",
+              "amount_rub": 69161,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-014",
+              "name": "Robot Coupe или профессиональный аналог",
+              "amount_rub": 472582,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-015",
+              "name": "Профессиональная электрическая мясорубка",
+              "amount_rub": 24253,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-016",
+              "name": "Профессиональный кухонный блендер со стаканом",
+              "amount_rub": 60116,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-017",
+              "name": "Профессиональный погружной блендер",
+              "amount_rub": 62832,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-018",
+              "name": "Профессиональный планетарный миксер",
+              "amount_rub": 44704,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-019",
+              "name": "Двухсекционная производственная мойка",
+              "amount_rub": 58798,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-020",
+              "name": "Отдельная раковина для мытья рук персонала",
+              "amount_rub": 10943,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-021",
+              "name": "Дозаторы моечной зоны",
+              "amount_rub": 6615,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-022",
+              "name": "Производственные настольные весы",
+              "amount_rub": 22533,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-023",
+              "name": "Точные порционные весы",
+              "amount_rub": 16448,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-024",
+              "name": "Термощупы для продуктов",
+              "amount_rub": 612,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-025",
+              "name": "Термометры для холодильной и морозильной камер",
+              "amount_rub": 1560,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-026",
+              "name": "Производственные таймеры",
+              "amount_rub": 2536,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-043",
+              "name": "Профессиональный льдогенератор повышенной производительности",
+              "amount_rub": 234270,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-045",
+              "name": "Ёмкости или ванны для охлаждения продуктов во льду",
+              "amount_rub": 13700,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-01-048",
+              "name": "Комплект мелкого инвентаря заготовочного цеха",
+              "amount_rub": 295020,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-001",
+              "name": "Газовый гриль для колобков",
+              "amount_rub": 90000,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-002",
+              "name": "Гриль для Манчеса",
+              "amount_rub": 60000,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-003",
+              "name": "Профессиональные ручные шприцы или пистолеты-дозаторы",
+              "amount_rub": 240000,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-004",
+              "name": "Холодильный стол-саладетта",
+              "amount_rub": 153287,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-005",
+              "name": "Пластиковые гастроёмкости и контейнеры с плотными крышками",
+              "amount_rub": 9648,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-006",
+              "name": "Столы под горячее оборудование",
+              "amount_rub": 40640,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-007",
+              "name": "Стол для сортировки и сборки заказов",
+              "amount_rub": 20320,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-008",
+              "name": "Стол для сервировки и выдачи",
+              "amount_rub": 20320,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-009",
+              "name": "Стеллажи для хранения чистой посуды и рабочего инвентаря",
+              "amount_rub": 64902,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-010",
+              "name": "Профессиональная post-mix система для лимонадов",
+              "amount_rub": 199000,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-011",
+              "name": "Кеги для собственных сиропов",
+              "amount_rub": 84640,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-012",
+              "name": "Профессиональные энергоэффективные термопоты",
+              "amount_rub": 17072,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-056",
+              "name": "Комплект мелкого инвентаря торговой кухни",
+              "amount_rub": 309760,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-02-057",
+              "name": "Комплект базового барного инвентаря",
+              "amount_rub": 122760,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-03-001",
+              "name": "Многоярусная стойка",
+              "amount_rub": 258000,
+              "category": "GROW",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-04-001",
+              "name": "Кассовые POS-терминалы",
+              "amount_rub": 95000,
+              "category": "POS_KDS_IT_SMALL",
+              "useful_life_years": 3,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-04-002",
+              "name": "Терминал складского и производственного учёта в заготовочном цехе",
+              "amount_rub": 47500,
+              "category": "POS_KDS_IT_SMALL",
+              "useful_life_years": 3,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-04-003",
+              "name": "KDS-экраны или закреплённые планшеты",
+              "amount_rub": 142500,
+              "category": "POS_KDS_IT_SMALL",
+              "useful_life_years": 3,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "CAPEX-08-001",
+              "name": "Комплект профессиональной посудомоечной зоны",
+              "amount_rub": 304101.33,
+              "category": "MAIN_KITCHEN",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "FURNITURE",
+              "name": "Мебель посадочного зала",
+              "amount_rub": 425000,
+              "category": "FURNITURE",
+              "useful_life_years": 5,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-ENGINEERING",
+              "name": "Инженерные системы подготовки помещения",
+              "amount_rub": 4900000,
+              "category": "ENGINEERING",
+              "useful_life_years": 10,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-FIT-OUT",
+              "name": "Подготовка помещения / fit-out",
+              "amount_rub": 6100000,
+              "category": "FIT_OUT",
+              "useful_life_years": 7,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "LAUNCH-VIDEO",
+              "name": "Видеонаблюдение",
+              "amount_rub": 70000,
+              "category": "POS_KDS_IT_SMALL",
+              "useful_life_years": 3,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "LAUNCH-ALARM",
+              "name": "Охранная сигнализация",
+              "amount_rub": 35000,
+              "category": "POS_KDS_IT_SMALL",
+              "useful_life_years": 3,
+              "mapping_status": "mapped"
+            }
+          ],
+          "monthly_depreciation_rub": 208616.15,
+          "mapping_requires_review_count": 0
+        },
+        "restaurant_invested_capital_rub": 41488754.76,
+        "real_estate_investment_rub": 69000000,
+        "total_invested_capital_rub": 110488754.76,
+        "break_even_revenue_rub": 5205286.24,
+        "break_even_checks_per_day": 148.88,
+        "restaurant_payback_month": 6,
+        "restaurant_roi_annual": 2.0100346035179464,
+        "restaurant_irr_annual": 5.4124882515229435,
+        "restaurant_npv_rub": 230019229.5,
+        "property_appreciation": 0,
+        "property_residual_value_rub": 69000000,
+        "real_estate_return": 0,
+        "real_estate_irr_annual": 0,
+        "combined_payback_month": 16,
+        "combined_irr_annual": 1.064211770747983,
+        "combined_npv_rub": 188748781.97,
+        "restaurant_cash_flows": [
+          -41488754.76,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06
+        ],
+        "combined_cash_flows": [
+          -110488754.76,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          6949486.06,
+          75949486.06
+        ],
+        "tax_scenario": "base",
+        "contribution_scenario": "reduced",
+        "real_estate_scenario": "purchase",
+        "aggregator_share": 0
+      }
+    }
+  },
+  "sensitivity": {
+    "checks_average_check": [
+      {
+        "checks_per_day": 150,
+        "values": [
+          {
+            "average_check_multiplier": 0.85,
+            "ebitda_rub": -483105.9,
+            "ebitda_margin": -0.10837669133210169,
+            "payback_month": null
+          },
+          {
+            "average_check_multiplier": 1,
+            "ebitda_rub": 287806.2,
+            "ebitda_margin": 0.054879812367713554,
+            "payback_month": null
+          },
+          {
+            "average_check_multiplier": 1.15,
+            "ebitda_rub": 1058718.3,
+            "ebitda_margin": 0.17554766292844667,
+            "payback_month": 41
+          }
+        ]
+      },
+      {
+        "checks_per_day": 200,
+        "values": [
+          {
+            "average_check_multiplier": 0.85,
+            "ebitda_rub": 498004.89,
+            "ebitda_margin": 0.0837892726108234,
+            "payback_month": null
+          },
+          {
+            "average_check_multiplier": 1,
+            "ebitda_rub": 1525887.69,
+            "ebitda_margin": 0.21822088171919993,
+            "payback_month": 28
+          },
+          {
+            "average_check_multiplier": 1.15,
+            "ebitda_rub": 2553770.49,
+            "ebitda_margin": 0.3175833754079998,
+            "payback_month": 17
+          }
+        ]
+      },
+      {
+        "checks_per_day": 300,
+        "values": [
+          {
+            "average_check_multiplier": 0.85,
+            "ebitda_rub": 2460226.48,
+            "ebitda_margin": 0.27595523655374854,
+            "payback_month": 18
+          },
+          {
+            "average_check_multiplier": 1,
+            "ebitda_rub": 4002050.68,
+            "ebitda_margin": 0.38156195107068624,
+            "payback_month": 11
+          },
+          {
+            "average_check_multiplier": 1.15,
+            "ebitda_rub": 5543874.88,
+            "ebitda_margin": 0.4596190878875534,
+            "payback_month": 8
+          }
+        ]
+      },
+      {
+        "checks_per_day": 450,
+        "values": [
+          {
+            "average_check_multiplier": 0.85,
+            "ebitda_rub": 4845436.79,
+            "ebitda_margin": 0.3623307763087692,
+            "payback_month": 10
+          },
+          {
+            "average_check_multiplier": 1,
+            "ebitda_rub": 7158173.09,
+            "ebitda_margin": 0.4549811598624539,
+            "payback_month": 7
+          },
+          {
+            "average_check_multiplier": 1.15,
+            "ebitda_rub": 9470909.39,
+            "ebitda_margin": 0.5234618781412642,
+            "payback_month": 6
+          }
+        ]
+      }
+    ],
+    "food_cost": [
+      {
+        "value": 0.25,
+        "ebitda_rub": 3875353.72,
+        "ebitda_margin": 0.369482459050779,
+        "payback_month": 11
+      },
+      {
+        "value": 0.3,
+        "ebitda_rub": 3329946.52,
+        "ebitda_margin": 0.3174824590507789,
+        "payback_month": 13
+      },
+      {
+        "value": 0.35,
+        "ebitda_rub": 2784539.32,
+        "ebitda_margin": 0.26548245905077894,
+        "payback_month": 16
+      }
+    ],
+    "labor": [
+      {
+        "value": 1,
+        "ebitda_rub": 4002050.68,
+        "ebitda_margin": 0.38156195107068624,
+        "payback_month": 11
+      },
+      {
+        "value": 1.1,
+        "ebitda_rub": 3762356.85,
+        "ebitda_margin": 0.35870915584539403,
+        "payback_month": 12
+      },
+      {
+        "value": 1.2,
+        "ebitda_rub": 3522663.02,
+        "ebitda_margin": 0.3358563606201018,
+        "payback_month": 13
+      }
+    ],
+    "rent": [
+      {
+        "value": 350000,
+        "ebitda_rub": 4002050.68,
+        "ebitda_margin": 0.38156195107068624,
+        "payback_month": 11
+      },
+      {
+        "value": 500000,
+        "ebitda_rub": 3852050.68,
+        "ebitda_margin": 0.36726070972293723,
+        "payback_month": 12
+      },
+      {
+        "value": 750000,
+        "ebitda_rub": 3602050.68,
+        "ebitda_margin": 0.3434253074766889,
+        "payback_month": 12
+      }
+    ],
+    "capex": [
+      {
+        "value": 1,
+        "ebitda_rub": 4002050.68,
+        "ebitda_margin": 0.38156195107068624,
+        "payback_month": 11
+      },
+      {
+        "value": 1.15,
+        "ebitda_rub": 4002050.68,
+        "ebitda_margin": 0.38156195107068624,
+        "payback_month": 12
+      },
+      {
+        "value": 1.3,
+        "ebitda_rub": 4002050.68,
+        "ebitda_margin": 0.38156195107068624,
+        "payback_month": 13
+      }
+    ],
+    "aggregators": [
+      {
+        "value": 0,
+        "ebitda_rub": 4002050.68,
+        "ebitda_margin": 0.38156195107068624,
+        "payback_month": 11
+      },
+      {
+        "value": 0.1,
+        "ebitda_rub": 3696098.22,
+        "ebitda_margin": 0.3523919510706862,
+        "payback_month": 12
+      },
+      {
+        "value": 0.2,
+        "ebitda_rub": 3390145.76,
+        "ebitda_margin": 0.32322195107068624,
+        "payback_month": 13
+      },
+      {
+        "value": 0.3,
+        "ebitda_rub": 3084193.29,
+        "ebitda_margin": 0.29405195107068627,
+        "payback_month": 14
+      }
+    ],
+    "vat": [
+      {
+        "value": "base",
+        "vat_rub": 0,
+        "tax_due_rub": 295396.79,
+        "ebitda_rub": 4002050.68,
+        "ebitda_margin": 0.38156195107068624
+      },
+      {
+        "value": "conservative",
+        "vat_rub": 499457.14,
+        "tax_due_rub": 260434.79,
+        "ebitda_rub": 3502593.54,
+        "ebitda_margin": 0.3506400486242205
+      }
+    ],
+    "contributions": [
+      {
+        "value": "reduced",
+        "labor_rub": 2396938.28,
+        "ebitda_rub": 4002050.68,
+        "ebitda_margin": 0.38156195107068624
+      },
+      {
+        "value": "standard",
+        "labor_rub": 2588300,
+        "ebitda_rub": 3810688.96,
+        "ebitda_margin": 0.36331721678775053
+      }
+    ]
+  },
+  "deferred": [
+    {
+      "id": "master_lease_sublease",
+      "status": "not_started"
+    },
+    {
+      "id": "external_supply_chain_revenue",
+      "status": "not_started"
+    },
+    {
+      "id": "franchise_economics",
+      "status": "not_started"
+    },
+    {
+      "id": "future_intercompany_sales",
+      "status": "not_started"
+    },
+    {
+      "id": "detailed_functional_contour_pnl",
+      "status": "not_started"
+    },
+    {
+      "id": "exit_terminal_recovery",
+      "status": "not_started"
+    },
+    {
+      "id": "tax_capex_schedule",
+      "status": "tbd"
+    },
+    {
+      "id": "seasonality",
+      "status": "not_applied_v0.1"
+    },
+    {
+      "id": "ramp_up_profile",
+      "status": "tbd",
+      "v0_1_simplification": "100% выбранного сценария с первого полного расчётного месяца"
+    }
+  ]
+}

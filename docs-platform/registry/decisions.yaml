@@ -256,3 +256,16 @@ decisions:
     source_ids:
       - SRC-REVENUE-MODEL-BRIEF
     updated_at: 2026-08-14
+  - id: DEC-FINANCIAL-MODEL-2026-08-16-01
+    title: Создать Financial Model v0.1 и нативную Google Sheets-проекцию
+    status: approved
+    decision: Создать консолидированную рабочую финансовую модель первого собственного совмещённого объекта по точным допущениям владельца, импортировать Revenue Model, Investor Start Model и generated Equipment BOM, рассчитывать P&L, денежный поток, инвестиционные показатели, недвижимость и чувствительность формулами и опубликовать один нативный Google Sheet после проверки.
+    rationale: Прямое решение владельца проекта от 2026-08-16; модель имеет статус research и не утверждает окончательный бизнес-план, налоговую схему, закупки, valuation или гарантированную доходность.
+    affected_documents:
+      - DOC-FINANCIAL-MODEL
+    approved_by: project owner
+    approved_at: 2026-08-16
+    supersedes: null
+    source_ids:
+      - SRC-FINANCIAL-MODEL-BRIEF-2026-08-16
+    updated_at: 2026-08-16

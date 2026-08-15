@@ -1,0 +1,383 @@
+schema_version: 1
+document:
+  id: DOC-FINANCIAL-MODEL
+  title: Financial Model
+  title_ru: Финансовая модель пилотного объекта
+  google_title: 04 — Финансовая модель пилотного объекта
+  version: "0.1"
+  status: research
+  type: working_pilot_financial_model
+  iteration_id: ITR-FINANCIAL-MODEL-2026-08-16-01
+  decision_id: DEC-FINANCIAL-MODEL-2026-08-16-01
+  change_set_id: CHG-FINANCIAL-MODEL-2026-08-16-01
+  source_ids: [SRC-FINANCIAL-MODEL-BRIEF-2026-08-16]
+  note: Рабочая сценарная модель первого собственного совмещённого объекта; не является окончательным бизнес-планом, инвестиционным предложением или гарантией доходности.
+
+scope:
+  object: Первый собственный совмещённый объект
+  components:
+    - заготовочное производство
+    - торговая точка
+    - посадочный зал
+  consolidation_rule: Внутренние перемещения между заготовочным производством и собственной торговой точкой не являются выручкой консолидированной модели.
+  deferred:
+    - id: master_lease_sublease
+      status: not_started
+    - id: external_supply_chain_revenue
+      status: not_started
+    - id: franchise_economics
+      status: not_started
+    - id: future_intercompany_sales
+      status: not_started
+    - id: detailed_functional_contour_pnl
+      status: not_started
+    - id: exit_terminal_recovery
+      status: not_started
+    - id: tax_capex_schedule
+      status: tbd
+    - id: seasonality
+      status: not_applied_v0.1
+    - id: ramp_up_profile
+      status: tbd
+      v0_1_simplification: 100% выбранного сценария с первого полного расчётного месяца
+
+imports:
+  revenue_model:
+    document_id: DOC-REVENUE-MODEL
+    path: docs-platform/working/revenue-model.yaml
+    content_state_sha256: 90727a6c51f959b617d6c972b898593a1b6dba6742d51b30bb75230f3f606c38
+    provenance: imported_canonical
+  capex:
+    document_id: DOC-CAPEX-GENERATED-EQUIPMENT-BOM
+    snapshot_path: src/content/capex-configurator-data.json
+    content_state_sha256: a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239
+    equipment_bom_path: docs-platform/working/configurations/CFG-PILOT-001/equipment-bom.yaml
+    equipment_bom_sha256: d001d531247e1c64820a6bd00df1db755908d483358f5f677b3ca6acb6d8fa4a
+    scenario: BASE
+    bar_enabled: true
+    grow_enabled: true
+    alcohol_enabled: false
+    excluded_item_ids: [CAPEX-01-012]
+    excluded_item_prefixes: [CAPEX-05-]
+    control_total_rub_rounded: 5298993
+    provenance: imported_canonical
+  investor_start_model:
+    document_id: DOC-INVESTOR-START-MODEL
+    path: docs-platform/working/investor-start-model.yaml
+    file_sha256: b81a6c4e8988a4532c9ba2749d492b3f96e37d83af822396afc82930244b2985
+    provenance: imported_canonical
+
+model:
+  currency: RUB
+  horizon_months: 60
+  detailed_months: 12
+  days_per_month: 30
+  default_sales_scenario: realistic
+  default_real_estate_scenario: rent
+  default_tax_scenario: base
+  default_contribution_scenario: reduced
+  default_aggregator_share: 0
+  discount_rate_annual: 0.20
+  discount_rate_status: tbd_investor_hurdle_rate
+
+food_cost:
+  kolobok_segments:
+    - id: BUDGET
+      name: Бюджетные
+      sales_share: 0.15
+      price_rub: 425
+      food_cost_rate: 0.25
+      provenance: owner_approved
+    - id: CORE
+      name: Основные
+      sales_share: 0.40
+      price_rub: 550
+      food_cost_rate: 0.27
+      provenance: owner_approved
+    - id: ABOVE_AVERAGE
+      name: Выше среднего
+      sales_share: 0.30
+      price_rub: 700
+      food_cost_rate: 0.28
+      provenance: owner_approved
+    - id: PREMIUM
+      name: Премиальные
+      sales_share: 0.15
+      price_rub: 925
+      food_cost_rate: 0.30
+      provenance: owner_approved
+  manches:
+    price_rub: 650
+    food_cost_rate: 0.28
+    provenance: owner_approved
+  drinks:
+    price_rub: 275
+    unit_cost_rub: 30
+    provenance: owner_approved
+  waste:
+    default_rate: 0.04
+    sensitivity: [0.02, 0.04, 0.07]
+    basis: raw_material_cost
+    provenance: owner_approved
+
+packaging:
+  name: Упаковка и одноразовая посуда
+  baseline_checks_per_day: 300
+  baseline_monthly_rub: 250000
+  sensitivity_monthly_rub: [200000, 250000, 300000]
+  scaling_formula: baseline_monthly_rub * checks_per_day / baseline_checks_per_day
+  concept: Максимально бумажная или картонная, предпочтительно биоразлагаемая упаковка; свойства конкретного товара требуют подтверждения производителя.
+  provenance: owner_approved
+
+staffing:
+  roles:
+    - id: SOUS_CHEF
+      role: Су-шеф
+      pessimistic_headcount: 1
+      realistic_headcount: 1
+      optimistic_headcount: 1
+      gross_salary_rub: 150000
+      schedule: 5/2, 8 часов
+      function: Кухня, качество, стандарты, заготовки, остатки, обучение и усиление основной линии в пик.
+    - id: PREP_COOK
+      role: Повар-заготовщик
+      pessimistic_headcount: 2
+      realistic_headcount: 2
+      optimistic_headcount: 4
+      gross_salary_rub: 120000
+      schedule: сменный
+      function: Заготовочное производство.
+    - id: LINE_COOK
+      role: Повар основной линии
+      pessimistic_headcount: 4
+      realistic_headcount: 4
+      optimistic_headcount: 4
+      gross_salary_rub: 115000
+      schedule: сменный, 2 одновременно
+      function: Основная горячая линия.
+    - id: SERVING
+      role: Сервировка
+      pessimistic_headcount: 2
+      realistic_headcount: 2
+      optimistic_headcount: 2
+      gross_salary_rub: 95000
+      schedule: сменный, 1 одновременно
+      function: Сервировка и выдача; усиление другими сотрудниками при высокой нагрузке.
+    - id: CASHIER_BAR
+      role: Кассир / бар
+      pessimistic_headcount: 2
+      realistic_headcount: 2
+      optimistic_headcount: 2
+      gross_salary_rub: 95000
+      schedule: сменный
+      function: Касса и бар.
+    - id: ADMINISTRATOR
+      role: Администратор
+      pessimistic_headcount: 2
+      realistic_headcount: 2
+      optimistic_headcount: 2
+      gross_salary_rub: 125000
+      schedule: сменный
+      function: Зал, смена, сервис, касса, бар и помощь операционной работе в пик.
+    - id: TECHNICAL
+      role: Технический сотрудник / мойщик
+      pessimistic_headcount: 2
+      realistic_headcount: 2
+      optimistic_headcount: 4
+      gross_salary_rub: 90000
+      schedule: сменный
+      function: Мойка, уборка, движение сырья и отходов.
+    - id: MANAGER
+      role: Управляющий
+      pessimistic_headcount: 1
+      realistic_headcount: 1
+      optimistic_headcount: 1
+      gross_salary_rub: 150000
+      schedule: 5/2
+      function: Поставщики, экономика точки, объект, подрядчики, бухгалтерия, локальный маркетинг, SMM, остатки и списания.
+  employer_contributions:
+    default_scenario: reduced
+    reduced:
+      name: Льготный для общепита
+      status: requires_confirmation
+      mrot_rub: 27093
+      threshold_multiple: 1.5
+      rate_below_threshold: 0.30
+      rate_above_threshold: 0.15
+    standard:
+      name: Стандартный
+      rate: 0.30
+  personnel_reserve_rate: 0.10
+  personnel_reserve_basis: payroll_plus_employer_contributions
+
+opex:
+  entries:
+    - { id: RENT, name: Аренда, category: Occupancy, behavior: fixed, amount_rub: 350000, applies_to: rent, status: owner_approved }
+    - { id: UTILITIES, name: Коммунальные услуги, category: Utilities, behavior: fixed, amount_rub: 200000, status: owner_approved }
+    - { id: ACQUIRING, name: Эквайринг, category: Payment Processing, behavior: variable, rate_of_gross_revenue: 0.02, sensitivity: [0.007, 0.012, 0.02], status: owner_approved }
+    - { id: ADVERTISING, name: Рекламный бюджет, category: Marketing, behavior: fixed, amount_rub: 100000, status: owner_approved }
+    - { id: SMM, name: SMM / ведение, category: Marketing, behavior: fixed, amount_rub: 50000, type: outsourcing, status: owner_approved }
+    - { id: EQUIPMENT_SERVICE, name: Обслуживание оборудования, category: Repairs & Maintenance, behavior: fixed, amount_rub: 100000, status: owner_approved }
+    - { id: HOUSEHOLD, name: Хозяйственные расходы, category: Other OPEX, behavior: fixed, amount_rub: 80000, status: owner_approved }
+    - { id: ACCOUNTING, name: Бухгалтерский аутсорсинг, category: Accounting, behavior: fixed, amount_rub: 25000, status: owner_approved }
+    - { id: VENT_GREASE, name: Вентиляция и жироуловители, category: Sanitation, behavior: fixed, amount_rub: 15000, status: owner_approved }
+    - { id: UNIFORM_RENEWAL, name: Обновление спецодежды, category: Other OPEX, behavior: fixed, amount_rub: 15000, status: owner_approved }
+    - { id: MUSIC_RIGHTS, name: Музыка и права публичного исполнения, category: Other OPEX, behavior: fixed, amount_rub: 7000, status: owner_approved }
+    - { id: PEST, name: Дезинсекция и дератизация, category: Sanitation, behavior: fixed, amount_rub: 6000, status: owner_approved }
+    - { id: YUMA, name: YUMA / кассовые сервисы, category: Software, behavior: fixed, amount_rub: 6000, status: owner_approved }
+    - { id: MEDICAL, name: Медосмотры и санитарные документы, category: Sanitation, behavior: fixed, amount_rub: 5000, annual_amount_rub: 60000, status: owner_approved }
+    - { id: SECURITY_MONITORING, name: Пультовая охрана, category: Security, behavior: fixed, amount_rub: 4000, status: owner_approved }
+    - { id: BANKING, name: Банковское обслуживание, category: Payment Processing, behavior: fixed, amount_rub: 0, status: tbd, display_status: Требует уточнения }
+    - { id: SUPPLIER_DELIVERY, name: Доставка сырья, category: Food & Beverage COGS, behavior: variable, amount_rub: 0, status: included_in_purchase_price }
+    - { id: AGGREGATORS, name: Агрегаторы, category: Payment Processing, behavior: variable, default_share: 0, share_sensitivity: [0, 0.10, 0.20, 0.30], commission_rate: 0.2917, status: owner_approved }
+    - { id: OTHER, name: Прочие регулярные расходы, category: Other OPEX, behavior: fixed, amount_rub: 66500, status: owner_approved }
+
+tax:
+  scenarios:
+    base:
+      name: Базовый налоговый
+      usn_income_less_expenses_rate: 0.07
+      minimum_usn_income_rate: 0.01
+      vat_mode: food_service_exemption
+      vat_status: requires_confirmation
+      vat_rate: 0
+    conservative:
+      name: Консервативный налоговый
+      usn_income_less_expenses_rate: 0.07
+      minimum_usn_income_rate: 0.01
+      vat_mode: included_in_consumer_price
+      vat_rate: 0.05
+      vat_formula: gross_revenue * vat_rate / (1 + vat_rate)
+  management_proxy:
+    status: management_proxy
+    formula: revenue_excluding_vat - eligible_operating_cash_expenses
+    includes:
+      - raw_materials
+      - waste
+      - packaging
+      - payroll
+      - employer_contributions
+      - rent
+      - utilities
+      - acquiring
+      - advertising
+      - smm
+      - software
+      - accounting
+      - repairs_service
+      - sanitation
+      - security
+      - other_current_opex
+    excludes:
+      - personnel_reserve
+      - restaurant_capex
+      - real_estate_purchase
+      - security_deposit
+      - initial_inventory_balance
+      - management_depreciation
+      - maintenance_capex
+
+real_estate:
+  scenarios:
+    rent:
+      monthly_rent_rub: 350000
+      prepayment_months: 12
+      security_deposit_months: 2
+    purchase:
+      purchase_price_rub: 69000000
+      monthly_rent_rub: 0
+  appreciation_default: 0
+  appreciation_sensitivity: [0, 0.03, 0.05]
+  restaurant_ebitda_includes_appreciation: false
+
+launch_investment:
+  video_surveillance_rub: 70000
+  alarm_rub: 35000
+  initial_uniform_rub: 180000
+  initial_inventory_rub: 1000000
+  initial_inventory_classification: Working Capital / Launch Investment
+  other_launch_costs_rub: 0
+  other_launch_costs_status: tbd
+  contingency_default_rate: 0.10
+  contingency_sensitivity: [0.05, 0.10, 0.15]
+  contingency_basis: equipment_plus_furniture_plus_preparation
+
+operating_reserve:
+  default_months: 6
+  month_options: [3, 6, 9]
+  default_invested_capital_basis: fixed
+  fixed_excludes: [raw_materials, waste, packaging, acquiring, aggregator_commission, sales_dependent_taxes]
+  rent_uncovered_months_formula: max(reserve_months - prepaid_rent_months, 0)
+  full_indicator_includes_variable_operating_cash_costs: true
+  initial_inventory_separate: true
+
+depreciation:
+  type: management_depreciation
+  tax_use: false
+  straight_line: true
+  categories:
+    - { id: POS_KDS_IT_SMALL, name: POS / KDS / IT / мелкая электроника, useful_life_years: 3 }
+    - { id: MAIN_KITCHEN, name: Основное кухонное оборудование, useful_life_years: 5 }
+    - { id: GROW, name: Модуль выращивания, useful_life_years: 5 }
+    - { id: FURNITURE, name: Мебель, useful_life_years: 5 }
+    - { id: COLD_FREEZER, name: Холодильные и морозильные камеры, useful_life_years: 10 }
+    - { id: ENGINEERING, name: Инженерные системы, useful_life_years: 10 }
+    - { id: FIT_OUT, name: Подготовка помещения / fit-out, useful_life_years: 7 }
+    - { id: UNCLASSIFIED, name: Неклассифицированное оборудование, useful_life_years: 5, status: mapping_requires_review }
+  preparation_engineering_category_ids: [PREP-ELECTRICAL, PREP-WATER-DRAINAGE, PREP-VENTILATION, PREP-LIGHTING]
+  preparation_fit_out_category_ids: [PREP-BUILDING, PREP-GUEST-AREA, PREP-BUILT-IN, PREP-DESIGN]
+
+maintenance_capex:
+  annual_rate: 0.03
+  basis: equipment_plus_furniture
+  ebitda_treatment: excluded
+  free_cash_flow_treatment: deducted
+
+terminal:
+  going_concern: true
+  month_60_deposit_recovery_rub: 0
+  month_60_inventory_recovery_rub: 0
+  restaurant_equipment_salvage_rub: 0
+  brand_value_rub: 0
+  exit_scenario_status: not_started
+
+investment_metrics:
+  payback_formula: first month where cumulative_free_cash_flow >= 0
+  roi_definition: annual operating free cash flow / restaurant invested capital
+  irr_horizon_months: 60
+  npv_horizon_months: 60
+  monthly_discount_rate_formula: (1 + annual_discount_rate) ^ (1 / 12) - 1
+  restaurant_terminal_value_rub: 0
+
+sensitivity:
+  checks_per_day: [150, 200, 300, 450]
+  average_check_multipliers: [0.85, 1, 1.15]
+  overall_food_cost_rates: [0.25, 0.30, 0.35]
+  labor_multipliers: [1, 1.10, 1.20]
+  rent_rub: [350000, 500000, 750000]
+  capex_multipliers: [1, 1.15, 1.30]
+  aggregator_shares: [0, 0.10, 0.20, 0.30]
+  vat_modes: [exemption, vat_5_included]
+  contribution_modes: [reduced, standard]
+
+google_sheet:
+  folder_name: Колобочная — Investment
+  title: 04 — Финансовая модель пилотного объекта
+  native_google_sheet: true
+  sheets:
+    - 01 Описание
+    - 02 Допущения
+    - 03 Продажи
+    - 04 Меню и себестоимость
+    - 05 Персонал
+    - 06 OPEX
+    - 07 CAPEX
+    - 08 P&L
+    - 09 Денежный поток
+    - 10 Инвестиции
+    - 11 Сценарии
+    - 12 Чувствительность
+    - 13 Недвижимость
+    - 14 Производственный центр
+    - 15 Источники
+    - 16 Проверки
