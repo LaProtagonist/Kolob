@@ -1,0 +1,27 @@
+schema_version: 2
+iteration_id: ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01
+decision_id: DEC-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01
+change_set_id: CHG-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01
+previewed_at: 2026-08-15T13:14:14.000Z
+status: passed
+mutation_performed: false
+planned_changes:
+  section_flow:
+    - remove the standalone «03 Расчётный объём продаж» presentation
+    - preserve month and day sales in the sticky summary
+    - renumber production load to 03 and capacity check to 04
+  daily_load:
+    - use one equal-height three-card row on desktop and tablet
+    - center the checks and drinks content vertically
+    - present 420 food portions on one compact parent line
+    - keep 336 + 84 under «Из них» and keep drinks separate
+  capacity_basis:
+    - rename the line-split label to «Нагрузка в расчётный максимум»
+invariants:
+  calculations_changed: false
+  revenue_model_yaml_changed: false
+  revenue_snapshot_changed: false
+  capex_changed: false
+  investor_start_model_changed: false
+  other_routes_changed: false
+  research_performed: false

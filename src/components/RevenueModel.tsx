@@ -16,6 +16,12 @@ import "./RevenueModel.css";
 
 const rub = new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 0 });
 const decimal = new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 1 });
+const publicCopy = {
+  summaryWarning: "Расчёт показывает потенциальный объём продаж при выбранных параметрах.",
+  maximumHourLabel: "Расчётный максимум",
+  maximumLineLoadLabel: "Нагрузка в расчётный максимум",
+  capacityBandLabel: "Расчётная рабочая мощность линии колобков",
+} as const;
 
 function formatRub(value: number | null) {
   return value === null ? revenueModel.public_presentation.not_calculated_label : `${rub.format(Math.round(value))} ₽`;
@@ -39,6 +45,16 @@ function plural(value: number, one: string, few: string, many: string) {
 function formatApprox(value: number | null, forms: [string, string, string]) {
   if (value === null) return revenueModel.public_presentation.not_calculated_label;
   return `≈${decimal.format(value)} ${plural(value, ...forms)}`;
+}
+
+function publicCapacityCopy(value: string) {
+  return value.replaceAll("Комплектация", "Сервировка").replaceAll("комплектации", "сервировки");
+}
+
+function publicCapacityLabel(value: string) {
+  if (value === "Комплектация") return "Сервировка";
+  if (value === "Манчес") return "Манчесы";
+  return value;
 }
 
 function SectionHeading({ id, number, title, text }: { id: string; number: string; title: string; text: string }) {
@@ -166,37 +182,46 @@ export function RevenueModelPage() {
               ) : null}
             </section>
 
-            <section className="launch-card" aria-labelledby="revenue-sales-title">
-              <SectionHeading id="revenue-sales-title" number="03" title={model.public_presentation.sales_title} text={model.public_presentation.month_note} />
-              <div className="revenue-sales-card" aria-live="polite" data-testid="sales-volume">
-                <span>{result.scenarioLabel}</span>
-                <strong>{result.salesPerMonthRub === null ? model.public_presentation.not_calculated_label : `${formatRub(result.salesPerMonthRub)} / месяц`}</strong>
-                <p>{result.salesPerDayRub === null ? model.public_presentation.not_calculated_label : `${formatRub(result.salesPerDayRub)} / день`}</p>
-                <small>{model.public_presentation.month_note}</small>
-              </div>
-            </section>
-
             <section className="launch-card" aria-labelledby="revenue-production-title">
-              <SectionHeading id="revenue-production-title" number="04" title={model.public_presentation.production_title} text={model.public_presentation.production_description} />
-              <dl className="revenue-metric-grid revenue-daily-metrics">
-                <SummaryMetric label="Чеков в день" value={formatCount(result.checksPerDay)} />
-                <SummaryMetric label="Порций еды в день" value={formatCount(result.foodPortionsPerDay)} />
-                <SummaryMetric label="Порций колобков в день" value={formatCount(result.kolobokPortionsPerDay)} />
-                <SummaryMetric label="Манчесов в день" value={formatCount(result.manchesPerDay)} />
-                <SummaryMetric label="Напитков в день" value={formatCount(result.drinksPerDay)} />
+              <SectionHeading id="revenue-production-title" number="03" title={model.public_presentation.production_title} text={model.public_presentation.production_description} />
+              <dl className="revenue-daily-load" data-testid="daily-production-load">
+                <div className="revenue-daily-card revenue-daily-side" data-daily-metric="checks">
+                  <dt>Чеков в день</dt>
+                  <dd>{formatCount(result.checksPerDay)}</dd>
+                </div>
+                <div className="revenue-daily-card revenue-daily-food" data-daily-metric="food">
+                  <div className="revenue-food-total">
+                    <strong>{formatCount(result.foodPortionsPerDay)}</strong>
+                    <span>порций еды в день</span>
+                  </div>
+                  <div className="revenue-food-composition">
+                    <span className="revenue-food-composition-title">Из них</span>
+                    <div className="revenue-food-parts">
+                      <div data-food-part="kolobok"><span>Колобки</span><strong>{formatCount(result.kolobokPortionsPerDay, "порций")}</strong></div>
+                      <div data-food-part="manches"><span>Манчесы</span><strong>{formatCount(result.manchesPerDay)}</strong></div>
+                    </div>
+                  </div>
+                </div>
+                <div className="revenue-daily-card revenue-daily-side revenue-daily-drinks" data-daily-metric="drinks">
+                  <dt>Напитков в день</dt>
+                  <dd>{formatCount(result.drinksPerDay)}</dd>
+                </div>
               </dl>
               <div className="revenue-hour-grid">
                 <article><span>Средний час</span><strong>{formatApprox(result.averageHour.food, ["порция еды", "порции еды", "порций еды"])}</strong><small>{formatApprox(result.averageHour.checks, ["чек", "чека", "чеков"])}</small></article>
                 <article><span>Пиковый час</span><strong>{formatApprox(result.peakHour.food, ["порция еды", "порции еды", "порций еды"])}</strong><small>{formatApprox(result.peakHour.checks, ["чек", "чека", "чеков"])}</small></article>
-                <article className="is-accent"><span>Максимальный час</span><strong>{formatApprox(result.maximumHour.food, ["порция еды", "порции еды", "порций еды"])}</strong><small>{formatApprox(result.maximumHour.kolobok, ["порция колобков", "порции колобков", "порций колобков"])} · {formatApprox(result.maximumHour.manches, ["манчес", "манчеса", "манчесов"])}</small></article>
+                <article className="is-accent"><span>{publicCopy.maximumHourLabel}</span><strong>{formatApprox(result.maximumHour.food, ["порция еды", "порции еды", "порций еды"])}</strong><small>{formatApprox(result.maximumHour.checks, ["чек", "чека", "чеков"])}</small></article>
               </div>
             </section>
 
             <section className="launch-card" aria-labelledby="revenue-capacity-title">
-              <SectionHeading id="revenue-capacity-title" number="05" title={model.public_presentation.capacity_title} text={result.capacityStatement} />
-              <div className="revenue-capacity-band"><span>Колобки</span><strong>{model.capacity.kolobok_line.sustainable_portions_per_hour.min}–{model.capacity.kolobok_line.sustainable_portions_per_hour.max} порций в час</strong></div>
+              <SectionHeading id="revenue-capacity-title" number="04" title={model.public_presentation.capacity_title} text={publicCapacityCopy(result.capacityStatement)} />
+              <div className="revenue-capacity-band"><span>{publicCopy.capacityBandLabel}</span><strong>{model.capacity.kolobok_line.sustainable_portions_per_hour.min}–{model.capacity.kolobok_line.sustainable_portions_per_hour.max} порций в час</strong></div>
               <button type="button" className="launch-preparation-accordion-button" aria-expanded={capacityOpen} aria-controls="revenue-capacity-details" onClick={() => setCapacityOpen(open => !open)}><span>{model.public_presentation.capacity_basis_label}</span><span aria-hidden="true">{capacityOpen ? "−" : "+"}</span></button>
-              {capacityOpen ? <div id="revenue-capacity-details" className="revenue-capacity-details">{model.capacity.public_basis.map(item => <div key={item.label}><strong>{item.label}</strong><span>{item.value}</span>{item.secondary ? <small>{item.secondary}</small> : null}</div>)}</div> : null}
+              {capacityOpen ? <div id="revenue-capacity-details" className="revenue-capacity-details">
+                {model.capacity.public_basis.map(item => <div key={item.label}><strong>{publicCapacityLabel(item.label)}</strong><span>{item.value}</span>{item.secondary ? <small>{item.secondary}</small> : null}</div>)}
+                <div className="revenue-capacity-split" data-testid="maximum-line-split"><strong>{publicCopy.maximumLineLoadLabel}</strong><span>{result.calculated ? `${formatApprox(result.maximumHour.kolobok, ["порция колобков", "порции колобков", "порций колобков"])} · ${formatApprox(result.maximumHour.manches, ["манчес", "манчеса", "манчесов"])}` : model.public_presentation.not_calculated_label}</span></div>
+              </div> : null}
             </section>
 
             <button className="launch-reset" type="button" onClick={reset}>Сбросить расчёт</button>
@@ -214,7 +239,7 @@ export function RevenueModelPage() {
               <SummaryMetric label="Напитков" value={formatCount(result.drinksPerDay)} />
               <SummaryMetric label="Сценарий" value={result.scenarioLabel} />
             </dl>
-            <p className="launch-warning">{model.public_presentation.summary_warning}</p>
+            <p className="launch-warning">{publicCopy.summaryWarning}</p>
           </aside>
         </div>
       </section>

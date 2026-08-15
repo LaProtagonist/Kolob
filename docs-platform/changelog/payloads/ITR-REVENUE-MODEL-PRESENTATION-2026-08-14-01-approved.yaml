@@ -1,0 +1,106 @@
+schema_version: 2
+payload_id: PAYLOAD-REVENUE-MODEL-PRESENTATION-2026-08-14-01
+iteration_id: ITR-REVENUE-MODEL-PRESENTATION-2026-08-14-01
+proposal_id: PROP-REVENUE-MODEL-PRESENTATION-2026-08-14-01
+decision_id: DEC-REVENUE-MODEL-PRESENTATION-2026-08-14-01
+change_set_id: CHG-REVENUE-MODEL-PRESENTATION-2026-08-14-01
+title: Clarify Revenue Model production-load presentation
+status: approved
+approved_by: project owner
+approved_at: 2026-08-14T20:32:48.000Z
+scope:
+  route: /revenue-model
+  summary: Точечно уточнить публичные тексты и визуальную иерархию производственной нагрузки без изменения модели, данных и формул.
+public_copy:
+  summary_warning:
+    before: Расчёт показывает потенциальный объём продаж при заданном потоке заказов и не является прогнозом гарантированной выручки.
+    after: Расчёт показывает потенциальный объём продаж при выбранных параметрах.
+  assembly_role:
+    before: Комплектация
+    after: Сервировка
+  maximum_hour:
+    before: Максимальный час
+    after: Расчётный максимум
+  kolobok_capacity_label:
+    before: Колобки
+    after: Расчётная рабочая мощность линии колобков
+  manches_line:
+    before: Манчес
+    after: Манчесы
+daily_load:
+  top_level:
+    checks_per_day: 300
+    food_portions_per_day: 420
+    drinks_per_day: 300
+  food_composition:
+    label: Из них
+    kolobok_portions: 336
+    manches: 84
+    invariant: 336 + 84 = 420
+  drinks_are_outside_food_total: true
+hourly_load:
+  average: { label: Средний час, food_portions: 35, checks: 25 }
+  peak: { label: Пиковый час, food_portions: 46, checks: 33 }
+  maximum: { label: Расчётный максимум, food_portions: 64, checks: 46 }
+  product_split:
+    kolobok_portions: 51
+    manches: 13
+    visible_only_in_capacity_basis: true
+capacity_basis:
+  kolobok_line_range: 60–90 порций в час
+  main_line: 2 повара
+  serving:
+    regular: 1 сотрудник
+    peak: 2 сотрудника при высокой пиковой нагрузке
+  checkout: до 2 кассиров в пиковые часы
+boundaries:
+  unchanged:
+    - formulas and Revenue Model structured data
+    - prices, scenarios, checks, average check and calculation coefficients
+    - CAPEX, Investor Start Model and generated snapshots
+    - launch-budget and capex-configurator
+    - navigation, sitemap, SEO and other pages
+    - all other revenue-model copy and design-system rules
+  forbidden:
+    - research or internet price search
+    - new calculation parameters
+    - Git commit, tag, seal, push or deployment
+state_hash_paths:
+  - src/components/RevenueModel.tsx
+  - src/components/RevenueModel.css
+  - scripts/test-site.cjs
+  - docs-platform/app/test/revenue-model.test.ts
+content_paths:
+  - src/components/RevenueModel.tsx
+  - src/components/RevenueModel.css
+  - scripts/test-site.cjs
+  - docs-platform/app/test/revenue-model.test.ts
+  - docs-platform/changes/proposals/PROP-REVENUE-MODEL-PRESENTATION-2026-08-14-01.yaml
+  - docs-platform/changes/decisions/DEC-REVENUE-MODEL-PRESENTATION-2026-08-14-01.yaml
+  - docs-platform/changes/iterations/ITR-REVENUE-MODEL-PRESENTATION-2026-08-14-01.yaml
+  - docs-platform/changes/CHG-REVENUE-MODEL-PRESENTATION-2026-08-14-01.yaml
+  - docs-platform/changelog/payloads/ITR-REVENUE-MODEL-PRESENTATION-2026-08-14-01-approved.yaml
+  - docs-platform/changelog/previews/ITR-REVENUE-MODEL-PRESENTATION-2026-08-14-01.yaml
+  - docs-platform/changelog/audit/ITR-REVENUE-MODEL-PRESENTATION-2026-08-14-01.yaml
+  - docs-platform/changelog/iteration-receipts/ITR-REVENUE-MODEL-PRESENTATION-2026-08-14-01.yaml
+  - docs-platform/changelog/verification/ITR-REVENUE-MODEL-PRESENTATION-2026-08-14-01.yaml
+  - docs-platform/changelog/rollback-payloads/ITR-REVENUE-MODEL-PRESENTATION-2026-08-14-01/manifest.yaml
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+  - docs-platform/generated/capex-governance-projection.json
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+  - docs-platform/generated/capex-governance-projection.json
+allowed_dirty_paths:
+  - output/pdf/launch-budget-review.pdf
+  - output/review/
+rollback_contract:
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true

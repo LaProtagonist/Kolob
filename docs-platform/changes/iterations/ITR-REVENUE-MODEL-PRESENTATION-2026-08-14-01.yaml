@@ -1,0 +1,57 @@
+schema_version: 2
+iteration_id: ITR-REVENUE-MODEL-PRESENTATION-2026-08-14-01
+proposal_id: PROP-REVENUE-MODEL-PRESENTATION-2026-08-14-01
+decision_id: DEC-REVENUE-MODEL-PRESENTATION-2026-08-14-01
+change_set_id: CHG-REVENUE-MODEL-PRESENTATION-2026-08-14-01
+title: Refine Revenue Model production-load presentation
+status: approved
+approved_by: project owner
+approved_at: 2026-08-14T20:32:49.000Z
+actor: Codex
+scope: Public copy and production-load layout on /revenue-model only; all calculations, structured business sources, snapshots and other routes are preserved.
+approved_payload_path: docs-platform/changelog/payloads/ITR-REVENUE-MODEL-PRESENTATION-2026-08-14-01-approved.yaml
+approved_payload_sha256: 049cff3de8dcd5ffdfbec8578af6c7ec3794eb2aadc6373fd3165a12dda72ad5
+before_state_sha256: efc86d7a86421f5e9c8c6b4352e3b2d5d335f3d7e961d1bc053d72260768c6e3
+after_state_sha256: d3cf04a9aecb3b7d6f17673d251a44bb7c950d802a70dcc38f9193af72cf5c04
+state_hash_paths:
+  - src/components/RevenueModel.tsx
+  - src/components/RevenueModel.css
+  - scripts/test-site.cjs
+  - docs-platform/app/test/revenue-model.test.ts
+content_paths:
+  - src/components/RevenueModel.tsx
+  - src/components/RevenueModel.css
+  - scripts/test-site.cjs
+  - docs-platform/app/test/revenue-model.test.ts
+  - docs-platform/changes/proposals/PROP-REVENUE-MODEL-PRESENTATION-2026-08-14-01.yaml
+  - docs-platform/changes/decisions/DEC-REVENUE-MODEL-PRESENTATION-2026-08-14-01.yaml
+  - docs-platform/changes/iterations/ITR-REVENUE-MODEL-PRESENTATION-2026-08-14-01.yaml
+  - docs-platform/changes/CHG-REVENUE-MODEL-PRESENTATION-2026-08-14-01.yaml
+  - docs-platform/changelog/payloads/ITR-REVENUE-MODEL-PRESENTATION-2026-08-14-01-approved.yaml
+  - docs-platform/changelog/previews/ITR-REVENUE-MODEL-PRESENTATION-2026-08-14-01.yaml
+  - docs-platform/changelog/audit/ITR-REVENUE-MODEL-PRESENTATION-2026-08-14-01.yaml
+  - docs-platform/changelog/iteration-receipts/ITR-REVENUE-MODEL-PRESENTATION-2026-08-14-01.yaml
+  - docs-platform/changelog/verification/ITR-REVENUE-MODEL-PRESENTATION-2026-08-14-01.yaml
+  - docs-platform/changelog/rollback-payloads/ITR-REVENUE-MODEL-PRESENTATION-2026-08-14-01
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+  - docs-platform/generated/capex-governance-projection.json
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+  - docs-platform/generated/capex-governance-projection.json
+allowed_dirty_paths:
+  - output/pdf/launch-budget-review.pdf
+  - output/review/
+affected_document_ids: []
+affected_section_ids:
+  - revenue-model.summary
+  - revenue-model.daily-load
+  - revenue-model.hourly-load
+  - revenue-model.capacity-basis
+rollback_payload: docs-platform/changelog/rollback-payloads/ITR-REVENUE-MODEL-PRESENTATION-2026-08-14-01/manifest.yaml

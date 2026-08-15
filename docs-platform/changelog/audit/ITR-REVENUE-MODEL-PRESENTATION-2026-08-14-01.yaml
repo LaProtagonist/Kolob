@@ -1,0 +1,66 @@
+schema_version: 2
+iteration_id: ITR-REVENUE-MODEL-PRESENTATION-2026-08-14-01
+proposal_id: PROP-REVENUE-MODEL-PRESENTATION-2026-08-14-01
+decision_id: DEC-REVENUE-MODEL-PRESENTATION-2026-08-14-01
+change_set_id: CHG-REVENUE-MODEL-PRESENTATION-2026-08-14-01
+timestamp: 2026-08-14T20:58:35.000Z
+actor: Codex
+type: Revenue Model public presentation refinement
+reason: Clarify the relationship between total food portions and their product mix, unify hourly load cards and replace internal serving terminology without changing any calculation.
+route: /revenue-model
+before_state_sha256: efc86d7a86421f5e9c8c6b4352e3b2d5d335f3d7e961d1bc053d72260768c6e3
+after_state_sha256: d3cf04a9aecb3b7d6f17673d251a44bb7c950d802a70dcc38f9193af72cf5c04
+copy_changes:
+  - field_id: revenue.summary_warning
+    before: Расчёт показывает потенциальный объём продаж при заданном потоке заказов и не является прогнозом гарантированной выручки.
+    after: Расчёт показывает потенциальный объём продаж при выбранных параметрах.
+  - field_id: revenue.capacity.serving_role
+    before: Комплектация
+    after: Сервировка
+  - field_id: revenue.hourly.maximum_label
+    before: Максимальный час
+    after: Расчётный максимум
+  - field_id: revenue.capacity.kolobok_line_label
+    before: Колобки
+    after: Расчётная рабочая мощность линии колобков
+  - field_id: revenue.capacity.manches_line_label
+    before: Манчес
+    after: Манчесы
+layout_changes:
+  daily_load:
+    before: 420 food portions, 336 kolobok portions, 84 manches and 300 drinks appeared as five peer metrics.
+    after: 420 food portions is the parent total; 336 kolobok portions and 84 manches appear under «Из них», while 300 drinks remains a separate metric.
+    invariant: 336 + 84 = 420; drinks are not included in food portions.
+  hourly_load:
+    before: The maximum-hour card used a different product split from the average and peak cards.
+    after: All three cards show food portions and checks; the stress-case label is «Расчётный максимум».
+    values:
+      average: { food_portions: 35, checks: 25 }
+      peak: { food_portions: 46, checks: 33 }
+      maximum: { food_portions: 64, checks: 46 }
+  capacity_split:
+    before: 51 kolobok portions and 13 manches were shown in the main maximum-hour card.
+    after: The 51/13 split appears once, inside «Основа расчёта», for checking the two production lines.
+changed_files:
+  - src/components/RevenueModel.tsx
+  - src/components/RevenueModel.css
+  - scripts/test-site.cjs
+  - docs-platform/app/test/revenue-model.test.ts
+invariants:
+  external_research_performed: false
+  revenue_model_changed: false
+  revenue_snapshot_changed: false
+  calculations_changed: false
+  prices_or_scenarios_changed: false
+  capex_changed: false
+  investor_start_model_changed: false
+  launch_budget_changed: false
+  capex_configurator_changed: false
+  navigation_sitemap_or_seo_changed: false
+delivery:
+  staged: false
+  committed: false
+  tagged: false
+  pushed: false
+  sealed: false
+  deployed: false

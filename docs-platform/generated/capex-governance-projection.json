@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_from_event_id": "EVT-ITR-REVENUE-MODEL-2026-08-14-01-DEPLOYED-DEPLOY-REVENUE-MODEL-2026-08-14-01",
-  "generated_from_event_hash": "f7a0b82119881608fba5091db1adb74a7d523f2ce45534f5a2f9607d6ca24bad",
+  "generated_from_event_id": "EVT-ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01-VERIFIED",
+  "generated_from_event_hash": "3a3100131e0680f57310b0a1e3459cb9f6e8a6f0d09ed2f68cc72125cffa6167",
   "content_state_sha256": "a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239",
   "latest_committed_iteration": {
     "iteration_id": "ITR-REVENUE-MODEL-2026-08-14-01",
@@ -17,10 +17,10 @@
     "deployment_receipt": "docs-platform/changelog/deployments/DEPLOY-REVENUE-MODEL-2026-08-14-01.yaml",
     "production_url": "https://colob.spi.ski"
   },
-  "repository_head": "1b0156521b523fa71433c9a9a9a3db0375054b4e",
+  "repository_head": "c8300652c923d8b57fd1f201f1be1b723cb11208",
   "timeline_head": {
-    "event_id": "EVT-ITR-REVENUE-MODEL-2026-08-14-01-DEPLOYED-DEPLOY-REVENUE-MODEL-2026-08-14-01",
-    "event_hash": "f7a0b82119881608fba5091db1adb74a7d523f2ce45534f5a2f9607d6ca24bad"
+    "event_id": "EVT-ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01-VERIFIED",
+    "event_hash": "3a3100131e0680f57310b0a1e3459cb9f6e8a6f0d09ed2f68cc72125cffa6167"
   },
   "deployment_receipts": [
     {

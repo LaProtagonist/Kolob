@@ -1,0 +1,23 @@
+schema_version: 2
+decision_id: DEC-REVENUE-MODEL-PRESENTATION-2026-08-14-01
+iteration_id: ITR-REVENUE-MODEL-PRESENTATION-2026-08-14-01
+title: Approve the refined Revenue Model production-load presentation
+status: approved
+approved_by: project owner
+approved_at: 2026-08-14T20:32:49.000Z
+scope: Exact summary disclaimer, serving-role terminology, daily food hierarchy, unified hourly cards and capacity-basis placement supplied in the approved payload.
+reason: The owner visually reviewed the published page and supplied exact presentation corrections that preserve every calculation and business input.
+approves:
+  - exact short summary phrase
+  - public term «Сервировка» instead of «Комплектация»
+  - visible hierarchy 420 portions of food = 336 kolobok portions + 84 manches
+  - visually separate 300 drinks
+  - unified average, peak and calculated-maximum hourly cards
+  - 51/13 product split only inside the capacity basis
+excludes:
+  - changes to formulas, data, Revenue Model, CAPEX or Investor Start Model
+  - changes to sales values, average check or scenarios
+  - changes to other pages, navigation, sitemap or SEO
+  - commit, seal, tag, push or deployment
+approved_payload_path: docs-platform/changelog/payloads/ITR-REVENUE-MODEL-PRESENTATION-2026-08-14-01-approved.yaml
+approved_payload_sha256: 049cff3de8dcd5ffdfbec8578af6c7ec3794eb2aadc6373fd3165a12dda72ad5

@@ -1,0 +1,62 @@
+schema_version: 2
+iteration_id: ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01
+proposal_id: PROP-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01
+decision_id: DEC-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01
+change_set_id: CHG-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01
+timestamp: 2026-08-15T13:14:15.000Z
+actor: Codex
+type: Revenue Model public layout refinement
+reason: Remove a duplicated financial presentation and balance the daily-load cards while preserving the approved hierarchy and every calculation.
+route: /revenue-model
+before_state_sha256: d3cf04a9aecb3b7d6f17673d251a44bb7c950d802a70dcc38f9193af72cf5c04
+after_state_sha256: d24f43e7158c3032785bdea121c3312ca992eb4425a1df14d585aa192b49f2a2
+before_after:
+  - field_id: revenue.section.sales_volume
+    before: Самостоятельный раздел «03 Расчётный объём продаж» повторял месячный и дневной показатели правой sticky-панели.
+    after: Самостоятельный раздел удалён; расчётные значения сохранены и продолжают отображаться в правой sticky-панели.
+  - field_id: revenue.section.production_number
+    before: "04"
+    after: "03"
+  - field_id: revenue.section.capacity_number
+    before: "05"
+    after: "04"
+  - field_id: revenue.daily_load.layout
+    before: Центральная карточка еды визуально выше коротких боковых карточек; контент боковых карточек не центрирован.
+    after: Три карточки имеют одинаковую внешнюю высоту; боковые значения центрированы вертикально, центральная карточка задаёт высоту ряда.
+  - field_id: revenue.daily_load.food_total
+    before: Значение 420 и подпись «Порций еды в день» были разнесены внутри центральной карточки.
+    after: Значение и подпись собраны в компактную строку «420 порций еды в день» над структурой 336 + 84.
+  - field_id: revenue.daily_load.drinks_label
+    before: Напитки
+    after: Напитков в день
+  - field_id: revenue.capacity.maximum_line_load_label
+    before: Расчётный максимум по линиям
+    after: Нагрузка в расчётный максимум
+layout_invariants:
+  daily_food: 420 = 336 + 84
+  drinks: 300, outside the 420 food portions
+  hourly_cards: 35/25, 46/33 and 64/46 preserved
+  maximum_product_split: ≈51/≈13 remains only in the capacity basis
+changed_files:
+  - src/components/RevenueModel.tsx
+  - src/components/RevenueModel.css
+  - scripts/test-site.cjs
+validation_note: The deterministic browser assertion uses rendered inner text so the visual flex gap is normalized to the intended readable phrase «420 порций еды в день».
+invariants:
+  external_research_performed: false
+  revenue_model_changed: false
+  revenue_snapshot_changed: false
+  calculations_changed: false
+  values_average_check_or_scenarios_changed: false
+  capex_changed: false
+  investor_start_model_changed: false
+  launch_budget_changed: false
+  capex_configurator_changed: false
+  navigation_sitemap_or_seo_changed: false
+delivery:
+  staged: false
+  committed: false
+  tagged: false
+  pushed: false
+  sealed: false
+  deployed: false

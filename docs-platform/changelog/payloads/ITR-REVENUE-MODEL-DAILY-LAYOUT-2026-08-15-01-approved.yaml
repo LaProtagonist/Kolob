@@ -1,0 +1,121 @@
+schema_version: 2
+payload_id: PAYLOAD-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01
+iteration_id: ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01
+proposal_id: PROP-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01
+decision_id: DEC-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01
+change_set_id: CHG-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01
+title: Remove duplicate sales block and balance the Revenue Model daily-load cards
+status: approved
+approved_by: project owner
+approved_at: 2026-08-15T13:14:13.000Z
+scope:
+  route: /revenue-model
+  summary: Удалить дублирующий самостоятельный блок объёма продаж и точечно сбалансировать композицию дневной производственной нагрузки без изменения модели, данных, формул или других страниц.
+section_flow:
+  removed:
+    number: "03"
+    title: Расчётный объём продаж
+    reason: Месячный и дневной объём продаж уже постоянно показаны в правой итоговой панели.
+  remaining:
+    - { number: "01", title: Поток заказов }
+    - { number: "02", title: Средний чек }
+    - { number: "03", title: Производственная нагрузка }
+    - { number: "04", title: Проверка мощности }
+  derived_sales_values_removed: false
+  sticky_summary_sales_values_preserved: true
+daily_load:
+  desktop_and_tablet:
+    layout: three equal-height cards
+    order: [checks, food, drinks]
+    side_content_vertical_alignment: centered
+  mobile:
+    layout: vertical stack
+    order: [checks, food, drinks]
+    horizontal_overflow_allowed: false
+  checks:
+    value: 300
+    label: Чеков в день
+  food:
+    total_line: 420 порций еды в день
+    composition_label: Из них
+    kolobok: 336 порций
+    manches: 84
+    invariant: 336 + 84 = 420
+  drinks:
+    value: 300
+    label: Напитков в день
+    included_in_food_total: false
+hourly_load:
+  average: { label: Средний час, food_portions: 35, checks: 25 }
+  peak: { label: Пиковый час, food_portions: 46, checks: 33 }
+  maximum: { label: Расчётный максимум, food_portions: 64, checks: 46 }
+  product_split_visible_in_hourly_card: false
+capacity_basis:
+  maximum_line_load_label:
+    before: Расчётный максимум по линиям
+    after: Нагрузка в расчётный максимум
+  maximum_line_load: ≈51 порция колобков · ≈13 манчесов
+  kolobok_capacity_label: Расчётная рабочая мощность линии колобков
+  kolobok_capacity_range: 60–90 порций в час
+  serving_label: Сервировка
+summary_warning: Расчёт показывает потенциальный объём продаж при выбранных параметрах.
+boundaries:
+  unchanged:
+    - Revenue Model structured data, formulas, values and generated snapshot
+    - average check, scenarios, production coefficients and derived calculations
+    - launch-budget, capex-configurator and every other route
+    - navigation, sitemap, SEO and design system
+    - all approved copy outside the listed UI elements
+  forbidden:
+    - research or internet search
+    - new calculation parameters
+    - Git commit, tag, seal, push or deployment
+state_hash_paths:
+  - src/components/RevenueModel.tsx
+  - src/components/RevenueModel.css
+  - scripts/test-site.cjs
+  - docs-platform/app/test/revenue-model.test.ts
+content_paths:
+  - src/components/RevenueModel.tsx
+  - src/components/RevenueModel.css
+  - scripts/test-site.cjs
+  - docs-platform/app/test/revenue-model.test.ts
+  - docs-platform/changes/proposals/PROP-REVENUE-MODEL-PRESENTATION-2026-08-14-01.yaml
+  - docs-platform/changes/decisions/DEC-REVENUE-MODEL-PRESENTATION-2026-08-14-01.yaml
+  - docs-platform/changes/iterations/ITR-REVENUE-MODEL-PRESENTATION-2026-08-14-01.yaml
+  - docs-platform/changes/CHG-REVENUE-MODEL-PRESENTATION-2026-08-14-01.yaml
+  - docs-platform/changelog/payloads/ITR-REVENUE-MODEL-PRESENTATION-2026-08-14-01-approved.yaml
+  - docs-platform/changelog/previews/ITR-REVENUE-MODEL-PRESENTATION-2026-08-14-01.yaml
+  - docs-platform/changelog/audit/ITR-REVENUE-MODEL-PRESENTATION-2026-08-14-01.yaml
+  - docs-platform/changelog/iteration-receipts/ITR-REVENUE-MODEL-PRESENTATION-2026-08-14-01.yaml
+  - docs-platform/changelog/verification/ITR-REVENUE-MODEL-PRESENTATION-2026-08-14-01.yaml
+  - docs-platform/changelog/rollback-payloads/ITR-REVENUE-MODEL-PRESENTATION-2026-08-14-01
+  - docs-platform/changes/proposals/PROP-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01.yaml
+  - docs-platform/changes/decisions/DEC-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01.yaml
+  - docs-platform/changes/iterations/ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01.yaml
+  - docs-platform/changes/CHG-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01.yaml
+  - docs-platform/changelog/payloads/ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01-approved.yaml
+  - docs-platform/changelog/previews/ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01.yaml
+  - docs-platform/changelog/audit/ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01.yaml
+  - docs-platform/changelog/iteration-receipts/ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01.yaml
+  - docs-platform/changelog/verification/ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01.yaml
+  - docs-platform/changelog/rollback-payloads/ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+  - docs-platform/generated/capex-governance-projection.json
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+  - docs-platform/generated/capex-governance-projection.json
+allowed_dirty_paths:
+  - output/pdf/launch-budget-review.pdf
+  - output/review/
+rollback_contract:
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true

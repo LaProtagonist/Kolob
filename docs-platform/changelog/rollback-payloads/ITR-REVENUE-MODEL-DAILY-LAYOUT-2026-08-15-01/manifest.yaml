@@ -1,0 +1,15 @@
+schema_version: 2
+iteration_id: ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01
+mode: governed_reverse_change_set
+status: prepared
+before_content_commit: c8300652c923d8b57fd1f201f1be1b723cb11208
+before_state_sha256: d3cf04a9aecb3b7d6f17673d251a44bb7c950d802a70dcc38f9193af72cf5c04
+after_state_sha256: d24f43e7158c3032785bdea121c3312ca992eb4425a1df14d585aa192b49f2a2
+reverse_strategy:
+  section_flow: restore the standalone sales-volume presentation and preceding section numbering only through a new approved reverse change set
+  daily_load: restore the preceding unequal-height presentation only through a new approved reverse change set
+  capacity_label: restore the preceding maximum-line label only through a new approved reverse change set
+  tests: restore the preceding deterministic assertions together with the public layout
+  events: append rollback lifecycle events and preserve this complete before/after history
+  git_reset_forbidden: true
+dependency_check: required against every later applied, committed or sealed iteration

@@ -29,16 +29,25 @@
 .revenue-segment-list > div { display: flex; gap: 12px; justify-content: space-between; padding: 10px 12px; border-bottom: 1px solid var(--launch-line); font-size: .76rem; }
 .revenue-segment-list span { color: var(--launch-muted); }
 
-.revenue-sales-card { padding: clamp(22px, 4vw, 36px); border-radius: 18px; color: #fff; background: #191813; }
-.revenue-sales-card > span { color: rgba(255,255,255,.58); font-size: .76rem; font-weight: 900; letter-spacing: .05em; text-transform: uppercase; }
-.revenue-sales-card > strong { display: block; margin: 12px 0 8px; color: var(--launch-yellow); font-size: clamp(2rem, 5vw, 4rem); line-height: .98; letter-spacing: -.04em; overflow-wrap: anywhere; }
-.revenue-sales-card p { margin: 0 0 12px; font-size: 1.15rem; font-weight: 900; }
-.revenue-sales-card small { color: rgba(255,255,255,.56); }
-
-.revenue-metric-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1px; margin: 0; overflow: hidden; border: 1px solid var(--launch-line); border-radius: 14px; background: var(--launch-line); }
-.revenue-metric-grid > div { min-width: 0; padding: 15px 13px; background: #fff; }
-.revenue-metric-grid dt { min-height: 34px; color: var(--launch-muted); font-size: .7rem; line-height: 1.35; }
-.revenue-metric-grid dd { margin: 7px 0 0; font-size: clamp(.94rem, 1.8vw, 1.2rem); font-weight: 900; overflow-wrap: anywhere; }
+.revenue-daily-load { display: grid; grid-template-columns: minmax(0, .82fr) minmax(290px, 1.6fr) minmax(0, .82fr); gap: 10px; margin: 0; }
+.revenue-daily-card { min-width: 0; height: 100%; padding: 17px; border: 1px solid var(--launch-line); border-radius: 14px; background: #fff; }
+.revenue-daily-card dt { color: var(--launch-muted); font-size: .72rem; line-height: 1.35; }
+.revenue-daily-card dd { margin: 8px 0 0; font-size: clamp(1.15rem, 2.4vw, 1.55rem); font-weight: 900; overflow-wrap: anywhere; }
+.revenue-daily-side { display: flex; flex-direction: column; justify-content: center; }
+.revenue-daily-side dd { order: 1; margin: 0; font-size: clamp(1.45rem, 3vw, 2rem); line-height: 1; }
+.revenue-daily-side dt { order: 2; margin-top: 8px; font-size: .78rem; }
+.revenue-daily-food { border-color: rgba(247,185,30,.62); background: #fff9e7; }
+.revenue-food-total { display: flex; align-items: baseline; gap: 7px; min-width: 0; }
+.revenue-food-total strong { flex: 0 0 auto; font-size: clamp(1.45rem, 3vw, 2rem); line-height: 1; }
+.revenue-food-total span { color: var(--launch-muted); font-size: .78rem; font-weight: 800; white-space: nowrap; }
+.revenue-food-composition { margin-top: 13px; padding-top: 11px; border-top: 1px solid rgba(25,24,19,.14); }
+.revenue-food-composition-title { display: block; color: var(--launch-muted); font-size: .67rem; font-weight: 900; letter-spacing: .05em; }
+.revenue-food-parts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 8px; }
+.revenue-food-parts > div { min-width: 0; padding: 10px 11px; border-radius: 10px; background: #fff; }
+.revenue-food-parts span, .revenue-food-parts strong { display: block; }
+.revenue-food-parts span { color: var(--launch-muted); font-size: .7rem; }
+.revenue-food-parts strong { margin-top: 4px; font-size: .86rem; overflow-wrap: anywhere; }
+.revenue-daily-drinks { border-left: 4px solid #9bb1b8; background: var(--revenue-blue); }
 .revenue-hour-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 16px; }
 .revenue-hour-grid article { padding: 17px; border: 1px solid var(--launch-line); border-radius: 13px; background: #f5f1e7; }
 .revenue-hour-grid article.is-accent { border-color: rgba(247,185,30,.6); background: #fff1c7; }
@@ -55,19 +64,17 @@
 .revenue-capacity-details strong, .revenue-capacity-details span, .revenue-capacity-details small { display: block; }
 .revenue-capacity-details span { margin-top: 4px; font-weight: 800; }
 .revenue-capacity-details small { margin-top: 3px; color: var(--launch-muted); }
+.revenue-capacity-details .revenue-capacity-split { border-color: rgba(247,185,30,.55); background: #fff9e7; }
 
 .revenue-total-card .launch-total-value { font-size: clamp(1.9rem, 3.7vw, 3.15rem); }
 .revenue-summary-list > div { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 15px; padding: 9px 0; border-bottom: 1px solid rgba(255,255,255,.09); }
 .revenue-summary-list dt { color: rgba(255,255,255,.57); font-size: .76rem; }
 .revenue-summary-list dd { margin: 0; font-size: .79rem; font-weight: 900; text-align: right; }
 
-@media (max-width: 900px) {
-  .revenue-metric-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-}
-
 @media (max-width: 680px) {
   .revenue-detail-list, .revenue-food-mix, .revenue-segment-list, .revenue-capacity-details { grid-template-columns: 1fr; }
-  .revenue-metric-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .revenue-daily-load { grid-template-columns: 1fr; }
+  .revenue-daily-side { min-height: 96px; }
   .revenue-hour-grid { grid-template-columns: 1fr; }
   .revenue-capacity-band { align-items: flex-start; flex-direction: column; }
   .revenue-capacity-band strong { text-align: left; }

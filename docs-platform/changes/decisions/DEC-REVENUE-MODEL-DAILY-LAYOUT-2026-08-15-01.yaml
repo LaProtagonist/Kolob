@@ -1,0 +1,24 @@
+schema_version: 2
+decision_id: DEC-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01
+iteration_id: ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01
+title: Approve the compact Revenue Model section flow and balanced daily-load layout
+status: approved
+approved_by: project owner
+approved_at: 2026-08-15T13:14:13.000Z
+scope: Exact removal, renumbering, daily-load card composition and capacity-basis label supplied in the approved payload.
+reason: The owner visually reviewed the page and approved removal of a duplicated financial presentation plus a clearer, equal-height daily-load composition without changing any calculation.
+approves:
+  - removal of the standalone «03 Расчётный объём продаж» presentation
+  - preservation of day and month sales in the sticky summary
+  - renumbering production load to 03 and capacity check to 04
+  - equal-height daily-load cards with vertically centered side metrics
+  - exact parent hierarchy 420 = 336 + 84 with drinks separate
+  - exact label «Напитков в день»
+  - exact capacity label «Нагрузка в расчётный максимум»
+excludes:
+  - changes to formulas, values, Revenue Model, CAPEX or Investor Start Model
+  - changes to average check, scenarios or production coefficients
+  - changes to other pages, navigation, sitemap or SEO
+  - commit, seal, tag, push or deployment
+approved_payload_path: docs-platform/changelog/payloads/ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01-approved.yaml
+approved_payload_sha256: c087ccf2189273ea55c3b271ea38d38eceda475baa59a5328e5fe03db670ad4c

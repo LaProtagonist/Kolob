@@ -1,0 +1,30 @@
+schema_version: 2
+change_id: CHG-REVENUE-MODEL-PRESENTATION-2026-08-14-01
+iteration_id: ITR-REVENUE-MODEL-PRESENTATION-2026-08-14-01
+proposal_id: PROP-REVENUE-MODEL-PRESENTATION-2026-08-14-01
+decision_id: DEC-REVENUE-MODEL-PRESENTATION-2026-08-14-01
+title: Apply approved Revenue Model presentation refinements
+status: approved
+approved_payload_path: docs-platform/changelog/payloads/ITR-REVENUE-MODEL-PRESENTATION-2026-08-14-01-approved.yaml
+approved_payload_sha256: 049cff3de8dcd5ffdfbec8578af6c7ec3794eb2aadc6373fd3165a12dda72ad5
+operations:
+  - replace the right-summary warning with the exact approved short sentence
+  - map internal assembly terminology to the public term «Сервировка»
+  - display food portions as a parent total with kolobok and manches children while keeping drinks separate
+  - unify hourly cards as food portions plus checks and rename the stress case to «Расчётный максимум»
+  - move the 51/13 split into the capacity-basis disclosure
+  - clarify the kolobok-line capacity and manches-line public labels
+  - update targeted arithmetic and deterministic browser assertions
+preview:
+  status: passed
+  mutation_performed: false
+  affected_site_files:
+    - src/components/RevenueModel.tsx
+    - src/components/RevenueModel.css
+    - scripts/test-site.cjs
+    - docs-platform/app/test/revenue-model.test.ts
+  structured_revenue_model_changed: false
+  generated_snapshot_changed: false
+  calculation_or_formula_changes: false
+  other_page_changes: false
+  delivery_changes: false

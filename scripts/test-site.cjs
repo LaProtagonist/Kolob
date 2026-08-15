@@ -162,11 +162,57 @@ async function inspectRevenueModel(browser, baseUrl) {
     scenario: await summaryValue("Сценарий").innerText(),
   };
 
+  const presentationSections = {
+    standaloneSalesSectionCount: await page.locator('section[aria-labelledby="revenue-sales-title"]').count(),
+    titles: await page.locator(".launch-form-column > .launch-card .launch-card-heading h2").allTextContents(),
+    numbers: await page.locator(".launch-form-column > .launch-card .launch-card-heading > span").allTextContents(),
+  };
+
+  const dailyLoad = {
+    checksLabel: await page.locator('[data-daily-metric="checks"] dt').innerText(),
+    checks: await page.locator('[data-daily-metric="checks"] dd').innerText(),
+    foodTotalLine: await page.locator(".revenue-food-total").evaluate(element => (element instanceof HTMLElement ? element.innerText : element.textContent)?.trim().replace(/\s+/g, " ") ?? ""),
+    food: await page.locator(".revenue-food-total strong").innerText(),
+    compositionTitle: await page.locator(".revenue-food-composition-title").innerText(),
+    kolobok: await page.locator('[data-food-part="kolobok"] strong').innerText(),
+    manches: await page.locator('[data-food-part="manches"] strong').innerText(),
+    drinksLabel: await page.locator('[data-daily-metric="drinks"] dt').innerText(),
+    drinks: await page.locator('[data-daily-metric="drinks"] dd').innerText(),
+    foodContainsDrinks: await page.locator('[data-daily-metric="food"] [data-daily-metric="drinks"]').count(),
+  };
+
+  const desktopDailyLayout = await page.locator('[data-testid="daily-production-load"]').evaluate(container => {
+    const cards = ["checks", "food", "drinks"].map(metric => {
+      const element = container.querySelector(`[data-daily-metric="${metric}"]`);
+      if (!element) return null;
+      const rect = element.getBoundingClientRect();
+      return { metric, top: rect.top, bottom: rect.bottom, height: rect.height };
+    }).filter(Boolean);
+    const centerDelta = metric => {
+      const element = container.querySelector(`[data-daily-metric="${metric}"]`);
+      if (!element) return null;
+      const card = element.getBoundingClientRect();
+      const children = [...element.children].map(child => child.getBoundingClientRect());
+      const contentTop = Math.min(...children.map(rect => rect.top));
+      const contentBottom = Math.max(...children.map(rect => rect.bottom));
+      return Math.abs((card.top + card.bottom) / 2 - (contentTop + contentBottom) / 2);
+    };
+    return {
+      heightSpread: Math.max(...cards.map(card => card.height)) - Math.min(...cards.map(card => card.height)),
+      topSpread: Math.max(...cards.map(card => card.top)) - Math.min(...cards.map(card => card.top)),
+      bottomSpread: Math.max(...cards.map(card => card.bottom)) - Math.min(...cards.map(card => card.bottom)),
+      checksCenterDelta: centerDelta("checks"),
+      drinksCenterDelta: centerDelta("drinks"),
+    };
+  });
+
   const loads = async () => ({
     average: await page.locator(".revenue-hour-grid article").filter({ hasText: "Средний час" }).locator("strong").innerText(),
+    averageChecks: await page.locator(".revenue-hour-grid article").filter({ hasText: "Средний час" }).locator("small").innerText(),
     peak: await page.locator(".revenue-hour-grid article").filter({ hasText: "Пиковый час" }).locator("strong").innerText(),
-    maximum: await page.locator(".revenue-hour-grid article").filter({ hasText: "Максимальный час" }).locator("strong").innerText(),
-    maximumDetail: await page.locator(".revenue-hour-grid article").filter({ hasText: "Максимальный час" }).locator("small").innerText(),
+    peakChecks: await page.locator(".revenue-hour-grid article").filter({ hasText: "Пиковый час" }).locator("small").innerText(),
+    maximum: await page.locator(".revenue-hour-grid article").filter({ hasText: "Расчётный максимум" }).locator("strong").innerText(),
+    maximumChecks: await page.locator(".revenue-hour-grid article").filter({ hasText: "Расчётный максимум" }).locator("small").innerText(),
   });
   const realisticLoads = await loads();
 
@@ -186,6 +232,16 @@ async function inspectRevenueModel(browser, baseUrl) {
   await page.getByRole("button", { name: "Сбросить расчёт" }).click();
   const reset = { realisticSelected: await scenarioButton("Реалистичный").getAttribute("aria-pressed"), customFieldCount: await page.locator("#custom-checks-per-day").count(), monthly: await summaryMoney(), storage: await page.evaluate(key => localStorage.getItem(key), revenueSnapshot.model.form.local_storage_key) };
 
+  await page.getByRole("button", { name: "Основа расчёта" }).click();
+  const capacity = {
+    band: await page.locator(".revenue-capacity-band").innerText(),
+    details: await page.locator("#revenue-capacity-details").innerText(),
+    maximumSplit: await page.locator('[data-testid="maximum-line-split"] span').innerText(),
+    maximumSplitLabel: await page.locator('[data-testid="maximum-line-split"] strong').innerText(),
+    legacyAssemblyLabel: await page.getByText("Комплектация", { exact: true }).count(),
+    singularManchesLabel: await page.getByText("Манчес", { exact: true }).count(),
+  };
+
   await page.getByRole("button", { name: "Состав среднего чека" }).click();
   await page.getByRole("button", { name: "Как рассчитана средняя цена еды" }).click();
   const breakdown = {
@@ -196,20 +252,26 @@ async function inspectRevenueModel(browser, baseUrl) {
   };
 
   const overflow = {};
+  const mobileDailyOrder = {};
   for (const viewport of [{ key: "desktop", width: 1440, height: 900 }, { key: "tablet", width: 768, height: 1024 }, { key: "mobile", width: 390, height: 844 }]) {
     await page.setViewportSize({ width: viewport.width, height: viewport.height });
     overflow[viewport.key] = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth + 2);
+    if (viewport.key === "mobile") {
+      Object.assign(mobileDailyOrder, await page.locator('[data-testid="daily-production-load"]').evaluate(container => Object.fromEntries(["checks", "food", "drinks"].map(metric => [metric, container.querySelector(`[data-daily-metric="${metric}"]`)?.getBoundingClientRect().top ?? null]))));
+    }
   }
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.keyboard.press("Tab");
   const focus = await page.evaluate(() => { const active = document.activeElement; const style = active ? getComputedStyle(active) : null; return { tag: active?.tagName ?? null, outlineStyle: style?.outlineStyle ?? null, outlineWidth: style?.outlineWidth ?? null }; });
   const bodyText = await text();
+  const summaryWarning = await summary.locator(".launch-warning").innerText();
   const forbiddenTechnical = ["research", "v0.1", "registry", "decision id", "change set", "snapshot", "yaml", "approved", "canonical"].filter(term => bodyText.toLowerCase().includes(term));
   const forbiddenFinancial = ["EBITDA", "окупаемость", "break-even", "Гарантированная выручка", "Прогноз выручки", "Ожидаемая выручка"].filter(term => bodyText.includes(term));
+  const supersededPresentationCopy = ["Комплектация", "комплектации", "не является прогнозом гарантированной выручки", "Расчётный максимум по линиям"].filter(term => bodyText.includes(term));
   const result = {
-    defaultState, realisticLoads, pessimistic, optimistic, customEmpty, customZeroAlert, custom, persisted, reset, breakdown, overflow, focus,
+    defaultState, presentationSections, dailyLoad, desktopDailyLayout, mobileDailyOrder, realisticLoads, pessimistic, optimistic, customEmpty, customZeroAlert, custom, persisted, reset, capacity, breakdown, summaryWarning, overflow, focus,
     noLinks: { capex: await page.locator('a[href="/capex-configurator"]').count(), launch: await page.locator('a[href="/launch-budget"]').count() },
-    forbiddenTechnical, forbiddenFinancial, consoleMessages, pageErrors,
+    forbiddenTechnical, forbiddenFinancial, supersededPresentationCopy, consoleMessages, pageErrors,
   };
   await page.close();
   return result;
@@ -1006,13 +1068,36 @@ async function inspectCapex(browser, baseUrl) {
     if (!String(revenueModel.defaultState.robots).includes("noindex") || !String(revenueModel.defaultState.robots).includes("nofollow")) failures.push(`revenue-model robots: ${revenueModel.defaultState.robots}`);
     if (revenueModel.defaultState.title !== "Расчёт объёма продаж" || revenueModel.defaultState.documentTitle !== "Расчёт объёма продаж — Колобочная") failures.push(`revenue-model metadata invalid: ${JSON.stringify(revenueModel.defaultState)}`);
     if (revenueModel.defaultState.realisticSelected !== "true" || revenueModel.defaultState.monthly !== 10488600 || revenueModel.defaultState.daily !== 349620 || revenueModel.defaultState.averageCheck !== 1165 || revenueModel.defaultState.checks !== "300" || revenueModel.defaultState.food !== "420" || revenueModel.defaultState.drinks !== "300" || revenueModel.defaultState.scenario !== "Реалистичный") failures.push(`revenue-model realistic defaults invalid: ${JSON.stringify(revenueModel.defaultState)}`);
-    if (!revenueModel.realisticLoads.average.includes("35 порций еды") || !revenueModel.realisticLoads.peak.includes("46 порций еды") || !revenueModel.realisticLoads.maximum.includes("64 порции еды") || !revenueModel.realisticLoads.maximumDetail.includes("51 порция колобков") || !revenueModel.realisticLoads.maximumDetail.includes("13 манчесов")) failures.push(`revenue-model realistic load invalid: ${JSON.stringify(revenueModel.realisticLoads)}`);
+    if (revenueModel.presentationSections.standaloneSalesSectionCount !== 0
+      || revenueModel.presentationSections.titles.join("|") !== "Поток заказов|Средний чек|Производственная нагрузка|Проверка мощности"
+      || revenueModel.presentationSections.numbers.join("|") !== "01|02|03|04") failures.push(`revenue-model section flow invalid: ${JSON.stringify(revenueModel.presentationSections)}`);
+    if (revenueModel.dailyLoad.checksLabel !== "Чеков в день"
+      || revenueModel.dailyLoad.checks !== "300"
+      || revenueModel.dailyLoad.foodTotalLine !== "420 порций еды в день"
+      || revenueModel.dailyLoad.food !== "420"
+      || revenueModel.dailyLoad.compositionTitle !== "Из них"
+      || revenueModel.dailyLoad.kolobok !== "336 порций"
+      || revenueModel.dailyLoad.manches !== "84"
+      || revenueModel.dailyLoad.drinksLabel !== "Напитков в день"
+      || revenueModel.dailyLoad.drinks !== "300"
+      || revenueModel.dailyLoad.foodContainsDrinks !== 0) failures.push(`revenue-model daily load hierarchy invalid: ${JSON.stringify(revenueModel.dailyLoad)}`);
+    if (revenueModel.desktopDailyLayout.heightSpread > 1
+      || revenueModel.desktopDailyLayout.topSpread > 1
+      || revenueModel.desktopDailyLayout.bottomSpread > 1
+      || revenueModel.desktopDailyLayout.checksCenterDelta > 2
+      || revenueModel.desktopDailyLayout.drinksCenterDelta > 2) failures.push(`revenue-model desktop daily cards are not balanced: ${JSON.stringify(revenueModel.desktopDailyLayout)}`);
+    if (!(revenueModel.mobileDailyOrder.checks < revenueModel.mobileDailyOrder.food
+      && revenueModel.mobileDailyOrder.food < revenueModel.mobileDailyOrder.drinks)) failures.push(`revenue-model mobile daily cards are not stacked in semantic order: ${JSON.stringify(revenueModel.mobileDailyOrder)}`);
+    if (!revenueModel.realisticLoads.average.includes("35 порций еды") || !revenueModel.realisticLoads.averageChecks.includes("25 чеков") || !revenueModel.realisticLoads.peak.includes("46 порций еды") || !revenueModel.realisticLoads.peakChecks.includes("33 чека") || !revenueModel.realisticLoads.maximum.includes("64 порции еды") || !revenueModel.realisticLoads.maximumChecks.includes("46 чеков") || /51|13/.test(revenueModel.realisticLoads.maximumChecks)) failures.push(`revenue-model realistic load invalid: ${JSON.stringify(revenueModel.realisticLoads)}`);
     if (revenueModel.pessimistic.monthly !== 6992400 || revenueModel.pessimistic.daily !== 233080 || !revenueModel.pessimistic.loads.maximum.includes("43 порции еды") || revenueModel.pessimistic.statement !== "Сценарий оставляет значительный резерв производственной мощности.") failures.push(`revenue-model pessimistic scenario invalid: ${JSON.stringify(revenueModel.pessimistic)}`);
-    if (revenueModel.optimistic.monthly !== 15732900 || revenueModel.optimistic.daily !== 524430 || !revenueModel.optimistic.loads.maximum.includes("96 порций еды") || !revenueModel.optimistic.loads.maximumDetail.includes("77 порций колобков") || !revenueModel.optimistic.loads.maximumDetail.includes("19 манчесов") || revenueModel.optimistic.statement !== "Сценарий достижим при усилении комплектации и выдачи в часы максимальной нагрузки.") failures.push(`revenue-model optimistic scenario invalid: ${JSON.stringify(revenueModel.optimistic)}`);
+    if (revenueModel.optimistic.monthly !== 15732900 || revenueModel.optimistic.daily !== 524430 || !revenueModel.optimistic.loads.maximum.includes("96 порций еды") || revenueModel.optimistic.statement !== "Сценарий достижим при усилении сервировки и выдачи в часы максимальной нагрузки.") failures.push(`revenue-model optimistic scenario invalid: ${JSON.stringify(revenueModel.optimistic)}`);
     if (revenueModel.customEmpty.value !== "" || revenueModel.customEmpty.monthly !== "Не рассчитано" || revenueModel.customEmpty.scenario !== "Другое значение" || revenueModel.customZeroAlert !== 1) failures.push(`revenue-model empty/zero custom invalid: ${JSON.stringify({ empty: revenueModel.customEmpty, alert: revenueModel.customZeroAlert })}`);
     if (revenueModel.custom.monthly !== 8740500 || revenueModel.custom.daily !== 291350 || revenueModel.custom.checks !== "250" || revenueModel.custom.scenario !== "Другое значение") failures.push(`revenue-model custom flow invalid: ${JSON.stringify(revenueModel.custom)}`);
     if (revenueModel.persisted.modeSelected !== "true" || revenueModel.persisted.value !== "250" || revenueModel.persisted.monthly !== 8740500 || revenueModel.reset.realisticSelected !== "true" || revenueModel.reset.customFieldCount !== 0 || revenueModel.reset.monthly !== 10488600 || revenueModel.reset.storage === null) failures.push(`revenue-model persistence/reset invalid: ${JSON.stringify({ persisted: revenueModel.persisted, reset: revenueModel.reset })}`);
     if (revenueModel.breakdown.averageCheck !== 1165 || revenueModel.breakdown.rows !== 4 || revenueModel.breakdown.priceSegments !== 4 || !revenueModel.breakdown.text.includes("Средняя цена порции еды") || !revenueModel.breakdown.text.includes("Манчесы — 20%")) failures.push(`revenue-model average-check breakdown invalid: ${JSON.stringify(revenueModel.breakdown)}`);
+    if (!revenueModel.capacity.band.includes("Расчётная рабочая мощность линии колобков") || !revenueModel.capacity.band.includes("60–90 порций в час") || !revenueModel.capacity.details.includes("Сервировка") || !revenueModel.capacity.details.includes("Манчесы") || revenueModel.capacity.maximumSplitLabel !== "Нагрузка в расчётный максимум" || revenueModel.capacity.legacyAssemblyLabel !== 0 || revenueModel.capacity.singularManchesLabel !== 0 || !revenueModel.capacity.maximumSplit.includes("51 порция колобков") || !revenueModel.capacity.maximumSplit.includes("13 манчесов")) failures.push(`revenue-model capacity presentation invalid: ${JSON.stringify(revenueModel.capacity)}`);
+    if (revenueModel.summaryWarning !== "Расчёт показывает потенциальный объём продаж при выбранных параметрах.") failures.push(`revenue-model summary warning invalid: ${revenueModel.summaryWarning}`);
+    if (revenueModel.supersededPresentationCopy.length) failures.push(`revenue-model retains superseded public copy: ${revenueModel.supersededPresentationCopy.join(" | ")}`);
     if (Object.values(revenueModel.overflow).some(Boolean)) failures.push(`revenue-model overflow: ${JSON.stringify(revenueModel.overflow)}`);
     if (!revenueModel.focus.tag || revenueModel.focus.outlineStyle === "none" || revenueModel.focus.outlineWidth === "0px") failures.push(`revenue-model keyboard focus is not visible: ${JSON.stringify(revenueModel.focus)}`);
     if (revenueModel.noLinks.capex || revenueModel.noLinks.launch) failures.push(`revenue-model exposes internal cross-links: ${JSON.stringify(revenueModel.noLinks)}`);

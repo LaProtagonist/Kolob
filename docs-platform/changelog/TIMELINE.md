@@ -4,10 +4,10 @@
 
 ## 1. Current state
 
-- Events: 116.
-- Timeline head event: `EVT-ITR-REVENUE-MODEL-2026-08-14-01-DEPLOYED-DEPLOY-REVENUE-MODEL-2026-08-14-01`.
-- Timeline head SHA-256: `f7a0b82119881608fba5091db1adb74a7d523f2ce45534f5a2f9607d6ca24bad`.
-- Latest recorded iteration: `ITR-REVENUE-MODEL-2026-08-14-01`.
+- Events: 126.
+- Timeline head event: `EVT-ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01-VERIFIED`.
+- Timeline head SHA-256: `3a3100131e0680f57310b0a1e3459cb9f6e8a6f0d09ed2f68cc72125cffa6167`.
+- Latest recorded iteration: `ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01`.
 
 ## 2. Modern governed iterations
 
@@ -34,6 +34,8 @@
 | 2026-08-11T08:04:45.000Z | verified | Clean input controls for launch-budget | ITR-LAUNCH-INPUT-CONTROLS-2026-08-11-01 | DEC-LAUNCH-INPUT-CONTROLS-2026-08-11-01 | CHG-LAUNCH-INPUT-CONTROLS-2026-08-11-01 | — | — | — | — | — | Verified spinner-free numeric fields, matching 52-pixel selectors, working 12→3→12 month selection, clean browser rendering and unchanged calculations and canonical hashes. The change remains unstaged and undeployed, with a prepared governed reverse payload. |
 | 2026-08-11T15:14:11.000Z | verified | Add baseline and custom operating-expense modes | ITR-INVESTOR-OPEX-MODE-2026-08-11-01 | DEC-INVESTOR-OPEX-MODE-2026-08-11-01 | CHG-INVESTOR-OPEX-MODE-2026-08-11-01 | — | — | — | — | — | Verified the unchanged 2,650,000 RUB baseline and 7,950,000 / 15,900,000 / 23,850,000 RUB period totals, the 2,000,000 RUB custom examples, blank-custom lower-bound behavior, reset and reload persistence, unchanged contingency basis, no area scaling, hidden internal module status, responsive layouts and zero console or hydration errors. The work remains unstaged and undeployed. |
 | 2026-08-14T18:59:28.000Z | deployed | Create Revenue Model and the direct-review sales-volume page | ITR-REVENUE-MODEL-2026-08-14-01 | DEC-REVENUE-MODEL-2026-08-14-01 | CHG-REVENUE-MODEL-2026-08-14-01 | 7012c506d863dc680a8f9aafeda066c37d30b03f | iteration/ITR-REVENUE-MODEL-2026-08-14-01 | — | docs-platform/changelog/deployments/DEPLOY-REVENUE-MODEL-2026-08-14-01.yaml | — | Sealed content state a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239 deployed to https://colob.spi.ski; smoke test passed. |
+| 2026-08-15T13:14:11.000Z | superseded | Refine Revenue Model production-load presentation | ITR-REVENUE-MODEL-PRESENTATION-2026-08-14-01 | DEC-REVENUE-MODEL-PRESENTATION-2026-08-14-01 | CHG-REVENUE-MODEL-PRESENTATION-2026-08-14-01 | — | — | — | — | — | The verified presentation iteration was not committed and is superseded as a delivery unit by the next approved Revenue Model UI iteration. Its short summary copy, serving terminology, food hierarchy, unified hourly cards and capacity-only 51/13 split remain preserved as the succeeding iteration's baseline; no old event was edited. |
+| 2026-08-15T13:52:47.000Z | verified | Refine Revenue Model section flow and daily-load card balance | ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01 | DEC-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01 | CHG-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01 | — | — | — | — | — | Verified removal of the duplicated sales section while month/day sales remain in the sticky summary; sections are 01–04; 1440/768 cards have equal height with centered side content; 390 stacks without overflow; 420 remains 336 + 84 with 300 drinks separate; «Нагрузка в расчётный максимум» retains the ≈51/≈13 split. Full tests and 12-route prerender passed without changing Revenue Model data, snapshots, calculations or other pages; no Git or deployment action was performed. |
 
 ## 3. Legacy imported history
 

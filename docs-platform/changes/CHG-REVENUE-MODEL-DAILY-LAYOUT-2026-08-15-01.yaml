@@ -1,0 +1,30 @@
+schema_version: 2
+change_id: CHG-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01
+iteration_id: ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01
+proposal_id: PROP-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01
+decision_id: DEC-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01
+title: Apply the approved Revenue Model section-flow and daily-load layout refinements
+status: approved
+approved_payload_path: docs-platform/changelog/payloads/ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01-approved.yaml
+approved_payload_sha256: c087ccf2189273ea55c3b271ea38d38eceda475baa59a5328e5fe03db670ad4c
+operations:
+  - remove only the standalone duplicated sales-volume section
+  - renumber production load to 03 and capacity check to 04
+  - render checks, food and drinks as three equal-height daily-load cards
+  - vertically center checks and drinks inside their cards
+  - keep 420 food portions as the compact parent of 336 kolobok portions and 84 manches
+  - keep drinks visually and mathematically outside the food total
+  - replace «Расчётный максимум по линиям» with «Нагрузка в расчётный максимум»
+  - extend the deterministic route test with content and geometry assertions
+preview:
+  status: passed
+  mutation_performed: false
+  affected_site_files:
+    - src/components/RevenueModel.tsx
+    - src/components/RevenueModel.css
+    - scripts/test-site.cjs
+  structured_revenue_model_changed: false
+  generated_snapshot_changed: false
+  calculation_or_formula_changes: false
+  other_page_changes: false
+  delivery_changes: false

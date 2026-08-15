@@ -1,0 +1,105 @@
+schema_version: 2
+iteration_id: ITR-REVENUE-MODEL-PRESENTATION-2026-08-14-01
+proposal_id: PROP-REVENUE-MODEL-PRESENTATION-2026-08-14-01
+decision_id: DEC-REVENUE-MODEL-PRESENTATION-2026-08-14-01
+change_set_id: CHG-REVENUE-MODEL-PRESENTATION-2026-08-14-01
+verified_at: 2026-08-14T21:06:31.000Z
+actor: Codex
+validation_status: passed
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-REVENUE-MODEL-PRESENTATION-2026-08-14-01-approved.yaml
+  sha256: 049cff3de8dcd5ffdfbec8578af6c7ec3794eb2aadc6373fd3165a12dda72ad5
+state:
+  before_state_sha256: efc86d7a86421f5e9c8c6b4352e3b2d5d335f3d7e961d1bc053d72260768c6e3
+  after_state_sha256: d3cf04a9aecb3b7d6f17673d251a44bb7c950d802a70dcc38f9193af72cf5c04
+  component_sha256: 6c055607e5d75a409e897c1ba1cfd252c31d2a1bd6067933400955bd9810d83a
+  stylesheet_sha256: ecb604312c7d57cc6d44bd0da273abcfac329aa2c3a1b9ef091502739b6e964e
+  route_test_sha256: f7167a0718f0fe3f244714c8eb70a07d108e69f600a7510ba0f44a19e6d61495
+  unit_test_sha256: 3762ad93a940f1737ace73717a57b07cb909b68d4f065408d148572cb72b43cc
+presentation_verification:
+  summary_warning: Расчёт показывает потенциальный объём продаж при выбранных параметрах.
+  public_assembly_term_count: 0
+  public_serving_term: Сервировка
+  daily_load:
+    checks: 300
+    food_total: 420
+    food_parts: { kolobok_portions: 336, manches: 84 }
+    food_parts_sum: 420
+    drinks: 300
+    drinks_inside_food_total: false
+  hourly_cards:
+    average: { label: Средний час, food_portions: 35, checks: 25 }
+    peak: { label: Пиковый час, food_portions: 46, checks: 33 }
+    maximum: { label: Расчётный максимум, food_portions: 64, checks: 46 }
+    same_structure: true
+  maximum_product_split:
+    main_hourly_card: absent
+    capacity_basis: ≈51 порция колобков · ≈13 манчесов
+    public_occurrences: 1
+  kolobok_capacity_label: Расчётная рабочая мощность линии колобков
+  kolobok_capacity_range: 60–90 порций в час
+  manches_line_label: Манчесы
+browser_verification:
+  engine: Codex in-app browser
+  console_errors: 0
+  page_errors: 0
+  sticky_summary_desktop: passed
+  horizontal_overflow:
+    desktop_1440x900: false
+    tablet_768x1024: false
+    mobile_390x844: false
+  review_screenshots:
+    - output/review/revenue-model-presentation-desktop.png
+    - output/review/revenue-model-presentation-tablet.png
+    - output/review/revenue-model-presentation-mobile.png
+validation:
+  npm_test: passed; deterministic route checks and every docs-platform suite passed
+  revenue_model_tests: 19 passed, 0 failed
+  typescript_no_emit: passed
+  production_build: passed; 12 routes prerendered
+  registry_validation: passed
+  timeline_validation: passed; 120 events at verified-state validation
+  context_validation: passed
+  governance_validation: passed
+  capex_content_snapshot_check: passed; current and unchanged
+  revenue_content_snapshot_check: passed; current and unchanged
+  git_diff_check: passed
+business_source_invariants:
+  revenue_model:
+    sha256: ab68399813d62d861522752c8e94df9cfc5d5a48e9b7723c60f2c968c4cba721
+    changed: false
+  revenue_snapshot:
+    sha256: 6dacd7aab33fcc139a05f6ac2eee5319c6107a6153d4a3a92ffee8d82406139a
+    content_state_sha256: 90727a6c51f959b617d6c972b898593a1b6dba6742d51b30bb75230f3f606c38
+    changed: false
+  investor_start_model:
+    sha256: b81a6c4e8988a4532c9ba2749d492b3f96e37d83af822396afc82930244b2985
+    changed: false
+  capex_equipment_register:
+    sha256: c8853fe61ad8407ab96d0fbafb79702853842f970cbf699b6c2138b23f32c7aa
+    changed: false
+  launch_budget_component:
+    sha256: fa01e57179c8d8fd1a33ff8adf2d46f58938974dc73f9450f4e933cda23c9fa3
+    changed: false
+  capex_configurator_component:
+    sha256: 7567710c3ebd70e0ae0be6ab931e888619bb7a52f732ea79a3e3bd7838e7f51f
+    changed: false
+  research_performed: false
+  google_files_changed: false
+audit:
+  receipt: docs-platform/changelog/audit/ITR-REVENUE-MODEL-PRESENTATION-2026-08-14-01.yaml
+  receipt_sha256: 8508a4b85cad622bb12920cd27f37c07949d6dfe5c08a2edcb272c5ce565477c
+rollback:
+  payload: docs-platform/changelog/rollback-payloads/ITR-REVENUE-MODEL-PRESENTATION-2026-08-14-01/manifest.yaml
+  payload_sha256: 226b42d3779d4fa2ae10e7bd985648405c109492c3637d49607fea953aa2d159
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true
+git_and_delivery:
+  staged: false
+  committed: false
+  tagged: false
+  pushed: false
+  sealed: false
+  deployed: false
+summary: The approved presentation-only Revenue Model refinement is verified. Daily food hierarchy, separate drinks, unified hourly cards, serving terminology, capacity-only 51/13 split and exact summary text passed responsive browser checks while all business models, snapshots, calculations and other routes remained unchanged.

@@ -1,0 +1,15 @@
+schema_version: 2
+iteration_id: ITR-REVENUE-MODEL-PRESENTATION-2026-08-14-01
+mode: governed_reverse_change_set
+status: prepared
+before_content_commit: c8300652c923d8b57fd1f201f1be1b723cb11208
+before_state_sha256: efc86d7a86421f5e9c8c6b4352e3b2d5d335f3d7e961d1bc053d72260768c6e3
+after_state_sha256: d3cf04a9aecb3b7d6f17673d251a44bb7c950d802a70dcc38f9193af72cf5c04
+reverse_strategy:
+  public_copy: restore the before values from the audit receipt through a new approved reverse change set
+  daily_load: restore the preceding five-peer metric layout only through a new approved reverse change set
+  hourly_load: restore the preceding maximum-hour label and split placement only through a new approved reverse change set
+  tests: restore the preceding deterministic assertions together with the public presentation
+  events: append rollback lifecycle events and preserve this complete before/after history
+  git_reset_forbidden: true
+dependency_check: required against every later applied, committed or sealed iteration

@@ -60,7 +60,9 @@ test("9-14. realistic flow produces the approved daily product load", () => {
   assert.equal(result.foodPortionsPerDay, 420);
   assert.equal(result.kolobokPortionsPerDay, 336);
   assert.equal(result.manchesPerDay, 84);
+  assert.equal(result.kolobokPortionsPerDay + result.manchesPerDay, result.foodPortionsPerDay);
   assert.equal(result.drinksPerDay, 300);
+  assert.notEqual(result.kolobokPortionsPerDay + result.manchesPerDay + result.drinksPerDay, result.foodPortionsPerDay);
 });
 
 test("15-20. all scenario day and month sales values match the approved model", () => {
@@ -74,8 +76,11 @@ test("15-20. all scenario day and month sales values match the approved model", 
 test("approved realistic average, peak and maximum hourly food loads are 35, 46 and 64", () => {
   const result = calculateRevenueModel(state());
   assert.equal(result.averageHour.food, 35);
+  assert.equal(result.averageHour.checks, 25);
   assert.equal(result.peakHour.food, 46);
+  assert.equal(result.peakHour.checks, 33);
   assert.equal(result.maximumHour.food, 64);
+  assert.equal(result.maximumHour.checks, 46);
   assert.equal(result.maximumHour.kolobok, 51);
   assert.equal(result.maximumHour.manches, 13);
 });

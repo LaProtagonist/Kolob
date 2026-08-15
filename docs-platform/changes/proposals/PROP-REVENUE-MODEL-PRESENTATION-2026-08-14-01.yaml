@@ -1,0 +1,14 @@
+schema_version: 2
+proposal_id: PROP-REVENUE-MODEL-PRESENTATION-2026-08-14-01
+iteration_id: ITR-REVENUE-MODEL-PRESENTATION-2026-08-14-01
+title: Clarify the production-load hierarchy on revenue-model
+status: proposed
+proposed_at: 2026-08-14T20:32:48.000Z
+scope: Public copy and layout inside the revenue-model summary, production-load and capacity blocks only; all calculations, structured data and other pages remain unchanged.
+approved_payload_path: docs-platform/changelog/payloads/ITR-REVENUE-MODEL-PRESENTATION-2026-08-14-01-approved.yaml
+approved_payload_sha256: 049cff3de8dcd5ffdfbec8578af6c7ec3794eb2aadc6373fd3165a12dda72ad5
+excludes:
+  - research, new assumptions or changes to Revenue Model data
+  - formulas, prices, scenarios, average check or coefficients
+  - CAPEX, Investor Start Model, launch-budget or capex-configurator
+  - navigation, sitemap, SEO, commit, seal, tag, push and deployment

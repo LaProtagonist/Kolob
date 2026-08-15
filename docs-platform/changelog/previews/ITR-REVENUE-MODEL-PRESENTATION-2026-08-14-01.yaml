@@ -1,0 +1,26 @@
+schema_version: 2
+iteration_id: ITR-REVENUE-MODEL-PRESENTATION-2026-08-14-01
+decision_id: DEC-REVENUE-MODEL-PRESENTATION-2026-08-14-01
+change_set_id: CHG-REVENUE-MODEL-PRESENTATION-2026-08-14-01
+previewed_at: 2026-08-14T20:32:50.000Z
+status: passed
+mutation_performed: false
+planned_changes:
+  public_copy:
+    - summary warning shortened exactly as approved
+    - Комплектация replaced by Сервировка in public rendering
+    - Максимальный час replaced by Расчётный максимум
+    - capacity line labels clarified
+  layout:
+    - 420 food portions becomes the parent of 336 kolobok portions and 84 manches
+    - 300 drinks remains a separate peer metric
+    - all three hourly cards use food portions and checks
+    - 51/13 moves from the hourly card to the capacity disclosure
+invariants:
+  calculations_changed: false
+  revenue_model_yaml_changed: false
+  revenue_snapshot_changed: false
+  capex_changed: false
+  investor_start_model_changed: false
+  other_routes_changed: false
+  research_performed: false

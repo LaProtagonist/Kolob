@@ -1,0 +1,123 @@
+schema_version: 2
+iteration_id: ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01
+proposal_id: PROP-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01
+decision_id: DEC-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01
+change_set_id: CHG-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01
+verified_at: 2026-08-15T13:52:47.000Z
+actor: Codex
+validation_status: passed
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01-approved.yaml
+  sha256: c087ccf2189273ea55c3b271ea38d38eceda475baa59a5328e5fe03db670ad4c
+state:
+  before_state_sha256: d3cf04a9aecb3b7d6f17673d251a44bb7c950d802a70dcc38f9193af72cf5c04
+  after_state_sha256: d24f43e7158c3032785bdea121c3312ca992eb4425a1df14d585aa192b49f2a2
+  component_sha256: 9af804d199d050c40935b28afb6818ce0e42e2dd7cae417730bc16dddfc4a9d5
+  stylesheet_sha256: 5a6729e64a0364882a8fac5e3a1cf5e77047b58ffd440573e32c8e48eb0b1d18
+  route_test_sha256: f272252de090e71f24101bbfe34d8e413187b6096fe1f4fa951ac86d32506fad
+  unit_test_sha256: 3762ad93a940f1737ace73717a57b07cb909b68d4f065408d148572cb72b43cc
+presentation_verification:
+  standalone_sales_section_count: 0
+  sticky_summary:
+    month: 10 488 600 ₽ / месяц
+    day: 349 620 ₽
+  section_flow:
+    - { number: "01", title: Поток заказов }
+    - { number: "02", title: Средний чек }
+    - { number: "03", title: Производственная нагрузка }
+    - { number: "04", title: Проверка мощности }
+  daily_load:
+    checks: 300 чеков в день
+    food_total: 420 порций еды в день
+    food_parts: { kolobok_portions: 336, manches: 84 }
+    food_parts_sum: 420
+    drinks: 300 напитков в день
+    drinks_inside_food_total: false
+  desktop_geometry:
+    card_height_spread_px: 0
+    card_top_spread_px: 0
+    card_bottom_spread_px: 0
+    checks_content_center_delta_px: 0.0078125
+    drinks_content_center_delta_px: 0.0078125
+  tablet_geometry:
+    card_height_spread_px: 0
+    food_total_on_one_line: true
+  mobile_geometry:
+    semantic_order: [checks, food, drinks]
+    food_total_on_one_line: true
+    horizontal_overflow: false
+  hourly_cards:
+    average: { food_portions: 35, checks: 25 }
+    peak: { food_portions: 46, checks: 33 }
+    maximum: { label: Расчётный максимум, food_portions: 64, checks: 46 }
+    maximum_product_split_present: false
+  capacity_basis:
+    label: Нагрузка в расчётный максимум
+    product_split: ≈51 порция колобков · ≈13 манчесов
+    public_serving_term: Сервировка
+    legacy_assembly_term_count: 0
+  summary_warning: Расчёт показывает потенциальный объём продаж при выбранных параметрах.
+browser_verification:
+  engine: Codex in-app browser
+  console_errors: 0
+  page_errors: 0
+  sticky_summary_desktop: passed
+  horizontal_overflow:
+    desktop_1440x900: false
+    tablet_768x1024: false
+    mobile_390x844: false
+  review_screenshots:
+    - output/review/revenue-model-daily-layout-desktop.png
+    - output/review/revenue-model-daily-layout-tablet.png
+    - output/review/revenue-model-daily-layout-mobile.png
+validation:
+  npm_test: passed; all 12 route checks, CAPEX, launch-budget, Revenue Model and every docs-platform suite completed with zero failures
+  revenue_model_tests: 19 passed, 0 failed
+  typescript_no_emit: passed
+  production_build: passed; exact npm run build completed and prerendered 12 routes
+  registry_validation: passed
+  timeline_validation: passed at applied-state validation with 125 events
+  context_validation: passed
+  project_onboard: passed; dirty worktree reported transparently
+  capex_content_snapshot_check: passed; current and unchanged
+  revenue_content_snapshot_check: passed; current and unchanged
+  git_diff_check: passed
+business_source_invariants:
+  revenue_model:
+    sha256: ab68399813d62d861522752c8e94df9cfc5d5a48e9b7723c60f2c968c4cba721
+    changed: false
+  revenue_snapshot:
+    sha256: 6dacd7aab33fcc139a05f6ac2eee5319c6107a6153d4a3a92ffee8d82406139a
+    content_state_sha256: 90727a6c51f959b617d6c972b898593a1b6dba6742d51b30bb75230f3f606c38
+    changed: false
+  investor_start_model:
+    sha256: b81a6c4e8988a4532c9ba2749d492b3f96e37d83af822396afc82930244b2985
+    changed: false
+  capex_equipment_register:
+    sha256: c8853fe61ad8407ab96d0fbafb79702853842f970cbf699b6c2138b23f32c7aa
+    changed: false
+  launch_budget_component:
+    sha256: fa01e57179c8d8fd1a33ff8adf2d46f58938974dc73f9450f4e933cda23c9fa3
+    changed: false
+  capex_configurator_component:
+    sha256: 7567710c3ebd70e0ae0be6ab931e888619bb7a52f732ea79a3e3bd7838e7f51f
+    changed: false
+  research_performed: false
+  google_files_changed: false
+audit:
+  receipt: docs-platform/changelog/audit/ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01.yaml
+  receipt_sha256: 193581ca26fde9ab3e308f837f7fd2d077c618f0a9c6d7935eba91057626165f
+rollback:
+  payload: docs-platform/changelog/rollback-payloads/ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01/manifest.yaml
+  payload_sha256: 09d45124772d26ecd9acddf6aa74b539e01afafd64f5933ca853ebcb07abcb22
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true
+git_and_delivery:
+  staged: false
+  committed: false
+  tagged: false
+  pushed: false
+  sealed: false
+  deployed: false
+summary: The approved presentation-only Revenue Model layout refinement is verified. The duplicated sales section is removed while its figures remain in the sticky summary; sections now run 01–04; desktop and tablet daily cards are equal-height with centered side content; mobile stacks without overflow; 420 remains exactly 336 + 84 and drinks remain separate. All business sources, snapshots, calculations and other routes are unchanged.

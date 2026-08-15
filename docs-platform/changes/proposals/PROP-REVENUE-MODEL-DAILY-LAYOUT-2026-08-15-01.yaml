@@ -1,0 +1,14 @@
+schema_version: 2
+proposal_id: PROP-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01
+iteration_id: ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01
+title: Remove the duplicate Revenue Model sales section and balance daily-load cards
+status: proposed
+proposed_at: 2026-08-15T13:14:12.000Z
+scope: Public layout and labels inside /revenue-model only; calculations, structured data, snapshots and all other pages remain unchanged.
+approved_payload_path: docs-platform/changelog/payloads/ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01-approved.yaml
+approved_payload_sha256: c087ccf2189273ea55c3b271ea38d38eceda475baa59a5328e5fe03db670ad4c
+excludes:
+  - research, new assumptions or changes to Revenue Model data
+  - formulas, values, average check, scenarios or production coefficients
+  - CAPEX, Investor Start Model, launch-budget or capex-configurator
+  - navigation, sitemap, SEO, commit, seal, tag, push and deployment
