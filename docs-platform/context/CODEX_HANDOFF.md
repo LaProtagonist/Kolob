@@ -9,16 +9,16 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 ## 2. Текущая ветка и governed iteration
 
 - Branch: `master`.
-- Latest closed iteration: `ITR-REVENUE-MODEL-2026-08-14-01`.
-- Latest iteration tag: `iteration/ITR-REVENUE-MODEL-2026-08-14-01`.
-- Latest content commit: `7012c506d863dc680a8f9aafeda066c37d30b03f`.
+- Latest closed iteration: `ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01`.
+- Latest iteration tag: `iteration/ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01`.
+- Latest content commit: `f67920077a9ba7b07cc20ecc7be34b72dee4b4a5`.
 - Текущий Git HEAD намеренно не записывается: его вычисляет `npm run project:onboard`.
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01-VERIFIED`.
-- Hash: `3a3100131e0680f57310b0a1e3459cb9f6e8a6f0d09ed2f68cc72125cffa6167`.
-- generated_from_event_hash: `3a3100131e0680f57310b0a1e3459cb9f6e8a6f0d09ed2f68cc72125cffa6167`.
+- Event: `EVT-ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01-COMMITTED`.
+- Hash: `ea3da82f96e2f813d1265968afb205356bd23841f11df798ae0f21ce7ba3f758`.
+- generated_from_event_hash: `ea3da82f96e2f813d1265968afb205356bd23841f11df798ae0f21ce7ba3f758`.
 
 ## 4. Канонические документы
 
@@ -43,7 +43,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 5. Текущая рабочая тема
 
-Create Revenue Model and the direct-review sales-volume page
+Refine Revenue Model section flow and daily-load card balance
 
 ## 6. Decisions и change sets
 
