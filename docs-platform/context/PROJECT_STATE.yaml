@@ -1,12 +1,12 @@
 schema_version: 2
-generated_at: 2026-08-16T00:09:49.176Z
+generated_at: 2026-08-16T00:10:13.344Z
 project: Колобочная
 branch: master
-latest_timeline_event_id: EVT-ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01-COMMITTED
-latest_timeline_event_hash: 72123d84a5a22e8c5eb47aa8bc7ef555b619cc0b42dd1cb63d31d3fc7bdef3d3
-latest_closed_iteration_id: ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01
-latest_iteration_tag: iteration/ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01
-latest_content_commit_hash: ee46fa3abcb410ae8066c3c1939e70a7a364fd53
+latest_timeline_event_id: EVT-ITR-FINANCIAL-MODEL-2026-08-16-01-COMMITTED
+latest_timeline_event_hash: 15f99393101194b2b8b204dfe9b64778b4d0452b52d494c346d963cbc616a266
+latest_closed_iteration_id: ITR-FINANCIAL-MODEL-2026-08-16-01
+latest_iteration_tag: iteration/ITR-FINANCIAL-MODEL-2026-08-16-01
+latest_content_commit_hash: c86133747af6e469a15bad1780cc63fca5482fe5
 registry_hash: ac6e2d9de09be7d092a2b9917da7f5ecdf76d94462a9b025832572c52594021c
 canonical_document_hashes:
   - document_id: DOC-AGENTS
@@ -84,7 +84,7 @@ open_questions:
   - Archive pending review artifacts in durable storage before treating visual verification as portable.
   - Create deployment receipts when the next governed deployment is performed.
   - Decide whether malformed superseded legacy YAML evidence should receive a separate correction event.
-current_workstream: Pre-commit publication lifecycle correction
+current_workstream: Create Financial Model v0.1 and its Google Sheets working projection
 next_task: Select the next task through a new governed proposal; no business task is pre-authorized.
 google_integration_status:
   configured: true

@@ -9,16 +9,16 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 ## 2. Текущая ветка и governed iteration
 
 - Branch: `master`.
-- Latest closed iteration: `ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01`.
-- Latest iteration tag: `iteration/ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01`.
-- Latest content commit: `ee46fa3abcb410ae8066c3c1939e70a7a364fd53`.
+- Latest closed iteration: `ITR-FINANCIAL-MODEL-2026-08-16-01`.
+- Latest iteration tag: `iteration/ITR-FINANCIAL-MODEL-2026-08-16-01`.
+- Latest content commit: `c86133747af6e469a15bad1780cc63fca5482fe5`.
 - Текущий Git HEAD намеренно не записывается: его вычисляет `npm run project:onboard`.
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01-COMMITTED`.
-- Hash: `72123d84a5a22e8c5eb47aa8bc7ef555b619cc0b42dd1cb63d31d3fc7bdef3d3`.
-- generated_from_event_hash: `72123d84a5a22e8c5eb47aa8bc7ef555b619cc0b42dd1cb63d31d3fc7bdef3d3`.
+- Event: `EVT-ITR-FINANCIAL-MODEL-2026-08-16-01-COMMITTED`.
+- Hash: `15f99393101194b2b8b204dfe9b64778b4d0452b52d494c346d963cbc616a266`.
+- generated_from_event_hash: `15f99393101194b2b8b204dfe9b64778b4d0452b52d494c346d963cbc616a266`.
 
 ## 4. Канонические документы
 
@@ -44,7 +44,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 5. Текущая рабочая тема
 
-Pre-commit publication lifecycle correction
+Create Financial Model v0.1 and its Google Sheets working projection
 
 ## 6. Decisions и change sets
 

@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "generated_from_event_id": "EVT-ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01-COMMITTED",
-  "generated_from_event_hash": "72123d84a5a22e8c5eb47aa8bc7ef555b619cc0b42dd1cb63d31d3fc7bdef3d3",
+  "generated_from_event_id": "EVT-ITR-FINANCIAL-MODEL-2026-08-16-01-COMMITTED",
+  "generated_from_event_hash": "15f99393101194b2b8b204dfe9b64778b4d0452b52d494c346d963cbc616a266",
   "content_state_sha256": "a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239",
   "latest_committed_iteration": {
-    "iteration_id": "ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01",
-    "decision_id": "DEC-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01",
-    "change_set_id": "CHG-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01",
-    "content_commit_hash": "ee46fa3abcb410ae8066c3c1939e70a7a364fd53",
+    "iteration_id": "ITR-FINANCIAL-MODEL-2026-08-16-01",
+    "decision_id": "DEC-FINANCIAL-MODEL-2026-08-16-01",
+    "change_set_id": "CHG-FINANCIAL-MODEL-2026-08-16-01",
+    "content_commit_hash": "c86133747af6e469a15bad1780cc63fca5482fe5",
     "seal_commit_hash": null,
-    "iteration_tag": "iteration/ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01"
+    "iteration_tag": "iteration/ITR-FINANCIAL-MODEL-2026-08-16-01"
   },
   "latest_deployment_event": {
     "event_id": "EVT-ITR-REVENUE-MODEL-2026-08-14-01-DEPLOYED-DEPLOY-REVENUE-MODEL-2026-08-14-01",
@@ -17,10 +17,10 @@
     "deployment_receipt": "docs-platform/changelog/deployments/DEPLOY-REVENUE-MODEL-2026-08-14-01.yaml",
     "production_url": "https://colob.spi.ski"
   },
-  "repository_head": "ee46fa3abcb410ae8066c3c1939e70a7a364fd53",
+  "repository_head": "cfc9f100e057f9672770e6590c7baad6a60c01ce",
   "timeline_head": {
-    "event_id": "EVT-ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01-COMMITTED",
-    "event_hash": "72123d84a5a22e8c5eb47aa8bc7ef555b619cc0b42dd1cb63d31d3fc7bdef3d3"
+    "event_id": "EVT-ITR-FINANCIAL-MODEL-2026-08-16-01-COMMITTED",
+    "event_hash": "15f99393101194b2b8b204dfe9b64778b4d0452b52d494c346d963cbc616a266"
   },
   "deployment_receipts": [
     {

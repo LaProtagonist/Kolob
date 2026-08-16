@@ -1,0 +1,58 @@
+receipt_version: 1
+registry_id: DOC-FINANCIAL-MODEL
+decision_id: DEC-FINANCIAL-MODEL-2026-08-16-01
+change_set_id: CHG-FINANCIAL-MODEL-2026-08-16-01
+iteration_id: ITR-FINANCIAL-MODEL-2026-08-16-01
+local_path: docs-platform/working/financial-model.yaml
+local_sha256: bb61e57b9b65ec2961f5d16a2065b5937d803a5772cdef172716ec952daf6bb4
+local_source_sha256: bb61e57b9b65ec2961f5d16a2065b5937d803a5772cdef172716ec952daf6bb4
+projection_path: docs-platform/generated/financial-model-projection.json
+projection_sha256: aa494d3c03d57d11a6c57c126046576d0cf7440387adc54688ad4ca6c6552324
+payload_path: docs-platform/generated/financial-google-sheets-payload.json
+payload_sha256: cde9d85aadef88696378a978a50c3b510989bd7e8be77fc7582731a8289e6d10
+content_state_sha256: 18e56ce33cc19540ff9540d05a35c24284534fdfd89a6b74e59ff5a394980ae4
+google_file_id: 1C5rxrxCxXq6q2D3Nm5sF7CHNMVlS3FddK8hPxV8DiCk
+google_mime_type: application/vnd.google-apps.spreadsheet
+google_title: 04 — Финансовая модель пилотного объекта
+web_view_link: https://docs.google.com/spreadsheets/d/1C5rxrxCxXq6q2D3Nm5sF7CHNMVlS3FddK8hPxV8DiCk/edit?usp=drivesdk
+synced_at: 2026-08-15T22:51:53.913Z
+action: create_then_resume_same_file
+source_status: research
+source_version: "0.1"
+sheets:
+  - 01 Описание
+  - 02 Допущения
+  - 03 Продажи
+  - 04 Меню и себестоимость
+  - 05 Персонал
+  - 06 OPEX
+  - 07 CAPEX
+  - 08 P&L
+  - 09 Денежный поток
+  - 10 Инвестиции
+  - 11 Сценарии
+  - 12 Чувствительность
+  - 13 Недвижимость
+  - 14 Производственный центр
+  - 15 Источники
+  - 16 Проверки
+readback_hash: c44e09779be49f0546b42aa821f21d71398a4d7896bc2628861f6d3964851351
+remote_readback_sha256: c44e09779be49f0546b42aa821f21d71398a4d7896bc2628861f6d3964851351
+readback: passed
+validation_status: passed
+result: passed
+validation:
+  folder_guard: passed
+  native_google_sheet: true
+  exact_single_file: true
+  existing_google_files_changed: false
+  localized_sheet_order: passed
+  formula_readback: passed
+  google_checks: 11
+  formula_errors: 0
+  exact_title: passed
+  exact_tab_count: 16
+  registry_link: DOC-FINANCIAL-MODEL
+publication_note: The first apply created the single guarded native Sheet; the same file was resumed after publisher fixes. No duplicate file was created.
+content_commit_hash: null
+commit_note: Financial Model publication is intentionally pre-commit pending owner review; convert this receipt to Governance History v2 when a content commit is explicitly authorized.
