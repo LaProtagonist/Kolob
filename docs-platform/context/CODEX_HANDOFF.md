@@ -16,9 +16,9 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-FINANCIAL-MODEL-2026-08-16-01-COMMITTED`.
-- Hash: `15f99393101194b2b8b204dfe9b64778b4d0452b52d494c346d963cbc616a266`.
-- generated_from_event_hash: `15f99393101194b2b8b204dfe9b64778b4d0452b52d494c346d963cbc616a266`.
+- Event: `EVT-ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01-DEPLOYED-DEPLOY-REVENUE-MODEL-DAILY-LAYOUT-2026-08-16-01`.
+- Hash: `9382759a50fd890f1a4e1a41481a7f279354be9aa2071fdf0cf9a4163e9783d2`.
+- generated_from_event_hash: `9382759a50fd890f1a4e1a41481a7f279354be9aa2071fdf0cf9a4163e9783d2`.
 
 ## 4. Канонические документы
 
@@ -61,7 +61,7 @@ Create Financial Model v0.1 and its Google Sheets working projection
 
 - Google: `{"configured":true,"historical_receipts":10,"receipts_with_machine_readback_hash":7,"live_drift_check":"not_run_by_context_build"}`.
 - MCP: `{"implementation_present":true,"canonical_access":"registry_document_ids_only","live_status":"not_probed_by_context_build"}`.
-- Deployment: `{"status":"receipts_present","receipts":1,"production_url":null}`.
+- Deployment: `{"status":"receipts_present","receipts":2,"production_url":null}`.
 
 ## 9. Команды проверки
 

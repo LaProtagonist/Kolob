@@ -4,10 +4,10 @@
 
 ## 1. Current state
 
-- Events: 141.
-- Timeline head event: `EVT-ITR-FINANCIAL-MODEL-2026-08-16-01-COMMITTED`.
-- Timeline head SHA-256: `15f99393101194b2b8b204dfe9b64778b4d0452b52d494c346d963cbc616a266`.
-- Latest recorded iteration: `ITR-FINANCIAL-MODEL-2026-08-16-01`.
+- Events: 142.
+- Timeline head event: `EVT-ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01-DEPLOYED-DEPLOY-REVENUE-MODEL-DAILY-LAYOUT-2026-08-16-01`.
+- Timeline head SHA-256: `9382759a50fd890f1a4e1a41481a7f279354be9aa2071fdf0cf9a4163e9783d2`.
+- Latest recorded iteration: `ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01`.
 
 ## 2. Modern governed iterations
 
@@ -35,7 +35,7 @@
 | 2026-08-11T15:14:11.000Z | verified | Add baseline and custom operating-expense modes | ITR-INVESTOR-OPEX-MODE-2026-08-11-01 | DEC-INVESTOR-OPEX-MODE-2026-08-11-01 | CHG-INVESTOR-OPEX-MODE-2026-08-11-01 | — | — | — | — | — | Verified the unchanged 2,650,000 RUB baseline and 7,950,000 / 15,900,000 / 23,850,000 RUB period totals, the 2,000,000 RUB custom examples, blank-custom lower-bound behavior, reset and reload persistence, unchanged contingency basis, no area scaling, hidden internal module status, responsive layouts and zero console or hydration errors. The work remains unstaged and undeployed. |
 | 2026-08-14T18:59:28.000Z | deployed | Create Revenue Model and the direct-review sales-volume page | ITR-REVENUE-MODEL-2026-08-14-01 | DEC-REVENUE-MODEL-2026-08-14-01 | CHG-REVENUE-MODEL-2026-08-14-01 | 7012c506d863dc680a8f9aafeda066c37d30b03f | iteration/ITR-REVENUE-MODEL-2026-08-14-01 | — | docs-platform/changelog/deployments/DEPLOY-REVENUE-MODEL-2026-08-14-01.yaml | — | Sealed content state a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239 deployed to https://colob.spi.ski; smoke test passed. |
 | 2026-08-15T13:14:11.000Z | superseded | Refine Revenue Model production-load presentation | ITR-REVENUE-MODEL-PRESENTATION-2026-08-14-01 | DEC-REVENUE-MODEL-PRESENTATION-2026-08-14-01 | CHG-REVENUE-MODEL-PRESENTATION-2026-08-14-01 | — | — | — | — | — | The verified presentation iteration was not committed and is superseded as a delivery unit by the next approved Revenue Model UI iteration. Its short summary copy, serving terminology, food hierarchy, unified hourly cards and capacity-only 51/13 split remain preserved as the succeeding iteration's baseline; no old event was edited. |
-| 2026-08-15T21:31:42.000Z | committed | Refine Revenue Model section flow and daily-load card balance | ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01 | DEC-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01 | CHG-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01 | f67920077a9ba7b07cc20ecc7be34b72dee4b4a5 | iteration/ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01 | — | — | — | Refine Revenue Model section flow and daily-load card balance: content commit verified and linked to the governed lifecycle before sealing. |
+| 2026-08-16T00:18:47.000Z | deployed | Refine Revenue Model section flow and daily-load card balance | ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01 | DEC-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01 | CHG-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01 | f67920077a9ba7b07cc20ecc7be34b72dee4b4a5 | iteration/ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01 | — | docs-platform/changelog/deployments/DEPLOY-REVENUE-MODEL-DAILY-LAYOUT-2026-08-16-01.yaml | — | Sealed content state a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239 deployed to https://colob.spi.ski/revenue-model; smoke test passed. |
 | 2026-08-15T23:54:22.000Z | committed | Create Financial Model v0.1 and its Google Sheets working projection | ITR-FINANCIAL-MODEL-2026-08-16-01 | DEC-FINANCIAL-MODEL-2026-08-16-01 | CHG-FINANCIAL-MODEL-2026-08-16-01 | c86133747af6e469a15bad1780cc63fca5482fe5 | iteration/ITR-FINANCIAL-MODEL-2026-08-16-01 | docs-platform/changelog/google-sync/2026-08-16-DOC-FINANCIAL-MODEL.yaml | — | — | Create Financial Model v0.1 and its Google Sheets working projection: content commit verified and linked to the governed lifecycle before sealing. |
 | 2026-08-16T00:09:12.000Z | committed | Pre-commit publication lifecycle correction | ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01 | DEC-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01 | CHG-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01 | ee46fa3abcb410ae8066c3c1939e70a7a364fd53 | iteration/ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01 | — | — | — | Pre-commit publication lifecycle correction: content commit verified and linked to the governed lifecycle before sealing. |
 
@@ -88,6 +88,7 @@
 | 2026-08-15T22:51:53.913Z | ITR-FINANCIAL-MODEL-2026-08-16-01 | published | docs-platform/changelog/google-sync/2026-08-16-DOC-FINANCIAL-MODEL.yaml | — | — |
 | 2026-08-15T22:51:53.913Z | ITR-FINANCIAL-MODEL-2026-08-16-01 | synced | docs-platform/changelog/google-sync/2026-08-16-DOC-FINANCIAL-MODEL.yaml | — | — |
 | 2026-08-15T23:54:22.000Z | ITR-FINANCIAL-MODEL-2026-08-16-01 | committed | docs-platform/changelog/google-sync/2026-08-16-DOC-FINANCIAL-MODEL.yaml | — | — |
+| 2026-08-16T00:18:47.000Z | ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01 | deployed | — | docs-platform/changelog/deployments/DEPLOY-REVENUE-MODEL-DAILY-LAYOUT-2026-08-16-01.yaml | https://colob.spi.ski/revenue-model |
 
 ## 6. Open issues
 
