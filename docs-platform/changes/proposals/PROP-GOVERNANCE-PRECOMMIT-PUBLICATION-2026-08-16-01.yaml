@@ -1,0 +1,9 @@
+schema_version: 2
+proposal_id: PROP-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01
+iteration_id: ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01
+title: Support Google publication before Git content linkage
+status: proposed
+proposed_at: 2026-08-16T00:04:16.000Z
+scope: Infrastructure-only lifecycle and content-commit resolution correction for pre-commit external publication.
+approved_payload_path: docs-platform/changelog/payloads/ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01-approved.yaml
+approved_payload_sha256: 832fdf6ecc75e42e357ff0c0d3faa1d9217e0e90c0e0850d0ef045597f3ac476

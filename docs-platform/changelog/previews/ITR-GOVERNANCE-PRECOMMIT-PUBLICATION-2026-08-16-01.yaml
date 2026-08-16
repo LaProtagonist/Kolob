@@ -1,0 +1,20 @@
+schema_version: 2
+iteration_id: ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01
+proposal_id: PROP-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01
+decision_id: DEC-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01
+change_set_id: CHG-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01
+previewed_at: 2026-08-16T00:04:18.000Z
+mutation_performed: false
+before_state_sha256: 14d45ba48a91374db631fb9d22f1527c2428cb9b155efdaf583a36fef705cf50
+expected_after_state_sha256: 209b254347c3523f8ae810bb40443c61435f77335deda96b493945ffeebb1c91
+expected_changes:
+  newly_allowed_transition: synced -> committed
+  unchanged_ordinary_transition: verified -> committed
+  still_rejected_transition: published -> committed
+  content_commit_lookup: exact reachable commit metadata instead of HEAD equality
+  duplicate_seal_guard: repository-history lookup
+excluded_changes:
+  business_data: true
+  google_content: true
+  website: true
+  historical_events: true

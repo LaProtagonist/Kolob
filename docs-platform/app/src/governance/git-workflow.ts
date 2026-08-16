@@ -204,13 +204,26 @@ export function commitIteration(iterationId: string, message: string): string {
   return commit;
 }
 
-function findContentCommit(iteration: GovernedIteration, verified: TimelineEvent): string {
-  const head = gitText(["rev-parse", "HEAD"]);
-  const trailers = commitTrailers(head);
-  if (trailers["Iteration-ID"] !== iteration.iteration_id) throw new Error(`HEAD is not the content commit for ${iteration.iteration_id}.`);
-  const errors = verifyRequiredTrailers(head, iteration, verified.event_hash);
-  if (errors.length) throw new Error(errors.join("\n"));
-  return head;
+function isAncestorOfHead(commit: string): boolean {
+  try {
+    git(["merge-base", "--is-ancestor", commit, "HEAD"]);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export function findContentCommit(iteration: GovernedIteration, verified: TimelineEvent): string {
+  const commits = gitText(["log", "--all", "--format=%H"], true).split("\n").filter(Boolean);
+  const candidates = commits.filter(commit => commitTrailers(commit)["Iteration-ID"] === iteration.iteration_id);
+  const exact = candidates.filter(commit =>
+    isAncestorOfHead(commit)
+    && verifyRequiredTrailers(commit, iteration, verified.event_hash).length === 0
+    && scopeHash(iteration.state_hash_paths, commit) === iteration.after_state_sha256
+  );
+  if (exact.length === 0) throw new Error(`No reachable content commit with exact governed metadata was found for ${iteration.iteration_id}.`);
+  if (exact.length > 1) throw new Error(`Multiple reachable content commits with exact governed metadata were found for ${iteration.iteration_id}: ${exact.join(", ")}.`);
+  return exact[0];
 }
 
 function googleReceipt(iteration: GovernedIteration): { path: string; hash: string | null } | null {
@@ -345,8 +358,11 @@ export function governanceValidationErrors(): string[] {
 export function sealIteration(iterationId: string): { content_commit_hash: string; seal_commit_hash: string; iteration_tag: string } {
   const iteration = loadGovernedIteration(iterationId);
   ensureNoForbiddenContentPaths(iteration);
-  const lastSubject = gitText(["show", "-s", "--format=%s", "HEAD"]);
-  if (lastSubject === `chore(governance): seal ${iterationId}`) throw new Error(`${iterationId} is already sealed.`);
+  const sealSubject = `chore(governance): seal ${iterationId}`;
+  const existingSeal = gitText(["log", "--all", "--format=%H%x09%s"], true)
+    .split("\n")
+    .find(line => line.slice(line.indexOf("\t") + 1) === sealSubject);
+  if (existingSeal) throw new Error(`${iterationId} is already sealed.`);
   const verified = verifiedEvent(iteration);
   const contentCommit = findContentCommit(iteration, verified);
   const phaseErrors = [...scopeErrors(iteration, "seal"), ...lifecycleErrors(iteration), ...validateImmutability(), ...validateTimeline()];

@@ -5,7 +5,15 @@ import os from "node:os";
 import path from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
-import { appendTimelineEvent, readTimelineEvents, validateTimeline, type TimelineEventInput } from "../src/governance/timeline.js";
+import {
+  appendTimelineEvent,
+  buildGovernanceEvent,
+  readTimelineEvents,
+  validateTimeline,
+  type GovernanceEventInputV2,
+  type GovernanceEventV2,
+  type TimelineEventInput,
+} from "../src/governance/timeline.js";
 
 const platform = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 const payloadPath = "docs-platform/changelog/payloads/ITR-CAPEX-REGISTER-2026-08-01-01-approved.yaml";
@@ -23,6 +31,40 @@ function input(status: TimelineEventInput["lifecycle_status"], timestamp: string
     validation_result: status === "verified" ? "passed" : "pending", git_commit_hash: null,
     rollback_reference: rollbackPath, summary: `Test ${status}`,
   };
+}
+
+function modernInput(iterationId: string, eventType: GovernanceEventInputV2["event_type"], step: number): GovernanceEventInputV2 {
+  const timestamp = new Date(Date.parse("2026-08-16T00:00:00.000Z") + step).toISOString();
+  return {
+    event_id: `EVT-${iterationId}-${eventType.toUpperCase()}-${step}`,
+    event_type: eventType,
+    occurred_at: timestamp,
+    recorded_at: timestamp,
+    iteration_id: iterationId,
+    proposal_id: null,
+    decision_id: null,
+    change_set_id: null,
+    actor: "node:test",
+    tool: "governance lifecycle test",
+    scope: "temporary lifecycle fixture",
+    summary: `${eventType} lifecycle fixture`,
+    approved_payload_sha256: null,
+    before_hash: null,
+    after_hash: null,
+    affected_document_ids: [],
+    affected_section_ids: [],
+    source_refs: [],
+    git: { content_commit_hash: null, seal_commit_ref: null, iteration_tag: null, commit_message_verified: null, trailers_verified: null },
+    external: { google_sync_receipts: [], deployment_receipt: null, remote_readback_hash: null, production_url: null },
+    rollback: { rollback_payload: null, compensates_iteration_id: null, restores_hash: null, dependency_check: null },
+    artifacts: { manifest_refs: [] },
+  };
+}
+
+function modernLifecycle(iterationId: string, types: GovernanceEventInputV2["event_type"][]): GovernanceEventV2[] {
+  const events: GovernanceEventV2[] = [];
+  for (const [index, type] of types.entries()) events.push(buildGovernanceEvent(modernInput(iterationId, type, index), events));
+  return events;
 }
 
 test("timeline appends without changing prior bytes and validates its hash chain", () => {
@@ -53,6 +95,23 @@ test("editing a past event is detected and secret-shaped fields are rejected", (
   events[0].summary = "tampered";
   assert.equal(validateTimeline(events).some(error => /event_hash mismatch/.test(error)), true);
   assert.throws(() => appendTimelineEvent({ ...input("applied", "2026-08-01T10:02:00.000Z", 3), access_token: "forbidden" } as TimelineEventInput, file), /additional properties|forbidden/i);
+});
+
+test("ordinary verified to committed lifecycle remains seal-ready", () => {
+  const events = modernLifecycle("ITR-ORDINARY-LIFECYCLE", ["proposed", "approved", "applied", "verified", "committed"]);
+  assert.deepEqual(validateTimeline(events), []);
+});
+
+test("pre-commit Google publication may move from synced to committed", () => {
+  const events = modernLifecycle("ITR-PREPUBLISHED-LIFECYCLE", ["proposed", "approved", "applied", "verified", "published", "synced", "committed"]);
+  assert.deepEqual(validateTimeline(events), []);
+});
+
+test("published without synced and unrelated invalid transitions remain rejected", () => {
+  const published = modernLifecycle("ITR-PUBLISHED-NOT-SYNCED", ["proposed", "approved", "applied", "verified", "published"]);
+  assert.throws(() => buildGovernanceEvent(modernInput("ITR-PUBLISHED-NOT-SYNCED", "committed", 5), published), /published -> committed/);
+  const synced = modernLifecycle("ITR-PREPUBLISHED-INVALID", ["proposed", "approved", "applied", "verified", "published", "synced"]);
+  assert.throws(() => buildGovernanceEvent(modernInput("ITR-PREPUBLISHED-INVALID", "applied", 6), synced), /synced -> applied/);
 });
 
 test("repository timeline, when present, has valid references and no secret keys", () => {

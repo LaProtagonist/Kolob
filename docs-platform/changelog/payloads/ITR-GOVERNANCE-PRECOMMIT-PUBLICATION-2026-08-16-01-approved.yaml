@@ -1,0 +1,86 @@
+schema_version: 2
+payload_id: PAYLOAD-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01
+iteration_id: ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01
+proposal_id: PROP-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01
+decision_id: DEC-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01
+change_set_id: CHG-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01
+title: Support pre-commit external publication in Governance History v2
+status: approved
+approved_by: project owner
+approved_at: 2026-08-16T00:04:17.000Z
+scope:
+  - Permit the exact append-only transition verified -> published -> synced -> committed for an artifact published before its Git content commit is linked.
+  - Preserve the ordinary verified -> committed path and every existing lifecycle guard.
+  - Resolve a content commit from exact governed commit metadata even when later technical commits make it an ancestor of HEAD.
+  - Require the resolved commit to be reachable from HEAD, carry all mandatory trailers, match the verified event hash and reproduce the approved after-state scope hash.
+  - Strengthen duplicate-seal detection across reachable repository history.
+  - Add deterministic regression tests for ordinary, pre-published and rejected lifecycle transitions.
+forbidden_scope:
+  - editing or deleting historical timeline events
+  - recreating or amending the existing Financial Model content commit
+  - Financial Model, Revenue Model, CAPEX or Investor Start Model data
+  - Google Sheet content or Google authentication
+  - website source, public copy, design, calculations or deployment
+transition_contract:
+  ordinary:
+    - verified
+    - committed
+  pre_commit_publication:
+    - verified
+    - published
+    - synced
+    - committed
+  newly_allowed_transition: synced -> committed
+  explicitly_not_allowed: published -> committed
+content_commit_resolution:
+  lookup: reachable Git commits with exact Iteration-ID trailer
+  required_checks:
+    - commit is an ancestor of current HEAD
+    - mandatory trailers match the governed iteration and verified event hash
+    - committed tree reproduces the approved after_state_sha256 over state_hash_paths
+  ambiguity_policy: reject zero or multiple exact matches
+state_hash_paths:
+  - docs-platform/app/src/governance/timeline.ts
+  - docs-platform/app/src/governance/git-workflow.ts
+  - docs-platform/app/test/governance-timeline.test.ts
+  - docs-platform/app/test/governance-history-v2.test.ts
+content_paths:
+  - docs-platform/app/src/governance/timeline.ts
+  - docs-platform/app/src/governance/git-workflow.ts
+  - docs-platform/app/test/governance-timeline.test.ts
+  - docs-platform/app/test/governance-history-v2.test.ts
+  - docs-platform/changes/proposals/PROP-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01.yaml
+  - docs-platform/changes/decisions/DEC-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01.yaml
+  - docs-platform/changes/CHG-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01.yaml
+  - docs-platform/changes/iterations/ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01.yaml
+  - docs-platform/changelog/payloads/ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01-approved.yaml
+  - docs-platform/changelog/previews/ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01.yaml
+  - docs-platform/changelog/audit/ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01.yaml
+  - docs-platform/changelog/verification/ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01.yaml
+  - docs-platform/changelog/iteration-receipts/ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01.yaml
+  - docs-platform/changelog/rollback-payloads/ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01/
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+  - docs-platform/generated/capex-governance-projection.json
+allowed_dirty_paths:
+  - docs-platform/changelog/google-sync/2026-08-16-DOC-FINANCIAL-MODEL.yaml
+  - output/pdf/launch-budget-review.pdf
+  - output/review/
+commit_contract:
+  content_subject: "fix(docs-platform): support pre-commit publication lifecycle"
+  mandatory_trailers: [Iteration-ID, Decision-ID, Change-Set-ID, Approved-Payload-SHA256, Before-State-SHA256, After-State-SHA256, Timeline-Head-SHA256]
+  separate_seal_commit: true
+  annotated_iteration_tag: true
+rollback_contract:
+  mode: governed_reverse_change_set
+  restore_code_from_commit: c86133747af6e469a15bad1780cc63fca5482fe5
+  historical_events: retain_append_only
+  git_reset_forbidden: true

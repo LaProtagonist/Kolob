@@ -1,0 +1,23 @@
+schema_version: 2
+change_id: CHG-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01
+iteration_id: ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01
+proposal_id: PROP-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01
+decision_id: DEC-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01
+title: Support pre-commit publication without weakening Governance History
+status: approved
+created_at: 2026-08-16
+approved_payload_path: docs-platform/changelog/payloads/ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01-approved.yaml
+approved_payload_sha256: 832fdf6ecc75e42e357ff0c0d3faa1d9217e0e90c0e0850d0ef045597f3ac476
+governance_operations:
+  - add only synced -> committed to the modern transition graph
+  - resolve exact reachable content commits by mandatory trailers, verified event hash and approved scope hash
+  - reject missing or ambiguous content commit matches
+  - detect a prior seal anywhere in reachable history
+  - cover ordinary, pre-published and invalid lifecycle fixtures
+operations: []
+preview:
+  status: passed
+  mutation_performed: false
+  business_sources_changed: []
+  google_writes: false
+  website_changes: false

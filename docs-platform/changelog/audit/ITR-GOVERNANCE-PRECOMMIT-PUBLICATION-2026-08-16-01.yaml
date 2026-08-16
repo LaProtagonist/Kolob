@@ -1,0 +1,26 @@
+schema_version: 2
+iteration_id: ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01
+audited_at: 2026-08-16T00:04:18.000Z
+actor: Codex
+root_cause:
+  financial_iteration_id: ITR-FINANCIAL-MODEL-2026-08-16-01
+  existing_content_commit: c86133747af6e469a15bad1780cc63fca5482fe5
+  recorded_sequence: [verified, published, synced]
+  rejected_next_event: committed
+  original_error: "Invalid v2 transition for ITR-FINANCIAL-MODEL-2026-08-16-01: synced -> committed."
+  explanation: The Financial Google Sheet was intentionally created and read back before the owner approved Git delivery, but Governance History v2 represented external publication as terminal relative to later Git linkage and the seal resolver required the content commit to equal HEAD.
+approved_correction:
+  transition_added: synced -> committed
+  commit_lookup_checks: [reachable_from_HEAD, exact_mandatory_trailers, verified_event_hash, approved_scope_hash, unique_match]
+  duplicate_seal_guard: strengthened
+history_policy:
+  old_events_edited: false
+  financial_content_commit_recreated: false
+  financial_history_rewritten: false
+business_impact:
+  financial_model_changed: false
+  revenue_model_changed: false
+  capex_changed: false
+  investor_start_model_changed: false
+  google_sheet_changed: false
+  website_changed: false

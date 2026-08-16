@@ -1,0 +1,18 @@
+schema_version: 2
+iteration_id: ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01
+mode: governed_reverse_change_set
+status: prepared
+before_content_commit: c86133747af6e469a15bad1780cc63fca5482fe5
+source_scope: docs-platform/changelog/payloads/ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01-approved.yaml
+reverse_strategy:
+  modified_files:
+    - restore docs-platform/app/src/governance/timeline.ts from c86133747af6e469a15bad1780cc63fca5482fe5
+    - restore docs-platform/app/src/governance/git-workflow.ts from c86133747af6e469a15bad1780cc63fca5482fe5
+    - restore docs-platform/app/test/governance-timeline.test.ts from c86133747af6e469a15bad1780cc63fca5482fe5
+    - restore docs-platform/app/test/governance-history-v2.test.ts from c86133747af6e469a15bad1780cc63fca5482fe5
+  events: append rollback lifecycle; never delete technical or Financial evidence
+  tags: retain historical iteration tags
+  google: no action because this iteration does not change Google content
+  website: no action because this iteration does not change public content
+  git_reset_forbidden: true
+dependency_check: required against the later Financial seal and every subsequent governed iteration

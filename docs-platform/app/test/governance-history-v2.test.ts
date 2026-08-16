@@ -19,7 +19,15 @@ import {
 } from "../src/governance/context.js";
 import { deploymentDriftCheck, googleDriftCheck } from "../src/governance/external.js";
 import { createHistoricalIterationTags, readGitLinkIndex, verifyHistoricalTags } from "../src/governance/history.js";
-import { lifecycleErrors, parsePorcelainPaths, REQUIRED_TRAILERS, verifyRequiredTrailers, type GovernedIteration } from "../src/governance/git-workflow.js";
+import {
+  findContentCommit,
+  lifecycleErrors,
+  loadGovernedIteration,
+  parsePorcelainPaths,
+  REQUIRED_TRAILERS,
+  verifyRequiredTrailers,
+  type GovernedIteration,
+} from "../src/governance/git-workflow.js";
 import { readImmutabilityBaseline, validateImmutability } from "../src/governance/immutability.js";
 import { historicalCompensationPreview, rollbackLatestPreview } from "../src/governance/reversal.js";
 import {
@@ -112,6 +120,19 @@ test("10. trailer checker rejects legacy commits and accepts only exact iteratio
   const iteration = YAML.parse(fs.readFileSync(path.join(platform, "changes", "iterations", `${link.iteration_id}.yaml`), "utf8"));
   const governed = { ...iteration, schema_version: 2, before_state_sha256: link.before_hash ?? "0".repeat(64), after_state_sha256: link.after_hash } as GovernedIteration;
   assert.ok(verifyRequiredTrailers(link.probable_git_commit, governed, "0".repeat(64)).length >= REQUIRED_TRAILERS.length);
+});
+
+test("10a. seal content lookup resolves exact ancestor commits instead of assuming HEAD", () => {
+  const expectations = new Map([
+    ["ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01", "f67920077a9ba7b07cc20ecc7be34b72dee4b4a5"],
+    ["ITR-FINANCIAL-MODEL-2026-08-16-01", "c86133747af6e469a15bad1780cc63fca5482fe5"],
+  ]);
+  for (const [iterationId, expected] of expectations) {
+    const iteration = loadGovernedIteration(iterationId);
+    const verified = [...readTimelineEvents()].reverse().find(event => event.iteration_id === iterationId && effectiveType(event) === "verified")!;
+    assert.equal(findContentCommit(iteration, verified), expected);
+  }
+  assert.notEqual(expectations.get("ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01"), gitText(["rev-parse", "HEAD"]));
 });
 
 test("11. Handoff is an exact generated projection with a do-not-edit marker", () => {

@@ -1,0 +1,52 @@
+schema_version: 2
+iteration_id: ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01
+proposal_id: PROP-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01
+decision_id: DEC-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01
+change_set_id: CHG-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01
+verified_at: 2026-08-16T00:05:00.000Z
+actor: Codex
+validation_status: passed
+approved_payload_sha256: 832fdf6ecc75e42e357ff0c0d3faa1d9217e0e90c0e0850d0ef045597f3ac476
+before_state_sha256: 14d45ba48a91374db631fb9d22f1527c2428cb9b155efdaf583a36fef705cf50
+after_state_sha256: 209b254347c3523f8ae810bb40443c61435f77335deda96b493945ffeebb1c91
+checks:
+  ordinary_verified_to_committed: passed
+  prepublished_verified_to_published_to_synced_to_committed: passed
+  published_without_synced_to_committed: rejected_as_required
+  synced_to_unrelated_applied: rejected_as_required
+  exact_revenue_ancestor_content_commit_resolution: passed
+  exact_financial_content_commit_resolution: passed
+  mandatory_trailer_verification: passed
+  approved_scope_hash_verification: passed
+  reachable_ancestor_guard: passed
+  duplicate_seal_guard: passed
+  protected_event_prefixes: passed
+  append_only_hash_chain: passed
+  timeline_validation: passed
+  governance_validation: passed
+  context_validation: passed
+  registry_validation: passed
+  typescript: passed
+  git_diff_check: passed
+tests:
+  governance_timeline:
+    passed: 7
+    failed: 0
+    elapsed_ms: 3403.879875
+  governance_history_v2:
+    passed: 38
+    failed: 0
+    elapsed_ms: 24985.951208
+business_invariants:
+  financial_model_changed: false
+  revenue_model_changed: false
+  capex_changed: false
+  investor_start_model_changed: false
+  google_sheet_changed: false
+  website_changed: false
+history_invariants:
+  old_events_edited: false
+  financial_content_commit: c86133747af6e469a15bad1780cc63fca5482fe5
+  financial_content_commit_recreated: false
+rollback_payload: docs-platform/changelog/rollback-payloads/ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01/manifest.yaml
+summary: Governance History v2 now supports exact Git linkage after a verified artifact was published and synced, while retaining the ordinary lifecycle and rejecting publication without readback or unrelated regressions.

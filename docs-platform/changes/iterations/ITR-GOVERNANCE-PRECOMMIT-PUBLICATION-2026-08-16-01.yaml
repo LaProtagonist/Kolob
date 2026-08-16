@@ -1,0 +1,56 @@
+schema_version: 2
+iteration_id: ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01
+proposal_id: PROP-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01
+decision_id: DEC-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01
+change_set_id: CHG-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01
+title: Pre-commit publication lifecycle correction
+status: approved
+approved_by: project owner
+approved_at: 2026-08-16T00:04:17.000Z
+actor: Codex
+scope: Infrastructure-only support for a synced external artifact to receive exact Git content linkage and a later seal without rewriting history.
+approved_payload_path: docs-platform/changelog/payloads/ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01-approved.yaml
+approved_payload_sha256: 832fdf6ecc75e42e357ff0c0d3faa1d9217e0e90c0e0850d0ef045597f3ac476
+before_state_sha256: 14d45ba48a91374db631fb9d22f1527c2428cb9b155efdaf583a36fef705cf50
+after_state_sha256: 209b254347c3523f8ae810bb40443c61435f77335deda96b493945ffeebb1c91
+state_hash_paths:
+  - docs-platform/app/src/governance/timeline.ts
+  - docs-platform/app/src/governance/git-workflow.ts
+  - docs-platform/app/test/governance-timeline.test.ts
+  - docs-platform/app/test/governance-history-v2.test.ts
+content_paths:
+  - docs-platform/app/src/governance/timeline.ts
+  - docs-platform/app/src/governance/git-workflow.ts
+  - docs-platform/app/test/governance-timeline.test.ts
+  - docs-platform/app/test/governance-history-v2.test.ts
+  - docs-platform/changes/proposals/PROP-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01.yaml
+  - docs-platform/changes/decisions/DEC-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01.yaml
+  - docs-platform/changes/CHG-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01.yaml
+  - docs-platform/changes/iterations/ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01.yaml
+  - docs-platform/changelog/payloads/ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01-approved.yaml
+  - docs-platform/changelog/previews/ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01.yaml
+  - docs-platform/changelog/audit/ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01.yaml
+  - docs-platform/changelog/verification/ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01.yaml
+  - docs-platform/changelog/iteration-receipts/ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01.yaml
+  - docs-platform/changelog/rollback-payloads/ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01/
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+  - docs-platform/generated/capex-governance-projection.json
+allowed_dirty_paths:
+  - docs-platform/changelog/google-sync/2026-08-16-DOC-FINANCIAL-MODEL.yaml
+  - output/pdf/launch-budget-review.pdf
+  - output/review/
+affected_document_ids: []
+affected_section_ids:
+  - governance.lifecycle.precommit-publication
+  - governance.git-content-commit-resolution
+  - governance.seal-duplicate-guard
+rollback_payload: docs-platform/changelog/rollback-payloads/ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01/manifest.yaml
