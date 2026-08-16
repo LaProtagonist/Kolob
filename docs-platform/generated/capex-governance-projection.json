@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "generated_from_event_id": "EVT-ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01-COMMITTED",
-  "generated_from_event_hash": "ea3da82f96e2f813d1265968afb205356bd23841f11df798ae0f21ce7ba3f758",
+  "generated_from_event_id": "EVT-ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01-COMMITTED",
+  "generated_from_event_hash": "72123d84a5a22e8c5eb47aa8bc7ef555b619cc0b42dd1cb63d31d3fc7bdef3d3",
   "content_state_sha256": "a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239",
   "latest_committed_iteration": {
-    "iteration_id": "ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01",
-    "decision_id": "DEC-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01",
-    "change_set_id": "CHG-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01",
-    "content_commit_hash": "f67920077a9ba7b07cc20ecc7be34b72dee4b4a5",
+    "iteration_id": "ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01",
+    "decision_id": "DEC-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01",
+    "change_set_id": "CHG-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01",
+    "content_commit_hash": "ee46fa3abcb410ae8066c3c1939e70a7a364fd53",
     "seal_commit_hash": null,
-    "iteration_tag": "iteration/ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01"
+    "iteration_tag": "iteration/ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01"
   },
   "latest_deployment_event": {
     "event_id": "EVT-ITR-REVENUE-MODEL-2026-08-14-01-DEPLOYED-DEPLOY-REVENUE-MODEL-2026-08-14-01",
@@ -17,10 +17,10 @@
     "deployment_receipt": "docs-platform/changelog/deployments/DEPLOY-REVENUE-MODEL-2026-08-14-01.yaml",
     "production_url": "https://colob.spi.ski"
   },
-  "repository_head": "f67920077a9ba7b07cc20ecc7be34b72dee4b4a5",
+  "repository_head": "ee46fa3abcb410ae8066c3c1939e70a7a364fd53",
   "timeline_head": {
-    "event_id": "EVT-ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01-COMMITTED",
-    "event_hash": "ea3da82f96e2f813d1265968afb205356bd23841f11df798ae0f21ce7ba3f758"
+    "event_id": "EVT-ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01-COMMITTED",
+    "event_hash": "72123d84a5a22e8c5eb47aa8bc7ef555b619cc0b42dd1cb63d31d3fc7bdef3d3"
   },
   "deployment_receipts": [
     {

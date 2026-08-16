@@ -4,9 +4,9 @@
 
 ## 1. Current state
 
-- Events: 139.
-- Timeline head event: `EVT-ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01-VERIFIED`.
-- Timeline head SHA-256: `8d71923c069fae2cb312e608408710fe9c62ecc8ad4fa5dbf3e54af18fd0b0d3`.
+- Events: 140.
+- Timeline head event: `EVT-ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01-COMMITTED`.
+- Timeline head SHA-256: `72123d84a5a22e8c5eb47aa8bc7ef555b619cc0b42dd1cb63d31d3fc7bdef3d3`.
 - Latest recorded iteration: `ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01`.
 
 ## 2. Modern governed iterations
@@ -37,7 +37,7 @@
 | 2026-08-15T13:14:11.000Z | superseded | Refine Revenue Model production-load presentation | ITR-REVENUE-MODEL-PRESENTATION-2026-08-14-01 | DEC-REVENUE-MODEL-PRESENTATION-2026-08-14-01 | CHG-REVENUE-MODEL-PRESENTATION-2026-08-14-01 | — | — | — | — | — | The verified presentation iteration was not committed and is superseded as a delivery unit by the next approved Revenue Model UI iteration. Its short summary copy, serving terminology, food hierarchy, unified hourly cards and capacity-only 51/13 split remain preserved as the succeeding iteration's baseline; no old event was edited. |
 | 2026-08-15T21:31:42.000Z | committed | Refine Revenue Model section flow and daily-load card balance | ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01 | DEC-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01 | CHG-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01 | f67920077a9ba7b07cc20ecc7be34b72dee4b4a5 | iteration/ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01 | — | — | — | Refine Revenue Model section flow and daily-load card balance: content commit verified and linked to the governed lifecycle before sealing. |
 | 2026-08-15T22:51:53.913Z | synced | Create Financial Model v0.1 and its Google Sheets working projection | ITR-FINANCIAL-MODEL-2026-08-16-01 | DEC-FINANCIAL-MODEL-2026-08-16-01 | CHG-FINANCIAL-MODEL-2026-08-16-01 | — | — | docs-platform/changelog/google-sync/2026-08-16-DOC-FINANCIAL-MODEL.yaml | — | — | Sheets API readback confirmed the exact 16-tab order, eleven control checks, preserved formulas and zero formula errors. |
-| 2026-08-16T00:05:00.000Z | verified | Pre-commit publication lifecycle correction | ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01 | DEC-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01 | CHG-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01 | — | — | — | — | — | Both approved lifecycle paths pass; publication without sync and unrelated regressions remain rejected; exact ancestor commit resolution and all governance projections validate. |
+| 2026-08-16T00:09:12.000Z | committed | Pre-commit publication lifecycle correction | ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01 | DEC-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01 | CHG-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01 | ee46fa3abcb410ae8066c3c1939e70a7a364fd53 | iteration/ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01 | — | — | — | Pre-commit publication lifecycle correction: content commit verified and linked to the governed lifecycle before sealing. |
 
 ## 3. Legacy imported history
 

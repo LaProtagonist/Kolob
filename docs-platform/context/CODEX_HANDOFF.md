@@ -9,16 +9,16 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 ## 2. Текущая ветка и governed iteration
 
 - Branch: `master`.
-- Latest closed iteration: `ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01`.
-- Latest iteration tag: `iteration/ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01`.
-- Latest content commit: `f67920077a9ba7b07cc20ecc7be34b72dee4b4a5`.
+- Latest closed iteration: `ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01`.
+- Latest iteration tag: `iteration/ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01`.
+- Latest content commit: `ee46fa3abcb410ae8066c3c1939e70a7a364fd53`.
 - Текущий Git HEAD намеренно не записывается: его вычисляет `npm run project:onboard`.
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01-VERIFIED`.
-- Hash: `8d71923c069fae2cb312e608408710fe9c62ecc8ad4fa5dbf3e54af18fd0b0d3`.
-- generated_from_event_hash: `8d71923c069fae2cb312e608408710fe9c62ecc8ad4fa5dbf3e54af18fd0b0d3`.
+- Event: `EVT-ITR-GOVERNANCE-PRECOMMIT-PUBLICATION-2026-08-16-01-COMMITTED`.
+- Hash: `72123d84a5a22e8c5eb47aa8bc7ef555b619cc0b42dd1cb63d31d3fc7bdef3d3`.
+- generated_from_event_hash: `72123d84a5a22e8c5eb47aa8bc7ef555b619cc0b42dd1cb63d31d3fc7bdef3d3`.
 
 ## 4. Канонические документы
 
@@ -44,7 +44,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 5. Текущая рабочая тема
 
-Refine Revenue Model section flow and daily-load card balance
+Pre-commit publication lifecycle correction
 
 ## 6. Decisions и change sets
 
