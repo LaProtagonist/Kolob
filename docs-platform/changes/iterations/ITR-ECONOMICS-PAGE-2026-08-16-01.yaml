@@ -1,0 +1,62 @@
+schema_version: 2
+iteration_id: ITR-ECONOMICS-PAGE-2026-08-16-01
+proposal_id: PROP-ECONOMICS-PAGE-2026-08-16-01
+decision_id: DEC-ECONOMICS-PAGE-2026-08-16-01
+change_set_id: CHG-ECONOMICS-PAGE-2026-08-16-01
+title: Create the local investor-facing Economics page
+status: approved
+approved_by: project owner
+approved_at: 2026-08-16T02:07:35.000Z
+actor: Codex
+scope: Local presentation-only /economics route over the existing Investor Financial Summary and Financial Model projections.
+approved_payload_path: docs-platform/changelog/payloads/ITR-ECONOMICS-PAGE-2026-08-16-01-approved.yaml
+approved_payload_sha256: 7cf35db25a78222dfed36330deee31ba5c67eec98d3e699a53bda1c5b7179f21
+before_state_sha256: 40fa6ed869884d0af15c7dc093ac6cfdcce11ef3d54bfaac9764549fd7827268
+after_state_sha256: f6b66f7c4a3a972ff42c81cebe0692b952902f4b7ead1dcd9c1b26263c31eda3
+state_hash_paths:
+  - src/App.tsx
+  - src/content/site.ts
+  - src/components/Economics.tsx
+  - src/components/Economics.css
+  - src/content/economics.ts
+  - src/lib/economics.ts
+  - scripts/test-economics-data.test.ts
+  - scripts/test-economics-route.cjs
+content_paths:
+  - src/App.tsx
+  - src/content/site.ts
+  - src/components/Economics.tsx
+  - src/components/Economics.css
+  - src/content/economics.ts
+  - src/lib/economics.ts
+  - scripts/test-economics-data.test.ts
+  - scripts/test-economics-route.cjs
+  - docs-platform/changes/proposals/PROP-ECONOMICS-PAGE-2026-08-16-01.yaml
+  - docs-platform/changes/decisions/DEC-ECONOMICS-PAGE-2026-08-16-01.yaml
+  - docs-platform/changes/iterations/ITR-ECONOMICS-PAGE-2026-08-16-01.yaml
+  - docs-platform/changes/CHG-ECONOMICS-PAGE-2026-08-16-01.yaml
+  - docs-platform/changelog/payloads/ITR-ECONOMICS-PAGE-2026-08-16-01-approved.yaml
+  - docs-platform/changelog/previews/ITR-ECONOMICS-PAGE-2026-08-16-01.yaml
+  - docs-platform/changelog/audit/ITR-ECONOMICS-PAGE-2026-08-16-01.yaml
+  - docs-platform/changelog/iteration-receipts/ITR-ECONOMICS-PAGE-2026-08-16-01.yaml
+  - docs-platform/changelog/verification/ITR-ECONOMICS-PAGE-2026-08-16-01.yaml
+  - docs-platform/changelog/rollback-payloads/ITR-ECONOMICS-PAGE-2026-08-16-01/
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+allowed_dirty_paths:
+  - output/pdf/launch-budget-review.pdf
+  - output/review/
+affected_document_ids: []
+affected_section_ids:
+  - economics.route
+  - economics.financial-presentation
+  - economics.responsive-layout
+  - economics.summary-dependency
+rollback_payload: docs-platform/changelog/rollback-payloads/ITR-ECONOMICS-PAGE-2026-08-16-01/manifest.yaml

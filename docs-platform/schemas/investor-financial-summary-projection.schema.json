@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "investor-financial-summary-projection.schema.json",
+  "type": "object",
+  "required": ["meta", "headline", "scenario_comparison", "income_statement", "investments", "real_estate", "sensitivity", "assumptions", "copy"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": ["schema_version", "document_id", "version", "status", "financial_model_document_id", "financial_model_content_state_sha256", "financial_model_projection_sha256", "summary_content_state_sha256"],
+      "properties": {
+        "schema_version": { "const": 1 },
+        "document_id": { "const": "DOC-INVESTOR-FINANCIAL-SUMMARY" },
+        "version": { "const": "0.1" },
+        "status": { "const": "research" },
+        "financial_model_document_id": { "const": "DOC-FINANCIAL-MODEL" },
+        "financial_model_content_state_sha256": { "$ref": "#/$defs/sha256" },
+        "financial_model_projection_sha256": { "$ref": "#/$defs/sha256" },
+        "summary_content_state_sha256": { "$ref": "#/$defs/sha256" }
+      },
+      "additionalProperties": false
+    },
+    "headline": { "$ref": "#/$defs/free_object" },
+    "scenario_comparison": { "type": "array", "minItems": 3, "maxItems": 3, "items": { "$ref": "#/$defs/free_object" } },
+    "income_statement": { "$ref": "#/$defs/free_object" },
+    "investments": { "$ref": "#/$defs/free_object" },
+    "real_estate": { "$ref": "#/$defs/free_object" },
+    "sensitivity": { "$ref": "#/$defs/free_object" },
+    "assumptions": { "$ref": "#/$defs/free_object" },
+    "copy": { "$ref": "#/$defs/free_object" }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "free_object": { "type": "object", "additionalProperties": true }
+  },
+  "additionalProperties": false
+}

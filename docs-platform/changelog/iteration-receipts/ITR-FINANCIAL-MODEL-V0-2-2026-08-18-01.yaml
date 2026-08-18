@@ -1,0 +1,15 @@
+schema_version: 2
+iteration_id: ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01
+status: verified_pending_seal
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01-approved.yaml
+  sha256: df9de912fb4c50e897cac3917bbf7bf2bca0b6d22dd8dad30d79cb0a13f49958
+state:
+  before_sha256: fab9ad52d614a67dd13bc03b98d998cb2d6ccb8891c25ed5d066302021a0dfae
+  after_sha256: cca896f6c850373cca947c5a91d92d78187e6fdb198aaa06d9973c65b768a42d
+registry_changes:
+  - CHG-043
+  - CHG-FINANCIAL-MODEL-V0-2-2026-08-18-01
+external_operations:
+  google: none
+  deployment: pending_seal

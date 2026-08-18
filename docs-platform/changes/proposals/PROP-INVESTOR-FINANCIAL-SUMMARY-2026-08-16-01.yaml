@@ -1,0 +1,15 @@
+schema_version: 2
+proposal_id: PROP-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+iteration_id: ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+title: Create an investor-facing presentation view of Financial Model v0.1
+status: proposed
+proposed_at: 2026-08-16T01:00:00.000Z
+scope: Deterministic five-tab Investor Financial Summary, exact dependency on the sealed Financial Model content hash, one native Google Sheets publication and readback.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01-approved.yaml
+approved_payload_sha256: 0e88152fc40dcedf691fd47fea7d92d65cfba662552c36798908a05d4d2addb7
+excludes:
+  - changes to Financial Model, Revenue Model, CAPEX or Investor Start Model
+  - independent financial formulas or assumptions
+  - website routes, build or deployment
+  - Investment Memorandum
+  - commit, seal, tag or push before owner visual approval

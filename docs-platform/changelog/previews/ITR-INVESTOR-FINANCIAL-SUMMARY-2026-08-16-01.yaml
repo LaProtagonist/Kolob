@@ -1,0 +1,38 @@
+preview_version: 1
+iteration_id: ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+proposal_id: PROP-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+decision_id: DEC-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+change_set_id: CHG-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+created_at: 2026-08-16T01:21:00.000Z
+actor: Codex
+tool: deterministic Investor Summary projection and guarded Google preview
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01-approved.yaml
+  sha256: 0e88152fc40dcedf691fd47fea7d92d65cfba662552c36798908a05d4d2addb7
+before_state_sha256: 7453d20f9e63c2fd2592d89f1beaee92237d1588de3c5d535d7b6759cffdfb42
+target:
+  source_path: docs-platform/working/investor-financial-summary.yaml
+  projection_path: docs-platform/generated/investor-financial-summary.json
+  google_payload_path: docs-platform/generated/investor-financial-summary-google-sheets-payload.json
+  google_title: 05 — Финансовая модель — инвестиционная сводка
+  sheet_count: 5
+scope:
+  presentation_only: true
+  default_scenario: realistic
+  financial_model_content_state_sha256: 18e56ce33cc19540ff9540d05a35c24284534fdfd89a6b74e59ff5a394980ae4
+  google_native_sheet_count: 1
+out_of_scope:
+  - master Financial Model changes
+  - Revenue, CAPEX or Investor Start changes
+  - website or deployment
+  - commit, seal, tag or push
+writes: false
+validation:
+  projection_parity: passed
+  stale_dependency_guard: passed
+  five_tab_contract: passed
+  russian_investor_copy: passed
+  technical_fields_excluded: passed
+  google_target: unique_create_then_reuse
+  mutation_performed: false
+  research_performed: false

@@ -1,0 +1,21 @@
+schema_version: 2
+iteration_id: ITR-GOVERNANCE-SUPERSEDE-SYNCED-2026-08-18-01
+proposal_id: PROP-GOVERNANCE-SUPERSEDE-SYNCED-2026-08-18-01
+decision_id: DEC-GOVERNANCE-SUPERSEDE-SYNCED-2026-08-18-01
+change_set_id: CHG-GOVERNANCE-SUPERSEDE-SYNCED-2026-08-18-01
+previewed_at: 2026-08-18T20:00:02.000Z
+mutation_performed: false
+before_state_sha256: 51c6bbdecfe5ff377a602b8862f1522429a37f569aaa9b887f7552174a8c0fc9
+expected_after_state_sha256: 9104f74611482be5c070d0046d91fd8e1b835bf5ed30d5e022088d4d19acd53f
+expected_changes:
+  newly_allowed_transition: synced -> superseded
+  retained_transitions: [approved -> superseded, previewed -> superseded, verified -> superseded]
+  still_rejected_transitions: [committed -> superseded, deployed -> superseded, superseded -> superseded]
+  new_tool: docs-platform/app/src/governance/supersede-cli.ts
+  event_writer: appendGovernanceEvent only
+excluded_changes:
+  business_data: true
+  investor_summary_content: true
+  google_content: true
+  website: true
+  historical_events: true

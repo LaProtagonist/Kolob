@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import type { ReactNode } from "react";
 import { capexData } from "../lib/capex-runtime";
+import { launchFinancials } from "../lib/launch-financials";
 import {
   calculateLaunchBudget,
   defaultLaunchBudgetState,
@@ -175,7 +176,12 @@ export function LaunchBudgetPage() {
     }
   }, [state]);
 
-  const result = useMemo(() => calculateLaunchBudget(state), [state]);
+  const result = useMemo(() => calculateLaunchBudget(state, undefined, launchFinancials), [state]);
+  const reserveCategories = useMemo(() => [
+    { id: "FM-PERSONNEL", name: "Расходы на персонал", amount_rub: launchFinancials.monthlyLaborRub, description: "Фактическая стоимость команды с начислениями и резервом на замещение." },
+    { id: "FM-FIXED-OPEX", name: "Постоянные операционные расходы", amount_rub: launchFinancials.monthlyFixedOpexRub, description: "Коммунальные услуги, обслуживание оборудования, бухгалтерия, санитария, охрана и прочие постоянные расходы без аренды." },
+    { id: "FM-SCENARIO-OPEX", name: "Маркетинг и хозяйственные расходники", amount_rub: launchFinancials.monthlyScenarioOpexRub, description: "Регулярный маркетинг и эксплуатационные расходники на уровне зрелого реалистичного месяца." },
+  ], []);
   const seatingProfile = rawModel.seating.profiles.find(item => item.id === state.seatingProfileId)!;
   const furnitureProfile = rawModel.furniture.profiles.find(item => item.id === state.furnitureProfileId)!;
   const equipmentProfile = rawModel.equipment.scenarios.find(item => item.id === state.equipmentScenarioId)!;
@@ -369,7 +375,7 @@ export function LaunchBudgetPage() {
                   />
                 </div>
               ) : null}
-              <div className="launch-preparation-summary launch-opex-summary" data-testid="operating-reserve-summary" aria-live="polite">
+              <div className="launch-preparation-summary launch-opex-summary" data-testid="operating-reserve-summary" data-reserve-source={result.operatingReserveSource} aria-live="polite">
                 <span>{rawModel.operating_reserve.title}</span>
                 <strong>{formatRub(result.operatingReserveRub)}</strong>
                 {result.monthlyOperatingExpensesRub === null ? null : <small>{state.operatingReserveMonths} {state.operatingReserveMonths === 3 ? "месяца" : "месяцев"} × {formatRub(result.monthlyOperatingExpensesRub)} в месяц</small>}
@@ -389,13 +395,14 @@ export function LaunchBudgetPage() {
                   </button>
                   {state.operatingReserveAccordionOpen ? (
                     <div className="launch-preparation-details" id="launch-operating-expense-details">
-                      <div className="launch-opex-categories">
-                        {rawModel.operating_reserve.categories.map(category => <OperatingExpenseRow key={category.id} category={category} />)}
+                      <div className="launch-opex-categories" data-testid="operating-reserve-basis">
+                        {reserveCategories.map(category => <OperatingExpenseRow key={category.id} category={category} />)}
                       </div>
                       <div className="launch-inline-result launch-opex-monthly-total">
                         <span>{rawModel.operating_reserve.monthly_total_label}</span>
                         <strong>{formatRub(result.monthlyOperatingExpensesRub)}</strong>
                       </div>
+                      <p className="launch-preparation-area-note">Аренда за первые 12 месяцев уже входит в первоначальные платежи по аренде и в запас повторно не включается. Основа расчёта — финансовая модель объекта.</p>
                     </div>
                   ) : null}
                 </>
@@ -427,6 +434,8 @@ export function LaunchBudgetPage() {
               <SummaryRow label="Стоимость текущей комплектации оборудования" value={result.equipment.total} partial={equipmentPartial} />
               <SummaryRow label="Мебель посадочного зала" value={result.furnitureRub} />
               <SummaryRow label="Подготовка помещения и монтаж" value={result.effectivePreparationRub} />
+              <SummaryRow label="Маркетинг запуска" value={result.launchMarketingRub} />
+              <SummaryRow label="Прочие стартовые статьи" value={result.launchItemsRub - result.launchMarketingRub} />
               <SummaryRow label="Операционный запас" value={result.operatingReserveRub} />
               <SummaryRow label="Резерв" value={result.contingencyRub} />
             </dl>

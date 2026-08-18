@@ -10,6 +10,7 @@ export type RouteId =
   | "capexConfigurator"
   | "launchBudget"
   | "revenueModel"
+  | "economics"
   | "notFound";
 
 export type PageMeta = {

@@ -16,9 +16,9 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01-DEPLOYED-DEPLOY-REVENUE-MODEL-DAILY-LAYOUT-2026-08-16-01`.
-- Hash: `9382759a50fd890f1a4e1a41481a7f279354be9aa2071fdf0cf9a4163e9783d2`.
-- generated_from_event_hash: `9382759a50fd890f1a4e1a41481a7f279354be9aa2071fdf0cf9a4163e9783d2`.
+- Event: `EVT-ITR-ECONOMICS-PAGE-2026-08-16-01-SUPERSEDED`.
+- Hash: `fba863fa49a14e9560c9a9b5e8f4ed20adf5b96110a51cc347f570ffee4b8306`.
+- generated_from_event_hash: `fba863fa49a14e9560c9a9b5e8f4ed20adf5b96110a51cc347f570ffee4b8306`.
 
 ## 4. Канонические документы
 
@@ -34,9 +34,10 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 | DOC-CAPEX-MODULES | research | `docs-platform/working/capex-modules.yaml` | `2fb31d90b852a5aaae6500d99412c7fabba0bbe9187f08106e3f37c7a52ae33a` |
 | DOC-CAPEX-POINT-FORMATS | research | `docs-platform/working/capex-point-formats.yaml` | `4b6d5a8806f696f499dbbab8fa061020c7ba77b670eb2a1f7d3ccdcc78b2e523` |
 | DOC-CAPEX-PRICE-RESEARCH | research | `docs-platform/working/capex-price-research.yaml` | `b2b752f1822db8b529d58d822b83b32d44bcba9a0110ae35062d3b561f08249d` |
-| DOC-FINANCIAL-MODEL | research | `docs-platform/working/financial-model.yaml` | `bb61e57b9b65ec2961f5d16a2065b5937d803a5772cdef172716ec952daf6bb4` |
+| DOC-FINANCIAL-MODEL | research | `docs-platform/working/financial-model.yaml` | `6a76990d3635e62ac633610754415d401edba989f1a49a463091e2cece1e329b` |
 | DOC-FOUNDATION | approved | `docs-platform/00-foundation.md` | `5b4d457184c055ba11f8c4d05cc263139d2eb4f623981bcdc198c0114a50c0bb` |
 | DOC-INVESTMENT-MEMO | proposed | `docs-platform/templates/investment-memorandum.md` | `464e46d307aaa98e57cab3a098cd639e212d32b51f82a06688de228f0e7fb4cd` |
+| DOC-INVESTOR-FINANCIAL-SUMMARY | research | `docs-platform/working/investor-financial-summary.yaml` | `0aded90fe9bf703684ac0d829bdda6d476180c2eae9a761afe6ffa3b4a7090ec` |
 | DOC-INVESTOR-START-MODEL | research | `docs-platform/working/investor-start-model.yaml` | `b81a6c4e8988a4532c9ba2749d492b3f96e37d83af822396afc82930244b2985` |
 | DOC-PILOT-CAPEX-ASSUMPTIONS | research | `docs-platform/working/pilot-capex-assumptions.yaml` | `25e11d4db20050b3a95cab40797ef0a29e56fad93c73d33d4a39415a8071d4ac` |
 | DOC-README | approved | `docs-platform/README.md` | `04e947f296a158a1c37ceb8d4c959d1f4e31cf609d16c99bee2d3c3b79b824ab` |
@@ -59,7 +60,7 @@ Create Financial Model v0.1 and its Google Sheets working projection
 
 ## 8. Google / MCP / deployment
 
-- Google: `{"configured":true,"historical_receipts":10,"receipts_with_machine_readback_hash":7,"live_drift_check":"not_run_by_context_build"}`.
+- Google: `{"configured":true,"historical_receipts":12,"receipts_with_machine_readback_hash":9,"live_drift_check":"not_run_by_context_build"}`.
 - MCP: `{"implementation_present":true,"canonical_access":"registry_document_ids_only","live_status":"not_probed_by_context_build"}`.
 - Deployment: `{"status":"receipts_present","receipts":2,"production_url":null}`.
 

@@ -1,0 +1,66 @@
+schema_version: 2
+payload_id: PAYLOAD-FINANCIAL-MODEL-V0-2-2026-08-18-01
+iteration_id: ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01
+proposal_id: PROP-FINANCIAL-MODEL-V0-2-2026-08-18-01
+decision_id: DEC-FINANCIAL-MODEL-V0-2-2026-08-18-01
+change_set_id: CHG-FINANCIAL-MODEL-V0-2-2026-08-18-01
+title: Consolidate approved Financial Model v0.2 and dependent local investor and website projections
+status: approved
+approved_by: project owner
+approved_at: 2026-08-19T00:00:00.000Z
+scope:
+  - Consolidate the owner-approved Financial Model v0.2 assumptions already implemented in the local working tree: protected raw-material basis, protected labor, administrative reserve, ramp-up, seasonality, launch marketing, cash flow and investment metrics.
+  - Regenerate deterministic local Financial Model and Investor Financial Summary projections and local Google payloads without any Google API operation, publication, readback or receipt.
+  - Bring /economics and /launch-budget to the same Financial Model projection, while retaining /revenue-model as the mature potential-revenue model.
+  - Include the already implemented guarded supersede lifecycle tool and append superseded events for the prior Investor Summary and Economics iterations.
+  - Build, validate, seal, push and deploy only the sealed reproducible web state after all checks pass.
+approved_owner_assumptions:
+  protected_raw_materials:
+    formula: raw_material_cost = net_revenue * 0.30
+    waste_formula: waste = raw_material_cost * 0.04
+    recipe_cost_model: retained_as_analytical_technology_reference
+  protected_labor:
+    formula: max(calculated_staffing_labor, net_revenue * 0.27)
+    staffing: pessimistic_14_baseline_16_optimistic_20
+  administrative_reserve:
+    formula: net_revenue * 0.02
+  monthly_dynamics:
+    opening_month: January
+    ramp_up: [0.60, 0.70, 0.80, 0.85, 0.90, 0.95, 1.00]
+    seasonality: [0.93, 0.75, 0.88, 0.95, 1.02, 0.96, 0.96, 0.98, 1.12, 1.16, 1.10, 1.18]
+  launch_marketing_rub: 700000
+  opex:
+    marketing: scenario_formula_with_ramp_up_floor
+    household: scenario_formula
+constraints:
+  - No new research, benchmarks, business assumptions, Google Drive or Google Sheets action.
+  - No rewrite or deletion of historical events, no force push, reset, rebase or history rewrite.
+  - Canonical Financial Model remains the only financial source of truth; website and Summary remain projections.
+  - Do not begin the separate Investor Journey architecture iteration.
+supersession:
+  supersede:
+    - iteration_id: ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+      current_state: synced
+      reason: Local v0.2 Financial Model state supersedes the pre-commit published Summary presentation; its Google artifact is historical and is not modified in this iteration.
+    - iteration_id: ITR-ECONOMICS-PAGE-2026-08-16-01
+      current_state: verified
+      reason: The local v0.2 Financial Model state supersedes the earlier local Economics presentation before its commit or deployment.
+validation_contract:
+  targeted:
+    - financial-model projection and sheet-payload tests
+    - Investor Summary projection and local payload tests
+    - governance supersede regression tests
+    - economics, launch-budget and revenue-model affected route tests
+    - TypeScript for affected packages
+    - local browser desktop and mobile checks
+  final_before_seal:
+    - project-level validation once
+    - registry, timeline, governance and context validation
+    - git diff --check
+publication_contract:
+  google: forbidden
+  web: deploy only the sealed commit through the existing deployment workflow
+rollback_contract:
+  mode: governed_reverse_change_set
+  historical_events: retain_append_only
+  git_reset_forbidden: true

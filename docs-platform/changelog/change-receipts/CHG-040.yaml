@@ -1,0 +1,106 @@
+receipt_version: 2
+change_id: CHG-040
+iteration_id: ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+proposal_id: PROP-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+decision_id: DEC-001
+source_change_set: docs-platform/changes/CHG-040-investor-financial-summary-registration.yaml
+status: applied
+applied_at: 2026-08-16T01:23:13.629Z
+actor: Codex
+tool: docs-platform change:apply
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01-approved.yaml
+  sha256: 0e88152fc40dcedf691fd47fea7d92d65cfba662552c36798908a05d4d2addb7
+before_hash: 1fcdd7562e3fe7b8ab5ef50c7367161ac2d5281ff447a77bf920536e6303972a
+after_hash: 1dbc320098d3f6d189dd9630667878f90f2690b469e6a6f0e5005e664436c727
+touched_registry_files:
+  - path: docs-platform/registry/documents.yaml
+    backup_path: docs-platform/changelog/backups/2026-08-16T01-23-13-629Z-CHG-040/documents.yaml
+  - path: docs-platform/registry/sources.yaml
+    backup_path: docs-platform/changelog/backups/2026-08-16T01-23-13-629Z-CHG-040/sources.yaml
+  - path: docs-platform/registry/decisions.yaml
+    backup_path: docs-platform/changelog/backups/2026-08-16T01-23-13-629Z-CHG-040/decisions.yaml
+operations:
+  - type: add
+    entity: documents
+    id: DOC-INVESTOR-FINANCIAL-SUMMARY
+    before: null
+    after:
+      id: DOC-INVESTOR-FINANCIAL-SUMMARY
+      title: Investor Financial Summary
+      type: investor_financial_summary
+      status: research
+      google_file_id: null
+      template: null
+      sections:
+        - Основные показатели
+        - Доходы и расходы
+        - Инвестиции
+        - Сценарии
+        - Допущения
+      version: "0.1"
+      governance_level: working
+      local_path: docs-platform/working/investor-financial-summary.yaml
+      updated_at: 2026-08-16
+    before_index: null
+    after_index: 19
+    before_sha256: null
+    after_sha256: 2c49691b313a80d3fe65b618023b116095ea40a1efb5de0fa0b1d72b8cfdcc76
+    reverse_operation:
+      type: remove
+      entity: documents
+      id: DOC-INVESTOR-FINANCIAL-SUMMARY
+  - type: add
+    entity: sources
+    id: SRC-INVESTOR-FINANCIAL-SUMMARY-BRIEF-2026-08-16
+    before: null
+    after:
+      id: SRC-INVESTOR-FINANCIAL-SUMMARY-BRIEF-2026-08-16
+      title: Утверждённый контракт Investor Financial Summary
+      type: instruction
+      location: User instruction, 2026-08-16
+      publisher: project owner
+      publication_date: 2026-08-16
+      accessed_at: 2026-08-16
+      reliability: primary
+      notes: Содержит точную пятилистовую структуру, инвесторские формулировки, правила группировки, форматирования, зависимости от Financial Model и публикации. Новое исследование запрещено и не выполнялось.
+    before_index: null
+    after_index: 157
+    before_sha256: null
+    after_sha256: 54cda9fd39b31d8b7f5970d66d403e87efab0155f02a1a674475774308aaecd8
+    reverse_operation:
+      type: remove
+      entity: sources
+      id: SRC-INVESTOR-FINANCIAL-SUMMARY-BRIEF-2026-08-16
+  - type: add
+    entity: decisions
+    id: DEC-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+    before: null
+    after:
+      id: DEC-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+      title: Создать Investor Financial Summary и нативную Google Sheets-проекцию
+      status: approved
+      decision: Создать отдельное инвесторское представление из пяти русскоязычных вкладок поверх DOC-FINANCIAL-MODEL, без независимых формул, с hash-зависимостью, одной нативной Google Sheet и полным readback.
+      rationale: Прямое решение владельца проекта от 2026-08-16; представление не меняет master-модель, допущения, расчёты или сайт.
+      affected_documents:
+        - DOC-INVESTOR-FINANCIAL-SUMMARY
+      approved_by: project owner
+      approved_at: 2026-08-16
+      supersedes: null
+      source_ids:
+        - SRC-INVESTOR-FINANCIAL-SUMMARY-BRIEF-2026-08-16
+      updated_at: 2026-08-16
+    before_index: null
+    after_index: 19
+    before_sha256: null
+    after_sha256: 2b2bf914cae8918071e05f534876e9731b1bc23c2e4b7eadf12b70e54e860001
+    reverse_operation:
+      type: remove
+      entity: decisions
+      id: DEC-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+validation_result: passed
+git_commit_hash: null
+rollback:
+  source_receipt: docs-platform/changelog/change-receipts/CHG-040.yaml
+  command: npm run change:reverse:preview -- ../changelog/change-receipts/CHG-040.yaml --change-id CHG-ROLLBACK-XXX --decision DEC-ROLLBACK-XXX
+  rollback_of: CHG-040

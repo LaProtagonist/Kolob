@@ -1,0 +1,28 @@
+schema_version: 2
+iteration_id: ITR-GOVERNANCE-SUPERSEDE-SYNCED-2026-08-18-01
+audited_at: 2026-08-18T20:00:02.000Z
+actor: Codex
+root_cause:
+  open_iterations:
+    - iteration_id: ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+      last_event: synced
+      external_artifact: docs-platform/changelog/google-sync/2026-08-16-DOC-INVESTOR-FINANCIAL-SUMMARY-02.yaml
+    - iteration_id: ITR-ECONOMICS-PAGE-2026-08-16-01
+      last_event: verified
+  intended_next_step: supersede both by a consolidating Financial Model v0.2 iteration
+  original_gap: "modernTransitions.synced did not include superseded, and no governed tool wrote a superseded event; only manual events.ndjson edits could have expressed the consolidation, which rule 20 forbids."
+approved_correction:
+  transition_added: synced -> superseded
+  tool_added: docs-platform/app/src/governance/supersede-cli.ts
+  guards: [source exists, target exists, no self-supersede, transition allowed, not already superseded, reason required, explicit superseded_by reference, append-only chain]
+history_policy:
+  old_events_edited: false
+  google_receipts_edited: false
+  external_artifacts_rolled_back: false
+business_impact:
+  financial_model_changed: false
+  investor_summary_content_changed: false
+  revenue_model_changed: false
+  capex_changed: false
+  google_sheet_changed: false
+  website_changed: false

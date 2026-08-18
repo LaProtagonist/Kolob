@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "investor-financial-summary.schema.json",
+  "type": "object",
+  "required": ["document", "dependency", "google", "presentation", "opex_grouping", "staffing_presentation"],
+  "properties": {
+    "document": {
+      "type": "object",
+      "required": ["id", "title", "russian_title", "status", "version"],
+      "properties": {
+        "id": { "const": "DOC-INVESTOR-FINANCIAL-SUMMARY" },
+        "title": { "const": "Investor Financial Summary" },
+        "russian_title": { "const": "05 — Финансовая модель — инвестиционная сводка" },
+        "status": { "const": "research" },
+        "version": { "const": "0.1" }
+      },
+      "additionalProperties": false
+    },
+    "dependency": {
+      "type": "object",
+      "required": ["document_id", "projection_path", "content_state_sha256"],
+      "properties": {
+        "document_id": { "const": "DOC-FINANCIAL-MODEL" },
+        "projection_path": { "const": "docs-platform/generated/financial-model-projection.json" },
+        "content_state_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+      },
+      "additionalProperties": false
+    },
+    "google": {
+      "type": "object",
+      "required": ["title", "folder_name", "sheets"],
+      "properties": {
+        "title": { "const": "05 — Финансовая модель — инвестиционная сводка" },
+        "folder_name": { "const": "Колобочная — Investment" },
+        "sheets": {
+          "type": "array",
+          "const": ["Основные показатели", "Доходы и расходы", "Инвестиции", "Сценарии", "Допущения"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "presentation": {
+      "type": "object",
+      "required": ["default_scenario", "opening_statement", "investment_note", "operating_reserve_note", "additional_launch_costs_note", "tax_base_text", "tax_confirmation_text", "tax_conservative_text", "ramp_up_text", "seasonality_text", "ramp_and_seasonality_note", "year_1_note", "protected_base_note", "opening_month_note", "marketing_text", "household_text", "pessimistic_staffing_text", "discount_rate_text"],
+      "properties": {
+        "default_scenario": { "const": "realistic" },
+        "opening_statement": { "type": "string", "minLength": 1 },
+        "investment_note": { "type": "string", "minLength": 1 },
+        "operating_reserve_note": { "type": "string", "minLength": 1 },
+        "additional_launch_costs_note": { "type": "string", "minLength": 1 },
+        "tax_base_text": { "type": "string", "minLength": 1 },
+        "tax_confirmation_text": { "type": "string", "minLength": 1 },
+        "tax_conservative_text": { "type": "string", "minLength": 1 },
+        "ramp_up_text": { "type": "string", "minLength": 1 },
+        "seasonality_text": { "type": "string", "minLength": 1 },
+        "ramp_and_seasonality_note": { "type": "string", "minLength": 1 },
+        "year_1_note": { "type": "string", "minLength": 1 },
+        "protected_base_note": { "type": "string", "minLength": 1 },
+        "opening_month_note": { "type": "string", "minLength": 1 },
+        "marketing_text": { "type": "string", "minLength": 1 },
+        "household_text": { "type": "string", "minLength": 1 },
+        "pessimistic_staffing_text": { "type": "string", "minLength": 1 },
+        "discount_rate_text": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "opex_grouping": {
+      "type": "object",
+      "required": ["marketing", "operations", "administrative", "other"],
+      "properties": {
+        "marketing": { "$ref": "#/$defs/id_array" },
+        "operations": { "$ref": "#/$defs/id_array" },
+        "administrative": { "$ref": "#/$defs/id_array" },
+        "other": { "$ref": "#/$defs/id_array" }
+      },
+      "additionalProperties": false
+    },
+    "staffing_presentation": { "type": "array", "minItems": 8, "maxItems": 8, "items": { "type": "string", "minLength": 1 } }
+  },
+  "$defs": {
+    "id_array": { "type": "array", "minItems": 1, "items": { "type": "string", "pattern": "^[A-Z0-9_]+$" }, "uniqueItems": true }
+  },
+  "additionalProperties": false
+}

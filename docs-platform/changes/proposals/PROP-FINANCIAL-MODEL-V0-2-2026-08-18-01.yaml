@@ -1,0 +1,21 @@
+schema_version: 2
+proposal_id: PROP-FINANCIAL-MODEL-V0-2-2026-08-18-01
+iteration_id: ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01
+title: Consolidate Financial Model v0.2 and dependent projections for reproducible deployment
+status: approved
+proposed_by: project owner
+proposed_at: 2026-08-19T00:00:00.000Z
+summary: Consolidate the already approved Financial Model v0.2 financial logic, local Investor Summary, current finance web pages and the pre-existing supersede lifecycle support into one governed, reproducible, deployable state.
+scope:
+  - Financial Model v0.2 canonical source, schemas, projection, local Sheet payload and tests
+  - Investor Financial Summary local source, projection, local payload and tests; Google remains untouched
+  - /economics, /launch-budget and the limited mature-model context on /revenue-model
+  - append-only supersession of ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01 and ITR-ECONOMICS-PAGE-2026-08-16-01
+  - existing governance lifecycle support and its tests
+excludes:
+  - Google Drive, Google Sheets, Google payload publication, readback and receipt creation
+  - new business assumptions or changes to approved Financial Model v0.2 parameters
+  - Investor Journey architecture and new website concepts
+  - force push, reset, rebase or historical-event modification
+approved_payload_path: docs-platform/changelog/payloads/ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01-approved.yaml
+approved_payload_sha256: df9de912fb4c50e897cac3917bbf7bf2bca0b6d22dd8dad30d79cb0a13f49958

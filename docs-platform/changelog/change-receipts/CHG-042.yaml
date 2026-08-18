@@ -1,0 +1,71 @@
+receipt_version: 2
+change_id: CHG-042
+iteration_id: ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+proposal_id: PROP-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+decision_id: DEC-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+source_change_set: docs-platform/changes/CHG-042-investor-financial-summary-google-link.yaml
+status: applied
+applied_at: 2026-08-16T01:35:01.875Z
+actor: Codex
+tool: docs-platform change:apply
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01-approved.yaml
+  sha256: 0e88152fc40dcedf691fd47fea7d92d65cfba662552c36798908a05d4d2addb7
+before_hash: 5471cc29b009f4d2937b882988874da84c108cbe6b17e9559d7fe4cba4f4a22a
+after_hash: 79e7abbaf7b7c2333bbb79b4aa631abf7e1eaca7b6c277e22a840c187b219ac9
+touched_registry_files:
+  - path: docs-platform/registry/documents.yaml
+    backup_path: docs-platform/changelog/backups/2026-08-16T01-35-01-875Z-CHG-042/documents.yaml
+operations:
+  - type: update
+    entity: documents
+    id: DOC-INVESTOR-FINANCIAL-SUMMARY
+    before: &a1
+      id: DOC-INVESTOR-FINANCIAL-SUMMARY
+      title: Investor Financial Summary
+      type: investor_financial_summary
+      status: research
+      google_file_id: null
+      template: null
+      sections:
+        - Основные показатели
+        - Доходы и расходы
+        - Инвестиции
+        - Сценарии
+        - Допущения
+      version: "0.1"
+      governance_level: working
+      local_path: docs-platform/working/investor-financial-summary.yaml
+      updated_at: 2026-08-16
+    after:
+      id: DOC-INVESTOR-FINANCIAL-SUMMARY
+      title: Investor Financial Summary
+      type: investor_financial_summary
+      status: research
+      google_file_id: 1AW-JONG-vkxCEIG_pY5SSPgsMpXLycLJAk7iY5saVus
+      template: null
+      sections:
+        - Основные показатели
+        - Доходы и расходы
+        - Инвестиции
+        - Сценарии
+        - Допущения
+      version: "0.1"
+      governance_level: working
+      local_path: docs-platform/working/investor-financial-summary.yaml
+      updated_at: 2026-08-16
+    before_index: 19
+    after_index: 19
+    before_sha256: 2c49691b313a80d3fe65b618023b116095ea40a1efb5de0fa0b1d72b8cfdcc76
+    after_sha256: 7a9c5ff0955d5fa3298004ccea7c22a70af8804a5ba9f4861e9cab9e7c34bab1
+    reverse_operation:
+      type: replace
+      entity: documents
+      id: DOC-INVESTOR-FINANCIAL-SUMMARY
+      value: *a1
+validation_result: passed
+git_commit_hash: null
+rollback:
+  source_receipt: docs-platform/changelog/change-receipts/CHG-042.yaml
+  command: npm run change:reverse:preview -- ../changelog/change-receipts/CHG-042.yaml --change-id CHG-ROLLBACK-XXX --decision DEC-ROLLBACK-XXX
+  rollback_of: CHG-042

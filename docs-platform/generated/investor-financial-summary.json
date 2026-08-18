@@ -1,0 +1,803 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "document_id": "DOC-INVESTOR-FINANCIAL-SUMMARY",
+    "version": "0.1",
+    "status": "research",
+    "financial_model_document_id": "DOC-FINANCIAL-MODEL",
+    "financial_model_content_state_sha256": "8e933d6b3a503b97cc68a856c73cb855258c5d3e2cffc8d91e4c10516c366c81",
+    "financial_model_projection_sha256": "f4c908aea53edf475dc08e0ec7577130432c38306b5bcbc0bd61485338e708ac",
+    "summary_content_state_sha256": "146f4fad50fe331cb7a3bec00c5bfad4e9ef20b90fc47ab1798d3747e99da101"
+  },
+  "headline": {
+    "scenario_id": "realistic",
+    "scenario_name": "Реалистичный",
+    "start_investment_rub": 45370380.74,
+    "sales_per_month_rub": 10488600,
+    "average_check_rub": 1165.4,
+    "checks_per_day": 300,
+    "ebitda_rub": 2413464.4,
+    "ebitda_margin": 0.23010357912400128,
+    "break_even_checks_per_day": 165.95,
+    "free_cash_flow_rub": 2184509.8,
+    "free_cash_flow_basis": "зрелый месяц",
+    "payback_month": 23,
+    "roi": 0.571107454591898,
+    "irr": 0.6132655586273896,
+    "npv_rub": 36701297.58,
+    "discount_rate": 0.2,
+    "year_1": {
+      "sales_rub": 114582710.7,
+      "ebitda_rub": 22664361.54,
+      "ebitda_margin": 0.19779913916803504,
+      "free_cash_flow_rub": 20313011.06
+    },
+    "mature_year": {
+      "sales_rub": 125758314,
+      "ebitda_rub": 28654446.36,
+      "ebitda_margin": 0.22785329612481922,
+      "free_cash_flow_rub": 25911362.66
+    },
+    "personnel": {
+      "calculated_rub": 2396938.28,
+      "protected_floor_rub": 2831922,
+      "applied_rub": 2831922,
+      "protected_applied": true
+    },
+    "drivers": {
+      "checks_per_day": 300,
+      "average_check_rub": 1165.4,
+      "sales_per_month_rub": 10488600,
+      "gross_margin": 0.6641645977537517,
+      "rent_per_month_rub": 350000,
+      "headcount": 16,
+      "break_even_checks_per_day": 165.95
+    }
+  },
+  "scenario_comparison": [
+    {
+      "id": "pessimistic",
+      "name": "Пессимистичный",
+      "checks_per_day": 200,
+      "sales_per_month_rub": 6992400,
+      "ebitda_rub": 1071180.35,
+      "ebitda_margin": 0.15319208712316237,
+      "free_cash_flow_rub": 968571.34,
+      "break_even_checks_per_day": 151.08,
+      "payback_month": 48,
+      "roi": 0.2627890741095091,
+      "irr": 0.10289613823565258,
+      "npv_rub": -8045583.84,
+      "start_investment_rub": 42940761.74,
+      "calculated_staffing_labor_rub": 2092577.25,
+      "protected_labor_floor_rub": 1887948,
+      "protected_labor_applied": false,
+      "personnel_rub": 2092577.25,
+      "headcount": 14,
+      "marketing_rub": 317817.6,
+      "household_rub": 83333.33,
+      "year_1": {
+        "sales_rub": 76388473.8,
+        "ebitda_rub": 7364521.29,
+        "ebitda_margin": 0.09640880258037045,
+        "free_cash_flow_rub": 6207914.59
+      },
+      "mature_year": {
+        "sales_rub": 83838876,
+        "ebitda_rub": 12557963.31,
+        "ebitda_margin": 0.14978687584027248,
+        "free_cash_flow_rub": 11284363.02
+      }
+    },
+    {
+      "id": "realistic",
+      "name": "Реалистичный",
+      "checks_per_day": 300,
+      "sales_per_month_rub": 10488600,
+      "ebitda_rub": 2413464.4,
+      "ebitda_margin": 0.23010357912400128,
+      "free_cash_flow_rub": 2184509.8,
+      "break_even_checks_per_day": 165.95,
+      "payback_month": 23,
+      "roi": 0.571107454591898,
+      "irr": 0.6132655586273896,
+      "npv_rub": 36701297.58,
+      "start_investment_rub": 45370380.74,
+      "calculated_staffing_labor_rub": 2396938.28,
+      "protected_labor_floor_rub": 2831922,
+      "protected_labor_applied": true,
+      "personnel_rub": 2831922,
+      "headcount": 16,
+      "marketing_rub": 401726.4,
+      "household_rub": 100000,
+      "year_1": {
+        "sales_rub": 114582710.7,
+        "ebitda_rub": 22664361.54,
+        "ebitda_margin": 0.19779913916803504,
+        "free_cash_flow_rub": 20313011.06
+      },
+      "mature_year": {
+        "sales_rub": 125758314,
+        "ebitda_rub": 28654446.36,
+        "ebitda_margin": 0.22785329612481922,
+        "free_cash_flow_rub": 25911362.66
+      }
+    },
+    {
+      "id": "optimistic",
+      "name": "Оптимистичный",
+      "checks_per_day": 450,
+      "sales_per_month_rub": 15732900,
+      "ebitda_rub": 4119946.6,
+      "ebitda_margin": 0.26186822518416814,
+      "free_cash_flow_rub": 3707937.84,
+      "break_even_checks_per_day": 193.22,
+      "payback_month": 15,
+      "roi": 0.8957430849561592,
+      "irr": 1.1962123382587664,
+      "npv_rub": 92021328.42,
+      "start_investment_rub": 49624292.36,
+      "calculated_staffing_labor_rub": 2955060.35,
+      "protected_labor_floor_rub": 4247883,
+      "protected_labor_applied": true,
+      "personnel_rub": 4247883,
+      "headcount": 20,
+      "marketing_rub": 527589.6,
+      "household_rub": 125000,
+      "year_1": {
+        "sales_rub": 171874066.05,
+        "ebitda_rub": 42532660.52,
+        "ebitda_margin": 0.24746409680926962,
+        "free_cash_flow_rub": 38300149.72
+      },
+      "mature_year": {
+        "sales_rub": 188637471,
+        "ebitda_rub": 49388164.75,
+        "ebitda_margin": 0.2618152400378608,
+        "free_cash_flow_rub": 44450616.73
+      }
+    }
+  ],
+  "income_statement": {
+    "sales_rub": 10488600,
+    "cogs_rub": 3522443.2,
+    "cogs": {
+      "raw_materials_rub": 3146580,
+      "waste_rub": 125863.2,
+      "packaging_rub": 250000
+    },
+    "gross_profit_rub": 6966156.8,
+    "gross_margin": 0.6641645977537517,
+    "expense_groups": {
+      "personnel_rub": 2831922,
+      "premises_rub": 350000,
+      "acquiring_rub": 209772,
+      "utilities_rub": 200000,
+      "marketing_rub": 401726.4,
+      "operations_rub": 152000,
+      "administrative_rub": 31000,
+      "administrative_reserve_rub": 209772,
+      "household_rub": 100000,
+      "other_rub": 66500
+    },
+    "marketing_formula": {
+      "fixed_amount_rub": 150000,
+      "rate_of_net_revenue": 0.024,
+      "ramp_up_floor_rub": 400000,
+      "ramp_up_floor_months": 6
+    },
+    "marketing_structure_reference": [
+      {
+        "id": "MARKETING_SMM",
+        "name": "SMM / ведение",
+        "amount_rub": 50000
+      },
+      {
+        "id": "MARKETING_BLOGGERS",
+        "name": "Блогеры / инфлюенсеры / гастроканалы",
+        "amount_rub": 150000
+      },
+      {
+        "id": "MARKETING_PERFORMANCE",
+        "name": "Performance / геореклама / продвижение",
+        "amount_rub": 75000
+      },
+      {
+        "id": "MARKETING_CONTENT",
+        "name": "Производство фото / видео / контента",
+        "amount_rub": 40000
+      },
+      {
+        "id": "MARKETING_CRM",
+        "name": "CRM / акции / возврат гостей",
+        "amount_rub": 25000
+      },
+      {
+        "id": "MARKETING_MERCH",
+        "name": "Мерч / подарки / специальные промоматериалы",
+        "amount_rub": 25000
+      },
+      {
+        "id": "MARKETING_PARTNERSHIPS",
+        "name": "Локальные партнёрства / события / PR",
+        "amount_rub": 20000
+      },
+      {
+        "id": "MARKETING_TESTING",
+        "name": "Резерв тестирования каналов",
+        "amount_rub": 15000
+      }
+    ],
+    "household_formula": {
+      "fixed_amount_rub": 50000,
+      "variable_amount_rub": 50000,
+      "baseline_checks_per_day": 300
+    },
+    "operations_detail": {
+      "EQUIPMENT_SERVICE": 100000,
+      "VENT_GREASE": 15000,
+      "PEST": 6000,
+      "SECURITY_MONITORING": 4000,
+      "UNIFORM_RENEWAL": 15000,
+      "MEDICAL": 5000,
+      "MUSIC_RIGHTS": 7000
+    },
+    "administrative_detail": {
+      "ACCOUNTING": 25000,
+      "YUMA": 6000,
+      "BANKING": 0
+    },
+    "other_detail": {
+      "OTHER": 66500
+    },
+    "ebitda_rub": 2413464.4,
+    "ebitda_margin": 0.23010357912400128,
+    "depreciation_rub": 208616.15,
+    "tax_rub": 214644.61,
+    "net_operating_result_rub": 1990203.64,
+    "maintenance_capex_rub": 14309.98,
+    "free_cash_flow_rub": 2184509.8
+  },
+  "investments": {
+    "breakdown": [
+      {
+        "key": "equipment",
+        "group": "creation",
+        "name": "Оборудование",
+        "amount_rub": 5298993.33
+      },
+      {
+        "key": "furniture",
+        "group": "creation",
+        "name": "Мебель",
+        "amount_rub": 425000
+      },
+      {
+        "key": "preparation",
+        "group": "creation",
+        "name": "Подготовка помещения",
+        "amount_rub": 11000000
+      },
+      {
+        "key": "video",
+        "group": "creation",
+        "name": "Видеонаблюдение",
+        "amount_rub": 70000
+      },
+      {
+        "key": "alarm",
+        "group": "creation",
+        "name": "Охранная сигнализация",
+        "amount_rub": 35000
+      },
+      {
+        "key": "uniform",
+        "group": "launch",
+        "name": "Первичная форма",
+        "amount_rub": 180000
+      },
+      {
+        "key": "launch_marketing",
+        "group": "launch",
+        "name": "Маркетинг запуска",
+        "amount_rub": 700000
+      },
+      {
+        "key": "contingency",
+        "group": "launch",
+        "name": "Резерв запуска",
+        "amount_rub": 1672399.33
+      },
+      {
+        "key": "inventory",
+        "group": "tied",
+        "name": "Первоначальный товарный запас",
+        "amount_rub": 1000000
+      },
+      {
+        "key": "prepaid_rent",
+        "group": "tied",
+        "name": "Предоплата аренды на 12 месяцев",
+        "amount_rub": 4200000
+      },
+      {
+        "key": "deposit",
+        "group": "tied",
+        "name": "Обеспечительный платёж",
+        "amount_rub": 700000
+      },
+      {
+        "key": "operating_reserve",
+        "group": "reserve",
+        "name": "Операционный запас",
+        "amount_rub": 20088988.08
+      }
+    ],
+    "groups": [
+      {
+        "key": "creation",
+        "name": "Создание объекта",
+        "note": "Оборудование, мебель и подготовка помещения.",
+        "amount_rub": 16828993.33,
+        "items": [
+          {
+            "key": "equipment",
+            "name": "Оборудование",
+            "amount_rub": 5298993.33
+          },
+          {
+            "key": "furniture",
+            "name": "Мебель",
+            "amount_rub": 425000
+          },
+          {
+            "key": "preparation",
+            "name": "Подготовка помещения",
+            "amount_rub": 11000000
+          },
+          {
+            "key": "video",
+            "name": "Видеонаблюдение",
+            "amount_rub": 70000
+          },
+          {
+            "key": "alarm",
+            "name": "Охранная сигнализация",
+            "amount_rub": 35000
+          }
+        ]
+      },
+      {
+        "key": "launch",
+        "name": "Запуск",
+        "note": "Единовременные расходы на открытие объекта.",
+        "amount_rub": 2552399.33,
+        "items": [
+          {
+            "key": "uniform",
+            "name": "Первичная форма",
+            "amount_rub": 180000
+          },
+          {
+            "key": "launch_marketing",
+            "name": "Маркетинг запуска",
+            "amount_rub": 700000
+          },
+          {
+            "key": "contingency",
+            "name": "Резерв запуска",
+            "amount_rub": 1672399.33
+          }
+        ]
+      },
+      {
+        "key": "tied",
+        "name": "Связанные средства",
+        "note": "Товарный запас и платежи, связанные с арендой помещения.",
+        "amount_rub": 5900000,
+        "items": [
+          {
+            "key": "inventory",
+            "name": "Первоначальный товарный запас",
+            "amount_rub": 1000000
+          },
+          {
+            "key": "prepaid_rent",
+            "name": "Предоплата аренды на 12 месяцев",
+            "amount_rub": 4200000
+          },
+          {
+            "key": "deposit",
+            "name": "Обеспечительный платёж",
+            "amount_rub": 700000
+          }
+        ]
+      },
+      {
+        "key": "reserve",
+        "name": "Операционный запас",
+        "note": "Шестимесячный запас постоянных и ступенчато изменяемых операционных расходов.",
+        "amount_rub": 20088988.08,
+        "items": [
+          {
+            "key": "operating_reserve",
+            "name": "Операционный запас",
+            "amount_rub": 20088988.08
+          }
+        ]
+      }
+    ],
+    "launch_marketing_rub": 700000,
+    "total_rub": 45370380.74,
+    "fixed_operating_reserve_rub": 20088988.08,
+    "full_operating_reserve_rub": 45028778.94,
+    "other_launch_costs_status": "tbd"
+  },
+  "real_estate": {
+    "rent": {
+      "start_capital_rub": 45370380.74,
+      "ebitda_rub": 2413464.4,
+      "payback_month": 23,
+      "irr": 0.6132655586273896
+    },
+    "purchase": {
+      "restaurant_capital_rub": 40470380.74,
+      "real_estate_investment_rub": 69000000,
+      "total_capital_rub": 109470380.74,
+      "restaurant_ebitda_rub": 2763464.4,
+      "restaurant_payback_month": 20,
+      "combined_payback_month": 47,
+      "combined_irr": 0.23402569379089577,
+      "base_property_appreciation": 0
+    }
+  },
+  "sensitivity": {
+    "checks_average_check": [
+      {
+        "checks_per_day": 150,
+        "values": [
+          {
+            "average_check_multiplier": 0.85,
+            "ebitda_rub": -764861.56,
+            "ebitda_margin": -0.17158383948511036,
+            "payback_month": null
+          },
+          {
+            "average_check_multiplier": 1,
+            "ebitda_rub": -273995.08,
+            "ebitda_margin": -0.05224626356234386,
+            "payback_month": null
+          },
+          {
+            "average_check_multiplier": 1.15,
+            "ebitda_rub": 216871.4,
+            "ebitda_margin": 0.03595977081535321,
+            "payback_month": null
+          }
+        ]
+      },
+      {
+        "checks_per_day": 200,
+        "values": [
+          {
+            "average_check_multiplier": 0.85,
+            "ebitda_rub": 112330.68,
+            "ebitda_margin": 0.018899625475726635,
+            "payback_month": null
+          },
+          {
+            "average_check_multiplier": 1,
+            "ebitda_rub": 766819.32,
+            "ebitda_margin": 0.10966468165436773,
+            "payback_month": null
+          },
+          {
+            "average_check_multiplier": 1.15,
+            "ebitda_rub": 1421307.96,
+            "ebitda_margin": 0.17675189709075437,
+            "payback_month": 38
+          }
+        ]
+      },
+      {
+        "checks_per_day": 300,
+        "values": [
+          {
+            "average_check_multiplier": 0.85,
+            "ebitda_rub": 1856519.74,
+            "ebitda_margin": 0.2082395048517662,
+            "payback_month": 31
+          },
+          {
+            "average_check_multiplier": 1,
+            "ebitda_rub": 2413464.4,
+            "ebitda_margin": 0.23010357912400128,
+            "payback_month": 23
+          },
+          {
+            "average_check_multiplier": 1.15,
+            "ebitda_rub": 2970409.06,
+            "ebitda_margin": 0.24626398184695766,
+            "payback_month": 19
+          }
+        ]
+      },
+      {
+        "checks_per_day": 450,
+        "values": [
+          {
+            "average_check_multiplier": 0.85,
+            "ebitda_rub": 3284529.61,
+            "ebitda_margin": 0.24560967668725667,
+            "payback_month": 19
+          },
+          {
+            "average_check_multiplier": 1,
+            "ebitda_rub": 4119946.6,
+            "ebitda_margin": 0.26186822518416814,
+            "payback_month": 15
+          },
+          {
+            "average_check_multiplier": 1.15,
+            "ebitda_rub": 4955363.59,
+            "ebitda_margin": 0.27388541320362453,
+            "payback_month": 12
+          }
+        ]
+      }
+    ],
+    "food_cost": [
+      {
+        "value": 0.25,
+        "ebitda_rub": 2958871.6,
+        "ebitda_margin": 0.2821035791240013,
+        "payback_month": 19
+      },
+      {
+        "value": 0.3,
+        "ebitda_rub": 2413464.4,
+        "ebitda_margin": 0.23010357912400128,
+        "payback_month": 23
+      },
+      {
+        "value": 0.35,
+        "ebitda_rub": 1868057.2,
+        "ebitda_margin": 0.17810357912400127,
+        "payback_month": 29
+      }
+    ],
+    "labor": [
+      {
+        "value": 1,
+        "ebitda_rub": 2413464.4,
+        "ebitda_margin": 0.23010357912400128,
+        "payback_month": 23
+      },
+      {
+        "value": 1.1,
+        "ebitda_rub": 2413464.4,
+        "ebitda_margin": 0.23010357912400128,
+        "payback_month": 24
+      },
+      {
+        "value": 1.2,
+        "ebitda_rub": 2369060.46,
+        "ebitda_margin": 0.22587003642049464,
+        "payback_month": 25
+      }
+    ],
+    "rent": [
+      {
+        "value": 350000,
+        "ebitda_rub": 2413464.4,
+        "ebitda_margin": 0.23010357912400128,
+        "payback_month": 23
+      },
+      {
+        "value": 500000,
+        "ebitda_rub": 2263464.4,
+        "ebitda_margin": 0.2158023377762523,
+        "payback_month": 24
+      },
+      {
+        "value": 750000,
+        "ebitda_rub": 2013464.4,
+        "ebitda_margin": 0.191966935530004,
+        "payback_month": 28
+      }
+    ],
+    "aggregators": [
+      {
+        "value": 0,
+        "ebitda_rub": 2413464.4,
+        "ebitda_margin": 0.23010357912400128,
+        "payback_month": 23
+      },
+      {
+        "value": 0.1,
+        "ebitda_rub": 2107511.94,
+        "ebitda_margin": 0.2009335791240013,
+        "payback_month": 25
+      },
+      {
+        "value": 0.2,
+        "ebitda_rub": 1801559.48,
+        "ebitda_margin": 0.17176357912400128,
+        "payback_month": 30
+      },
+      {
+        "value": 0.3,
+        "ebitda_rub": 1495607.01,
+        "ebitda_margin": 0.1425935791240013,
+        "payback_month": 36
+      }
+    ],
+    "capex": [
+      {
+        "value": 1,
+        "ebitda_rub": 2413464.4,
+        "ebitda_margin": 0.23010357912400128,
+        "payback_month": 23
+      },
+      {
+        "value": 1.15,
+        "ebitda_rub": 2413464.4,
+        "ebitda_margin": 0.23010357912400128,
+        "payback_month": 24
+      },
+      {
+        "value": 1.3,
+        "ebitda_rub": 2413464.4,
+        "ebitda_margin": 0.23010357912400128,
+        "payback_month": 25
+      }
+    ]
+  },
+  "assumptions": {
+    "days_per_month": 30,
+    "average_check_rub": 1165.4,
+    "food_portions_per_check": 1.4,
+    "drinks_per_check": 1,
+    "kolobok_share": 0.8,
+    "manches_share": 0.2,
+    "waste_rate": 0.04,
+    "acquiring_rate": 0.02,
+    "packaging_baseline_rub": 250000,
+    "packaging_baseline_checks_per_day": 300,
+    "rent_per_month_rub": 350000,
+    "baseline_headcount": 16,
+    "optimistic_headcount": 20,
+    "baseline_labor_rub": 2831922,
+    "optimistic_labor_rub": 4247883,
+    "staffing_structure": [
+      "Су-шеф",
+      "Заготовка",
+      "Основная кухня",
+      "Сервировка",
+      "Касса / бар",
+      "Администрация",
+      "Технические сотрудники",
+      "Управляющий"
+    ],
+    "discount_rate": 0.2,
+    "opening_month": 1,
+    "raw_materials_rate": 0.3,
+    "protected_labor_rate": 0.27,
+    "administrative_reserve_rate": 0.02,
+    "marketing_per_month_rub": 401726.4,
+    "marketing_formula": {
+      "fixed_amount_rub": 150000,
+      "rate_of_net_revenue": 0.024,
+      "ramp_up_floor_rub": 400000,
+      "ramp_up_floor_months": 6
+    },
+    "household_formula": {
+      "fixed_amount_rub": 50000,
+      "variable_amount_rub": 50000,
+      "baseline_checks_per_day": 300
+    },
+    "pessimistic_headcount": 14,
+    "launch_marketing_rub": 700000,
+    "investment_break_even_checks_per_day": 228.87,
+    "ramp_up_profile": [
+      {
+        "month": 1,
+        "ramp_factor": 0.6
+      },
+      {
+        "month": 2,
+        "ramp_factor": 0.7
+      },
+      {
+        "month": 3,
+        "ramp_factor": 0.8
+      },
+      {
+        "month": 4,
+        "ramp_factor": 0.85
+      },
+      {
+        "month": 5,
+        "ramp_factor": 0.9
+      },
+      {
+        "month": 6,
+        "ramp_factor": 0.95
+      },
+      {
+        "month": 7,
+        "ramp_factor": 1
+      }
+    ],
+    "seasonality_profile": [
+      {
+        "month": 1,
+        "seasonality_coefficient": 0.93
+      },
+      {
+        "month": 2,
+        "seasonality_coefficient": 0.75
+      },
+      {
+        "month": 3,
+        "seasonality_coefficient": 0.88
+      },
+      {
+        "month": 4,
+        "seasonality_coefficient": 0.95
+      },
+      {
+        "month": 5,
+        "seasonality_coefficient": 1.02
+      },
+      {
+        "month": 6,
+        "seasonality_coefficient": 0.96
+      },
+      {
+        "month": 7,
+        "seasonality_coefficient": 0.96
+      },
+      {
+        "month": 8,
+        "seasonality_coefficient": 0.98
+      },
+      {
+        "month": 9,
+        "seasonality_coefficient": 1.12
+      },
+      {
+        "month": 10,
+        "seasonality_coefficient": 1.16
+      },
+      {
+        "month": 11,
+        "seasonality_coefficient": 1.1
+      },
+      {
+        "month": 12,
+        "seasonality_coefficient": 1.18
+      }
+    ]
+  },
+  "copy": {
+    "default_scenario": "realistic",
+    "opening_statement": "Расчёт основан на текущих рабочих параметрах модели и используется для сценарной оценки экономики объекта.",
+    "investment_note": "Стартовый капитал включает не только создание объекта, но также первоначальный товарный запас, предоплату аренды и шестимесячный операционный запас.",
+    "operating_reserve_note": "Шестимесячный запас постоянных и ступенчато изменяемых операционных расходов.",
+    "additional_launch_costs_note": "Дополнительные расходы, возникающие после выбора конкретного помещения и подрядчиков, уточняются отдельно.",
+    "tax_base_text": "Базовый расчёт выполнен для УСН “Доходы минус расходы” 7% с рабочим предположением о применимости освобождения услуг общественного питания от НДС.",
+    "tax_confirmation_text": "Применимость налоговых льгот и специальных тарифов подтверждается перед запуском объекта.",
+    "tax_conservative_text": "Консервативный сценарий — УСН 7% + НДС 5%.",
+    "ramp_up_text": "Объект выходит на рабочую загрузку постепенно: 60% в первый месяц, далее 70%, 80%, 85%, 90%, 95% и полная загрузка с седьмого месяца.",
+    "seasonality_text": "Продажи рассчитываются с сезонной кривой Санкт-Петербурга — от 0,75 в феврале до 1,18 в декабре. Сезонность применяется на всём горизонте расчёта.",
+    "marketing_text": "Регулярный маркетинг: 150 000 ₽ в месяц плюс 2,4% продаж; в первые шесть месяцев не менее 400 000 ₽ в месяц. Маркетинг запуска 700 000 ₽ учтён отдельно в стартовом капитале.",
+    "household_text": "Хозяйственные и эксплуатационные расходники: 50 000 ₽ в месяц плюс 50 000 ₽ × фактический поток чеков / 300.",
+    "pessimistic_staffing_text": "Пессимистичный сценарий рассчитан для команды из 14 сотрудников: два повара основной линии в штате, один в смене при графике 2/2.",
+    "ramp_and_seasonality_note": "Модель учитывает постепенный выход объекта на рабочую загрузку и сезонность продаж.",
+    "year_1_note": "Первый год включает выход на загрузку, поэтому его показатели ниже зрелого режима работы.",
+    "protected_base_note": "Прямые затраты на продукцию и расходы на персонал рассчитаны от защищённой финансовой базы, а не от минимально возможной себестоимости.",
+    "opening_month_note": "Расчёт выполнен для открытия в январе; месяц открытия является рабочим параметром модели.",
+    "discount_rate_text": "NPV рассчитан при ставке дисконтирования 20%. Ставка является рабочим параметром и уточняется под требования конкретного инвестора."
+  }
+}

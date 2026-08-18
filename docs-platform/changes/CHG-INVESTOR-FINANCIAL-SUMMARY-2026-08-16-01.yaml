@@ -1,0 +1,26 @@
+schema_version: 2
+change_id: CHG-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+iteration_id: ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+proposal_id: PROP-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+decision_id: DEC-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+title: Apply Investor Financial Summary and publish its native Google Sheets presentation
+status: approved
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01-approved.yaml
+approved_payload_sha256: 0e88152fc40dcedf691fd47fea7d92d65cfba662552c36798908a05d4d2addb7
+operations:
+  - register the Investor Financial Summary, owner instruction and approved decision
+  - register the exact dependency on DOC-FINANCIAL-MODEL
+  - create the structured presentation source and schemas
+  - generate a deterministic five-tab projection with a stale-master guard
+  - preserve exact KPI, scenario, investment, real-estate and sensitivity parity with the master projection
+  - create a guarded Google Sheets payload with investor-facing Russian copy only
+  - preview and publish exactly one native Google Sheet using the existing project OAuth workflow
+  - perform exactly one full Sheets API readback and retain its receipt by payload hash
+  - add targeted projection, parity, publisher and stale-dependency tests
+preview:
+  status: passed
+  mutation_performed: false
+  research_performed: false
+  master_financial_model_changed: false
+  website_changed: false
+  google_publication_status: pending

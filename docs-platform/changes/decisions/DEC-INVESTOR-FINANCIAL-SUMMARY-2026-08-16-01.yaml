@@ -1,0 +1,21 @@
+schema_version: 2
+decision_id: DEC-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+iteration_id: ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+title: Approve the Investor Financial Summary presentation structure and Google publication
+status: approved
+approved_by: project owner
+approved_at: 2026-08-16T01:00:01.000Z
+scope: Presentation projection, five Russian investor-facing tabs, exact Financial Model dependency, grouping and formatting, single native Google Sheet and one readback.
+reason: The owner supplied the complete presentation contract and authorized a short pre-commit publication iteration without changes to the master model.
+approves:
+  - a deterministic presentation projection over DOC-FINANCIAL-MODEL
+  - exact KPI, scenario, investment, real-estate and sensitivity parity with the master projection
+  - five Russian tabs without technical governance fields
+  - exactly one native Google Sheet using the existing guarded OAuth workflow
+  - lifecycle through proposed, approved, applied, verified, published and synced before owner visual approval
+excludes:
+  - changes to Financial Model assumptions or calculations
+  - new website pages, site deployment or Investment Memorandum
+  - commit, seal, tag or push in the current task
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01-approved.yaml
+approved_payload_sha256: 0e88152fc40dcedf691fd47fea7d92d65cfba662552c36798908a05d4d2addb7

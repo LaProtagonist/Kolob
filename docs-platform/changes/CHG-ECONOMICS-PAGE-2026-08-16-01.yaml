@@ -1,0 +1,27 @@
+schema_version: 2
+change_id: CHG-ECONOMICS-PAGE-2026-08-16-01
+iteration_id: ITR-ECONOMICS-PAGE-2026-08-16-01
+proposal_id: PROP-ECONOMICS-PAGE-2026-08-16-01
+decision_id: DEC-ECONOMICS-PAGE-2026-08-16-01
+title: Apply the local Economics page and targeted verification
+status: approved
+approved_payload_path: docs-platform/changelog/payloads/ITR-ECONOMICS-PAGE-2026-08-16-01-approved.yaml
+approved_payload_sha256: 7cf35db25a78222dfed36330deee31ba5c67eec98d3e699a53bda1c5b7179f21
+operations:
+  - add presentation-only Economics copy, dependency adapter, component and responsive stylesheet
+  - register only the direct /economics route and its noindex metadata
+  - read Investor Financial Summary values and verify its Financial Model content hash at runtime
+  - preserve the nested cost-of-goods hierarchy and keep drinks, CAPEX and property concepts correctly separated
+  - add targeted data parity, dependency, route, scenario, robots and responsive-overflow tests
+  - create local desktop and mobile review screenshots
+  - append the approved working lifecycle only through verified
+preview:
+  status: passed
+  mutation_performed: false
+  research_performed: false
+  financial_model_changed: false
+  investor_financial_summary_changed: false
+  revenue_model_changed: false
+  capex_changed: false
+  google_action: false
+  deployment: false

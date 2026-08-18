@@ -1,0 +1,22 @@
+change_id: CHG-041
+title: Зарегистрировать зависимость Investor Financial Summary от Financial Model
+status: approved
+created_at: 2026-08-16
+decision_id: DEC-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+iteration_id: ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+proposal_id: PROP-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01-approved.yaml
+approved_payload_sha256: 0e88152fc40dcedf691fd47fea7d92d65cfba662552c36798908a05d4d2addb7
+operations:
+  - type: add
+    entity: dependencies
+    value:
+      id: DEP-FINANCIAL-MODEL-INVESTOR-FINANCIAL-SUMMARY
+      source_document_id: DOC-FINANCIAL-MODEL
+      priority: governing_source
+      status: research
+      version: "0.1"
+      target_documents:
+        - title: Investor Financial Summary
+          document_id: DOC-INVESTOR-FINANCIAL-SUMMARY
+      updated_at: 2026-08-16

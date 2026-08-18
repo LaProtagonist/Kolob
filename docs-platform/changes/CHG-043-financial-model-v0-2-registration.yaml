@@ -1,0 +1,39 @@
+change_id: CHG-043
+title: Зарегистрировать источник и решение консолидации Financial Model v0.2
+status: approved
+created_at: 2026-08-19
+decision_id: DEC-001
+iteration_id: ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01
+proposal_id: PROP-FINANCIAL-MODEL-V0-2-2026-08-18-01
+approved_payload_path: docs-platform/changelog/payloads/ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01-approved.yaml
+approved_payload_sha256: df9de912fb4c50e897cac3917bbf7bf2bca0b6d22dd8dad30d79cb0a13f49958
+operations:
+  - type: add
+    entity: sources
+    value:
+      id: SRC-FINANCIAL-MODEL-V0-2-BRIEF-2026-08-18
+      title: Утверждённые уточнения Financial Model v0.2 и консолидация текущего состояния
+      type: instruction
+      location: User instructions, 2026-08-18 and 2026-08-19
+      publisher: project owner
+      publication_date: 2026-08-18
+      accessed_at: 2026-08-19
+      reliability: primary
+      notes: Первичный источник уже утверждённых защищённых финансовых допущений, помесячного ramp-up и сезонности, зависимых локальных представлений, append-only supersession и последующего sealed deployment без Google операций.
+  - type: add
+    entity: decisions
+    value:
+      id: DEC-FINANCIAL-MODEL-V0-2-2026-08-18-01
+      title: Консолидировать Financial Model v0.2 и зависимые локальные представления
+      status: approved
+      decision: Зафиксировать одну воспроизводимую Financial Model v0.2 с уже утверждёнными параметрами и детерминированными локальными проекциями Investor Summary, /economics и /launch-budget; append-only supersede две незакрытые прежние iterations и deploy только sealed web state без обращения к Google.
+      rationale: Прямое решение владельца проекта от 2026-08-19 закрыть накопившееся governed-состояние и опубликовать уже реализованную текущую версию сайта без новых бизнес-изменений.
+      affected_documents:
+        - DOC-FINANCIAL-MODEL
+        - DOC-INVESTOR-FINANCIAL-SUMMARY
+      approved_by: project owner
+      approved_at: 2026-08-19
+      supersedes: DEC-FINANCIAL-MODEL-2026-08-16-01
+      source_ids:
+        - SRC-FINANCIAL-MODEL-V0-2-BRIEF-2026-08-18
+      updated_at: 2026-08-19

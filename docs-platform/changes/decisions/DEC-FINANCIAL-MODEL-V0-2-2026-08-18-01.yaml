@@ -1,0 +1,20 @@
+schema_version: 2
+decision_id: DEC-FINANCIAL-MODEL-V0-2-2026-08-18-01
+iteration_id: ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01
+title: Approve consolidation of Financial Model v0.2 and its dependent local projections
+status: approved
+approved_by: project owner
+approved_at: 2026-08-19T00:00:00.000Z
+scope: Record and seal the owner-approved v0.2 Financial Model state, its deterministic local Investor Summary and current finance website presentations; append-only supersede the older incomplete working iterations and deploy only the sealed website state.
+approves:
+  - existing owner-approved Financial Model v0.2 formulas and inputs without adding or changing business assumptions
+  - deterministic local projections and local Google payload generation without any Google operation
+  - Financial Model -> Investor Summary -> /economics -> /launch-budget consistency checks
+  - append-only superseded lifecycle events for the prior Summary and Economics iterations
+  - commit, seal, annotated tag, normal push and standard deployment after successful validation
+excludes:
+  - Google Sheets modification or publication
+  - Investor Journey architecture, new web routes and business-model research
+  - historical event rewriting and any force-push/reset/rebase operation
+approved_payload_path: docs-platform/changelog/payloads/ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01-approved.yaml
+approved_payload_sha256: df9de912fb4c50e897cac3917bbf7bf2bca0b6d22dd8dad30d79cb0a13f49958

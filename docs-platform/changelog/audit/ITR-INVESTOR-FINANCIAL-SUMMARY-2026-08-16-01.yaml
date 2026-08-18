@@ -1,0 +1,92 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+proposal_id: PROP-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+decision_id: DEC-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+change_set_id: CHG-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+timestamp: 2026-08-16T01:35:20.388Z
+actor: Codex
+type: Investor Financial Summary presentation publication
+reason: Create the exact owner-approved investor presentation over the sealed Financial Model without changing calculations, assumptions or the website.
+before:
+  investor_summary_document: absent
+  google_sheet: absent
+  state_sha256: 7453d20f9e63c2fd2592d89f1beaee92237d1588de3c5d535d7b6759cffdfb42
+after:
+  investor_summary_document:
+    id: DOC-INVESTOR-FINANCIAL-SUMMARY
+    status: research
+    version: "0.1"
+  deterministic_projection: present
+  google_payload: prepared
+  google_publication:
+    status: published_and_read_back
+    google_file_id: 1AW-JONG-vkxCEIG_pY5SSPgsMpXLycLJAk7iY5saVus
+    google_title: 05 — Финансовая модель — инвестиционная сводка
+    native_sheet: true
+    exact_single_file: true
+    tab_count: 5
+    final_payload_sha256: 1d380914bc5d053ec001e12ec72d511780378a9b76cd4825a943d44e4f2cc6c3
+    readback_sha256: 1ee8fbe3e3eb3491aa8376bd6d007d94e39c4e21a9a5733cfa815171eef27a50
+    formula_errors: 0
+  state_sha256: 86f6b79114b5f4d71c481f4e1b571982d5ee8cdbd670d3d19f550eab12dc0813
+dependency:
+  document_id: DOC-FINANCIAL-MODEL
+  content_state_sha256: 18e56ce33cc19540ff9540d05a35c24284534fdfd89a6b74e59ff5a394980ae4
+  stale_guard: passed
+headline_realistic:
+  start_investment_rub: 43040022.34
+  sales_per_month_rub: 10488600
+  ebitda_rub: 4002050.68
+  ebitda_margin: 0.38156195107068624
+  free_cash_flow_rub: 3692343.91
+  break_even_checks_per_day: 140.36
+  payback_month: 11
+  roi: 1.029463379749064
+  irr: 1.8305365233082607
+  npv_rub: 105025649.67
+scenario_payback_months: [28, 11, 7]
+publication_history:
+  - step: initial_apply
+    result: rejected_before_completion
+    reason: Google rejected a merge across a frozen-column boundary.
+    duplicate_created: false
+    readback_performed: false
+  - step: corrected_apply
+    result: rejected_before_completion
+    reason: Google detected an overlapping merge caused by a KPI label matching a section label.
+    duplicate_created: false
+    readback_performed: false
+  - step: first_successful_publication
+    result: readback_passed_then_visual_correction_required
+    receipt: docs-platform/changelog/google-sync/2026-08-16-DOC-INVESTOR-FINANCIAL-SUMMARY.yaml
+    reason: Visual QA detected locale integer formatting and a scenario-section formatting collision.
+    duplicate_created: false
+  - step: final_corrected_publication
+    result: passed
+    action: reuse
+    receipt: docs-platform/changelog/google-sync/2026-08-16-DOC-INVESTOR-FINANCIAL-SUMMARY-02.yaml
+    duplicate_created: false
+visual_qa:
+  local_xlsx: passed
+  live_google_sheet: passed
+  tabs_checked: [Основные показатели, Доходы и расходы, Инвестиции, Сценарии, Допущения]
+  number_formats: passed
+  widths_and_wrapping: passed
+  frozen_rows: passed
+  console_errors: 0
+invariants:
+  research_performed: false
+  financial_model_changed: false
+  revenue_model_changed: false
+  capex_changed: false
+  investor_start_model_changed: false
+  website_changed: false
+  existing_master_google_files_changed: false
+  exactly_one_new_native_google_sheet_created: true
+delivery:
+  staged: false
+  committed: false
+  sealed: false
+  tagged: false
+  pushed: false
+  deployed: false

@@ -1,0 +1,9 @@
+schema_version: 2
+proposal_id: PROP-GOVERNANCE-SUPERSEDE-SYNCED-2026-08-18-01
+iteration_id: ITR-GOVERNANCE-SUPERSEDE-SYNCED-2026-08-18-01
+title: Support superseding a synced iteration by a later governed iteration
+status: proposed
+proposed_at: 2026-08-18T20:00:00.000Z
+scope: Infrastructure-only lifecycle gap fix so an iteration whose external artifact was already published and synced can be closed as superseded by a later consolidating governed iteration, without rollback or history rewrite.
+approved_payload_path: docs-platform/changelog/payloads/ITR-GOVERNANCE-SUPERSEDE-SYNCED-2026-08-18-01-approved.yaml
+approved_payload_sha256: f603dc99c9c48ab3ab9172b3cce27dc0699d9cfbeb09b3f876ca8844626358eb

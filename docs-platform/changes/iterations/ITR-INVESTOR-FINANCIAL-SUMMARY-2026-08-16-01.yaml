@@ -1,0 +1,100 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+proposal_id: PROP-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+decision_id: DEC-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+change_set_id: CHG-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+title: Create an investor-facing presentation view of Financial Model v0.1
+status: approved
+approved_by: project owner
+approved_at: 2026-08-16T01:00:01.000Z
+actor: Codex
+scope: Deterministic five-tab Investor Financial Summary, exact dependency on the sealed Financial Model content hash, one native Google Sheets publication and readback.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01-approved.yaml
+approved_payload_sha256: 0e88152fc40dcedf691fd47fea7d92d65cfba662552c36798908a05d4d2addb7
+before_state_sha256: 7453d20f9e63c2fd2592d89f1beaee92237d1588de3c5d535d7b6759cffdfb42
+after_state_sha256: 86f6b79114b5f4d71c481f4e1b571982d5ee8cdbd670d3d19f550eab12dc0813
+state_hash_paths:
+  - docs-platform/working/investor-financial-summary.yaml
+  - docs-platform/schemas/investor-financial-summary.schema.json
+  - docs-platform/schemas/investor-financial-summary-projection.schema.json
+  - docs-platform/schemas/investor-financial-summary-google-payload.schema.json
+  - docs-platform/app/src/financial/investor-summary.ts
+  - docs-platform/app/src/financial/investor-summary-google-sheet.ts
+  - docs-platform/app/src/google/investor-summary-publisher.ts
+  - docs-platform/app/test/investor-financial-summary.test.ts
+  - docs-platform/app/test/investor-financial-summary-publisher.test.ts
+  - docs-platform/generated/investor-financial-summary.json
+  - docs-platform/generated/investor-financial-summary-google-sheets-payload.json
+  - docs-platform/app/src/cli.ts
+  - docs-platform/app/package.json
+  - package.json
+  - docs-platform/registry/documents.yaml
+  - docs-platform/registry/sources.yaml
+  - docs-platform/registry/decisions.yaml
+  - docs-platform/registry/dependencies.yaml
+content_paths:
+  - docs-platform/working/investor-financial-summary.yaml
+  - docs-platform/schemas/investor-financial-summary.schema.json
+  - docs-platform/schemas/investor-financial-summary-projection.schema.json
+  - docs-platform/schemas/investor-financial-summary-google-payload.schema.json
+  - docs-platform/app/src/financial/investor-summary.ts
+  - docs-platform/app/src/financial/investor-summary-google-sheet.ts
+  - docs-platform/app/src/google/investor-summary-publisher.ts
+  - docs-platform/app/test/investor-financial-summary.test.ts
+  - docs-platform/app/test/investor-financial-summary-publisher.test.ts
+  - docs-platform/generated/investor-financial-summary.json
+  - docs-platform/generated/investor-financial-summary-google-sheets-payload.json
+  - docs-platform/app/src/cli.ts
+  - docs-platform/app/package.json
+  - package.json
+  - docs-platform/registry/documents.yaml
+  - docs-platform/registry/sources.yaml
+  - docs-platform/registry/decisions.yaml
+  - docs-platform/registry/dependencies.yaml
+  - docs-platform/changes/CHG-040-investor-financial-summary-registration.yaml
+  - docs-platform/changes/CHG-041-investor-financial-summary-dependency.yaml
+  - docs-platform/changes/CHG-042-investor-financial-summary-google-link.yaml
+  - docs-platform/changes/CHG-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01.yaml
+  - docs-platform/changes/proposals/PROP-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01.yaml
+  - docs-platform/changes/decisions/DEC-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01.yaml
+  - docs-platform/changes/iterations/ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01.yaml
+  - docs-platform/changelog/payloads/ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01-approved.yaml
+  - docs-platform/changelog/previews/ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01.yaml
+  - docs-platform/changelog/iteration-receipts/ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01.yaml
+  - docs-platform/changelog/verification/ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01.yaml
+  - docs-platform/changelog/audit/ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01.yaml
+  - docs-platform/changelog/rollback-payloads/ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01/
+  - docs-platform/changelog/google-sync/2026-08-16-DOC-INVESTOR-FINANCIAL-SUMMARY.yaml
+  - docs-platform/changelog/google-sync/2026-08-16-DOC-INVESTOR-FINANCIAL-SUMMARY-02.yaml
+  - docs-platform/changelog/2026-08-16T01-23-13-629Z-CHG-040.md
+  - docs-platform/changelog/2026-08-16T01-23-22-689Z-CHG-041.md
+  - docs-platform/changelog/2026-08-16T01-35-01-875Z-CHG-042.md
+  - docs-platform/changelog/change-receipts/CHG-040.yaml
+  - docs-platform/changelog/change-receipts/CHG-041.yaml
+  - docs-platform/changelog/change-receipts/CHG-042.yaml
+  - docs-platform/changelog/changes.log
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/google-sync/2026-08-16-DOC-INVESTOR-FINANCIAL-SUMMARY.yaml
+  - docs-platform/changelog/google-sync/2026-08-16-DOC-INVESTOR-FINANCIAL-SUMMARY-02.yaml
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+allowed_dirty_paths:
+  - output/pdf/launch-budget-review.pdf
+  - output/review/
+affected_document_ids:
+  - DOC-INVESTOR-FINANCIAL-SUMMARY
+affected_section_ids:
+  - financial-model-dependency
+  - headline-kpi
+  - income-and-expenses
+  - investments
+  - scenario-comparison
+  - assumptions
+  - google-sheets-publication
+rollback_payload: docs-platform/changelog/rollback-payloads/ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01/manifest.yaml

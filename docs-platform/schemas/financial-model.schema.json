@@ -33,13 +33,13 @@
         "title": { "const": "Financial Model" },
         "title_ru": { "const": "Финансовая модель пилотного объекта" },
         "google_title": { "const": "04 — Финансовая модель пилотного объекта" },
-        "version": { "const": "0.1" },
+        "version": { "const": "0.2" },
         "status": { "const": "research" },
         "type": { "const": "working_pilot_financial_model" },
-        "iteration_id": { "const": "ITR-FINANCIAL-MODEL-2026-08-16-01" },
-        "decision_id": { "const": "DEC-FINANCIAL-MODEL-2026-08-16-01" },
-        "change_set_id": { "const": "CHG-FINANCIAL-MODEL-2026-08-16-01" },
-        "source_ids": { "type": "array", "const": ["SRC-FINANCIAL-MODEL-BRIEF-2026-08-16"] },
+        "iteration_id": { "const": "ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01" },
+        "decision_id": { "const": "DEC-FINANCIAL-MODEL-V0-2-2026-08-18-01" },
+        "change_set_id": { "const": "CHG-FINANCIAL-MODEL-V0-2-2026-08-18-01" },
+        "source_ids": { "type": "array", "const": ["SRC-FINANCIAL-MODEL-BRIEF-2026-08-16", "SRC-FINANCIAL-MODEL-V0-2-BRIEF-2026-08-18"] },
         "note": { "type": "string", "minLength": 1 }
       },
       "additionalProperties": false
@@ -69,23 +69,131 @@
     },
     "model": {
       "type": "object",
-      "required": ["currency", "horizon_months", "detailed_months", "days_per_month", "default_sales_scenario", "default_real_estate_scenario", "default_tax_scenario", "default_contribution_scenario", "default_aggregator_share", "discount_rate_annual", "discount_rate_status"],
+      "required": ["currency", "horizon_months", "detailed_months", "days_per_month", "default_sales_scenario", "default_real_estate_scenario", "default_tax_scenario", "default_contribution_scenario", "default_aggregator_share", "discount_rate_annual", "discount_rate_status", "opening_month", "opening_month_basis", "seasonality_profile", "ramp_up_profile"],
       "properties": {
         "currency": { "const": "RUB" },
         "horizon_months": { "const": 60 },
         "days_per_month": { "const": 30 },
-        "discount_rate_annual": { "const": 0.2 }
+        "discount_rate_annual": { "const": 0.2 },
+        "opening_month": { "type": "integer", "minimum": 1, "maximum": 12 },
+        "opening_month_basis": { "const": "calendar_month" },
+        "seasonality_profile": {
+          "type": "array",
+          "minItems": 12,
+          "maxItems": 12,
+          "items": {
+            "type": "object",
+            "required": ["month", "seasonality_coefficient"],
+            "properties": {
+              "month": { "type": "integer", "minimum": 1, "maximum": 12 },
+              "seasonality_coefficient": { "type": "number", "exclusiveMinimum": 0 }
+            },
+            "additionalProperties": false
+          }
+        },
+        "ramp_up_profile": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["month", "ramp_factor"],
+            "properties": {
+              "month": { "type": "integer", "minimum": 1 },
+              "ramp_factor": { "type": "number", "exclusiveMinimum": 0, "maximum": 1 }
+            },
+            "additionalProperties": false
+          }
+        }
       },
       "additionalProperties": true
     },
-    "food_cost": { "type": "object", "required": ["kolobok_segments", "manches", "drinks", "waste"] },
+    "food_cost": {
+      "type": "object",
+      "required": ["kolobok_segments", "manches", "drinks", "waste", "protected_formula"],
+      "properties": {
+        "protected_formula": {
+          "type": "object",
+          "required": ["basis", "raw_materials_rate", "raw_materials_rule", "protected_labor_rate", "protected_labor_formula", "recipe_model_status"],
+          "properties": {
+            "basis": { "const": "net_revenue" },
+            "raw_materials_rate": { "const": 0.3 },
+            "raw_materials_rule": { "const": "financial_pnl_uses_protected_rate" },
+            "protected_labor_rate": { "const": 0.27 },
+            "protected_labor_formula": { "type": "string", "minLength": 1 },
+            "recipe_model_status": { "const": "retained_as_analytical_source" },
+            "provenance": { "type": "string", "minLength": 1 }
+          },
+          "additionalProperties": false
+        }
+      }
+    },
     "packaging": { "type": "object", "required": ["baseline_checks_per_day", "baseline_monthly_rub", "sensitivity_monthly_rub", "scaling_formula", "provenance"] },
     "staffing": { "type": "object", "required": ["roles", "employer_contributions", "personnel_reserve_rate", "personnel_reserve_basis"] },
-    "opex": { "type": "object", "required": ["entries"] },
+    "opex": {
+      "type": "object",
+      "required": ["entries", "marketing_structure_reference"],
+      "properties": {
+        "marketing_structure_reference": {
+          "type": "object",
+          "required": ["note", "items"],
+          "properties": {
+            "note": { "type": "string", "minLength": 1 },
+            "items": { "type": "array", "minItems": 8, "maxItems": 8 }
+          }
+        },
+        "entries": {
+          "type": "array",
+          "contains": {
+            "type": "object",
+            "properties": {
+              "id": { "const": "MARKETING" },
+              "behavior": { "const": "scenario_formula" },
+              "fixed_amount_rub": { "const": 150000 },
+              "rate_of_net_revenue": { "const": 0.024 },
+              "ramp_up_floor_rub": { "const": 400000 },
+              "ramp_up_floor_months": { "const": 6 }
+            },
+            "required": ["id", "behavior", "fixed_amount_rub", "rate_of_net_revenue", "ramp_up_floor_rub", "ramp_up_floor_months"]
+          }
+        }
+      }
+    },
     "tax": { "type": "object", "required": ["scenarios", "management_proxy"] },
     "real_estate": { "type": "object", "required": ["scenarios", "appreciation_default", "appreciation_sensitivity", "restaurant_ebitda_includes_appreciation"] },
-    "launch_investment": { "type": "object" },
-    "operating_reserve": { "type": "object" },
+    "launch_investment": {
+      "type": "object",
+      "required": ["launch_marketing_rub", "launch_marketing_timing", "contingency_basis"],
+      "properties": {
+        "launch_marketing_rub": { "const": 700000 },
+        "launch_marketing_timing": { "const": "month_0" },
+        "contingency_basis": { "const": "equipment_plus_furniture_plus_preparation" }
+      }
+    },
+    "operating_reserve": {
+      "type": "object",
+      "required": ["default_months", "include_administrative_reserve_in_fixed_reserve", "reserve_labor_basis", "reserve_labor_basis_status"],
+      "properties": {
+        "default_months": { "const": 6 },
+        "include_administrative_reserve_in_fixed_reserve": { "const": false },
+        "reserve_labor_basis": { "const": "calculated_staffing_labor" },
+        "reserve_labor_basis_status": { "const": "owner_approved" },
+        "reserve_labor_basis_note": { "type": "string", "minLength": 1 },
+        "open_questions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "status"],
+            "properties": {
+              "id": { "type": "string", "minLength": 1 },
+              "status": { "type": "string", "minLength": 1 },
+              "current_engine_behavior": { "type": "string", "minLength": 1 },
+              "rationale": { "type": "string", "minLength": 1 }
+            },
+            "additionalProperties": false
+          }
+        }
+      }
+    },
     "depreciation": { "type": "object" },
     "maintenance_capex": { "type": "object" },
     "terminal": { "type": "object" },

@@ -1,0 +1,18 @@
+schema_version: 2
+iteration_id: ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01
+decision_id: DEC-FINANCIAL-MODEL-V0-2-2026-08-18-01
+change_set_id: CHG-FINANCIAL-MODEL-V0-2-2026-08-18-01
+previewed_at: 2026-08-18T21:27:00.000Z
+status: passed
+mutation_performed: false
+planned_changes:
+  - Register source and decision metadata, then update Financial Model v0.2 registry metadata through two governed registry change sets.
+  - Retain the canonical Financial Model as the only calculation source and regenerate deterministic local projections.
+  - Consolidate existing local finance website changes and append-only governance lifecycle support in one content commit.
+  - Append superseded events without touching historical events or external Google artifacts.
+invariants:
+  google_action: false
+  new_business_assumptions: false
+  historical_events_edited: false
+  financial_model_is_canonical: true
+  website_deployment_before_seal: false

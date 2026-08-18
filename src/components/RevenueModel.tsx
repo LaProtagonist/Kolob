@@ -21,6 +21,7 @@ const publicCopy = {
   maximumHourLabel: "Расчётный максимум",
   maximumLineLoadLabel: "Нагрузка в расчётный максимум",
   capacityBandLabel: "Расчётная рабочая мощность линии колобков",
+  trafficScenarioNote: "Сценарии показывают потенциальную загрузку объекта после выхода на рабочий режим. Динамика первых месяцев и сезонность учитываются в финансовой модели.",
 } as const;
 
 function formatRub(value: number | null) {
@@ -152,6 +153,7 @@ export function RevenueModelPage() {
                   {customInvalid ? <small className="revenue-field-error" role="alert">Укажите целое положительное значение.</small> : null}
                 </label>
               )}
+              <p className="revenue-scenario-note" data-testid="revenue-scenario-note">{publicCopy.trafficScenarioNote}</p>
             </section>
 
             <section className="launch-card" aria-labelledby="revenue-check-title">

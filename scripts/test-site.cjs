@@ -10,6 +10,16 @@ const { chromium } = require("playwright");
 const distDir = path.join(projectRoot, "dist");
 const capexSnapshot = JSON.parse(fs.readFileSync(path.join(projectRoot, "src", "content", "capex-configurator-data.json"), "utf8"));
 const revenueSnapshot = JSON.parse(fs.readFileSync(path.join(projectRoot, "src", "content", "revenue-model-data.json"), "utf8"));
+const financialProjection = JSON.parse(fs.readFileSync(path.join(projectRoot, "docs-platform", "generated", "financial-model-projection.json"), "utf8"));
+const realisticFinancial = financialProjection.scenarios.rent.realistic;
+const launchFinancialExpectation = {
+  reserveMonths: 6,
+  reserveRub: Math.round(realisticFinancial.fixed_opex_reserve_rub),
+  monthlyReserveBaseRub: Math.round(realisticFinancial.fixed_opex_reserve_rub / 6),
+  monthlyLaborRub: Math.round(realisticFinancial.calculated_staffing_labor_rub),
+  monthlyFixedOpexRub: Math.round(realisticFinancial.fixed_opex_without_labor_rent_rub),
+  monthlyScenarioOpexRub: Math.round(realisticFinancial.marketing_rub + realisticFinancial.household_rub),
+};
 const routes = [
   { path: "/", must: ["Еда в пути.", "Всё внутри."] },
   { path: "/concept", must: ["Колобок — полноценная еда, собранная в удобную форму."] },
@@ -22,6 +32,7 @@ const routes = [
   { path: "/capex-configurator", must: ["CAPEX-конфигуратор", "Стоимость текущей комплектации оборудования"], internal: true },
   { path: "/launch-budget", must: ["Расчёт стоимости запуска", "Стоимость запуска"], internal: true },
   { path: "/revenue-model", must: ["Расчёт объёма продаж", "Производственная нагрузка"], internal: true },
+  { path: "/economics", must: ["Экономика объекта"], internal: true },
   { path: "/404", must: ["Страница не найдена"] }
 ];
 
@@ -950,8 +961,8 @@ async function inspectCapex(browser, baseUrl) {
       || launchBudget.defaults.preparationAmount !== 11000000
       || launchBudget.defaults.preparationAccordionExpanded !== "false"
       || launchBudget.defaults.operatingExpenseBaselineSelected !== "true"
-      || launchBudget.defaults.operatingReserveAmount !== 15900000
-      || !launchBudget.defaults.operatingReserveSummary.replace(/\s+/g, " ").includes("6 месяцев × 2 650 000 ₽ в месяц")
+      || launchBudget.defaults.operatingReserveAmount !== launchFinancialExpectation.reserveRub
+      || launchBudget.defaults.operatingReserveSummary.replace(/\D/g, "") !== `6${launchFinancialExpectation.monthlyReserveBaseRub}`
       || launchBudget.defaults.operatingReserveAccordionExpanded !== "false") failures.push(`launch-budget defaults invalid: ${JSON.stringify(launchBudget.defaults)}`);
     if (launchBudget.inputPresentation.numericInputCount < 4
       || launchBudget.inputPresentation.numericAppearances.some(value => value !== "textfield")
@@ -975,22 +986,18 @@ async function inspectCapex(browser, baseUrl) {
       || launchBudget.preparationScenarios.returnedBreakdown !== 8500000) failures.push(`launch-budget manual preparation mode invalid: ${JSON.stringify(launchBudget.preparationScenarios)}`);
     if (launchBudget.operatingReserveScenarios.modeLabels.join("|") !== "Базовый расчёт|Другая сумма"
       || launchBudget.operatingReserveScenarios.modeHints.join("|") !== "Ориентир для объекта площадью около 200 м²|Укажите ежемесячные операционные расходы"
-      || launchBudget.operatingReserveScenarios.rowCount !== 7
+      || launchBudget.operatingReserveScenarios.rowCount !== 3
       || launchBudget.operatingReserveScenarios.monthlyTotalLabel !== "Ежемесячные операционные расходы"
-      || launchBudget.operatingReserveScenarios.monthlyTotal !== 2650000
-      || launchBudget.operatingReserveScenarios.threeMonths !== 7950000
-      || launchBudget.operatingReserveScenarios.sixMonths !== 15900000
-      || launchBudget.operatingReserveScenarios.nineMonths !== 23850000
-      || launchBudget.operatingReserveScenarios.names.join("|") !== "Персонал|Коммунальные услуги|Обслуживание оборудования|Хозяйственные расходы|ПО и связь|Маркетинг запуска|Прочие расходы"
-      || launchBudget.operatingReserveScenarios.descriptions.join("|") !== "Фонд оплаты труда с учётом обязательных начислений и резерва на замещение сотрудников.|Электроэнергия, вода, водоотведение и вывоз отходов.|Техническое обслуживание оборудования, холодильных систем, вентиляции и мелкие ремонты.|Расходные материалы, хозяйственные товары и текущие закупки.|Кассовые системы, учёт, интернет и сервисные подписки.|Локальное продвижение, акции и поддержка открытия.|Дополнительные регулярные расходы, возникающие в процессе работы."
+      || launchBudget.operatingReserveScenarios.monthlyTotal !== launchFinancialExpectation.monthlyReserveBaseRub
+      || launchBudget.operatingReserveScenarios.threeMonths !== Math.round(realisticFinancial.fixed_opex_reserve_rub / 2)
+      || launchBudget.operatingReserveScenarios.sixMonths !== launchFinancialExpectation.reserveRub
+      || launchBudget.operatingReserveScenarios.nineMonths !== Math.round(realisticFinancial.fixed_opex_reserve_rub * 1.5)
+      || launchBudget.operatingReserveScenarios.names.join("|") !== "Расходы на персонал|Постоянные операционные расходы|Маркетинг и хозяйственные расходники"
+      || launchBudget.operatingReserveScenarios.descriptions.join("|") !== "Фактическая стоимость команды с начислениями и резервом на замещение.|Коммунальные услуги, обслуживание оборудования, бухгалтерия, санитария, охрана и прочие постоянные расходы без аренды.|Регулярный маркетинг и эксплуатационные расходники на уровне зрелого реалистичного месяца."
       || JSON.stringify(launchBudget.operatingReserveScenarios.values) !== JSON.stringify({
-        "OPEX-PERSONNEL": 2073500,
-        "OPEX-UTILITIES": 200000,
-        "OPEX-EQUIPMENT-MAINTENANCE": 100000,
-        "OPEX-HOUSEHOLD": 80000,
-        "OPEX-SOFTWARE-COMMS": 30000,
-        "OPEX-LAUNCH-MARKETING": 100000,
-        "OPEX-OTHER": 66500,
+        "FM-PERSONNEL": launchFinancialExpectation.monthlyLaborRub,
+        "FM-FIXED-OPEX": launchFinancialExpectation.monthlyFixedOpexRub,
+        "FM-SCENARIO-OPEX": launchFinancialExpectation.monthlyScenarioOpexRub,
       })
       || launchBudget.operatingReserveScenarios.customEmpty.input !== ""
       || launchBudget.operatingReserveScenarios.customEmpty.reserveText !== "Не рассчитано"
@@ -1005,16 +1012,16 @@ async function inspectCapex(browser, baseUrl) {
       || !launchBudget.operatingReserveScenarios.customSixMonthSummary.replace(/\s+/g, " ").includes("6 месяцев × 2 000 000 ₽ в месяц")
       || launchBudget.operatingReserveScenarios.customCompleteness !== "рассчитан"
       || launchBudget.operatingReserveScenarios.contingencyBeforeCustom !== launchBudget.operatingReserveScenarios.contingencyAfterCustom
-      || launchBudget.operatingReserveScenarios.restoredBaselineReserve !== 15900000
+      || launchBudget.operatingReserveScenarios.restoredBaselineReserve !== launchFinancialExpectation.reserveRub
       || launchBudget.operatingReserveScenarios.restoredCustomValue !== "2000000"
       || launchBudget.operatingReserveScenarios.restoredCustomReserve !== 12000000) failures.push(`launch-budget operating reserve structure invalid: ${JSON.stringify(launchBudget.operatingReserveScenarios)}`);
     if (launchBudget.defaultPurchasePrice !== "69000000") failures.push(`launch-budget purchase default invalid: ${launchBudget.defaultPurchasePrice}`);
     if (!launchBudget.defaults.totalText.startsWith("от ") || !(launchBudget.defaults.equipmentTotal > 0)) failures.push("launch-budget default state does not show a positive lower bound");
-    if (launchBudget.area.other !== "80 м²" || launchBudget.area.seats !== "62 мест" || parseMoney(launchBudget.area.furniture) !== 527000 || launchBudget.area.operatingReserve !== 15900000) failures.push(`launch-budget area or furniture math invalid: ${JSON.stringify(launchBudget.area)}`);
+    if (launchBudget.area.other !== "80 м²" || launchBudget.area.seats !== "62 мест" || parseMoney(launchBudget.area.furniture) !== 527000 || launchBudget.area.operatingReserve !== launchFinancialExpectation.reserveRub) failures.push(`launch-budget area or furniture math invalid: ${JSON.stringify(launchBudget.area)}`);
     if (launchBudget.invalidArea.alert !== 1 || launchBudget.invalidArea.total !== "Не рассчитано") failures.push("launch-budget invalid area is not blocking total");
-    if (launchBudget.purchase.entry !== 20000000 || launchBudget.purchase.reserve !== 15900000 || !(launchBudget.purchase.assets > 20000000)) failures.push(`launch-budget purchase math invalid: ${JSON.stringify(launchBudget.purchase)}`);
-    if (launchBudget.rent.entry !== 2500000 || launchBudget.rent.reserve !== 15900000 || launchBudget.rent.tied !== 1000000) failures.push(`launch-budget rent math invalid: ${JSON.stringify(launchBudget.rent)}`);
-    if (launchBudget.rentWithAnnualPrepaymentReserve !== 15900000) failures.push(`launch-budget operating reserve changed with annual rent prepayment: ${launchBudget.rentWithAnnualPrepaymentReserve}`);
+    if (launchBudget.purchase.entry !== 20000000 || launchBudget.purchase.reserve !== launchFinancialExpectation.reserveRub || !(launchBudget.purchase.assets > 20000000)) failures.push(`launch-budget purchase math invalid: ${JSON.stringify(launchBudget.purchase)}`);
+    if (launchBudget.rent.entry !== 2500000 || launchBudget.rent.reserve !== launchFinancialExpectation.reserveRub || launchBudget.rent.tied !== 1000000) failures.push(`launch-budget rent math invalid: ${JSON.stringify(launchBudget.rent)}`);
+    if (launchBudget.rentWithAnnualPrepaymentReserve !== launchFinancialExpectation.reserveRub) failures.push(`launch-budget operating reserve changed with annual rent prepayment: ${launchBudget.rentWithAnnualPrepaymentReserve}`);
     if (!(launchBudget.scenarioTotals.MINIMUM < launchBudget.scenarioTotals.BASE && launchBudget.scenarioTotals.BASE < launchBudget.scenarioTotals.SCALE_READY)) failures.push(`launch-budget equipment scenarios invalid: ${JSON.stringify(launchBudget.scenarioTotals)}`);
     if (!(launchBudget.allModulesTotal > launchBudget.reducedModulesTotal)) failures.push("launch-budget BAR/GROW toggles do not change equipment total");
     if (launchBudget.persistedTotalArea !== "321"
@@ -1030,7 +1037,7 @@ async function inspectCapex(browser, baseUrl) {
       || launchBudget.resetPreparation.amount !== 11000000
       || launchBudget.resetPreparation.accordionExpanded !== "false"
       || launchBudget.resetOperatingReserve.mode !== "baseline"
-      || launchBudget.resetOperatingReserve.amount !== 15900000
+      || launchBudget.resetOperatingReserve.amount !== launchFinancialExpectation.reserveRub
       || launchBudget.resetOperatingReserve.accordionExpanded !== "false"
       || launchBudget.resetOperatingReserve.months !== "6"
       || launchBudget.resetOperatingReserve.customValue !== ""

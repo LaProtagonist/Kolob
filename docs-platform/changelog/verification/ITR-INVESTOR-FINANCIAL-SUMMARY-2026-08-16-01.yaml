@@ -1,0 +1,85 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+proposal_id: PROP-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+decision_id: DEC-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+change_set_id: CHG-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+verified_at: 2026-08-16T01:31:30.000Z
+actor: Codex
+validation_status: passed
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01-approved.yaml
+  sha256: 0e88152fc40dcedf691fd47fea7d92d65cfba662552c36798908a05d4d2addb7
+state:
+  before_state_sha256: 7453d20f9e63c2fd2592d89f1beaee92237d1588de3c5d535d7b6759cffdfb42
+  after_state_sha256: 86f6b79114b5f4d71c481f4e1b571982d5ee8cdbd670d3d19f550eab12dc0813
+  source_sha256: 866068e67a6dc1355854df90cf18be96297d7c9460d428db22201b2d5aa745b3
+  projection_sha256: 383c867a478f43da46bcc381f58bce9b70f91c4c7ce633dc64b3d3d33b03ba50
+  google_payload_sha256: 1d380914bc5d053ec001e12ec72d511780378a9b76cd4825a943d44e4f2cc6c3
+  financial_model_content_state_sha256: 18e56ce33cc19540ff9540d05a35c24284534fdfd89a6b74e59ff5a394980ae4
+parity:
+  headline_kpi: passed
+  three_scenarios: passed
+  payback_28_11_7: passed
+  investment_total_43040022_34: passed
+  rent_purchase: passed
+  sensitivity: passed
+  pnl_grouping: passed
+  financial_model_hash_dependency: passed
+google_verification:
+  final_receipt: docs-platform/changelog/google-sync/2026-08-16-DOC-INVESTOR-FINANCIAL-SUMMARY-02.yaml
+  prior_visual_qa_receipt: docs-platform/changelog/google-sync/2026-08-16-DOC-INVESTOR-FINANCIAL-SUMMARY.yaml
+  google_file_id: 1AW-JONG-vkxCEIG_pY5SSPgsMpXLycLJAk7iY5saVus
+  native_sheet: true
+  exact_single_file: true
+  action: reuse
+  tab_count: 5
+  exact_tab_order: passed
+  readback_sha256: 1ee8fbe3e3eb3491aa8376bd6d007d94e39c4e21a9a5733cfa815171eef27a50
+  formula_errors: 0
+  russian_investor_copy: passed
+  technical_fields_excluded: passed
+  visual_qa: passed
+  console_errors: 0
+validation:
+  investor_summary_projection_test: passed
+  financial_content_hash_dependency_test: passed
+  kpi_parity_test: passed
+  scenario_parity_test: passed
+  investment_parity_test: passed
+  google_payload_schema: passed
+  google_publisher_targeted_tests: passed
+  formatting_overlap_regression: passed
+  final_number_format_regression: passed
+  targeted_tests: 13 passed, 0 failed
+  typescript_affected_package: passed with ESNext/Bundler resolution required by the affected package JSON imports
+  investor_summary_validation: passed
+  investor_google_payload_validation: passed
+  google_api_readback: passed
+  git_diff_check: passed
+  full_root_test: intentionally not run by owner instruction
+  full_docs_platform_suite: intentionally not run by owner instruction
+  site_build: intentionally not run because web routes are unchanged
+business_source_invariants:
+  research_performed: false
+  financial_model_changed: false
+  revenue_model_changed: false
+  capex_changed: false
+  investor_start_model_changed: false
+  website_changed: false
+  existing_master_google_files_changed: false
+audit:
+  receipt: docs-platform/changelog/audit/ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01.yaml
+  receipt_sha256: 859783f66d9cccd35b8191329a0290c5cd9651973e9e88d0427dc9d35436d747
+rollback:
+  payload: docs-platform/changelog/rollback-payloads/ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01/manifest.yaml
+  payload_sha256: f7e37b105e814aa3f18df0b860042bdc65c3d3cf188c627e65a1064d3c80ca49
+  mode: governed_reverse_change_set
+  preserves_history: true
+git_and_delivery:
+  staged: false
+  committed: false
+  sealed: false
+  tagged: false
+  pushed: false
+  deployed: false
+summary: Investor Financial Summary is an exact five-tab Russian presentation projection over the sealed Financial Model, published as one native Google Sheet and verified through targeted parity tests, full API readback and live visual QA without changing the master model or website.

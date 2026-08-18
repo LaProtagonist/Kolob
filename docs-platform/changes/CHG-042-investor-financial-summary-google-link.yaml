@@ -1,0 +1,16 @@
+change_id: CHG-042
+title: Зарегистрировать нативную Google Sheets-проекцию Investor Financial Summary
+status: approved
+created_at: 2026-08-16
+decision_id: DEC-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+iteration_id: ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+proposal_id: PROP-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01-approved.yaml
+approved_payload_sha256: 0e88152fc40dcedf691fd47fea7d92d65cfba662552c36798908a05d4d2addb7
+operations:
+  - type: update
+    entity: documents
+    id: DOC-INVESTOR-FINANCIAL-SUMMARY
+    value:
+      google_file_id: 1AW-JONG-vkxCEIG_pY5SSPgsMpXLycLJAk7iY5saVus
+      updated_at: 2026-08-16

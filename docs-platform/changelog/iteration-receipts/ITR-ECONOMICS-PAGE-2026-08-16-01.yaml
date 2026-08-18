@@ -1,0 +1,42 @@
+schema_version: 2
+iteration_id: ITR-ECONOMICS-PAGE-2026-08-16-01
+proposal_id: PROP-ECONOMICS-PAGE-2026-08-16-01
+decision_id: DEC-ECONOMICS-PAGE-2026-08-16-01
+change_set_id: CHG-ECONOMICS-PAGE-2026-08-16-01
+status: verified
+applied_at: 2026-08-16T02:07:37.000Z
+verified_at: 2026-08-16T02:09:00.000Z
+actor: Codex
+tool: apply_patch + targeted TypeScript/data/route checks + local in-app browser
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-ECONOMICS-PAGE-2026-08-16-01-approved.yaml
+  sha256: 7cf35db25a78222dfed36330deee31ba5c67eec98d3e699a53bda1c5b7179f21
+before_state_sha256: 40fa6ed869884d0af15c7dc093ac6cfdcce11ef3d54bfaac9764549fd7827268
+after_state_sha256: f6b66f7c4a3a972ff42c81cebe0692b952902f4b7ead1dcd9c1b26263c31eda3
+implementation:
+  route: /economics
+  presentation_dependency: docs-platform/generated/investor-financial-summary.json
+  master_dependency: docs-platform/generated/financial-model-projection.json
+  financial_model_content_state_sha256: 18e56ce33cc19540ff9540d05a35c24284534fdfd89a6b74e59ff5a394980ae4
+  default_scenario: realistic
+  scenario_count: 3
+  noindex: true
+  nofollow: true
+  navigation_added: false
+  sitemap_added: false
+git_commit_hash: null
+validation_result: passed
+verification_receipt: docs-platform/changelog/verification/ITR-ECONOMICS-PAGE-2026-08-16-01.yaml
+rollback:
+  mode: governed_reverse_change_set
+  payload: docs-platform/changelog/rollback-payloads/ITR-ECONOMICS-PAGE-2026-08-16-01/manifest.yaml
+  preserves_history: true
+  git_reset_forbidden: true
+delivery:
+  committed: false
+  sealed: false
+  tagged: false
+  pushed: false
+  published: false
+  synced: false
+  deployed: false

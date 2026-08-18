@@ -1,0 +1,42 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+proposal_id: PROP-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+decision_id: DEC-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+change_set_id: CHG-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+status: synced
+applied_at: 2026-08-16T01:23:22.689Z
+verified_at: 2026-08-16T01:31:30.000Z
+published_at: 2026-08-16T01:32:05.477Z
+synced_at: 2026-08-16T01:32:16.073Z
+actor: Codex
+tool: apply_patch + deterministic projection + existing guarded Google OAuth workflow + Sheets API readback + live visual QA
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01-approved.yaml
+  sha256: 0e88152fc40dcedf691fd47fea7d92d65cfba662552c36798908a05d4d2addb7
+before_state_sha256: 7453d20f9e63c2fd2592d89f1beaee92237d1588de3c5d535d7b6759cffdfb42
+after_state_sha256: 86f6b79114b5f4d71c481f4e1b571982d5ee8cdbd670d3d19f550eab12dc0813
+implementation:
+  registry_id: DOC-INVESTOR-FINANCIAL-SUMMARY
+  source_path: docs-platform/working/investor-financial-summary.yaml
+  projection_path: docs-platform/generated/investor-financial-summary.json
+  google_payload_path: docs-platform/generated/investor-financial-summary-google-sheets-payload.json
+  google_sheet_receipt: docs-platform/changelog/google-sync/2026-08-16-DOC-INVESTOR-FINANCIAL-SUMMARY-02.yaml
+  google_file_id: 1AW-JONG-vkxCEIG_pY5SSPgsMpXLycLJAk7iY5saVus
+  google_sheet_count: 1
+  google_tab_count: 5
+  google_formula_errors: 0
+  financial_model_content_state_sha256: 18e56ce33cc19540ff9540d05a35c24284534fdfd89a6b74e59ff5a394980ae4
+  default_scenario: realistic
+git_commit_hash: null
+validation_result: passed
+verification_receipt: docs-platform/changelog/verification/ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01.yaml
+rollback:
+  mode: governed_reverse_change_set
+  payload: docs-platform/changelog/rollback-payloads/ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01/manifest.yaml
+  preserves_history: true
+delivery:
+  committed: false
+  sealed: false
+  tagged: false
+  pushed: false
+  deployed: false

@@ -1,0 +1,19 @@
+schema_version: 2
+iteration_id: ITR-GOVERNANCE-SUPERSEDE-SYNCED-2026-08-18-01
+mode: governed_reverse_change_set
+status: prepared
+before_content_commit: 93852f910ddf0b2c34b09ffbab05e611e1ee7767
+source_scope: docs-platform/changelog/payloads/ITR-GOVERNANCE-SUPERSEDE-SYNCED-2026-08-18-01-approved.yaml
+reverse_strategy:
+  modified_files:
+    - restore docs-platform/app/src/governance/timeline.ts from 93852f910ddf0b2c34b09ffbab05e611e1ee7767
+  added_files:
+    - remove docs-platform/app/src/governance/supersede.ts
+    - remove docs-platform/app/src/governance/supersede-cli.ts
+    - remove docs-platform/app/test/governance-supersede.test.ts
+  events: append rollback lifecycle; never delete technical evidence or superseded events already recorded
+  tags: retain historical iteration tags
+  google: no action because this iteration does not change Google content
+  website: no action because this iteration does not change public content
+  git_reset_forbidden: true
+dependency_check: required against every later iteration that recorded a superseded event through this tool

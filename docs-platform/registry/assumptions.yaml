@@ -450,66 +450,75 @@ assumptions:
     decision_id: DEC-REVENUE-MODEL-2026-08-14-01
     updated_at: 2026-08-14
   - id: ASM-FINANCIAL-FOOD-COST
-    title: Себестоимость еды, напитков, списаний и упаковки Financial Model v0.1
+    title: Рецептурная и защищённая финансовая себестоимость Financial Model v0.2
     value:
       average_kolobok_cost_rub: 175.7625
       average_food_portion_cost_rub: 177.01
       drink_cost_rub: 30
-      waste_rate: 0.04
+      protected_raw_material_rate_of_net_revenue: 0.3
+      waste_rate_of_raw_materials: 0.04
       packaging_base_rub: 250000
       packaging_base_checks: 300
     unit: mixed
     status: research
-    rationale: Исходные ставки и доли заданы владельцем; средние значения получаются формулами и не являются фактической рецептурной себестоимостью.
-    scenario: FINANCIAL_MODEL_V0_1
+    rationale: Рецептурный расчёт сохранён как технологический ориентир; Financial Model использует защищённую базу сырья 30% net revenue, списания 4% сырья и отдельно масштабируемую упаковку.
+    scenario: FINANCIAL_MODEL_V0_2
     applies_to:
       - DOC-FINANCIAL-MODEL
     source_ids:
       - SRC-FINANCIAL-MODEL-BRIEF-2026-08-16
-    decision_id: DEC-FINANCIAL-MODEL-2026-08-16-01
-    updated_at: 2026-08-16
+      - SRC-FINANCIAL-MODEL-V0-2-BRIEF-2026-08-18
+    decision_id: DEC-FINANCIAL-MODEL-V0-2-2026-08-18-01
+    updated_at: 2026-08-19
   - id: ASM-FINANCIAL-STAFFING
-    title: Штат и labor budget Financial Model v0.1
+    title: Штат и защищённая labor-база Financial Model v0.2
     value:
+      pessimistic_headcount: 14
       baseline_headcount: 16
       optimistic_headcount: 20
-      baseline_payroll_rub: 1810000
-      optimistic_payroll_rub: 2230000
       baseline_labor_rub: 2396938.28
       optimistic_labor_rub: 2955060.35
+      protected_labor_rate_of_net_revenue: 0.27
+      protected_labor_formula: max_calculated_staffing_labor_or_net_revenue_x_0_27
       personnel_reserve_rate: 0.1
     unit: RUB/month and headcount
     status: research
-    rationale: Роли, ставки и льготная формула начислений заданы владельцем; применимость льготы требует подтверждения.
-    scenario: FINANCIAL_MODEL_V0_1
+    rationale: Ролевой расчёт команды сохранён; основной расход labor не может быть ниже него и защищён floor 27% net revenue.
+    scenario: FINANCIAL_MODEL_V0_2
     applies_to:
       - DOC-FINANCIAL-MODEL
     source_ids:
       - SRC-FINANCIAL-MODEL-BRIEF-2026-08-16
-    decision_id: DEC-FINANCIAL-MODEL-2026-08-16-01
-    updated_at: 2026-08-16
+      - SRC-FINANCIAL-MODEL-V0-2-BRIEF-2026-08-18
+    decision_id: DEC-FINANCIAL-MODEL-V0-2-2026-08-18-01
+    updated_at: 2026-08-19
   - id: ASM-FINANCIAL-OPEX
-    title: OPEX Financial Model v0.1
+    title: OPEX Financial Model v0.2
     value:
       rent_rub: 350000
       utilities_rub: 200000
       acquiring_rate: 0.02
-      advertising_rub: 100000
-      smm_rub: 50000
+      marketing_fixed_rub: 150000
+      marketing_rate_of_net_revenue: 0.024
+      marketing_ramp_up_floor_rub: 400000
+      marketing_ramp_up_floor_months: 6
       service_rub: 100000
-      household_rub: 80000
+      household_base_rub: 50000
+      household_per_300_actual_checks_rub: 50000
       accounting_rub: 25000
+      administrative_reserve_rate_of_net_revenue: 0.02
       other_rub: 66500
     unit: RUB/month and share
     status: research
-    rationale: Точные рабочие ставки заданы владельцем; банковское обслуживание остаётся tbd, доставка сырья включена в закупочную цену.
-    scenario: FINANCIAL_MODEL_V0_1
+    rationale: Постоянные и сценарные OPEX отражают уже утверждённую v0.2 защитную структуру; SMM входит в Marketing и не прибавляется вторично.
+    scenario: FINANCIAL_MODEL_V0_2
     applies_to:
       - DOC-FINANCIAL-MODEL
     source_ids:
       - SRC-FINANCIAL-MODEL-BRIEF-2026-08-16
-    decision_id: DEC-FINANCIAL-MODEL-2026-08-16-01
-    updated_at: 2026-08-16
+      - SRC-FINANCIAL-MODEL-V0-2-BRIEF-2026-08-18
+    decision_id: DEC-FINANCIAL-MODEL-V0-2-2026-08-18-01
+    updated_at: 2026-08-19
   - id: ASM-FINANCIAL-TAX-PROXY
     title: Налоговый management proxy Financial Model v0.1
     value:
@@ -549,9 +558,10 @@ assumptions:
     decision_id: DEC-FINANCIAL-MODEL-2026-08-16-01
     updated_at: 2026-08-16
   - id: ASM-FINANCIAL-RESERVE-TERMINAL
-    title: Operating Reserve и terminal treatment Financial Model v0.1
+    title: Operating Reserve и terminal treatment Financial Model v0.2
     value:
       fixed_reserve_months: 6
+      reserve_labor_basis: calculated_staffing_labor
       initial_inventory_rub: 1000000
       full_reserve_default: false
       month_60_deposit_recovery_rub: 0
@@ -560,14 +570,15 @@ assumptions:
       brand_value_rub: 0
     unit: mixed
     status: research
-    rationale: Основной invested capital использует Fixed OPEX Reserve; модель является going concern без автоматической ликвидации в Month 60.
-    scenario: FINANCIAL_MODEL_V0_1
+    rationale: Default invested capital продолжает использовать только Fixed OPEX Reserve; pre-paid rent не учитывается повторно и модель остаётся going concern без terminal recovery.
+    scenario: FINANCIAL_MODEL_V0_2
     applies_to:
       - DOC-FINANCIAL-MODEL
     source_ids:
       - SRC-FINANCIAL-MODEL-BRIEF-2026-08-16
-    decision_id: DEC-FINANCIAL-MODEL-2026-08-16-01
-    updated_at: 2026-08-16
+      - SRC-FINANCIAL-MODEL-V0-2-BRIEF-2026-08-18
+    decision_id: DEC-FINANCIAL-MODEL-V0-2-2026-08-18-01
+    updated_at: 2026-08-19
   - id: ASM-FINANCIAL-REAL-ESTATE
     title: Недвижимость Financial Model v0.1
     value:
@@ -589,20 +600,42 @@ assumptions:
     decision_id: DEC-FINANCIAL-MODEL-2026-08-16-01
     updated_at: 2026-08-16
   - id: ASM-FINANCIAL-INVESTMENT-METRICS
-    title: Investment metrics Financial Model v0.1
+    title: Investment metrics Financial Model v0.2
     value:
       horizon_months: 60
       payback_method: cumulative_fcf
       roi_definition: annual_fcf_div_restaurant_invested_capital
       discount_rate: 0.2
-      discount_rate_status: tbd_investor_hurdle_rate
+      opening_month: January
+      ramp_up:
+        - 0.6
+        - 0.7
+        - 0.8
+        - 0.85
+        - 0.9
+        - 0.95
+        - 1
+      seasonality:
+        - 0.93
+        - 0.75
+        - 0.88
+        - 0.95
+        - 1.02
+        - 0.96
+        - 0.96
+        - 0.98
+        - 1.12
+        - 1.16
+        - 1.1
+        - 1.18
     unit: mixed
     status: research
-    rationale: Метрики рассчитываются по 60-месячному cash flow; ставка дисконтирования 20% является только рабочей ставкой модели.
-    scenario: FINANCIAL_MODEL_V0_1
+    rationale: Метрики рассчитываются по 60-месячному cash flow с owner-approved ramp-up и сезонностью; NPV 20% остаётся рабочим параметром, а не требованием инвестора.
+    scenario: FINANCIAL_MODEL_V0_2
     applies_to:
       - DOC-FINANCIAL-MODEL
     source_ids:
       - SRC-FINANCIAL-MODEL-BRIEF-2026-08-16
-    decision_id: DEC-FINANCIAL-MODEL-2026-08-16-01
-    updated_at: 2026-08-16
+      - SRC-FINANCIAL-MODEL-V0-2-BRIEF-2026-08-18
+    decision_id: DEC-FINANCIAL-MODEL-V0-2-2026-08-18-01
+    updated_at: 2026-08-19

@@ -1,0 +1,138 @@
+schema_version: 2
+iteration_id: ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01
+proposal_id: PROP-FINANCIAL-MODEL-V0-2-2026-08-18-01
+decision_id: DEC-FINANCIAL-MODEL-V0-2-2026-08-18-01
+change_set_id: CHG-FINANCIAL-MODEL-V0-2-2026-08-18-01
+title: Consolidate Financial Model v0.2 and deploy the current sealed finance website
+status: approved
+approved_by: project owner
+approved_at: 2026-08-19T00:00:00.000Z
+actor: Codex
+scope: Consolidate the already approved Financial Model v0.2, Investor Financial Summary local projection, current finance website projections and associated governance lifecycle support; append-only supersede incomplete prior local iterations; seal and deploy the reproducible web state without Google operations.
+approved_payload_path: docs-platform/changelog/payloads/ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01-approved.yaml
+approved_payload_sha256: df9de912fb4c50e897cac3917bbf7bf2bca0b6d22dd8dad30d79cb0a13f49958
+before_state_sha256: fab9ad52d614a67dd13bc03b98d998cb2d6ccb8891c25ed5d066302021a0dfae
+after_state_sha256: cca896f6c850373cca947c5a91d92d78187e6fdb198aaa06d9973c65b768a42d
+state_hash_paths:
+  - docs-platform/working/financial-model.yaml
+  - docs-platform/schemas/financial-model.schema.json
+  - docs-platform/schemas/financial-projection.schema.json
+  - docs-platform/schemas/financial-google-sheets-payload.schema.json
+  - docs-platform/app/src/financial/financial-model.ts
+  - docs-platform/app/src/financial/google-sheet.ts
+  - docs-platform/app/src/google/financial-model-publisher.ts
+  - docs-platform/app/test/financial-model.test.ts
+  - docs-platform/app/test/financial-sheet-publisher.test.ts
+  - docs-platform/generated/financial-model-projection.json
+  - docs-platform/generated/financial-google-sheets-payload.json
+  - docs-platform/working/investor-financial-summary.yaml
+  - docs-platform/schemas/investor-financial-summary.schema.json
+  - docs-platform/schemas/investor-financial-summary-projection.schema.json
+  - docs-platform/schemas/investor-financial-summary-google-payload.schema.json
+  - docs-platform/app/src/financial/investor-summary.ts
+  - docs-platform/app/src/financial/investor-summary-google-sheet.ts
+  - docs-platform/app/src/google/investor-summary-publisher.ts
+  - docs-platform/app/test/investor-financial-summary.test.ts
+  - docs-platform/app/test/investor-financial-summary-publisher.test.ts
+  - docs-platform/generated/investor-financial-summary.json
+  - docs-platform/generated/investor-financial-summary-google-sheets-payload.json
+  - docs-platform/app/src/governance/timeline.ts
+  - docs-platform/app/src/governance/supersede.ts
+  - docs-platform/app/src/governance/supersede-cli.ts
+  - docs-platform/app/test/governance-supersede.test.ts
+  - docs-platform/app/src/cli.ts
+  - docs-platform/app/package.json
+  - package.json
+  - src/App.tsx
+  - src/components/Economics.css
+  - src/components/Economics.tsx
+  - src/components/LaunchBudget.tsx
+  - src/components/RevenueModel.css
+  - src/components/RevenueModel.tsx
+  - src/content/economics.ts
+  - src/content/site.ts
+  - src/lib/economics.ts
+  - src/lib/launch-budget.ts
+  - src/lib/launch-financials.ts
+  - src/types.ts
+  - scripts/test-economics-data.test.ts
+  - scripts/test-economics-route.cjs
+  - scripts/test-launch-budget-financials.test.ts
+content_paths:
+  - docs-platform/working/financial-model.yaml
+  - docs-platform/working/investor-financial-summary.yaml
+  - docs-platform/schemas/financial-model.schema.json
+  - docs-platform/schemas/financial-projection.schema.json
+  - docs-platform/schemas/financial-google-sheets-payload.schema.json
+  - docs-platform/schemas/investor-financial-summary.schema.json
+  - docs-platform/schemas/investor-financial-summary-projection.schema.json
+  - docs-platform/schemas/investor-financial-summary-google-payload.schema.json
+  - docs-platform/app/package.json
+  - docs-platform/app/src/cli.ts
+  - docs-platform/app/src/financial/financial-model.ts
+  - docs-platform/app/src/financial/google-sheet.ts
+  - docs-platform/app/src/financial/investor-summary.ts
+  - docs-platform/app/src/financial/investor-summary-google-sheet.ts
+  - docs-platform/app/src/google/financial-model-publisher.ts
+  - docs-platform/app/src/google/investor-summary-publisher.ts
+  - docs-platform/app/src/governance/timeline.ts
+  - docs-platform/app/src/governance/supersede.ts
+  - docs-platform/app/src/governance/supersede-cli.ts
+  - docs-platform/app/test/financial-model.test.ts
+  - docs-platform/app/test/financial-sheet-publisher.test.ts
+  - docs-platform/app/test/investor-financial-summary.test.ts
+  - docs-platform/app/test/investor-financial-summary-publisher.test.ts
+  - docs-platform/app/test/governance-supersede.test.ts
+  - docs-platform/generated/financial-model-projection.json
+  - docs-platform/generated/financial-google-sheets-payload.json
+  - docs-platform/generated/investor-financial-summary.json
+  - docs-platform/generated/investor-financial-summary-google-sheets-payload.json
+  - docs-platform/registry/assumptions.yaml
+  - docs-platform/registry/decisions.yaml
+  - docs-platform/registry/dependencies.yaml
+  - docs-platform/registry/documents.yaml
+  - docs-platform/registry/sources.yaml
+  - docs-platform/changes/
+  - docs-platform/changelog/
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+  - package.json
+  - src/App.tsx
+  - src/components/Economics.css
+  - src/components/Economics.tsx
+  - src/components/LaunchBudget.tsx
+  - src/components/RevenueModel.css
+  - src/components/RevenueModel.tsx
+  - src/content/economics.ts
+  - src/content/site.ts
+  - src/lib/economics.ts
+  - src/lib/launch-budget.ts
+  - src/lib/launch-financials.ts
+  - src/types.ts
+  - scripts/test-economics-data.test.ts
+  - scripts/test-economics-route.cjs
+  - scripts/test-launch-budget-financials.test.ts
+  - scripts/test-site.cjs
+  - scripts/prerender-dist.cjs
+  - output/review/economics-desktop.png
+  - output/review/economics-mobile.png
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+allowed_dirty_paths:
+  - output/pdf/launch-budget-review.pdf
+  - output/review/
+affected_document_ids:
+  - DOC-FINANCIAL-MODEL
+  - DOC-INVESTOR-FINANCIAL-SUMMARY
+affected_section_ids:
+  - financial-model.v0_2
+  - financial-model.monthly-cash-flow
+  - investor-summary.local-projection
+  - economics.financial-presentation
+  - launch-budget.financial-dependency
+  - governance.lifecycle.superseded
+rollback_payload: docs-platform/changelog/rollback-payloads/ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01/manifest.yaml

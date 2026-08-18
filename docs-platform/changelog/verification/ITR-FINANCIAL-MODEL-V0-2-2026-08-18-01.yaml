@@ -1,0 +1,52 @@
+schema_version: 2
+iteration_id: ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01
+proposal_id: PROP-FINANCIAL-MODEL-V0-2-2026-08-18-01
+decision_id: DEC-FINANCIAL-MODEL-V0-2-2026-08-18-01
+change_set_id: CHG-FINANCIAL-MODEL-V0-2-2026-08-18-01
+verified_at: 2026-08-19T00:10:00.000Z
+actor: Codex
+validation_status: passed
+approved_payload_sha256: df9de912fb4c50e897cac3917bbf7bf2bca0b6d22dd8dad30d79cb0a13f49958
+before_state_sha256: fab9ad52d614a67dd13bc03b98d998cb2d6ccb8891c25ed5d066302021a0dfae
+after_state_sha256: cca896f6c850373cca947c5a91d92d78187e6fdb198aaa06d9973c65b768a42d
+checks:
+  financial_model_projection: passed
+  financial_google_payload_local: passed
+  investor_summary_hash_dependency: passed
+  investor_summary_projection: passed
+  investor_summary_google_payload_local: passed
+  economics_projection_parity: passed
+  launch_budget_projection_parity: passed
+  ramp_up_and_seasonality: passed
+  protected_raw_materials_and_labor: passed
+  tax_cash_flow_and_investment_metrics: passed
+  governance_supersede_regression: passed
+  google_operations: not_run_by_scope
+tests:
+  targeted_financial_summary_governance:
+    passed: 61
+    failed: 0
+  targeted_economics_launch_budget:
+    passed: 11
+    failed: 0
+  current_static_build_browser_check:
+    passed: true
+    routes: 13
+    includes_economics: true
+    console_errors: 0
+    horizontal_overflow: 0
+  economics_route_desktop_mobile:
+    passed: true
+    console_errors: 0
+    horizontal_overflow: 0
+business_invariants:
+  financial_model_to_investor_summary: exact_hash_dependency
+  investor_summary_to_economics: direct_projection_mapping
+  financial_model_to_launch_budget: direct_projection_mapping
+  revenue_model_mature_volume_inputs: unchanged
+  google_sheets: not_updated
+history_invariants:
+  old_events_edited: false
+  prior_iterations_pending_supersession: true
+rollback_payload: docs-platform/changelog/rollback-payloads/ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01/manifest.yaml
+summary: Targeted deterministic checks and the current static-build browser check confirm the consolidated v0.2 content state. The launch-budget browser assertions read current Financial Model projection values, and /economics is included in prerendered static output. Google publication and readback are intentionally outside this iteration; prior local Investor Summary and Economics iterations are superseded append-only before sealing.

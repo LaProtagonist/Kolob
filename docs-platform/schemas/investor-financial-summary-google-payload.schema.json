@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "investor-financial-summary-google-payload.schema.json",
+  "type": "object",
+  "required": ["meta", "sheets"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": ["schema_version", "document_id", "title", "folder_name", "native_google_sheet", "financial_model_content_state_sha256", "summary_projection_sha256"],
+      "properties": {
+        "schema_version": { "const": 1 },
+        "document_id": { "const": "DOC-INVESTOR-FINANCIAL-SUMMARY" },
+        "title": { "const": "05 — Финансовая модель — инвестиционная сводка" },
+        "folder_name": { "const": "Колобочная — Investment" },
+        "native_google_sheet": { "const": true },
+        "financial_model_content_state_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "summary_projection_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+      },
+      "additionalProperties": false
+    },
+    "sheets": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "required": ["name", "values", "frozen_rows", "frozen_columns", "column_widths"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "values": { "type": "array", "minItems": 1, "items": { "type": "array", "items": { "type": ["string", "number", "boolean"] } } },
+          "frozen_rows": { "type": "integer", "minimum": 0 },
+          "frozen_columns": { "type": "integer", "minimum": 0 },
+          "column_widths": { "type": "array", "minItems": 1, "items": { "type": "integer", "minimum": 40 } }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

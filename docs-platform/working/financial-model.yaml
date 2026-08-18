@@ -4,13 +4,13 @@ document:
   title: Financial Model
   title_ru: Финансовая модель пилотного объекта
   google_title: 04 — Финансовая модель пилотного объекта
-  version: "0.1"
+  version: "0.2"
   status: research
   type: working_pilot_financial_model
-  iteration_id: ITR-FINANCIAL-MODEL-2026-08-16-01
-  decision_id: DEC-FINANCIAL-MODEL-2026-08-16-01
-  change_set_id: CHG-FINANCIAL-MODEL-2026-08-16-01
-  source_ids: [SRC-FINANCIAL-MODEL-BRIEF-2026-08-16]
+  iteration_id: ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01
+  decision_id: DEC-FINANCIAL-MODEL-V0-2-2026-08-18-01
+  change_set_id: CHG-FINANCIAL-MODEL-V0-2-2026-08-18-01
+  source_ids: [SRC-FINANCIAL-MODEL-BRIEF-2026-08-16, SRC-FINANCIAL-MODEL-V0-2-BRIEF-2026-08-18]
   note: Рабочая сценарная модель первого собственного совмещённого объекта; не является окончательным бизнес-планом, инвестиционным предложением или гарантией доходности.
 
 scope:
@@ -36,10 +36,11 @@ scope:
     - id: tax_capex_schedule
       status: tbd
     - id: seasonality
-      status: not_applied_v0.1
+      status: applied
+      basis: owner_approved_working_assumption
     - id: ramp_up_profile
-      status: tbd
-      v0_1_simplification: 100% выбранного сценария с первого полного расчётного месяца
+      status: applied
+      basis: owner_approved_working_assumption
 
 imports:
   revenue_model:
@@ -79,6 +80,48 @@ model:
   default_aggregator_share: 0
   discount_rate_annual: 0.20
   discount_rate_status: tbd_investor_hurdle_rate
+  opening_month: 1
+  opening_month_basis: calendar_month
+  seasonality_profile:
+    - month: 1
+      seasonality_coefficient: 0.93
+    - month: 2
+      seasonality_coefficient: 0.75
+    - month: 3
+      seasonality_coefficient: 0.88
+    - month: 4
+      seasonality_coefficient: 0.95
+    - month: 5
+      seasonality_coefficient: 1.02
+    - month: 6
+      seasonality_coefficient: 0.96
+    - month: 7
+      seasonality_coefficient: 0.96
+    - month: 8
+      seasonality_coefficient: 0.98
+    - month: 9
+      seasonality_coefficient: 1.12
+    - month: 10
+      seasonality_coefficient: 1.16
+    - month: 11
+      seasonality_coefficient: 1.10
+    - month: 12
+      seasonality_coefficient: 1.18
+  ramp_up_profile:
+    - month: 1
+      ramp_factor: 0.6
+    - month: 2
+      ramp_factor: 0.7
+    - month: 3
+      ramp_factor: 0.8
+    - month: 4
+      ramp_factor: 0.85
+    - month: 5
+      ramp_factor: 0.9
+    - month: 6
+      ramp_factor: 0.95
+    - month: 7
+      ramp_factor: 1
 
 food_cost:
   kolobok_segments:
@@ -119,6 +162,14 @@ food_cost:
     sensitivity: [0.02, 0.04, 0.07]
     basis: raw_material_cost
     provenance: owner_approved
+  protected_formula:
+    basis: net_revenue
+    raw_materials_rate: 0.30
+    raw_materials_rule: financial_pnl_uses_protected_rate
+    protected_labor_rate: 0.27
+    protected_labor_formula: max(calculated_staffing_labor, net_revenue * protected_labor_rate)
+    recipe_model_status: retained_as_analytical_source
+    provenance: owner_approved
 
 packaging:
   name: Упаковка и одноразовая посуда
@@ -149,12 +200,13 @@ staffing:
       function: Заготовочное производство.
     - id: LINE_COOK
       role: Повар основной линии
-      pessimistic_headcount: 4
+      pessimistic_headcount: 2
       realistic_headcount: 4
       optimistic_headcount: 4
       gross_salary_rub: 115000
-      schedule: сменный, 2 одновременно
+      schedule: сменный, 2 одновременно (Пессимистичный — 1 в смене, график 2/2)
       function: Основная горячая линия.
+      pessimistic_note: Утверждено владельцем 2026-08-18 — 2 повара основной линии в штате, 1 в смене при графике 2/2.
     - id: SERVING
       role: Сервировка
       pessimistic_headcount: 2
@@ -211,14 +263,25 @@ staffing:
   personnel_reserve_basis: payroll_plus_employer_contributions
 
 opex:
+  marketing_structure_reference:
+    note: Утверждённая структура регулярного маркетинга на реалистичном зрелом уровне ~400 000 ₽ в месяц; используется как ориентир состава, суммы по сценариям задаёт формула MARKETING.
+    items:
+      - { id: MARKETING_SMM, name: SMM / ведение, amount_rub: 50000, type: outsourcing }
+      - { id: MARKETING_BLOGGERS, name: Блогеры / инфлюенсеры / гастроканалы, amount_rub: 150000 }
+      - { id: MARKETING_PERFORMANCE, name: Performance / геореклама / продвижение, amount_rub: 75000 }
+      - { id: MARKETING_CONTENT, name: Производство фото / видео / контента, amount_rub: 40000 }
+      - { id: MARKETING_CRM, name: CRM / акции / возврат гостей, amount_rub: 25000 }
+      - { id: MARKETING_MERCH, name: Мерч / подарки / специальные промоматериалы, amount_rub: 25000 }
+      - { id: MARKETING_PARTNERSHIPS, name: Локальные партнёрства / события / PR, amount_rub: 20000 }
+      - { id: MARKETING_TESTING, name: Резерв тестирования каналов, amount_rub: 15000 }
   entries:
     - { id: RENT, name: Аренда, category: Occupancy, behavior: fixed, amount_rub: 350000, applies_to: rent, status: owner_approved }
     - { id: UTILITIES, name: Коммунальные услуги, category: Utilities, behavior: fixed, amount_rub: 200000, status: owner_approved }
     - { id: ACQUIRING, name: Эквайринг, category: Payment Processing, behavior: variable, rate_of_gross_revenue: 0.02, sensitivity: [0.007, 0.012, 0.02], status: owner_approved }
-    - { id: ADVERTISING, name: Рекламный бюджет, category: Marketing, behavior: fixed, amount_rub: 100000, status: owner_approved }
-    - { id: SMM, name: SMM / ведение, category: Marketing, behavior: fixed, amount_rub: 50000, type: outsourcing, status: owner_approved }
+    - { id: MARKETING, name: Маркетинг и продвижение, category: Marketing, behavior: scenario_formula, fixed_amount_rub: 150000, rate_of_net_revenue: 0.024, ramp_up_floor_rub: 400000, ramp_up_floor_months: 6, formula: "M1-M6: max(ramp_up_floor_rub, fixed_amount_rub + rate_of_net_revenue * monthly_net_revenue); M7+: fixed_amount_rub + rate_of_net_revenue * monthly_net_revenue", status: owner_approved }
     - { id: EQUIPMENT_SERVICE, name: Обслуживание оборудования, category: Repairs & Maintenance, behavior: fixed, amount_rub: 100000, status: owner_approved }
-    - { id: HOUSEHOLD, name: Хозяйственные расходы, category: Other OPEX, behavior: fixed, amount_rub: 80000, status: owner_approved }
+    - { id: HOUSEHOLD, name: Хозяйственные и эксплуатационные расходники, category: Other OPEX, behavior: scenario_formula, fixed_amount_rub: 50000, variable_amount_rub: 50000, baseline_checks_per_day: 300, formula: "fixed_amount_rub + variable_amount_rub * actual_checks_per_day / baseline_checks_per_day", status: owner_approved }
+    - { id: ADMINISTRATIVE_RESERVE, name: Административный резерв, category: Other OPEX, behavior: variable, rate_of_net_revenue: 0.02, status: owner_approved }
     - { id: ACCOUNTING, name: Бухгалтерский аутсорсинг, category: Accounting, behavior: fixed, amount_rub: 25000, status: owner_approved }
     - { id: VENT_GREASE, name: Вентиляция и жироуловители, category: Sanitation, behavior: fixed, amount_rub: 15000, status: owner_approved }
     - { id: UNIFORM_RENEWAL, name: Обновление спецодежды, category: Other OPEX, behavior: fixed, amount_rub: 15000, status: owner_approved }
@@ -260,16 +323,20 @@ tax:
       - rent
       - utilities
       - acquiring
-      - advertising
-      - smm
+      - marketing
       - software
       - accounting
       - repairs_service
       - sanitation
       - security
+      - household_supplies
+      - administrative_reserve
       - other_current_opex
+    labor_basis: calculated_staffing_labor
+    labor_basis_status: owner_approved
     excludes:
       - personnel_reserve
+      - protected_labor_uplift
       - restaurant_capex
       - real_estate_purchase
       - security_deposit
@@ -295,6 +362,8 @@ launch_investment:
   alarm_rub: 35000
   initial_uniform_rub: 180000
   initial_inventory_rub: 1000000
+  launch_marketing_rub: 700000
+  launch_marketing_timing: month_0
   initial_inventory_classification: Working Capital / Launch Investment
   other_launch_costs_rub: 0
   other_launch_costs_status: tbd
@@ -309,7 +378,14 @@ operating_reserve:
   fixed_excludes: [raw_materials, waste, packaging, acquiring, aggregator_commission, sales_dependent_taxes]
   rent_uncovered_months_formula: max(reserve_months - prepaid_rent_months, 0)
   full_indicator_includes_variable_operating_cash_costs: true
+  include_administrative_reserve_in_fixed_reserve: false
   initial_inventory_separate: true
+  scenario_formula_basis: mature_month_of_scenario
+  scenario_formula_basis_note: Сценарные формулы (маркетинг, хозрасходники) входят в Fixed OPEX Reserve по значению зрелого месяца выбранного сценария (volume = 1), без ramp-up floor.
+  reserve_labor_basis: calculated_staffing_labor
+  reserve_labor_basis_status: owner_approved
+  reserve_labor_basis_note: Надбавка защищённого ФОТ не входит в Fixed OPEX Reserve; резерв считается от фактической стоимости команды. Защищённый ФОТ остаётся консервативным допущением P&L.
+  open_questions: []
 
 depreciation:
   type: management_depreciation

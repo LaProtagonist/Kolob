@@ -308,7 +308,23 @@ documents:
       - Производственный центр
       - Источники
       - Проверки
-    version: "0.1"
+    version: "0.2"
     governance_level: working
     local_path: docs-platform/working/financial-model.yaml
-    updated_at: 2026-08-16
+    updated_at: 2026-08-19
+  - id: DOC-INVESTOR-FINANCIAL-SUMMARY
+    title: Investor Financial Summary
+    type: investor_financial_summary
+    status: research
+    google_file_id: 1AW-JONG-vkxCEIG_pY5SSPgsMpXLycLJAk7iY5saVus
+    template: null
+    sections:
+      - Основные показатели
+      - Доходы и расходы
+      - Инвестиции
+      - Сценарии
+      - Допущения
+    version: "0.1"
+    governance_level: working
+    local_path: docs-platform/working/investor-financial-summary.yaml
+    updated_at: 2026-08-19

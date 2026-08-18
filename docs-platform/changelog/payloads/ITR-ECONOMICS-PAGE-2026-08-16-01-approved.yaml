@@ -1,0 +1,86 @@
+schema_version: 2
+payload_id: PAYLOAD-ECONOMICS-PAGE-2026-08-16-01
+iteration_id: ITR-ECONOMICS-PAGE-2026-08-16-01
+proposal_id: PROP-ECONOMICS-PAGE-2026-08-16-01
+decision_id: DEC-ECONOMICS-PAGE-2026-08-16-01
+change_set_id: CHG-ECONOMICS-PAGE-2026-08-16-01
+title: Create the local investor-facing Economics page
+status: approved
+approved_by: project owner
+approved_at: 2026-08-16T02:07:35.000Z
+scope:
+  route: /economics
+  summary: Create a compact local investment visualization that connects sales, operating expenses, cash flow and launch investment without changing any master calculation source.
+dependency:
+  presentation_source: docs-platform/generated/investor-financial-summary.json
+  investor_summary_projection_sha256: 383c867a478f43da46bcc381f58bce9b70f91c4c7ce633dc64b3d3d33b03ba50
+  master_source: docs-platform/generated/financial-model-projection.json
+  financial_model_content_state_sha256: 18e56ce33cc19540ff9540d05a35c24284534fdfd89a6b74e59ff5a394980ae4
+  stale_guard: required
+route_contract:
+  title: Экономика объекта
+  subtitle: "Модель экономики совмещённого объекта «Колобочной»: объём продаж, операционные расходы, стартовые инвестиции и срок окупаемости."
+  robots: [noindex, nofollow]
+  public_navigation: false
+  sitemap: false
+  deployment: forbidden_before_owner_approval
+scenarios:
+  default: realistic
+  values:
+    - { id: pessimistic, checks_per_day: 200 }
+    - { id: realistic, checks_per_day: 300 }
+    - { id: optimistic, checks_per_day: 450 }
+realistic_headline:
+  start_investment_rub: 43040022.34
+  sales_per_month_rub: 10488600
+  ebitda_rub: 4002050.68
+  ebitda_margin: 0.38156195107068624
+  break_even_checks_per_day: 140.36
+  payback_month: 11
+presentation:
+  sections:
+    - Главные показатели
+    - От продаж к операционному результату
+    - Запас устойчивости
+    - Сравнение сценариев
+    - Стартовые инвестиции
+    - Аренда или покупка помещения
+    - Чувствительность результата
+    - Основные допущения
+  sticky_summary_desktop: true
+  mobile_sticky_summary: false
+  cogs_hierarchy: Себестоимость продукции раскрывается как сырьё + списания + упаковка.
+  sensitivity_scope: [average_check, food_cost]
+boundaries:
+  unchanged:
+    - Financial Model source, projection, formulas and assumptions
+    - Investor Financial Summary source, projection and Google payload
+    - Revenue Model source, projection, route and calculations
+    - CAPEX and Investor Start Model
+    - /launch-budget and /revenue-model
+    - navigation, footer and sitemap
+  forbidden:
+    - research or internet search
+    - independent financial formulas
+    - Google publication or readback
+    - commit, seal, tag, push or deployment
+    - full project or docs-platform test suite
+state_hash_paths:
+  - src/App.tsx
+  - src/content/site.ts
+  - src/components/Economics.tsx
+  - src/components/Economics.css
+  - src/content/economics.ts
+  - src/lib/economics.ts
+  - scripts/test-economics-data.test.ts
+  - scripts/test-economics-route.cjs
+allowed_dirty_paths:
+  - docs-platform/working/investor-financial-summary.yaml
+  - docs-platform/generated/investor-financial-summary.json
+  - docs-platform/generated/investor-financial-summary-google-sheets-payload.json
+  - output/pdf/launch-budget-review.pdf
+  - output/review/
+rollback_contract:
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true

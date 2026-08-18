@@ -1,0 +1,49 @@
+schema_version: 2
+iteration_id: ITR-GOVERNANCE-SUPERSEDE-SYNCED-2026-08-18-01
+proposal_id: PROP-GOVERNANCE-SUPERSEDE-SYNCED-2026-08-18-01
+decision_id: DEC-GOVERNANCE-SUPERSEDE-SYNCED-2026-08-18-01
+change_set_id: CHG-GOVERNANCE-SUPERSEDE-SYNCED-2026-08-18-01
+verified_at: 2026-08-18T20:05:00.000Z
+actor: Codex
+validation_status: passed
+approved_payload_sha256: f603dc99c9c48ab3ab9172b3cce27dc0699d9cfbeb09b3f876ca8844626358eb
+before_state_sha256: 51c6bbdecfe5ff377a602b8862f1522429a37f569aaa9b887f7552174a8c0fc9
+after_state_sha256: 9104f74611482be5c070d0046d91fd8e1b835bf5ed30d5e022088d4d19acd53f
+checks:
+  verified_to_superseded: passed
+  synced_to_superseded: passed
+  synced_to_superseded_no_rollback: passed
+  synced_to_superseded_external_receipts_untouched: passed
+  synced_to_superseded_no_google_api: passed
+  ordinary_verified_to_committed: passed
+  prepublished_verified_to_published_to_synced_to_committed: passed
+  committed_to_superseded: rejected_as_required
+  deployed_to_superseded: rejected_as_required
+  self_supersede: rejected_as_required
+  missing_target_iteration: rejected_as_required
+  missing_source_iteration: rejected_as_required
+  empty_reason: rejected_as_required
+  repeated_supersede: rejected_as_required
+  explicit_superseded_by_reference: passed
+  append_only_hash_chain: passed
+  timeline_validation: passed
+  typescript: passed
+tests:
+  governance_supersede:
+    passed: 12
+    failed: 0
+  governance_timeline:
+    passed: 7
+    failed: 0
+business_invariants:
+  financial_model_changed: false
+  investor_summary_content_changed: false
+  revenue_model_changed: false
+  capex_changed: false
+  google_sheet_changed: false
+  website_changed: false
+history_invariants:
+  old_events_edited: false
+  google_receipts_edited: false
+rollback_payload: docs-platform/changelog/rollback-payloads/ITR-GOVERNANCE-SUPERSEDE-SYNCED-2026-08-18-01/manifest.yaml
+summary: Governance History v2 now supports closing an already published and synced iteration as superseded by a later governed iteration through a guarded append-only tool, while every ordinary lifecycle path and every rejection guard keeps working.

@@ -1,0 +1,15 @@
+schema_version: 2
+proposal_id: PROP-ECONOMICS-PAGE-2026-08-16-01
+iteration_id: ITR-ECONOMICS-PAGE-2026-08-16-01
+title: Create the local investor-facing Economics page
+status: proposed
+proposed_at: 2026-08-16T02:07:34.000Z
+scope: Local /economics presentation over the existing Investor Financial Summary and sealed Financial Model, without new calculations or changes to either source.
+approved_payload_path: docs-platform/changelog/payloads/ITR-ECONOMICS-PAGE-2026-08-16-01-approved.yaml
+approved_payload_sha256: 7cf35db25a78222dfed36330deee31ba5c67eec98d3e699a53bda1c5b7179f21
+excludes:
+  - changes to Financial Model, Investor Financial Summary, Revenue Model, CAPEX or Investor Start Model
+  - changes to /revenue-model, /launch-budget or other existing routes
+  - independent financial formulas, research or new assumptions
+  - navigation, footer, sitemap, publication or deployment
+  - commit, seal, tag or push before owner visual approval

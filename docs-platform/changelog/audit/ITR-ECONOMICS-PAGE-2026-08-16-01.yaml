@@ -1,0 +1,76 @@
+schema_version: 2
+iteration_id: ITR-ECONOMICS-PAGE-2026-08-16-01
+proposal_id: PROP-ECONOMICS-PAGE-2026-08-16-01
+decision_id: DEC-ECONOMICS-PAGE-2026-08-16-01
+change_set_id: CHG-ECONOMICS-PAGE-2026-08-16-01
+timestamp: 2026-08-16T02:09:00.000Z
+actor: Codex
+type: Local Economics investor page
+reason: Connect the existing sales, operating-expense and investment projections in a compact local working page without modifying their sources.
+before:
+  route: absent
+  state_sha256: 40fa6ed869884d0af15c7dc093ac6cfdcce11ef3d54bfaac9764549fd7827268
+after:
+  route: /economics
+  robots: noindex, nofollow
+  navigation: absent
+  sitemap: absent
+  scenario_count: 3
+  default_scenario: realistic
+  state_sha256: f6b66f7c4a3a972ff42c81cebe0692b952902f4b7ead1dcd9c1b26263c31eda3
+dependency:
+  presentation_source: docs-platform/generated/investor-financial-summary.json
+  presentation_source_sha256: 383c867a478f43da46bcc381f58bce9b70f91c4c7ce633dc64b3d3d33b03ba50
+  master_source: docs-platform/generated/financial-model-projection.json
+  master_source_sha256: aa494d3c03d57d11a6c57c126046576d0cf7440387adc54688ad4ca6c6552324
+  financial_model_content_state_sha256: 18e56ce33cc19540ff9540d05a35c24284534fdfd89a6b74e59ff5a394980ae4
+  stale_guard: passed
+realistic_scenario:
+  checks_per_day: 300
+  start_investment_rub: 43040022.34
+  revenue_per_month_rub: 10488600
+  ebitda_rub: 4002050.68
+  ebitda_margin: 0.38156195107068624
+  break_even_checks_per_day: 140.36
+  free_cash_flow_rub: 3692343.91
+  payback_month: 11
+presentation_invariants:
+  cogs_total_rub: 2850339.04
+  cogs_components_rub:
+    raw_materials: 2500326
+    waste: 100013.04
+    packaging: 250000
+  cogs_components_equal_total: true
+  drinks_in_food_cost_hierarchy: false
+  property_value_in_restaurant_capex: false
+  full_operating_reserve_in_default_capital: false
+browser_qa:
+  desktop_1440x900:
+    horizontal_overflow: false
+    sticky_summary: passed
+  mobile_390x844:
+    horizontal_overflow: false
+    sticky_summary: disabled_as_designed
+  scenario_interaction: passed
+  console_errors: 0
+  review_screenshots:
+    - output/review/economics-desktop.png
+    - output/review/economics-mobile.png
+invariants:
+  research_performed: false
+  financial_model_changed: false
+  investor_financial_summary_changed: false
+  revenue_model_changed: false
+  capex_changed: false
+  launch_budget_changed: false
+  revenue_route_changed: false
+  google_files_changed: false
+delivery:
+  staged: false
+  committed: false
+  sealed: false
+  tagged: false
+  pushed: false
+  published: false
+  synced: false
+  deployed: false

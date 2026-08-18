@@ -114,6 +114,14 @@ function assumptionsSheet(model: any, revenue: any, capital: ReturnType<typeof i
   add("contribution_rate_above", reduced.rate_above_threshold, "share", "reduced", reduced.status, "SRC-FINANCIAL-MODEL-BRIEF-2026-08-16");
   add("standard_contribution_rate", model.staffing.employer_contributions.standard.rate, "share", "standard", "owner_approved", "SRC-FINANCIAL-MODEL-BRIEF-2026-08-16");
   add("personnel_reserve_rate", model.staffing.personnel_reserve_rate, "share", "all", "owner_approved", "SRC-FINANCIAL-MODEL-BRIEF-2026-08-16");
+  add("protected_raw_materials_rate", model.food_cost.protected_formula.raw_materials_rate, "share of net revenue", "financial P&L", "owner_approved", "Financial Model v0.2", "Защищённая финансовая база; рецептурный расчёт остаётся аналитическим ориентиром.");
+  add("protected_labor_rate", model.food_cost.protected_formula.protected_labor_rate, "share of net revenue", "financial P&L", "owner_approved", "Financial Model v0.2", "MAX(расчётная стоимость команды; выручка без НДС × ставка).");
+  add("administrative_reserve_rate", opex(model, "ADMINISTRATIVE_RESERVE").rate_of_net_revenue, "share of net revenue", "financial P&L", "owner_approved", "Financial Model v0.2");
+  add("marketing_fixed_amount_rub", opex(model, "MARKETING").fixed_amount_rub, "RUB/month", "marketing", "owner_approved", "Financial Model v0.2");
+  add("marketing_rate", opex(model, "MARKETING").rate_of_net_revenue, "share of net revenue", "marketing", "owner_approved", "Financial Model v0.2");
+  add("marketing_ramp_up_floor_rub", opex(model, "MARKETING").ramp_up_floor_rub, "RUB/month", "months 1–6", "owner_approved", "Financial Model v0.2");
+  add("opening_month", model.model.opening_month, "calendar month", "cash flow", "working_assumption", "Financial Model v0.2", "Январь в текущей проекции; выбирается для конкретного объекта.");
+  add("launch_marketing_rub", model.launch_investment.launch_marketing_rub, "RUB", "Month 0", "owner_approved", "Financial Model v0.2", "Отдельная разовая инвестиция, не ежемесячный OPEX.");
   return sheet("02 Допущения", rows, [250, 150, 150, 240, 200, 280, 380], 3, 1);
 }
 
@@ -146,6 +154,9 @@ function menuSheet(model: any, revenue: any): FinancialSheet {
   rows.push(["Средняя порция еды", 1, revenue.product_model.average_food_portion_price_rub, "", formula(`E8*${cell("02 Допущения", "$B$8")}+E9*${cell("02 Допущения", "$B$9")}`), formula("E10"), "derived"]);
   rows.push(["Напитки", 1, revenue.product_model.drinks.average_price_rub, formula("E11/C11"), model.food_cost.drinks.unit_cost_rub, formula("E11"), "owner_approved"]);
   rows.push(["Списания", "", "", formula(`${cell("02 Допущения", "$B$11")}`), "", "", "4% от сырья"]);
+  rows.push([]);
+  rows.push(["Расчётная рецептурная себестоимость", "", "", "", "", "", "Технологический ориентир; не используется как базовая P&L-себестоимость."]);
+  rows.push(["Защищённое допущение Financial Model", formula(`${cell("02 Допущения", "$B$44")}`), "", "", "", "", "Сырьё = 30% выручки без НДС в P&L, FCF и инвестиционных метриках."]);
   return sheet("04 Меню и себестоимость", rows, [240, 120, 120, 130, 150, 150, 240], 3, 1);
 }
 
@@ -178,12 +189,12 @@ function opexSheet(model: any): FinancialSheet {
     return formula(value(scenario.row, staffCol));
   };
   const add = (name: string, category: string, behavior: string, basis: string, values: SheetValue[], status = "owner_approved", comment = "") => rows.push([name, category, behavior, basis, ...values, status, comment]);
-  add("Сырьё", "Food & Beverage COGS", "Variable", "food portions × 177.01 + drinks × 30", SCENARIOS.map((_, i) => scenarioFormula(i, r => `${cell("03 Продажи", `H${r}`)}*${cell("04 Меню и себестоимость", "$E$10")}+${cell("03 Продажи", `I${r}`)}*${cell("04 Меню и себестоимость", "$E$11")}`)));
+  add("Сырьё — защищённая финансовая база", "Food & Beverage COGS", "Variable", "net revenue × 30%", SCENARIOS.map((_, i) => scenarioFormula(i, r => `${cell("03 Продажи", `F${r}`)}*${cell("02 Допущения", "$B$44")}`)));
   add("Списания", "Food & Beverage COGS", "Variable", "raw materials × 4%", SCENARIOS.map((_, i) => formula(`${col(4 + i)}4*${cell("02 Допущения", "$B$11")}`)));
   add("Упаковка", "Packaging", "Variable", "250,000 × checks / 300", SCENARIOS.map((s, i) => formula(`${cell("02 Допущения", "$B$26")}*${cell("03 Продажи", `B${s.row}`)}/${cell("02 Допущения", "$B$27")}`)));
-  add("ФОТ", "Labor", "Step-fixed", "role headcount × gross salary", SCENARIOS.map((_, i) => formula(`${cell("05 Персонал", `${["F", "G", "H"][i]}12`)}`)));
-  add("Страховые взносы", "Labor", "Step-fixed", "reduced formula / standard sensitivity", SCENARIOS.map((_, i) => formula(`${cell("05 Персонал", `${["I", "J", "K"][i]}12`)}`)), "requires_confirmation");
-  add("Резерв на персонал", "Labor", "Step-fixed", "10% × (payroll + contributions)", SCENARIOS.map((_, i) => formula(`${cell("05 Персонал", `${["F", "G", "H"][i]}13`)}`)));
+  add("Расчётная стоимость команды", "Labor", "Step-fixed", "роли, взносы и резерв на персонал", SCENARIOS.map((_, i) => formula(`${cell("05 Персонал", `${["F", "G", "H"][i]}14`)}`)));
+  add("Защищённый Labor", "Labor", "Step-fixed", "MAX(расчётная команда; net revenue × 27%)", SCENARIOS.map((_, i) => scenarioFormula(i, r => `MAX(${col(4 + i)}7,${cell("03 Продажи", `F${r}`)}*${cell("02 Допущения", "$B$45")})`)));
+  add("Надбавка защищённого Labor", "Labor", "Derived", "защищённый Labor − расчётная команда", SCENARIOS.map((_, i) => formula(`${col(4 + i)}8-${col(4 + i)}7`)), "derived");
   const fixed = (amount: number) => SCENARIOS.map(() => amount);
   add(opex(model, "RENT").name, opex(model, "RENT").category, "Fixed", "Investor Start Model", fixed(model.real_estate.scenarios.rent.monthly_rent_rub), opex(model, "RENT").status);
   add(opex(model, "UTILITIES").name, opex(model, "UTILITIES").category, "Fixed", "owner-approved", fixed(opex(model, "UTILITIES").amount_rub), opex(model, "UTILITIES").status);
@@ -192,10 +203,13 @@ function opexSheet(model: any): FinancialSheet {
     const entry = opex(model, id);
     add(entry.name, entry.category, "Fixed", basis, fixed(entry.amount_rub), entry.status, comment);
   };
-  addFixedEntry("ADVERTISING");
-  addFixedEntry("SMM", "outsourcing");
+  const marketing = opex(model, "MARKETING");
+  add(marketing.name, marketing.category, "Scenario formula", "150,000 + net revenue × 2.4%; M1–M6 floor 400,000", SCENARIOS.map(s => formula(`MAX(${cell("02 Допущения", "$B$49")},${cell("02 Допущения", "$B$47")}+${cell("03 Продажи", `F${s.row}`)}*${cell("02 Допущения", "$B$48")})`)), marketing.status);
+  const household = opex(model, "HOUSEHOLD");
+  add(household.name, household.category, "Scenario formula", "50,000 + 50,000 × checks / 300", SCENARIOS.map(s => formula(`${household.fixed_amount_rub}+${household.variable_amount_rub}*${cell("03 Продажи", `B${s.row}`)}/${household.baseline_checks_per_day}`)), household.status);
+  const administrativeReserve = opex(model, "ADMINISTRATIVE_RESERVE");
+  add(administrativeReserve.name, administrativeReserve.category, "Variable", "net revenue × 2%", SCENARIOS.map(s => formula(`${cell("03 Продажи", `F${s.row}`)}*${cell("02 Допущения", "$B$46")}`)), administrativeReserve.status);
   addFixedEntry("EQUIPMENT_SERVICE", "service OPEX");
-  addFixedEntry("HOUSEHOLD");
   addFixedEntry("ACCOUNTING", "outsourcing");
   addFixedEntry("VENT_GREASE");
   addFixedEntry("UNIFORM_RENEWAL");
@@ -209,7 +223,7 @@ function opexSheet(model: any): FinancialSheet {
   add(supplierDelivery.name, supplierDelivery.category, "Variable", "included in purchase price", fixed(supplierDelivery.amount_rub), supplierDelivery.status);
   add("Агрегаторы", "Payment Processing", "Variable", "gross sales × share × 29.17%", SCENARIOS.map(s => formula(`${cell("03 Продажи", `F${s.row}`)}*${cell("02 Допущения", "$B$13")}*${cell("02 Допущения", "$B$14")}`)));
   addFixedEntry("OTHER");
-  add("Налоги", "Taxes", "Variable", "см. налоговый proxy в P&L", SCENARIOS.map((_, i) => formula(`${cell("08 P&L", `${["B", "C", "D"][i]}31`)}`)), "management_proxy");
+  add("Налоги", "Taxes", "Variable", "см. налоговый proxy в P&L", SCENARIOS.map((_, i) => formula(`${cell("08 P&L", `${["B", "C", "D"][i]}39`)}`)), "management_proxy");
   add("Амортизация", "Management depreciation", "Non-cash", "management useful lives", SCENARIOS.map(() => formula(`${cell("07 CAPEX", "$D$20")}`)), "management_only");
   add("Maintenance CAPEX", "Capital expenditure", "Cash / outside EBITDA", "(equipment + furniture) × 3% / 12", SCENARIOS.map(() => formula(`${cell("07 CAPEX", "$D$19")}/12`)));
   return sheet("06 OPEX", rows, [260, 190, 130, 310, 150, 150, 150, 180, 360], 3, 1);
@@ -227,13 +241,14 @@ function capexSheet(model: any, capital: ReturnType<typeof importedLaunchCapital
     ["Охранная сигнализация", "Launch CAPEX", "Owner approved", model.launch_investment.alarm_rub, "research", "Month 0"],
     ["Первичная форма", "Pre-opening", "Owner approved", model.launch_investment.initial_uniform_rub, "research", "Month 0"],
     ["Первоначальный товарный запас", "Working Capital", "Owner approved", model.launch_investment.initial_inventory_rub, "research", "Отдельно от Operating Reserve"],
+    ["Маркетинг запуска", "Pre-opening", "Owner approved", model.launch_investment.launch_marketing_rub, "research", "Отдельная строка Month 0; не входит в ежемесячный маркетинг"],
     ["Прочие launch costs", "Pre-opening", "TBD", model.launch_investment.other_launch_costs_rub, model.launch_investment.other_launch_costs_status, "Ноль не является подтверждённым значением"],
     ["Резерв запуска", "Launch contingency", "Investor Start Model", formula(`SUM(D4:D6)*${cell("02 Допущения", "$B$19")}`), "research", "Недвижимость не входит в базу"],
     ["Предоплата аренды", "Prepaid occupancy", "Investor Start Model", formula(`${cell("02 Допущения", "$B$16")}*${cell("02 Допущения", "$B$17")}`), "research", "Не P&L Month 1"],
     ["Обеспечительный платёж", "Tied funds", "Investor Start Model", formula(`${cell("02 Допущения", "$B$16")}*${cell("02 Допущения", "$B$18")}`), "research", "Не P&L; не возвращается автоматически Month 60"],
-    ["Fixed OPEX Reserve", "Operating Reserve", "Financial Model", formula(`(${cell("05 Персонал", "$G$14")}+SUM(${cell("06 OPEX", "$F$11")},${cell("06 OPEX", "$F$13")}:${cell("06 OPEX", "$F$25")},${cell("06 OPEX", "$F$28")}))*${cell("02 Допущения", "$B$15")}+MAX(${cell("02 Допущения", "$B$15")}-${cell("02 Допущения", "$B$17")},0)*${cell("02 Допущения", "$B$16")}`), "research", "Default invested capital reserve"],
-    ["Full Operating Reserve", "Conservative indicator", "Financial Model", formula(`D15+SUM(${cell("06 OPEX", "$F$4")}:${cell("06 OPEX", "$F$6")},${cell("06 OPEX", "$F$12")},${cell("06 OPEX", "$F$27")},${cell("06 OPEX", "$F$29")})*${cell("02 Допущения", "$B$15")}`), "research", "Не default invested capital"],
-    ["Restaurant invested capital", "Investment", "Financial Model", formula("SUM(D4:D15)"), "derived", "Включает Fixed OPEX Reserve, не Full Reserve"],
+    ["Fixed OPEX Reserve", "Operating Reserve", "Financial Model", formula(`(${cell("05 Персонал", "$G$14")}+SUM(${cell("06 OPEX", "$F$11")},${cell("06 OPEX", "$F$13")},${cell("06 OPEX", "$F$14")},${cell("06 OPEX", "$F$16")}:${cell("06 OPEX", "$F$25")},${cell("06 OPEX", "$F$28")}))*${cell("02 Допущения", "$B$15")}+MAX(${cell("02 Допущения", "$B$15")}-${cell("02 Допущения", "$B$17")},0)*${cell("02 Допущения", "$B$16")}`), "research", "Включает расчётную команду, маркетинг и хозрасходники; не включает protected labor uplift и административный резерв"],
+    ["Full Operating Reserve", "Conservative indicator", "Financial Model", formula(`D16+SUM(${cell("06 OPEX", "$F$4")}:${cell("06 OPEX", "$F$6")},${cell("06 OPEX", "$F$12")},${cell("06 OPEX", "$F$15")},${cell("06 OPEX", "$F$26")},${cell("06 OPEX", "$F$29")})*${cell("02 Допущения", "$B$15")}`), "research", "Не default invested capital"],
+    ["Restaurant invested capital", "Investment", "Financial Model", formula("SUM(D4:D16)"), "derived", "Включает Fixed OPEX Reserve, не Full Reserve"],
     ["Real Estate Investment", "Property", "Investor Start Model", model.real_estate.scenarios.purchase.purchase_price_rub, "research", "Только purchase scenario"],
     ["Maintenance CAPEX / год", "Capital expenditure", "Financial Model", formula(`(D4+D5)*${cell("02 Допущения", "$B$25")}`), "derived", "Вычитается из FCF, не из EBITDA"],
     ["Management depreciation / месяц", "Non-cash", "Financial Model", capital.monthly_depreciation_rub, "management_only", `${capital.mapping_requires_review_count} unmapped items`],
@@ -254,71 +269,84 @@ function pnlSheet(): FinancialSheet {
   add("Продажи (gross consumer prices)", SCENARIOS.map(s => formula(`${cell("03 Продажи", `F${s.row}`)}`)));
   add("НДС", [0, 0, 0]);
   add("Продажи без НДС", [formula("B4-B5"), formula("C4-C5"), formula("D4-D5")]);
-  add("Сырьё", [formula(`${cell("06 OPEX", "E4")}`), formula(`${cell("06 OPEX", "F4")}`), formula(`${cell("06 OPEX", "G4")}`)]);
+  add("Сырьё — защищённая финансовая база", [formula(`${cell("06 OPEX", "E4")}`), formula(`${cell("06 OPEX", "F4")}`), formula(`${cell("06 OPEX", "G4")}`)]);
   add("Списания", [formula(`${cell("06 OPEX", "E5")}`), formula(`${cell("06 OPEX", "F5")}`), formula(`${cell("06 OPEX", "G5")}`)]);
   add("Упаковка", [formula(`${cell("06 OPEX", "E6")}`), formula(`${cell("06 OPEX", "F6")}`), formula(`${cell("06 OPEX", "G6")}`)]);
   add("Валовая прибыль", [formula("B6-SUM(B7:B9)"), formula("C6-SUM(C7:C9)"), formula("D6-SUM(D7:D9)")]);
   add("Gross Margin %", [formula("B10/B6"), formula("C10/C6"), formula("D10/D6")], false);
-  add("Labor", [formula(`SUM(${cell("06 OPEX", "E7:E9")})`), formula(`SUM(${cell("06 OPEX", "F7:F9")})`), formula(`SUM(${cell("06 OPEX", "G7:G9")})`)]);
+  add("Расчётная стоимость команды", [formula(`${cell("06 OPEX", "E7")}`), formula(`${cell("06 OPEX", "F7")}`), formula(`${cell("06 OPEX", "G7")}`)]);
+  add("Защищённый Labor", [formula(`${cell("06 OPEX", "E8")}`), formula(`${cell("06 OPEX", "F8")}`), formula(`${cell("06 OPEX", "G8")}`)]);
   add("Аренда", [formula(`${cell("06 OPEX", "E10")}`), formula(`${cell("06 OPEX", "F10")}`), formula(`${cell("06 OPEX", "G10")}`)]);
   add("Коммунальные", [formula(`${cell("06 OPEX", "E11")}`), formula(`${cell("06 OPEX", "F11")}`), formula(`${cell("06 OPEX", "G11")}`)]);
   add("Эквайринг", [formula(`${cell("06 OPEX", "E12")}`), formula(`${cell("06 OPEX", "F12")}`), formula(`${cell("06 OPEX", "G12")}`)]);
-  add("Маркетинг", [formula(`SUM(${cell("06 OPEX", "E13:E14")})`), formula(`SUM(${cell("06 OPEX", "F13:F14")})`), formula(`SUM(${cell("06 OPEX", "G13:G14")})`)]);
-  add("ПО", [formula(`${cell("06 OPEX", "E22")}`), formula(`${cell("06 OPEX", "F22")}`), formula(`${cell("06 OPEX", "G22")}`)]);
-  add("Ремонт и обслуживание", [formula(`${cell("06 OPEX", "E15")}`), formula(`${cell("06 OPEX", "F15")}`), formula(`${cell("06 OPEX", "G15")}`)]);
-  add("Санитарное обслуживание", [formula(`SUM(${cell("06 OPEX", "E18")},${cell("06 OPEX", "E21")},${cell("06 OPEX", "E23")})`), formula(`SUM(${cell("06 OPEX", "F18")},${cell("06 OPEX", "F21")},${cell("06 OPEX", "F23")})`), formula(`SUM(${cell("06 OPEX", "G18")},${cell("06 OPEX", "G21")},${cell("06 OPEX", "G23")})`)]);
-  add("Безопасность", [formula(`${cell("06 OPEX", "E24")}`), formula(`${cell("06 OPEX", "F24")}`), formula(`${cell("06 OPEX", "G24")}`)]);
+  add("Маркетинг", [formula(`${cell("06 OPEX", "E13")}`), formula(`${cell("06 OPEX", "F13")}`), formula(`${cell("06 OPEX", "G13")}`)]);
+  add("Хозяйственные и эксплуатационные расходники", [formula(`${cell("06 OPEX", "E14")}`), formula(`${cell("06 OPEX", "F14")}`), formula(`${cell("06 OPEX", "G14")}`)]);
+  add("Административный резерв", [formula(`${cell("06 OPEX", "E15")}`), formula(`${cell("06 OPEX", "F15")}`), formula(`${cell("06 OPEX", "G15")}`)]);
+  add("Обслуживание оборудования", [formula(`${cell("06 OPEX", "E16")}`), formula(`${cell("06 OPEX", "F16")}`), formula(`${cell("06 OPEX", "G16")}`)]);
   add("Бухгалтерия", [formula(`${cell("06 OPEX", "E17")}`), formula(`${cell("06 OPEX", "F17")}`), formula(`${cell("06 OPEX", "G17")}`)]);
-  add("Прочий OPEX", [formula(`SUM(${cell("06 OPEX", "E16")},${cell("06 OPEX", "E19:E20")},${cell("06 OPEX", "E25")},${cell("06 OPEX", "E28")})`), formula(`SUM(${cell("06 OPEX", "F16")},${cell("06 OPEX", "F19:F20")},${cell("06 OPEX", "F25")},${cell("06 OPEX", "F28")})`), formula(`SUM(${cell("06 OPEX", "G16")},${cell("06 OPEX", "G19:G20")},${cell("06 OPEX", "G25")},${cell("06 OPEX", "G28")})`)]);
+  add("Вентиляция и жироуловители", [formula(`${cell("06 OPEX", "E18")}`), formula(`${cell("06 OPEX", "F18")}`), formula(`${cell("06 OPEX", "G18")}`)]);
+  add("Обновление спецодежды", [formula(`${cell("06 OPEX", "E19")}`), formula(`${cell("06 OPEX", "F19")}`), formula(`${cell("06 OPEX", "G19")}`)]);
+  add("Музыка и права", [formula(`${cell("06 OPEX", "E20")}`), formula(`${cell("06 OPEX", "F20")}`), formula(`${cell("06 OPEX", "G20")}`)]);
+  add("Дезинсекция и дератизация", [formula(`${cell("06 OPEX", "E21")}`), formula(`${cell("06 OPEX", "F21")}`), formula(`${cell("06 OPEX", "G21")}`)]);
+  add("YUMA / кассовые сервисы", [formula(`${cell("06 OPEX", "E22")}`), formula(`${cell("06 OPEX", "F22")}`), formula(`${cell("06 OPEX", "G22")}`)]);
+  add("Медосмотры", [formula(`${cell("06 OPEX", "E23")}`), formula(`${cell("06 OPEX", "F23")}`), formula(`${cell("06 OPEX", "G23")}`)]);
+  add("Пультовая охрана", [formula(`${cell("06 OPEX", "E24")}`), formula(`${cell("06 OPEX", "F24")}`), formula(`${cell("06 OPEX", "G24")}`)]);
+  add("Банковское обслуживание", [formula(`${cell("06 OPEX", "E25")}`), formula(`${cell("06 OPEX", "F25")}`), formula(`${cell("06 OPEX", "G25")}`)]);
+  add("Прочие регулярные расходы", [formula(`${cell("06 OPEX", "E28")}`), formula(`${cell("06 OPEX", "F28")}`), formula(`${cell("06 OPEX", "G28")}`)]);
   add("Агрегаторы", [formula(`${cell("06 OPEX", "E27")}`), formula(`${cell("06 OPEX", "F27")}`), formula(`${cell("06 OPEX", "G27")}`)]);
-  add("EBITDA объекта", [formula("B10-SUM(B12:B23)"), formula("C10-SUM(C12:C23)"), formula("D10-SUM(D12:D23)")]);
-  add("EBITDA Margin %", [formula("B24/B6"), formula("C24/C6"), formula("D24/D6")], false);
-  add("Амортизация", [formula(`${cell("07 CAPEX", "$D$20")}`), formula(`${cell("07 CAPEX", "$D$20")}`), formula(`${cell("07 CAPEX", "$D$20")}`)]);
-  add("EBIT", [formula("B24-B26"), formula("C24-C26"), formula("D24-D26")]);
-  add("Taxable base — management proxy", [formula(`MAX(B6-SUM(B7:B9,${cell("06 OPEX", "E7:E8")},B13:B23),0)`), formula(`MAX(C6-SUM(C7:C9,${cell("06 OPEX", "F7:F8")},C13:C23),0)`), formula(`MAX(D6-SUM(D7:D9,${cell("06 OPEX", "G7:G8")},D13:D23),0)`)]);
-  add("Regular USN 7%", [formula(`B28*${cell("02 Допущения", "$B$21")}`), formula(`C28*${cell("02 Допущения", "$B$21")}`), formula(`D28*${cell("02 Допущения", "$B$21")}`)]);
+  add("EBITDA объекта", [formula("B10-SUM(B13:B31)"), formula("C10-SUM(C13:C31)"), formula("D10-SUM(D13:D31)")]);
+  add("EBITDA Margin %", [formula("B32/B6"), formula("C32/C6"), formula("D32/D6")], false);
+  add("Амортизация", [formula(`${cell("07 CAPEX", "$D$21")}`), formula(`${cell("07 CAPEX", "$D$21")}`), formula(`${cell("07 CAPEX", "$D$21")}`)]);
+  add("EBIT", [formula("B32-B34"), formula("C32-C34"), formula("D32-D34")]);
+  add("Taxable base — management proxy", [formula(`MAX(B6-SUM(B7:B9,${cell("05 Персонал", "F12")},${cell("05 Персонал", "I12")},B14:B31),0)`), formula(`MAX(C6-SUM(C7:C9,${cell("05 Персонал", "G12")},${cell("05 Персонал", "J12")},C14:C31),0)`), formula(`MAX(D6-SUM(D7:D9,${cell("05 Персонал", "H12")},${cell("05 Персонал", "K12")},D14:D31),0)`)]);
+  add("Regular USN 7%", [formula(`B36*${cell("02 Допущения", "$B$21")}`), formula(`C36*${cell("02 Допущения", "$B$21")}`), formula(`D36*${cell("02 Допущения", "$B$21")}`)]);
   add("Minimum USN 1%", [formula(`B6*${cell("02 Допущения", "$B$22")}`), formula(`C6*${cell("02 Допущения", "$B$22")}`), formula(`D6*${cell("02 Допущения", "$B$22")}`)]);
-  add("Налоги", [formula("MAX(B29,B30)"), formula("MAX(C29,C30)"), formula("MAX(D29,D30)")]);
-  add("Чистый операционный результат", [formula("B27-B31"), formula("C27-C31"), formula("D27-D31")]);
-  add("Maintenance CAPEX", [formula(`${cell("07 CAPEX", "$D$19")}/12`), formula(`${cell("07 CAPEX", "$D$19")}/12`), formula(`${cell("07 CAPEX", "$D$19")}/12`)]);
-  add("Operating Free Cash Flow", [formula("B24-B31-B33"), formula("C24-C31-C33"), formula("D24-D31-D33")]);
+  add("Налоги", [formula("MAX(B37,B38)"), formula("MAX(C37,C38)"), formula("MAX(D37,D38)")]);
+  add("Чистый операционный результат", [formula("B35-B39"), formula("C35-C39"), formula("D35-D39")]);
+  add("Maintenance CAPEX", [formula(`${cell("07 CAPEX", "$D$20")}/12`), formula(`${cell("07 CAPEX", "$D$20")}/12`), formula(`${cell("07 CAPEX", "$D$20")}/12`)]);
+  add("Operating Free Cash Flow", [formula("B32-B39-B41"), formula("C32-C39-C41"), formula("D32-D39-D41")]);
   return sheet("08 P&L", rows, [270, 160, 160, 160, 130, 130, 130], 3, 1);
 }
 
-function cashFlowSheet(): FinancialSheet {
+function cashFlowSheet(projection: any): FinancialSheet {
+  const scenario = projection.scenarios.rent.realistic;
+  const months = scenario.monthly as any[];
   const width = 62;
   const rows: SheetValue[][] = [
     ["Денежный поток — Реалистичный / Аренда", ...blank(width - 1)],
-    ["Month 0 отделён от P&L; депозит, inventory и оборудование не возвращаются автоматически в Month 60.", ...blank(width - 1)],
+    ["Month 0 отделён от P&L; месяцы 1–60 используют канонические коэффициенты ramp-up и сезонности. Депозит, inventory и оборудование не возвращаются автоматически в Month 60.", ...blank(width - 1)],
     ["Показатель", ...Array.from({ length: 61 }, (_, month) => month)],
-    ["Launch investment excluding initial inventory", formula(`-(${cell("07 CAPEX", "$D$17")}-${cell("07 CAPEX", "$D$10")})`), ...Array(60).fill(0)],
-    ["Продажи", 0, ...Array.from({ length: 60 }, () => formula(`${cell("08 P&L", "$C$4")}`))],
-    ["EBITDA", 0, ...Array.from({ length: 60 }, () => formula(`${cell("08 P&L", "$C$24")}`))],
-    ["Cash taxes", 0, ...Array.from({ length: 60 }, () => formula(`-${cell("08 P&L", "$C$31")}`))],
-    ["Maintenance CAPEX", 0, ...Array.from({ length: 60 }, () => formula(`-${cell("08 P&L", "$C$33")}`))],
-    ["Изменение working capital", formula(`-${cell("07 CAPEX", "$D$10")}`), ...Array(60).fill(0)],
-    ["Использование предоплаченной аренды", 0, ...Array.from({ length: 60 }, (_, index) => index < 12 ? formula(`${cell("02 Допущения", "$B$16")}`) : 0)],
-    ["Free Cash Flow", ...Array.from({ length: 61 }, (_, month) => formula(`${col(month + 1)}4+SUM(${col(month + 1)}6:${col(month + 1)}10)`))],
-    ["Cumulative FCF", formula("B11"), ...Array.from({ length: 60 }, (_, index) => formula(`${col(index + 1)}12+${col(index + 2)}11`))],
+    ["Календарный месяц", "", ...months.map(row => row.calendar_month)],
+    ["Seasonality", "", ...months.map(row => row.seasonality_factor)],
+    ["Ramp-up", "", ...months.map(row => row.ramp_factor)],
+    ["Стартовые инвестиции", -scenario.restaurant_invested_capital_rub, ...Array(60).fill(0)],
+    ["Продажи", 0, ...months.map(row => row.gross_revenue_rub)],
+    ["EBITDA", 0, ...months.map(row => row.ebitda_rub)],
+    ["Cash taxes", 0, ...months.map(row => -row.tax_due_rub)],
+    ["Maintenance CAPEX", 0, ...months.map(() => -scenario.maintenance_capex_rub)],
+    ["Использование предоплаченной аренды", 0, ...months.map(row => row.prepaid_rent_release_rub)],
+    ["Net cash flow", -scenario.restaurant_invested_capital_rub, ...months.map(row => row.net_cash_flow_rub)],
+    ["Cumulative FCF", -scenario.restaurant_invested_capital_rub, ...months.map(row => row.cumulative_net_cash_flow_rub)],
   ];
   return sheet("09 Денежный поток", rows, [300, ...Array(61).fill(110)], 3, 1);
 }
 
-function investmentsSheet(): FinancialSheet {
+function investmentsSheet(projection: any): FinancialSheet {
+  const scenario = projection.scenarios.rent.realistic;
   const rows: SheetValue[][] = [
     ["Инвестиции и доходность"],
-    ["Метрики рассчитаны по 60-месячному cash flow. ROI ниже имеет явно заданное определение."],
+    ["Метрики рассчитаны по каноническому 60-месячному cash flow с ramp-up и сезонностью. ROI ниже имеет явно заданное определение."],
     ["Показатель", "Аренда / Реалистичный", "Определение / статус"],
-    ["Restaurant investment", formula(`${cell("07 CAPEX", "$D$17")}`), "Restaurant CAPEX + launch + tied funds + Fixed OPEX Reserve"],
+    ["Restaurant investment", scenario.restaurant_invested_capital_rub, "Restaurant CAPEX + launch + tied funds + Fixed OPEX Reserve"],
     ["Real estate investment", 0, "Аренда"],
-    ["Operating reserve", formula(`${cell("07 CAPEX", "$D$15")}`), "Fixed OPEX Reserve, 6 months"],
-    ["Working capital", formula(`${cell("07 CAPEX", "$D$10")}`), "Initial inventory, separate from reserve"],
+    ["Operating reserve", scenario.fixed_opex_reserve_rub, "Fixed OPEX Reserve, 6 months"],
+    ["Working capital", scenario.initial_inventory_rub, "Initial inventory, separate from reserve"],
     ["Total invested capital", formula("B4+B5"), "Restaurant + property"],
-    ["Payback Period", formula(`MATCH(TRUE,ARRAYFORMULA(${cell("09 Денежный поток", "B12:BJ12")}>=0),0)-1`), "First month cumulative FCF ≥ 0"],
-    ["ROI", formula(`${cell("08 P&L", "$C$34")}*12/B4`), "Annual Operating FCF / Restaurant invested capital"],
-    ["IRR", formula(`(1+IRR(${cell("09 Денежный поток", "B11:BJ11")}))^12-1`), "Annualized monthly IRR"],
-    ["NPV", formula(`${cell("09 Денежный поток", "B11")}+NPV((1+${cell("02 Допущения", "$B$20")})^(1/12)-1,${cell("09 Денежный поток", "C11:BJ11")})`), "20% working discount rate; tbd investor hurdle"],
-    ["Full Operating Reserve", formula(`${cell("07 CAPEX", "$D$16")}`), "Secondary conservative indicator; not default capital"],
+    ["Payback Period", scenario.restaurant_payback_month ?? "Не окупается за 60 месяцев", "Первый месяц, в котором накопленный FCF неотрицателен"],
+    ["ROI", scenario.restaurant_roi_annual, "FCF зрелого года / Restaurant invested capital"],
+    ["IRR", scenario.restaurant_irr_annual ?? "Не окупается за 60 месяцев", "Annualized monthly IRR"],
+    ["NPV", scenario.restaurant_npv_rub, "20% working discount rate; tbd investor hurdle"],
+    ["Full Operating Reserve", scenario.full_operating_reserve_rub, "Secondary conservative indicator; not default capital"],
   ];
   return sheet("10 Инвестиции", rows, [300, 200, 520], 3, 1);
 }
@@ -326,11 +354,11 @@ function investmentsSheet(): FinancialSheet {
 function scenariosSheet(projection: any): FinancialSheet {
   const rows: SheetValue[][] = [
     ["Сценарии"],
-    ["Revenue Model traffic feeds the scenarios; annual sales are a mechanical v0.1 extrapolation."],
+    ["Сценарии получают зрелый поток из Revenue Model; год 1 учитывает ramp-up и сезонность."],
     ["Показатель", "Пессимистичный", "Реалистичный", "Оптимистичный"],
   ];
   const keys: Array<[string, string]> = [
-    ["Чеков / день", "checks_per_day"], ["Продажи / месяц", "gross_revenue_rub"], ["Продажи / год — механически", "gross_revenue_rub"],
+    ["Чеков / день", "checks_per_day"], ["Продажи / месяц — зрелый режим", "gross_revenue_rub"], ["Продажи / год 1", "year_1.gross_revenue_rub"],
     ["Сырьё", "raw_materials_rub"], ["Валовая прибыль", "gross_profit_rub"], ["Labor", "labor_rub"], ["EBITDA", "ebitda_rub"],
     ["EBITDA margin", "ebitda_margin"], ["Налоги", "tax_due_rub"], ["Free Cash Flow", "operating_free_cash_flow_rub"],
     ["Break-even checks/day", "break_even_checks_per_day"], ["Invested capital", "restaurant_invested_capital_rub"], ["Payback, month", "restaurant_payback_month"],
@@ -338,8 +366,9 @@ function scenariosSheet(projection: any): FinancialSheet {
   ];
   for (const [label, key] of keys) {
     rows.push([label, ...SCENARIOS.map(s => {
-      const value = projection.scenarios.rent[s.id][key];
-      return label === "Продажи / год — механически" ? rub(value * 12) : value ?? "Не окупается за 60 месяцев";
+      const source = projection.scenarios.rent[s.id];
+      const value = key.includes(".") ? key.split(".").reduce((current: any, part) => current?.[part], source) : source[key];
+      return value ?? "Не окупается за 60 месяцев";
     })]);
   }
   return sheet("11 Сценарии", rows, [330, 180, 180, 180], 3, 1);
@@ -405,14 +434,15 @@ function sourcesSheet(model: any, projection: any): FinancialSheet {
     ["Источники и provenance"],
     ["Owner-approved assumptions не выдаются за рыночные факты; external research в этой итерации не проводился."],
     ["Source ID", "Параметр", "Источник / hash", "Дата", "Тип", "Confidence / status", "Комментарий"],
-    ["SRC-FINANCIAL-MODEL-BRIEF-2026-08-16", "Financial Model assumptions", "User instructions", "2026-08-16", "owner_approved", "primary", "Exact payload; no new research"],
+    ["SRC-FINANCIAL-MODEL-BRIEF-2026-08-16", "Financial Model v0.1 baseline", "User instructions", "2026-08-16", "owner_approved", "primary", "Original approved baseline; no new research"],
+    ["SRC-FINANCIAL-MODEL-V0-2-BRIEF-2026-08-18", "Financial Model v0.2 updates", "User instructions", "2026-08-18", "owner_approved", "primary", "Protected financial base, launch marketing, ramp-up and seasonality"],
     [model.imports.revenue_model.document_id, "Revenue", projection.meta.imported_revenue_content_state_sha256, "2026-08-16", "imported_canonical", "current", "Stale validation enabled"],
     [model.imports.capex.document_id, "Equipment CAPEX", projection.meta.imported_capex_content_state_sha256, "2026-08-16", "imported_canonical", "current", `BOM ${projection.meta.imported_equipment_bom_sha256}`],
     [model.imports.investor_start_model.document_id, "Premises / furniture / preparation", projection.meta.imported_investor_start_model_sha256, "2026-08-16", "imported_canonical", "current", "Stale validation enabled"],
     ["TAX-CAPEX-SCHEDULE", "Tax treatment of CAPEX", "not supplied", "", "tbd", "tbd", "Management depreciation is not a tax schedule"],
     ["BANKING", "Banking service", "not supplied", "", "tbd", "Требует уточнения", "0 is not an approved confirmed rate"],
-    ["RAMP-UP", "Ramp-up profile", "not supplied", "", "tbd", "tbd", "100% from first full month is a v0.1 simplification"],
-    ["SEASONALITY", "Seasonality", "not supplied", "", "tbd", "not_applied_v0.1", "No coefficients invented"],
+    ["RAMP-UP", "Ramp-up profile", "Owner-approved working assumption", "2026-08-18", "owner_approved", "working", "60% to 100% from month 7"],
+    ["SEASONALITY", "Seasonality", "Owner-approved working assumption", "2026-08-18", "owner_approved", "working", "Monthly Saint Petersburg curve; replaced by POS data when available"],
   ], [300, 260, 560, 130, 180, 190, 430], 3, 1);
 }
 
@@ -427,12 +457,13 @@ function checksSheet(model: any, projection: any): FinancialSheet {
     ["Average food cost", "04 Меню и себестоимость!E10", projection.derived_food_cost.average_food_portion_cost_rub, formula(`IF(ABS(${cell("04 Меню и себестоимость", "E10")}-C5)<0.01,"OK","ERROR")`)],
     ["Baseline headcount", "05 Персонал!C12", baseline.staffing.headcount, formula(`IF(${cell("05 Персонал", "C12")}=C6,"OK","ERROR")`)],
     ["Optimistic headcount", "05 Персонал!D12", optimistic.staffing.headcount, formula(`IF(${cell("05 Персонал", "D12")}=C7,"OK","ERROR")`)],
-    ["Baseline labor", "05 Персонал!G14", baseline.labor_rub, formula(`IF(ABS(${cell("05 Персонал", "G14")}-C8)<0.01,"OK","ERROR")`)],
-    ["Optimistic labor", "05 Персонал!H14", optimistic.labor_rub, formula(`IF(ABS(${cell("05 Персонал", "H14")}-C9)<0.01,"OK","ERROR")`)],
+    ["Baseline calculated labor", "05 Персонал!G14", baseline.calculated_staffing_labor_rub, formula(`IF(ABS(${cell("05 Персонал", "G14")}-C8)<0.01,"OK","ERROR")`)],
+    ["Baseline protected labor", "06 OPEX!F8", baseline.labor_rub, formula(`IF(ABS(${cell("06 OPEX", "F8")}-C9)<0.01,"OK","ERROR")`)],
+    ["Optimistic protected labor", "06 OPEX!G8", optimistic.labor_rub, formula(`IF(ABS(${cell("06 OPEX", "G8")}-C10)<0.01,"OK","ERROR")`)],
     ["Equipment CAPEX", "07 CAPEX!D4", projection.launch_capital.equipment_rub, formula(`IF(ROUND(${cell("07 CAPEX", "D4")},0)=${model.imports.capex.control_total_rub_rounded},"OK","ERROR")`)],
-    ["Realistic revenue", "03 Продажи!F5", baseline.gross_revenue_rub, formula(`IF(${cell("03 Продажи", "F5")}=C11,"OK","ERROR")`)],
-    ["Month count", "09 Денежный поток!B3:BJ3", model.model.horizon_months + 1, formula(`IF(COUNTA(${cell("09 Денежный поток", "B3:BJ3")})=C12,"OK","ERROR")`)],
-    ["Month 60 no restaurant terminal recovery", "09 Денежный поток!BJ11", baseline.operating_free_cash_flow_rub, formula(`IF(ABS(${cell("09 Денежный поток", "BJ11")}-C13)<0.01,"OK","ERROR")`)],
+    ["Realistic revenue", "03 Продажи!F5", baseline.gross_revenue_rub, formula(`IF(${cell("03 Продажи", "F5")}=C12,"OK","ERROR")`)],
+    ["Month count", "09 Денежный поток!B3:BJ3", model.model.horizon_months + 1, formula(`IF(COUNTA(${cell("09 Денежный поток", "B3:BJ3")})=C13,"OK","ERROR")`)],
+    ["Month 60 no restaurant terminal recovery", "09 Денежный поток!BJ13", baseline.monthly.at(-1).net_cash_flow_rub, formula(`IF(ABS(${cell("09 Денежный поток", "BJ13")}-C14)<0.01,"OK","ERROR")`)],
     ["Internal supply revenue", "14 Производственный центр", 0, "OK"],
   ], [330, 360, 180, 150], 3, 1);
 }
@@ -455,7 +486,7 @@ export function buildFinancialGoogleSheetsPayload() {
       formula_input_mode: "USER_ENTERED",
     },
     sheets: [
-      descriptionSheet(model, contentState.content_state_sha256), assumptionsSheet(model, revenue, capital), salesSheet(revenue), menuSheet(model, revenue), staffSheet(model), opexSheet(model), capexSheet(model, capital), pnlSheet(), cashFlowSheet(), investmentsSheet(), scenariosSheet(projection), sensitivitySheet(model), realEstateSheet(model), productionCenterSheet(), sourcesSheet(model, projection), checksSheet(model, projection),
+      descriptionSheet(model, contentState.content_state_sha256), assumptionsSheet(model, revenue, capital), salesSheet(revenue), menuSheet(model, revenue), staffSheet(model), opexSheet(model), capexSheet(model, capital), pnlSheet(), cashFlowSheet(projection), investmentsSheet(projection), scenariosSheet(projection), sensitivitySheet(model), realEstateSheet(model), productionCenterSheet(), sourcesSheet(model, projection), checksSheet(model, projection),
     ],
   };
 }

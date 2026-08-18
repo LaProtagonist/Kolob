@@ -1,0 +1,26 @@
+event_id: EVT-ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01-PROPOSED
+event_type: proposed
+occurred_at: 2026-08-18T21:27:01.000Z
+recorded_at: 2026-08-18T21:27:01.000Z
+iteration_id: ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01
+proposal_id: PROP-FINANCIAL-MODEL-V0-2-2026-08-18-01
+decision_id: DEC-FINANCIAL-MODEL-V0-2-2026-08-18-01
+change_set_id: CHG-FINANCIAL-MODEL-V0-2-2026-08-18-01
+actor: Codex
+tool: docs-platform governance workflow
+scope: Consolidate the already implemented Financial Model v0.2, local Investor Summary, current finance website views and lifecycle supersession support.
+summary: Owner-approved consolidation proposal recorded; no Google operation or deployment occurs before seal.
+approved_payload_sha256: df9de912fb4c50e897cac3917bbf7bf2bca0b6d22dd8dad30d79cb0a13f49958
+before_hash: fab9ad52d614a67dd13bc03b98d998cb2d6ccb8891c25ed5d066302021a0dfae
+after_hash: cca896f6c850373cca947c5a91d92d78187e6fdb198aaa06d9973c65b768a42d
+affected_document_ids: [DOC-FINANCIAL-MODEL, DOC-INVESTOR-FINANCIAL-SUMMARY]
+affected_section_ids: [financial-model.v0_2, investor-summary.local-projection, economics.financial-presentation, launch-budget.financial-dependency, governance.lifecycle.superseded]
+source_refs:
+  - docs-platform/changes/proposals/PROP-FINANCIAL-MODEL-V0-2-2026-08-18-01.yaml
+  - docs-platform/changes/iterations/ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01.yaml
+  - docs-platform/changelog/payloads/ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01-approved.yaml
+git: { content_commit_hash: null, seal_commit_ref: null, iteration_tag: null, commit_message_verified: null, trailers_verified: null }
+external: { google_sync_receipts: [], deployment_receipt: null, remote_readback_hash: null, production_url: null }
+rollback: { rollback_payload: docs-platform/changelog/rollback-payloads/ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01/manifest.yaml, compensates_iteration_id: null, restores_hash: fab9ad52d614a67dd13bc03b98d998cb2d6ccb8891c25ed5d066302021a0dfae, dependency_check: Governed reverse change set required; historical events remain append-only. }
+artifacts: { manifest_refs: [docs-platform/changelog/previews/ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01.yaml] }
+confidence: exact

@@ -1,0 +1,55 @@
+change_id: CHG-040
+title: Зарегистрировать Investor Financial Summary, источник и решение
+status: approved
+created_at: 2026-08-16
+decision_id: DEC-001
+iteration_id: ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+proposal_id: PROP-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01-approved.yaml
+approved_payload_sha256: 0e88152fc40dcedf691fd47fea7d92d65cfba662552c36798908a05d4d2addb7
+operations:
+  - type: add
+    entity: documents
+    value:
+      id: DOC-INVESTOR-FINANCIAL-SUMMARY
+      title: Investor Financial Summary
+      type: investor_financial_summary
+      status: research
+      google_file_id: null
+      template: null
+      sections:
+        - Основные показатели
+        - Доходы и расходы
+        - Инвестиции
+        - Сценарии
+        - Допущения
+      version: "0.1"
+      governance_level: working
+      local_path: docs-platform/working/investor-financial-summary.yaml
+      updated_at: 2026-08-16
+  - type: add
+    entity: sources
+    value:
+      id: SRC-INVESTOR-FINANCIAL-SUMMARY-BRIEF-2026-08-16
+      title: Утверждённый контракт Investor Financial Summary
+      type: instruction
+      location: User instruction, 2026-08-16
+      publisher: project owner
+      publication_date: 2026-08-16
+      accessed_at: 2026-08-16
+      reliability: primary
+      notes: Содержит точную пятилистовую структуру, инвесторские формулировки, правила группировки, форматирования, зависимости от Financial Model и публикации. Новое исследование запрещено и не выполнялось.
+  - type: add
+    entity: decisions
+    value:
+      id: DEC-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+      title: Создать Investor Financial Summary и нативную Google Sheets-проекцию
+      status: approved
+      decision: Создать отдельное инвесторское представление из пяти русскоязычных вкладок поверх DOC-FINANCIAL-MODEL, без независимых формул, с hash-зависимостью, одной нативной Google Sheet и полным readback.
+      rationale: Прямое решение владельца проекта от 2026-08-16; представление не меняет master-модель, допущения, расчёты или сайт.
+      affected_documents: [DOC-INVESTOR-FINANCIAL-SUMMARY]
+      approved_by: project owner
+      approved_at: 2026-08-16
+      supersedes: null
+      source_ids: [SRC-INVESTOR-FINANCIAL-SUMMARY-BRIEF-2026-08-16]
+      updated_at: 2026-08-16

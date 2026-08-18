@@ -1,0 +1,30 @@
+schema_version: 2
+iteration_id: ITR-ECONOMICS-PAGE-2026-08-16-01
+decision_id: DEC-ECONOMICS-PAGE-2026-08-16-01
+change_set_id: CHG-ECONOMICS-PAGE-2026-08-16-01
+previewed_at: 2026-08-16T02:07:36.000Z
+status: passed
+mutation_performed: false
+planned_changes:
+  route:
+    - add /economics as noindex and nofollow
+    - keep it outside navigation, footer and sitemap
+  dependency:
+    - read investor-ready values from the Investor Financial Summary projection
+    - check the exact Financial Model content hash before rendering
+  presentation:
+    - add the three approved scenarios and dynamic sticky summary
+    - show a nested cost-of-goods hierarchy from sales to EBITDA
+    - show resilience, scenario comparison, investments, property comparison and two stress tests
+  verification:
+    - run targeted data and route tests, affected TypeScript, local browser QA and git diff check
+invariants:
+  independent_financial_calculations_added: false
+  financial_model_changed: false
+  investor_financial_summary_changed: false
+  revenue_model_changed: false
+  capex_changed: false
+  existing_routes_changed: false
+  google_action: false
+  deployment: false
+  research_performed: false

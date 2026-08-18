@@ -1,0 +1,132 @@
+schema_version: 2
+change_id: CHG-FINANCIAL-MODEL-V0-2-2026-08-18-01
+iteration_id: ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01
+proposal_id: PROP-FINANCIAL-MODEL-V0-2-2026-08-18-01
+decision_id: DEC-FINANCIAL-MODEL-V0-2-2026-08-18-01
+title: Align registry metadata with the owner-approved Financial Model v0.2
+status: approved
+created_at: 2026-08-19
+approved_payload_path: docs-platform/changelog/payloads/ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01-approved.yaml
+approved_payload_sha256: df9de912fb4c50e897cac3917bbf7bf2bca0b6d22dd8dad30d79cb0a13f49958
+operations:
+  - type: update
+    entity: documents
+    id: DOC-FINANCIAL-MODEL
+    value:
+      version: "0.2"
+      updated_at: 2026-08-19
+  - type: update
+    entity: documents
+    id: DOC-INVESTOR-FINANCIAL-SUMMARY
+    value:
+      updated_at: 2026-08-19
+  - type: update
+    entity: dependencies
+    id: DEP-FINANCIAL-MODEL-INVESTOR-FINANCIAL-SUMMARY
+    value:
+      version: "0.2"
+      updated_at: 2026-08-19
+  - type: update
+    entity: assumptions
+    id: ASM-FINANCIAL-FOOD-COST
+    value:
+      title: Рецептурная и защищённая финансовая себестоимость Financial Model v0.2
+      value:
+        average_kolobok_cost_rub: 175.7625
+        average_food_portion_cost_rub: 177.01
+        drink_cost_rub: 30
+        protected_raw_material_rate_of_net_revenue: 0.30
+        waste_rate_of_raw_materials: 0.04
+        packaging_base_rub: 250000
+        packaging_base_checks: 300
+      rationale: Рецептурный расчёт сохранён как технологический ориентир; Financial Model использует защищённую базу сырья 30% net revenue, списания 4% сырья и отдельно масштабируемую упаковку.
+      scenario: FINANCIAL_MODEL_V0_2
+      source_ids: [SRC-FINANCIAL-MODEL-BRIEF-2026-08-16, SRC-FINANCIAL-MODEL-V0-2-BRIEF-2026-08-18]
+      decision_id: DEC-FINANCIAL-MODEL-V0-2-2026-08-18-01
+      updated_at: 2026-08-19
+  - type: update
+    entity: assumptions
+    id: ASM-FINANCIAL-STAFFING
+    value:
+      title: Штат и защищённая labor-база Financial Model v0.2
+      value:
+        pessimistic_headcount: 14
+        baseline_headcount: 16
+        optimistic_headcount: 20
+        baseline_labor_rub: 2396938.28
+        optimistic_labor_rub: 2955060.35
+        protected_labor_rate_of_net_revenue: 0.27
+        protected_labor_formula: max_calculated_staffing_labor_or_net_revenue_x_0_27
+        personnel_reserve_rate: 0.1
+      rationale: Ролевой расчёт команды сохранён; основной расход labor не может быть ниже него и защищён floor 27% net revenue.
+      scenario: FINANCIAL_MODEL_V0_2
+      source_ids: [SRC-FINANCIAL-MODEL-BRIEF-2026-08-16, SRC-FINANCIAL-MODEL-V0-2-BRIEF-2026-08-18]
+      decision_id: DEC-FINANCIAL-MODEL-V0-2-2026-08-18-01
+      updated_at: 2026-08-19
+  - type: update
+    entity: assumptions
+    id: ASM-FINANCIAL-OPEX
+    value:
+      title: OPEX Financial Model v0.2
+      value:
+        rent_rub: 350000
+        utilities_rub: 200000
+        acquiring_rate: 0.02
+        marketing_fixed_rub: 150000
+        marketing_rate_of_net_revenue: 0.024
+        marketing_ramp_up_floor_rub: 400000
+        marketing_ramp_up_floor_months: 6
+        service_rub: 100000
+        household_base_rub: 50000
+        household_per_300_actual_checks_rub: 50000
+        accounting_rub: 25000
+        administrative_reserve_rate_of_net_revenue: 0.02
+        other_rub: 66500
+      rationale: Постоянные и сценарные OPEX отражают уже утверждённую v0.2 защитную структуру; SMM входит в Marketing и не прибавляется вторично.
+      scenario: FINANCIAL_MODEL_V0_2
+      source_ids: [SRC-FINANCIAL-MODEL-BRIEF-2026-08-16, SRC-FINANCIAL-MODEL-V0-2-BRIEF-2026-08-18]
+      decision_id: DEC-FINANCIAL-MODEL-V0-2-2026-08-18-01
+      updated_at: 2026-08-19
+  - type: update
+    entity: assumptions
+    id: ASM-FINANCIAL-RESERVE-TERMINAL
+    value:
+      title: Operating Reserve и terminal treatment Financial Model v0.2
+      value:
+        fixed_reserve_months: 6
+        reserve_labor_basis: calculated_staffing_labor
+        initial_inventory_rub: 1000000
+        full_reserve_default: false
+        month_60_deposit_recovery_rub: 0
+        month_60_inventory_recovery_rub: 0
+        restaurant_salvage_rub: 0
+        brand_value_rub: 0
+      rationale: Default invested capital продолжает использовать только Fixed OPEX Reserve; pre-paid rent не учитывается повторно и модель остаётся going concern без terminal recovery.
+      scenario: FINANCIAL_MODEL_V0_2
+      source_ids: [SRC-FINANCIAL-MODEL-BRIEF-2026-08-16, SRC-FINANCIAL-MODEL-V0-2-BRIEF-2026-08-18]
+      decision_id: DEC-FINANCIAL-MODEL-V0-2-2026-08-18-01
+      updated_at: 2026-08-19
+  - type: update
+    entity: assumptions
+    id: ASM-FINANCIAL-INVESTMENT-METRICS
+    value:
+      title: Investment metrics Financial Model v0.2
+      value:
+        horizon_months: 60
+        payback_method: cumulative_fcf
+        roi_definition: annual_fcf_div_restaurant_invested_capital
+        discount_rate: 0.2
+        opening_month: January
+        ramp_up: [0.60, 0.70, 0.80, 0.85, 0.90, 0.95, 1.00]
+        seasonality: [0.93, 0.75, 0.88, 0.95, 1.02, 0.96, 0.96, 0.98, 1.12, 1.16, 1.10, 1.18]
+      rationale: Метрики рассчитываются по 60-месячному cash flow с owner-approved ramp-up и сезонностью; NPV 20% остаётся рабочим параметром, а не требованием инвестора.
+      scenario: FINANCIAL_MODEL_V0_2
+      source_ids: [SRC-FINANCIAL-MODEL-BRIEF-2026-08-16, SRC-FINANCIAL-MODEL-V0-2-BRIEF-2026-08-18]
+      decision_id: DEC-FINANCIAL-MODEL-V0-2-2026-08-18-01
+      updated_at: 2026-08-19
+preview:
+  status: pending_validation
+  mutation_performed: false
+  business_sources_changed: false
+  google_writes: false
+  website_changes: true

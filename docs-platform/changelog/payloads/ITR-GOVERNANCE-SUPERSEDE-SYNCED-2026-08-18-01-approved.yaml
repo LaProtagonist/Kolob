@@ -1,0 +1,90 @@
+schema_version: 2
+payload_id: PAYLOAD-GOVERNANCE-SUPERSEDE-SYNCED-2026-08-18-01
+iteration_id: ITR-GOVERNANCE-SUPERSEDE-SYNCED-2026-08-18-01
+proposal_id: PROP-GOVERNANCE-SUPERSEDE-SYNCED-2026-08-18-01
+decision_id: DEC-GOVERNANCE-SUPERSEDE-SYNCED-2026-08-18-01
+change_set_id: CHG-GOVERNANCE-SUPERSEDE-SYNCED-2026-08-18-01
+title: Support superseding a synced iteration by a later governed iteration
+status: approved
+approved_by: project owner
+approved_at: 2026-08-18T20:00:01.000Z
+scope:
+  - Permit the exact append-only transition synced -> superseded in the modern governance lifecycle.
+  - Keep the existing approved -> superseded, previewed -> superseded and verified -> superseded transitions unchanged.
+  - Add a governed supersede tool that builds and appends the superseded event through buildGovernanceEvent and appendGovernanceEvent only.
+  - Record the superseding iteration explicitly (source_refs to its iteration file plus a superseded_by marker) and require a reason.
+  - Reject self-supersede, unknown source or target iterations, repeated supersede and any transition outside approved/previewed/verified/synced.
+  - Add deterministic regression tests for the allowed and rejected transitions and for the append-only hash chain.
+semantics:
+  superseded_means: The local development line of the iteration is replaced by another governed iteration.
+  superseded_does_not_mean:
+    - rollback of an external artifact
+    - deletion of a Google file
+    - cancellation of a historical publication
+    - editing of old events or receipts
+forbidden_scope:
+  - editing or deleting historical timeline events
+  - Financial Model, Investor Financial Summary content, Revenue Model, CAPEX or Investor Start Model data
+  - Google files, Google payloads or Google authentication
+  - website source, public copy, design, calculations or deployment
+transition_contract:
+  newly_allowed_transition: synced -> superseded
+  retained_transitions:
+    - approved -> superseded
+    - previewed -> superseded
+    - verified -> superseded
+  explicitly_not_allowed:
+    - committed -> superseded
+    - deployed -> superseded
+    - superseded -> superseded
+  ordinary_paths_unchanged:
+    - verified -> committed
+    - verified -> published -> synced -> committed
+tool_contract:
+  entry: docs-platform/app/src/governance/supersede-cli.ts
+  invocation: "npx tsx src/governance/supersede-cli.ts --iteration <ID> --superseded-by <ID> --reason <text>"
+  required_arguments: [--iteration, --superseded-by, --reason]
+  writes_events_ndjson_manually: false
+  uses: [buildGovernanceEvent, appendGovernanceEvent]
+  google_api: false
+state_hash_paths:
+  - docs-platform/app/src/governance/timeline.ts
+  - docs-platform/app/src/governance/supersede.ts
+  - docs-platform/app/src/governance/supersede-cli.ts
+  - docs-platform/app/test/governance-supersede.test.ts
+content_paths:
+  - docs-platform/app/src/governance/timeline.ts
+  - docs-platform/app/src/governance/supersede.ts
+  - docs-platform/app/src/governance/supersede-cli.ts
+  - docs-platform/app/test/governance-supersede.test.ts
+  - docs-platform/changes/proposals/PROP-GOVERNANCE-SUPERSEDE-SYNCED-2026-08-18-01.yaml
+  - docs-platform/changes/decisions/DEC-GOVERNANCE-SUPERSEDE-SYNCED-2026-08-18-01.yaml
+  - docs-platform/changes/CHG-GOVERNANCE-SUPERSEDE-SYNCED-2026-08-18-01.yaml
+  - docs-platform/changes/iterations/ITR-GOVERNANCE-SUPERSEDE-SYNCED-2026-08-18-01.yaml
+  - docs-platform/changelog/payloads/ITR-GOVERNANCE-SUPERSEDE-SYNCED-2026-08-18-01-approved.yaml
+  - docs-platform/changelog/previews/ITR-GOVERNANCE-SUPERSEDE-SYNCED-2026-08-18-01.yaml
+  - docs-platform/changelog/audit/ITR-GOVERNANCE-SUPERSEDE-SYNCED-2026-08-18-01.yaml
+  - docs-platform/changelog/verification/ITR-GOVERNANCE-SUPERSEDE-SYNCED-2026-08-18-01.yaml
+  - docs-platform/changelog/iteration-receipts/ITR-GOVERNANCE-SUPERSEDE-SYNCED-2026-08-18-01.yaml
+  - docs-platform/changelog/rollback-payloads/ITR-GOVERNANCE-SUPERSEDE-SYNCED-2026-08-18-01/
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+  - docs-platform/generated/capex-governance-projection.json
+commit_contract:
+  content_subject: "fix(docs-platform): support superseding a synced iteration"
+  mandatory_trailers: [Iteration-ID, Decision-ID, Change-Set-ID, Approved-Payload-SHA256, Before-State-SHA256, After-State-SHA256, Timeline-Head-SHA256]
+  separate_seal_commit: true
+  annotated_iteration_tag: true
+rollback_contract:
+  mode: governed_reverse_change_set
+  restore_code_from_commit: 93852f910ddf0b2c34b09ffbab05e611e1ee7767
+  historical_events: retain_append_only
+  git_reset_forbidden: true

@@ -1,0 +1,11 @@
+schema_version: 2
+decision_id: DEC-GOVERNANCE-SUPERSEDE-SYNCED-2026-08-18-01
+iteration_id: ITR-GOVERNANCE-SUPERSEDE-SYNCED-2026-08-18-01
+title: Approve the exact synced-to-superseded lifecycle support and governed supersede tool
+status: approved
+approved_by: project owner
+approved_at: 2026-08-18T20:00:01.000Z
+scope: Only the synced -> superseded transition, the governed supersede tool with its guards, and regression tests.
+excludes: [business data, financial assumptions, Investor Financial Summary content, Google files, Google payloads, website source, public copy, design, deployment, historical events]
+approved_payload_path: docs-platform/changelog/payloads/ITR-GOVERNANCE-SUPERSEDE-SYNCED-2026-08-18-01-approved.yaml
+approved_payload_sha256: f603dc99c9c48ab3ab9172b3cce27dc0699d9cfbeb09b3f876ca8844626358eb

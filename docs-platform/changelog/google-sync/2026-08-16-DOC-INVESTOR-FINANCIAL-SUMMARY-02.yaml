@@ -1,0 +1,44 @@
+receipt_version: 1
+registry_id: DOC-INVESTOR-FINANCIAL-SUMMARY
+decision_id: DEC-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+change_set_id: CHG-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+iteration_id: ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+local_path: docs-platform/working/investor-financial-summary.yaml
+local_source_sha256: 866068e67a6dc1355854df90cf18be96297d7c9460d428db22201b2d5aa745b3
+projection_path: docs-platform/generated/investor-financial-summary.json
+projection_sha256: 383c867a478f43da46bcc381f58bce9b70f91c4c7ce633dc64b3d3d33b03ba50
+payload_path: docs-platform/generated/investor-financial-summary-google-sheets-payload.json
+payload_sha256: 1d380914bc5d053ec001e12ec72d511780378a9b76cd4825a943d44e4f2cc6c3
+financial_model_content_state_sha256: 18e56ce33cc19540ff9540d05a35c24284534fdfd89a6b74e59ff5a394980ae4
+google_file_id: 1AW-JONG-vkxCEIG_pY5SSPgsMpXLycLJAk7iY5saVus
+google_mime_type: application/vnd.google-apps.spreadsheet
+google_title: 05 — Финансовая модель — инвестиционная сводка
+web_view_link: https://docs.google.com/spreadsheets/d/1AW-JONG-vkxCEIG_pY5SSPgsMpXLycLJAk7iY5saVus/edit?usp=drivesdk
+published_at: 2026-08-16T01:32:05.477Z
+synced_at: 2026-08-16T01:32:16.073Z
+action: reuse
+source_status: research
+source_version: "0.1"
+sheets:
+  - Основные показатели
+  - Доходы и расходы
+  - Инвестиции
+  - Сценарии
+  - Допущения
+readback_hash: 1ee8fbe3e3eb3491aa8376bd6d007d94e39c4e21a9a5733cfa815171eef27a50
+remote_readback_sha256: 1ee8fbe3e3eb3491aa8376bd6d007d94e39c4e21a9a5733cfa815171eef27a50
+readback: passed
+validation_status: passed
+result: passed
+validation:
+  folder_guard: passed
+  native_google_sheet: true
+  exact_single_file: true
+  existing_google_files_changed: false
+  exact_tab_order: passed
+  exact_tab_count: 5
+  frozen_panes: passed
+  formula_errors: 0
+  investor_copy_only: passed
+content_commit_hash: null
+commit_note: Investor Financial Summary publication is intentionally pre-commit pending visual owner approval.

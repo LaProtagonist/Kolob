@@ -1413,3 +1413,21 @@ sources:
     accessed_at: 2026-08-16
     reliability: primary
     notes: Содержит точные рабочие допущения, формулы, приоритет derived values, CAPEX-конфигурацию, налоговый proxy, резерв, terminal treatment и Google scope. Новое исследование запрещено и не выполнялось.
+  - id: SRC-INVESTOR-FINANCIAL-SUMMARY-BRIEF-2026-08-16
+    title: Утверждённый контракт Investor Financial Summary
+    type: instruction
+    location: User instruction, 2026-08-16
+    publisher: project owner
+    publication_date: 2026-08-16
+    accessed_at: 2026-08-16
+    reliability: primary
+    notes: Содержит точную пятилистовую структуру, инвесторские формулировки, правила группировки, форматирования, зависимости от Financial Model и публикации. Новое исследование запрещено и не выполнялось.
+  - id: SRC-FINANCIAL-MODEL-V0-2-BRIEF-2026-08-18
+    title: Утверждённые уточнения Financial Model v0.2 и консолидация текущего состояния
+    type: instruction
+    location: User instructions, 2026-08-18 and 2026-08-19
+    publisher: project owner
+    publication_date: 2026-08-18
+    accessed_at: 2026-08-19
+    reliability: primary
+    notes: Первичный источник уже утверждённых защищённых финансовых допущений, помесячного ramp-up и сезонности, зависимых локальных представлений, append-only supersession и последующего sealed deployment без Google операций.

@@ -1,0 +1,68 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+mode: governed_reverse_change_set
+status: prepared
+before_content_commit: 93852f910ddf0b2c34b09ffbab05e611e1ee7767
+before_state_sha256: 7453d20f9e63c2fd2592d89f1beaee92237d1588de3c5d535d7b6759cffdfb42
+after_state_sha256: 86f6b79114b5f4d71c481f4e1b571982d5ee8cdbd670d3d19f550eab12dc0813
+source_change_sets:
+  - CHG-040
+  - CHG-041
+  - CHG-042
+  - CHG-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+reverse_order:
+  - Preserve the append-only proposal, decision, audit, receipts and timeline events for this iteration.
+  - Require a separately approved external reverse action for the Google Sheet; never delete it implicitly.
+  - Remove the Investor Summary source, schemas, projections, publisher and targeted tests through a new governed reverse change set.
+  - Restore package scripts and CLI from the pre-iteration content commit.
+  - Apply approved registry reversals for CHG-042, CHG-041 and CHG-040 using their receipts.
+  - Re-run targeted Summary, registry, dependency and timeline checks.
+new_paths_to_remove_by_reverse_change:
+  - docs-platform/working/investor-financial-summary.yaml
+  - docs-platform/schemas/investor-financial-summary.schema.json
+  - docs-platform/schemas/investor-financial-summary-projection.schema.json
+  - docs-platform/schemas/investor-financial-summary-google-payload.schema.json
+  - docs-platform/app/src/financial/investor-summary.ts
+  - docs-platform/app/src/financial/investor-summary-google-sheet.ts
+  - docs-platform/app/src/google/investor-summary-publisher.ts
+  - docs-platform/app/test/investor-financial-summary.test.ts
+  - docs-platform/app/test/investor-financial-summary-publisher.test.ts
+  - docs-platform/generated/investor-financial-summary.json
+  - docs-platform/generated/investor-financial-summary-google-sheets-payload.json
+paths_to_restore_from_before_content_commit:
+  - docs-platform/app/src/cli.ts
+  - docs-platform/app/package.json
+  - package.json
+before_file_sha256:
+  docs-platform/app/src/cli.ts: d2052dc261af1e512624f8fc75951330728b53e7cc302f5a5553baffc2d98c8e
+  docs-platform/app/package.json: c7dcecc103beb1f8949e85553989073505782bf025bccf6320709657255322be
+  package.json: bac7fdec30deac27e822fb9b7379361e5ffc9c62ff772ee3335475bcfc67b194
+  docs-platform/registry/documents.yaml: effa387248716a885864197d13217fc27c5e530bf4f164cf00e08ac72d9f9188
+  docs-platform/registry/sources.yaml: f789501203d84924a00e55d4b3767f441ec9b0eb6db8374d4d82deb063add77c
+  docs-platform/registry/decisions.yaml: 778fbb3576917941ae772a16de728acb09de8cb4af20203b4b2ed02e1460c019
+  docs-platform/registry/dependencies.yaml: 57843e32da0452fa9a1feed50710a0e1afd250893189621abbd59bb96216464c
+after_file_sha256:
+  docs-platform/working/investor-financial-summary.yaml: 866068e67a6dc1355854df90cf18be96297d7c9460d428db22201b2d5aa745b3
+  docs-platform/generated/investor-financial-summary.json: 383c867a478f43da46bcc381f58bce9b70f91c4c7ce633dc64b3d3d33b03ba50
+  docs-platform/generated/investor-financial-summary-google-sheets-payload.json: 1d380914bc5d053ec001e12ec72d511780378a9b76cd4825a943d44e4f2cc6c3
+  docs-platform/app/src/cli.ts: 9c9024159dda979aa10652d4c736c54365a800447f4b9a568e7054436ffb5135
+  docs-platform/app/package.json: 75f9fc6fd75e60cc91076d1adad32ec5d9c576a2c8d96799888466a23271dabf
+  package.json: 7ec41c6a47a4d0b772d12cc2fee0c4ca761023fd4fc226e28e9047abc4e51849
+  docs-platform/registry/documents.yaml: df31f40a6db8a87821dca1eb57b7ffb09b4fcffbd79a6c8bc6bbced37d3285d4
+  docs-platform/registry/sources.yaml: a0d0c51914befb50072e17430330f2679c49e597952c87c1b5480ec01f1cd38b
+  docs-platform/registry/decisions.yaml: 945c34e1c65cd7e72e1e80d30d8f9ca2e13cf94fc60077ee586c6c9332d772bd
+  docs-platform/registry/dependencies.yaml: 6a752616da70db7f674c8a5893b34161d3d4492f30af2b541b4fb31b48d12820
+registry_receipts:
+  - docs-platform/changelog/change-receipts/CHG-042.yaml
+  - docs-platform/changelog/change-receipts/CHG-041.yaml
+  - docs-platform/changelog/change-receipts/CHG-040.yaml
+google_reverse_strategy:
+  requirement: A new owner-approved external reverse action is mandatory after publication.
+  default_action: Retain the Sheet and mark it superseded; do not delete automatically.
+  google_file_id: 1AW-JONG-vkxCEIG_pY5SSPgsMpXLycLJAk7iY5saVus
+  final_receipt: docs-platform/changelog/google-sync/2026-08-16-DOC-INVESTOR-FINANCIAL-SUMMARY-02.yaml
+reverse_strategy:
+  requirement: A new rollback request, reverse preview and approved rollback decision are mandatory before apply.
+  history: Append rollback events; never delete or rewrite this iteration's events or receipts.
+  git_reset_forbidden: true
+  dependency_check: required against every later applied iteration

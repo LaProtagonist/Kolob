@@ -43,7 +43,11 @@ export type LaunchBudgetResult = {
   premisesEntryRub: number | null;
   securityDepositRub: number | null;
   operatingReserveRub: number | null;
+  operatingReserveSource: "financial_model" | "custom" | "legacy_snapshot";
   monthlyOperatingExpensesRub: number | null;
+  launchMarketingRub: number;
+  launchItemsRub: number;
+  launchItems: Array<{ id: string; name: string; amountRub: number }>;
   preparationBreakdownRub: number;
   effectivePreparationRub: number | null;
   contingencyRub: number;
@@ -125,6 +129,20 @@ type LaunchModel = {
 };
 
 export const launchModel = capexData.investorStartModel as unknown as LaunchModel;
+
+// Financial parameters of the launch (operating reserve, launch marketing, one-off launch items) come from
+// the Financial Model projection and are injected by the page; the calculator never reads that projection
+// itself because docs-platform's Financial Model imports this module for CAPEX.
+export type LaunchFinancialInputs = {
+  reserveMonths: number;
+  operatingReserveRub: number;
+  monthlyReserveBaseRub: number;
+  launchMarketingRub: number;
+  initialUniformRub: number;
+  initialInventoryRub: number;
+  videoSurveillanceRub: number;
+  alarmRub: number;
+};
 
 export function defaultLaunchBudgetState(model = launchModel): LaunchBudgetState {
   return {
@@ -239,9 +257,18 @@ export function calculateEffectiveMonthlyOperatingExpenses(state: LaunchBudgetSt
   return state.operatingExpenseMode === "custom" ? state.customMonthlyOpexRub : calculateMonthlyOperatingExpenses(model);
 }
 
-export function calculateOperatingReserve(state: LaunchBudgetState, model = launchModel) {
+export function calculateOperatingReserve(state: LaunchBudgetState, model = launchModel, financials: LaunchFinancialInputs | null = null) {
+  if (state.operatingExpenseMode === "custom") {
+    return state.customMonthlyOpexRub === null ? null : state.customMonthlyOpexRub * state.operatingReserveMonths;
+  }
+  if (financials) return financials.monthlyReserveBaseRub * state.operatingReserveMonths;
   const monthlyOperatingExpensesRub = calculateEffectiveMonthlyOperatingExpenses(state, model);
   return monthlyOperatingExpensesRub === null ? null : monthlyOperatingExpensesRub * state.operatingReserveMonths;
+}
+
+export function calculateMonthlyReserveBase(state: LaunchBudgetState, model = launchModel, financials: LaunchFinancialInputs | null = null) {
+  if (state.operatingExpenseMode === "custom") return state.customMonthlyOpexRub;
+  return financials ? financials.monthlyReserveBaseRub : calculateMonthlyOperatingExpenses(model);
 }
 
 export function calculatePreparationBreakdown(state: LaunchBudgetState, model = launchModel) {
@@ -253,7 +280,7 @@ export function calculateEffectivePreparationAmount(state: LaunchBudgetState, mo
   return state.preparationMode === "manual" ? state.preparationManualRub : calculatePreparationBreakdown(state, model);
 }
 
-export function calculateLaunchBudget(state: LaunchBudgetState, model = launchModel): LaunchBudgetResult {
+export function calculateLaunchBudget(state: LaunchBudgetState, model = launchModel, financials: LaunchFinancialInputs | null = null): LaunchBudgetResult {
   const seating = model.seating.profiles.find(item => item.id === state.seatingProfileId)!;
   const furniture = model.furniture.profiles.find(item => item.id === state.furnitureProfileId)!;
   const equipmentScenario = model.equipment.scenarios.find(item => item.id === state.equipmentScenarioId)!;
@@ -293,8 +320,18 @@ export function calculateLaunchBudget(state: LaunchBudgetState, model = launchMo
   const securityDepositRub = state.premisesScenario === "rent" && state.monthlyRentRub !== null
     ? state.monthlyRentRub * state.securityDepositMonths
     : null;
-  const monthlyOperatingExpensesRub = calculateEffectiveMonthlyOperatingExpenses(state, model);
-  const operatingReserveRub = calculateOperatingReserve(state, model);
+  const monthlyOperatingExpensesRub = calculateMonthlyReserveBase(state, model, financials);
+  const operatingReserveRub = calculateOperatingReserve(state, model, financials);
+  const operatingReserveSource: LaunchBudgetResult["operatingReserveSource"] = state.operatingExpenseMode === "custom" ? "custom" : financials ? "financial_model" : "legacy_snapshot";
+  const launchItems = financials ? [
+    { id: "launch_marketing", name: "Маркетинг запуска", amountRub: financials.launchMarketingRub },
+    { id: "initial_uniform", name: "Первичная форма", amountRub: financials.initialUniformRub },
+    { id: "video_surveillance", name: "Видеонаблюдение", amountRub: financials.videoSurveillanceRub },
+    { id: "alarm", name: "Охранная сигнализация", amountRub: financials.alarmRub },
+    { id: "initial_inventory", name: "Первоначальный товарный запас", amountRub: financials.initialInventoryRub },
+  ] : [];
+  const launchMarketingRub = financials ? financials.launchMarketingRub : 0;
+  const launchItemsRub = launchItems.reduce((sum, item) => sum + item.amountRub, 0);
   const preparationBreakdownRub = calculatePreparationBreakdown(state, model);
   const effectivePreparationAmount = calculateEffectivePreparationAmount(state, model);
   const contingencyBasis = equipment.total + (furnitureRub ?? 0) + (effectivePreparationAmount ?? 0);
@@ -310,8 +347,8 @@ export function calculateLaunchBudget(state: LaunchBudgetState, model = launchMo
   if (equipment.quoteRequiredCount > 0) missing.push(`Коммерческие предложения по крупным позициям: ${equipment.quoteRequiredCount}`);
   for (const module of incompleteRequiredModules) missing.push(`Обязательный модуль не сформирован: ${module.name}`);
 
-  const financingRequirementRub = area.invalid ? null : [premisesEntryRub, equipment.total, furnitureRub, effectivePreparationAmount, operatingReserveRub, contingencyRub]
-    .reduce<number>((sum, value) => sum + (value ?? 0), 0);
+  const financingRequirementRub = area.invalid ? null : Math.round([premisesEntryRub, equipment.total, furnitureRub, effectivePreparationAmount, launchItemsRub, operatingReserveRub, contingencyRub]
+    .reduce<number>((sum, value) => sum + (value ?? 0), 0) * 100) / 100;
   const propertyAsset = state.premisesScenario === "purchase" ? state.purchasePriceRub ?? 0 : 0;
   const createdAssetsRub = propertyAsset + equipment.total + (furnitureRub ?? 0);
   const createdAssetsPartial = equipment.unpricedCount > 0 || furnitureRub === null || (state.premisesScenario === "purchase" && state.purchasePriceRub === null);
@@ -327,7 +364,11 @@ export function calculateLaunchBudget(state: LaunchBudgetState, model = launchMo
     premisesEntryRub,
     securityDepositRub,
     operatingReserveRub,
+    operatingReserveSource,
     monthlyOperatingExpensesRub,
+    launchMarketingRub,
+    launchItemsRub,
+    launchItems,
     preparationBreakdownRub,
     effectivePreparationRub: effectivePreparationAmount,
     contingencyRub,

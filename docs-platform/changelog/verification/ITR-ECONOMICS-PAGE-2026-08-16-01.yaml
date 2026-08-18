@@ -1,0 +1,95 @@
+schema_version: 2
+iteration_id: ITR-ECONOMICS-PAGE-2026-08-16-01
+proposal_id: PROP-ECONOMICS-PAGE-2026-08-16-01
+decision_id: DEC-ECONOMICS-PAGE-2026-08-16-01
+change_set_id: CHG-ECONOMICS-PAGE-2026-08-16-01
+verified_at: 2026-08-16T02:09:00.000Z
+actor: Codex
+validation_status: passed
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-ECONOMICS-PAGE-2026-08-16-01-approved.yaml
+  sha256: 7cf35db25a78222dfed36330deee31ba5c67eec98d3e699a53bda1c5b7179f21
+state:
+  before_state_sha256: 40fa6ed869884d0af15c7dc093ac6cfdcce11ef3d54bfaac9764549fd7827268
+  after_state_sha256: f6b66f7c4a3a972ff42c81cebe0692b952902f4b7ead1dcd9c1b26263c31eda3
+  component_sha256: d6ed4a4427fca2ecb3dcc6648a713fd2a5fa51f076524135a6a1816c4a1037ed
+  stylesheet_sha256: 8b3c0e81aa414b7b4dd301b1e0df173396115bdfa7d341581b4ceba77f9e2df8
+  copy_sha256: f468a72ce2b4053675b124b67cad86529ed855d10739bf6b50a00c887b20b8d7
+  adapter_sha256: a8a4306f92667f490f11e161bafff12ae09732620674ceb816805a6ca756923d
+  data_test_sha256: 12768af9dc404c0026897835e7893cef3433a95ee1023cf4d020fea741ed5551
+  route_test_sha256: cf28183673bb25b7471ab1558c081023d89836bdae7343462229966731872a47
+dependency:
+  investor_summary_source_sha256: 866068e67a6dc1355854df90cf18be96297d7c9460d428db22201b2d5aa745b3
+  investor_summary_projection_sha256: 383c867a478f43da46bcc381f58bce9b70f91c4c7ce633dc64b3d3d33b03ba50
+  investor_summary_google_payload_sha256: 1d380914bc5d053ec001e12ec72d511780378a9b76cd4825a943d44e4f2cc6c3
+  financial_model_source_sha256: bb61e57b9b65ec2961f5d16a2065b5937d803a5772cdef172716ec952daf6bb4
+  financial_model_projection_sha256: aa494d3c03d57d11a6c57c126046576d0cf7440387adc54688ad4ca6c6552324
+  financial_model_content_state_sha256: 18e56ce33cc19540ff9540d05a35c24284534fdfd89a6b74e59ff5a394980ae4
+  parity_and_stale_guard: passed
+scenario_parity:
+  pessimistic: { checks_per_day: 200, sales_per_month_rub: 6992400, ebitda_rounded_rub: 1525888, ebitda_margin: 0.2182, free_cash_flow_rounded_rub: 1389512, payback_month: 28 }
+  realistic: { checks_per_day: 300, sales_per_month_rub: 10488600, ebitda_rounded_rub: 4002051, ebitda_margin: 0.3816, free_cash_flow_rounded_rub: 3692344, payback_month: 11 }
+  optimistic: { checks_per_day: 450, sales_per_month_rub: 15732900, ebitda_rounded_rub: 7158173, ebitda_margin: 0.4550, free_cash_flow_rounded_rub: 6623986, payback_month: 7 }
+presentation_verification:
+  exact_hero_subtitle: passed
+  default_scenario_realistic: passed
+  scenario_switching: passed
+  sticky_summary_desktop: passed
+  mobile_summary_non_sticky: passed
+  cogs_hierarchy: passed
+  cogs_components_equal_total: passed
+  scenario_comparison: passed
+  investment_breakdown: passed
+  rent_purchase_separation: passed
+  sensitivity_scope: passed
+  noindex_nofollow: passed
+  navigation_footer_sitemap_exclusion: passed
+browser_verification:
+  local_url: http://127.0.0.1:5173/economics
+  console_errors: 0
+  page_errors: 0
+  horizontal_overflow:
+    desktop_1440x900: false
+    mobile_390x844: false
+  review_screenshots:
+    - output/review/economics-desktop.png
+    - output/review/economics-mobile.png
+validation:
+  economics_data_and_dependency_tests: 5 passed, 0 failed
+  economics_route_test: passed at 1440x900 and 390x844
+  typescript_no_emit: passed
+  local_route_render: passed
+  in_app_browser_qa: passed
+  timeline_validation: passed with 152 append-only events
+  context_validation: passed
+  git_diff_check: passed
+  full_root_test: intentionally not run by owner instruction
+  full_docs_platform_suite: intentionally not run by owner instruction
+  full_site_build: intentionally not run by owner instruction
+  unrelated_google_readback: intentionally not run by owner instruction
+business_source_invariants:
+  financial_model_changed: false
+  investor_financial_summary_changed: false
+  revenue_model_changed: false
+  capex_changed: false
+  investor_start_model_changed: false
+  launch_budget_changed: false
+  revenue_route_changed: false
+audit:
+  receipt: docs-platform/changelog/audit/ITR-ECONOMICS-PAGE-2026-08-16-01.yaml
+  receipt_sha256: 1188efa33da6f3a154bc9cfca49f91ef29a8d4ea35a07369616a6fbded888aec
+rollback:
+  payload: docs-platform/changelog/rollback-payloads/ITR-ECONOMICS-PAGE-2026-08-16-01/manifest.yaml
+  payload_sha256: f70944e199095b3c475973f0b8d646d330ab61756fdfe0fb30ff88f0df6cfde6
+  mode: governed_reverse_change_set
+  preserves_history: true
+git_and_delivery:
+  staged: false
+  committed: false
+  sealed: false
+  tagged: false
+  pushed: false
+  published: false
+  synced: false
+  deployed: false
+summary: The local /economics page is a responsive, presentation-only projection over the existing Investor Financial Summary and sealed Financial Model. Its three scenarios, KPI, P&L hierarchy, investment structure, property comparison and two stress tests match the source projections; no master data, existing route or Google artifact changed.

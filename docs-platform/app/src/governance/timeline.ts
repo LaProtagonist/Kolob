@@ -114,7 +114,7 @@ const modernTransitions: Record<GovernanceEventType, GovernanceEventType[]> = {
   committed: ["deployed", "published", "synced", "closed", "rollback_requested", "external_drift_detected", "compensation_proposed"],
   deployed: ["deployed", "closed", "rollback_requested", "external_drift_detected", "compensation_proposed"],
   published: ["synced", "closed", "rollback_requested", "external_drift_detected"],
-  synced: ["committed", "published", "closed", "rollback_requested", "external_drift_detected"],
+  synced: ["committed", "published", "closed", "rollback_requested", "external_drift_detected", "superseded"],
   closed: ["rollback_requested", "compensation_proposed", "external_drift_detected"],
   rejected: [], failed: [], superseded: [],
   rollback_requested: ["rollback_approved", "failed"],

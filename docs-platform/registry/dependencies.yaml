@@ -220,3 +220,12 @@ dependencies:
       - title: Financial Model
         document_id: DOC-FINANCIAL-MODEL
     updated_at: 2026-08-16
+  - id: DEP-FINANCIAL-MODEL-INVESTOR-FINANCIAL-SUMMARY
+    source_document_id: DOC-FINANCIAL-MODEL
+    priority: governing_source
+    status: research
+    version: "0.2"
+    target_documents:
+      - title: Investor Financial Summary
+        document_id: DOC-INVESTOR-FINANCIAL-SUMMARY
+    updated_at: 2026-08-19

@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "financial-projection.schema.json",
   "type": "object",
-  "required": ["meta", "derived_food_cost", "launch_capital", "scenarios", "sensitivity", "deferred"],
+  "required": ["meta", "derived_food_cost", "launch_capital", "scenarios", "investment_break_even", "sensitivity", "deferred"],
   "properties": {
     "meta": {
       "type": "object",
@@ -20,7 +20,7 @@
       "properties": {
         "schema_version": { "const": 1 },
         "document_id": { "const": "DOC-FINANCIAL-MODEL" },
-        "version": { "const": "0.1" },
+        "version": { "const": "0.2" },
         "status": { "const": "research" },
         "content_state": {
           "type": "object",
@@ -73,12 +73,82 @@
       },
       "additionalProperties": false
     },
+    "investment_break_even": {
+      "type": "object",
+      "required": ["min_checks_per_day", "npv_rub", "status"],
+      "properties": {
+        "min_checks_per_day": { "type": ["number", "null"] },
+        "npv_rub": { "type": "number" },
+        "status": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": true
+    },
     "sensitivity": { "type": "object" },
     "deferred": { "type": "array", "minItems": 1 }
   },
   "$defs": {
     "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
     "nullableNumber": { "type": ["number", "null"] },
+    "monthRow": {
+      "type": "object",
+      "required": [
+        "month",
+        "calendar_month",
+        "ramp_factor",
+        "seasonality_factor",
+        "gross_revenue_rub",
+        "net_revenue_rub",
+        "raw_materials_rub",
+        "labor_rub",
+        "administrative_reserve_rub",
+        "marketing_rub",
+        "household_rub",
+        "ebitda_rub",
+        "ebitda_margin",
+        "tax_due_rub",
+        "operating_free_cash_flow_rub",
+        "prepaid_rent_release_rub",
+        "net_cash_flow_rub",
+        "cumulative_net_cash_flow_rub"
+      ],
+      "properties": {
+        "month": { "type": "integer", "minimum": 1, "maximum": 60 },
+        "calendar_month": { "type": "integer", "minimum": 1, "maximum": 12 },
+        "ramp_factor": { "type": "number", "exclusiveMinimum": 0, "maximum": 1 },
+        "seasonality_factor": { "type": "number", "exclusiveMinimum": 0 }
+      },
+      "additionalProperties": true
+    },
+    "periodTotals": {
+      "type": "object",
+      "required": [
+        "from_month",
+        "to_month",
+        "gross_revenue_rub",
+        "net_revenue_rub",
+        "raw_materials_rub",
+        "labor_rub",
+        "ebitda_rub",
+        "ebitda_margin",
+        "tax_due_rub",
+        "free_cash_flow_rub"
+      ],
+      "properties": {
+        "from_month": { "type": "integer", "minimum": 1 },
+        "to_month": { "type": "integer", "minimum": 1 },
+        "gross_revenue_rub": { "type": "number" },
+        "net_revenue_rub": { "type": "number" },
+        "raw_materials_rub": { "type": "number" },
+        "labor_rub": { "type": "number" },
+        "ebitda_rub": { "type": "number" },
+        "ebitda_margin": { "type": "number" },
+        "tax_due_rub": { "type": "number" },
+        "free_cash_flow_rub": { "type": "number" },
+        "prepaid_rent_release_rub": { "type": "number" },
+        "net_cash_flow_rub": { "type": "number" }
+      },
+      "additionalProperties": false
+    },
     "launchCapital": {
       "type": "object",
       "required": [
@@ -161,7 +231,22 @@
         "combined_irr_annual",
         "combined_npv_rub",
         "restaurant_cash_flows",
-        "combined_cash_flows"
+        "combined_cash_flows",
+        "raw_materials_rate",
+        "recipe_based_raw_materials_rub",
+        "calculated_staffing_labor_rub",
+        "protected_labor_floor_rub",
+        "protected_labor_binding",
+        "administrative_reserve_rub",
+        "marketing_rub",
+        "launch_marketing_rub",
+        "initial_uniform_rub",
+        "video_surveillance_rub",
+        "alarm_rub",
+        "monthly",
+        "monthly_detailed",
+        "year_1",
+        "mature_year"
       ],
       "properties": {
         "scenario": { "enum": ["pessimistic", "realistic", "optimistic"] },
@@ -197,7 +282,25 @@
         "combined_irr_annual": { "$ref": "#/$defs/nullableNumber" },
         "combined_npv_rub": { "type": "number" },
         "restaurant_cash_flows": { "type": "array", "minItems": 61, "maxItems": 61, "items": { "type": "number" } },
-        "combined_cash_flows": { "type": "array", "minItems": 61, "maxItems": 61, "items": { "type": "number" } }
+        "combined_cash_flows": { "type": "array", "minItems": 61, "maxItems": 61, "items": { "type": "number" } },
+        "raw_materials_rate": { "type": "number", "exclusiveMinimum": 0 },
+        "recipe_based_raw_materials_rub": { "type": "number" },
+        "calculated_staffing_labor_rub": { "type": "number" },
+        "protected_labor_floor_rub": { "type": "number" },
+        "protected_labor_binding": { "type": "boolean" },
+        "administrative_reserve_rub": { "type": "number" },
+        "marketing_rub": { "type": "number", "minimum": 0 },
+        "marketing_formula": { "type": "object" },
+        "household_rub": { "type": "number", "minimum": 0 },
+        "household_formula": { "type": "object" },
+        "launch_marketing_rub": { "const": 700000 },
+        "initial_uniform_rub": { "type": "number", "minimum": 0 },
+        "video_surveillance_rub": { "type": "number", "minimum": 0 },
+        "alarm_rub": { "type": "number", "minimum": 0 },
+        "monthly": { "type": "array", "minItems": 60, "maxItems": 60, "items": { "$ref": "#/$defs/monthRow" } },
+        "monthly_detailed": { "type": "array", "minItems": 12, "maxItems": 12, "items": { "type": "object" } },
+        "year_1": { "$ref": "#/$defs/periodTotals" },
+        "mature_year": { "$ref": "#/$defs/periodTotals" }
       },
       "additionalProperties": true
     }

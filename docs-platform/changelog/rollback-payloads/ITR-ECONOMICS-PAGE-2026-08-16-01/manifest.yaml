@@ -1,0 +1,14 @@
+schema_version: 2
+iteration_id: ITR-ECONOMICS-PAGE-2026-08-16-01
+mode: governed_reverse_change_set
+status: prepared
+before_content_commit: 93852f910ddf0b2c34b09ffbab05e611e1ee7767
+before_state_sha256: 40fa6ed869884d0af15c7dc093ac6cfdcce11ef3d54bfaac9764549fd7827268
+after_state_sha256: f6b66f7c4a3a972ff42c81cebe0692b952902f4b7ead1dcd9c1b26263c31eda3
+reverse_strategy:
+  route: remove /economics and its noindex page metadata only through a new approved reverse change set
+  presentation: remove the Economics component, copy, adapter and stylesheet only through the same reverse change set
+  tests: remove the targeted Economics tests together with the route
+  events: append rollback lifecycle events and preserve this complete before/after history
+  git_reset_forbidden: true
+dependency_check: required against every later applied, committed or sealed iteration

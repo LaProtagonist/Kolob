@@ -79,3 +79,4 @@
   .revenue-capacity-band { align-items: flex-start; flex-direction: column; }
   .revenue-capacity-band strong { text-align: left; }
 }
+.revenue-scenario-note { margin: 16px 0 0; color: var(--launch-muted); font-size: .82rem; line-height: 1.55; }

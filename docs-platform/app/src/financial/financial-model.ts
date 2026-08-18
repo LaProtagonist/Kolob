@@ -277,6 +277,76 @@ function presentValue(cashFlows: number[], annualDiscountRate: number) {
   return cashFlows.reduce((value, cash, month) => value + cash / ((1 + monthlyRate) ** month), 0);
 }
 
+type MonthlyDriver = { month: number; calendar_month: number; ramp_factor: number; seasonality_factor: number; volume_factor: number };
+
+function fixedOpexEntries(model: any) {
+  return (model.opex.entries as any[]).filter(entry => entry.behavior === "fixed" && entry.applies_to !== "rent");
+}
+
+function scenarioFormulaEntry(model: any, id: string) {
+  const entry = opexEntry(model, id);
+  if (entry.behavior !== "scenario_formula") throw new Error(`OPEX entry ${id} must be a scenario_formula entry.`);
+  return entry;
+}
+
+function variableRateEntry(model: any, id: string, field: string) {
+  const entry = opexEntry(model, id);
+  const value = Number(entry[field]);
+  if (!Number.isFinite(value)) throw new Error(`OPEX entry ${id} must define a numeric ${field}.`);
+  return value;
+}
+
+function rampFactorFor(model: any, operatingMonth: number) {
+  const profile = (model.model.ramp_up_profile as any[])
+    .map(item => ({ month: Number(item.month), factor: Number(item.ramp_factor) }))
+    .sort((left, right) => left.month - right.month);
+  if (!profile.length) throw new Error("Financial Model requires a ramp-up profile.");
+  const exact = profile.find(item => item.month === operatingMonth);
+  if (exact) return exact.factor;
+  const last = profile[profile.length - 1];
+  if (operatingMonth > last.month) return last.factor;
+  throw new Error(`Ramp-up profile has no factor for operating month ${operatingMonth}.`);
+}
+
+function seasonalityFactorFor(model: any, calendarMonth: number) {
+  const row = (model.model.seasonality_profile as any[]).find(item => Number(item.month) === calendarMonth);
+  if (!row) throw new Error(`Seasonality profile has no coefficient for calendar month ${calendarMonth}.`);
+  return Number(row.seasonality_coefficient);
+}
+
+function monthlyDrivers(model: any): MonthlyDriver[] {
+  const horizon = Number(model.model.horizon_months);
+  const openingMonth = Number(model.model.opening_month);
+  return Array.from({ length: horizon }, (_, index) => {
+    const month = index + 1;
+    const calendarMonth = ((openingMonth - 1 + index) % 12) + 1;
+    const ramp = rampFactorFor(model, month);
+    const seasonality = seasonalityFactorFor(model, calendarMonth);
+    return { month, calendar_month: calendarMonth, ramp_factor: ramp, seasonality_factor: seasonality, volume_factor: ramp * seasonality };
+  });
+}
+
+function periodTotals(months: any[], fromMonth: number, toMonth: number) {
+  const slice = months.filter(item => item.month >= fromMonth && item.month <= toMonth);
+  const total = (key: string) => round(sum(slice.map(item => Number(item[key]))));
+  const netRevenue = total("net_revenue_rub");
+  const ebitda = total("ebitda_rub");
+  return {
+    from_month: fromMonth,
+    to_month: toMonth,
+    gross_revenue_rub: total("gross_revenue_rub"),
+    net_revenue_rub: netRevenue,
+    raw_materials_rub: total("raw_materials_rub"),
+    labor_rub: total("labor_rub"),
+    ebitda_rub: ebitda,
+    ebitda_margin: netRevenue === 0 ? 0 : ebitda / netRevenue,
+    tax_due_rub: total("tax_due_rub"),
+    free_cash_flow_rub: total("operating_free_cash_flow_rub"),
+    prepaid_rent_release_rub: total("prepaid_rent_release_rub"),
+    net_cash_flow_rub: total("net_cash_flow_rub"),
+  };
+}
+
 export function calculateFinancialScenario(scenario: SalesScenarioId, options: CalculationOptions = {}, model = readFinancialModel()) {
   const revenueModel = readRevenueModel();
   const traffic = revenueModel.traffic.scenarios.find((item: any) => item.id === scenario);
@@ -284,67 +354,179 @@ export function calculateFinancialScenario(scenario: SalesScenarioId, options: C
   const checksPerDay = Number(options.checksPerDay ?? traffic.checks_per_day);
   const daysPerMonth = Number(model.model.days_per_month);
   const averageCheck = Number(revenueModel.product_model.average_check_rub) * Number(options.averageCheckMultiplier ?? 1);
-  const grossRevenue = checksPerDay * daysPerMonth * averageCheck;
+  const matureGrossRevenue = checksPerDay * daysPerMonth * averageCheck;
   const taxScenario = options.taxScenario ?? model.model.default_tax_scenario as TaxScenarioId;
   const taxRules = model.tax.scenarios[taxScenario];
-  const vat = taxScenario === "conservative" ? grossRevenue * Number(taxRules.vat_rate) / (1 + Number(taxRules.vat_rate)) : 0;
-  const netRevenue = grossRevenue - vat;
+  const vatRate = taxScenario === "conservative" ? Number(taxRules.vat_rate) : 0;
+
+  const protectedFormula = model.food_cost.protected_formula;
+  const rawMaterialsRate = Number(options.overallFoodCostRate ?? protectedFormula.raw_materials_rate);
+  const protectedLaborRate = Number(protectedFormula.protected_labor_rate);
+  const wasteRate = Number(options.wasteRate ?? model.food_cost.waste.default_rate);
+  const administrativeReserveRate = variableRateEntry(model, "ADMINISTRATIVE_RESERVE", "rate_of_net_revenue");
+  const acquiringRate = Number(opexEntry(model, "ACQUIRING").rate_of_gross_revenue);
+  const aggregatorShare = Number(options.aggregatorShare ?? model.model.default_aggregator_share);
+  const aggregatorRate = Number(opexEntry(model, "AGGREGATORS").commission_rate);
+
   const food = calculateFoodCost(model);
-  const foodPortions = checksPerDay * daysPerMonth * Number(revenueModel.product_model.food_portions_per_check);
-  const drinks = checksPerDay * daysPerMonth * Number(revenueModel.product_model.drinks.per_check);
-  const rawMaterials = options.overallFoodCostRate === undefined || options.overallFoodCostRate === null
-    ? foodPortions * food.average_food_portion_cost_rub + drinks * food.drink_cost_rub
-    : grossRevenue * Number(options.overallFoodCostRate);
-  const waste = rawMaterials * Number(options.wasteRate ?? model.food_cost.waste.default_rate);
-  const packaging = Number(model.packaging.baseline_monthly_rub) * checksPerDay / Number(model.packaging.baseline_checks_per_day);
+  const matureFoodPortions = checksPerDay * daysPerMonth * Number(revenueModel.product_model.food_portions_per_check);
+  const matureDrinks = checksPerDay * daysPerMonth * Number(revenueModel.product_model.drinks.per_check);
+  const matureRecipeRawMaterials = matureFoodPortions * food.average_food_portion_cost_rub + matureDrinks * food.drink_cost_rub;
+  const maturePackaging = Number(model.packaging.baseline_monthly_rub) * checksPerDay / Number(model.packaging.baseline_checks_per_day);
+
   const staffingScenario: SalesScenarioId = options.checksPerDay !== undefined ? (checksPerDay >= 450 ? "optimistic" : "realistic") : scenario;
   const staffing = calculateStaffing(staffingScenario, options.contributionScenario ?? model.model.default_contribution_scenario, model);
   const laborMultiplier = Number(options.laborMultiplier ?? 1);
-  const labor = staffing.total_labor_rub * laborMultiplier;
+  const calculatedStaffingLabor = staffing.total_labor_rub * laborMultiplier;
+  const cashPayroll = (staffing.payroll_rub + staffing.employer_contributions_rub) * laborMultiplier;
+
   const realEstateScenario = options.realEstateScenario ?? model.model.default_real_estate_scenario as RealEstateScenarioId;
   const rent = realEstateScenario === "rent" ? Number(options.rentRub ?? model.real_estate.scenarios.rent.monthly_rent_rub) : 0;
-  const acquiring = grossRevenue * Number(opexEntry(model, "ACQUIRING").rate_of_gross_revenue);
-  const aggregatorShare = Number(options.aggregatorShare ?? model.model.default_aggregator_share);
-  const aggregator = grossRevenue * aggregatorShare * Number(opexEntry(model, "AGGREGATORS").commission_rate);
-  const fixedEntryIds = ["UTILITIES", "ADVERTISING", "SMM", "EQUIPMENT_SERVICE", "HOUSEHOLD", "ACCOUNTING", "VENT_GREASE", "UNIFORM_RENEWAL", "MUSIC_RIGHTS", "PEST", "YUMA", "MEDICAL", "SECURITY_MONITORING", "BANKING", "OTHER"];
-  const fixedEntries = Object.fromEntries(fixedEntryIds.map(id => [id, Number(opexEntry(model, id).amount_rub)]));
+
+  const fixedEntries = Object.fromEntries(fixedOpexEntries(model).map(entry => [entry.id, Number(entry.amount_rub)]));
   const fixedOpexWithoutLaborAndRent = sum(Object.values(fixedEntries));
-  const ebitda = netRevenue - rawMaterials - waste - packaging - labor - rent - acquiring - aggregator - fixedOpexWithoutLaborAndRent;
+  const marketingRule = scenarioFormulaEntry(model, "MARKETING");
+  const householdRule = scenarioFormulaEntry(model, "HOUSEHOLD");
+  const marketingFor = (netRevenue: number, operatingMonth: number | null) => {
+    const formulaValue = Number(marketingRule.fixed_amount_rub) + netRevenue * Number(marketingRule.rate_of_net_revenue);
+    const withinFloor = operatingMonth !== null && operatingMonth <= Number(marketingRule.ramp_up_floor_months);
+    return withinFloor ? Math.max(Number(marketingRule.ramp_up_floor_rub), formulaValue) : formulaValue;
+  };
+  const householdFor = (actualChecksPerDay: number) =>
+    Number(householdRule.fixed_amount_rub) + Number(householdRule.variable_amount_rub) * actualChecksPerDay / Number(householdRule.baseline_checks_per_day);
+
   const capex = importedLaunchCapital(model);
   const depreciation = capex.monthly_depreciation_rub;
-  const ebit = ebitda - depreciation;
-  const eligibleOperatingCashExpenses = rawMaterials + waste + packaging + staffing.payroll_rub + staffing.employer_contributions_rub
-    + rent + acquiring + aggregator + fixedOpexWithoutLaborAndRent;
-  const taxableBase = Math.max(netRevenue - eligibleOperatingCashExpenses, 0);
-  const regularUsn = taxableBase * Number(taxRules.usn_income_less_expenses_rate);
-  const minimumUsn = netRevenue * Number(taxRules.minimum_usn_income_rate);
-  const taxDue = Math.max(regularUsn, minimumUsn);
-  const netOperatingResult = ebit - taxDue;
   const maintenanceCapex = (capex.equipment_rub + capex.furniture_rub) * Number(model.maintenance_capex.annual_rate) / 12;
-  const operatingFreeCashFlow = ebitda - taxDue - maintenanceCapex;
-  const reserveMonths = Number(model.operating_reserve.default_months);
   const prepaidMonths = realEstateScenario === "rent" ? Number(model.real_estate.scenarios.rent.prepayment_months) : 0;
+
+  function monthFromVolume(volume: number, operatingMonth: number | null = null) {
+    const grossRevenue = matureGrossRevenue * volume;
+    const vat = grossRevenue * vatRate / (1 + vatRate);
+    const netRevenue = grossRevenue - vat;
+    const rawMaterials = netRevenue * rawMaterialsRate;
+    const waste = rawMaterials * wasteRate;
+    const packaging = maturePackaging * volume;
+    const acquiring = grossRevenue * acquiringRate;
+    const aggregator = grossRevenue * aggregatorShare * aggregatorRate;
+    const administrativeReserve = netRevenue * administrativeReserveRate;
+    const protectedLaborFloor = netRevenue * protectedLaborRate;
+    const labor = Math.max(calculatedStaffingLabor, protectedLaborFloor);
+    const marketing = marketingFor(netRevenue, operatingMonth);
+    const household = householdFor(checksPerDay * volume);
+    const scenarioOpex = marketing + household;
+    const grossProfit = netRevenue - rawMaterials - waste - packaging;
+    const ebitda = grossProfit - labor - rent - acquiring - aggregator - administrativeReserve - scenarioOpex - fixedOpexWithoutLaborAndRent;
+    const ebit = ebitda - depreciation;
+    const eligibleOperatingCashExpenses = rawMaterials + waste + packaging + cashPayroll
+      + rent + acquiring + aggregator + administrativeReserve + scenarioOpex + fixedOpexWithoutLaborAndRent;
+    const taxableBase = Math.max(netRevenue - eligibleOperatingCashExpenses, 0);
+    const regularUsn = taxableBase * Number(taxRules.usn_income_less_expenses_rate);
+    const minimumUsn = netRevenue * Number(taxRules.minimum_usn_income_rate);
+    const taxDue = Math.max(regularUsn, minimumUsn);
+    const operatingFreeCashFlow = ebitda - taxDue - maintenanceCapex;
+    const prepaidRentRelease = operatingMonth !== null && realEstateScenario === "rent" && operatingMonth <= prepaidMonths ? rent : 0;
+    return {
+      volume_factor: round(volume, 6),
+      checks_per_day: round(checksPerDay * volume, 2),
+      gross_revenue_rub: round(grossRevenue),
+      vat_rub: round(vat),
+      net_revenue_rub: round(netRevenue),
+      raw_materials_rub: round(rawMaterials),
+      waste_rub: round(waste),
+      packaging_rub: round(packaging),
+      gross_profit_rub: round(grossProfit),
+      gross_margin: netRevenue === 0 ? 0 : grossProfit / netRevenue,
+      calculated_staffing_labor_rub: round(calculatedStaffingLabor),
+      protected_labor_floor_rub: round(protectedLaborFloor),
+      protected_labor_binding: protectedLaborFloor > calculatedStaffingLabor,
+      labor_rub: round(labor),
+      rent_rub: round(rent),
+      acquiring_rub: round(acquiring),
+      aggregator_rub: round(aggregator),
+      administrative_reserve_rub: round(administrativeReserve),
+      marketing_rub: round(marketing),
+      marketing_floor_binding: operatingMonth !== null && operatingMonth <= Number(marketingRule.ramp_up_floor_months) && Number(marketingRule.ramp_up_floor_rub) > Number(marketingRule.fixed_amount_rub) + netRevenue * Number(marketingRule.rate_of_net_revenue),
+      household_rub: round(household),
+      fixed_opex_without_labor_rent_rub: round(fixedOpexWithoutLaborAndRent),
+      ebitda_rub: round(ebitda),
+      ebitda_margin: netRevenue === 0 ? 0 : ebitda / netRevenue,
+      depreciation_rub: round(depreciation),
+      ebit_rub: round(ebit),
+      taxable_base_management_proxy_rub: round(taxableBase),
+      regular_usn_rub: round(regularUsn),
+      minimum_usn_rub: round(minimumUsn),
+      tax_due_rub: round(taxDue),
+      net_operating_result_rub: round(ebit - taxDue),
+      maintenance_capex_rub: round(maintenanceCapex),
+      operating_free_cash_flow_rub: round(operatingFreeCashFlow),
+      prepaid_rent_release_rub: round(prepaidRentRelease),
+      net_cash_flow_rub: round(operatingFreeCashFlow + prepaidRentRelease),
+    };
+  }
+
+  const mature = monthFromVolume(1);
+
+
+  const reserveMonths = Number(model.operating_reserve.default_months);
   const uncoveredRentMonths = Math.max(reserveMonths - prepaidMonths, 0);
-  const fixedReserve = (labor + fixedOpexWithoutLaborAndRent) * reserveMonths + rent * uncoveredRentMonths;
-  const fullReserve = fixedReserve + (rawMaterials + waste + packaging + acquiring + aggregator + taxDue) * reserveMonths;
+  const matureScenarioOpex = mature.marketing_rub + mature.household_rub;
+  const fixedReserve = (calculatedStaffingLabor + fixedOpexWithoutLaborAndRent + matureScenarioOpex) * reserveMonths + rent * uncoveredRentMonths;
+  const fullReserve = fixedReserve
+    + (mature.raw_materials_rub + mature.waste_rub + mature.packaging_rub + mature.acquiring_rub
+      + mature.aggregator_rub + mature.administrative_reserve_rub + mature.tax_due_rub) * reserveMonths;
 
   const capexMultiplier = Number(options.capexMultiplier ?? 1);
   const fixedAssetCapexBeforeContingency = (capex.equipment_rub + capex.furniture_rub + capex.preparation_rub
     + Number(model.launch_investment.video_surveillance_rub) + Number(model.launch_investment.alarm_rub)) * capexMultiplier;
   const contingency = (capex.equipment_rub + capex.furniture_rub + capex.preparation_rub) * capexMultiplier * Number(model.launch_investment.contingency_default_rate);
+  const launchMarketing = Number(model.launch_investment.launch_marketing_rub);
   const prepaidRent = realEstateScenario === "rent" ? rent * prepaidMonths : 0;
   const securityDeposit = realEstateScenario === "rent" ? rent * Number(model.real_estate.scenarios.rent.security_deposit_months) : 0;
   const restaurantInvestedCapital = fixedAssetCapexBeforeContingency + Number(model.launch_investment.initial_uniform_rub)
     + Number(model.launch_investment.initial_inventory_rub) + Number(model.launch_investment.other_launch_costs_rub)
-    + contingency + prepaidRent + securityDeposit + fixedReserve;
+    + launchMarketing + contingency + prepaidRent + securityDeposit + fixedReserve;
+
+  const drivers = monthlyDrivers(model);
+  let cumulative = -round(restaurantInvestedCapital);
+  const monthlyFull = drivers.map(driver => {
+    const row = monthFromVolume(driver.volume_factor, driver.month);
+    cumulative = round(cumulative + row.net_cash_flow_rub);
+    return {
+      month: driver.month,
+      calendar_month: driver.calendar_month,
+      ramp_factor: driver.ramp_factor,
+      seasonality_factor: driver.seasonality_factor,
+      ...row,
+      cumulative_net_cash_flow_rub: cumulative,
+    };
+  });
+  const monthly = monthlyFull.map(row => ({
+    month: row.month,
+    calendar_month: row.calendar_month,
+    ramp_factor: row.ramp_factor,
+    seasonality_factor: row.seasonality_factor,
+    gross_revenue_rub: row.gross_revenue_rub,
+    net_revenue_rub: row.net_revenue_rub,
+    raw_materials_rub: row.raw_materials_rub,
+    labor_rub: row.labor_rub,
+    administrative_reserve_rub: row.administrative_reserve_rub,
+    marketing_rub: row.marketing_rub,
+    household_rub: row.household_rub,
+    ebitda_rub: row.ebitda_rub,
+    ebitda_margin: row.ebitda_margin,
+    tax_due_rub: row.tax_due_rub,
+    operating_free_cash_flow_rub: row.operating_free_cash_flow_rub,
+    prepaid_rent_release_rub: row.prepaid_rent_release_rub,
+    net_cash_flow_rub: row.net_cash_flow_rub,
+    cumulative_net_cash_flow_rub: row.cumulative_net_cash_flow_rub,
+  }));
+  const monthlyDetailed = monthlyFull.slice(0, Number(model.model.detailed_months));
+
   const realEstateInvestment = realEstateScenario === "purchase" ? Number(model.real_estate.scenarios.purchase.purchase_price_rub) : 0;
   const totalInvestedCapital = restaurantInvestedCapital + realEstateInvestment;
   const horizon = Number(model.model.horizon_months);
-  const restaurantCashFlows = [-round(restaurantInvestedCapital)];
-  for (let month = 1; month <= horizon; month += 1) {
-    const prepaidRentRelease = realEstateScenario === "rent" && month <= prepaidMonths ? rent : 0;
-    restaurantCashFlows.push(round(operatingFreeCashFlow + prepaidRentRelease));
-  }
+  const restaurantCashFlows = [-round(restaurantInvestedCapital), ...monthlyFull.map(row => row.net_cash_flow_rub)];
   const appreciation = Number(options.propertyAppreciation ?? model.real_estate.appreciation_default);
   const propertyResidualValue = realEstateScenario === "purchase" ? realEstateInvestment * ((1 + appreciation) ** (horizon / 12)) : 0;
   const combinedCashFlows = restaurantCashFlows.map((cash, index) => index === 0 ? round(cash - realEstateInvestment) : index === horizon ? round(cash + propertyResidualValue) : cash);
@@ -353,60 +535,91 @@ export function calculateFinancialScenario(scenario: SalesScenarioId, options: C
   const realEstateCashFlows = [-realEstateInvestment, ...Array(horizon - 1).fill(0), propertyResidualValue];
   const realEstateMonthlyIrr = realEstateInvestment > 0 ? monthlyIrr(realEstateCashFlows) : null;
 
-  const fixedCostsForBreakEven = labor + rent + fixedOpexWithoutLaborAndRent;
-  const rawPerCheck = rawMaterials / (checksPerDay * daysPerMonth);
-  const wastePerCheck = waste / (checksPerDay * daysPerMonth);
-  const packagingPerCheck = packaging / (checksPerDay * daysPerMonth);
-  const acquiringPerCheck = averageCheck * Number(opexEntry(model, "ACQUIRING").rate_of_gross_revenue);
-  const aggregatorPerCheck = averageCheck * aggregatorShare * Number(opexEntry(model, "AGGREGATORS").commission_rate);
-  const minimumUsnPerCheck = averageCheck * (taxScenario === "conservative" ? 1 / 1.05 : 1) * Number(taxRules.minimum_usn_income_rate);
-  const vatPerCheck = taxScenario === "conservative" ? averageCheck * Number(taxRules.vat_rate) / (1 + Number(taxRules.vat_rate)) : 0;
-  const contributionPerCheck = averageCheck - vatPerCheck - rawPerCheck - wastePerCheck - packagingPerCheck - acquiringPerCheck - aggregatorPerCheck - minimumUsnPerCheck;
+  const year1 = periodTotals(monthlyFull, 1, 12);
+  const matureYear = periodTotals(monthlyFull, 13, 24);
+
+  const vatPerCheck = averageCheck * vatRate / (1 + vatRate);
+  const netCheck = averageCheck - vatPerCheck;
+  const rawPerCheck = netCheck * rawMaterialsRate;
+  const wastePerCheck = rawPerCheck * wasteRate;
+  const packagingPerCheck = maturePackaging / (checksPerDay * daysPerMonth);
+  const acquiringPerCheck = averageCheck * acquiringRate;
+  const aggregatorPerCheck = averageCheck * aggregatorShare * aggregatorRate;
+  const administrativeReservePerCheck = netCheck * administrativeReserveRate;
+  const marketingVariablePerCheck = netCheck * Number(marketingRule.rate_of_net_revenue);
+  const householdVariablePerCheck = Number(householdRule.variable_amount_rub) / Number(householdRule.baseline_checks_per_day) / daysPerMonth;
+  const minimumUsnPerCheck = netCheck * Number(taxRules.minimum_usn_income_rate);
+  const contributionPerCheck = averageCheck - vatPerCheck - rawPerCheck - wastePerCheck - packagingPerCheck
+    - acquiringPerCheck - aggregatorPerCheck - administrativeReservePerCheck - marketingVariablePerCheck - householdVariablePerCheck - minimumUsnPerCheck;
+  const fixedCostsForBreakEven = calculatedStaffingLabor + rent + fixedOpexWithoutLaborAndRent
+    + Number(marketingRule.fixed_amount_rub) + Number(householdRule.fixed_amount_rub);
   const breakEvenChecksPerDay = fixedCostsForBreakEven / contributionPerCheck / daysPerMonth;
+  const breakEvenNetRevenue = breakEvenChecksPerDay * daysPerMonth * netCheck;
 
   return {
     scenario,
     checks_per_day: checksPerDay,
     average_check_rub: round(averageCheck),
-    gross_revenue_rub: round(grossRevenue),
-    vat_rub: round(vat),
-    net_revenue_rub: round(netRevenue),
-    food_portions_per_month: round(foodPortions),
-    drinks_per_month: round(drinks),
-    raw_materials_rub: round(rawMaterials),
-    waste_rub: round(waste),
-    packaging_rub: round(packaging),
-    gross_profit_rub: round(netRevenue - rawMaterials - waste - packaging),
-    gross_margin: (netRevenue - rawMaterials - waste - packaging) / netRevenue,
+    gross_revenue_rub: mature.gross_revenue_rub,
+    vat_rub: mature.vat_rub,
+    net_revenue_rub: mature.net_revenue_rub,
+    food_portions_per_month: round(matureFoodPortions),
+    drinks_per_month: round(matureDrinks),
+    raw_materials_rub: mature.raw_materials_rub,
+    raw_materials_rate: rawMaterialsRate,
+    recipe_based_raw_materials_rub: round(matureRecipeRawMaterials),
+    recipe_based_raw_materials_rate: mature.net_revenue_rub === 0 ? 0 : matureRecipeRawMaterials / mature.net_revenue_rub,
+    waste_rub: mature.waste_rub,
+    packaging_rub: mature.packaging_rub,
+    gross_profit_rub: mature.gross_profit_rub,
+    gross_margin: mature.gross_margin,
     staffing,
-    labor_rub: round(labor),
-    rent_rub: round(rent),
-    acquiring_rub: round(acquiring),
-    aggregator_rub: round(aggregator),
-    fixed_opex_without_labor_rent_rub: round(fixedOpexWithoutLaborAndRent),
+    calculated_staffing_labor_rub: mature.calculated_staffing_labor_rub,
+    protected_labor_floor_rub: mature.protected_labor_floor_rub,
+    protected_labor_binding: mature.protected_labor_binding,
+    labor_rub: mature.labor_rub,
+    rent_rub: mature.rent_rub,
+    acquiring_rub: mature.acquiring_rub,
+    aggregator_rub: mature.aggregator_rub,
+    administrative_reserve_rub: mature.administrative_reserve_rub,
+    marketing_rub: mature.marketing_rub,
+    marketing_formula: { fixed_amount_rub: Number(marketingRule.fixed_amount_rub), rate_of_net_revenue: Number(marketingRule.rate_of_net_revenue), ramp_up_floor_rub: Number(marketingRule.ramp_up_floor_rub), ramp_up_floor_months: Number(marketingRule.ramp_up_floor_months) },
+    household_rub: mature.household_rub,
+    household_formula: { fixed_amount_rub: Number(householdRule.fixed_amount_rub), variable_amount_rub: Number(householdRule.variable_amount_rub), baseline_checks_per_day: Number(householdRule.baseline_checks_per_day) },
+    fixed_opex_without_labor_rent_rub: mature.fixed_opex_without_labor_rent_rub,
     opex_entries_rub: fixedEntries,
-    ebitda_rub: round(ebitda),
-    ebitda_margin: ebitda / netRevenue,
-    depreciation_rub: round(depreciation),
-    ebit_rub: round(ebit),
-    taxable_base_management_proxy_rub: round(taxableBase),
-    regular_usn_rub: round(regularUsn),
-    minimum_usn_rub: round(minimumUsn),
-    tax_due_rub: round(taxDue),
-    net_operating_result_rub: round(netOperatingResult),
-    maintenance_capex_rub: round(maintenanceCapex),
-    operating_free_cash_flow_rub: round(operatingFreeCashFlow),
+    ebitda_rub: mature.ebitda_rub,
+    ebitda_margin: mature.ebitda_margin,
+    depreciation_rub: mature.depreciation_rub,
+    ebit_rub: mature.ebit_rub,
+    taxable_base_management_proxy_rub: mature.taxable_base_management_proxy_rub,
+    regular_usn_rub: mature.regular_usn_rub,
+    minimum_usn_rub: mature.minimum_usn_rub,
+    tax_due_rub: mature.tax_due_rub,
+    net_operating_result_rub: mature.net_operating_result_rub,
+    maintenance_capex_rub: mature.maintenance_capex_rub,
+    operating_free_cash_flow_rub: mature.operating_free_cash_flow_rub,
+    monthly,
+    monthly_detailed: monthlyDetailed,
+    year_1: year1,
+    mature_year: matureYear,
     fixed_opex_reserve_rub: round(fixedReserve),
     full_operating_reserve_rub: round(fullReserve),
     initial_inventory_rub: Number(model.launch_investment.initial_inventory_rub),
+    initial_uniform_rub: Number(model.launch_investment.initial_uniform_rub),
+    video_surveillance_rub: Number(model.launch_investment.video_surveillance_rub),
+    alarm_rub: Number(model.launch_investment.alarm_rub),
+    launch_marketing_rub: launchMarketing,
     capex,
     restaurant_invested_capital_rub: round(restaurantInvestedCapital),
     real_estate_investment_rub: round(realEstateInvestment),
     total_invested_capital_rub: round(totalInvestedCapital),
-    break_even_revenue_rub: round(breakEvenChecksPerDay * daysPerMonth * averageCheck),
+    break_even_revenue_rub: round(breakEvenNetRevenue),
     break_even_checks_per_day: round(breakEvenChecksPerDay, 2),
+    break_even_protected_labor_binding: breakEvenNetRevenue * protectedLaborRate > calculatedStaffingLabor,
     restaurant_payback_month: firstPaybackMonth(restaurantCashFlows),
-    restaurant_roi_annual: operatingFreeCashFlow * 12 / restaurantInvestedCapital,
+    restaurant_roi_annual: matureYear.free_cash_flow_rub / restaurantInvestedCapital,
+    restaurant_roi_annual_year_1: year1.free_cash_flow_rub / restaurantInvestedCapital,
     restaurant_irr_annual: restaurantMonthlyIrr === null ? null : (1 + restaurantMonthlyIrr) ** 12 - 1,
     restaurant_npv_rub: round(presentValue(restaurantCashFlows, Number(model.model.discount_rate_annual))),
     property_appreciation: appreciation,
@@ -455,6 +668,45 @@ export function buildSensitivity(model = readFinancialModel()) {
   };
 }
 
+export function solveInvestmentBreakEven(model = readFinancialModel(), options: { tolerance?: number; low?: number; high?: number } = {}) {
+  const tolerance = options.tolerance ?? 0.01;
+  const npvAt = (checks: number) => calculateFinancialScenario("realistic", { checksPerDay: checks }, model).restaurant_npv_rub;
+  let low = options.low ?? 50;
+  let high = options.high ?? 900;
+  if (npvAt(low) >= 0) return { min_checks_per_day: low, npv_rub: npvAt(low), status: "npv_non_negative_at_lower_bound", iterations: 0 };
+  if (npvAt(high) < 0) return { min_checks_per_day: null, npv_rub: npvAt(high), status: "npv_negative_at_upper_bound", iterations: 0 };
+  let iterations = 0;
+  while (high - low > tolerance && iterations < 60) {
+    const mid = (low + high) / 2;
+    if (npvAt(mid) >= 0) high = mid; else low = mid;
+    iterations += 1;
+  }
+  const solved = Math.ceil(high * 100) / 100;
+  const at = calculateFinancialScenario("realistic", { checksPerDay: solved }, model);
+  return {
+    min_checks_per_day: solved,
+    npv_rub: at.restaurant_npv_rub,
+    status: "solved",
+    iterations,
+    discount_rate_annual: Number(model.model.discount_rate_annual),
+    horizon_months: Number(model.model.horizon_months),
+    at_solution: {
+      gross_revenue_rub: at.gross_revenue_rub,
+      ebitda_rub: at.ebitda_rub,
+      ebitda_margin: at.ebitda_margin,
+      labor_rub: at.labor_rub,
+      protected_labor_binding: at.protected_labor_binding,
+      marketing_rub: at.marketing_rub,
+      household_rub: at.household_rub,
+      restaurant_invested_capital_rub: at.restaurant_invested_capital_rub,
+      restaurant_payback_month: at.restaurant_payback_month,
+      restaurant_irr_annual: at.restaurant_irr_annual,
+      staffing_scenario_used: at.staffing.headcount,
+    },
+    note: "Solver uses the realistic staffing table for any checks/day below 450 (existing engine rule); pessimistic staffing (14 people) applies only to the pessimistic scenario itself.",
+  };
+}
+
 export function buildFinancialProjection(root = projectRoot) {
   const model = readFinancialModel(root);
   const errors = validateFinancialModel(model, root);
@@ -476,6 +728,7 @@ export function buildFinancialProjection(root = projectRoot) {
     derived_food_cost: calculateFoodCost(model),
     launch_capital: importedLaunchCapital(model),
     scenarios: { rent: rentScenarios, purchase: purchaseScenarios },
+    investment_break_even: solveInvestmentBreakEven(model),
     sensitivity: buildSensitivity(model),
     deferred: model.scope.deferred,
   };

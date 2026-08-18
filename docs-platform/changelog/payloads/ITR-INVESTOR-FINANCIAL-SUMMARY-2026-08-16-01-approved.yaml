@@ -1,0 +1,93 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+proposal_id: PROP-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+decision_id: DEC-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+change_set_id: CHG-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01
+approved_by: project owner
+approved_at: 2026-08-16T01:00:00.000Z
+source: Direct owner instruction of 2026-08-16; no external research is authorized or used.
+document:
+  id: DOC-INVESTOR-FINANCIAL-SUMMARY
+  title: Investor Financial Summary
+  russian_title: Финансовая модель — инвестиционная сводка
+  google_title: 05 — Финансовая модель — инвестиционная сводка
+  version: "0.1"
+  status: research
+  local_path: docs-platform/working/investor-financial-summary.yaml
+  generated_path: docs-platform/generated/investor-financial-summary.json
+  google_format: native Google Sheets
+dependency:
+  document_id: DOC-FINANCIAL-MODEL
+  content_state_sha256: 18e56ce33cc19540ff9540d05a35c24284534fdfd89a6b74e59ff5a394980ae4
+  rule: Summary is stale when the Financial Model content hash differs.
+presentation:
+  default_scenario: realistic
+  sheet_order:
+    - Основные показатели
+    - Доходы и расходы
+    - Инвестиции
+    - Сценарии
+    - Допущения
+  investor_language: Russian
+  technical_fields_public: false
+  independent_calculation_engine: false
+headline_realistic:
+  start_investment_rub: 43040022.34
+  sales_per_month_rub: 10488600
+  average_check_rub: 1165.40
+  checks_per_day: 300
+  ebitda_rub: 4002050.68
+  ebitda_margin: 0.38156195107068624
+  break_even_checks_per_day: 140.36
+  free_cash_flow_rub: 3692343.91
+  free_cash_flow_basis: after first year
+  payback_month: 11
+  roi: 1.029463379749064
+  irr: 1.8305365233082607
+  npv_rub: 105025649.67
+scenarios:
+  pessimistic: { checks_per_day: 200, sales_per_month_rub: 6992400, ebitda_rub: 1525887.69, ebitda_margin: 0.218221, free_cash_flow_rub: 1389512.33, break_even_checks_per_day: 140.36, payback_month: 28, roi: 0.387410, irr: 0.404717, npv_rub: 15056815.29 }
+  realistic: { checks_per_day: 300, sales_per_month_rub: 10488600, ebitda_rub: 4002050.68, ebitda_margin: 0.381562, free_cash_flow_rub: 3692343.91, break_even_checks_per_day: 140.36, payback_month: 11, roi: 1.029463, irr: 1.830537, npv_rub: 105025649.67 }
+  optimistic: { checks_per_day: 450, sales_per_month_rub: 15732900, ebitda_rub: 7158173.09, ebitda_margin: 0.454981, free_cash_flow_rub: 6623986.06, break_even_checks_per_day: 163.22, payback_month: 7, roi: 1.713515, irr: 4.287861, npv_rub: 216212617.28 }
+investment_rent_realistic:
+  equipment_rub: 5298993.33
+  furniture_rub: 425000
+  preparation_rub: 11000000
+  video_surveillance_rub: 70000
+  alarm_rub: 35000
+  initial_uniform_rub: 180000
+  initial_inventory_rub: 1000000
+  contingency_rub: 1672399.33
+  prepaid_rent_rub: 4200000
+  security_deposit_rub: 700000
+  fixed_operating_reserve_rub: 18458629.68
+  total_rub: 43040022.34
+real_estate_comparison:
+  rent: { start_capital_rub: 43040022.34, ebitda_rub: 4002050.68, payback_month: 11, irr: 1.8305365233082607 }
+  purchase: { restaurant_capital_rub: 38140022.34, real_estate_rub: 69000000, total_capital_rub: 107140022.34, restaurant_ebitda_rub: 4352050.68, restaurant_payback_month: 10, combined_payback_month: 27, combined_irr: 0.5240748912262472, base_property_appreciation: 0 }
+sensitivity:
+  checks_average_check: master_projection_only
+  food_cost: [0.25, 0.30, 0.35]
+  labor_multiplier: [1, 1.10, 1.20]
+  rent_rub: [350000, 500000, 750000]
+  aggregator_share: [0, 0.10, 0.20, 0.30]
+  capex_multiplier: [1, 1.15, 1.30]
+google:
+  folder: Колобочная — Investment
+  title: 05 — Финансовая модель — инвестиционная сводка
+  create_exactly_one_native_sheet: true
+  reuse_or_update_on_repeat: true
+  exact_tab_count: 5
+  preview_required: true
+  one_full_readback_required: true
+  existing_oauth_workflow_only: true
+lifecycle:
+  allowed_for_current_iteration: [proposed, approved, applied, verified, published, synced]
+  deferred_until_owner_visual_approval: [committed, sealed, tagged, pushed]
+explicit_exclusions:
+  - changes to the master Financial Model, Revenue Model, CAPEX or Investor Start Model
+  - independent formulas or copied calculation sources
+  - website routes, site build or deployment
+  - Investment Memorandum
+  - external research
+  - commit, seal, tag or push before visual owner approval

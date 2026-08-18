@@ -1,0 +1,23 @@
+schema_version: 2
+change_id: CHG-GOVERNANCE-SUPERSEDE-SYNCED-2026-08-18-01
+iteration_id: ITR-GOVERNANCE-SUPERSEDE-SYNCED-2026-08-18-01
+proposal_id: PROP-GOVERNANCE-SUPERSEDE-SYNCED-2026-08-18-01
+decision_id: DEC-GOVERNANCE-SUPERSEDE-SYNCED-2026-08-18-01
+title: Add synced -> superseded and a governed supersede tool without weakening Governance History
+status: approved
+created_at: 2026-08-18
+approved_payload_path: docs-platform/changelog/payloads/ITR-GOVERNANCE-SUPERSEDE-SYNCED-2026-08-18-01-approved.yaml
+approved_payload_sha256: f603dc99c9c48ab3ab9172b3cce27dc0699d9cfbeb09b3f876ca8844626358eb
+governance_operations:
+  - add only synced -> superseded to the modern transition graph
+  - build the superseded event through buildGovernanceEvent and append it through appendGovernanceEvent
+  - record the superseding iteration explicitly and require a reason
+  - reject self-supersede, unknown iterations, repeated supersede and transitions from committed, deployed or terminal states
+  - cover allowed, rejected and append-only fixtures with regression tests
+operations: []
+preview:
+  status: passed
+  mutation_performed: false
+  business_sources_changed: []
+  google_writes: false
+  website_changes: false

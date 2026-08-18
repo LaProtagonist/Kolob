@@ -1,0 +1,13 @@
+schema_version: 2
+iteration_id: ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01
+mode: governed_reverse_change_set
+status: prepared
+before_state_sha256: fab9ad52d614a67dd13bc03b98d998cb2d6ccb8891c25ed5d066302021a0dfae
+after_state_sha256: cca896f6c850373cca947c5a91d92d78187e6fdb198aaa06d9973c65b768a42d
+reverse_strategy:
+  registry: Prepare a separately approved reverse change set from CHG-043 and CHG-FINANCIAL-MODEL-V0-2-2026-08-18-01 receipts.
+  code_and_generated_state: Revert only through a subsequent governed iteration after dependency validation.
+  website: Deploy a later sealed reversal; do not reset or rewrite history.
+  google: No Google artifact was changed by this iteration.
+  events: Retain all events; append rollback lifecycle events only.
+git_reset_forbidden: true

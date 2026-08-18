@@ -31,6 +31,9 @@ import { checkRevenueWebSnapshot, validateRevenueModel, writeRevenueWebSnapshot 
 import { checkFinancialProjection, readFinancialModel, validateFinancialModel, writeFinancialProjection } from "./financial/financial-model.js";
 import { checkFinancialGoogleSheetsPayload, writeFinancialGoogleSheetsPayload } from "./financial/google-sheet.js";
 import { applyFinancialModelSheet, previewFinancialModelSheet, readbackFinancialModelSheet } from "./google/financial-model-publisher.js";
+import { checkInvestorFinancialSummary, validateInvestorFinancialSummary, writeInvestorFinancialSummary } from "./financial/investor-summary.js";
+import { checkInvestorSummaryGooglePayload, writeInvestorSummaryGooglePayload } from "./financial/investor-summary-google-sheet.js";
+import { applyInvestorSummarySheet, previewInvestorSummarySheet, readbackInvestorSummarySheet } from "./google/investor-summary-publisher.js";
 
 function flag(args: string[], name: string) { const index = args.indexOf(name); return index >= 0 ? args[index + 1] ?? "" : ""; }
 function applyOptions(args: string[]) { return { apply: args.includes("--apply"), decisionId: flag(args, "--decision") }; }
@@ -240,6 +243,24 @@ try {
     await applyFinancialModelSheet(applyOptions(args));
   } else if (command === "financial:sheet:readback") {
     await readbackFinancialModelSheet();
+  } else if (command === "investor:summary:validate") {
+    const errors = validateInvestorFinancialSummary();
+    if (errors.length) throw new Error(errors.join("\n"));
+    console.log("investor financial summary validation: OK");
+  } else if (command === "investor:summary:sync") {
+    console.log(JSON.stringify(writeInvestorFinancialSummary(), null, 2));
+  } else if (command === "investor:summary:check") {
+    console.log(JSON.stringify(checkInvestorFinancialSummary(), null, 2));
+  } else if (command === "investor:summary:sheet:payload") {
+    console.log(JSON.stringify(writeInvestorSummaryGooglePayload(), null, 2));
+  } else if (command === "investor:summary:sheet:check") {
+    console.log(JSON.stringify(checkInvestorSummaryGooglePayload(), null, 2));
+  } else if (command === "investor:summary:sheet:preview") {
+    await previewInvestorSummarySheet();
+  } else if (command === "investor:summary:sheet:apply") {
+    await applyInvestorSummarySheet(applyOptions(args));
+  } else if (command === "investor:summary:sheet:readback") {
+    await readbackInvestorSummarySheet();
   } else if (command === "capex:formats:list") {
     listFormats();
   } else if (command === "capex:modules:list") {

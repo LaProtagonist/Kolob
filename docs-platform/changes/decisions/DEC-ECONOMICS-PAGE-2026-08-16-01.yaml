@@ -1,0 +1,23 @@
+schema_version: 2
+decision_id: DEC-ECONOMICS-PAGE-2026-08-16-01
+iteration_id: ITR-ECONOMICS-PAGE-2026-08-16-01
+title: Approve the local Economics presentation over the existing financial projections
+status: approved
+approved_by: project owner
+approved_at: 2026-08-16T02:07:35.000Z
+scope: Exact local /economics route, scenario presentation, financial hierarchy, sticky summary and responsive layout supplied in the approved payload.
+reason: The owner supplied a complete presentation contract for the third working financial page and explicitly prohibited changes to every calculation source.
+approves:
+  - a noindex, nofollow /economics route outside navigation, footer and sitemap
+  - exact dependency on Investor Financial Summary with Financial Model parity guard
+  - dynamic pessimistic, realistic and optimistic scenarios sourced from the existing projection
+  - compact sales-to-EBITDA, resilience, investment, rent-versus-purchase and sensitivity presentations
+  - desktop sticky summary and a non-sticky mobile adaptation without horizontal overflow
+  - lifecycle only through proposed, approved, applied and verified before visual approval
+excludes:
+  - changes to master or presentation financial data and formulas
+  - changes to existing investor pages or public navigation
+  - Google actions, deployment or production smoke
+  - commit, seal, tag or push
+approved_payload_path: docs-platform/changelog/payloads/ITR-ECONOMICS-PAGE-2026-08-16-01-approved.yaml
+approved_payload_sha256: 7cf35db25a78222dfed36330deee31ba5c67eec98d3e699a53bda1c5b7179f21
