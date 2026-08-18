@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "generated_from_event_id": "EVT-ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01-DEPLOYED-DEPLOY-FINANCIAL-MODEL-V0-2-2026-08-19-01",
-  "generated_from_event_hash": "cb8f254a9c7c99ee4b1ddf0b1bc0f5b86cc9cb2341ee2d67ce53f8133b25aac3",
+  "generated_from_event_id": "EVT-ITR-VERIFICATION-ORCHESTRATOR-2026-08-19-01-COMMITTED",
+  "generated_from_event_hash": "3684a4421413c47133e3d68d27804c06e87f212f5ad935a3a196c6854ef77f54",
   "content_state_sha256": "a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239",
   "latest_committed_iteration": {
-    "iteration_id": "ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01",
-    "decision_id": "DEC-FINANCIAL-MODEL-V0-2-2026-08-18-01",
-    "change_set_id": "CHG-FINANCIAL-MODEL-V0-2-2026-08-18-01",
-    "content_commit_hash": "5684693613e65525bedf7a7ef2d97d65e094c90f",
-    "seal_commit_hash": "f828a1ac9d896f35624e32a7df1df1f30424913e",
-    "iteration_tag": "iteration/ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01"
+    "iteration_id": "ITR-VERIFICATION-ORCHESTRATOR-2026-08-19-01",
+    "decision_id": "DEC-VERIFICATION-ORCHESTRATOR-2026-08-19-01",
+    "change_set_id": "CHG-VERIFICATION-ORCHESTRATOR-2026-08-19-01",
+    "content_commit_hash": "37f1d0d0d09673c211d5686bc1334e123ed952f8",
+    "seal_commit_hash": null,
+    "iteration_tag": "iteration/ITR-VERIFICATION-ORCHESTRATOR-2026-08-19-01"
   },
   "latest_deployment_event": {
     "event_id": "EVT-ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01-DEPLOYED-DEPLOY-FINANCIAL-MODEL-V0-2-2026-08-19-01",
@@ -17,10 +17,10 @@
     "deployment_receipt": "docs-platform/changelog/deployments/DEPLOY-FINANCIAL-MODEL-V0-2-2026-08-19-01.yaml",
     "production_url": "https://colob.spi.ski"
   },
-  "repository_head": "f828a1ac9d896f35624e32a7df1df1f30424913e",
+  "repository_head": "37f1d0d0d09673c211d5686bc1334e123ed952f8",
   "timeline_head": {
-    "event_id": "EVT-ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01-DEPLOYED-DEPLOY-FINANCIAL-MODEL-V0-2-2026-08-19-01",
-    "event_hash": "cb8f254a9c7c99ee4b1ddf0b1bc0f5b86cc9cb2341ee2d67ce53f8133b25aac3"
+    "event_id": "EVT-ITR-VERIFICATION-ORCHESTRATOR-2026-08-19-01-COMMITTED",
+    "event_hash": "3684a4421413c47133e3d68d27804c06e87f212f5ad935a3a196c6854ef77f54"
   },
   "deployment_receipts": [
     {

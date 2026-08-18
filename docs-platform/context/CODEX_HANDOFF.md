@@ -9,22 +9,22 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 ## 2. Текущая ветка и governed iteration
 
 - Branch: `master`.
-- Latest closed iteration: `ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01`.
-- Latest iteration tag: `iteration/ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01`.
-- Latest content commit: `5684693613e65525bedf7a7ef2d97d65e094c90f`.
+- Latest closed iteration: `ITR-VERIFICATION-ORCHESTRATOR-2026-08-19-01`.
+- Latest iteration tag: `iteration/ITR-VERIFICATION-ORCHESTRATOR-2026-08-19-01`.
+- Latest content commit: `37f1d0d0d09673c211d5686bc1334e123ed952f8`.
 - Текущий Git HEAD намеренно не записывается: его вычисляет `npm run project:onboard`.
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01-DEPLOYED-DEPLOY-FINANCIAL-MODEL-V0-2-2026-08-19-01`.
-- Hash: `cb8f254a9c7c99ee4b1ddf0b1bc0f5b86cc9cb2341ee2d67ce53f8133b25aac3`.
-- generated_from_event_hash: `cb8f254a9c7c99ee4b1ddf0b1bc0f5b86cc9cb2341ee2d67ce53f8133b25aac3`.
+- Event: `EVT-ITR-VERIFICATION-ORCHESTRATOR-2026-08-19-01-COMMITTED`.
+- Hash: `3684a4421413c47133e3d68d27804c06e87f212f5ad935a3a196c6854ef77f54`.
+- generated_from_event_hash: `3684a4421413c47133e3d68d27804c06e87f212f5ad935a3a196c6854ef77f54`.
 
 ## 4. Канонические документы
 
 | Document | Status | Local path | SHA-256 |
 |---|---|---|---|
-| DOC-AGENTS | approved | `docs-platform/AGENTS.md` | `a232bccb51c4e584f02f313727745acdfa406b11dea5aa05b37daeb6b988bfdf` |
+| DOC-AGENTS | approved | `docs-platform/AGENTS.md` | `8589a2fb1075f53a4f114ff945a22465068996eab577bfd2e073a6dc66e61bba` |
 | DOC-AUDIT | approved | `docs-platform/AUDIT.md` | `f43cb183f4c025ba74d4f77c2a498cb0ad07e7b0622e47f38afd6212173689e7` |
 | DOC-BUSINESS-MODEL-ARCHITECTURE | approved | `docs-platform/01-business-model-architecture.md` | `1584d836a159f6e3c5859ccf539830248b2cd782ed2c7005c5963ac8730c556b` |
 | DOC-CAPEX-CONFIGURATIONS | research | `docs-platform/working/capex-configurations.yaml` | `3810fa84efa969d8d95e2f0b0b49ede044b854d9be21ac92f5787d9ff8369f3c` |
@@ -45,7 +45,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 5. Текущая рабочая тема
 
-Consolidate Financial Model v0.2 and deploy the current sealed finance website
+Deterministic verification orchestrator infrastructure
 
 ## 6. Decisions и change sets
 

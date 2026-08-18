@@ -1,17 +1,17 @@
 schema_version: 2
-generated_at: 2026-08-19T00:10:00.004Z
+generated_at: 2026-08-19T00:20:03.001Z
 project: Колобочная
 branch: master
-latest_timeline_event_id: EVT-ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01-DEPLOYED-DEPLOY-FINANCIAL-MODEL-V0-2-2026-08-19-01
-latest_timeline_event_hash: cb8f254a9c7c99ee4b1ddf0b1bc0f5b86cc9cb2341ee2d67ce53f8133b25aac3
-latest_closed_iteration_id: ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01
-latest_iteration_tag: iteration/ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01
-latest_content_commit_hash: 5684693613e65525bedf7a7ef2d97d65e094c90f
+latest_timeline_event_id: EVT-ITR-VERIFICATION-ORCHESTRATOR-2026-08-19-01-COMMITTED
+latest_timeline_event_hash: 3684a4421413c47133e3d68d27804c06e87f212f5ad935a3a196c6854ef77f54
+latest_closed_iteration_id: ITR-VERIFICATION-ORCHESTRATOR-2026-08-19-01
+latest_iteration_tag: iteration/ITR-VERIFICATION-ORCHESTRATOR-2026-08-19-01
+latest_content_commit_hash: 37f1d0d0d09673c211d5686bc1334e123ed952f8
 registry_hash: afc53c6fdfcd2ae8b8f782f63c3e84308948108cbf2de13abe529a23259d5be5
 canonical_document_hashes:
   - document_id: DOC-AGENTS
     local_path: docs-platform/AGENTS.md
-    sha256: a232bccb51c4e584f02f313727745acdfa406b11dea5aa05b37daeb6b988bfdf
+    sha256: 8589a2fb1075f53a4f114ff945a22465068996eab577bfd2e073a6dc66e61bba
     status: approved
   - document_id: DOC-AUDIT
     local_path: docs-platform/AUDIT.md
@@ -88,7 +88,7 @@ open_questions:
   - Archive pending review artifacts in durable storage before treating visual verification as portable.
   - Create deployment receipts when the next governed deployment is performed.
   - Decide whether malformed superseded legacy YAML evidence should receive a separate correction event.
-current_workstream: Consolidate Financial Model v0.2 and deploy the current sealed finance website
+current_workstream: Deterministic verification orchestrator infrastructure
 next_task: Select the next task through a new governed proposal; no business task is pre-authorized.
 google_integration_status:
   configured: true
