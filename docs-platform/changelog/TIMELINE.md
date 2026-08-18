@@ -4,9 +4,9 @@
 
 ## 1. Current state
 
-- Events: 164.
-- Timeline head event: `EVT-ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01-COMMITTED`.
-- Timeline head SHA-256: `50caedca8ae8b4474b1a8bc168b5cde48378b9e03749cb485a40b14b025be31e`.
+- Events: 165.
+- Timeline head event: `EVT-ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01-DEPLOYED-DEPLOY-FINANCIAL-MODEL-V0-2-2026-08-19-01`.
+- Timeline head SHA-256: `cb8f254a9c7c99ee4b1ddf0b1bc0f5b86cc9cb2341ee2d67ce53f8133b25aac3`.
 - Latest recorded iteration: `ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01`.
 
 ## 2. Modern governed iterations
@@ -41,7 +41,7 @@
 | 2026-08-19T00:10:00.001Z | superseded | Create an investor-facing presentation view of Financial Model v0.1 | ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01 | DEC-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01 | CHG-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01 | — | — | docs-platform/changelog/google-sync/2026-08-16-DOC-INVESTOR-FINANCIAL-SUMMARY-02.yaml | — | — | Create an investor-facing presentation view of Financial Model v0.1 superseded by Consolidate Financial Model v0.2 and deploy the current sealed finance website (ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01). Reason: Its synced local presentation state is incorporated into the later consolidated Financial Model v0.2 iteration; the historical Google receipt remains unchanged. |
 | 2026-08-19T00:10:00.002Z | superseded | Create the local investor-facing Economics page | ITR-ECONOMICS-PAGE-2026-08-16-01 | DEC-ECONOMICS-PAGE-2026-08-16-01 | CHG-ECONOMICS-PAGE-2026-08-16-01 | — | — | — | — | — | Create the local investor-facing Economics page superseded by Consolidate Financial Model v0.2 and deploy the current sealed finance website (ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01). Reason: Its verified local website state is incorporated into the later consolidated Financial Model v0.2 iteration. |
 | 2026-08-18T20:05:00.000Z | verified | Superseding a synced iteration lifecycle support | ITR-GOVERNANCE-SUPERSEDE-SYNCED-2026-08-18-01 | DEC-GOVERNANCE-SUPERSEDE-SYNCED-2026-08-18-01 | CHG-GOVERNANCE-SUPERSEDE-SYNCED-2026-08-18-01 | — | — | — | — | — | All allowed transitions pass, all rejections hold, ordinary lifecycle paths unchanged, append-only chain validates; verification and iteration receipts recorded. |
-| 2026-08-18T22:05:20.000Z | committed | Consolidate Financial Model v0.2 and deploy the current sealed finance website | ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01 | DEC-FINANCIAL-MODEL-V0-2-2026-08-18-01 | CHG-FINANCIAL-MODEL-V0-2-2026-08-18-01 | 5684693613e65525bedf7a7ef2d97d65e094c90f | iteration/ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01 | — | — | — | Consolidate Financial Model v0.2 and deploy the current sealed finance website: content commit verified and linked to the governed lifecycle before sealing. |
+| 2026-08-18T22:11:37.000Z | deployed | Consolidate Financial Model v0.2 and deploy the current sealed finance website | ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01 | DEC-FINANCIAL-MODEL-V0-2-2026-08-18-01 | CHG-FINANCIAL-MODEL-V0-2-2026-08-18-01 | 5684693613e65525bedf7a7ef2d97d65e094c90f | iteration/ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01 | — | docs-platform/changelog/deployments/DEPLOY-FINANCIAL-MODEL-V0-2-2026-08-19-01.yaml | — | Sealed content state a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239 deployed to https://colob.spi.ski; smoke test passed. |
 
 ## 3. Legacy imported history
 
@@ -95,6 +95,7 @@
 | 2026-08-16T00:18:47.000Z | ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01 | deployed | — | docs-platform/changelog/deployments/DEPLOY-REVENUE-MODEL-DAILY-LAYOUT-2026-08-16-01.yaml | https://colob.spi.ski/revenue-model |
 | 2026-08-16T01:32:05.477Z | ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01 | published | docs-platform/changelog/google-sync/2026-08-16-DOC-INVESTOR-FINANCIAL-SUMMARY-02.yaml | — | https://docs.google.com/spreadsheets/d/1AW-JONG-vkxCEIG_pY5SSPgsMpXLycLJAk7iY5saVus/edit?usp=drivesdk |
 | 2026-08-16T01:32:16.073Z | ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01 | synced | docs-platform/changelog/google-sync/2026-08-16-DOC-INVESTOR-FINANCIAL-SUMMARY-02.yaml | — | https://docs.google.com/spreadsheets/d/1AW-JONG-vkxCEIG_pY5SSPgsMpXLycLJAk7iY5saVus/edit?usp=drivesdk |
+| 2026-08-18T22:11:37.000Z | ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01 | deployed | — | docs-platform/changelog/deployments/DEPLOY-FINANCIAL-MODEL-V0-2-2026-08-19-01.yaml | https://colob.spi.ski |
 
 ## 6. Open issues
 

@@ -16,9 +16,9 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01-COMMITTED`.
-- Hash: `50caedca8ae8b4474b1a8bc168b5cde48378b9e03749cb485a40b14b025be31e`.
-- generated_from_event_hash: `50caedca8ae8b4474b1a8bc168b5cde48378b9e03749cb485a40b14b025be31e`.
+- Event: `EVT-ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01-DEPLOYED-DEPLOY-FINANCIAL-MODEL-V0-2-2026-08-19-01`.
+- Hash: `cb8f254a9c7c99ee4b1ddf0b1bc0f5b86cc9cb2341ee2d67ce53f8133b25aac3`.
+- generated_from_event_hash: `cb8f254a9c7c99ee4b1ddf0b1bc0f5b86cc9cb2341ee2d67ce53f8133b25aac3`.
 
 ## 4. Канонические документы
 
@@ -62,7 +62,7 @@ Consolidate Financial Model v0.2 and deploy the current sealed finance website
 
 - Google: `{"configured":true,"historical_receipts":12,"receipts_with_machine_readback_hash":9,"live_drift_check":"not_run_by_context_build"}`.
 - MCP: `{"implementation_present":true,"canonical_access":"registry_document_ids_only","live_status":"not_probed_by_context_build"}`.
-- Deployment: `{"status":"receipts_present","receipts":2,"production_url":null}`.
+- Deployment: `{"status":"receipts_present","receipts":3,"production_url":null}`.
 
 ## 9. Команды проверки
 

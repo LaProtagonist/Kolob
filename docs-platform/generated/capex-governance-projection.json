@@ -1,28 +1,39 @@
 {
   "schema_version": 1,
-  "generated_from_event_id": "EVT-ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01-DEPLOYED-DEPLOY-REVENUE-MODEL-DAILY-LAYOUT-2026-08-16-01",
-  "generated_from_event_hash": "9382759a50fd890f1a4e1a41481a7f279354be9aa2071fdf0cf9a4163e9783d2",
+  "generated_from_event_id": "EVT-ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01-DEPLOYED-DEPLOY-FINANCIAL-MODEL-V0-2-2026-08-19-01",
+  "generated_from_event_hash": "cb8f254a9c7c99ee4b1ddf0b1bc0f5b86cc9cb2341ee2d67ce53f8133b25aac3",
   "content_state_sha256": "a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239",
   "latest_committed_iteration": {
-    "iteration_id": "ITR-FINANCIAL-MODEL-2026-08-16-01",
-    "decision_id": "DEC-FINANCIAL-MODEL-2026-08-16-01",
-    "change_set_id": "CHG-FINANCIAL-MODEL-2026-08-16-01",
-    "content_commit_hash": "c86133747af6e469a15bad1780cc63fca5482fe5",
-    "seal_commit_hash": "b0cb5023f502e8be271704ea587344a2d8c6c4c1",
-    "iteration_tag": "iteration/ITR-FINANCIAL-MODEL-2026-08-16-01"
+    "iteration_id": "ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01",
+    "decision_id": "DEC-FINANCIAL-MODEL-V0-2-2026-08-18-01",
+    "change_set_id": "CHG-FINANCIAL-MODEL-V0-2-2026-08-18-01",
+    "content_commit_hash": "5684693613e65525bedf7a7ef2d97d65e094c90f",
+    "seal_commit_hash": "f828a1ac9d896f35624e32a7df1df1f30424913e",
+    "iteration_tag": "iteration/ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01"
   },
   "latest_deployment_event": {
-    "event_id": "EVT-ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01-DEPLOYED-DEPLOY-REVENUE-MODEL-DAILY-LAYOUT-2026-08-16-01",
-    "iteration_id": "ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01",
-    "deployment_receipt": "docs-platform/changelog/deployments/DEPLOY-REVENUE-MODEL-DAILY-LAYOUT-2026-08-16-01.yaml",
-    "production_url": "https://colob.spi.ski/revenue-model"
+    "event_id": "EVT-ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01-DEPLOYED-DEPLOY-FINANCIAL-MODEL-V0-2-2026-08-19-01",
+    "iteration_id": "ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01",
+    "deployment_receipt": "docs-platform/changelog/deployments/DEPLOY-FINANCIAL-MODEL-V0-2-2026-08-19-01.yaml",
+    "production_url": "https://colob.spi.ski"
   },
-  "repository_head": "b0cb5023f502e8be271704ea587344a2d8c6c4c1",
+  "repository_head": "f828a1ac9d896f35624e32a7df1df1f30424913e",
   "timeline_head": {
-    "event_id": "EVT-ITR-REVENUE-MODEL-DAILY-LAYOUT-2026-08-15-01-DEPLOYED-DEPLOY-REVENUE-MODEL-DAILY-LAYOUT-2026-08-16-01",
-    "event_hash": "9382759a50fd890f1a4e1a41481a7f279354be9aa2071fdf0cf9a4163e9783d2"
+    "event_id": "EVT-ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01-DEPLOYED-DEPLOY-FINANCIAL-MODEL-V0-2-2026-08-19-01",
+    "event_hash": "cb8f254a9c7c99ee4b1ddf0b1bc0f5b86cc9cb2341ee2d67ce53f8133b25aac3"
   },
   "deployment_receipts": [
+    {
+      "path": "docs-platform/changelog/deployments/DEPLOY-FINANCIAL-MODEL-V0-2-2026-08-19-01.yaml",
+      "deployment_id": "DEPLOY-FINANCIAL-MODEL-V0-2-2026-08-19-01",
+      "content_state_sha256": "a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239",
+      "content_commit_hash": "5684693613e65525bedf7a7ef2d97d65e094c90f",
+      "seal_commit_hash": "f828a1ac9d896f35624e32a7df1df1f30424913e",
+      "dist_sha256": "0b53d568986db1409a327ce1282662a99d74a5f0b11b81b76006538294a21bd3",
+      "production_url": "https://colob.spi.ski",
+      "deployed_at": "2026-08-18T22:11:37.000Z",
+      "result": "passed"
+    },
     {
       "path": "docs-platform/changelog/deployments/DEPLOY-REVENUE-MODEL-2026-08-14-01.yaml",
       "deployment_id": "DEPLOY-REVENUE-MODEL-2026-08-14-01",

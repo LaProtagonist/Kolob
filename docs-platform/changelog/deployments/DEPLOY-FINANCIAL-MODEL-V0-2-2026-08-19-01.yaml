@@ -1,0 +1,14 @@
+schema_version: 2
+iteration_id: ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01
+content_state_sha256: a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239
+content_commit_hash: 5684693613e65525bedf7a7ef2d97d65e094c90f
+seal_commit_hash: f828a1ac9d896f35624e32a7df1df1f30424913e
+repository_head_at_build: f828a1ac9d896f35624e32a7df1df1f30424913e
+dist_sha256: 0b53d568986db1409a327ce1282662a99d74a5f0b11b81b76006538294a21bd3
+deployment_id: DEPLOY-FINANCIAL-MODEL-V0-2-2026-08-19-01
+production_url: https://colob.spi.ski
+built_at: 2026-08-18T22:11:37.000Z
+deployed_at: 2026-08-18T22:11:37.000Z
+build_hash: 0b53d568986db1409a327ce1282662a99d74a5f0b11b81b76006538294a21bd3
+smoke_test_result: passed
+recorded_at: 2026-08-18T22:15:12.315Z
