@@ -1,0 +1,5 @@
+{
+  "extends": "../docs-platform/app/tsconfig.json",
+  "include": ["../docs-platform/app/src/**/*.ts"],
+  "exclude": ["../docs-platform/app/test/**", "../docs-platform/mcp/**"]
+}

@@ -1,0 +1,12 @@
+schema_version: 2
+iteration_id: ITR-VERIFICATION-ORCHESTRATOR-2026-08-19-01
+mode: governed_reverse_change_set
+status: prepared
+before_content_commit: 40e56cbbbcdfd036db0e3eeec47909af06684d26
+reverse_strategy:
+  verification_rules: restore the preceding repository testing policy through a new approved reverse change set
+  orchestrator: remove the verification runner and package aliases through the same governed reversal
+  test_expectation: restore the preceding economics route expectation only if the orchestrator is reversed
+  events: append rollback lifecycle; never remove verification evidence
+  git_reset_forbidden: true
+dependency_check: required against every later sealed iteration

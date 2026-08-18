@@ -1,0 +1,21 @@
+schema_version: 2
+change_id: CHG-VERIFICATION-ORCHESTRATOR-2026-08-19-01
+iteration_id: ITR-VERIFICATION-ORCHESTRATOR-2026-08-19-01
+proposal_id: PROP-VERIFICATION-ORCHESTRATOR-2026-08-19-01
+decision_id: DEC-VERIFICATION-ORCHESTRATOR-2026-08-19-01
+title: Add the deterministic verification orchestrator
+status: approved
+approved_payload_path: docs-platform/changelog/payloads/ITR-VERIFICATION-ORCHESTRATOR-2026-08-19-01-approved.yaml
+approved_payload_sha256: 8a4c6837cd8c4f1c92463ef308cf5f569c97e6c984f7543dcaaeddaafae18a07
+operations:
+  - classify changed files into machine-readable functional domains and dependency closure
+  - execute minimal fail-fast checks and reuse compatible PASS receipts by deterministic hashes
+  - select browser routes and screenshots from visual-impact classification
+  - reuse current domain receipts at release while always executing mandatory release gates
+  - document canonical verification and agent workflow policies
+preview:
+  status: passed
+  mutation_performed: false
+  affected_domain_cases: [economics CSS, financial model, governance source, revenue text-only TSX]
+  business_or_google_changes: false
+  production_or_deployment_changes: false

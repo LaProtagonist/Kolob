@@ -1,0 +1,9 @@
+schema_version: 2
+proposal_id: PROP-VERIFICATION-ORCHESTRATOR-2026-08-19-01
+iteration_id: ITR-VERIFICATION-ORCHESTRATOR-2026-08-19-01
+title: Establish deterministic affected-domain verification
+status: proposed
+proposed_at: 2026-08-19T00:20:00.000Z
+scope: Verification infrastructure, agent testing policy and one required economics route expectation correction only.
+approved_payload_path: docs-platform/changelog/payloads/ITR-VERIFICATION-ORCHESTRATOR-2026-08-19-01-approved.yaml
+approved_payload_sha256: 8a4c6837cd8c4f1c92463ef308cf5f569c97e6c984f7543dcaaeddaafae18a07

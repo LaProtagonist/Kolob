@@ -1,0 +1,11 @@
+schema_version: 2
+decision_id: DEC-VERIFICATION-ORCHESTRATOR-2026-08-19-01
+iteration_id: ITR-VERIFICATION-ORCHESTRATOR-2026-08-19-01
+title: Approve deterministic affected-domain verification infrastructure
+status: approved
+approved_by: project owner
+approved_at: 2026-08-19T00:20:01.000Z
+scope: Affected-domain classification, reusable verification receipts, selective visual QA and release verification orchestration.
+excludes: [business data, financial assumptions, public site design, Google operations, deployment, production mutation]
+approved_payload_path: docs-platform/changelog/payloads/ITR-VERIFICATION-ORCHESTRATOR-2026-08-19-01-approved.yaml
+approved_payload_sha256: 8a4c6837cd8c4f1c92463ef308cf5f569c97e6c984f7543dcaaeddaafae18a07

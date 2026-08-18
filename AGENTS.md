@@ -28,3 +28,7 @@ For explicitly authorized governed iterations:
 
 After editing files, leave changes unstaged unless the current task explicitly authorizes the exact content/seal commits. Report changed files and final status.
 
+## Testing and verification
+
+Testing and verification MUST follow `verification/README.md` and `verification/TESTING_POLICY.md`.
+Use `npm run verify:affected` by default. Use `npm run verify:release` only at lifecycle or release boundaries.

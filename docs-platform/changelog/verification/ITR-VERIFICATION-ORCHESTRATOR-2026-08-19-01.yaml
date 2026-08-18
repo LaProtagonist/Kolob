@@ -1,0 +1,64 @@
+schema_version: 2
+iteration_id: ITR-VERIFICATION-ORCHESTRATOR-2026-08-19-01
+proposal_id: PROP-VERIFICATION-ORCHESTRATOR-2026-08-19-01
+decision_id: DEC-VERIFICATION-ORCHESTRATOR-2026-08-19-01
+change_set_id: CHG-VERIFICATION-ORCHESTRATOR-2026-08-19-01
+verified_at: 2026-08-19T00:20:03.000Z
+actor: Codex
+validation_status: passed
+approved_payload_sha256: 8a4c6837cd8c4f1c92463ef308cf5f569c97e6c984f7543dcaaeddaafae18a07
+before_state_sha256: f1a72437b0f6c1891e77f480541a3c742b8e14b2a2eda4cd95f99bd5bc2a888f
+after_state_sha256: 54d59857e5788afb11326ec1b84ff5e3a5614196631e9008a7577cd4e4158fc8
+checks:
+  verify_affected:
+    status: passed
+    affected_domains: [economics-ui, governance, documentation, verification]
+    run: [governance:registry, governance:timeline, governance:context, governance:consistency, diff:check, documentation:static]
+    reused: [economics-ui, verification]
+    skipped: [financial, investor-summary, capex, revenue-model, revenue-ui, launch-budget, site-core, google-publisher, deployment]
+    duration_ms: 94000
+  orchestrator_unit_tests:
+    status: passed
+    cases: 14
+    receipt: reused-current-hash
+  selective_visual:
+    status: passed
+    affected_route: /economics
+    viewports: [desktop, mobile]
+    unrelated_routes: skipped
+    receipt: reused-current-visual-hash
+  cache_reuse:
+    status: passed
+    economics_ui_hash: 6da935432c0d29379d9ba1baee3fffe035db80c637630f731ee7dbba69062946
+    verification_hash: 9d8b33a20628fd9ad8e646bd26bbd073558122c1af7114866d1c2ff66796d3d6
+  release_verification:
+    status: passed
+    runtime: node-20.19.0
+    duration_ms: 218400
+    domain_status:
+      financial: passed
+      investor_summary: passed
+      capex: passed
+      revenue_model: passed
+      revenue_ui: passed
+      launch_budget: passed
+      economics_ui: passed
+      site_core: skipped_no_checks
+      governance: passed
+      deployment_validation: passed
+      documentation: passed
+      verification: passed
+    mandatory_gates:
+      diff_check: passed
+      governance_registry: passed
+      governance_timeline: passed
+      governance_context: passed
+      governance_consistency: passed
+      typescript_site: passed
+      production_build: passed
+      sealed_reproducibility: not_applicable_before_content_commit
+  business_data_change: none
+  google_operation: none
+  deployment_or_production_mutation: none
+rollback_payload: docs-platform/changelog/rollback-payloads/ITR-VERIFICATION-ORCHESTRATOR-2026-08-19-01/manifest.yaml
+summary: Affected-domain verification and the release orchestrator passed with deterministic runtime fingerprints, compact output, no automatic visual expansion and no external operations.

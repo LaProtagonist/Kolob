@@ -116,7 +116,7 @@ test("rent/purchase and two public sensitivity slices match the Investor Summary
   );
 });
 
-test("economics route is private working metadata and is not a public navigation item", () => {
+test("economics route is private working metadata, prerendered, and not a public navigation item", () => {
   const page = pageByPath("/economics");
   assert.equal(page.path, "/economics");
   assert.equal(page.title, "Экономика объекта — Колобочная");
@@ -124,5 +124,5 @@ test("economics route is private working metadata and is not a public navigation
   const navigation = fs.readFileSync(path.join(projectRoot, "src/content/navigation.ts"), "utf8");
   const prerender = fs.readFileSync(path.join(projectRoot, "scripts/prerender-dist.cjs"), "utf8");
   assert.doesNotMatch(navigation, /\/economics/);
-  assert.doesNotMatch(prerender, /path:\s*["']\/economics["']/);
+  assert.match(prerender, /path:\s*["']\/economics["']/);
 });

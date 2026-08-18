@@ -1,0 +1,22 @@
+schema_version: 2
+iteration_id: ITR-VERIFICATION-ORCHESTRATOR-2026-08-19-01
+proposal_id: PROP-VERIFICATION-ORCHESTRATOR-2026-08-19-01
+decision_id: DEC-VERIFICATION-ORCHESTRATOR-2026-08-19-01
+change_set_id: CHG-VERIFICATION-ORCHESTRATOR-2026-08-19-01
+title: Deterministic verification orchestrator infrastructure
+status: approved
+approved_by: project owner
+approved_at: 2026-08-19T00:20:01.000Z
+actor: Codex
+scope: Deterministic affected-domain verification, verification cache, selective visual QA and release verification orchestration only.
+approved_payload_path: docs-platform/changelog/payloads/ITR-VERIFICATION-ORCHESTRATOR-2026-08-19-01-approved.yaml
+approved_payload_sha256: 8a4c6837cd8c4f1c92463ef308cf5f569c97e6c984f7543dcaaeddaafae18a07
+before_state_sha256: f1a72437b0f6c1891e77f480541a3c742b8e14b2a2eda4cd95f99bd5bc2a888f
+after_state_sha256: 54d59857e5788afb11326ec1b84ff5e3a5614196631e9008a7577cd4e4158fc8
+affected_document_ids: []
+affected_section_ids:
+  - verification.affected-domain-classification
+  - verification.cache-receipts
+  - verification.selective-visual-qa
+  - verification.release-orchestration
+rollback_payload: docs-platform/changelog/rollback-payloads/ITR-VERIFICATION-ORCHESTRATOR-2026-08-19-01/manifest.yaml

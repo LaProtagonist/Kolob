@@ -32,3 +32,4 @@
 30. Governed iteration завершена только после seal. Force-push и rebase sealed commits запрещены; annotated iteration tags нельзя перезаписывать и при разрешённом push их отправляют вместе с commits.
 31. Одна governed iteration не смешивается с несвязанными правками. Git notes не являются каноническим источником связи. Старые events и receipts не редактируются; correction — только новое событие.
 32. Последовательный rollback работает только для последних итераций в обратном порядке. Извлечение исторической средней итерации оформляется новым compensating change и отдельным approved decision; `git reset` запрещён.
+33. Testing and verification MUST follow `verification/README.md` and `verification/TESTING_POLICY.md`. Use `npm run verify:affected` by default and `npm run verify:release` only at lifecycle or release boundaries.
