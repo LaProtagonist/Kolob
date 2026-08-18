@@ -1,12 +1,12 @@
 schema_version: 2
-generated_at: 2026-08-19T00:10:00.002Z
+generated_at: 2026-08-19T00:10:00.003Z
 project: Колобочная
 branch: master
-latest_timeline_event_id: EVT-ITR-ECONOMICS-PAGE-2026-08-16-01-SUPERSEDED
-latest_timeline_event_hash: fba863fa49a14e9560c9a9b5e8f4ed20adf5b96110a51cc347f570ffee4b8306
-latest_closed_iteration_id: ITR-FINANCIAL-MODEL-2026-08-16-01
-latest_iteration_tag: iteration/ITR-FINANCIAL-MODEL-2026-08-16-01
-latest_content_commit_hash: c86133747af6e469a15bad1780cc63fca5482fe5
+latest_timeline_event_id: EVT-ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01-COMMITTED
+latest_timeline_event_hash: 50caedca8ae8b4474b1a8bc168b5cde48378b9e03749cb485a40b14b025be31e
+latest_closed_iteration_id: ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01
+latest_iteration_tag: iteration/ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01
+latest_content_commit_hash: 5684693613e65525bedf7a7ef2d97d65e094c90f
 registry_hash: afc53c6fdfcd2ae8b8f782f63c3e84308948108cbf2de13abe529a23259d5be5
 canonical_document_hashes:
   - document_id: DOC-AGENTS
@@ -88,7 +88,7 @@ open_questions:
   - Archive pending review artifacts in durable storage before treating visual verification as portable.
   - Create deployment receipts when the next governed deployment is performed.
   - Decide whether malformed superseded legacy YAML evidence should receive a separate correction event.
-current_workstream: Create Financial Model v0.1 and its Google Sheets working projection
+current_workstream: Consolidate Financial Model v0.2 and deploy the current sealed finance website
 next_task: Select the next task through a new governed proposal; no business task is pre-authorized.
 google_integration_status:
   configured: true

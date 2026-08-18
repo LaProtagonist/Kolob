@@ -9,16 +9,16 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 ## 2. Текущая ветка и governed iteration
 
 - Branch: `master`.
-- Latest closed iteration: `ITR-FINANCIAL-MODEL-2026-08-16-01`.
-- Latest iteration tag: `iteration/ITR-FINANCIAL-MODEL-2026-08-16-01`.
-- Latest content commit: `c86133747af6e469a15bad1780cc63fca5482fe5`.
+- Latest closed iteration: `ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01`.
+- Latest iteration tag: `iteration/ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01`.
+- Latest content commit: `5684693613e65525bedf7a7ef2d97d65e094c90f`.
 - Текущий Git HEAD намеренно не записывается: его вычисляет `npm run project:onboard`.
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-ECONOMICS-PAGE-2026-08-16-01-SUPERSEDED`.
-- Hash: `fba863fa49a14e9560c9a9b5e8f4ed20adf5b96110a51cc347f570ffee4b8306`.
-- generated_from_event_hash: `fba863fa49a14e9560c9a9b5e8f4ed20adf5b96110a51cc347f570ffee4b8306`.
+- Event: `EVT-ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01-COMMITTED`.
+- Hash: `50caedca8ae8b4474b1a8bc168b5cde48378b9e03749cb485a40b14b025be31e`.
+- generated_from_event_hash: `50caedca8ae8b4474b1a8bc168b5cde48378b9e03749cb485a40b14b025be31e`.
 
 ## 4. Канонические документы
 
@@ -45,7 +45,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 5. Текущая рабочая тема
 
-Create Financial Model v0.1 and its Google Sheets working projection
+Consolidate Financial Model v0.2 and deploy the current sealed finance website
 
 ## 6. Decisions и change sets
 
