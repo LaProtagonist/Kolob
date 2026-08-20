@@ -1,0 +1,9 @@
+schema_version: 1
+iteration_id: ITR-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01
+reverse_strategy:
+  modified_files: restore the sealed pre-iteration CSS state only through a new approved reverse change set
+  added_files: remove only through an explicit approved reverse operation
+  deployment: publish a restored state only after reverse validation and a new deployment receipt
+  events: append rollback lifecycle events; never delete historical evidence
+git_reset_forbidden: true
+dependency_check: This iteration becomes the latest release line after sealing; rollback remains suffix-only until a later iteration is sealed.

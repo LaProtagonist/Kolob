@@ -1,0 +1,16 @@
+schema_version: 2
+iteration_id: ITR-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01
+decision_id: DEC-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01
+change_set_id: CHG-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01
+previewed_at: 2026-08-20T21:57:20.000Z
+status: passed
+mutation_performed: false
+planned_changes:
+  - Release the owner-reviewed mobile responsive CSS corrections exactly as present in src/styles.css.
+  - Preserve desktop/tablet layouts, canonical documents, business values and browser-local runtime configuration.
+  - Publish only the sealed static build after the established web and governance gates pass.
+invariants:
+  canonical_documents_written: false
+  google_action: false
+  historical_events_edited: false
+  business_parameter_change: false

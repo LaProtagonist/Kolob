@@ -1,0 +1,51 @@
+schema_version: 2
+payload_id: PAYLOAD-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01
+iteration_id: ITR-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01
+proposal_id: PROP-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01
+decision_id: DEC-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01
+change_set_id: CHG-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01
+title: Release approved public-site mobile responsive corrections
+status: approved
+approved_by: project owner
+approved_at: 2026-08-20T21:57:19.000Z
+scope:
+  - Publish the owner-approved mobile-only responsive corrections for the legacy public website routes.
+  - Preserve the approved desktop and tablet compositions, financial pages, Investor Journey runtime state and all business content.
+  - Use the existing sealed-build deployment workflow after required release gates pass.
+forbidden_scope:
+  - Financial Model, canonical projections, Investor Summary, Revenue Model business data, CAPEX, OPEX and KPI calculations
+  - InvestorConfiguration semantics, configured financial engine and Investor Journey navigation
+  - Google Drive, Google Sheets, Google publication and Google readback
+  - Desktop or tablet design changes, new content, business assumptions and unrelated refactors
+state_hash_paths:
+  - src/styles.css
+content_paths:
+  - src/styles.css
+  - docs-platform/changes/CHG-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01.yaml
+  - docs-platform/changes/decisions/DEC-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01.yaml
+  - docs-platform/changes/iterations/ITR-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01.yaml
+  - docs-platform/changes/proposals/PROP-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01.yaml
+  - docs-platform/changelog/audit/ITR-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01.yaml
+  - docs-platform/changelog/change-receipts/CHG-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01.yaml
+  - docs-platform/changelog/iterations/ITR-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01-proposed.yaml
+  - docs-platform/changelog/iterations/ITR-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01-approved.yaml
+  - docs-platform/changelog/iterations/ITR-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01-applied.yaml
+  - docs-platform/changelog/iterations/ITR-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01-verified.yaml
+  - docs-platform/changelog/payloads/ITR-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01-approved.yaml
+  - docs-platform/changelog/previews/ITR-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01.yaml
+  - docs-platform/changelog/rollback-payloads/ITR-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01/manifest.yaml
+  - docs-platform/changelog/verification/ITR-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01.yaml
+  - docs-platform/changelog/events.ndjson
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+  - docs-platform/changelog/snapshots/SNAPSHOT-ITR-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01.yaml
+allowed_dirty_paths:
+  - output/pdf/launch-budget-review.pdf
+  - output/review/
+rollback_contract:
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true

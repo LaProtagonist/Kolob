@@ -3596,11 +3596,20 @@ main {
 
   .home-hero,
   .page-hero {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: 24px;
+    min-height: 0;
     padding: 42px 20px 0;
+  }
+
+  .hero-tagline span {
+    white-space: normal;
   }
 
   .home-hero-media,
   .page-hero-media {
+    justify-self: stretch;
     min-height: 360px;
     margin: 4px -20px 0;
   }
@@ -3641,6 +3650,17 @@ main {
     font-size: clamp(2.45rem, 10vw, 3.7rem);
   }
 
+  .investment-page-hero .page-hero-media {
+    width: 100%;
+    min-height: 0;
+    margin: 4px 0 32px;
+  }
+
+  .investment-page-hero .page-hero-media img,
+  .investment-page-hero .page-hero-media video {
+    width: min(72%, 300px);
+  }
+
   h2 {
     font-size: 2.08rem;
   }
@@ -3648,6 +3668,45 @@ main {
   .investment-card-grid-4,
   .investment-card-grid-3 {
     grid-template-columns: 1fr;
+  }
+
+  .intro-grid,
+  .statement-grid,
+  .scale-layout,
+  .investment-grid,
+  .form-layout,
+  .process-layout,
+  .two-column,
+  .note-grid,
+  .investment-two-column,
+  .investment-dialogue-layout,
+  .timeline-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 30px;
+  }
+
+  .about-project-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+
+  .about-project-copy {
+    padding: 0;
+  }
+
+  .timeline-layout > .section-intro,
+  .timeline-year {
+    position: static;
+  }
+
+  .timeline-more {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .timeline-more-link {
+    grid-column: auto;
+    justify-self: stretch;
   }
 
   .investment-card {
@@ -3797,7 +3856,8 @@ main {
   .form-grid,
   .pill-list,
   .metric-grid,
-  .timeline-card {
+  .timeline-card,
+  .document-card {
     grid-template-columns: 1fr;
   }
 
@@ -3900,9 +3960,9 @@ main {
 
   .concept-fox {
     justify-self: start;
-    width: min(88vw, 390px);
-    margin-top: 24px;
-    transform: translateX(-22px);
+    width: min(100%, 390px);
+    margin-top: 12px;
+    transform: none;
   }
 
   .concept-taste-copy .section-intro {
@@ -3914,7 +3974,7 @@ main {
     width: fit-content;
     max-width: 100%;
     padding: 8px 10px;
-    white-space: nowrap;
+    white-space: normal;
     font-size: clamp(0.68rem, 2.75vw, 0.82rem);
   }
 
@@ -4018,6 +4078,8 @@ main {
   }
 
   .site-footer {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
     padding: 38px 20px 30px;
   }
 }
@@ -4197,14 +4259,14 @@ main {
 
   .concept-fox {
     width: min(92vw, 400px);
-    margin-top: -52px;
-    transform: translateX(-28px);
+    margin-top: 12px;
+    transform: none;
   }
 
   .concept-collage {
     min-height: clamp(340px, 88vw, 385px);
     margin-top: 8px;
-    margin-bottom: -86px;
+    margin-bottom: 0;
   }
 
   .concept-collage-item-1 {
@@ -4238,9 +4300,9 @@ main {
   }
 
   .concept-collage-item-6 {
-    right: -16%;
-    bottom: auto;
-    top: 118%;
+    right: 7%;
+    bottom: 2%;
+    top: auto;
     width: 34%;
   }
 

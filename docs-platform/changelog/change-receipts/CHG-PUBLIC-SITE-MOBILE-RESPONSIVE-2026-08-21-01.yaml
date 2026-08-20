@@ -1,0 +1,10 @@
+schema_version: 2
+change_id: CHG-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01
+iteration_id: ITR-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01
+status: applied
+applied_at: 2026-08-20T21:57:22.000Z
+actor: Codex
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01-approved.yaml
+  sha256: 2ed99451ae10ade8d120bc0c99775869c82ed543eea6b952a83d46b35b70dfc6
+summary: Applied the approved CSS-only mobile responsive composition corrections. Canonical documents, business data, Google and production remain unchanged until governed release.

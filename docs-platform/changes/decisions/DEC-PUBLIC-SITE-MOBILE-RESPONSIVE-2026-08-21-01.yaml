@@ -1,0 +1,11 @@
+schema_version: 2
+decision_id: DEC-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01
+iteration_id: ITR-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01
+title: Approve release of public-site mobile responsive corrections
+status: approved
+approved_by: project owner
+approved_at: 2026-08-20T21:57:21.000Z
+scope: Release the current owner-approved mobile-only responsive presentation corrections. Desktop/tablet, business content, financial logic, canonical documents, Google and Investor Journey runtime remain unchanged.
+excludes: [Financial Model, canonical projections, Investor Summary, CAPEX, OPEX, Revenue business data, Google operations, desktop/tablet layouts]
+approved_payload_path: docs-platform/changelog/payloads/ITR-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01-approved.yaml
+approved_payload_sha256: 2ed99451ae10ade8d120bc0c99775869c82ed543eea6b952a83d46b35b70dfc6
