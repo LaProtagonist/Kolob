@@ -1,12 +1,12 @@
 schema_version: 2
-generated_at: 2026-08-20T12:40:00.981Z
+generated_at: 2026-08-20T22:07:33.960Z
 project: Колобочная
 branch: master
-latest_timeline_event_id: EVT-ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01-DEPLOYED-DEPLOY-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01
-latest_timeline_event_hash: 8a2d212bef2fa96156ad4e4585089aec9bdd3ebefa72812133da8f6e14800731
-latest_closed_iteration_id: ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01
-latest_iteration_tag: iteration/ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01
-latest_content_commit_hash: 040a81434e48f976da2deb7ef2064af313f2bf1e
+latest_timeline_event_id: EVT-ITR-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01-COMMITTED
+latest_timeline_event_hash: 01598007e751d610dc5b9c122aa6d4a28b8d852a01789fbebc667845dfe66ff5
+latest_closed_iteration_id: ITR-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01
+latest_iteration_tag: iteration/ITR-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01
+latest_content_commit_hash: 2fe665af1acad113613d83e8838d86a6b1cd81d0
 registry_hash: afc53c6fdfcd2ae8b8f782f63c3e84308948108cbf2de13abe529a23259d5be5
 canonical_document_hashes:
   - document_id: DOC-AGENTS
@@ -88,7 +88,7 @@ open_questions:
   - Archive pending review artifacts in durable storage before treating visual verification as portable.
   - Create deployment receipts when the next governed deployment is performed.
   - Decide whether malformed superseded legacy YAML evidence should receive a separate correction event.
-current_workstream: Consolidate approved Investor Journey and public UI review
+current_workstream: Release approved public-site mobile responsive corrections
 next_task: Select the next task through a new governed proposal; no business task is pre-authorized.
 google_integration_status:
   configured: true

@@ -9,16 +9,16 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 ## 2. Текущая ветка и governed iteration
 
 - Branch: `master`.
-- Latest closed iteration: `ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01`.
-- Latest iteration tag: `iteration/ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01`.
-- Latest content commit: `040a81434e48f976da2deb7ef2064af313f2bf1e`.
+- Latest closed iteration: `ITR-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01`.
+- Latest iteration tag: `iteration/ITR-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01`.
+- Latest content commit: `2fe665af1acad113613d83e8838d86a6b1cd81d0`.
 - Текущий Git HEAD намеренно не записывается: его вычисляет `npm run project:onboard`.
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01-DEPLOYED-DEPLOY-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01`.
-- Hash: `8a2d212bef2fa96156ad4e4585089aec9bdd3ebefa72812133da8f6e14800731`.
-- generated_from_event_hash: `8a2d212bef2fa96156ad4e4585089aec9bdd3ebefa72812133da8f6e14800731`.
+- Event: `EVT-ITR-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01-COMMITTED`.
+- Hash: `01598007e751d610dc5b9c122aa6d4a28b8d852a01789fbebc667845dfe66ff5`.
+- generated_from_event_hash: `01598007e751d610dc5b9c122aa6d4a28b8d852a01789fbebc667845dfe66ff5`.
 
 ## 4. Канонические документы
 
@@ -45,7 +45,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 5. Текущая рабочая тема
 
-Consolidate approved Investor Journey and public UI review
+Release approved public-site mobile responsive corrections
 
 ## 6. Decisions и change sets
 
