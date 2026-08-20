@@ -1,12 +1,12 @@
 schema_version: 2
-generated_at: 2026-08-19T00:20:03.001Z
+generated_at: 2026-08-20T12:37:30.890Z
 project: Колобочная
 branch: master
-latest_timeline_event_id: EVT-ITR-VERIFICATION-ORCHESTRATOR-2026-08-19-01-COMMITTED
-latest_timeline_event_hash: 3684a4421413c47133e3d68d27804c06e87f212f5ad935a3a196c6854ef77f54
-latest_closed_iteration_id: ITR-VERIFICATION-ORCHESTRATOR-2026-08-19-01
-latest_iteration_tag: iteration/ITR-VERIFICATION-ORCHESTRATOR-2026-08-19-01
-latest_content_commit_hash: 37f1d0d0d09673c211d5686bc1334e123ed952f8
+latest_timeline_event_id: EVT-ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01-COMMITTED
+latest_timeline_event_hash: 60a098e71c769581577c022244344489819e0e2d58e95c76b89ae83f982e51f4
+latest_closed_iteration_id: ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01
+latest_iteration_tag: iteration/ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01
+latest_content_commit_hash: 040a81434e48f976da2deb7ef2064af313f2bf1e
 registry_hash: afc53c6fdfcd2ae8b8f782f63c3e84308948108cbf2de13abe529a23259d5be5
 canonical_document_hashes:
   - document_id: DOC-AGENTS
@@ -88,7 +88,7 @@ open_questions:
   - Archive pending review artifacts in durable storage before treating visual verification as portable.
   - Create deployment receipts when the next governed deployment is performed.
   - Decide whether malformed superseded legacy YAML evidence should receive a separate correction event.
-current_workstream: Deterministic verification orchestrator infrastructure
+current_workstream: Consolidate approved Investor Journey and public UI review
 next_task: Select the next task through a new governed proposal; no business task is pre-authorized.
 google_integration_status:
   configured: true

@@ -4,10 +4,10 @@
 
 ## 1. Current state
 
-- Events: 170.
-- Timeline head event: `EVT-ITR-VERIFICATION-ORCHESTRATOR-2026-08-19-01-COMMITTED`.
-- Timeline head SHA-256: `3684a4421413c47133e3d68d27804c06e87f212f5ad935a3a196c6854ef77f54`.
-- Latest recorded iteration: `ITR-VERIFICATION-ORCHESTRATOR-2026-08-19-01`.
+- Events: 180.
+- Timeline head event: `EVT-ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01-COMMITTED`.
+- Timeline head SHA-256: `60a098e71c769581577c022244344489819e0e2d58e95c76b89ae83f982e51f4`.
+- Latest recorded iteration: `ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01`.
 
 ## 2. Modern governed iterations
 
@@ -43,6 +43,8 @@
 | 2026-08-18T20:05:00.000Z | verified | Superseding a synced iteration lifecycle support | ITR-GOVERNANCE-SUPERSEDE-SYNCED-2026-08-18-01 | DEC-GOVERNANCE-SUPERSEDE-SYNCED-2026-08-18-01 | CHG-GOVERNANCE-SUPERSEDE-SYNCED-2026-08-18-01 | — | — | — | — | — | All allowed transitions pass, all rejections hold, ordinary lifecycle paths unchanged, append-only chain validates; verification and iteration receipts recorded. |
 | 2026-08-18T22:11:37.000Z | deployed | Consolidate Financial Model v0.2 and deploy the current sealed finance website | ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01 | DEC-FINANCIAL-MODEL-V0-2-2026-08-18-01 | CHG-FINANCIAL-MODEL-V0-2-2026-08-18-01 | 5684693613e65525bedf7a7ef2d97d65e094c90f | iteration/ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01 | — | docs-platform/changelog/deployments/DEPLOY-FINANCIAL-MODEL-V0-2-2026-08-19-01.yaml | — | Sealed content state a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239 deployed to https://colob.spi.ski; smoke test passed. |
 | 2026-08-18T23:30:12.000Z | committed | Deterministic verification orchestrator infrastructure | ITR-VERIFICATION-ORCHESTRATOR-2026-08-19-01 | DEC-VERIFICATION-ORCHESTRATOR-2026-08-19-01 | CHG-VERIFICATION-ORCHESTRATOR-2026-08-19-01 | 37f1d0d0d09673c211d5686bc1334e123ed952f8 | iteration/ITR-VERIFICATION-ORCHESTRATOR-2026-08-19-01 | — | — | — | Deterministic verification orchestrator infrastructure: content commit verified and linked to the governed lifecycle before sealing. |
+| 2026-08-20T12:35:30.295Z | superseded | Runtime Investor Journey | ITR-INVESTOR-JOURNEY-2026-08-19-01 | DEC-INVESTOR-JOURNEY-2026-08-19-01 | CHG-INVESTOR-JOURNEY-2026-08-19-01 | — | — | — | — | — | Runtime Investor Journey superseded by Consolidate approved Investor Journey and public UI review (ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01). Reason: The owner-approved public responsive and presentation refinements extend the unsealed Investor Journey working line; the successor captures the exact release state. |
+| 2026-08-20T12:37:19.000Z | committed | Consolidate approved Investor Journey and public UI review | ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01 | DEC-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01 | CHG-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01 | 040a81434e48f976da2deb7ef2064af313f2bf1e | iteration/ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01 | — | — | — | Consolidate approved Investor Journey and public UI review: content commit verified and linked to the governed lifecycle before sealing. |
 
 ## 3. Legacy imported history
 

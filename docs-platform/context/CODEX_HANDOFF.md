@@ -9,16 +9,16 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 ## 2. Текущая ветка и governed iteration
 
 - Branch: `master`.
-- Latest closed iteration: `ITR-VERIFICATION-ORCHESTRATOR-2026-08-19-01`.
-- Latest iteration tag: `iteration/ITR-VERIFICATION-ORCHESTRATOR-2026-08-19-01`.
-- Latest content commit: `37f1d0d0d09673c211d5686bc1334e123ed952f8`.
+- Latest closed iteration: `ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01`.
+- Latest iteration tag: `iteration/ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01`.
+- Latest content commit: `040a81434e48f976da2deb7ef2064af313f2bf1e`.
 - Текущий Git HEAD намеренно не записывается: его вычисляет `npm run project:onboard`.
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-VERIFICATION-ORCHESTRATOR-2026-08-19-01-COMMITTED`.
-- Hash: `3684a4421413c47133e3d68d27804c06e87f212f5ad935a3a196c6854ef77f54`.
-- generated_from_event_hash: `3684a4421413c47133e3d68d27804c06e87f212f5ad935a3a196c6854ef77f54`.
+- Event: `EVT-ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01-COMMITTED`.
+- Hash: `60a098e71c769581577c022244344489819e0e2d58e95c76b89ae83f982e51f4`.
+- generated_from_event_hash: `60a098e71c769581577c022244344489819e0e2d58e95c76b89ae83f982e51f4`.
 
 ## 4. Канонические документы
 
@@ -45,7 +45,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 5. Текущая рабочая тема
 
-Deterministic verification orchestrator infrastructure
+Consolidate approved Investor Journey and public UI review
 
 ## 6. Decisions и change sets
 
