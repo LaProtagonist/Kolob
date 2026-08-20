@@ -23,12 +23,21 @@ export type PageMeta = {
   noindex?: boolean;
 };
 
-export type ImageSpec = {
-  base: string;
-  widths: number[];
-  sizes: string;
-  alt: string;
-};
+export type ImageSpec =
+  | {
+      base: string;
+      widths: number[];
+      sizes: string;
+      alt: string;
+      src?: never;
+    }
+  | {
+      src: string;
+      alt: string;
+      base?: never;
+      widths?: never;
+      sizes?: never;
+    };
 
 export type HeroVideo = {
   mp4?: string | null;
@@ -119,4 +128,6 @@ export type DocumentItem = {
   actionLabel?: string | null;
   href?: string | null;
   documentUrl?: string | null;
+  featured?: boolean;
+  fullCardLink?: boolean;
 };

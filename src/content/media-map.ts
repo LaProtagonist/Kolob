@@ -264,10 +264,8 @@ export const mediaMap: {
       alt: "Классические колобки Колобочной"
     },
     ufo: {
-      base: "concept-manches",
-      widths: [420, 720, 960],
-      sizes: "(max-width: 720px) 100vw, 40vw",
-      alt: "Манчесы Колобочной"
+      src: "/media/concept-manches-hand.jpg",
+      alt: "Манчес в руке"
     },
     dessert: {
       base: "product-dessert",

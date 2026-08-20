@@ -115,7 +115,7 @@ export const qualityDrinks = {
     },
     {
       title: "Холодные лимонады",
-      text: "Неожиданные сочетания вкусов. Только органические ингредиенты.",
+      text: "На основе собственных рецептурных сиропов. Неожиданные сочетания вкусов. Только органические ингредиенты.",
       image: mediaMap.qualityPage.drinksCold ?? coldDrinkVisual
     }
   ] satisfies QualityDrinkLine[]

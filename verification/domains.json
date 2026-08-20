@@ -109,6 +109,10 @@
       "cost": "targeted",
       "command": ["node", "docs-platform/app/node_modules/tsx/dist/cli.mjs", "--test", "scripts/test-economics-data.test.ts"]
     },
+    "investor-journey:unit": {
+      "cost": "targeted",
+      "command": ["node", "docs-platform/app/node_modules/tsx/dist/cli.mjs", "--test", "scripts/test-investor-journey.test.ts"]
+    },
     "governance:registry": {
       "cost": "fast",
       "command": ["npm", "run", "registry:validate", "--silent"]
@@ -232,6 +236,18 @@
       "integration": [],
       "dependency": ["economics:data"],
       "visual": {"route": "/economics", "requiredSelectors": ["[data-testid=economics-summary]", "h1"], "defaultImpact": "none"},
+      "releaseRequired": true
+    },
+    "investor-journey": {
+      "patterns": ["src/components/InvestorConfigurationProvider.tsx", "src/lib/investor-configuration.ts", "src/lib/configured-economics.ts", "scripts/test-investor-journey.test.ts"],
+      "upstream": ["financial", "investor-summary", "launch-budget", "economics-ui", "revenue-ui"],
+      "downstream": [],
+      "testInputs": ["scripts/test-investor-journey.test.ts"],
+      "fast": [],
+      "targeted": ["typescript:site", "investor-journey:unit"],
+      "integration": [],
+      "dependency": ["investor-journey:unit"],
+      "visual": {"route": "/economics", "requiredSelectors": ["[data-testid=economics-summary]", "h1"], "defaultImpact": "high"},
       "releaseRequired": true
     },
     "site-core": {

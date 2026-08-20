@@ -1,6 +1,8 @@
-import { useState } from "react";
 import { economicsCopy } from "../content/economics";
 import { economicsData, economicsScenarioIds, type EconomicsScenarioId } from "../lib/economics";
+import { configuredEconomicsScenario, configuredEconomicsScenarios } from "../lib/configured-economics";
+import { useInvestorConfiguration } from "./InvestorConfigurationProvider";
+import { InvestorJourneyNavigation } from "./InvestorJourneyNavigation";
 import "./LaunchBudget.css";
 import "./Economics.css";
 
@@ -9,7 +11,6 @@ const millions = new Intl.NumberFormat("ru-RU", { minimumFractionDigits: 2, maxi
 const percent = new Intl.NumberFormat("ru-RU", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const decimal = new Intl.NumberFormat("ru-RU", { minimumFractionDigits: 1, maximumFractionDigits: 2 });
 const monthNames = ["Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен", "Окт", "Ноя", "Дек"];
-const shortScenarioName: Record<EconomicsScenarioId, string> = { pessimistic: "Песс.", realistic: "Реал.", optimistic: "Оптим." };
 
 function formatRub(value: number) {
   return `${money.format(Math.round(value))} ₽`;
@@ -25,6 +26,10 @@ function formatSignedRub(value: number) {
 
 function formatPercent(value: number) {
   return `${percent.format(value * 100)}%`;
+}
+
+function formatOptionalPercent(value: number | null) {
+  return value === null ? "не рассчитано" : formatPercent(value);
 }
 
 function paybackText(value: number | null) {
@@ -78,11 +83,21 @@ function PnlRow({ label, value, kind = "expense" }: { label: string; value: numb
 }
 
 export function EconomicsPage() {
-  const [scenarioId, setScenarioId] = useState<EconomicsScenarioId>(economicsData.defaultScenario);
-  const scenario = economicsData.scenariosById[scenarioId];
+  const { configuration, resetConfiguration, setScenarioId } = useInvestorConfiguration();
+  const scenarioId = configuration.scenarioId as EconomicsScenarioId;
+  const scenario = configuredEconomicsScenario(configuration);
+  const scenarios = configuredEconomicsScenarios(configuration);
   const assumptions = economicsData.assumptions;
-  const purchase = economicsData.realEstate.purchase;
-  const rent = economicsData.realEstate.rent;
+  const rent = configuredEconomicsScenario({
+    ...configuration,
+    launchBudget: { ...configuration.launchBudget, premisesScenario: "rent" },
+  });
+  const purchase = configuredEconomicsScenario({
+    ...configuration,
+    launchBudget: { ...configuration.launchBudget, premisesScenario: "purchase" },
+  });
+  const purchasePropertyRub = purchase.investmentBreakdown.find((item) => item.key === "property")?.amount_rub ?? 0;
+  const purchaseRestaurantCapitalRub = purchase.startInvestmentRub - purchasePropertyRub;
 
   return (
     <div className="launch-budget-page economics-page">
@@ -132,6 +147,10 @@ export function EconomicsPage() {
             <div className="launch-form-column">
               <section className="launch-card" aria-labelledby="economics-result-title">
                 <SectionHeading id="economics-result-title" number="01" title={economicsCopy.resultTitle} text={economicsCopy.resultText} />
+                <div className="economics-configuration-actions" data-testid="economics-configuration-actions">
+                  <span>{scenario.isConfigured ? economicsCopy.configuredLabel : economicsCopy.baselineConfigurationLabel}</span>
+                  {scenario.isConfigured ? <div><button type="button" onClick={resetConfiguration} data-testid="economics-reset-configuration">{economicsCopy.resetConfigurationLabel}</button></div> : null}
+                </div>
                 <div className="economics-headline-grid" aria-live="polite">
                   <HeadlineMetric label="Стартовые инвестиции" value={formatMillion(scenario.startInvestmentRub)} testId="economics-start-investment" />
                   <HeadlineMetric label="Продажи" value={`${formatMillion(scenario.salesPerMonthRub)} / месяц`} testId="economics-sales" />
@@ -218,7 +237,7 @@ export function EconomicsPage() {
                 </div>
                 <div className="economics-resilience-scale" aria-label="Сравнение точки безубыточности и сценариев загрузки">
                   <div className="is-break-even"><span>Точка безубыточности</span><strong>≈{money.format(Math.round(scenario.breakEvenChecksPerDay))}</strong></div>
-                  {economicsData.scenarios.map((item) => <div key={item.id} className={scenarioId === item.id ? "is-current" : ""}><span>{item.name}</span><strong>{item.checksPerDay}</strong></div>)}
+                  {scenarios.map((item) => <div key={item.id} className={scenarioId === item.id ? "is-current" : ""}><span>{item.name}</span><strong>{item.checksPerDay}</strong></div>)}
                 </div>
                 <p className="economics-note">{economicsCopy.resilienceNote}</p>
               </section>
@@ -226,7 +245,7 @@ export function EconomicsPage() {
               <section className="launch-card" aria-labelledby="economics-comparison-title">
                 <SectionHeading id="economics-comparison-title" number="05" title={economicsCopy.comparisonTitle} text={economicsCopy.comparisonText} />
                 <div className="economics-scenario-cards" data-testid="economics-scenario-comparison">
-                  {economicsData.scenarios.map((item) => (
+                  {scenarios.map((item) => (
                     <article key={item.id} className={scenarioId === item.id ? "is-current" : ""}>
                       <h3>{item.name}</h3>
                       <dl>
@@ -276,27 +295,26 @@ export function EconomicsPage() {
               <section className="launch-card" aria-labelledby="economics-property-title">
                 <SectionHeading id="economics-property-title" number="07" title={economicsCopy.rentPurchaseTitle} text={economicsCopy.rentPurchaseText} />
                 <div className="economics-property-grid">
-                  <article className="is-primary">
+                  <article className={scenario.premisesScenario === "rent" ? "is-primary" : ""}>
                     <p>Аренда</p>
-                    <h3>{formatMillion(rent.start_capital_rub)}</h3>
+                    <h3>{formatMillion(rent.startInvestmentRub)}</h3>
                     <dl>
-                      <SummaryMetric label="Стартовый капитал" value={formatMillion(rent.start_capital_rub)} />
-                      <SummaryMetric label="EBITDA" value={`${formatMillion(rent.ebitda_rub)} / мес.`} />
-                      <SummaryMetric label="Окупаемость" value={paybackText(rent.payback_month)} />
-                      <SummaryMetric label="IRR" value={formatPercent(rent.irr)} />
+                      <SummaryMetric label="Стартовый капитал" value={formatMillion(rent.startInvestmentRub)} />
+                      <SummaryMetric label="EBITDA" value={`${formatMillion(rent.ebitdaRub)} / мес.`} />
+                      <SummaryMetric label="Окупаемость" value={paybackText(rent.paybackMonth)} />
+                      <SummaryMetric label="IRR ресторанной инвестиции" value={formatOptionalPercent(rent.irr)} />
                     </dl>
                   </article>
-                  <article>
+                  <article className={scenario.premisesScenario === "purchase" ? "is-primary" : ""}>
                     <p>Покупка помещения</p>
-                    <h3>{formatMillion(purchase.total_capital_rub)}</h3>
+                    <h3>{formatMillion(purchase.startInvestmentRub)}</h3>
                     <dl>
-                      <SummaryMetric label="Ресторанный капитал" value={formatMillion(purchase.restaurant_capital_rub)} />
-                      <SummaryMetric label="Недвижимость" value={formatMillion(purchase.real_estate_investment_rub)} />
-                      <SummaryMetric label="Совокупный капитал" value={formatMillion(purchase.total_capital_rub)} />
-                      <SummaryMetric label="EBITDA ресторана" value={`${formatMillion(purchase.restaurant_ebitda_rub)} / мес.`} />
-                      <SummaryMetric label="Окупаемость ресторанного капитала" value={paybackText(purchase.restaurant_payback_month)} />
-                      <SummaryMetric label="Совокупная окупаемость" value={paybackText(purchase.combined_payback_month)} />
-                      <SummaryMetric label="IRR совокупной инвестиции" value={formatPercent(purchase.combined_irr)} />
+                      <SummaryMetric label="Ресторанный капитал" value={formatMillion(purchaseRestaurantCapitalRub)} />
+                      <SummaryMetric label="Недвижимость" value={formatMillion(purchasePropertyRub)} />
+                      <SummaryMetric label="Совокупный капитал" value={formatMillion(purchase.startInvestmentRub)} />
+                      <SummaryMetric label="EBITDA ресторана" value={`${formatMillion(purchase.ebitdaRub)} / мес.`} />
+                      <SummaryMetric label="Совокупная окупаемость" value={paybackText(purchase.paybackMonth)} />
+                      <SummaryMetric label="IRR совокупной инвестиции" value={formatOptionalPercent(purchase.irr)} />
                     </dl>
                   </article>
                 </div>
@@ -304,8 +322,8 @@ export function EconomicsPage() {
                   <summary>{economicsCopy.metricsLabel}</summary>
                   <div className="economics-metric-explanations">
                     <div><strong>ROI · {formatPercent(scenario.roi)}</strong><span>Годовой свободный денежный поток относительно ресторанного капитала.</span></div>
-                    <div><strong>IRR · {formatPercent(scenario.irr)}</strong><span>Внутренняя норма доходности денежного потока модели.</span></div>
-                    <div><strong>NPV при 20% · {formatMillion(scenario.npvRub)}</strong><span>Текущая стоимость будущих денежных потоков при выбранной ставке дисконтирования.</span></div>
+                    <div><strong>IRR · {formatOptionalPercent(scenario.irr)}</strong><span>Внутренняя норма доходности денежного потока модели.</span></div>
+                    <div><strong>{economicsCopy.npvTitle} · {formatMillion(scenario.npvRub)}</strong><span>{economicsCopy.npvText}</span></div>
                   </div>
                 </details>
               </section>
@@ -344,7 +362,7 @@ export function EconomicsPage() {
                   <div><span>Порций еды на чек</span><strong>{decimal.format(assumptions.food_portions_per_check)}</strong></div>
                   <div><span>Напитков на чек</span><strong>{decimal.format(assumptions.drinks_per_check)}</strong></div>
                   <div><span>Эквайринг</span><strong>{formatPercent(assumptions.acquiring_rate)}</strong></div>
-                  <div><span>Аренда</span><strong>{formatRub(assumptions.rent_per_month_rub)} / месяц</strong></div>
+                  <div><span>Расходы на помещение</span><strong>{formatRub(scenario.pnl.premisesRub)} / месяц</strong></div>
                   <div><span>Персонал</span><strong>{scenario.headcount} сотрудников</strong></div>
                   <div><span>Списания</span><strong>{formatPercent(assumptions.waste_rate)} стоимости сырья</strong></div>
                   <div><span>Сырьё</span><strong>{formatPercent(assumptions.raw_materials_rate)} продаж</strong></div>
@@ -388,7 +406,7 @@ export function EconomicsPage() {
                     data-scenario-sticky={id}
                     onClick={() => setScenarioId(id)}
                   >
-                    <strong>{shortScenarioName[id]}</strong>
+                    <strong>{economicsData.scenariosById[id].checksPerDay} чеков/день</strong>
                   </button>
                 ))}
               </div>
@@ -406,6 +424,10 @@ export function EconomicsPage() {
               </dl>
               <p className="launch-warning">{economicsCopy.summaryNote}</p>
             </div>
+            <InvestorJourneyNavigation actions={[
+              { href: "/launch-budget", label: "← Расчёт затрат", tone: "primary", testId: "economics-to-launch-budget" },
+              { href: "/revenue-model", label: "Расчёт доходов", tone: "secondary", testId: "economics-to-revenue" },
+            ]} />
             </aside>
           </div>
         </div>

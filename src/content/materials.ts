@@ -20,6 +20,15 @@ export const moments = mediaMap.moments;
 
 export const documents: DocumentItem[] = [
   {
+    title: "Ознакомиться с расчётами запуска",
+    description:
+      "Доходы, стоимость запуска и экономика объекта в трёх сценариях.",
+    href: "/revenue-model",
+    documentUrl: null,
+    featured: true,
+    fullCardLink: true
+  },
+  {
     title: "Инвестиционный меморандум",
     description:
       "Закрытый документ первого касания с описанием продукта, модели развития и вопросов для обсуждения.",

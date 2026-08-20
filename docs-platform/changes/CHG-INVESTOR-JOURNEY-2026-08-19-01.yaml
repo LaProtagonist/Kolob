@@ -1,0 +1,21 @@
+schema_version: 2
+change_id: CHG-INVESTOR-JOURNEY-2026-08-19-01
+iteration_id: ITR-INVESTOR-JOURNEY-2026-08-19-01
+proposal_id: PROP-INVESTOR-JOURNEY-2026-08-19-01
+decision_id: DEC-INVESTOR-JOURNEY-2026-08-19-01
+title: Add the runtime Investor Journey
+status: approved
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-JOURNEY-2026-08-19-01-approved.yaml
+approved_payload_sha256: 748b4bf63b57c6a88462fa5db8a5fec5b5e4b6cfa3326e92a2fafc23df9461d2
+operations:
+  - persist only visitor inputs in client-side InvestorConfiguration state
+  - derive configured economics from canonical Financial Model cash flows and existing launch-budget inputs
+  - add Revenue Model → Launch Budget → Economics navigation plus return and reset actions
+  - preserve canonical Financial Model, Investor Summary, Google artifacts and governance data from runtime interaction
+  - verify baseline parity, configuration deltas, persistence, reset and desktop/mobile rendering
+preview:
+  status: passed
+  mutation_performed: false
+  canonical_financial_model_change: false
+  google_operation: false
+  production_or_deployment_change: false

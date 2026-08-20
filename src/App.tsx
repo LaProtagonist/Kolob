@@ -17,6 +17,7 @@ import {
 } from "./components/ui";
 import { MomentsMosaic } from "./components/MomentsMosaic";
 import { ProcessRoute } from "./components/ProcessRoute";
+import { InvestorConfigurationProvider } from "./components/InvestorConfigurationProvider";
 import { approvedCopy } from "./content/approved-copy";
 import {
   conceptDefinition,
@@ -224,7 +225,7 @@ function HomePage() {
       <section className="section section-light about-project-section">
         <div className="section-inner about-project-grid">
           <div className="about-project-copy">
-            <SectionIntro eyebrow="О проекте" title={homeAbout.title} text={homeAbout.text} />
+            <SectionIntro title={homeAbout.title} text={homeAbout.text} />
             <a className="text-link" href={homeAbout.link.href}>
               {homeAbout.link.label}
             </a>
@@ -281,28 +282,30 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="section section-light">
-        <div className="section-inner statement-grid">
+      <section className="section section-light home-quality-section">
+        <div className="section-inner statement-grid home-quality-layout">
           <div className="quality-teaser-copy">
             <SectionIntro title={homeQuality.title} text={homeQuality.text} />
-            <div className="quality-pillars-label">{homeQuality.label}</div>
-            <ol className="quality-pillars" aria-label={homeQuality.label}>
-              {homeQuality.pillars.map((item) => (
-                <li className="quality-pillar" key={item.number}>
-                  <span className="quality-pillar-number">{item.number}</span>
-                  <span className="quality-pillar-icon">
-                    <QualityPillarIcon icon={item.icon} />
-                  </span>
-                  <span className="quality-pillar-text">
-                    <strong>{item.title}</strong>
-                    <span>{item.text}</span>
-                  </span>
-                </li>
-              ))}
-            </ol>
-            <a className="text-link" href={homeQuality.link.href}>
-              {homeQuality.link.label}
-            </a>
+            <div className="quality-pillars-wrap">
+              <div className="quality-pillars-label">{homeQuality.label}</div>
+              <ol className="quality-pillars" aria-label={homeQuality.label}>
+                {homeQuality.pillars.map((item) => (
+                  <li className="quality-pillar" key={item.number}>
+                    <span className="quality-pillar-number">{item.number}</span>
+                    <span className="quality-pillar-icon">
+                      <QualityPillarIcon icon={item.icon} />
+                    </span>
+                    <span className="quality-pillar-text">
+                      <strong>{item.title}</strong>
+                      <span>{item.text}</span>
+                    </span>
+                  </li>
+                ))}
+              </ol>
+              <a className="text-link" href={homeQuality.link.href}>
+                {homeQuality.link.label}
+              </a>
+            </div>
           </div>
           <LoopMedia
             image={homeQuality.media.image}
@@ -877,10 +880,12 @@ export default function App() {
   }
 
   return (
-    <div className="app-shell" onClick={handleInternalNavigation}>
-      <SiteHeader activePath={activePage.path} />
-      <main>{renderPage(activePage.path)}</main>
-      <SiteFooter />
-    </div>
+    <InvestorConfigurationProvider>
+      <div className="app-shell" onClick={handleInternalNavigation}>
+        <SiteHeader activePath={activePage.path} />
+        <main>{renderPage(activePage.path)}</main>
+        <SiteFooter />
+      </div>
+    </InvestorConfigurationProvider>
   );
 }

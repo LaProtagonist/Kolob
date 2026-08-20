@@ -1,0 +1,25 @@
+event_id: EVT-ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01-APPLIED
+event_type: applied
+occurred_at: 2026-08-20T12:22:18.000Z
+recorded_at: 2026-08-20T12:22:18.000Z
+iteration_id: ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01
+proposal_id: PROP-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01
+decision_id: DEC-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01
+change_set_id: CHG-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01
+actor: Codex
+tool: approved local implementation
+scope: Browser-local runtime configuration, approved public UI refinements and their targeted regression coverage.
+summary: The reviewed website source state is ready for release validation without changing canonical finance, Google artifacts or production.
+approved_payload_sha256: bc08c31acf3974e5c051d36b3e004c0940003ed072993e315e1d1f8095cf79b2
+before_hash: f32375d43c3f0f9e12165a8eb590f779d3aa307418475071664659b3c76da4a4
+after_hash: c4af7fa02d5b0715ce3592fec71af4ab5f1b80b3089c0e6a58a561f9a3f14117
+affected_document_ids: []
+affected_section_ids: [investor-journey.runtime-configuration, investor-journey.configured-economics, investor-journey.navigation, public-site.tablet-responsive, materials.calculation-entry, public-site.media-presentation]
+source_refs:
+  - docs-platform/changelog/change-receipts/CHG-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01.yaml
+  - docs-platform/changelog/audit/ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01.yaml
+git: { content_commit_hash: null, seal_commit_ref: null, iteration_tag: null, commit_message_verified: null, trailers_verified: null }
+external: { google_sync_receipts: [], deployment_receipt: null, remote_readback_hash: null, production_url: null }
+rollback: { rollback_payload: docs-platform/changelog/rollback-payloads/ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01/manifest.yaml, compensates_iteration_id: null, restores_hash: f32375d43c3f0f9e12165a8eb590f779d3aa307418475071664659b3c76da4a4, dependency_check: Governed reverse change set required; historical events remain append-only. }
+artifacts: { manifest_refs: [docs-platform/changelog/change-receipts/CHG-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01.yaml] }
+confidence: exact

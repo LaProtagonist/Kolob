@@ -1,0 +1,18 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-JOURNEY-2026-08-19-01
+decision_id: DEC-INVESTOR-JOURNEY-2026-08-19-01
+change_set_id: CHG-INVESTOR-JOURNEY-2026-08-19-01
+previewed_at: 2026-08-19T07:30:00.000Z
+status: passed
+mutation_performed: false
+planned_changes:
+  - Keep Financial Model v0.2 and Investor Summary as canonical read-only inputs.
+  - Persist scenario and existing launch-budget parameters in browser-local runtime state only.
+  - Produce configured investment KPI from canonical cash-flow rules and the existing launch-budget calculator.
+  - Add the approved investor journey CTAs and economics return/reset controls.
+invariants:
+  canonical_documents_written: false
+  google_action: false
+  historical_events_edited: false
+  runtime_state_server_side: false
+  deployment_before_owner_approval: false

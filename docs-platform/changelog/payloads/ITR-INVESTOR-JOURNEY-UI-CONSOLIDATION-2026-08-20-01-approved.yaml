@@ -1,0 +1,116 @@
+schema_version: 2
+payload_id: PAYLOAD-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01
+iteration_id: ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01
+proposal_id: PROP-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01
+decision_id: DEC-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01
+change_set_id: CHG-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01
+title: Consolidate approved Investor Journey and public UI review
+status: approved
+approved_by: project owner
+approved_at: 2026-08-20T12:22:16.000Z
+scope:
+  - Consolidate the owner-approved browser-local InvestorConfiguration and configured Economics presentation.
+  - Publish the approved Revenue Model → Launch Budget → Economics journey, current launch defaults and public UI refinements.
+  - Include responsive tablet corrections, public navigation, Materials entry point and the approved Manches image.
+  - Preserve canonical Financial Model, Investor Summary, CAPEX data, Revenue business parameters and Google artifacts unchanged.
+  - Seal, push and deploy only the reviewed website state after the required web and governance release gates pass.
+forbidden_scope:
+  - Financial Model YAML, generated canonical Financial Model projection, Investor Summary canonical files, CAPEX pricing and Revenue business parameters
+  - Google Drive, Google Sheets, Google publication and Google readback
+  - Runtime writes to repository, governance, canonical documents or shared project data
+state_hash_paths:
+  - public/media/concept-manches-hand.jpg
+  - scripts/test-economics-route.cjs
+  - scripts/test-investor-journey.test.ts
+  - scripts/test-site.cjs
+  - src/App.tsx
+  - src/components/CapexConfigurator.css
+  - src/components/Economics.css
+  - src/components/Economics.tsx
+  - src/components/InvestorConfigurationProvider.tsx
+  - src/components/InvestorJourneyNavigation.tsx
+  - src/components/LaunchBudget.css
+  - src/components/LaunchBudget.tsx
+  - src/components/RevenueModel.css
+  - src/components/RevenueModel.tsx
+  - src/components/ui.tsx
+  - src/content/economics.ts
+  - src/content/materials.ts
+  - src/content/media-map.ts
+  - src/content/navigation.ts
+  - src/content/quality.ts
+  - src/lib/configured-economics.ts
+  - src/lib/investor-configuration.ts
+  - src/lib/launch-budget.ts
+  - src/styles.css
+  - src/types.ts
+  - verification/domains.json
+content_paths:
+  - public/media/concept-manches-hand.jpg
+  - scripts/test-economics-route.cjs
+  - scripts/test-investor-journey.test.ts
+  - scripts/test-site.cjs
+  - src/App.tsx
+  - src/components/CapexConfigurator.css
+  - src/components/Economics.css
+  - src/components/Economics.tsx
+  - src/components/InvestorConfigurationProvider.tsx
+  - src/components/InvestorJourneyNavigation.tsx
+  - src/components/LaunchBudget.css
+  - src/components/LaunchBudget.tsx
+  - src/components/RevenueModel.css
+  - src/components/RevenueModel.tsx
+  - src/components/ui.tsx
+  - src/content/economics.ts
+  - src/content/materials.ts
+  - src/content/media-map.ts
+  - src/content/navigation.ts
+  - src/content/quality.ts
+  - src/lib/configured-economics.ts
+  - src/lib/investor-configuration.ts
+  - src/lib/launch-budget.ts
+  - src/styles.css
+  - src/types.ts
+  - verification/domains.json
+  - docs-platform/changes/CHG-INVESTOR-JOURNEY-2026-08-19-01.yaml
+  - docs-platform/changes/decisions/DEC-INVESTOR-JOURNEY-2026-08-19-01.yaml
+  - docs-platform/changes/iterations/ITR-INVESTOR-JOURNEY-2026-08-19-01.yaml
+  - docs-platform/changes/proposals/PROP-INVESTOR-JOURNEY-2026-08-19-01.yaml
+  - docs-platform/changelog/audit/ITR-INVESTOR-JOURNEY-2026-08-19-01.yaml
+  - docs-platform/changelog/change-receipts/CHG-INVESTOR-JOURNEY-2026-08-19-01.yaml
+  - docs-platform/changelog/iterations/ITR-INVESTOR-JOURNEY-2026-08-19-01-proposed.yaml
+  - docs-platform/changelog/iterations/ITR-INVESTOR-JOURNEY-2026-08-19-01-approved.yaml
+  - docs-platform/changelog/iterations/ITR-INVESTOR-JOURNEY-2026-08-19-01-applied.yaml
+  - docs-platform/changelog/iterations/ITR-INVESTOR-JOURNEY-2026-08-19-01-verified.yaml
+  - docs-platform/changelog/payloads/ITR-INVESTOR-JOURNEY-2026-08-19-01-approved.yaml
+  - docs-platform/changelog/previews/ITR-INVESTOR-JOURNEY-2026-08-19-01.yaml
+  - docs-platform/changelog/rollback-payloads/ITR-INVESTOR-JOURNEY-2026-08-19-01/manifest.yaml
+  - docs-platform/changelog/verification/ITR-INVESTOR-JOURNEY-2026-08-19-01.yaml
+  - docs-platform/changes/CHG-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01.yaml
+  - docs-platform/changes/decisions/DEC-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01.yaml
+  - docs-platform/changes/iterations/ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01.yaml
+  - docs-platform/changes/proposals/PROP-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01.yaml
+  - docs-platform/changelog/audit/ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01.yaml
+  - docs-platform/changelog/change-receipts/CHG-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01.yaml
+  - docs-platform/changelog/iterations/ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01-proposed.yaml
+  - docs-platform/changelog/iterations/ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01-approved.yaml
+  - docs-platform/changelog/iterations/ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01-applied.yaml
+  - docs-platform/changelog/iterations/ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01-verified.yaml
+  - docs-platform/changelog/payloads/ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01-approved.yaml
+  - docs-platform/changelog/previews/ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01.yaml
+  - docs-platform/changelog/rollback-payloads/ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01/manifest.yaml
+  - docs-platform/changelog/verification/ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01.yaml
+  - docs-platform/changelog/events.ndjson
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+  - docs-platform/changelog/snapshots/SNAPSHOT-ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01.yaml
+allowed_dirty_paths:
+  - output/pdf/launch-budget-review.pdf
+  - output/review/
+rollback_contract:
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true

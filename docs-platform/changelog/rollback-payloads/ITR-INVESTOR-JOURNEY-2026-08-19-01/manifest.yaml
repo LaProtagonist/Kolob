@@ -1,0 +1,13 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-JOURNEY-2026-08-19-01
+mode: governed_reverse_change_set
+status: prepared
+before_content_commit: fb4f662421ff31ab49fbe241651770f475b5d0c0
+reverse_strategy:
+  runtime_state: remove the InvestorConfiguration provider and browser-local persistence through a new approved reverse change set
+  configured_projection: remove the configured presentation adapter without changing canonical Financial Model projections
+  journey_ui: remove investor journey CTAs and restore the prior approved private page presentation through the same reversal
+  events: append rollback lifecycle evidence; never remove historical events
+  google_or_production: no external artifact requires rollback because neither channel is used in this iteration
+  git_reset_forbidden: true
+dependency_check: required against every later sealed iteration

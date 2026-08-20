@@ -1,0 +1,26 @@
+event_id: EVT-ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01-VERIFIED
+event_type: verified
+occurred_at: 2026-08-20T12:34:24.000Z
+recorded_at: 2026-08-20T12:34:24.000Z
+iteration_id: ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01
+proposal_id: PROP-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01
+decision_id: DEC-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01
+change_set_id: CHG-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01
+actor: Codex
+tool: targeted web verification and local browser scenarios
+scope: "Owner-approved website release only: Investor Journey runtime configuration, configured Economics UI, public responsive and presentation refinements."
+summary: The reviewed website state passed the scoped web gate under the supported Node runtime. Canonical finance, Google artifacts and production remain unchanged pending governed release.
+approved_payload_sha256: bc08c31acf3974e5c051d36b3e004c0940003ed072993e315e1d1f8095cf79b2
+before_hash: f32375d43c3f0f9e12165a8eb590f779d3aa307418475071664659b3c76da4a4
+after_hash: fd96da40c3b5be4e40b49a167c6e2425ac2a4abe5636e79a5ed282db3549bd34
+affected_document_ids: []
+affected_section_ids: [investor-journey.runtime-configuration, investor-journey.configured-economics, investor-journey.navigation, public-site.tablet-responsive, materials.calculation-entry, public-site.media-presentation]
+source_refs:
+  - docs-platform/changes/iterations/ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01.yaml
+  - docs-platform/changelog/verification/ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01.yaml
+  - docs-platform/changelog/audit/ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01.yaml
+git: { content_commit_hash: null, seal_commit_ref: null, iteration_tag: null, commit_message_verified: null, trailers_verified: null }
+external: { google_sync_receipts: [], deployment_receipt: null, remote_readback_hash: null, production_url: null }
+rollback: { rollback_payload: docs-platform/changelog/rollback-payloads/ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01/manifest.yaml, compensates_iteration_id: null, restores_hash: f32375d43c3f0f9e12165a8eb590f779d3aa307418475071664659b3c76da4a4, dependency_check: Governed reverse change set required; historical events remain append-only. }
+artifacts: { manifest_refs: [docs-platform/changelog/verification/ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01.yaml] }
+confidence: exact

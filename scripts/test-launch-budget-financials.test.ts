@@ -1,20 +1,31 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { calculateLaunchBudget, defaultLaunchBudgetState } from "../src/lib/launch-budget.js";
+import { calculateLaunchBudget, defaultLaunchBudgetState, launchModel } from "../src/lib/launch-budget.js";
 import { launchFinancials } from "../src/lib/launch-financials.js";
 import { economicsData } from "../src/lib/economics.js";
 
-test("/launch-budget reconciles exactly to the Financial Model realistic invested capital", () => {
-  const state = defaultLaunchBudgetState();
-  const result = calculateLaunchBudget(state, undefined, launchFinancials);
-  assert.equal(result.operatingReserveSource, "financial_model");
-  assert.equal(result.operatingReserveRub, launchFinancials.operatingReserveRub);
-  assert.ok(Math.abs(result.operatingReserveRub! - 20088988.08) < 0.01, "realistic reserve now includes mature scenario marketing 401 726 and household 100 000");
-  assert.equal(result.launchMarketingRub, 700000);
-  assert.equal(result.launchItemsRub, 700000 + 180000 + 70000 + 35000 + 1000000);
-  assert.equal(result.financingRequirementRub, 45370380.74);
-  assert.equal(result.financingRequirementRub, launchFinancials.restaurantInvestedCapitalRub);
-  assert.equal(result.financingRequirementRub, economicsData.scenariosById.realistic.startInvestmentRub);
+test("/launch-budget uses the ready-premises runtime default while the complete canonical configuration still reconciles to Financial Model capital", () => {
+  const runtimeState = defaultLaunchBudgetState();
+  const canonicalState = {
+    ...runtimeState,
+    preparationEnabledCategoryIds: launchModel.preparation.categories
+      .filter(category => category.enabled_by_default)
+      .map(category => category.id),
+  };
+  const runtime = calculateLaunchBudget(runtimeState, undefined, launchFinancials);
+  const canonical = calculateLaunchBudget(canonicalState, undefined, launchFinancials);
+
+  assert.equal(runtime.operatingReserveSource, "financial_model");
+  assert.equal(runtime.operatingReserveRub, launchFinancials.operatingReserveRub);
+  assert.ok(Math.abs(runtime.operatingReserveRub! - 20088988.08) < 0.01, "realistic reserve now includes mature scenario marketing 401 726 and household 100 000");
+  assert.equal(runtime.launchMarketingRub, 700000);
+  assert.equal(runtime.launchItemsRub, 700000 + 180000 + 70000 + 35000 + 1000000);
+  assert.equal(runtime.effectivePreparationRub, 3500000);
+  assert.equal(runtime.financingRequirementRub, 37120380.74);
+  assert.equal(canonical.financingRequirementRub, 45370380.74);
+  assert.equal(canonical.financingRequirementRub, launchFinancials.restaurantInvestedCapitalRub);
+  assert.equal(canonical.financingRequirementRub, economicsData.scenariosById.realistic.startInvestmentRub);
+  assert.equal(canonical.financingRequirementRub! - runtime.financingRequirementRub!, 8250000);
 });
 
 test("Financial Model reserve and launch marketing are the same figures on /economics and /launch-budget", () => {

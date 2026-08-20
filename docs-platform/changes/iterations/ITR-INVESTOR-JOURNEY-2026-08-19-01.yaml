@@ -1,0 +1,53 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-JOURNEY-2026-08-19-01
+proposal_id: PROP-INVESTOR-JOURNEY-2026-08-19-01
+decision_id: DEC-INVESTOR-JOURNEY-2026-08-19-01
+change_set_id: CHG-INVESTOR-JOURNEY-2026-08-19-01
+title: Runtime Investor Journey
+status: approved
+approved_by: project owner
+approved_at: 2026-08-19T07:30:00.000Z
+actor: Codex
+scope: Client-side InvestorConfiguration, configured financial presentation, approved journey UI and local verification only.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-JOURNEY-2026-08-19-01-approved.yaml
+approved_payload_sha256: 748b4bf63b57c6a88462fa5db8a5fec5b5e4b6cfa3326e92a2fafc23df9461d2
+before_state_sha256: ddca0a73b49fb5b96b699427fded10774921c15d07ad5d684c52be033b84f0bd
+after_state_sha256: e05e89fea655adcef63372b94232be4d4acbceaa4c83ee0188ad9de659b3c102
+affected_document_ids: []
+affected_section_ids:
+  - investor-journey.runtime-configuration
+  - investor-journey.configured-economics
+  - revenue-model.journey-cta
+  - launch-budget.journey-cta
+  - economics.configured-presentation
+rollback_payload: docs-platform/changelog/rollback-payloads/ITR-INVESTOR-JOURNEY-2026-08-19-01/manifest.yaml
+content_paths:
+  - src/App.tsx
+  - src/components/RevenueModel.tsx
+  - src/components/LaunchBudget.tsx
+  - src/components/Economics.tsx
+  - src/components/LaunchBudget.css
+  - src/components/Economics.css
+  - src/components/InvestorConfigurationProvider.tsx
+  - src/content/economics.ts
+  - src/lib/investor-configuration.ts
+  - src/lib/configured-economics.ts
+  - scripts/test-economics-route.cjs
+  - scripts/test-investor-journey.test.ts
+  - scripts/test-site.cjs
+  - verification/domains.json
+  - docs-platform/changes/CHG-INVESTOR-JOURNEY-2026-08-19-01.yaml
+  - docs-platform/changes/decisions/DEC-INVESTOR-JOURNEY-2026-08-19-01.yaml
+  - docs-platform/changes/iterations/ITR-INVESTOR-JOURNEY-2026-08-19-01.yaml
+  - docs-platform/changes/proposals/PROP-INVESTOR-JOURNEY-2026-08-19-01.yaml
+  - docs-platform/changelog/audit/ITR-INVESTOR-JOURNEY-2026-08-19-01.yaml
+  - docs-platform/changelog/change-receipts/CHG-INVESTOR-JOURNEY-2026-08-19-01.yaml
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/iterations/ITR-INVESTOR-JOURNEY-2026-08-19-01-proposed.yaml
+  - docs-platform/changelog/iterations/ITR-INVESTOR-JOURNEY-2026-08-19-01-approved.yaml
+  - docs-platform/changelog/iterations/ITR-INVESTOR-JOURNEY-2026-08-19-01-applied.yaml
+  - docs-platform/changelog/iterations/ITR-INVESTOR-JOURNEY-2026-08-19-01-verified.yaml
+  - docs-platform/changelog/payloads/ITR-INVESTOR-JOURNEY-2026-08-19-01-approved.yaml
+  - docs-platform/changelog/previews/ITR-INVESTOR-JOURNEY-2026-08-19-01.yaml
+  - docs-platform/changelog/verification/ITR-INVESTOR-JOURNEY-2026-08-19-01.yaml
+  - docs-platform/changelog/rollback-payloads/ITR-INVESTOR-JOURNEY-2026-08-19-01/manifest.yaml

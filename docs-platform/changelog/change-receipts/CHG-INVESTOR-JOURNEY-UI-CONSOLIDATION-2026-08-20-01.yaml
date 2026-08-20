@@ -1,0 +1,10 @@
+schema_version: 2
+change_id: CHG-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01
+iteration_id: ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01
+status: applied
+applied_at: 2026-08-20T12:22:18.000Z
+actor: Codex
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01-approved.yaml
+  sha256: bc08c31acf3974e5c051d36b3e004c0940003ed072993e315e1d1f8095cf79b2
+summary: Consolidated the owner-approved local Investor Journey and public UI review state for governed release; canonical finance, Google and production remain unchanged until deployment.

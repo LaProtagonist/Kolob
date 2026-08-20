@@ -21,28 +21,44 @@ function srcSet(base: string, widths: number[]) {
   return widths.map((width) => `/media/${base}-${width}.webp ${width}w`).join(", ");
 }
 
-export function ResponsiveImage({
-  base,
-  widths,
-  sizes,
-  alt,
-  className,
-  loading = "lazy",
-  fetchPriority = "auto"
-}: ImageSpec & {
+function imageSrc(image: ImageSpec) {
+  if ("src" in image) return image.src;
+  return `/media/${image.base}-${image.widths[image.widths.length - 1]}.webp`;
+}
+
+export function ResponsiveImage(props: ImageSpec & {
   className?: string;
   loading?: "eager" | "lazy";
   fetchPriority?: "high" | "low" | "auto";
 }) {
-  const largest = widths[widths.length - 1];
+  const {
+    className,
+    loading = "lazy",
+    fetchPriority = "auto"
+  } = props;
+
+  if ("src" in props) {
+    return (
+      <img
+        className={className}
+        src={props.src}
+        alt={props.alt}
+        loading={loading}
+        decoding="async"
+        fetchPriority={fetchPriority}
+      />
+    );
+  }
+
+  const largest = props.widths[props.widths.length - 1];
 
   return (
     <img
       className={className}
-      src={`/media/${base}-${largest}.webp`}
-      srcSet={srcSet(base, widths)}
-      sizes={sizes}
-      alt={alt}
+      src={`/media/${props.base}-${largest}.webp`}
+      srcSet={srcSet(props.base, props.widths)}
+      sizes={props.sizes}
+      alt={props.alt}
       loading={loading}
       decoding="async"
       fetchPriority={fetchPriority}
@@ -109,7 +125,7 @@ export function HeroMedia({ image, video }: { image: ImageSpec; video?: HeroVide
     <video
       ref={videoRef}
       className="hero-video"
-      poster={`/media/${video?.poster.base}-${video?.poster.widths[video.poster.widths.length - 1]}.webp`}
+      poster={imageSrc(video!.poster)}
       muted
       autoPlay
       loop
@@ -143,7 +159,7 @@ export function LoopMedia({
   const [isVisible, setIsVisible] = useState(false);
   const hasVideo = Boolean(video?.mp4 || video?.webm);
   const poster = video?.poster ?? image;
-  const posterSrc = `/media/${poster.base}-${poster.widths[poster.widths.length - 1]}.webp`;
+  const posterSrc = imageSrc(poster);
 
   const clearPlaybackTimers = useCallback(() => {
     if (retryTimer.current) {
@@ -766,7 +782,7 @@ export function VideoCard({ item, featured = false }: { item: VideoItem; feature
       <div className="video-poster">
         {hasVideo ? (
           <video
-            poster={`/media/${item.poster.base}-${item.poster.widths[item.poster.widths.length - 1]}.webp`}
+            poster={imageSrc(item.poster)}
             controls
             preload="metadata"
             playsInline
@@ -902,7 +918,7 @@ function TimelineMedia({ item }: { item: TimelineItem }) {
   return (
     <video
       className="timeline-cover-video"
-      poster={`/media/${video?.poster.base}-${video?.poster.widths[video.poster.widths.length - 1]}.webp`}
+      poster={imageSrc(video!.poster)}
       muted
       autoPlay
       loop
@@ -989,15 +1005,29 @@ export function CTASection({
 
 export function DocumentCard({ item }: { item: DocumentItem }) {
   const actionHref = item.documentUrl ?? item.href;
-
-  return (
-    <article className="document-card">
+  const className = `document-card${item.featured ? " document-card-featured" : ""}`;
+  const content = (
+    <>
       <div>
         {item.status ? <p className="card-meta">{item.status}</p> : null}
         <h3>{item.title}</h3>
         <p>{item.description}</p>
       </div>
-      {item.actionLabel && actionHref ? <a href={actionHref}>{item.actionLabel}</a> : null}
+      {item.actionLabel && actionHref ? <span className="document-card-action">{item.actionLabel}</span> : null}
+    </>
+  );
+
+  if (item.fullCardLink && actionHref) {
+    return (
+      <a className={`${className} document-card-link`} href={actionHref}>
+        {content}
+      </a>
+    );
+  }
+
+  return (
+    <article className={className}>
+      {content}
     </article>
   );
 }

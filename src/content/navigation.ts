@@ -17,7 +17,8 @@ export const navGroups: NavGroup[] = [
     label: "Инвесторам",
     items: [
       { href: "/investment", label: "Модель развития" },
-      { href: "/materials", label: "Материалы" },
+      { href: "/materials", label: "Материалы проекта" },
+      { href: "/revenue-model", label: "Расчёты запуска" },
       { href: "/investor-questions", label: "Обсудить участие" }
     ]
   }

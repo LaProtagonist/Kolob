@@ -7,6 +7,16 @@ export type EquipmentScenarioId = "MINIMUM" | "BASE" | "SCALE_READY";
 export type PreparationMode = "breakdown" | "manual";
 export type OperatingExpenseMode = "baseline" | "custom";
 
+// Runtime default: the initial option assumes a former restaurant/catering premises
+// with the core construction and engineering infrastructure already in place.
+// These modules remain available for a raw premises configuration.
+const readyPremisesExcludedPreparationCategoryIds = new Set([
+  "PREP-BUILDING",
+  "PREP-ELECTRICAL",
+  "PREP-WATER-DRAINAGE",
+  "PREP-VENTILATION",
+]);
+
 export type LaunchBudgetState = {
   premisesScenario: PremisesScenario;
   purchasePriceRub: number | null;
@@ -160,7 +170,9 @@ export function defaultLaunchBudgetState(model = launchModel): LaunchBudgetState
     barEnabled: model.point_configuration.optional_modules.find(item => item.module_id === "MOD-BAR")?.default_enabled ?? false,
     growEnabled: model.point_configuration.optional_modules.find(item => item.module_id === "MOD-GROW")?.default_enabled ?? false,
     preparationMode: model.preparation.default_mode,
-    preparationEnabledCategoryIds: model.preparation.categories.filter(item => item.enabled_by_default).map(item => item.id),
+    preparationEnabledCategoryIds: model.preparation.categories
+      .filter(item => item.enabled_by_default && !readyPremisesExcludedPreparationCategoryIds.has(item.id))
+      .map(item => item.id),
     preparationManualRub: null,
     preparationAccordionOpen: false,
     operatingExpenseMode: model.operating_reserve.default_mode,

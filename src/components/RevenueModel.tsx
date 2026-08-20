@@ -11,6 +11,8 @@ import {
   type TrafficMode,
   type TrafficScenario,
 } from "../lib/revenue-model";
+import { useInvestorConfiguration } from "./InvestorConfigurationProvider";
+import { InvestorJourneyNavigation } from "./InvestorJourneyNavigation";
 import "./LaunchBudget.css";
 import "./RevenueModel.css";
 
@@ -70,7 +72,7 @@ function Segmented({ label, value, options, onChange, dataName }: {
   dataName: string;
 }) {
   return (
-    <div className="launch-segmented revenue-segmented" role="group" aria-label={label} data-control={dataName}>
+    <div className={`launch-segmented revenue-segmented${options.length === 3 ? " is-three-options" : ""}`} role="group" aria-label={label} data-control={dataName}>
       {options.map(option => <button key={String(option.value)} type="button" className={value === option.value ? "is-selected" : ""} aria-pressed={value === option.value} onClick={() => onChange(option.value)}><strong>{option.label}</strong>{option.hint ? <span>{option.hint}</span> : null}</button>)}
     </div>
   );
@@ -82,6 +84,7 @@ function SummaryMetric({ label, value }: { label: string; value: string }) {
 
 export function RevenueModelPage() {
   const model = revenueModel;
+  const { setScenarioId } = useInvestorConfiguration();
   const defaults = useMemo(() => defaultRevenueModelState(), []);
   const [state, setState] = useState<RevenueModelState>(() => {
     try {
@@ -144,7 +147,11 @@ export function RevenueModelPage() {
               ]} onChange={value => update("trafficMode", value as TrafficMode)} />
               {state.trafficMode === "scenario" ? (
                 <div className="revenue-scenario-control">
-                  <Segmented label="Сценарий потока" value={state.trafficScenario} dataName="traffic-scenario" options={model.traffic.scenarios.map(item => ({ value: item.id, label: item.name, hint: `${item.checks_per_day} чеков в день` }))} onChange={value => update("trafficScenario", value as TrafficScenario)} />
+                  <Segmented label="Сценарий потока" value={state.trafficScenario} dataName="traffic-scenario" options={model.traffic.scenarios.map(item => ({ value: item.id, label: item.name, hint: `${item.checks_per_day} чеков в день` }))} onChange={value => {
+                    const scenario = value as TrafficScenario;
+                    update("trafficScenario", scenario);
+                    setScenarioId(scenario);
+                  }} />
                 </div>
               ) : (
                 <label className="launch-field revenue-custom-field" htmlFor="custom-checks-per-day">
@@ -197,9 +204,8 @@ export function RevenueModelPage() {
                     <span>порций еды в день</span>
                   </div>
                   <div className="revenue-food-composition">
-                    <span className="revenue-food-composition-title">Из них</span>
                     <div className="revenue-food-parts">
-                      <div data-food-part="kolobok"><span>Колобки</span><strong>{formatCount(result.kolobokPortionsPerDay, "порций")}</strong></div>
+                      <div data-food-part="kolobok"><span>Колобки</span><strong>{formatCount(result.kolobokPortionsPerDay)}</strong></div>
                       <div data-food-part="manches"><span>Манчесы</span><strong>{formatCount(result.manchesPerDay)}</strong></div>
                     </div>
                   </div>
@@ -229,7 +235,8 @@ export function RevenueModelPage() {
             <button className="launch-reset" type="button" onClick={reset}>Сбросить расчёт</button>
           </div>
 
-          <aside className="launch-total-card revenue-total-card" aria-live="polite" data-testid="revenue-summary">
+          <aside className="launch-sticky-column revenue-sticky-column">
+          <div className="launch-total-card revenue-total-card" aria-live="polite" data-testid="revenue-summary">
             <p className="launch-total-eyebrow">Сценарная модель</p>
             <h2>{model.public_presentation.sales_title}</h2>
             <strong className="launch-total-value">{result.salesPerMonthRub === null ? model.public_presentation.not_calculated_label : `${formatRub(result.salesPerMonthRub)} / месяц`}</strong>
@@ -242,6 +249,11 @@ export function RevenueModelPage() {
               <SummaryMetric label="Сценарий" value={result.scenarioLabel} />
             </dl>
             <p className="launch-warning">{publicCopy.summaryWarning}</p>
+          </div>
+          <InvestorJourneyNavigation actions={[
+            { href: "/launch-budget", label: "Расчёт затрат →", tone: "primary", testId: "revenue-to-launch-budget" },
+            { href: "/economics", label: "Экономика объекта →", tone: "secondary", testId: "revenue-to-economics" },
+          ]} />
           </aside>
         </div>
       </section>

@@ -1,0 +1,24 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01
+proposal_id: PROP-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01
+decision_id: DEC-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01
+change_set_id: CHG-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01
+timestamp: 2026-08-20T12:22:16.000Z
+actor: Codex
+type: Consolidated website release preparation
+reason: The approved public UI refinements extend the prior unsealed Investor Journey scope; they are recorded in one successor iteration rather than rewriting the previous approval.
+before:
+  state_sha256: f32375d43c3f0f9e12165a8eb590f779d3aa307418475071664659b3c76da4a4
+after:
+  state_sha256: fd96da40c3b5be4e40b49a167c6e2425ac2a4abe5636e79a5ed282db3549bd34
+consistency:
+  canonical_financial_model: unchanged
+  canonical_investor_summary: unchanged
+  google: unused
+  runtime_state: browser_local_storage_only
+  predecessor_iteration: ITR-INVESTOR-JOURNEY-2026-08-19-01
+delivery:
+  committed: pending_release
+  sealed: pending_release
+  pushed: pending_release
+  deployed: pending_release

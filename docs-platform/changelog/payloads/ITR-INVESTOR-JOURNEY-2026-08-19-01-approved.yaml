@@ -1,0 +1,76 @@
+schema_version: 2
+payload_id: PAYLOAD-INVESTOR-JOURNEY-2026-08-19-01
+iteration_id: ITR-INVESTOR-JOURNEY-2026-08-19-01
+proposal_id: PROP-INVESTOR-JOURNEY-2026-08-19-01
+decision_id: DEC-INVESTOR-JOURNEY-2026-08-19-01
+change_set_id: CHG-INVESTOR-JOURNEY-2026-08-19-01
+title: Create the runtime Investor Journey
+status: approved
+approved_by: project owner
+approved_at: 2026-08-19T07:30:00.000Z
+scope:
+  - Add one client-side InvestorConfiguration state for scenario and existing launch-budget inputs.
+  - Derive configured economics from the canonical Financial Model projection and the existing launch-budget calculator without writing canonical data.
+  - Connect the private working pages in the order Revenue Model → Launch Budget → Economics, with return and reset actions.
+  - Apply the approved compact Revenue daily-load and Economics selector/NPV presentation corrections.
+  - Add deterministic parity, navigation, persistence, reset and visual regression coverage.
+forbidden_scope:
+  - Financial Model YAML, generated canonical Financial Model projection, Investor Summary canonical files, CAPEX data, Revenue business parameters and Google artifacts
+  - Google Drive, Google Sheets, Google publication, Google readback or any external publication action
+  - Git commit, seal, tag, push, deployment or production mutation before owner visual approval
+  - Runtime writes to repository, governance, canonical documents or shared project data
+state_hash_paths:
+  - src/App.tsx
+  - src/components/RevenueModel.tsx
+  - src/components/LaunchBudget.tsx
+  - src/components/Economics.tsx
+  - src/components/LaunchBudget.css
+  - src/components/Economics.css
+  - src/components/InvestorConfigurationProvider.tsx
+  - src/content/economics.ts
+  - src/lib/launch-budget.ts
+  - src/lib/launch-financials.ts
+  - src/lib/economics.ts
+  - src/lib/investor-configuration.ts
+  - src/lib/configured-economics.ts
+  - scripts/test-economics-route.cjs
+  - scripts/test-investor-journey.test.ts
+  - scripts/test-site.cjs
+  - verification/domains.json
+content_paths:
+  - src/App.tsx
+  - src/components/RevenueModel.tsx
+  - src/components/LaunchBudget.tsx
+  - src/components/Economics.tsx
+  - src/components/LaunchBudget.css
+  - src/components/Economics.css
+  - src/components/InvestorConfigurationProvider.tsx
+  - src/content/economics.ts
+  - src/lib/investor-configuration.ts
+  - src/lib/configured-economics.ts
+  - scripts/test-economics-route.cjs
+  - scripts/test-investor-journey.test.ts
+  - scripts/test-site.cjs
+  - verification/domains.json
+  - docs-platform/changes/CHG-INVESTOR-JOURNEY-2026-08-19-01.yaml
+  - docs-platform/changes/decisions/DEC-INVESTOR-JOURNEY-2026-08-19-01.yaml
+  - docs-platform/changes/iterations/ITR-INVESTOR-JOURNEY-2026-08-19-01.yaml
+  - docs-platform/changes/proposals/PROP-INVESTOR-JOURNEY-2026-08-19-01.yaml
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/payloads/ITR-INVESTOR-JOURNEY-2026-08-19-01-approved.yaml
+  - docs-platform/changelog/previews/ITR-INVESTOR-JOURNEY-2026-08-19-01.yaml
+  - docs-platform/changelog/verification/ITR-INVESTOR-JOURNEY-2026-08-19-01.yaml
+  - docs-platform/changelog/audit/ITR-INVESTOR-JOURNEY-2026-08-19-01.yaml
+  - docs-platform/changelog/rollback-payloads/ITR-INVESTOR-JOURNEY-2026-08-19-01/manifest.yaml
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+allowed_dirty_paths:
+  - output/pdf/launch-budget-review.pdf
+  - output/review/
+rollback_contract:
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true

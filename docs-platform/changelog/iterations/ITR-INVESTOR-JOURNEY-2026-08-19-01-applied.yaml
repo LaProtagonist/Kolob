@@ -1,0 +1,25 @@
+event_id: EVT-ITR-INVESTOR-JOURNEY-2026-08-19-01-APPLIED
+event_type: applied
+occurred_at: 2026-08-19T07:30:02.000Z
+recorded_at: 2026-08-19T07:30:02.000Z
+iteration_id: ITR-INVESTOR-JOURNEY-2026-08-19-01
+proposal_id: PROP-INVESTOR-JOURNEY-2026-08-19-01
+decision_id: DEC-INVESTOR-JOURNEY-2026-08-19-01
+change_set_id: CHG-INVESTOR-JOURNEY-2026-08-19-01
+actor: Codex
+tool: apply_patch and deterministic local calculation
+scope: Applied browser-local configuration, configured economics presentation, journey actions and targeted regression coverage.
+summary: Local working implementation now derives visitor-specific economics without modifying canonical Financial Model data, Google artifacts or production.
+approved_payload_sha256: 748b4bf63b57c6a88462fa5db8a5fec5b5e4b6cfa3326e92a2fafc23df9461d2
+before_hash: ddca0a73b49fb5b96b699427fded10774921c15d07ad5d684c52be033b84f0bd
+after_hash: 272372d3fcd85d69708299b26f197cc7b5deb4f172dbd8df16462787f172e1f7
+affected_document_ids: []
+affected_section_ids: [investor-journey.runtime-configuration, investor-journey.configured-economics, revenue-model.journey-cta, launch-budget.journey-cta, economics.configured-presentation]
+source_refs:
+  - docs-platform/changelog/change-receipts/CHG-INVESTOR-JOURNEY-2026-08-19-01.yaml
+  - docs-platform/changelog/audit/ITR-INVESTOR-JOURNEY-2026-08-19-01.yaml
+git: { content_commit_hash: null, seal_commit_ref: null, iteration_tag: null, commit_message_verified: null, trailers_verified: null }
+external: { google_sync_receipts: [], deployment_receipt: null, remote_readback_hash: null, production_url: null }
+rollback: { rollback_payload: docs-platform/changelog/rollback-payloads/ITR-INVESTOR-JOURNEY-2026-08-19-01/manifest.yaml, compensates_iteration_id: null, restores_hash: ddca0a73b49fb5b96b699427fded10774921c15d07ad5d684c52be033b84f0bd, dependency_check: Governed reverse change set required; historical events remain append-only. }
+artifacts: { manifest_refs: [docs-platform/changelog/change-receipts/CHG-INVESTOR-JOURNEY-2026-08-19-01.yaml] }
+confidence: exact

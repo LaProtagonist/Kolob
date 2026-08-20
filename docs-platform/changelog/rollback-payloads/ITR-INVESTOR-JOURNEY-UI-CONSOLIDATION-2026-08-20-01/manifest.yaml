@@ -1,0 +1,9 @@
+schema_version: 1
+iteration_id: ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01
+reverse_strategy:
+  modified_files: restore the sealed before-state only through a new approved reverse change set
+  added_files: remove only through an explicit approved reverse operation
+  deployment: publish a restored state only after reverse validation and a new deployment receipt
+  events: append rollback lifecycle events; never delete historical evidence
+git_reset_forbidden: true
+dependency_check: The successor iteration is the latest release line; rollback remains suffix-only until a later iteration is sealed.

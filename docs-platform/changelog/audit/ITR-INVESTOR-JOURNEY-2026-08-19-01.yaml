@@ -1,0 +1,24 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-JOURNEY-2026-08-19-01
+proposal_id: PROP-INVESTOR-JOURNEY-2026-08-19-01
+decision_id: DEC-INVESTOR-JOURNEY-2026-08-19-01
+change_set_id: CHG-INVESTOR-JOURNEY-2026-08-19-01
+timestamp: 2026-08-19T07:30:00.000Z
+actor: Codex
+type: Runtime Investor Journey local implementation
+reason: Let a visitor carry one set of existing launch inputs through revenue, launch-cost and economics pages without creating a new canonical finance model.
+before:
+  state_sha256: ddca0a73b49fb5b96b699427fded10774921c15d07ad5d684c52be033b84f0bd
+after:
+  state_sha256: 272372d3fcd85d69708299b26f197cc7b5deb4f172dbd8df16462787f172e1f7
+  financial_model_content_state_sha256: 8e933d6b3a503b97cc68a856c73cb855258c5d3e2cffc8d91e4c10516c366c81
+consistency:
+  financial_model_to_runtime_projection: canonical_generated_projection_read_only
+  launch_budget_to_runtime_projection: existing_calculator_inputs_only
+  visitor_configuration_storage: browser_local_storage_only
+  canonical_model_or_google_mutation: none
+delivery:
+  committed: pending_owner_review
+  sealed: pending_owner_review
+  pushed: pending_owner_review
+  deployed: pending_owner_review

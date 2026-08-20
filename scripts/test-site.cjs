@@ -179,12 +179,13 @@ async function inspectRevenueModel(browser, baseUrl) {
     numbers: await page.locator(".launch-form-column > .launch-card .launch-card-heading > span").allTextContents(),
   };
 
+  const compositionTitle = page.locator(".revenue-food-composition-title");
   const dailyLoad = {
     checksLabel: await page.locator('[data-daily-metric="checks"] dt').innerText(),
     checks: await page.locator('[data-daily-metric="checks"] dd').innerText(),
     foodTotalLine: await page.locator(".revenue-food-total").evaluate(element => (element instanceof HTMLElement ? element.innerText : element.textContent)?.trim().replace(/\s+/g, " ") ?? ""),
     food: await page.locator(".revenue-food-total strong").innerText(),
-    compositionTitle: await page.locator(".revenue-food-composition-title").innerText(),
+    compositionTitle: await compositionTitle.count() ? await compositionTitle.innerText() : "",
     kolobok: await page.locator('[data-food-part="kolobok"] strong').innerText(),
     manches: await page.locator('[data-food-part="manches"] strong').innerText(),
     drinksLabel: await page.locator('[data-daily-metric="drinks"] dt').innerText(),
@@ -539,7 +540,7 @@ async function inspectLaunchBudget(browser, baseUrl) {
     accordionExpanded: await page.locator("[data-opex-accordion]").getAttribute("aria-expanded"),
     months: await page.locator('[data-control="reserve-months"][aria-pressed="true"]').getAttribute("data-option"),
   };
-  const resetStorage = await page.evaluate(key => localStorage.getItem(key), capexSnapshot.investorStartModel.form.local_storage_key);
+  const resetStorage = await page.evaluate(key => localStorage.getItem(key), "kolobochnaya.investor-journey.v1");
   await page.locator('[data-control="operating-expense-mode"][data-option="custom"]').click();
   resetOperatingReserve.customValue = await page.locator("#custom-monthly-opex").inputValue();
   resetOperatingReserve.customReserveText = await page.locator('[data-testid="operating-reserve-summary"] strong').innerText();
@@ -1082,8 +1083,8 @@ async function inspectCapex(browser, baseUrl) {
       || revenueModel.dailyLoad.checks !== "300"
       || revenueModel.dailyLoad.foodTotalLine !== "420 порций еды в день"
       || revenueModel.dailyLoad.food !== "420"
-      || revenueModel.dailyLoad.compositionTitle !== "Из них"
-      || revenueModel.dailyLoad.kolobok !== "336 порций"
+      || revenueModel.dailyLoad.compositionTitle !== ""
+      || revenueModel.dailyLoad.kolobok !== "336"
       || revenueModel.dailyLoad.manches !== "84"
       || revenueModel.dailyLoad.drinksLabel !== "Напитков в день"
       || revenueModel.dailyLoad.drinks !== "300"
@@ -1107,7 +1108,7 @@ async function inspectCapex(browser, baseUrl) {
     if (revenueModel.supersededPresentationCopy.length) failures.push(`revenue-model retains superseded public copy: ${revenueModel.supersededPresentationCopy.join(" | ")}`);
     if (Object.values(revenueModel.overflow).some(Boolean)) failures.push(`revenue-model overflow: ${JSON.stringify(revenueModel.overflow)}`);
     if (!revenueModel.focus.tag || revenueModel.focus.outlineStyle === "none" || revenueModel.focus.outlineWidth === "0px") failures.push(`revenue-model keyboard focus is not visible: ${JSON.stringify(revenueModel.focus)}`);
-    if (revenueModel.noLinks.capex || revenueModel.noLinks.launch) failures.push(`revenue-model exposes internal cross-links: ${JSON.stringify(revenueModel.noLinks)}`);
+    if (revenueModel.noLinks.capex || revenueModel.noLinks.launch !== 1) failures.push(`revenue-model investor journey CTA invalid: ${JSON.stringify(revenueModel.noLinks)}`);
     if (revenueModel.forbiddenTechnical.length || revenueModel.forbiddenFinancial.length) failures.push(`revenue-model forbidden copy: ${[...revenueModel.forbiddenTechnical, ...revenueModel.forbiddenFinancial].join(", ")}`);
     if (revenueModel.consoleMessages.length) failures.push(`revenue-model console: ${revenueModel.consoleMessages.join(" | ")}`);
     if (revenueModel.pageErrors.length) failures.push(`revenue-model page errors: ${revenueModel.pageErrors.join(" | ")}`);

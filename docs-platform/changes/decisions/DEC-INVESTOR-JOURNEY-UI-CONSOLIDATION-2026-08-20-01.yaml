@@ -1,0 +1,12 @@
+schema_version: 2
+decision_id: DEC-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01
+iteration_id: ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01
+title: Approve release of the reviewed Investor Journey website state
+status: approved
+approved_by: project owner
+approved_at: 2026-08-20T12:22:16.000Z
+scope: Release the currently owner-approved Investor Journey, public responsive refinements and Materials entry point without changing canonical finance, business data, Google artifacts or runtime calculation rules.
+excludes: [Financial Model YAML, generated financial projections, Investor Summary canonical files, CAPEX pricing, Revenue business parameters, Google operations]
+supersedes: DEC-INVESTOR-JOURNEY-2026-08-19-01
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01-approved.yaml
+approved_payload_sha256: bc08c31acf3974e5c051d36b3e004c0940003ed072993e315e1d1f8095cf79b2

@@ -1,0 +1,21 @@
+schema_version: 2
+change_id: CHG-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01
+iteration_id: ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01
+proposal_id: PROP-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01
+decision_id: DEC-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01
+title: Release the approved Investor Journey website state
+status: approved
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01-approved.yaml
+approved_payload_sha256: bc08c31acf3974e5c051d36b3e004c0940003ed072993e315e1d1f8095cf79b2
+operations:
+  - preserve the browser-local InvestorConfiguration and configured Economics calculation path
+  - include the owner-reviewed responsive and presentation refinements across the public site
+  - retain the existing standard deployment mechanism and publish only the sealed website build
+  - supersede the prior unsealed Investor Journey lifecycle without editing historical events or receipts
+  - keep canonical financial data, Google and other external documents untouched
+preview:
+  status: passed
+  mutation_performed: false
+  canonical_financial_model_change: false
+  google_operation: false
+  production_or_deployment_change: pending_release

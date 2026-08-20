@@ -1,0 +1,16 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01
+decision_id: DEC-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01
+change_set_id: CHG-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01
+previewed_at: 2026-08-20T12:22:16.000Z
+status: passed
+mutation_performed: false
+planned_changes:
+  - Seal the owner-reviewed website source state exactly as present in the working tree.
+  - Preserve browser-local runtime configuration and canonical financial inputs.
+  - Use the existing static deployment target after successful release validation.
+invariants:
+  canonical_documents_written: false
+  google_action: false
+  historical_events_edited: false
+  business_parameter_change: false

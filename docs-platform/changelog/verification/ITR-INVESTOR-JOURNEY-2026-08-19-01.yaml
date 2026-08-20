@@ -1,0 +1,72 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-JOURNEY-2026-08-19-01
+proposal_id: PROP-INVESTOR-JOURNEY-2026-08-19-01
+decision_id: DEC-INVESTOR-JOURNEY-2026-08-19-01
+change_set_id: CHG-INVESTOR-JOURNEY-2026-08-19-01
+verified_at: 2026-08-19T07:40:00.000Z
+actor: Codex
+validation_status: passed
+approved_payload_sha256: 748b4bf63b57c6a88462fa5db8a5fec5b5e4b6cfa3326e92a2fafc23df9461d2
+before_state_sha256: ddca0a73b49fb5b96b699427fded10774921c15d07ad5d684c52be033b84f0bd
+after_state_sha256: e05e89fea655adcef63372b94232be4d4acbceaa4c83ee0188ad9de659b3c102
+checks:
+  verify_affected:
+    status: passed
+    affected_domains: [revenue-ui, launch-budget, economics-ui, investor-journey, site-core, governance, documentation, verification]
+    run:
+      - typescript:site
+      - revenue:web
+      - launch:schema
+      - launch:unit
+      - economics:data
+      - investor-journey:unit
+      - governance:registry
+      - governance:timeline
+      - governance:context
+      - governance:consistency
+      - diff:check
+      - documentation:static
+      - verification:config
+      - verification:unit
+    visual_domains: [revenue-ui, launch-budget, economics-ui, investor-journey, site-core]
+    skipped: [financial, investor-summary, capex, revenue-model, google-publisher, deployment]
+    duration_ms: 57681
+  investor_journey_unit:
+    status: passed
+    cases: 7
+    coverage:
+      - canonical baseline KPI parity
+      - CAPEX-only investment delta preserves mature EBITDA and FCF
+      - rent delta changes capital, OPEX, cash flow and investment KPI
+      - purchase configuration uses the combined property cash flow
+      - scenario switching
+      - safe local-state restore without canonical-file mutation
+      - no legacy KPI literals in Economics UI
+  browser_visual:
+    status: passed
+    console_errors: 0
+    page_errors: 0
+    horizontal_overflow: 0
+    viewports: [desktop, mobile]
+    review_screenshots:
+      - output/review/investor-journey-revenue-cta.png
+      - output/review/investor-journey-launch-configured.png
+      - output/review/investor-journey-economics-configured.png
+      - output/review/investor-journey-mobile-flow.png
+  canonical_invariants:
+    financial_model: unchanged
+    financial_model_projection: unchanged
+    investor_summary: unchanged
+    investor_summary_projection: unchanged
+    capex: unchanged
+    revenue_model: unchanged
+    google: not_used
+    production: unchanged
+  delivery:
+    committed: false
+    sealed: false
+    tagged: false
+    pushed: false
+    deployed: false
+rollback_payload: docs-platform/changelog/rollback-payloads/ITR-INVESTOR-JOURNEY-2026-08-19-01/manifest.yaml
+summary: Runtime InvestorConfiguration, configured economics and the private Revenue → Launch Budget → Economics journey passed targeted deterministic, governance and local visual verification. Canonical finance, Google and production were not changed.

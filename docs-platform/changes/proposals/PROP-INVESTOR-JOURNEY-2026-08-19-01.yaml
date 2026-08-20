@@ -1,0 +1,9 @@
+schema_version: 2
+proposal_id: PROP-INVESTOR-JOURNEY-2026-08-19-01
+iteration_id: ITR-INVESTOR-JOURNEY-2026-08-19-01
+title: Create the runtime Investor Journey
+status: proposed
+proposed_at: 2026-08-19T07:30:00.000Z
+scope: Client-side investor configuration, configured economics projection, approved journey CTAs and targeted local verification only.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-JOURNEY-2026-08-19-01-approved.yaml
+approved_payload_sha256: 748b4bf63b57c6a88462fa5db8a5fec5b5e4b6cfa3326e92a2fafc23df9461d2

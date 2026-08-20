@@ -58,6 +58,16 @@
 .economics-headline-metric span { color: var(--launch-muted); font-size: .74rem; font-weight: 800; }
 .economics-headline-metric strong { margin-top: 8px; font-size: clamp(1.25rem, 2.5vw, 1.8rem); line-height: 1.05; overflow-wrap: anywhere; }
 
+.economics-configuration-actions { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 18px 0; padding: 12px 14px; border-radius: 11px; background: #f5f1e7; }
+.economics-configuration-actions > span { color: #795a0c; font-size: .74rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; }
+.economics-configuration-actions > div { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 12px; }
+.economics-configuration-actions a,
+.economics-configuration-actions button { padding: 0; border: 0; color: #191813; background: transparent; font: inherit; font-size: .78rem; font-weight: 900; text-decoration: none; cursor: pointer; }
+.economics-configuration-actions a:hover,
+.economics-configuration-actions button:hover { color: #795a0c; }
+.economics-configuration-actions a:focus-visible,
+.economics-configuration-actions button:focus-visible { outline: 3px solid var(--launch-yellow); outline-offset: 3px; }
+
 .economics-pnl { overflow: hidden; border: 1px solid var(--launch-line); border-radius: 15px; background: #fff; }
 .economics-pnl-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 18px; align-items: center; min-height: 56px; padding: 13px 17px; border-bottom: 1px solid var(--launch-line); }
 .economics-pnl-row span { color: var(--launch-muted); font-size: .83rem; font-weight: 800; }
@@ -206,10 +216,10 @@
 
 /* Sticky column: the compact scenario selector and the black summary card scroll together. */
 .economics-sticky-column { position: sticky; top: 92px; min-width: 0; align-self: start; }
-.economics-sticky-column > .economics-total-card { position: static; top: auto; max-height: calc(100vh - 168px); }
+.economics-sticky-column > .economics-total-card { position: static; top: auto; max-height: calc(100vh - 270px); }
 .economics-sticky-tabs { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin: 0 0 10px; }
-.economics-sticky-tabs button { min-height: 44px; padding: 8px 6px; }
-.economics-sticky-tabs button strong { font-size: .8rem; }
+.economics-sticky-tabs button { min-height: 44px; padding: 8px 4px; text-align: center; }
+.economics-sticky-tabs button strong { font-size: .72rem; line-height: 1.15; white-space: nowrap; }
 .economics-total-label { display: block; margin-bottom: 8px; color: rgba(255,255,255,.58); font-size: .74rem; font-weight: 800; }
 
 @media (max-width: 1180px) {
@@ -234,6 +244,8 @@
   .economics-investment-groups,
   .economics-sensitivity-grid,
   .economics-assumption-grid { grid-template-columns: 1fr; }
+  .economics-configuration-actions { align-items: flex-start; flex-direction: column; }
+  .economics-configuration-actions > div { justify-content: flex-start; }
   .economics-pnl-row { grid-template-columns: 1fr; gap: 5px; }
   .economics-pnl-row strong { text-align: left; white-space: normal; }
   .economics-pnl-subrows,
@@ -249,4 +261,3 @@
   .economics-details-list strong { text-align: left; }
   .economics-assumptions > summary { padding: 20px; }
 }
-

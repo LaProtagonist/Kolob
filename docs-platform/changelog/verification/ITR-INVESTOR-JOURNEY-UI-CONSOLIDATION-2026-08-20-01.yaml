@@ -1,0 +1,59 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01
+proposal_id: PROP-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01
+decision_id: DEC-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01
+change_set_id: CHG-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01
+verified_at: 2026-08-20T12:34:24.000Z
+actor: Codex
+validation_status: passed
+approved_payload_sha256: bc08c31acf3974e5c051d36b3e004c0940003ed072993e315e1d1f8095cf79b2
+before_state_sha256: f32375d43c3f0f9e12165a8eb590f779d3aa307418475071664659b3c76da4a4
+after_state_sha256: fd96da40c3b5be4e40b49a167c6e2425ac2a4abe5636e79a5ed282db3549bd34
+checks:
+  typescript_site:
+    status: passed
+    command: npx tsc -b --pretty false
+  investor_journey_unit:
+    status: passed
+    cases: 8
+    coverage:
+      - ready-premises default and manually restorable preparation modules
+      - CAPEX-only investment delta preserves mature EBITDA
+      - rent and purchase configured economics
+      - scenario switching and safe browser-local state restore
+      - no canonical-file mutation from runtime state
+      - no legacy KPI literals in Economics UI
+  verify_site:
+    status: passed
+    command: npm run verify:site
+    run:
+      - capex:snapshot
+      - capex:unit
+      - typescript:site
+      - revenue:web
+      - launch:schema
+      - launch:unit
+      - economics:data
+      - desktop browser visual checks
+      - mobile browser visual checks
+    skipped: [financial, investor-summary, revenue-model, investor-journey, governance, google-publisher, deployment, documentation, verification]
+    runtime: Node 22.15.1
+  diff_check:
+    status: pending_final_gate
+  canonical_invariants:
+    financial_model: unchanged
+    financial_model_projection: unchanged
+    investor_summary: unchanged
+    investor_summary_projection: unchanged
+    capex_pricing: unchanged
+    revenue_model_business_parameters: unchanged
+    google: not_used
+    production: unchanged_at_verification
+  delivery:
+    committed: false
+    sealed: false
+    tagged: false
+    pushed: false
+    deployed: false
+rollback_payload: docs-platform/changelog/rollback-payloads/ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01/manifest.yaml
+summary: The owner-approved Investor Journey, public UI refinements and browser-local ready-premises default passed the scoped web verification. The sole baseline failure under Node 18 was resolved by using the required Node 22 runtime; no source workaround was made. Canonical finance, Google and production were not changed during verification.

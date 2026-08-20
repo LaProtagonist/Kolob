@@ -1,12 +1,13 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import type { ReactNode } from "react";
+import { useInvestorConfiguration } from "./InvestorConfigurationProvider";
+import { InvestorJourneyNavigation } from "./InvestorJourneyNavigation";
 import { capexData } from "../lib/capex-runtime";
 import { launchFinancials } from "../lib/launch-financials";
 import {
   calculateLaunchBudget,
   defaultLaunchBudgetState,
   launchModel,
-  restoreLaunchBudgetState,
   type EquipmentScenarioId,
   type FurnitureProfileId,
   type LaunchBudgetState,
@@ -37,7 +38,7 @@ function Segmented({ label, value, options, onChange, dataName }: {
   dataName?: string;
 }) {
   return (
-    <div className="launch-segmented" role="group" aria-label={label}>
+    <div className={`launch-segmented${options.length === 3 ? " is-three-options" : ""}`} role="group" aria-label={label}>
       {options.map(option => (
         <button
           type="button"
@@ -158,23 +159,8 @@ function OperatingExpenseRow({ category }: {
 
 export function LaunchBudgetPage() {
   const rawModel = capexData.investorStartModel;
-  const defaults = useMemo(() => defaultLaunchBudgetState(), []);
-  const [state, setState] = useState<LaunchBudgetState>(() => {
-    try {
-      const saved = window.localStorage.getItem(launchModel.form.local_storage_key);
-      return saved ? restoreLaunchBudgetState(JSON.parse(saved)) : defaults;
-    } catch {
-      return defaults;
-    }
-  });
-
-  useEffect(() => {
-    try {
-      window.localStorage.setItem(launchModel.form.local_storage_key, JSON.stringify(state));
-    } catch {
-      // Local persistence is optional; shared project data is never changed.
-    }
-  }, [state]);
+  const { configuration, setLaunchBudget, setScenarioId } = useInvestorConfiguration();
+  const state = configuration.launchBudget;
 
   const result = useMemo(() => calculateLaunchBudget(state, undefined, launchFinancials), [state]);
   const reserveCategories = useMemo(() => [
@@ -186,7 +172,12 @@ export function LaunchBudgetPage() {
   const furnitureProfile = rawModel.furniture.profiles.find(item => item.id === state.furnitureProfileId)!;
   const equipmentProfile = rawModel.equipment.scenarios.find(item => item.id === state.equipmentScenarioId)!;
   const equipmentPartial = result.equipment.unpricedCount > 0 || result.incompleteRequiredModules.length > 0;
-  const currentConfiguration = rawModel.point_configuration.summary_modules.filter(item => result.activeModuleIds.includes(item.module_id));
+  const currentConfiguration = [
+    { id: "production", label: "Производственный центр", primary: true },
+    { id: "retail", label: "Торговая точка с посадочным залом", primary: false },
+    ...(state.barEnabled ? [{ id: "bar", label: "Бар и напитки", primary: false }] : []),
+    ...(state.growEnabled ? [{ id: "grow", label: "Выращивание зелени", primary: false }] : []),
+  ];
   const partialSummary = [
     ...(result.effectivePreparationRub === null ? ["подготовка помещения"] : []),
     ...(result.operatingReserveRub === null ? ["операционный запас"] : []),
@@ -194,11 +185,11 @@ export function LaunchBudgetPage() {
   ];
 
   function update<K extends keyof LaunchBudgetState>(key: K, value: LaunchBudgetState[K]) {
-    setState(current => ({ ...current, [key]: value }));
+    setLaunchBudget(current => ({ ...current, [key]: value }));
   }
 
   function togglePreparationCategory(categoryId: string) {
-    setState(current => ({
+    setLaunchBudget(current => ({
       ...current,
       preparationEnabledCategoryIds: current.preparationEnabledCategoryIds.includes(categoryId)
         ? current.preparationEnabledCategoryIds.filter(id => id !== categoryId)
@@ -208,8 +199,7 @@ export function LaunchBudgetPage() {
 
   function reset() {
     if (!window.confirm("Сбросить все введённые значения этого расчёта?")) return;
-    window.localStorage.removeItem(launchModel.form.local_storage_key);
-    setState(defaultLaunchBudgetState());
+    setLaunchBudget(defaultLaunchBudgetState());
   }
 
   return (
@@ -218,7 +208,7 @@ export function LaunchBudgetPage() {
         <div className="section-inner launch-hero-inner">
           <div>
             <h1 id="launch-budget-title">{rawModel.public_presentation.page_title}</h1>
-            <p className="launch-subtitle">Модель совмещённого объекта «Колобочной»: заготовочное производство и торговая точка с посадочным залом.</p>
+            <p className="launch-subtitle">Совмещённый объект «Колобочной» объединяет производственный центр и торговую точку с посадочным залом.</p>
           </div>
           <aside>
             <strong>Возможности расчёта</strong>
@@ -296,10 +286,18 @@ export function LaunchBudgetPage() {
                 <CompactToggle id="bar-enabled" checked={state.barEnabled} onChange={() => update("barEnabled", !state.barEnabled)}>Бар и напитки</CompactToggle>
                 <CompactToggle id="grow-enabled" checked={state.growEnabled} onChange={() => update("growEnabled", !state.growEnabled)}>Выращивание зелени</CompactToggle>
               </div>
+              <div className="launch-fixed-module" data-testid="production-center-included">
+                <span className="launch-fixed-module-check" aria-hidden="true">✓</span>
+                <span className="launch-fixed-module-copy"><strong>Производственный центр</strong><small>Заготовочное производство входит в базовую комплектацию объекта.</small></span>
+                <span className="launch-fixed-module-status">Включено</span>
+              </div>
               <div className="launch-equipment-summary" aria-live="polite">
                 <div><span>{equipmentProfile.id === "MINIMUM" ? "Минимальная" : equipmentProfile.id === "BASE" ? "Базовая" : "Рост"}</span><strong>{equipmentPartial ? "от " : ""}{formatRub(result.equipment.total)}</strong></div>
-                <dl><div><dt>Оценено</dt><dd>{result.equipment.pricedCount}</dd></div>{result.equipment.unpricedCount > 0 ? <div><dt>Без цены</dt><dd>{result.equipment.unpricedCount}</dd></div> : null}<div><dt>Требуют подтверждения коммерческими предложениями</dt><dd>{result.equipment.quoteRequiredCount}</dd></div></dl>
-                <p>Стоимость рассчитана по текущим ценовым ориентирам. Часть позиций требует подтверждения коммерческими предложениями.</p>
+                <dl>
+                  <div><dt>В расчёт включено</dt><dd>{result.equipment.pricedCount} <span>позиций оборудования</span></dd></div>
+                  <div><dt>Требуют подтверждения цены</dt><dd>{result.equipment.quoteRequiredCount} <span>из включённых в расчёт позиций</span></dd></div>
+                </dl>
+                <p>Текущая стоимость рассчитана по доступным рыночным ориентирам. Для {result.equipment.quoteRequiredCount} позиций требуется подтверждение актуальными коммерческими предложениями поставщиков.</p>
               </div>
             </section>
 
@@ -308,7 +306,7 @@ export function LaunchBudgetPage() {
               <div className="launch-preparation-summary" data-testid="preparation-summary" aria-live="polite">
                 <span>Базовая оценка</span>
                 <strong>{formatRub(result.effectivePreparationRub)}</strong>
-                <small>Все основные категории включены; состав работ можно скорректировать.</small>
+                <small>Базовый состав рассчитан для готового ресторанного помещения; работы можно включить при необходимости.</small>
               </div>
               <button
                 type="button"
@@ -418,16 +416,24 @@ export function LaunchBudgetPage() {
             <button className="launch-reset" type="button" onClick={reset}>Сбросить расчёт</button>
           </div>
 
-          <aside className="launch-total-card" aria-live="polite" data-testid="launch-total">
+          <aside className="launch-sticky-column">
+          <div className="launch-total-card" aria-live="polite" data-testid="launch-total">
             <p className="launch-total-eyebrow">Предварительный расчёт</p>
             <h2>{rawModel.public_presentation.total_title}</h2>
-            <strong className="launch-total-value">{result.financingRequirementRub === null ? "Не рассчитано" : `${result.partial ? "от " : ""}${formatRub(result.financingRequirementRub)}`}</strong>
+            <strong className="launch-total-value launch-budget-total-value">
+              {result.financingRequirementRub === null ? "Не рассчитано" : (
+                <span className="launch-total-value-line">
+                  {result.partial ? <span className="launch-total-prefix">от</span> : null}
+                  <span>{formatRub(result.financingRequirementRub)}</span>
+                </span>
+              )}
+            </strong>
             {result.partial && !result.areaInvalid && partialSummary.length ? <p className="launch-total-note">Требуют уточнения: {partialSummary.join(", ")}.</p> : null}
             {result.areaInvalid ? <p className="launch-total-blocked">Исправьте распределение площади, чтобы продолжить расчёт.</p> : null}
             <div className="launch-current-configuration">
-              <h3>{rawModel.public_presentation.current_configuration_title}</h3>
               <strong>{rawModel.point_configuration.format_name}</strong>
-              <ul>{currentConfiguration.map(item => <li key={item.module_id}><span aria-hidden="true">✓</span>{item.label}</li>)}</ul>
+              <p>Базовый формат для запуска первой точки и дальнейшего масштабирования сети.</p>
+              <ul>{currentConfiguration.map(item => <li key={item.id} className={item.primary ? "is-primary" : ""}><span aria-hidden="true">✓</span>{item.label}</li>)}</ul>
             </div>
             <dl className="launch-total-breakdown">
               <SummaryRow label={state.premisesScenario === "purchase" ? "Стоимость покупки помещения" : "Первоначальные платежи по аренде"} value={result.premisesEntryRub} />
@@ -453,6 +459,17 @@ export function LaunchBudgetPage() {
             </div>
             <p className="launch-warning">{rawModel.warning}</p>
             <p className="launch-legal">{rawModel.public_presentation.legal_disclaimer}</p>
+          </div>
+          <InvestorJourneyNavigation actions={[
+            { href: "/revenue-model", label: "← Расчёт доходов", tone: "secondary", testId: "launch-budget-to-revenue" },
+            {
+              href: "/economics",
+              label: "Экономика объекта →",
+              tone: "primary",
+              testId: "launch-budget-to-economics",
+              onNavigate: () => setScenarioId("realistic"),
+            },
+          ]} />
           </aside>
         </div>
       </section>
