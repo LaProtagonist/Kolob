@@ -1,26 +1,26 @@
 {
   "schema_version": 1,
-  "generated_from_event_id": "EVT-ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01-DEPLOYED-DEPLOY-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01",
-  "generated_from_event_hash": "8a2d212bef2fa96156ad4e4585089aec9bdd3ebefa72812133da8f6e14800731",
+  "generated_from_event_id": "EVT-ITR-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01-DEPLOYED-DEPLOY-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01",
+  "generated_from_event_hash": "af4472dc2851e6c5fd077c5a776fec35c6d8d053cb4a577824e2faa49adbc836",
   "content_state_sha256": "a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239",
   "latest_committed_iteration": {
-    "iteration_id": "ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01",
-    "decision_id": "DEC-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01",
-    "change_set_id": "CHG-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01",
-    "content_commit_hash": "040a81434e48f976da2deb7ef2064af313f2bf1e",
-    "seal_commit_hash": "73389239e6fdb7d6cee51aaf5250dffcb63c5df1",
-    "iteration_tag": "iteration/ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01"
+    "iteration_id": "ITR-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01",
+    "decision_id": "DEC-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01",
+    "change_set_id": "CHG-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01",
+    "content_commit_hash": "2fe665af1acad113613d83e8838d86a6b1cd81d0",
+    "seal_commit_hash": "70c700d37181ca27d57a0b15703e9cc57485d50c",
+    "iteration_tag": "iteration/ITR-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01"
   },
   "latest_deployment_event": {
-    "event_id": "EVT-ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01-DEPLOYED-DEPLOY-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01",
-    "iteration_id": "ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01",
-    "deployment_receipt": "docs-platform/changelog/deployments/DEPLOY-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01.yaml",
+    "event_id": "EVT-ITR-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01-DEPLOYED-DEPLOY-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01",
+    "iteration_id": "ITR-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01",
+    "deployment_receipt": "docs-platform/changelog/deployments/DEPLOY-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01.yaml",
     "production_url": "https://colob.spi.ski"
   },
-  "repository_head": "73389239e6fdb7d6cee51aaf5250dffcb63c5df1",
+  "repository_head": "70c700d37181ca27d57a0b15703e9cc57485d50c",
   "timeline_head": {
-    "event_id": "EVT-ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01-DEPLOYED-DEPLOY-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01",
-    "event_hash": "8a2d212bef2fa96156ad4e4585089aec9bdd3ebefa72812133da8f6e14800731"
+    "event_id": "EVT-ITR-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01-DEPLOYED-DEPLOY-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01",
+    "event_hash": "af4472dc2851e6c5fd077c5a776fec35c6d8d053cb4a577824e2faa49adbc836"
   },
   "deployment_receipts": [
     {
@@ -43,6 +43,17 @@
       "dist_sha256": "dcc94a09894c5cefd80ec3269154208b577e4a8895155c96d3f547b04a83d59b",
       "production_url": "https://colob.spi.ski",
       "deployed_at": "2026-08-20T12:38:53.000Z",
+      "result": "passed"
+    },
+    {
+      "path": "docs-platform/changelog/deployments/DEPLOY-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01.yaml",
+      "deployment_id": "DEPLOY-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01",
+      "content_state_sha256": "a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239",
+      "content_commit_hash": "2fe665af1acad113613d83e8838d86a6b1cd81d0",
+      "seal_commit_hash": "70c700d37181ca27d57a0b15703e9cc57485d50c",
+      "dist_sha256": "cc936ac6132777c2043dbe7abc0ffcf1578604b155ddd88e21c13a726e8bf716",
+      "production_url": "https://colob.spi.ski",
+      "deployed_at": "2026-08-20T22:13:44.000Z",
       "result": "passed"
     },
     {

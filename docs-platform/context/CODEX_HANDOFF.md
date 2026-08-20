@@ -16,9 +16,9 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01-COMMITTED`.
-- Hash: `01598007e751d610dc5b9c122aa6d4a28b8d852a01789fbebc667845dfe66ff5`.
-- generated_from_event_hash: `01598007e751d610dc5b9c122aa6d4a28b8d852a01789fbebc667845dfe66ff5`.
+- Event: `EVT-ITR-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01-DEPLOYED-DEPLOY-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01`.
+- Hash: `af4472dc2851e6c5fd077c5a776fec35c6d8d053cb4a577824e2faa49adbc836`.
+- generated_from_event_hash: `af4472dc2851e6c5fd077c5a776fec35c6d8d053cb4a577824e2faa49adbc836`.
 
 ## 4. Канонические документы
 
@@ -62,7 +62,7 @@ Release approved public-site mobile responsive corrections
 
 - Google: `{"configured":true,"historical_receipts":12,"receipts_with_machine_readback_hash":9,"live_drift_check":"not_run_by_context_build"}`.
 - MCP: `{"implementation_present":true,"canonical_access":"registry_document_ids_only","live_status":"not_probed_by_context_build"}`.
-- Deployment: `{"status":"receipts_present","receipts":4,"production_url":null}`.
+- Deployment: `{"status":"receipts_present","receipts":5,"production_url":null}`.
 
 ## 9. Команды проверки
 
