@@ -16,9 +16,9 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01-COMMITTED`.
-- Hash: `60a098e71c769581577c022244344489819e0e2d58e95c76b89ae83f982e51f4`.
-- generated_from_event_hash: `60a098e71c769581577c022244344489819e0e2d58e95c76b89ae83f982e51f4`.
+- Event: `EVT-ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01-DEPLOYED-DEPLOY-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01`.
+- Hash: `8a2d212bef2fa96156ad4e4585089aec9bdd3ebefa72812133da8f6e14800731`.
+- generated_from_event_hash: `8a2d212bef2fa96156ad4e4585089aec9bdd3ebefa72812133da8f6e14800731`.
 
 ## 4. Канонические документы
 
@@ -62,7 +62,7 @@ Consolidate approved Investor Journey and public UI review
 
 - Google: `{"configured":true,"historical_receipts":12,"receipts_with_machine_readback_hash":9,"live_drift_check":"not_run_by_context_build"}`.
 - MCP: `{"implementation_present":true,"canonical_access":"registry_document_ids_only","live_status":"not_probed_by_context_build"}`.
-- Deployment: `{"status":"receipts_present","receipts":3,"production_url":null}`.
+- Deployment: `{"status":"receipts_present","receipts":4,"production_url":null}`.
 
 ## 9. Команды проверки
 

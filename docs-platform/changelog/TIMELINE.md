@@ -4,9 +4,9 @@
 
 ## 1. Current state
 
-- Events: 180.
-- Timeline head event: `EVT-ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01-COMMITTED`.
-- Timeline head SHA-256: `60a098e71c769581577c022244344489819e0e2d58e95c76b89ae83f982e51f4`.
+- Events: 181.
+- Timeline head event: `EVT-ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01-DEPLOYED-DEPLOY-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01`.
+- Timeline head SHA-256: `8a2d212bef2fa96156ad4e4585089aec9bdd3ebefa72812133da8f6e14800731`.
 - Latest recorded iteration: `ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01`.
 
 ## 2. Modern governed iterations
@@ -44,7 +44,7 @@
 | 2026-08-18T22:11:37.000Z | deployed | Consolidate Financial Model v0.2 and deploy the current sealed finance website | ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01 | DEC-FINANCIAL-MODEL-V0-2-2026-08-18-01 | CHG-FINANCIAL-MODEL-V0-2-2026-08-18-01 | 5684693613e65525bedf7a7ef2d97d65e094c90f | iteration/ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01 | — | docs-platform/changelog/deployments/DEPLOY-FINANCIAL-MODEL-V0-2-2026-08-19-01.yaml | — | Sealed content state a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239 deployed to https://colob.spi.ski; smoke test passed. |
 | 2026-08-18T23:30:12.000Z | committed | Deterministic verification orchestrator infrastructure | ITR-VERIFICATION-ORCHESTRATOR-2026-08-19-01 | DEC-VERIFICATION-ORCHESTRATOR-2026-08-19-01 | CHG-VERIFICATION-ORCHESTRATOR-2026-08-19-01 | 37f1d0d0d09673c211d5686bc1334e123ed952f8 | iteration/ITR-VERIFICATION-ORCHESTRATOR-2026-08-19-01 | — | — | — | Deterministic verification orchestrator infrastructure: content commit verified and linked to the governed lifecycle before sealing. |
 | 2026-08-20T12:35:30.295Z | superseded | Runtime Investor Journey | ITR-INVESTOR-JOURNEY-2026-08-19-01 | DEC-INVESTOR-JOURNEY-2026-08-19-01 | CHG-INVESTOR-JOURNEY-2026-08-19-01 | — | — | — | — | — | Runtime Investor Journey superseded by Consolidate approved Investor Journey and public UI review (ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01). Reason: The owner-approved public responsive and presentation refinements extend the unsealed Investor Journey working line; the successor captures the exact release state. |
-| 2026-08-20T12:37:19.000Z | committed | Consolidate approved Investor Journey and public UI review | ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01 | DEC-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01 | CHG-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01 | 040a81434e48f976da2deb7ef2064af313f2bf1e | iteration/ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01 | — | — | — | Consolidate approved Investor Journey and public UI review: content commit verified and linked to the governed lifecycle before sealing. |
+| 2026-08-20T12:38:53.000Z | deployed | Consolidate approved Investor Journey and public UI review | ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01 | DEC-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01 | CHG-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01 | 040a81434e48f976da2deb7ef2064af313f2bf1e | iteration/ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01 | — | docs-platform/changelog/deployments/DEPLOY-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01.yaml | — | Sealed content state a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239 deployed to https://colob.spi.ski; smoke test passed. |
 
 ## 3. Legacy imported history
 
@@ -99,6 +99,7 @@
 | 2026-08-16T01:32:05.477Z | ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01 | published | docs-platform/changelog/google-sync/2026-08-16-DOC-INVESTOR-FINANCIAL-SUMMARY-02.yaml | — | https://docs.google.com/spreadsheets/d/1AW-JONG-vkxCEIG_pY5SSPgsMpXLycLJAk7iY5saVus/edit?usp=drivesdk |
 | 2026-08-16T01:32:16.073Z | ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01 | synced | docs-platform/changelog/google-sync/2026-08-16-DOC-INVESTOR-FINANCIAL-SUMMARY-02.yaml | — | https://docs.google.com/spreadsheets/d/1AW-JONG-vkxCEIG_pY5SSPgsMpXLycLJAk7iY5saVus/edit?usp=drivesdk |
 | 2026-08-18T22:11:37.000Z | ITR-FINANCIAL-MODEL-V0-2-2026-08-18-01 | deployed | — | docs-platform/changelog/deployments/DEPLOY-FINANCIAL-MODEL-V0-2-2026-08-19-01.yaml | https://colob.spi.ski |
+| 2026-08-20T12:38:53.000Z | ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01 | deployed | — | docs-platform/changelog/deployments/DEPLOY-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01.yaml | https://colob.spi.ski |
 
 ## 6. Open issues
 
