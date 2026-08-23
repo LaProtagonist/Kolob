@@ -4,10 +4,10 @@
 
 ## 1. Current state
 
-- Events: 187.
-- Timeline head event: `EVT-ITR-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01-DEPLOYED-DEPLOY-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01`.
-- Timeline head SHA-256: `af4472dc2851e6c5fd077c5a776fec35c6d8d053cb4a577824e2faa49adbc836`.
-- Latest recorded iteration: `ITR-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01`.
+- Events: 192.
+- Timeline head event: `EVT-ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01-COMMITTED`.
+- Timeline head SHA-256: `eb7068296ee536b30cc234433fc33ac139166875253448abf72fe2a21d52e2eb`.
+- Latest recorded iteration: `ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01`.
 
 ## 2. Modern governed iterations
 
@@ -46,6 +46,7 @@
 | 2026-08-20T12:35:30.295Z | superseded | Runtime Investor Journey | ITR-INVESTOR-JOURNEY-2026-08-19-01 | DEC-INVESTOR-JOURNEY-2026-08-19-01 | CHG-INVESTOR-JOURNEY-2026-08-19-01 | — | — | — | — | — | Runtime Investor Journey superseded by Consolidate approved Investor Journey and public UI review (ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01). Reason: The owner-approved public responsive and presentation refinements extend the unsealed Investor Journey working line; the successor captures the exact release state. |
 | 2026-08-20T12:38:53.000Z | deployed | Consolidate approved Investor Journey and public UI review | ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01 | DEC-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01 | CHG-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01 | 040a81434e48f976da2deb7ef2064af313f2bf1e | iteration/ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01 | — | docs-platform/changelog/deployments/DEPLOY-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01.yaml | — | Sealed content state a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239 deployed to https://colob.spi.ski; smoke test passed. |
 | 2026-08-20T22:13:44.000Z | deployed | Release approved public-site mobile responsive corrections | ITR-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01 | DEC-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01 | CHG-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01 | 2fe665af1acad113613d83e8838d86a6b1cd81d0 | iteration/ITR-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01 | — | docs-platform/changelog/deployments/DEPLOY-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01.yaml | — | Sealed content state a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239 deployed to https://colob.spi.ski; smoke test passed. |
+| 2026-08-23T19:16:11.000Z | committed | Register Investor Terminal feature-worktree governance context | ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01 | DEC-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01 | CHG-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01 | 38811a50837edd2accff947f3af0229ce0cdc9b5 | iteration/ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01 | — | — | — | Register Investor Terminal feature-worktree governance context: content commit verified and linked to the governed lifecycle before sealing. |
 
 ## 3. Legacy imported history
 

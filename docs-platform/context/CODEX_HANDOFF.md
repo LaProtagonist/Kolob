@@ -8,17 +8,17 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 2. Текущая ветка и governed iteration
 
-- Branch: `master`.
-- Latest closed iteration: `ITR-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01`.
-- Latest iteration tag: `iteration/ITR-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01`.
-- Latest content commit: `2fe665af1acad113613d83e8838d86a6b1cd81d0`.
+- Branch: `feat/investor-terminal-v2`.
+- Latest closed iteration: `ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01`.
+- Latest iteration tag: `iteration/ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01`.
+- Latest content commit: `38811a50837edd2accff947f3af0229ce0cdc9b5`.
 - Текущий Git HEAD намеренно не записывается: его вычисляет `npm run project:onboard`.
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01-DEPLOYED-DEPLOY-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01`.
-- Hash: `af4472dc2851e6c5fd077c5a776fec35c6d8d053cb4a577824e2faa49adbc836`.
-- generated_from_event_hash: `af4472dc2851e6c5fd077c5a776fec35c6d8d053cb4a577824e2faa49adbc836`.
+- Event: `EVT-ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01-COMMITTED`.
+- Hash: `eb7068296ee536b30cc234433fc33ac139166875253448abf72fe2a21d52e2eb`.
+- generated_from_event_hash: `eb7068296ee536b30cc234433fc33ac139166875253448abf72fe2a21d52e2eb`.
 
 ## 4. Канонические документы
 
@@ -45,7 +45,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 5. Текущая рабочая тема
 
-Release approved public-site mobile responsive corrections
+Register Investor Terminal feature-worktree governance context
 
 ## 6. Decisions и change sets
 
@@ -60,7 +60,7 @@ Release approved public-site mobile responsive corrections
 
 ## 8. Google / MCP / deployment
 
-- Google: `{"configured":true,"historical_receipts":12,"receipts_with_machine_readback_hash":9,"live_drift_check":"not_run_by_context_build"}`.
+- Google: `{"configured":false,"historical_receipts":12,"receipts_with_machine_readback_hash":9,"live_drift_check":"not_run_by_context_build"}`.
 - MCP: `{"implementation_present":true,"canonical_access":"registry_document_ids_only","live_status":"not_probed_by_context_build"}`.
 - Deployment: `{"status":"receipts_present","receipts":5,"production_url":null}`.
 
