@@ -1,18 +1,24 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import {
+  canonicalInvestorConfiguration,
   defaultInvestorConfiguration,
   investorConfigurationStorageKey,
   restoreInvestorConfiguration,
   type InvestorConfiguration,
   type InvestorScenarioId,
+  type NetworkScalingConfiguration,
 } from "../lib/investor-configuration";
 import { launchModel, restoreLaunchBudgetState, type LaunchBudgetState } from "../lib/launch-budget";
 
 type InvestorConfigurationContextValue = {
   configuration: InvestorConfiguration;
   setScenarioId: (scenarioId: InvestorScenarioId) => void;
+  setCustomChecksPerDay: (checksPerDay: number | null) => void;
   setLaunchBudget: (next: LaunchBudgetState | ((current: LaunchBudgetState) => LaunchBudgetState)) => void;
+  setNetworkScaling: (next: NetworkScalingConfiguration | ((current: NetworkScalingConfiguration) => NetworkScalingConfiguration)) => void;
   resetConfiguration: () => void;
+  resetToCanonicalConfiguration: () => void;
+  applyReadyPremisesPreset: () => void;
 };
 
 const InvestorConfigurationContext = createContext<InvestorConfigurationContextValue | null>(null);
@@ -44,9 +50,25 @@ export function InvestorConfigurationProvider({ children }: { children: ReactNod
   const value = useMemo<InvestorConfigurationContextValue>(() => ({
     configuration,
     setScenarioId: (scenarioId) => setConfiguration(current => ({ ...current, scenarioId })),
-    setLaunchBudget: (next) => setConfiguration(current => ({
+    setCustomChecksPerDay: (customChecksPerDay) => setConfiguration(current => ({ ...current, customChecksPerDay })),
+    setLaunchBudget: (next) => setConfiguration(current => {
+      const launchBudget = typeof next === "function" ? next(current.launchBudget) : next;
+      return {
+        ...current,
+        launchBudget,
+        // Legacy launch pages still edit the shared integrated configuration.
+        // Keep the two module flags aligned while the network point selector is
+        // introduced incrementally.
+        networkScaling: {
+          ...current.networkScaling,
+          pointBarEnabled: launchBudget.barEnabled,
+          productionGrowEnabled: launchBudget.growEnabled,
+        },
+      };
+    }),
+    setNetworkScaling: (next) => setConfiguration(current => ({
       ...current,
-      launchBudget: typeof next === "function" ? next(current.launchBudget) : next,
+      networkScaling: typeof next === "function" ? next(current.networkScaling) : next,
     })),
     resetConfiguration: () => {
       try {
@@ -56,6 +78,15 @@ export function InvestorConfigurationProvider({ children }: { children: ReactNod
       }
       setConfiguration(defaultInvestorConfiguration());
     },
+    resetToCanonicalConfiguration: () => {
+      try {
+        window.localStorage.removeItem(investorConfigurationStorageKey);
+      } catch {
+        // The in-memory reset remains available when storage is unavailable.
+      }
+      setConfiguration(canonicalInvestorConfiguration());
+    },
+    applyReadyPremisesPreset: () => setConfiguration(defaultInvestorConfiguration()),
   }), [configuration]);
 
   return <InvestorConfigurationContext.Provider value={value}>{children}</InvestorConfigurationContext.Provider>;

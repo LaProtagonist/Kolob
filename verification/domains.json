@@ -113,6 +113,10 @@
       "cost": "targeted",
       "command": ["node", "docs-platform/app/node_modules/tsx/dist/cli.mjs", "--test", "scripts/test-investor-journey.test.ts"]
     },
+    "investor-terminal:browser": {
+      "cost": "integration",
+      "command": ["node", "scripts/test-investor-terminal.cjs"]
+    },
     "governance:registry": {
       "cost": "fast",
       "command": ["npm", "run", "registry:validate", "--silent"]
@@ -239,15 +243,15 @@
       "releaseRequired": true
     },
     "investor-journey": {
-      "patterns": ["src/components/InvestorConfigurationProvider.tsx", "src/lib/investor-configuration.ts", "src/lib/configured-economics.ts", "scripts/test-investor-journey.test.ts"],
+      "patterns": ["src/components/InvestorConfigurationProvider.tsx", "src/components/InvestorTerminal.*", "src/components/NetworkScalingPanel.*", "src/lib/investor-configuration.ts", "src/lib/configured-economics.ts", "src/lib/network-scaling.ts", "scripts/test-investor-journey.test.ts", "scripts/test-investor-terminal.cjs"],
       "upstream": ["financial", "investor-summary", "launch-budget", "economics-ui", "revenue-ui"],
       "downstream": [],
-      "testInputs": ["scripts/test-investor-journey.test.ts"],
+      "testInputs": ["scripts/test-investor-journey.test.ts", "scripts/test-investor-terminal.cjs"],
       "fast": [],
-      "targeted": ["typescript:site", "investor-journey:unit"],
+      "targeted": ["typescript:site", "investor-journey:unit", "investor-terminal:browser"],
       "integration": [],
       "dependency": ["investor-journey:unit"],
-      "visual": {"route": "/economics", "requiredSelectors": ["[data-testid=economics-summary]", "h1"], "defaultImpact": "high"},
+      "visual": {"route": "/investor-terminal", "requiredSelectors": [".investor-terminal", "#investor-terminal-title"], "defaultImpact": "high"},
       "releaseRequired": true
     },
     "site-core": {

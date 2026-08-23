@@ -166,6 +166,72 @@ function calculateConfiguredRentMonth(row: MonthlyRow, master: FinancialScenario
   };
 }
 
+/**
+ * The generated Financial Model is still the authority for all assumptions.
+ * This adapter only replays its current scenario structure when an investor
+ * enters a traffic value between the three generated canonical scenarios.
+ * Staffing remains that of the selected canonical scenario: changing team
+ * design is deliberately outside this UI control.
+ */
+function calculateCustomTrafficMonth(
+  row: MonthlyRow,
+  master: FinancialScenario,
+  configuredRentRub: number,
+  prepaidMonths: number,
+  customChecksPerDay: number,
+) {
+  const rates = referenceRates(master);
+  const trafficFactor = customChecksPerDay / master.checks_per_day;
+  const grossRevenueRub = row.gross_revenue_rub * trafficFactor;
+  const netRevenueRub = row.net_revenue_rub * trafficFactor;
+  const rawMaterialsRub = row.raw_materials_rub * trafficFactor;
+  const wasteRub = rawMaterialsRub * rates.rawWasteRate;
+  const packagingRub = grossRevenueRub * rates.packagingRate;
+  const acquiringRub = grossRevenueRub * rates.acquiringRate;
+  const aggregatorRub = grossRevenueRub * rates.aggregatorRate;
+  const administrativeReserveRub = row.administrative_reserve_rub * trafficFactor;
+  const marketingFormula = master.marketing_formula;
+  const marketingRub = row.month <= marketingFormula.ramp_up_floor_months
+    ? Math.max(marketingFormula.fixed_amount_rub + netRevenueRub * marketingFormula.rate_of_net_revenue, marketingFormula.ramp_up_floor_rub)
+    : marketingFormula.fixed_amount_rub + netRevenueRub * marketingFormula.rate_of_net_revenue;
+  const householdFormula = master.household_formula;
+  const householdRub = householdFormula.fixed_amount_rub
+    + householdFormula.variable_amount_rub * (grossRevenueRub / master.gross_revenue_rub);
+  const laborRub = row.labor_rub;
+  const ebitdaRub = netRevenueRub - rawMaterialsRub - wasteRub - packagingRub - laborRub - configuredRentRub
+    - acquiringRub - aggregatorRub - administrativeReserveRub - marketingRub - householdRub
+    - master.fixed_opex_without_labor_rent_rub;
+  const taxableBaseRub = Math.max(
+    netRevenueRub - (
+      rawMaterialsRub + wasteRub + packagingRub + rates.cashPayrollRub + configuredRentRub
+      + acquiringRub + aggregatorRub + administrativeReserveRub + marketingRub + householdRub
+      + master.fixed_opex_without_labor_rent_rub
+    ),
+    0,
+  );
+  const taxRub = Math.max(taxableBaseRub * rates.regularUsnRate, netRevenueRub * rates.minimumUsnRate);
+  const maintenanceCapexRub = row.ebitda_rub - row.tax_due_rub - row.operating_free_cash_flow_rub;
+  const operatingFreeCashFlowRub = ebitdaRub - taxRub - maintenanceCapexRub;
+  const prepaidRentReleaseRub = row.month <= prepaidMonths ? configuredRentRub : 0;
+  return {
+    grossRevenueRub: round(grossRevenueRub),
+    netRevenueRub: round(netRevenueRub),
+    rawMaterialsRub: round(rawMaterialsRub),
+    wasteRub: round(wasteRub),
+    packagingRub: round(packagingRub),
+    laborRub: round(laborRub),
+    acquiringRub: round(acquiringRub),
+    aggregatorRub: round(aggregatorRub),
+    administrativeReserveRub: round(administrativeReserveRub),
+    marketingRub: round(marketingRub),
+    householdRub: round(householdRub),
+    ebitdaRub: round(ebitdaRub),
+    taxRub: round(taxRub),
+    operatingFreeCashFlowRub: round(operatingFreeCashFlowRub),
+    netCashFlowRub: round(operatingFreeCashFlowRub + prepaidRentReleaseRub),
+  };
+}
+
 function configuredInvestmentBreakdown(configuration: InvestorConfiguration, capital: ReturnType<typeof calculateLaunchBudget>) {
   const launchBudget = configuration.launchBudget;
   const prepaymentRub = launchBudget.premisesScenario === "rent" && launchBudget.monthlyRentRub !== null
@@ -263,8 +329,9 @@ function scenarioLaunchFinancials(id: InvestorScenarioId) {
 export function configuredEconomicsScenario(configuration: InvestorConfiguration, id: InvestorScenarioId = configuration.scenarioId): ConfiguredEconomicsScenario {
   const canonical = canonicalScenario(id);
   const capital = calculateLaunchBudget(configuration.launchBudget, undefined, scenarioLaunchFinancials(id));
-  const isConfigured = !calculationInputsEqual(configuration.launchBudget, defaultLaunchBudgetState());
-  const usesCanonicalProjection = calculationInputsEqual(configuration.launchBudget, canonicalLaunchBudgetState());
+  const hasCustomTraffic = configuration.customChecksPerDay !== null;
+  const isConfigured = hasCustomTraffic || !calculationInputsEqual(configuration.launchBudget, defaultLaunchBudgetState());
+  const usesCanonicalProjection = !hasCustomTraffic && calculationInputsEqual(configuration.launchBudget, canonicalLaunchBudgetState());
   const complete = capital.financingRequirementRub !== null && !capital.areaInvalid;
 
   if (usesCanonicalProjection) {
@@ -299,6 +366,101 @@ export function configuredEconomicsScenario(configuration: InvestorConfiguration
   const investmentGroups = configuredInvestmentGroups(investmentBreakdown);
   const discountRate = investorSummary.assumptions.discount_rate;
   const horizon = master.restaurant_cash_flows.length - 1;
+
+  if (hasCustomTraffic) {
+    const customChecksPerDay = configuration.customChecksPerDay!;
+    const rentRub = isPurchase ? 0 : configuration.launchBudget.monthlyRentRub ?? master.rent_rub;
+    const prepaidMonths = isPurchase ? 0 : configuration.launchBudget.prepaymentMonths;
+    const monthlyRows = master.monthly.map((row) => calculateCustomTrafficMonth(
+      row,
+      master,
+      rentRub,
+      prepaidMonths,
+      customChecksPerDay,
+    ));
+    const matureRow = {
+      month: Number.MAX_SAFE_INTEGER,
+      gross_revenue_rub: master.gross_revenue_rub,
+      net_revenue_rub: master.net_revenue_rub,
+      raw_materials_rub: master.raw_materials_rub,
+      labor_rub: master.labor_rub,
+      administrative_reserve_rub: master.administrative_reserve_rub,
+      ebitda_rub: master.ebitda_rub,
+      tax_due_rub: master.tax_due_rub,
+      operating_free_cash_flow_rub: master.operating_free_cash_flow_rub,
+    } as MonthlyRow;
+    const mature = calculateCustomTrafficMonth(matureRow, master, rentRub, 0, customChecksPerDay);
+    const restaurantCashFlows = monthlyRows.map((row) => row.netCashFlowRub);
+    const propertyExitRub = isPurchase
+      ? master.combined_cash_flows[horizon] - master.restaurant_cash_flows[horizon]
+      : 0;
+    const cashFlows = [-configuredCapitalRub, ...restaurantCashFlows.map((cash, month) => (
+      isPurchase && month === horizon - 1 ? round(cash + propertyExitRub) : cash
+    ))];
+    const year1 = monthlyRows.slice(0, 12);
+    const matureYear = monthlyRows.slice(12, 24);
+    const year1RevenueRub = sum(year1.map((row) => row.grossRevenueRub));
+    const matureYearRevenueRub = sum(matureYear.map((row) => row.grossRevenueRub));
+    const annualFcfRub = sum(matureYear.map((row) => row.operatingFreeCashFlowRub));
+    const canonicalFixedCostsRub = master.calculated_staffing_labor_rub + master.rent_rub
+      + master.fixed_opex_without_labor_rent_rub + master.marketing_formula.fixed_amount_rub + master.household_formula.fixed_amount_rub;
+    const perCheckContributionRub = canonicalFixedCostsRub / master.break_even_checks_per_day / investorSummary.assumptions.days_per_month;
+    const configuredBreakEvenChecks = (canonicalFixedCostsRub - master.rent_rub + rentRub) / perCheckContributionRub / investorSummary.assumptions.days_per_month;
+
+    return {
+      ...canonical,
+      checksPerDay: customChecksPerDay,
+      startInvestmentRub: configuredCapitalRub,
+      salesPerMonthRub: mature.grossRevenueRub,
+      ebitdaRub: mature.ebitdaRub,
+      ebitdaMargin: mature.netRevenueRub === 0 ? 0 : mature.ebitdaRub / mature.netRevenueRub,
+      freeCashFlowRub: mature.operatingFreeCashFlowRub,
+      breakEvenChecksPerDay: round(configuredBreakEvenChecks, 2),
+      paybackMonth: firstPaybackMonth(cashFlows),
+      roi: annualFcfRub / configuredCapitalRub,
+      irr: annualIrr(cashFlows),
+      npvRub: round(presentValue(cashFlows, discountRate)),
+      pnl: {
+        ...canonical.pnl,
+        salesRub: mature.grossRevenueRub,
+        productCostRub: mature.rawMaterialsRub + mature.wasteRub + mature.packagingRub,
+        rawMaterialsRub: mature.rawMaterialsRub,
+        wasteRub: mature.wasteRub,
+        packagingRub: mature.packagingRub,
+        grossProfitRub: mature.netRevenueRub - mature.rawMaterialsRub - mature.wasteRub - mature.packagingRub,
+        grossMargin: mature.netRevenueRub === 0 ? 0 : (mature.netRevenueRub - mature.rawMaterialsRub - mature.wasteRub - mature.packagingRub) / mature.netRevenueRub,
+        personnelRub: mature.laborRub,
+        premisesRub: rentRub,
+        acquiringRub: mature.acquiringRub + mature.aggregatorRub,
+        marketingRub: mature.marketingRub,
+        householdRub: mature.householdRub,
+        administrativeReserveRub: mature.administrativeReserveRub,
+        ebitdaRub: mature.ebitdaRub,
+        ebitdaMargin: mature.netRevenueRub === 0 ? 0 : mature.ebitdaRub / mature.netRevenueRub,
+        taxRub: mature.taxRub,
+        netOperatingResultRub: round(mature.ebitdaRub - master.depreciation_rub - mature.taxRub),
+        freeCashFlowRub: mature.operatingFreeCashFlowRub,
+      },
+      year1: {
+        salesRub: round(year1RevenueRub),
+        ebitdaRub: round(sum(year1.map((row) => row.ebitdaRub))),
+        ebitdaMargin: year1RevenueRub === 0 ? 0 : sum(year1.map((row) => row.ebitdaRub)) / year1RevenueRub,
+        freeCashFlowRub: round(sum(year1.map((row) => row.operatingFreeCashFlowRub))),
+      },
+      matureYear: {
+        salesRub: round(matureYearRevenueRub),
+        ebitdaRub: round(sum(matureYear.map((row) => row.ebitdaRub))),
+        freeCashFlowRub: round(annualFcfRub),
+      },
+      operatingReserveRub: capital.operatingReserveRub ?? canonical.operatingReserveRub,
+      investmentBreakdown,
+      investmentGroups,
+      isConfigured: true,
+      configurationComplete: true,
+      premisesScenario: configuration.launchBudget.premisesScenario,
+      cashFlows,
+    };
+  }
 
   // Investment-only configuration must preserve the exact canonical operating cash-flow
   // sequence. Reusing it avoids recreating finance rounding in the browser adapter.

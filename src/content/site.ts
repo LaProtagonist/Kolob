@@ -95,6 +95,15 @@ export const pages: PageMeta[] = [
     noindex: true
   },
   {
+    id: "investorTerminal",
+    path: "/investor-terminal",
+    label: "Investor Terminal",
+    title: "Investor Terminal — Колобочная",
+    description: "Рабочая финансовая модель объекта «Колобочной»: исходные параметры, стартовые инвестиции и экономика пользовательского сценария.",
+    ogImage: "/media/hero-kolobok-1200.webp",
+    noindex: true
+  },
+  {
     id: "launchBudget",
     path: "/launch-budget",
     label: "Расчёт стоимости запуска",

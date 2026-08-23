@@ -6,11 +6,14 @@ import test from "node:test";
 import { fileURLToPath } from "node:url";
 import { configuredEconomicsScenario, configuredEconomicsScenarios } from "../src/lib/configured-economics.js";
 import {
+  canonicalInvestorConfiguration,
   defaultInvestorConfiguration,
+  investorConfigurationIsCanonical,
   restoreInvestorConfiguration,
 } from "../src/lib/investor-configuration.js";
 import { economicsData } from "../src/lib/economics.js";
 import { launchModel } from "../src/lib/launch-budget.js";
+import { networkScalingProjection } from "../src/lib/network-scaling.js";
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const canonicalPaths = [
@@ -160,6 +163,98 @@ test("runtime configuration is safely restored and never mutates canonical sourc
   assert.deepEqual(sourceHashes(), before);
 });
 
+test("custom checks per day is a local scenario override and canonical reset stays exact", () => {
+  const before = sourceHashes();
+  const canonical = canonicalInvestorConfiguration();
+  const canonicalEconomics = configuredEconomicsScenario(canonical);
+  const restored = restoreInvestorConfiguration({ ...canonical, customChecksPerDay: 175 });
+  const custom = configuredEconomicsScenario(restored);
+
+  assert.equal(restored.customChecksPerDay, 175);
+  assert.equal(custom.checksPerDay, 175);
+  assert.equal(canonicalEconomics.checksPerDay, 300);
+  assert.equal(canonicalEconomics.salesPerMonthRub, economicsData.scenariosById.realistic.salesPerMonthRub);
+  assert.ok(custom.salesPerMonthRub < canonicalEconomics.salesPerMonthRub);
+  assert.ok(custom.ebitdaRub < canonicalEconomics.ebitdaRub);
+  assert.notDeepEqual(custom.cashFlows, canonicalEconomics.cashFlows);
+  assert.deepEqual(sourceHashes(), before);
+});
+
+test("network scaling separates the production base from the repeatable point without inventing network economics", () => {
+  const before = sourceHashes();
+  const canonical = canonicalInvestorConfiguration();
+  const withoutSeatingOne = networkScalingProjection({
+    ...canonical,
+    networkScaling: {
+      ...canonical.networkScaling,
+      pointCount: 1,
+      pointFormat: "without_seating",
+      pointBarEnabled: false,
+    },
+  });
+  const withoutSeatingFive = networkScalingProjection({
+    ...canonical,
+    networkScaling: {
+      ...canonical.networkScaling,
+      pointCount: 5,
+      pointFormat: "without_seating",
+      pointBarEnabled: false,
+    },
+  });
+
+  const grow = withoutSeatingOne.productionItems.find((item) => item.id === "grow-module");
+  assert.ok(grow, "the canonical grow module is exposed as production infrastructure");
+  assert.equal(grow.ownership, "production");
+  assert.equal(grow.multiplier, "once");
+  assert.equal(withoutSeatingFive.productionInvestmentRub, withoutSeatingOne.productionInvestmentRub);
+  assert.equal(withoutSeatingFive.pointNetworkInvestmentRub, withoutSeatingOne.pointInvestmentRub * 5);
+  assert.equal(
+    withoutSeatingFive.confirmedInvestmentSubtotalRub,
+    withoutSeatingFive.productionInvestmentRub + withoutSeatingFive.pointNetworkInvestmentRub,
+  );
+
+  const barOff = withoutSeatingOne.pointItems.find((item) => item.id === "point-bar");
+  const furnitureWithoutSeating = withoutSeatingOne.pointItems.find((item) => item.id === "furniture");
+  assert.equal(barOff, undefined, "the optional bar module is excluded from a bar-off point");
+  assert.ok(furnitureWithoutSeating);
+  assert.equal(furnitureWithoutSeating.included, false, "seating furniture is excluded for the existing no-seating format");
+  assert.ok(withoutSeatingFive.unresolvedItems.every((item) => item.ownership === "unresolved" && item.multiplier === "not_aggregated"));
+  assert.equal(withoutSeatingFive.unresolvedItems.find((item) => item.id === "operating_reserve")?.multiplier, "not_aggregated");
+  assert.equal(withoutSeatingFive.unresolvedItems.find((item) => item.id === "contingency")?.multiplier, "not_aggregated");
+
+  const barOn = networkScalingProjection({
+    ...canonical,
+    networkScaling: {
+      ...canonical.networkScaling,
+      pointCount: 1,
+      pointFormat: "without_seating",
+      pointBarEnabled: true,
+    },
+  });
+  const withSeating = networkScalingProjection({
+    ...canonical,
+    networkScaling: {
+      ...canonical.networkScaling,
+      pointCount: 1,
+      pointFormat: "with_seating",
+      pointBarEnabled: true,
+    },
+  });
+
+  assert.ok(barOn.pointInvestmentRub > withoutSeatingOne.pointInvestmentRub, "the existing bar module changes the repeatable point only when enabled");
+  assert.equal(barOn.pointItems.find((item) => item.id === "point-bar")?.multiplier, "per_point");
+  assert.equal(withSeating.pointItems.find((item) => item.id === "furniture")?.included, true);
+  assert.ok(withSeating.pointInvestmentRub > withoutSeatingOne.pointInvestmentRub, "the seated canonical format enables point-only guest items");
+  assert.equal(withoutSeatingFive.isPartial, true);
+  assert.deepEqual(sourceHashes(), before, "the selector is read-only against canonical sources");
+});
+
+test("canonical scenario selection is not presented as a user override", () => {
+  const canonical = canonicalInvestorConfiguration();
+  assert.equal(investorConfigurationIsCanonical({ ...canonical, scenarioId: "pessimistic" }), true);
+  assert.equal(investorConfigurationIsCanonical({ ...canonical, customChecksPerDay: 175 }), false);
+});
+
 test("economics UI has no legacy KPI literals and only consumes configured projection values", () => {
   const source = fs.readFileSync(path.join(projectRoot, "src/components/Economics.tsx"), "utf8");
   for (const legacyLiteral of ["45.37", "2.41", "23 месяца", "61.33%", "36,701,298"]) {
@@ -167,4 +262,17 @@ test("economics UI has no legacy KPI literals and only consumes configured proje
   }
   assert.match(source, /configuredEconomicsScenario\(configuration\)/);
   assert.match(source, /configuredEconomicsScenarios\(configuration\)/);
+});
+
+test("Investor Terminal is a compact runtime surface, not a second hardcoded model", () => {
+  const source = fs.readFileSync(path.join(projectRoot, "src/components/InvestorTerminal.tsx"), "utf8");
+  const scalingSource = fs.readFileSync(path.join(projectRoot, "src/lib/network-scaling.ts"), "utf8");
+  assert.match(source, /configuredEconomicsScenario\(configuration\)/);
+  assert.match(source, /setCustomChecksPerDay/);
+  assert.match(source, /resetToCanonicalConfiguration/);
+  assert.match(scalingSource, /buildCapexRows/);
+  assert.match(scalingSource, /configuredEconomicsScenario\(configuration\)/);
+  for (const legacyLiteral of ["45.37", "23 месяца", "61.33%", "36,701,298"]) {
+    assert.equal(source.includes(legacyLiteral), false, `legacy KPI literal remains: ${legacyLiteral}`);
+  }
 });
