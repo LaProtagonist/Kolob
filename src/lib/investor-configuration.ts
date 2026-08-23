@@ -23,8 +23,8 @@ export type TradingPointCohort = {
   guestAreaM2: number | null;
   monthlyRentRub: number | null;
   purchasePriceRub: number | null;
-  prepaymentMonths: number;
-  securityDepositMonths: number;
+  prepaymentMonths: number | null;
+  securityDepositMonths: number | null;
   preparationRub: number | null;
   barEnabled: boolean;
 };
@@ -53,6 +53,10 @@ function nonnegativeInteger(value: unknown, fallback = 1) {
   return typeof value === "number" && Number.isFinite(value) && value >= 0 ? Math.floor(value) : fallback;
 }
 
+function permittedMonths(value: unknown, permitted: number[]) {
+  return permitted.includes(Number(value)) ? Number(value) : null;
+}
+
 function valueOrDefault<T extends object, K extends keyof T>(value: T, key: K, fallback: T[K]) {
   return Object.prototype.hasOwnProperty.call(value, key) ? value[key] : fallback;
 }
@@ -79,8 +83,8 @@ export function createTradingPointCohort(
     guestAreaM2: format === "with_seating" ? finiteOrNull(valueOrDefault(overrides, "guestAreaM2", null)) : null,
     monthlyRentRub: finiteOrNull(valueOrDefault(overrides, "monthlyRentRub", null)),
     purchasePriceRub: finiteOrNull(valueOrDefault(overrides, "purchasePriceRub", null)),
-    prepaymentMonths: [1, 3, 12].includes(Number(overrides.prepaymentMonths)) ? Number(overrides.prepaymentMonths) : launchBudget.prepaymentMonths,
-    securityDepositMonths: [1, 2, 3].includes(Number(overrides.securityDepositMonths)) ? Number(overrides.securityDepositMonths) : launchBudget.securityDepositMonths,
+    prepaymentMonths: permittedMonths(valueOrDefault(overrides, "prepaymentMonths", null), [1, 3, 12]),
+    securityDepositMonths: permittedMonths(valueOrDefault(overrides, "securityDepositMonths", null), [1, 2, 3]),
     preparationRub: finiteOrNull(valueOrDefault(overrides, "preparationRub", null)),
     // A new group follows the current canonical point baseline, never another
     // cohort's selected bar setting.
@@ -125,6 +129,8 @@ export function restoreNetworkScalingConfiguration(value: unknown, launchBudget:
       guestAreaM2: launchBudget.guestAreaM2,
       monthlyRentRub: launchBudget.monthlyRentRub,
       purchasePriceRub: launchBudget.purchasePriceRub,
+      prepaymentMonths: launchBudget.prepaymentMonths,
+      securityDepositMonths: launchBudget.securityDepositMonths,
       preparationRub: null,
     })];
   return {

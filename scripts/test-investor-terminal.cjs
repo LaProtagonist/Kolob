@@ -101,6 +101,8 @@ async function run() {
     for (const label of ["Площадь помещения", "Рабочая зона", "Посадочный зал", "Аренда в месяц", "Подготовка точки"]) {
       assert.equal(await page.getByLabel(label).inputValue(), "", `${label} is unknown instead of inherited from the integrated object`);
     }
+    assert.equal(await page.getByLabel("Предоплата").inputValue(), "", "fresh prepayment is unknown");
+    assert.equal(await page.getByLabel("Обеспечительный платёж").inputValue(), "", "fresh security deposit is unknown");
     await page.evaluate(() => window.scrollTo(0, 0));
     await page.screenshot({ path: path.join(projectRoot, ".cache/verification/screenshots/investor-terminal-v22-desktop.png"), fullPage: true });
     await page.setViewportSize({ width: 390, height: 844 });
@@ -114,6 +116,8 @@ async function run() {
     await setCount("cohort-1", 5);
     await page.getByTestId("scaling-cohort-rent-cohort-1").fill("350000");
     await page.getByTestId("scaling-cohort-rent-cohort-1").press("Tab");
+    await page.getByLabel("Предоплата").selectOption("1");
+    await page.getByLabel("Обеспечительный платёж").selectOption("1");
     await setSwitch("scaling-cohort-bar-cohort-1", true);
     const seatingUnit = await amount("scaling-cohort-unit-cohort-1");
     assert.equal(await amount("scaling-cohort-total-cohort-1"), seatingUnit * 5, "seating cohort aggregates by its own count");
@@ -130,9 +134,13 @@ async function run() {
     for (const label of ["Площадь помещения", "Рабочая зона", "Аренда в месяц", "Подготовка точки"]) {
       assert.equal(await page.getByLabel(label).inputValue(), "", `new takeaway ${label} is not copied from another cohort`);
     }
+    assert.equal(await page.getByLabel("Предоплата").inputValue(), "", "new cohort does not inherit prepayment");
+    assert.equal(await page.getByLabel("Обеспечительный платёж").inputValue(), "", "new cohort does not inherit deposit");
     await setCount("cohort-2", 10);
     await page.getByTestId("scaling-cohort-rent-cohort-2").fill("210000");
     await page.getByTestId("scaling-cohort-rent-cohort-2").press("Tab");
+    await page.getByLabel("Предоплата").selectOption("1");
+    await page.getByLabel("Обеспечительный платёж").selectOption("1");
     await setSwitch("scaling-cohort-bar-cohort-2", false);
     const takeawayUnit = await amount("scaling-cohort-unit-cohort-2");
     assert.equal(await amount("scaling-cohort-total-cohort-2"), takeawayUnit * 10, "takeaway cohort aggregates independently");

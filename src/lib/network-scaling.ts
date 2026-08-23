@@ -80,8 +80,8 @@ function cohortLaunchState(configuration: InvestorConfiguration, cohort: Trading
     guestAreaM2: cohort.format === "with_seating" ? cohort.guestAreaM2 : 0,
     monthlyRentRub: cohort.monthlyRentRub,
     purchasePriceRub: cohort.purchasePriceRub,
-    prepaymentMonths: cohort.prepaymentMonths,
-    securityDepositMonths: cohort.securityDepositMonths,
+    prepaymentMonths: cohort.prepaymentMonths ?? 0,
+    securityDepositMonths: cohort.securityDepositMonths ?? 0,
     barEnabled: cohort.barEnabled,
     growEnabled: false,
   };
@@ -179,6 +179,8 @@ function pointPreparationItem(cohort: TradingPointCohort): NetworkScalingItem {
 }
 
 function pointPremisesItem(configuration: InvestorConfiguration, cohort: TradingPointCohort): NetworkScalingItem {
+  const rentTermsUnknown = cohort.realEstateMode === "rent"
+    && (cohort.monthlyRentRub === null || cohort.prepaymentMonths === null || cohort.securityDepositMonths === null);
   const launch = calculateLaunchBudget(cohortLaunchState(configuration, cohort));
   const rent = cohort.realEstateMode === "rent";
   return {
@@ -187,11 +189,13 @@ function pointPremisesItem(configuration: InvestorConfiguration, cohort: Trading
     name: rent ? "Вход в аренду помещения" : "Покупка помещения",
     ownership: "point",
     multiplier: "per_point",
-    amountRub: launch.premisesEntryRub,
-    included: launch.premisesEntryRub !== null,
+    amountRub: rentTermsUnknown ? null : launch.premisesEntryRub,
+    included: !rentTermsUnknown && launch.premisesEntryRub !== null,
     source: "calculateLaunchBudget.premisesEntryRub",
     reason: rent
-      ? "Предоплата и обеспечительный платёж рассчитаны из параметров этой группы точек."
+      ? rentTermsUnknown
+        ? "Для расчёта нужны аренда, предоплата и обеспечительный платёж этой группы."
+        : "Предоплата и обеспечительный платёж рассчитаны из параметров этой группы точек."
       : "Стоимость помещения задана для этой группы точек.",
   };
 }

@@ -208,6 +208,8 @@ test("v2.1 single-point state migrates safely into a v2.2 point cohort", () => {
       guestAreaM2: launchBudget.guestAreaM2,
       monthlyRentRub: launchBudget.monthlyRentRub,
       purchasePriceRub: launchBudget.purchasePriceRub,
+      prepaymentMonths: launchBudget.prepaymentMonths,
+      securityDepositMonths: launchBudget.securityDepositMonths,
       preparationRub: null,
     }),
     format: "takeaway",
@@ -242,6 +244,8 @@ test("fresh and reset network defaults use one neutral point cohort without inhe
     assert.equal(cohort.guestAreaM2, null);
     assert.equal(cohort.monthlyRentRub, null);
     assert.equal(cohort.purchasePriceRub, null);
+    assert.equal(cohort.prepaymentMonths, null);
+    assert.equal(cohort.securityDepositMonths, null);
     assert.equal(cohort.preparationRub, null);
   }
   const newTakeawayPurchase = createTradingPointCohort(fresh.launchBudget, { id: "cohort-new", format: "takeaway", realEstateMode: "purchase" });
@@ -252,6 +256,8 @@ test("fresh and reset network defaults use one neutral point cohort without inhe
   assert.equal(newTakeawayPurchase.guestAreaM2, null);
   assert.equal(newTakeawayPurchase.monthlyRentRub, null);
   assert.equal(newTakeawayPurchase.purchasePriceRub, null);
+  assert.equal(newTakeawayPurchase.prepaymentMonths, null);
+  assert.equal(newTakeawayPurchase.securityDepositMonths, null);
   assert.equal(newTakeawayPurchase.preparationRub, null);
 });
 
