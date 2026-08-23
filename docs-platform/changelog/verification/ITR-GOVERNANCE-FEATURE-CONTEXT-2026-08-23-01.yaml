@@ -1,0 +1,25 @@
+schema_version: 2
+iteration_id: ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01
+proposal_id: PROP-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01
+decision_id: DEC-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01
+change_set_id: CHG-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01
+verified_at: 2026-08-23T18:11:26.000Z
+actor: Codex
+validation_status: passed
+approved_payload_sha256: 0c02bc8bf446f35c7382c92dafc34d59362b67d89d73f92d3fcb47378db339c7
+before_state_sha256: 491a9bb7df0f0179360fc7803acfcdfcd0c648cf89c3269dd305fa45262f23eb
+after_state_sha256: 491a9bb7df0f0179360fc7803acfcdfcd0c648cf89c3269dd305fa45262f23eb
+checks:
+  governance_lifecycle:
+    status: passed
+    command: npm run project:onboard
+    scope: derived feature-worktree context only; stale-state cleared
+canonical_invariants:
+  master_history: unchanged
+  production_checkout: unused
+  financial_model: unchanged
+  investor_summary: unchanged
+  google: unused
+  deployment: unused
+rollback_payload: docs-platform/changelog/rollback-payloads/ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01/manifest.yaml
+summary: Verification is completed by the required post-repair onboarding after the append-only event chain is recorded and the derived context is rebuilt.

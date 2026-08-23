@@ -1,0 +1,17 @@
+schema_version: 2
+iteration_id: ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01
+decision_id: DEC-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01
+change_set_id: CHG-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01
+previewed_at: 2026-08-23T18:11:22.000Z
+status: passed
+mutation_performed: false
+planned_changes:
+  - Append feature-worktree context lifecycle evidence without modifying historical records.
+  - Rebuild derived governance context against the current feature branch.
+invariants:
+  master_history_edited: false
+  production_checkout_used: false
+  canonical_documents_written: false
+  google_action: false
+  deployment_action: false
+  onboarding_rule_changed: false

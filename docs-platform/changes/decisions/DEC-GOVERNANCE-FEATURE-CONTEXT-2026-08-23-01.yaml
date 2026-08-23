@@ -1,0 +1,11 @@
+schema_version: 2
+decision_id: DEC-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01
+iteration_id: ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01
+title: Approve append-only feature-worktree context registration
+status: approved
+approved_by: project owner
+approved_at: 2026-08-23T18:11:23.000Z
+scope: Record the actual feat/investor-terminal-v2 context through the existing append-only governance lifecycle, then regenerate derived context. Master history, production checkout, canonical documents, financial assumptions and onboarding policy remain unchanged.
+excludes: [master history, production checkout, canonical business documents, Financial Model formulas, Google operations, deployment, validation exceptions]
+approved_payload_path: docs-platform/changelog/payloads/ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01-approved.yaml
+approved_payload_sha256: 0c02bc8bf446f35c7382c92dafc34d59362b67d89d73f92d3fcb47378db339c7

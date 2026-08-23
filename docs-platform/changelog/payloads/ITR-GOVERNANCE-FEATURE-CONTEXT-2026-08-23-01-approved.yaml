@@ -1,0 +1,47 @@
+schema_version: 2
+payload_id: PAYLOAD-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01
+iteration_id: ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01
+proposal_id: PROP-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01
+decision_id: DEC-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01
+change_set_id: CHG-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01
+title: Register Investor Terminal feature-worktree governance context
+status: approved
+approved_by: project owner
+approved_at: 2026-08-23T18:11:23.000Z
+scope:
+  - Append governance evidence registering the existing feat/investor-terminal-v2 worktree context.
+  - Regenerate only the derived feature-branch context and timeline projections from append-only events.
+  - Preserve all master history, canonical business and financial data, Google resources, deployment state and validation rules.
+forbidden_scope:
+  - Changes to master history, production checkout, canonical documents, Financial Model formulas or business facts
+  - Google actions, deployment actions, branch-specific validation exceptions or weakened onboarding checks
+  - Rewrite, deletion or replacement of historical governance records
+state_hash_paths:
+  - docs-platform/app/src/governance/context.ts
+content_paths:
+  - docs-platform/changes/CHG-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01.yaml
+  - docs-platform/changes/decisions/DEC-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01.yaml
+  - docs-platform/changes/iterations/ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01.yaml
+  - docs-platform/changes/proposals/PROP-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01.yaml
+  - docs-platform/changelog/audit/ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01.yaml
+  - docs-platform/changelog/change-receipts/CHG-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01.yaml
+  - docs-platform/changelog/iterations/ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01-proposed.yaml
+  - docs-platform/changelog/iterations/ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01-approved.yaml
+  - docs-platform/changelog/iterations/ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01-applied.yaml
+  - docs-platform/changelog/iterations/ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01-verified.yaml
+  - docs-platform/changelog/payloads/ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01-approved.yaml
+  - docs-platform/changelog/previews/ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01.yaml
+  - docs-platform/changelog/rollback-payloads/ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01/manifest.yaml
+  - docs-platform/changelog/verification/ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01.yaml
+  - docs-platform/changelog/events.ndjson
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+  - docs-platform/changelog/snapshots/SNAPSHOT-ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01.yaml
+allowed_dirty_paths: []
+rollback_contract:
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true
