@@ -166,9 +166,10 @@ export function InvestorTerminalPage() {
   const equipmentItem = scenario.investmentBreakdown.find((item) => item.key === "equipment");
   const furnitureItem = scenario.investmentBreakdown.find((item) => item.key === "furniture");
   const operatingOpexRub = scenario.salesPerMonthRub - scenario.ebitdaRub;
-  const pointConfigurationText = configuration.networkScaling.pointFormat === "with_seating"
+  const primaryPointCohort = configuration.networkScaling.cohorts[0];
+  const pointConfigurationText = primaryPointCohort?.format === "with_seating"
     ? "с посадочным залом"
-    : "без посадочного зала";
+    : "только на вынос";
 
   useEffect(() => {
     if (!firstTerminalVisit.current) return;
@@ -255,7 +256,7 @@ export function InvestorTerminalPage() {
                 </div>
                 <button type="button" className="terminal-preset-button" onClick={applyReadyPremisesPreset}>Готовое помещение</button>
               </section>
-              <p className="terminal-point-configuration" data-testid="terminal-point-configuration">Повторяемая точка сети: <strong>{pointConfigurationText}</strong> · бар {configuration.networkScaling.pointBarEnabled ? "включён" : "выключен"}. Настраивается во вкладке «Масштабирование».</p>
+              <p className="terminal-point-configuration" data-testid="terminal-point-configuration">Точка первой группы сети: <strong>{pointConfigurationText}</strong> · {primaryPointCohort?.realEstateMode === "purchase" ? "покупка" : "аренда"} · бар {primaryPointCohort?.barEnabled ? "включён" : "выключен"}. Настраивается во вкладке «Масштабирование».</p>
 
               <TerminalSection title="Доходы" note="Вводимые ячейки меняют только локальный сценарий этого браузера.">
                 <TerminalRow label="Чеков в день" testId="terminal-checks-per-day">

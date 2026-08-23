@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useMemo, useState, type ReactNode
 import {
   canonicalInvestorConfiguration,
   defaultInvestorConfiguration,
+  defaultNetworkScalingConfiguration,
   investorConfigurationStorageKey,
   restoreInvestorConfiguration,
   type InvestorConfiguration,
@@ -28,9 +29,13 @@ function initialConfiguration() {
     const saved = window.localStorage.getItem(investorConfigurationStorageKey);
     if (saved) return restoreInvestorConfiguration(JSON.parse(saved));
     const legacyLaunchState = window.localStorage.getItem(launchModel.form.local_storage_key);
-    return legacyLaunchState
-      ? { ...defaultInvestorConfiguration(), launchBudget: restoreLaunchBudgetState(JSON.parse(legacyLaunchState)) }
-      : defaultInvestorConfiguration();
+    if (!legacyLaunchState) return defaultInvestorConfiguration();
+    const launchBudget = restoreLaunchBudgetState(JSON.parse(legacyLaunchState));
+    return {
+      ...defaultInvestorConfiguration(),
+      launchBudget,
+      networkScaling: defaultNetworkScalingConfiguration(launchBudget),
+    };
   } catch {
     return defaultInvestorConfiguration();
   }
@@ -56,13 +61,14 @@ export function InvestorConfigurationProvider({ children }: { children: ReactNod
       return {
         ...current,
         launchBudget,
-        // Legacy launch pages still edit the shared integrated configuration.
-        // Keep the two module flags aligned while the network point selector is
-        // introduced incrementally.
+        // Legacy point economics still exposes one integrated bar control.
+        // It edits the first cohort only; other cohorts remain independent.
         networkScaling: {
           ...current.networkScaling,
-          pointBarEnabled: launchBudget.barEnabled,
           productionGrowEnabled: launchBudget.growEnabled,
+          cohorts: current.networkScaling.cohorts.map((cohort, index) => index === 0
+            ? { ...cohort, barEnabled: launchBudget.barEnabled }
+            : cohort),
         },
       };
     }),

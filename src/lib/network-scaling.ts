@@ -1,7 +1,7 @@
 import { buildCapexRows, capexData, emptyCapexParameters, type ComputedCapexRow } from "./capex-runtime";
 import { configuredEconomicsScenario } from "./configured-economics";
-import type { InvestorConfiguration, NetworkPointFormat } from "./investor-configuration";
-import { calculateSeatCount, launchModel } from "./launch-budget";
+import type { InvestorConfiguration, TradingPointCohort, TradingPointFormat } from "./investor-configuration";
+import { calculateLaunchBudget, calculateSeatCount, launchModel, type LaunchBudgetState } from "./launch-budget";
 
 export type NetworkOwnership = "production" | "point" | "shared" | "unresolved";
 export type NetworkMultiplier = "once" | "per_point" | "not_aggregated";
@@ -20,20 +20,24 @@ export type NetworkScalingItem = {
   detail?: Array<{ id: string; name: string; amountRub: number | null; quantity: number | null }>;
 };
 
-export type NetworkScalingProjection = {
-  pointCount: number;
-  pointFormat: NetworkPointFormat;
+export type NetworkPointCohortProjection = {
+  cohort: TradingPointCohort;
+  formatName: string;
+  realEstateName: string;
   pointFormatSourceId: string;
-  pointFormatName: string;
-  pointBarEnabled: boolean;
-  productionGrowEnabled: boolean;
-  productionItems: NetworkScalingItem[];
   pointItems: NetworkScalingItem[];
+  confirmedPointInvestmentRub: number;
+  confirmedCohortInvestmentRub: number;
+  isPartial: boolean;
+};
+
+export type NetworkScalingProjection = {
+  productionItems: NetworkScalingItem[];
+  cohorts: NetworkPointCohortProjection[];
   sharedItems: NetworkScalingItem[];
   unresolvedItems: NetworkScalingItem[];
   productionInvestmentRub: number;
-  pointInvestmentRub: number;
-  pointNetworkInvestmentRub: number;
+  confirmedPointInvestmentRub: number;
   confirmedInvestmentSubtotalRub: number;
   isPartial: boolean;
   capacityNote: string;
@@ -43,28 +47,51 @@ export type NetworkScalingProjection = {
 
 const productionModuleIds = new Set(["MOD-PREP", "MOD-GROW"]);
 const pointModuleIds = new Set(["MOD-RETAIL-HOT", "MOD-TAKEAWAY", "MOD-GUEST", "MOD-BAR", "MOD-KDS"]);
-
-const pointFormatSourceIds: Record<NetworkPointFormat, string> = {
+const pointFormatSourceIds: Record<TradingPointFormat, string> = {
   with_seating: "FMT-RESTAURANT-SEATING",
-  without_seating: "FMT-FOOD-COURT",
+  takeaway: "FMT-FOOD-COURT",
 };
 
 function sumKnown(items: NetworkScalingItem[]) {
   return items.filter((item) => item.included).reduce((total, item) => total + (item.amountRub ?? 0), 0);
 }
 
-function activeFormat(configuration: InvestorConfiguration) {
-  const id = pointFormatSourceIds[configuration.networkScaling.pointFormat];
-  const format = capexData.formats.find((item) => item.id === id);
-  if (!format) throw new Error(`Canonical point format ${id} is unavailable.`);
-  return format;
+function formatName(format: TradingPointFormat) {
+  return format === "with_seating" ? "С посадочным залом" : "Только на вынос";
 }
 
-function equipmentParameters(configuration: InvestorConfiguration, pointFormat: NetworkPointFormat) {
-  const launch = configuration.launchBudget;
+function realEstateName(mode: TradingPointCohort["realEstateMode"]) {
+  return mode === "rent" ? "Аренда" : "Покупка";
+}
+
+function activeFormat(format: TradingPointFormat) {
+  const id = pointFormatSourceIds[format];
+  const value = capexData.formats.find((item) => item.id === id);
+  if (!value) throw new Error(`Canonical point format ${id} is unavailable.`);
+  return value;
+}
+
+function cohortLaunchState(configuration: InvestorConfiguration, cohort: TradingPointCohort): LaunchBudgetState {
+  return {
+    ...configuration.launchBudget,
+    premisesScenario: cohort.realEstateMode,
+    totalAreaM2: cohort.totalAreaM2,
+    kitchenAreaM2: cohort.kitchenAreaM2,
+    guestAreaM2: cohort.format === "with_seating" ? cohort.guestAreaM2 : 0,
+    monthlyRentRub: cohort.monthlyRentRub,
+    purchasePriceRub: cohort.purchasePriceRub,
+    prepaymentMonths: cohort.prepaymentMonths,
+    securityDepositMonths: cohort.securityDepositMonths,
+    barEnabled: cohort.barEnabled,
+    growEnabled: false,
+  };
+}
+
+function equipmentParameters(configuration: InvestorConfiguration, cohort: TradingPointCohort) {
+  const launch = cohortLaunchState(configuration, cohort);
   const seating = launchModel.seating.profiles.find((item) => item.id === launch.seatingProfileId)!;
-  const seatCount = pointFormat === "with_seating"
-    ? calculateSeatCount(launch.guestAreaM2, seating.square_metres_per_seat)
+  const seatCount = cohort.format === "with_seating"
+    ? calculateSeatCount(cohort.guestAreaM2, seating.square_metres_per_seat)
     : 0;
   return {
     seatCount,
@@ -75,20 +102,23 @@ function equipmentParameters(configuration: InvestorConfiguration, pointFormat: 
       cashierPostCount: capexData.pilotConfiguration?.cashier_post_count ?? null,
       hotKitchenPostCount: capexData.pilotConfiguration?.hot_kitchen_post_count ?? null,
       seatCount,
-      guestAreaM2: pointFormat === "with_seating" ? launch.guestAreaM2 : 0,
+      guestAreaM2: cohort.format === "with_seating" ? cohort.guestAreaM2 : 0,
       serviceStationCount: capexData.pilotConfiguration?.service_station_count ?? null,
       centralSupply: capexData.pilotConfiguration?.central_supply_enabled ?? false,
     }),
   };
 }
 
-function activeModuleIds(configuration: InvestorConfiguration, format: (typeof capexData.formats)[number]) {
-  const modules = new Set<string>(["MOD-PREP", ...format.requiredModules]);
+function activePointModuleIds(cohort: TradingPointCohort) {
+  const format = activeFormat(cohort.format);
+  const modules = new Set<string>(format.requiredModules);
+  if (cohort.barEnabled && format.optionalModules.includes("MOD-BAR")) modules.add("MOD-BAR");
+  return modules;
+}
+
+function activeProductionModuleIds(configuration: InvestorConfiguration) {
+  const modules = new Set<string>(["MOD-PREP", "MOD-POS"]);
   if (configuration.networkScaling.productionGrowEnabled) modules.add("MOD-GROW");
-  if (configuration.networkScaling.pointBarEnabled) modules.add("MOD-BAR");
-  // The current integrated launch budget includes this single combined zone,
-  // but its ownership cannot be proven for a separate point format.
-  if (format.requiredModules.includes("MOD-WASH")) modules.add("MOD-WASH");
   return modules;
 }
 
@@ -99,9 +129,8 @@ function excludedFromLaunchEquipment(row: ComputedCapexRow) {
 }
 
 function rowOwnership(row: ComputedCapexRow): NetworkOwnership {
-  // MOD-POS is intentionally split by its explicit canonical item names: the
-  // cash terminals repeat with the point, while the production accounting
-  // terminal belongs to the shared preparation base.
+  // The POS module is explicitly split in the canonical register: cash/KDS is
+  // repeated at each point, while CAPEX-04-002 is a production accounting terminal.
   if (row.item.id === "CAPEX-04-001" || row.item.id === "CAPEX-04-003") return "point";
   if (row.item.id === "CAPEX-04-002") return "production";
   if (row.moduleIds.length && row.moduleIds.every((id) => productionModuleIds.has(id))) return "production";
@@ -133,65 +162,88 @@ function groupEquipment(id: string, name: string, ownership: NetworkOwnership, r
   };
 }
 
-function preparationItems(configuration: InvestorConfiguration): NetworkScalingItem[] {
-  const enabled = new Set(configuration.launchBudget.preparationEnabledCategoryIds);
-  const withSeating = configuration.networkScaling.pointFormat === "with_seating";
-  return launchModel.preparation.categories.map((category) => {
-    const ownership: NetworkOwnership = ["PREP-GUEST-AREA", "PREP-BUILT-IN"].includes(category.id) ? "point" : "unresolved";
-    const applicable = category.id !== "PREP-GUEST-AREA" || withSeating;
-    const included = enabled.has(category.id) && applicable;
-    return {
-      id: category.id,
-      canonicalItem: category.id,
-      name: category.name,
-      ownership,
-      multiplier: ownership === "point" ? "per_point" : "not_aggregated",
-      amountRub: included ? category.amount_rub : 0,
-      included,
-      source: "investor-start-model.preparation.categories",
-      reason: ownership === "point"
-        ? category.id === "PREP-GUEST-AREA"
-          ? "Canonical category is explicitly the guest area; it is inapplicable without seating."
-          : "Canonical category contains order/issue counters and built-in retail furniture."
-        : "The canonical category combines production and/or retail works without a reliable split.",
-    };
-  });
+function pointPreparationItem(cohort: TradingPointCohort): NetworkScalingItem {
+  return {
+    id: `${cohort.id}:point-preparation`,
+    canonicalItem: "PREP-BUILT-IN / PREP-GUEST-AREA",
+    name: "Подготовка точки",
+    ownership: "point",
+    multiplier: "per_point",
+    amountRub: cohort.preparationRub,
+    included: cohort.preparationRub !== null,
+    source: "Текущие planning assumptions подготовки",
+    reason: cohort.format === "with_seating"
+      ? "Учитывает применимые подтверждённые категории торговой и гостевой зон."
+      : "Учитывает только подтверждённую подготовку торговой зоны без гостевой посадки.",
+  };
 }
 
-function furnitureItem(configuration: InvestorConfiguration, seatCount: number | null): NetworkScalingItem {
-  const withSeating = configuration.networkScaling.pointFormat === "with_seating";
-  const profile = launchModel.furniture.profiles.find((item) => item.id === configuration.launchBudget.furnitureProfileId)!;
+function pointPremisesItem(configuration: InvestorConfiguration, cohort: TradingPointCohort): NetworkScalingItem {
+  const launch = calculateLaunchBudget(cohortLaunchState(configuration, cohort));
+  const rent = cohort.realEstateMode === "rent";
   return {
-    id: "furniture",
+    id: `${cohort.id}:premises`,
+    canonicalItem: rent ? "prepaid_rent + security_deposit" : "property",
+    name: rent ? "Вход в аренду помещения" : "Покупка помещения",
+    ownership: "point",
+    multiplier: "per_point",
+    amountRub: launch.premisesEntryRub,
+    included: launch.premisesEntryRub !== null,
+    source: "calculateLaunchBudget.premisesEntryRub",
+    reason: rent
+      ? "Предоплата и обеспечительный платёж рассчитаны из параметров этой группы точек."
+      : "Стоимость помещения задана для этой группы точек.",
+  };
+}
+
+function furnitureItem(configuration: InvestorConfiguration, cohort: TradingPointCohort, seatCount: number | null): NetworkScalingItem {
+  const profile = launchModel.furniture.profiles.find((item) => item.id === configuration.launchBudget.furnitureProfileId)!;
+  const included = cohort.format === "with_seating" && seatCount !== null;
+  return {
+    id: `${cohort.id}:furniture`,
     canonicalItem: "furniture.formula",
     name: "Мебель посадочного зала",
     ownership: "point",
     multiplier: "per_point",
-    amountRub: withSeating && seatCount !== null ? seatCount * profile.rub_per_seat : 0,
-    included: withSeating && seatCount !== null,
+    amountRub: included ? seatCount * profile.rub_per_seat : 0,
+    included,
     source: "investor-start-model.furniture.formula",
-    reason: withSeating
-      ? "Canonical furniture formula is based on seats in the guest area."
-      : "The selected canonical point format excludes MOD-GUEST and has no own seating furniture.",
+    reason: included
+      ? "Существующая формула мебели зависит от числа мест этой точки."
+      : "Для точки только на вынос посадочный зал и его мебель не применяются.",
   };
+}
+
+function unresolvedPreparationItems(configuration: InvestorConfiguration): NetworkScalingItem[] {
+  const enabled = new Set(configuration.launchBudget.preparationEnabledCategoryIds);
+  return launchModel.preparation.categories
+    .filter((category) => !["PREP-GUEST-AREA", "PREP-BUILT-IN"].includes(category.id))
+    .map((category) => ({
+      id: category.id,
+      canonicalItem: category.id,
+      name: category.name,
+      ownership: "unresolved" as const,
+      multiplier: "not_aggregated" as const,
+      amountRub: enabled.has(category.id) ? category.amount_rub : 0,
+      included: enabled.has(category.id),
+      source: "investor-start-model.preparation.categories",
+      reason: "В текущих данных эта подготовка смешивает производство и торговые объекты.",
+    }));
 }
 
 function unresolvedLaunchItems(configuration: InvestorConfiguration): NetworkScalingItem[] {
   const economics = configuredEconomicsScenario(configuration);
   const reasons: Record<string, string> = {
-    video: "Security equipment belongs to the current integrated object; the canonical model has no network split.",
-    alarm: "Security equipment belongs to the current integrated object; the canonical model has no network split.",
-    uniform: "The canonical launch item is not separated into production and point teams.",
-    launch_marketing: "The canonical launch marketing item has no point/network allocation rule.",
-    inventory: "Initial inventory is working capital for the integrated object, without a point allocation rule.",
-    contingency: "Canonical contingency is based on equipment + furniture + preparation, whose network ownership is only partially resolved.",
-    prepaid_rent: "Prepaid rent is specified for the current integrated premises, not a separate production base or point.",
-    security_deposit: "The deposit is specified for the current integrated premises, not a separate production base or point.",
-    property: "The property price is specified for the current integrated premises, not a separate production base or point.",
-    operating_reserve: "The reserve is calculated from integrated operating costs; it must not be multiplied before OPEX is separated.",
+    video: "В текущей модели безопасность не разделена между производством и точками.",
+    alarm: "В текущей модели безопасность не разделена между производством и точками.",
+    uniform: "Первичная форма не разделена между командами производства и точек.",
+    launch_marketing: "Для маркетинга запуска нет правила распределения по группам точек.",
+    inventory: "Первоначальный запас не имеет правила распределения по группам точек.",
+    contingency: "База резерва запуска содержит как включённые, так и требующие уточнения статьи.",
+    operating_reserve: "Операционный запас основан на смешанном OPEX и не масштабируется до его разделения.",
   };
   return economics.investmentBreakdown
-    .filter((item) => !["equipment", "furniture", "preparation"].includes(item.key))
+    .filter((item) => !["equipment", "furniture", "preparation", "prepaid_rent", "security_deposit", "property"].includes(item.key))
     .map((item) => ({
       id: item.key,
       canonicalItem: item.key,
@@ -201,67 +253,92 @@ function unresolvedLaunchItems(configuration: InvestorConfiguration): NetworkSca
       amountRub: item.amount_rub,
       included: true,
       source: "Financial Model / Investor Summary investment breakdown",
-      reason: reasons[item.key] ?? "The canonical launch item has no confirmed production, point, or network allocation.",
+      reason: reasons[item.key] ?? "Для этой статьи пока нет подтверждённого распределения.",
     }));
 }
 
-export function networkScalingProjection(configuration: InvestorConfiguration): NetworkScalingProjection {
-  const format = activeFormat(configuration);
-  const pointFormat = configuration.networkScaling.pointFormat;
-  const { parameters, seatCount } = equipmentParameters(configuration, pointFormat);
-  const rows = buildCapexRows(activeModuleIds(configuration, format), configuration.launchBudget.equipmentScenarioId.toLowerCase() as "minimum" | "base" | "scale_ready", parameters);
-  const classifiedRows = rows.filter((row) => row.independentProcurement && !excludedFromLaunchEquipment(row));
-
-  const productionRows = classifiedRows.filter((row) => rowOwnership(row) === "production");
-  const pointRows = classifiedRows.filter((row) => rowOwnership(row) === "point");
-  const unresolvedRows = classifiedRows.filter((row) => rowOwnership(row) === "unresolved");
-  const productionEquipmentRows = productionRows.filter((row) => !row.moduleIds.includes("MOD-GROW"));
-  const growRows = productionRows.filter((row) => row.moduleIds.includes("MOD-GROW"));
-  const pointRetailRows = pointRows.filter((row) => !row.moduleIds.includes("MOD-BAR") && !["CAPEX-04-001", "CAPEX-04-003"].includes(row.item.id));
-  const pointPosRows = pointRows.filter((row) => ["CAPEX-04-001", "CAPEX-04-003"].includes(row.item.id));
-  const pointBarRows = pointRows.filter((row) => row.moduleIds.includes("MOD-BAR"));
-  const preparations = preparationItems(configuration);
-
-  const productionItems = [
-    groupEquipment("production-equipment", "Производственное оборудование", "production", productionEquipmentRows, "CAPEX modules: MOD-PREP", "All included rows belong only to the canonical preparation module."),
-    groupEquipment("grow-module", "Модуль выращивания", "production", growRows, "CAPEX modules: MOD-GROW", "Owner decision: grow is production infrastructure and is created once."),
-  ].filter((item): item is NetworkScalingItem => item !== null);
+function pointCohortProjection(configuration: InvestorConfiguration, cohort: TradingPointCohort): NetworkPointCohortProjection {
+  const format = activeFormat(cohort.format);
+  const { parameters, seatCount } = equipmentParameters(configuration, cohort);
+  const rows = buildCapexRows(
+    activePointModuleIds(cohort),
+    configuration.launchBudget.equipmentScenarioId.toLowerCase() as "minimum" | "base" | "scale_ready",
+    parameters,
+  ).filter((row) => row.independentProcurement && !excludedFromLaunchEquipment(row));
+  const pointRows = rows.filter((row) => rowOwnership(row) === "point");
+  const retailRows = pointRows.filter((row) => !row.moduleIds.includes("MOD-BAR") && !["CAPEX-04-001", "CAPEX-04-003"].includes(row.item.id));
+  const posRows = pointRows.filter((row) => ["CAPEX-04-001", "CAPEX-04-003"].includes(row.item.id));
+  const barRows = pointRows.filter((row) => row.moduleIds.includes("MOD-BAR"));
   const pointItems = [
-    groupEquipment("point-retail-equipment", "Торговая кухня и выдача", "point", pointRetailRows, "CAPEX modules: MOD-RETAIL-HOT / MOD-TAKEAWAY", "These modules are required by canonical trading-point formats."),
-    groupEquipment("point-pos-kds", "Касса и KDS", "point", pointPosRows, "CAPEX items CAPEX-04-001 / CAPEX-04-003", "Cash terminals and order screens are required by canonical trading-point formats."),
-    groupEquipment("point-bar", "Бар и напитки", "point", pointBarRows, "CAPEX module: MOD-BAR", "The optional canonical bar module belongs to each selected trading point."),
-    ...preparations.filter((item) => item.ownership === "point"),
-    furnitureItem(configuration, seatCount),
+    pointPremisesItem(configuration, cohort),
+    pointPreparationItem(cohort),
+    groupEquipment("point-retail-equipment", "Торговая кухня и выдача", "point", retailRows, "CAPEX: торговые модули", "Оборудование относится к повторяемой торговой точке."),
+    groupEquipment("point-pos-kds", "Касса и KDS", "point", posRows, "CAPEX-04-001 / CAPEX-04-003", "Касса и экран заказов относятся к торговой точке."),
+    groupEquipment("point-bar", "Бар и напитки", "point", barRows, "CAPEX: MOD-BAR", "Бар включён только для этой группы точек."),
+    furnitureItem(configuration, cohort, seatCount),
   ].filter((item): item is NetworkScalingItem => item !== null);
+  const confirmedPointInvestmentRub = sumKnown(pointItems);
+  return {
+    cohort,
+    formatName: formatName(cohort.format),
+    realEstateName: realEstateName(cohort.realEstateMode),
+    pointFormatSourceId: format.id,
+    pointItems,
+    confirmedPointInvestmentRub,
+    confirmedCohortInvestmentRub: confirmedPointInvestmentRub * cohort.count,
+    // Launch stock, security, reserve and contingency still require allocation;
+    // never present this subtotal as a complete opening cost.
+    isPartial: true,
+  };
+}
+
+export function networkScalingProjection(configuration: InvestorConfiguration): NetworkScalingProjection {
+  const productionRows = buildCapexRows(
+    activeProductionModuleIds(configuration),
+    configuration.launchBudget.equipmentScenarioId.toLowerCase() as "minimum" | "base" | "scale_ready",
+    emptyCapexParameters({
+      outletCount: capexData.businessCapacity.prep_outlet_count,
+      checksPerOutlet: capexData.businessCapacity.checks_per_outlet_per_day,
+      fillingCount: capexData.pilotConfiguration?.filling_count ?? null,
+      cashierPostCount: capexData.pilotConfiguration?.cashier_post_count ?? null,
+      hotKitchenPostCount: capexData.pilotConfiguration?.hot_kitchen_post_count ?? null,
+      seatCount: 0,
+      guestAreaM2: 0,
+      serviceStationCount: capexData.pilotConfiguration?.service_station_count ?? null,
+      centralSupply: capexData.pilotConfiguration?.central_supply_enabled ?? false,
+    }),
+  ).filter((row) => row.independentProcurement && !excludedFromLaunchEquipment(row) && rowOwnership(row) === "production");
+  const productionItems = [
+    groupEquipment("production-equipment", "Производственное оборудование", "production", productionRows.filter((row) => !row.moduleIds.includes("MOD-GROW")), "CAPEX: MOD-PREP", "Оборудование общей производственной базы создаётся один раз."),
+    groupEquipment("grow-module", "Модуль выращивания", "production", productionRows.filter((row) => row.moduleIds.includes("MOD-GROW")), "CAPEX: MOD-GROW", "Модуль выращивания относится к производству и создаётся один раз."),
+  ].filter((item): item is NetworkScalingItem => item !== null);
+  const cohorts = configuration.networkScaling.cohorts.map((cohort) => pointCohortProjection(configuration, cohort));
+  const unresolvedRowsByItemId = new Map<string, ComputedCapexRow>();
+  for (const cohort of configuration.networkScaling.cohorts) {
+    const { parameters } = equipmentParameters(configuration, cohort);
+    for (const row of buildCapexRows(activePointModuleIds(cohort), configuration.launchBudget.equipmentScenarioId.toLowerCase() as "minimum" | "base" | "scale_ready", parameters)) {
+      if (row.independentProcurement && !excludedFromLaunchEquipment(row) && rowOwnership(row) === "unresolved") unresolvedRowsByItemId.set(row.item.id, row);
+    }
+  }
   const unresolvedItems = [
-    groupEquipment("unresolved-equipment", "Неразделённое оборудование", "unresolved", unresolvedRows, "CAPEX modules with mixed or unclear ownership", "Canonical module ownership is not sufficient to allocate this equipment to production or a point."),
-    ...preparations.filter((item) => item.ownership === "unresolved"),
+    groupEquipment("unresolved-equipment", "Неразделённое оборудование", "unresolved", [...unresolvedRowsByItemId.values()], "CAPEX: смешанные модули", "Принадлежность оборудования к производству или точке пока не подтверждена."),
+    ...unresolvedPreparationItems(configuration),
     ...unresolvedLaunchItems(configuration),
   ].filter((item): item is NetworkScalingItem => item !== null);
-
   const productionInvestmentRub = sumKnown(productionItems);
-  const pointInvestmentRub = sumKnown(pointItems);
-  const pointNetworkInvestmentRub = pointInvestmentRub * configuration.networkScaling.pointCount;
-  const confirmedInvestmentSubtotalRub = productionInvestmentRub + pointNetworkInvestmentRub;
+  const confirmedPointInvestmentRub = cohorts.reduce((total, cohort) => total + cohort.confirmedCohortInvestmentRub, 0);
 
   return {
-    pointCount: configuration.networkScaling.pointCount,
-    pointFormat,
-    pointFormatSourceId: format.id,
-    pointFormatName: pointFormat === "with_seating" ? "Точка с посадочным залом" : "Точка без посадочного зала",
-    pointBarEnabled: configuration.networkScaling.pointBarEnabled,
-    productionGrowEnabled: configuration.networkScaling.productionGrowEnabled,
     productionItems,
-    pointItems,
+    cohorts,
     sharedItems: [],
     unresolvedItems,
     productionInvestmentRub,
-    pointInvestmentRub,
-    pointNetworkInvestmentRub,
-    confirmedInvestmentSubtotalRub,
+    confirmedPointInvestmentRub,
+    confirmedInvestmentSubtotalRub: productionInvestmentRub + confirmedPointInvestmentRub,
     isPartial: true,
-    capacityNote: "В канонической модели пока нет зависимости мощности заготовочного производства от количества торговых точек.",
-    contingencyNote: "Резерв запуска сохраняет каноническую базу «оборудование + мебель + подготовка», но не агрегируется: база смешивает resolved и unresolved статьи.",
-    reserveNote: "Операционный запас не умножается: каноническая модель пока не делит OPEX на production, point и shared/network.",
+    capacityNote: "Мощность производства пока не ограничивает расчёт: зависимость от количества точек ещё не определена.",
+    contingencyNote: "Резерв запуска пока не включён: его текущая база смешивает включённые и требующие уточнения статьи.",
+    reserveNote: "Операционный запас пока не включён: сначала нужен раздельный OPEX производства, точек и общих функций.",
   };
 }

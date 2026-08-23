@@ -7,6 +7,7 @@ import { fileURLToPath } from "node:url";
 import { configuredEconomicsScenario, configuredEconomicsScenarios } from "../src/lib/configured-economics.js";
 import {
   canonicalInvestorConfiguration,
+  createTradingPointCohort,
   defaultInvestorConfiguration,
   investorConfigurationIsCanonical,
   restoreInvestorConfiguration,
@@ -155,7 +156,7 @@ test("runtime configuration is safely restored and never mutates canonical sourc
     launchBudget: { ...defaultInvestorConfiguration().launchBudget, monthlyRentRub: 475_000 },
   });
 
-  assert.equal(restored.schemaVersion, 1);
+  assert.equal(restored.schemaVersion, 2);
   assert.equal(restored.scenarioId, "optimistic");
   assert.equal(restored.launchBudget.monthlyRentRub, 475_000);
   assert.deepEqual(restoreInvestorConfiguration({ scenarioId: "invalid" }), defaultInvestorConfiguration());
@@ -180,72 +181,110 @@ test("custom checks per day is a local scenario override and canonical reset sta
   assert.deepEqual(sourceHashes(), before);
 });
 
-test("network scaling separates the production base from the repeatable point without inventing network economics", () => {
-  const before = sourceHashes();
-  const canonical = canonicalInvestorConfiguration();
-  const withoutSeatingOne = networkScalingProjection({
-    ...canonical,
+test("v2.1 single-point state migrates safely into a v2.2 point cohort", () => {
+  const launchBudget = defaultInvestorConfiguration().launchBudget;
+  const migrated = restoreInvestorConfiguration({
+    schemaVersion: 1,
+    launchBudget,
     networkScaling: {
-      ...canonical.networkScaling,
-      pointCount: 1,
-      pointFormat: "without_seating",
-      pointBarEnabled: false,
-    },
-  });
-  const withoutSeatingFive = networkScalingProjection({
-    ...canonical,
-    networkScaling: {
-      ...canonical.networkScaling,
       pointCount: 5,
       pointFormat: "without_seating",
       pointBarEnabled: false,
+      productionGrowEnabled: true,
     },
   });
 
-  const grow = withoutSeatingOne.productionItems.find((item) => item.id === "grow-module");
+  assert.equal(migrated.schemaVersion, 2);
+  assert.equal(migrated.networkScaling.cohorts.length, 1);
+  assert.deepEqual(migrated.networkScaling.cohorts[0], {
+    ...createTradingPointCohort(launchBudget, {
+      id: "cohort-1",
+      format: "takeaway",
+      count: 5,
+      barEnabled: false,
+    }),
+    format: "takeaway",
+    guestAreaM2: null,
+  });
+  assert.equal(migrated.networkScaling.productionGrowEnabled, true);
+
+  const nullablePlanningInput = restoreInvestorConfiguration({
+    schemaVersion: 2,
+    launchBudget,
+    networkScaling: {
+      cohorts: [{ ...migrated.networkScaling.cohorts[0], monthlyRentRub: null, preparationRub: null }],
+      productionGrowEnabled: true,
+    },
+  });
+  assert.equal(nullablePlanningInput.networkScaling.cohorts[0].monthlyRentRub, null);
+  assert.equal(nullablePlanningInput.networkScaling.cohorts[0].preparationRub, null);
+});
+
+test("network scaling aggregates independent point cohorts without inventing network economics", () => {
+  const before = sourceHashes();
+  const canonical = canonicalInvestorConfiguration();
+  const seatingRent = createTradingPointCohort(canonical.launchBudget, {
+    id: "seating-rent",
+    format: "with_seating",
+    realEstateMode: "rent",
+    count: 5,
+    barEnabled: true,
+  });
+  const takeawayRent = createTradingPointCohort(canonical.launchBudget, {
+    id: "takeaway-rent",
+    format: "takeaway",
+    realEstateMode: "rent",
+    count: 10,
+    barEnabled: false,
+  });
+  const mixedNetwork = networkScalingProjection({
+    ...canonical,
+    networkScaling: {
+      ...canonical.networkScaling,
+      cohorts: [seatingRent, takeawayRent],
+    },
+  });
+  const changedCounts = networkScalingProjection({
+    ...canonical,
+    networkScaling: {
+      ...canonical.networkScaling,
+      cohorts: [{ ...seatingRent, count: 1 }, { ...takeawayRent, count: 1 }],
+    },
+  });
+
+  const grow = mixedNetwork.productionItems.find((item) => item.id === "grow-module");
   assert.ok(grow, "the canonical grow module is exposed as production infrastructure");
   assert.equal(grow.ownership, "production");
   assert.equal(grow.multiplier, "once");
-  assert.equal(withoutSeatingFive.productionInvestmentRub, withoutSeatingOne.productionInvestmentRub);
-  assert.equal(withoutSeatingFive.pointNetworkInvestmentRub, withoutSeatingOne.pointInvestmentRub * 5);
+  assert.equal(mixedNetwork.productionInvestmentRub, changedCounts.productionInvestmentRub);
+  assert.equal(mixedNetwork.cohorts.length, 2);
+  const seating = mixedNetwork.cohorts.find((cohort) => cohort.cohort.id === "seating-rent")!;
+  const takeaway = mixedNetwork.cohorts.find((cohort) => cohort.cohort.id === "takeaway-rent")!;
+  assert.equal(seating.confirmedCohortInvestmentRub, seating.confirmedPointInvestmentRub * 5);
+  assert.equal(takeaway.confirmedCohortInvestmentRub, takeaway.confirmedPointInvestmentRub * 10);
   assert.equal(
-    withoutSeatingFive.confirmedInvestmentSubtotalRub,
-    withoutSeatingFive.productionInvestmentRub + withoutSeatingFive.pointNetworkInvestmentRub,
+    mixedNetwork.confirmedInvestmentSubtotalRub,
+    mixedNetwork.productionInvestmentRub + seating.confirmedCohortInvestmentRub + takeaway.confirmedCohortInvestmentRub,
   );
 
-  const barOff = withoutSeatingOne.pointItems.find((item) => item.id === "point-bar");
-  const furnitureWithoutSeating = withoutSeatingOne.pointItems.find((item) => item.id === "furniture");
-  assert.equal(barOff, undefined, "the optional bar module is excluded from a bar-off point");
-  assert.ok(furnitureWithoutSeating);
-  assert.equal(furnitureWithoutSeating.included, false, "seating furniture is excluded for the existing no-seating format");
-  assert.ok(withoutSeatingFive.unresolvedItems.every((item) => item.ownership === "unresolved" && item.multiplier === "not_aggregated"));
-  assert.equal(withoutSeatingFive.unresolvedItems.find((item) => item.id === "operating_reserve")?.multiplier, "not_aggregated");
-  assert.equal(withoutSeatingFive.unresolvedItems.find((item) => item.id === "contingency")?.multiplier, "not_aggregated");
+  assert.equal(seating.pointItems.find((item) => item.id === "point-bar")?.multiplier, "per_point");
+  assert.equal(seating.pointItems.find((item) => item.name === "Мебель посадочного зала")?.included, true);
+  assert.equal(takeaway.pointItems.find((item) => item.id === "point-bar"), undefined, "bar-off takeaway excludes the optional bar module");
+  assert.equal(takeaway.pointItems.find((item) => item.name === "Мебель посадочного зала")?.included, false, "takeaway excludes seating furniture");
+  assert.match(seating.pointItems.find((item) => item.id.endsWith(":premises"))?.name ?? "", /Вход в аренду/);
 
-  const barOn = networkScalingProjection({
+  const takeawayPurchase = networkScalingProjection({
     ...canonical,
     networkScaling: {
       ...canonical.networkScaling,
-      pointCount: 1,
-      pointFormat: "without_seating",
-      pointBarEnabled: true,
+      cohorts: [{ ...takeawayRent, id: "takeaway-purchase", realEstateMode: "purchase", count: 1 }],
     },
   });
-  const withSeating = networkScalingProjection({
-    ...canonical,
-    networkScaling: {
-      ...canonical.networkScaling,
-      pointCount: 1,
-      pointFormat: "with_seating",
-      pointBarEnabled: true,
-    },
-  });
-
-  assert.ok(barOn.pointInvestmentRub > withoutSeatingOne.pointInvestmentRub, "the existing bar module changes the repeatable point only when enabled");
-  assert.equal(barOn.pointItems.find((item) => item.id === "point-bar")?.multiplier, "per_point");
-  assert.equal(withSeating.pointItems.find((item) => item.id === "furniture")?.included, true);
-  assert.ok(withSeating.pointInvestmentRub > withoutSeatingOne.pointInvestmentRub, "the seated canonical format enables point-only guest items");
-  assert.equal(withoutSeatingFive.isPartial, true);
+  assert.match(takeawayPurchase.cohorts[0].pointItems.find((item) => item.id.endsWith(":premises"))?.name ?? "", /Покупка помещения/);
+  assert.ok(mixedNetwork.unresolvedItems.every((item) => item.ownership === "unresolved" && item.multiplier === "not_aggregated"));
+  assert.equal(mixedNetwork.unresolvedItems.find((item) => item.id === "operating_reserve")?.multiplier, "not_aggregated");
+  assert.equal(mixedNetwork.unresolvedItems.find((item) => item.id === "contingency")?.multiplier, "not_aggregated");
+  assert.equal(mixedNetwork.isPartial, true);
   assert.deepEqual(sourceHashes(), before, "the selector is read-only against canonical sources");
 });
 
