@@ -57,13 +57,6 @@ function valueOrDefault<T extends object, K extends keyof T>(value: T, key: K, f
   return Object.prototype.hasOwnProperty.call(value, key) ? value[key] : fallback;
 }
 
-function pointPreparationDefault(launchBudget: LaunchBudgetState, format: TradingPointFormat) {
-  const enabled = new Set(launchBudget.preparationEnabledCategoryIds);
-  return launchModel.preparation.categories
-    .filter((category) => category.id === "PREP-BUILT-IN" || (format === "with_seating" && category.id === "PREP-GUEST-AREA"))
-    .reduce((total, category) => total + (enabled.has(category.id) ? category.amount_rub : 0), 0);
-}
-
 export function createTradingPointCohort(
   launchBudget = defaultLaunchBudgetState(),
   overrides: Partial<TradingPointCohort> = {},
@@ -76,16 +69,21 @@ export function createTradingPointCohort(
     format,
     realEstateMode: overrides.realEstateMode === "purchase" || overrides.realEstateMode === "rent"
       ? overrides.realEstateMode
-      : launchBudget.premisesScenario,
+      : "rent",
     count: nonnegativeInteger(overrides.count),
-    totalAreaM2: finiteOrNull(valueOrDefault(overrides, "totalAreaM2", launchBudget.totalAreaM2)),
-    kitchenAreaM2: finiteOrNull(valueOrDefault(overrides, "kitchenAreaM2", launchBudget.kitchenAreaM2)),
-    guestAreaM2: format === "with_seating" ? finiteOrNull(valueOrDefault(overrides, "guestAreaM2", launchBudget.guestAreaM2)) : null,
-    monthlyRentRub: finiteOrNull(valueOrDefault(overrides, "monthlyRentRub", launchBudget.monthlyRentRub)),
-    purchasePriceRub: finiteOrNull(valueOrDefault(overrides, "purchasePriceRub", launchBudget.purchasePriceRub)),
+    // The existing LaunchBudget defaults describe an integrated object, not a
+    // format-specific retail point. Fresh cohorts therefore start unknown until
+    // a format-specific canonical assumption is available or the user enters it.
+    totalAreaM2: finiteOrNull(valueOrDefault(overrides, "totalAreaM2", null)),
+    kitchenAreaM2: finiteOrNull(valueOrDefault(overrides, "kitchenAreaM2", null)),
+    guestAreaM2: format === "with_seating" ? finiteOrNull(valueOrDefault(overrides, "guestAreaM2", null)) : null,
+    monthlyRentRub: finiteOrNull(valueOrDefault(overrides, "monthlyRentRub", null)),
+    purchasePriceRub: finiteOrNull(valueOrDefault(overrides, "purchasePriceRub", null)),
     prepaymentMonths: [1, 3, 12].includes(Number(overrides.prepaymentMonths)) ? Number(overrides.prepaymentMonths) : launchBudget.prepaymentMonths,
     securityDepositMonths: [1, 2, 3].includes(Number(overrides.securityDepositMonths)) ? Number(overrides.securityDepositMonths) : launchBudget.securityDepositMonths,
-    preparationRub: finiteOrNull(valueOrDefault(overrides, "preparationRub", pointPreparationDefault(launchBudget, format))),
+    preparationRub: finiteOrNull(valueOrDefault(overrides, "preparationRub", null)),
+    // A new group follows the current canonical point baseline, never another
+    // cohort's selected bar setting.
     barEnabled: typeof overrides.barEnabled === "boolean" ? overrides.barEnabled : launchBudget.barEnabled,
   };
 }
@@ -104,7 +102,7 @@ type LegacyNetworkScalingConfiguration = {
 
 export function defaultNetworkScalingConfiguration(launchBudget = defaultLaunchBudgetState()): NetworkScalingConfiguration {
   return {
-    cohorts: [createTradingPointCohort(launchBudget)],
+    cohorts: [createTradingPointCohort(launchBudget, { format: "with_seating", realEstateMode: "rent", count: 1 })],
     productionGrowEnabled: launchBudget.growEnabled,
   };
 }
@@ -119,8 +117,15 @@ export function restoreNetworkScalingConfiguration(value: unknown, launchBudget:
     : [createTradingPointCohort(launchBudget, {
       id: "cohort-1",
       format: input.pointFormat === "without_seating" ? "takeaway" : "with_seating",
+      realEstateMode: launchBudget.premisesScenario,
       count: nonnegativeInteger(input.pointCount),
       barEnabled: typeof input.pointBarEnabled === "boolean" ? input.pointBarEnabled : launchBudget.barEnabled,
+      totalAreaM2: launchBudget.totalAreaM2,
+      kitchenAreaM2: launchBudget.kitchenAreaM2,
+      guestAreaM2: launchBudget.guestAreaM2,
+      monthlyRentRub: launchBudget.monthlyRentRub,
+      purchasePriceRub: launchBudget.purchasePriceRub,
+      preparationRub: null,
     })];
   return {
     cohorts: cohorts.length ? cohorts : defaults.cohorts,

@@ -87,8 +87,7 @@ async function run() {
     const checks = page.getByTestId("terminal-checks-input");
     await checks.waitFor();
     assert.equal(await checks.inputValue(), "300", "the Terminal opens with the canonical baseline");
-    await checks.fill("175");
-    assert.equal(await page.getByTestId("terminal-scenario-status").innerText(), "Пользовательский сценарий");
+    assert.equal(await page.getByTestId("terminal-scenario-status").innerText(), "Financial Model baseline");
 
     await page.locator(".terminal-tabs").getByRole("button", { name: "Масштабирование" }).click();
     await page.getByRole("heading", { name: "Масштабирование" }).waitFor();
@@ -96,9 +95,25 @@ async function run() {
     const production = await amount("scaling-production-investment");
     await setSwitch("scaling-grow-toggle", true);
 
-    // v2.1's one point is now the first independently configurable cohort.
+    assert.equal(await page.getByTestId("scaling-cohort-row-cohort-2").count(), 0, "fresh state has no demo cohorts");
+    assert.match(await page.getByTestId("scaling-cohort-row-cohort-1").innerText(), /С посадочным залом[\s\S]*Аренда[\s\S]*×1/, "fresh state starts with one rented seating point");
     await page.getByTestId("scaling-cohort-editor-cohort-1").waitFor();
+    for (const label of ["Площадь помещения", "Рабочая зона", "Посадочный зал", "Аренда в месяц", "Подготовка точки"]) {
+      assert.equal(await page.getByLabel(label).inputValue(), "", `${label} is unknown instead of inherited from the integrated object`);
+    }
+    await page.evaluate(() => window.scrollTo(0, 0));
+    await page.screenshot({ path: path.join(projectRoot, ".cache/verification/screenshots/investor-terminal-v22-desktop.png"), fullPage: true });
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.evaluate(() => window.scrollTo(0, 0));
+    await page.waitForTimeout(100);
+    await page.screenshot({ path: path.join(projectRoot, ".cache/verification/screenshots/investor-terminal-v22-mobile.png"), fullPage: true });
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.waitForTimeout(100);
+
+    // The neutral point can then be configured deterministically by the investor.
     await setCount("cohort-1", 5);
+    await page.getByTestId("scaling-cohort-rent-cohort-1").fill("350000");
+    await page.getByTestId("scaling-cohort-rent-cohort-1").press("Tab");
     await setSwitch("scaling-cohort-bar-cohort-1", true);
     const seatingUnit = await amount("scaling-cohort-unit-cohort-1");
     assert.equal(await amount("scaling-cohort-total-cohort-1"), seatingUnit * 5, "seating cohort aggregates by its own count");
@@ -111,7 +126,13 @@ async function run() {
     await page.getByTestId("scaling-add-estate").selectOption("rent");
     await page.getByTestId("scaling-add-cohort").click();
     await page.getByTestId("scaling-cohort-editor-cohort-2").waitFor();
+    assert.equal(await page.getByTestId("scaling-cohort-count-cohort-2").inputValue(), "1", "new cohort count defaults to one");
+    for (const label of ["Площадь помещения", "Рабочая зона", "Аренда в месяц", "Подготовка точки"]) {
+      assert.equal(await page.getByLabel(label).inputValue(), "", `new takeaway ${label} is not copied from another cohort`);
+    }
     await setCount("cohort-2", 10);
+    await page.getByTestId("scaling-cohort-rent-cohort-2").fill("210000");
+    await page.getByTestId("scaling-cohort-rent-cohort-2").press("Tab");
     await setSwitch("scaling-cohort-bar-cohort-2", false);
     const takeawayUnit = await amount("scaling-cohort-unit-cohort-2");
     assert.equal(await amount("scaling-cohort-total-cohort-2"), takeawayUnit * 10, "takeaway cohort aggregates independently");
@@ -127,23 +148,22 @@ async function run() {
     await page.getByTestId("scaling-add-cohort").click();
     await page.getByTestId("scaling-cohort-editor-cohort-3").waitFor();
     assert.equal(await page.getByTestId("scaling-cohort-estate-cohort-3").inputValue(), "purchase", "purchase is configured per cohort, not globally");
+    assert.equal(await page.getByTestId("scaling-cohort-count-cohort-3").inputValue(), "1", "new purchase cohort count defaults to one");
     assert.equal(await page.getByTestId("scaling-cohort-rent-cohort-3").count(), 0, "purchase cohort has no rent entry input");
     assert.equal(await page.getByTestId("scaling-cohort-purchase-cohort-3").count(), 1, "purchase cohort has its own property input");
+    assert.equal(await page.getByTestId("scaling-cohort-purchase-cohort-3").inputValue(), "", "purchase price is not inherited from the integrated object");
+    await page.getByTestId("scaling-cohort-purchase-cohort-3").fill("27000000");
+    await page.getByTestId("scaling-cohort-purchase-cohort-3").press("Tab");
     assert.notEqual(await amount("scaling-cohort-unit-cohort-3"), takeawayUnit, "rent and purchase entry costs are not mixed");
 
     const expectedTotal = production + seatingUnit * 5 + takeawayUnit * 10 + await amount("scaling-cohort-unit-cohort-3");
     assert.equal(await amount("scaling-confirmed-total"), expectedTotal, "network total sums only production and independently confirmed cohorts");
+    assert.equal(await page.getByTestId("scaling-unresolved").count(), 0, "unresolved items stay collapsed by default");
     await page.getByRole("button", { name: /Показать статьи/ }).click();
     const unresolvedMultipliers = await page.getByTestId("scaling-unresolved").locator("[data-multiplier]").evaluateAll((items) => items.map((item) => item.getAttribute("data-multiplier")));
     assert.ok(unresolvedMultipliers.length > 0 && unresolvedMultipliers.every((multiplier) => multiplier === "not_aggregated"), "unallocated items stay out of the confirmed total");
     assert.doesNotMatch(await page.getByTestId("scaling-cohort-editor-cohort-3").innerText(), /Стоимость открытия одной точки/, "partial point cost is not labelled as a full opening cost");
-
-    await page.evaluate(() => window.scrollTo(0, 0));
-    await page.screenshot({ path: path.join(projectRoot, ".cache/verification/screenshots/investor-terminal-v22-desktop.png"), fullPage: true });
-    await page.setViewportSize({ width: 390, height: 844 });
-    await page.evaluate(() => window.scrollTo(0, 0));
-    await page.waitForTimeout(100);
-    await page.screenshot({ path: path.join(projectRoot, ".cache/verification/screenshots/investor-terminal-v22-mobile.png"), fullPage: true });
+    await page.getByRole("button", { name: "Скрыть список" }).click();
 
     await page.getByRole("button", { name: "Вернуться к экономике точки" }).click();
     await checks.waitFor();
@@ -158,6 +178,8 @@ async function run() {
     await page.getByTestId("terminal-reset").click();
     await page.getByTestId("scaling-cohort-row-cohort-1").waitFor();
     assert.equal(await page.getByTestId("scaling-cohort-row-cohort-2").count(), 0, "reset restores the canonical single-cohort state");
+    assert.match(await page.getByTestId("scaling-cohort-row-cohort-1").innerText(), /С посадочным залом[\s\S]*Аренда[\s\S]*×1/, "reset restores the neutral point structure");
+    assert.equal(await page.getByLabel("Площадь помещения").inputValue(), "", "reset restores nullable planning inputs");
     await page.getByRole("button", { name: "Экономика точки" }).click();
     await checks.waitFor();
     assert.equal(await checks.inputValue(), "300", "reset restores canonical traffic too");

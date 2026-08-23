@@ -858,7 +858,16 @@
 }
 
 .cohort-table-row strong {
+  display: grid;
   font-size: .77rem;
+}
+
+.cohort-table-row strong small,
+.scaling-results dd small {
+  color: #8a7050;
+  font-size: .61rem;
+  font-weight: 500;
+  line-height: 1.1;
 }
 
 .cohort-editor {
@@ -1038,6 +1047,17 @@
   min-height: 32px;
   padding: 6px 10px;
   white-space: nowrap;
+}
+
+.scaling-unresolved-brief {
+  color: #746c60;
+  font-size: .75rem;
+  line-height: 1.4;
+  padding: 10px 13px 0;
+}
+
+.scaling-unresolved-brief p {
+  margin: 0;
 }
 
 @media (max-width: 850px) {

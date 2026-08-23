@@ -7,7 +7,7 @@ const money = new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 0 });
 const decimal = new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 1 });
 
 function formatRub(value: number | null) {
-  return value === null ? "не задано" : `${money.format(Math.round(value))} ₽`;
+  return value === null ? "Не задано" : `${money.format(Math.round(value))} ₽`;
 }
 
 function formatMillion(value: number) {
@@ -26,7 +26,7 @@ function ItemList({ items, multiplier }: { items: NetworkScalingItem[]; multipli
         <details key={item.id} className={`scaling-item is-${item.ownership}`} data-ownership={item.ownership} data-multiplier={item.multiplier}>
           <summary>
             <span>{item.name}{item.partial ? <small>частичное ценовое покрытие</small> : null}</span>
-            <strong>{item.included ? formatRub(item.amountRub) : "Не применяется"}</strong>
+            <strong>{item.amountRub === null ? "Не задано" : item.included ? formatRub(item.amountRub) : "Не применяется"}</strong>
           </summary>
           <div className="scaling-item-detail">
             <p>{item.reason}</p>
@@ -96,7 +96,7 @@ function CohortEditor({
         <summary>Показать включённые статьи</summary>
         <ItemList items={projection.pointItems} multiplier="per_point" />
       </details>
-      <p className="cohort-partial-note">Показана подтверждённая часть: запас, contingency и статьи без распределения не выданы за стоимость открытия.</p>
+      <p className="cohort-partial-note">Показана подтверждённая часть: запас, резерв запуска и статьи без распределения не выданы за стоимость открытия.</p>
     </section>
   );
 }
@@ -146,7 +146,7 @@ export function NetworkScalingPanel({ onReturnToUnit }: { onReturnToUnit: () => 
         <div className="scaling-inputs">
           <section className="scaling-section" aria-labelledby="production-title">
             <header><div><p>Общая инфраструктура</p><h3 id="production-title">Заготовочное производство</h3></div><strong className="scaling-multiplier" data-testid="scaling-production-multiplier">×1</strong></header>
-            <div className="scaling-row"><span>Общая производственная база</span><strong data-testid="scaling-production-investment" data-amount-rub={projection.productionInvestmentRub}>{formatMillion(projection.productionInvestmentRub)}</strong></div>
+            <div className="scaling-row"><span>Подтверждённая часть производственной базы</span><strong data-testid="scaling-production-investment" data-amount-rub={projection.productionInvestmentRub}>{formatMillion(projection.productionInvestmentRub)}</strong></div>
             <div className="scaling-row is-control"><span>Модуль выращивания</span><button type="button" className={`terminal-toggle${configuration.networkScaling.productionGrowEnabled ? " is-on" : ""}`} role="switch" aria-checked={configuration.networkScaling.productionGrowEnabled} onClick={() => setGrowEnabled(!configuration.networkScaling.productionGrowEnabled)} data-testid="scaling-grow-toggle"><span aria-hidden="true"><i /></span>{configuration.networkScaling.productionGrowEnabled ? "Включён · ×1" : "Выключен"}</button></div>
             <div className="scaling-row is-note"><span>Мощность производства</span><small>{projection.capacityNote}</small></div>
             <button type="button" className="scaling-details-button" aria-expanded={productionDetailsOpen} onClick={() => setProductionDetailsOpen((open) => !open)}>{productionDetailsOpen ? "Скрыть состав" : "Показать состав"}</button>
@@ -156,9 +156,9 @@ export function NetworkScalingPanel({ onReturnToUnit }: { onReturnToUnit: () => 
           <section className="scaling-section cohort-section" aria-labelledby="points-title">
             <header><div><p>Независимые группы</p><h3 id="points-title">Торговые точки</h3></div><strong className="scaling-multiplier">×N</strong></header>
             <div className="cohort-table" data-testid="scaling-cohorts">
-              <div className="cohort-table-head"><span>Тип</span><span>Недвижимость</span><span>Кол-во</span><span>1 точка</span><span>Итого</span></div>
+              <div className="cohort-table-head"><span>Тип</span><span>Недвижимость</span><span>Кол-во</span><span>Включено, 1</span><span>Итого</span></div>
               {projection.cohorts.map((cohort) => <button key={cohort.cohort.id} type="button" className={`cohort-table-row${expandedCohortId === cohort.cohort.id ? " is-expanded" : ""}`} data-testid={`scaling-cohort-row-${cohort.cohort.id}`} onClick={() => setExpandedCohortId((current) => current === cohort.cohort.id ? null : cohort.cohort.id)} aria-expanded={expandedCohortId === cohort.cohort.id}>
-                <span>{cohort.formatName}</span><span>{cohort.realEstateName}</span><strong>×{cohort.cohort.count}</strong><strong>{formatMillion(cohort.confirmedPointInvestmentRub)}</strong><strong>{formatMillion(cohort.confirmedCohortInvestmentRub)}</strong>
+                <span>{cohort.formatName}</span><span>{cohort.realEstateName}</span><strong>×{cohort.cohort.count}</strong><strong>{formatMillion(cohort.confirmedPointInvestmentRub)}<small>частично</small></strong><strong>{formatMillion(cohort.confirmedCohortInvestmentRub)}<small>частично</small></strong>
               </button>)}
             </div>
             {projection.cohorts.map((cohort) => expandedCohortId === cohort.cohort.id ? <CohortEditor key={cohort.cohort.id} projection={cohort} onChange={(next) => updateCohort(cohort.cohort.id, next)} onDelete={() => removeCohort(cohort.cohort.id)} canDelete={projection.cohorts.length > 1} /> : null)}
@@ -171,9 +171,7 @@ export function NetworkScalingPanel({ onReturnToUnit }: { onReturnToUnit: () => 
 
           <section className="scaling-section is-unresolved" aria-labelledby="unresolved-title">
             <header><div><p>Требует уточнения</p><h3 id="unresolved-title">Пока не включено в расчёт</h3></div><strong className="scaling-multiplier">{projection.unresolvedItems.length}</strong></header>
-            <div className="scaling-row is-note"><span>Общие расходы</span><small>Отдельных подтверждённых статей сети в текущей модели пока нет.</small></div>
-            <div className="scaling-row is-note" data-testid="scaling-reserve"><span>Операционный запас</span><small>{projection.reserveNote}</small></div>
-            <div className="scaling-row is-note"><span>Резерв запуска</span><small>{projection.contingencyNote}</small></div>
+            <div className="scaling-unresolved-brief" data-testid="scaling-reserve"><p>Часть расходов требует распределения между производством, точками и сетью.</p></div>
             <button type="button" className="scaling-details-button" aria-expanded={unresolvedDetailsOpen} onClick={() => setUnresolvedDetailsOpen((open) => !open)}>{unresolvedDetailsOpen ? "Скрыть список" : `Показать статьи (${projection.unresolvedItems.length})`}</button>
             {unresolvedDetailsOpen ? <div data-testid="scaling-unresolved"><ItemList items={projection.unresolvedItems} multiplier="not_aggregated" /></div> : null}
           </section>
@@ -184,7 +182,7 @@ export function NetworkScalingPanel({ onReturnToUnit }: { onReturnToUnit: () => 
           <h3>Структура инвестиций</h3>
           <dl>
             <div><dt>Производство</dt><dd data-testid="scaling-production-summary" data-amount-rub={projection.productionInvestmentRub}>{formatMillion(projection.productionInvestmentRub)} <b>×1</b></dd></div>
-            {projection.cohorts.map((cohort) => <div key={cohort.cohort.id}><dt>{cohort.formatName} · {cohort.realEstateName}</dt><dd data-testid={`scaling-cohort-summary-${cohort.cohort.id}`} data-amount-rub={cohort.confirmedCohortInvestmentRub}>{formatMillion(cohort.confirmedCohortInvestmentRub)} <b>×{cohort.cohort.count}</b></dd></div>)}
+            {projection.cohorts.map((cohort) => <div key={cohort.cohort.id}><dt>{cohort.formatName} · {cohort.realEstateName}</dt><dd data-testid={`scaling-cohort-summary-${cohort.cohort.id}`} data-amount-rub={cohort.confirmedCohortInvestmentRub}>{formatMillion(cohort.confirmedCohortInvestmentRub)} <b>×{cohort.cohort.count}</b><small>частично</small></dd></div>)}
             <div><dt>Пока не включено</dt><dd>{projection.unresolvedItems.length} статей</dd></div>
             <div className="is-total"><dt>Подтверждённые инвестиции</dt><dd data-testid="scaling-confirmed-total" data-amount-rub={projection.confirmedInvestmentSubtotalRub}>{formatMillion(projection.confirmedInvestmentSubtotalRub)}</dd></div>
           </dl>

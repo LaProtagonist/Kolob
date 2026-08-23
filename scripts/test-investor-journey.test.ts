@@ -200,8 +200,15 @@ test("v2.1 single-point state migrates safely into a v2.2 point cohort", () => {
     ...createTradingPointCohort(launchBudget, {
       id: "cohort-1",
       format: "takeaway",
+      realEstateMode: launchBudget.premisesScenario,
       count: 5,
       barEnabled: false,
+      totalAreaM2: launchBudget.totalAreaM2,
+      kitchenAreaM2: launchBudget.kitchenAreaM2,
+      guestAreaM2: launchBudget.guestAreaM2,
+      monthlyRentRub: launchBudget.monthlyRentRub,
+      purchasePriceRub: launchBudget.purchasePriceRub,
+      preparationRub: null,
     }),
     format: "takeaway",
     guestAreaM2: null,
@@ -218,6 +225,34 @@ test("v2.1 single-point state migrates safely into a v2.2 point cohort", () => {
   });
   assert.equal(nullablePlanningInput.networkScaling.cohorts[0].monthlyRentRub, null);
   assert.equal(nullablePlanningInput.networkScaling.cohorts[0].preparationRub, null);
+});
+
+test("fresh and reset network defaults use one neutral point cohort without inherited integrated premises", () => {
+  const fresh = defaultInvestorConfiguration();
+  const reset = canonicalInvestorConfiguration();
+  for (const configuration of [fresh, reset]) {
+    assert.equal(configuration.networkScaling.cohorts.length, 1);
+    const cohort = configuration.networkScaling.cohorts[0];
+    assert.equal(cohort.format, "with_seating");
+    assert.equal(cohort.realEstateMode, "rent");
+    assert.equal(cohort.count, 1);
+    assert.equal(cohort.barEnabled, configuration.launchBudget.barEnabled);
+    assert.equal(cohort.totalAreaM2, null);
+    assert.equal(cohort.kitchenAreaM2, null);
+    assert.equal(cohort.guestAreaM2, null);
+    assert.equal(cohort.monthlyRentRub, null);
+    assert.equal(cohort.purchasePriceRub, null);
+    assert.equal(cohort.preparationRub, null);
+  }
+  const newTakeawayPurchase = createTradingPointCohort(fresh.launchBudget, { id: "cohort-new", format: "takeaway", realEstateMode: "purchase" });
+  assert.equal(newTakeawayPurchase.count, 1);
+  assert.equal(newTakeawayPurchase.barEnabled, fresh.launchBudget.barEnabled);
+  assert.equal(newTakeawayPurchase.totalAreaM2, null);
+  assert.equal(newTakeawayPurchase.kitchenAreaM2, null);
+  assert.equal(newTakeawayPurchase.guestAreaM2, null);
+  assert.equal(newTakeawayPurchase.monthlyRentRub, null);
+  assert.equal(newTakeawayPurchase.purchasePriceRub, null);
+  assert.equal(newTakeawayPurchase.preparationRub, null);
 });
 
 test("network scaling aggregates independent point cohorts without inventing network economics", () => {

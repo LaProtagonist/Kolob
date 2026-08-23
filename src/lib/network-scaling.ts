@@ -198,18 +198,21 @@ function pointPremisesItem(configuration: InvestorConfiguration, cohort: Trading
 
 function furnitureItem(configuration: InvestorConfiguration, cohort: TradingPointCohort, seatCount: number | null): NetworkScalingItem {
   const profile = launchModel.furniture.profiles.find((item) => item.id === configuration.launchBudget.furnitureProfileId)!;
-  const included = cohort.format === "with_seating" && seatCount !== null;
+  const hasSeating = cohort.format === "with_seating";
+  const included = hasSeating;
   return {
     id: `${cohort.id}:furniture`,
     canonicalItem: "furniture.formula",
     name: "Мебель посадочного зала",
     ownership: "point",
     multiplier: "per_point",
-    amountRub: included ? seatCount * profile.rub_per_seat : 0,
+    amountRub: hasSeating && seatCount !== null ? seatCount * profile.rub_per_seat : hasSeating ? null : 0,
     included,
     source: "investor-start-model.furniture.formula",
-    reason: included
-      ? "Существующая формула мебели зависит от числа мест этой точки."
+    reason: hasSeating
+      ? seatCount === null
+        ? "Для расчёта мебели нужна площадь посадочного зала."
+        : "Существующая формула мебели зависит от числа мест этой точки."
       : "Для точки только на вынос посадочный зал и его мебель не применяются.",
   };
 }
