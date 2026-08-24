@@ -1,12 +1,12 @@
 schema_version: 2
-generated_at: 2026-08-23T19:16:15.399Z
+generated_at: 2026-08-24T21:28:26.709Z
 project: Колобочная
 branch: feat/investor-terminal-v2
-latest_timeline_event_id: EVT-ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01-COMMITTED
-latest_timeline_event_hash: eb7068296ee536b30cc234433fc33ac139166875253448abf72fe2a21d52e2eb
-latest_closed_iteration_id: ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01
-latest_iteration_tag: iteration/ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01
-latest_content_commit_hash: 38811a50837edd2accff947f3af0229ce0cdc9b5
+latest_timeline_event_id: EVT-ITR-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-02-COMMITTED
+latest_timeline_event_hash: 84ab01c38c25e30805b76786392d7a588c2582678a0c2789138ba59111e2fc4b
+latest_closed_iteration_id: ITR-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-02
+latest_iteration_tag: iteration/ITR-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-02
+latest_content_commit_hash: 55550cb85cbc8d2dd60bec856cf91d92456df329
 registry_hash: afc53c6fdfcd2ae8b8f782f63c3e84308948108cbf2de13abe529a23259d5be5
 canonical_document_hashes:
   - document_id: DOC-AGENTS
@@ -88,7 +88,7 @@ open_questions:
   - Archive pending review artifacts in durable storage before treating visual verification as portable.
   - Create deployment receipts when the next governed deployment is performed.
   - Decide whether malformed superseded legacy YAML evidence should receive a separate correction event.
-current_workstream: Register Investor Terminal feature-worktree governance context
+current_workstream: Investor Model physical allocation map — artifact-safe delivery
 next_task: Select the next task through a new governed proposal; no business task is pre-authorized.
 google_integration_status:
   configured: false

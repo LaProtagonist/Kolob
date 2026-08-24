@@ -4,9 +4,9 @@
 
 ## 1. Current state
 
-- Events: 201.
-- Timeline head event: `EVT-ITR-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-02-VERIFIED`.
-- Timeline head SHA-256: `a8211ba9718a47d44c7d57f8566275d7e8fe40cc0c00c787d54a07289bc3d72f`.
+- Events: 202.
+- Timeline head event: `EVT-ITR-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-02-COMMITTED`.
+- Timeline head SHA-256: `84ab01c38c25e30805b76786392d7a588c2582678a0c2789138ba59111e2fc4b`.
 - Latest recorded iteration: `ITR-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-02`.
 
 ## 2. Modern governed iterations
@@ -48,7 +48,7 @@
 | 2026-08-20T22:13:44.000Z | deployed | Release approved public-site mobile responsive corrections | ITR-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01 | DEC-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01 | CHG-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01 | 2fe665af1acad113613d83e8838d86a6b1cd81d0 | iteration/ITR-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01 | — | docs-platform/changelog/deployments/DEPLOY-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01.yaml | — | Sealed content state a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239 deployed to https://colob.spi.ski; smoke test passed. |
 | 2026-08-23T19:16:11.000Z | committed | Register Investor Terminal feature-worktree governance context | ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01 | DEC-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01 | CHG-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01 | 38811a50837edd2accff947f3af0229ce0cdc9b5 | iteration/ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01 | — | — | — | Register Investor Terminal feature-worktree governance context: content commit verified and linked to the governed lifecycle before sealing. |
 | 2026-08-24T21:21:34.729Z | superseded | Investor Model physical allocation map | ITR-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-01 | DEC-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-01 | CHG-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-01 | — | — | — | — | — | Superseded before content commit because the scope contract needed to preserve existing artifact provenance; the successor has identical product and financial scope. |
-| 2026-08-24T21:21:38.968Z | verified | Investor Model physical allocation map — artifact-safe delivery | ITR-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-02 | DEC-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-02 | CHG-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-02 | — | — | — | — | — | Known source IDs, allocation invariants, TypeScript graph and historical artifact provenance passed without a financial or UI change. |
+| 2026-08-24T21:28:08.000Z | committed | Investor Model physical allocation map — artifact-safe delivery | ITR-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-02 | DEC-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-02 | CHG-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-02 | 55550cb85cbc8d2dd60bec856cf91d92456df329 | iteration/ITR-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-02 | — | — | — | Investor Model physical allocation map — artifact-safe delivery: content commit verified and linked to the governed lifecycle before sealing. |
 
 ## 3. Legacy imported history
 

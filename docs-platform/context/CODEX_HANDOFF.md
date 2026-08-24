@@ -9,16 +9,16 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 ## 2. Текущая ветка и governed iteration
 
 - Branch: `feat/investor-terminal-v2`.
-- Latest closed iteration: `ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01`.
-- Latest iteration tag: `iteration/ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01`.
-- Latest content commit: `38811a50837edd2accff947f3af0229ce0cdc9b5`.
+- Latest closed iteration: `ITR-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-02`.
+- Latest iteration tag: `iteration/ITR-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-02`.
+- Latest content commit: `55550cb85cbc8d2dd60bec856cf91d92456df329`.
 - Текущий Git HEAD намеренно не записывается: его вычисляет `npm run project:onboard`.
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01-COMMITTED`.
-- Hash: `eb7068296ee536b30cc234433fc33ac139166875253448abf72fe2a21d52e2eb`.
-- generated_from_event_hash: `eb7068296ee536b30cc234433fc33ac139166875253448abf72fe2a21d52e2eb`.
+- Event: `EVT-ITR-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-02-COMMITTED`.
+- Hash: `84ab01c38c25e30805b76786392d7a588c2582678a0c2789138ba59111e2fc4b`.
+- generated_from_event_hash: `84ab01c38c25e30805b76786392d7a588c2582678a0c2789138ba59111e2fc4b`.
 
 ## 4. Канонические документы
 
@@ -45,7 +45,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 5. Текущая рабочая тема
 
-Register Investor Terminal feature-worktree governance context
+Investor Model physical allocation map — artifact-safe delivery
 
 ## 6. Decisions и change sets
 
