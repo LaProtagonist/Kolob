@@ -1,0 +1,10 @@
+schema_version: 2
+change_id: CHG-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-01
+iteration_id: ITR-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-01
+status: applied
+applied_at: 2026-08-24T21:15:57.000Z
+actor: Codex
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-01-approved.yaml
+  sha256: cf23edce3d05bc35bcabd4dc1a00e6627a8809e32d8e04ecb83d8c4925ba6c11
+summary: Added physical allocation metadata only. Existing canonical financial sources, v2.3 draft, production and Google state were not changed.

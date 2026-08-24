@@ -1,0 +1,6 @@
+schema_version: 1
+iteration_id: ITR-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-02
+mode: governed_reverse_change_set
+preserves_history: true
+git_reset_forbidden: true
+scope: Remove or supersede only the physical allocation metadata through a new approved compensating change; never alter canonical financial sources or historical events.

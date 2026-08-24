@@ -1,0 +1,16 @@
+schema_version: 2
+decision_id: DEC-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-01
+iteration_id: ITR-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-01
+title: Approve physical allocation semantics for Investor Model sources
+status: approved
+approved_by: project owner
+approved_at: 2026-08-24T21:15:55.000Z
+scope: Approve a typed allocation map that records Production ×1, Seating Point ×N, Takeaway Point ×N, Shared/Network, Mixed and Unresolved semantics for existing stable source IDs. The map stores no financial values and does not execute network economics.
+excludes:
+  - Canonical Financial Model facts or formulas
+  - 11m RUB / 3.5m RUB preparation reconciliation
+  - Investor Terminal v2.3 product changes
+  - Network OPEX, payroll, reserve, cash flow and investment KPI calculation
+  - Google, production, master and deployment operations
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-01-approved.yaml
+approved_payload_sha256: cf23edce3d05bc35bcabd4dc1a00e6627a8809e32d8e04ecb83d8c4925ba6c11

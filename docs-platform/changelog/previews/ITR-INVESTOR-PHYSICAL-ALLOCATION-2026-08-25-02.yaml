@@ -1,0 +1,13 @@
+schema_version: 1
+iteration_id: ITR-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-02
+proposal_id: PROP-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-02
+decision_id: DEC-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-02
+change_set_id: CHG-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-02
+status: passed
+mutation_performed: false
+scope: Same allocation metadata and narrow tests; review artifacts are pre-existing validation provenance only.
+canonical_financial_model: unchanged
+investor_terminal_v2_3: untouched
+production: unused
+google: unused
+deployment: unused
