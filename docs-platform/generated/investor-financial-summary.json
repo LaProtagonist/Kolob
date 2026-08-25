@@ -5,9 +5,9 @@
     "version": "0.1",
     "status": "research",
     "financial_model_document_id": "DOC-FINANCIAL-MODEL",
-    "financial_model_content_state_sha256": "8e933d6b3a503b97cc68a856c73cb855258c5d3e2cffc8d91e4c10516c366c81",
-    "financial_model_projection_sha256": "f4c908aea53edf475dc08e0ec7577130432c38306b5bcbc0bd61485338e708ac",
-    "summary_content_state_sha256": "146f4fad50fe331cb7a3bec00c5bfad4e9ef20b90fc47ab1798d3747e99da101"
+    "financial_model_content_state_sha256": "964ed09c82f3e872183c56ec79929762bce100259f2c0ad2d2749148dc3b3262",
+    "financial_model_projection_sha256": "78b0085f7f26e1b19ae93967eb3cdf4d6c39592c003fbb02a9990874bbda5640",
+    "summary_content_state_sha256": "3d0d7b6eadaa62beaadee6cb5212de7c758a7d5e7534b7d1847b192945584408"
   },
   "headline": {
     "scenario_id": "realistic",

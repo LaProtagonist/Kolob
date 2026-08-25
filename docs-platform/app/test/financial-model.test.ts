@@ -20,6 +20,7 @@ import {
   buildFinancialGoogleSheetsPayload,
   checkFinancialGoogleSheetsPayload,
 } from "../src/financial/google-sheet.js";
+import { calculateLaunchBudget, defaultLaunchBudgetState } from "../../../src/lib/launch-budget.js";
 
 const projectRoot = path.resolve(platformRoot, "..");
 const model = readFinancialModel();
@@ -239,6 +240,14 @@ test("canonical BASE equipment uses generated BOM plus BAR/GROW without alcohol 
   assert.ok(capital.equipment_active_module_ids.includes("MOD-GROW"));
   assert.equal(model.imports.capex.alcohol_enabled, false);
   assert.deepEqual(model.imports.capex.excluded_item_ids, ["CAPEX-01-012"]);
+});
+
+test("Financial Model imports the full preparation baseline, separately from the Ready Premises runtime preset", () => {
+  const readyPremises = calculateLaunchBudget(defaultLaunchBudgetState());
+  const capital = importedLaunchCapital(model);
+  assert.equal(readyPremises.effectivePreparationRub, 3_500_000);
+  assert.equal(capital.preparation_rub, 11_000_000);
+  assert.equal(capital.preparation_rub - readyPremises.effectivePreparationRub!, 7_500_000);
 });
 
 test("packaging, acquiring and aggregators follow their approved variable bases", () => {

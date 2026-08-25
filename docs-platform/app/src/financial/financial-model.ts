@@ -154,6 +154,14 @@ export function importedLaunchCapital(model = readFinancialModel()) {
     equipmentScenarioId: "BASE" as const,
     barEnabled: true,
     growEnabled: true,
+    // The public Launch Budget intentionally opens in the Ready Premises
+    // scenario. The Financial Model, however, is the full integrated-pilot
+    // baseline and must import all eight canonical preparation categories.
+    // Keep these selection semantics explicit: the 3.5m runtime preset is
+    // not a replacement for the 11m canonical preparation reference.
+    preparationEnabledCategoryIds: (launchModel as any).preparation.categories
+      .filter((category: any) => category.enabled_by_default)
+      .map((category: any) => category.id),
   };
   const result = calculateLaunchBudget(state);
   const equipmentBom = YAML.parse(fs.readFileSync(path.join(projectRoot, model.imports.capex.equipment_bom_path), "utf8"));

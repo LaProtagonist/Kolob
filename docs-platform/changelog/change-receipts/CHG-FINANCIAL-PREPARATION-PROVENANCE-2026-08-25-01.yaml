@@ -1,0 +1,10 @@
+schema_version: 2
+change_id: CHG-FINANCIAL-PREPARATION-PROVENANCE-2026-08-25-01
+iteration_id: ITR-FINANCIAL-PREPARATION-PROVENANCE-2026-08-25-01
+status: applied
+applied_at: 2026-08-25T00:00:00.000Z
+actor: Codex
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-FINANCIAL-PREPARATION-PROVENANCE-2026-08-25-01-approved.yaml
+  sha256: 873364b42979eafaed47bf998ebeab880b2b74b3055c22a61ffb66a62efed4b9
+summary: The Financial Model now explicitly selects all enabled preparation categories; the public Ready Premises subset remains unmodified. Dependent local projections and provenance hashes were regenerated.

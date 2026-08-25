@@ -1,0 +1,14 @@
+schema_version: 2
+decision_id: DEC-FINANCIAL-PREPARATION-PROVENANCE-2026-08-25-01
+iteration_id: ITR-FINANCIAL-PREPARATION-PROVENANCE-2026-08-25-01
+title: Separate full preparation baseline from the Ready Premises preset in Financial Model provenance
+status: approved
+approved_by: project owner
+approved_at: 2026-08-25T00:00:00.000Z
+scope: The Financial Model must validate against the full 11000000 RUB preparation baseline; Ready Premises remains the independently selected 3500000 RUB runtime preset.
+excludes:
+  - Changes to the eight preparation category amounts or their semantics
+  - Changes to Financial Model business facts, formulas or validation severity
+  - Google, deployment, production and master operations
+approved_payload_path: docs-platform/changelog/payloads/ITR-FINANCIAL-PREPARATION-PROVENANCE-2026-08-25-01-approved.yaml
+approved_payload_sha256: 873364b42979eafaed47bf998ebeab880b2b74b3055c22a61ffb66a62efed4b9

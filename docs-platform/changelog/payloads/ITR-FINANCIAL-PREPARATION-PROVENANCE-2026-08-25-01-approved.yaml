@@ -1,0 +1,50 @@
+schema_version: 2
+payload_id: PAYLOAD-FINANCIAL-PREPARATION-PROVENANCE-2026-08-25-01
+iteration_id: ITR-FINANCIAL-PREPARATION-PROVENANCE-2026-08-25-01
+proposal_id: PROP-FINANCIAL-PREPARATION-PROVENANCE-2026-08-25-01
+decision_id: DEC-FINANCIAL-PREPARATION-PROVENANCE-2026-08-25-01
+change_set_id: CHG-FINANCIAL-PREPARATION-PROVENANCE-2026-08-25-01
+title: Reconcile Financial Model preparation provenance with the Ready Premises runtime preset
+status: approved
+approved_by: project owner
+approved_at: 2026-08-25T00:00:00.000Z
+scope:
+  - Make the Financial Model import the full eight-category Integrated Pilot preparation baseline of 11000000 RUB.
+  - Preserve the public Ready Premises runtime preset at 3500000 RUB as a separate selected subset.
+  - Refresh only deterministic local financial and investor-summary projections and dependency fingerprints.
+  - Add a regression test for the full-baseline versus runtime-preset selection boundary.
+forbidden_scope:
+  - Changing any preparation category amount, the 11000000 RUB total, the 3500000 RUB preset, Financial Model business assumptions or validator severity
+  - Google access, publication, deployment, production checkout or master
+  - Investor Terminal v2.3/v2.4 UI or network-planning work
+state_hash_paths:
+  - docs-platform/app/src/financial/financial-model.ts
+  - docs-platform/app/test/financial-model.test.ts
+  - docs-platform/working/investor-financial-summary.yaml
+  - docs-platform/generated/financial-model-projection.json
+  - docs-platform/generated/financial-google-sheets-payload.json
+  - docs-platform/generated/investor-financial-summary.json
+  - docs-platform/generated/investor-financial-summary-google-sheets-payload.json
+content_paths:
+  - docs-platform/app/src/financial/financial-model.ts
+  - docs-platform/app/test/financial-model.test.ts
+  - docs-platform/working/investor-financial-summary.yaml
+  - docs-platform/generated/financial-model-projection.json
+  - docs-platform/generated/financial-google-sheets-payload.json
+  - docs-platform/generated/investor-financial-summary.json
+  - docs-platform/generated/investor-financial-summary-google-sheets-payload.json
+  - docs-platform/changes/
+  - docs-platform/changelog/
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+  - docs-platform/changelog/snapshots/SNAPSHOT-ITR-FINANCIAL-PREPARATION-PROVENANCE-2026-08-25-01.yaml
+allowed_dirty_paths:
+  - output/pdf/launch-budget-review.pdf
+  - output/review/launch-budget-page-full.jpg
+rollback_contract:
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true
