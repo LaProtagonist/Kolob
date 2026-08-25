@@ -1,12 +1,12 @@
 schema_version: 2
-generated_at: 2026-08-24T21:28:26.709Z
+generated_at: 2026-08-25T20:46:51.732Z
 project: Колобочная
 branch: feat/investor-terminal-v2
-latest_timeline_event_id: EVT-ITR-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-02-COMMITTED
-latest_timeline_event_hash: 84ab01c38c25e30805b76786392d7a588c2582678a0c2789138ba59111e2fc4b
-latest_closed_iteration_id: ITR-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-02
-latest_iteration_tag: iteration/ITR-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-02
-latest_content_commit_hash: 55550cb85cbc8d2dd60bec856cf91d92456df329
+latest_timeline_event_id: EVT-ITR-FINANCIAL-PREPARATION-PROVENANCE-2026-08-25-01-COMMITTED
+latest_timeline_event_hash: c9c3181307d288284f905167090d7e2ffb872fc133c5481a236d4152080a94e2
+latest_closed_iteration_id: ITR-FINANCIAL-PREPARATION-PROVENANCE-2026-08-25-01
+latest_iteration_tag: iteration/ITR-FINANCIAL-PREPARATION-PROVENANCE-2026-08-25-01
+latest_content_commit_hash: 98150db139d58c47e0fb437e73213a9c0a37b556
 registry_hash: afc53c6fdfcd2ae8b8f782f63c3e84308948108cbf2de13abe529a23259d5be5
 canonical_document_hashes:
   - document_id: DOC-AGENTS
@@ -63,7 +63,7 @@ canonical_document_hashes:
     status: proposed
   - document_id: DOC-INVESTOR-FINANCIAL-SUMMARY
     local_path: docs-platform/working/investor-financial-summary.yaml
-    sha256: 0aded90fe9bf703684ac0d829bdda6d476180c2eae9a761afe6ffa3b4a7090ec
+    sha256: 008aaa644847e09c4ae89199143e219f37eeb4e8828fd26091771965d540e212
     status: research
   - document_id: DOC-INVESTOR-START-MODEL
     local_path: docs-platform/working/investor-start-model.yaml
@@ -88,7 +88,7 @@ open_questions:
   - Archive pending review artifacts in durable storage before treating visual verification as portable.
   - Create deployment receipts when the next governed deployment is performed.
   - Decide whether malformed superseded legacy YAML evidence should receive a separate correction event.
-current_workstream: Investor Model physical allocation map — artifact-safe delivery
+current_workstream: Financial Model preparation provenance reconciliation
 next_task: Select the next task through a new governed proposal; no business task is pre-authorized.
 google_integration_status:
   configured: false

@@ -4,9 +4,9 @@
 
 ## 1. Current state
 
-- Events: 206.
-- Timeline head event: `EVT-ITR-FINANCIAL-PREPARATION-PROVENANCE-2026-08-25-01-VERIFIED`.
-- Timeline head SHA-256: `ea55b49bdc94cca5c93bbe9c1fbce4148f1e003b4591ec8f0dab300397e61b02`.
+- Events: 207.
+- Timeline head event: `EVT-ITR-FINANCIAL-PREPARATION-PROVENANCE-2026-08-25-01-COMMITTED`.
+- Timeline head SHA-256: `c9c3181307d288284f905167090d7e2ffb872fc133c5481a236d4152080a94e2`.
 - Latest recorded iteration: `ITR-FINANCIAL-PREPARATION-PROVENANCE-2026-08-25-01`.
 
 ## 2. Modern governed iterations
@@ -49,7 +49,7 @@
 | 2026-08-23T19:16:11.000Z | committed | Register Investor Terminal feature-worktree governance context | ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01 | DEC-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01 | CHG-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01 | 38811a50837edd2accff947f3af0229ce0cdc9b5 | iteration/ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01 | — | — | — | Register Investor Terminal feature-worktree governance context: content commit verified and linked to the governed lifecycle before sealing. |
 | 2026-08-24T21:21:34.729Z | superseded | Investor Model physical allocation map | ITR-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-01 | DEC-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-01 | CHG-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-01 | — | — | — | — | — | Superseded before content commit because the scope contract needed to preserve existing artifact provenance; the successor has identical product and financial scope. |
 | 2026-08-24T21:28:08.000Z | committed | Investor Model physical allocation map — artifact-safe delivery | ITR-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-02 | DEC-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-02 | CHG-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-02 | 55550cb85cbc8d2dd60bec856cf91d92456df329 | iteration/ITR-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-02 | — | — | — | Investor Model physical allocation map — artifact-safe delivery: content commit verified and linked to the governed lifecycle before sealing. |
-| 2026-08-25T00:25:00.003Z | verified | Financial Model preparation provenance reconciliation | ITR-FINANCIAL-PREPARATION-PROVENANCE-2026-08-25-01 | DEC-FINANCIAL-PREPARATION-PROVENANCE-2026-08-25-01 | CHG-FINANCIAL-PREPARATION-PROVENANCE-2026-08-25-01 | — | — | — | — | — | Financial schema and 31 financial unit tests pass, including the separate 11m full baseline and 3.5m Ready Premises runtime preset regression check. |
+| 2026-08-25T20:45:42.000Z | committed | Financial Model preparation provenance reconciliation | ITR-FINANCIAL-PREPARATION-PROVENANCE-2026-08-25-01 | DEC-FINANCIAL-PREPARATION-PROVENANCE-2026-08-25-01 | CHG-FINANCIAL-PREPARATION-PROVENANCE-2026-08-25-01 | 98150db139d58c47e0fb437e73213a9c0a37b556 | iteration/ITR-FINANCIAL-PREPARATION-PROVENANCE-2026-08-25-01 | — | — | — | Financial Model preparation provenance reconciliation: content commit verified and linked to the governed lifecycle before sealing. |
 
 ## 3. Legacy imported history
 
