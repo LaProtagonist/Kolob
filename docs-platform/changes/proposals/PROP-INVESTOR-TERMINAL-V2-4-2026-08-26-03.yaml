@@ -1,0 +1,9 @@
+schema_version: 2
+proposal_id: PROP-INVESTOR-TERMINAL-V2-4-2026-08-26-03
+iteration_id: ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-03
+title: Seal verified Investor Terminal v2.4 delivery after metadata correction
+status: proposed
+proposed_at: 2026-08-26T00:12:00.000Z
+scope: Append-only closure for the verified v2.4 content delivery; no product state changes.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-03-approved.yaml
+approved_payload_sha256: 4d4280c3346780369eb9a07643fc7c6cd4b7eda7abf324c327ae74f0ce918edf

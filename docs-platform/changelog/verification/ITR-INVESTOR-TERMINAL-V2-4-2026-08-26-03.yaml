@@ -1,0 +1,18 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-03
+proposal_id: PROP-INVESTOR-TERMINAL-V2-4-2026-08-26-03
+decision_id: DEC-NETWORK-PLANNING-V2-4-2026-08-26-01
+change_set_id: CHG-INVESTOR-TERMINAL-V2-4-2026-08-26-03
+verified_at: 2026-08-26T00:12:00.000Z
+actor: Codex
+validation_status: passed
+approved_payload_sha256: 4d4280c3346780369eb9a07643fc7c6cd4b7eda7abf324c327ae74f0ce918edf
+before_state_sha256: f9c931dc8bdef34e9a693bba927ddd957235c1e334d2f7ff3c7041dc92ab93ee
+after_state_sha256: f9c931dc8bdef34e9a693bba927ddd957235c1e334d2f7ff3c7041dc92ab93ee
+checks:
+  - command: npm run governance:validate
+    result: passed
+  - command: npm run artifact:validate
+    result: passed
+  - command: npm run project:onboard
+    result: passed
