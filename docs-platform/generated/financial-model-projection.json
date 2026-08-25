@@ -21,7 +21,7 @@
         },
         {
           "path": "docs-platform/app/src/financial/financial-model.ts",
-          "sha256": "028730efc75ace58a5e68ac0d1f166363b3d0fbbda4057ef0b5d2b753b1bad48"
+          "sha256": "452fab1981758e74277fb0f03425632c76574802cafcffd3592085cc933bb70d"
         },
         {
           "path": "docs-platform/app/src/financial/google-sheet.ts",
@@ -56,7 +56,7 @@
           "sha256": "783bdd16c8a9b83535010a63609f9205fd2d4461357e87de069d719f5ec8c2ab"
         }
       ],
-      "content_state_sha256": "964ed09c82f3e872183c56ec79929762bce100259f2c0ad2d2749148dc3b3262"
+      "content_state_sha256": "f09ba76c9dbc38102f5d4b788a42553ef60756d62c7d7bec776491527c64d2a3"
     },
     "imported_revenue_content_state_sha256": "90727a6c51f959b617d6c972b898593a1b6dba6742d51b30bb75230f3f606c38",
     "imported_capex_content_state_sha256": "a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239",

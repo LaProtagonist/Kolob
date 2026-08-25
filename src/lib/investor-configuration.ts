@@ -5,12 +5,20 @@ import {
   type LaunchBudgetState,
   type PremisesScenario,
 } from "./launch-budget";
+import { locationTypes, type LocationType } from "./network-planning";
 
 export const investorScenarioIds = ["pessimistic", "realistic", "optimistic"] as const;
 export type InvestorScenarioId = (typeof investorScenarioIds)[number];
 
 export const tradingPointFormats = ["with_seating", "takeaway"] as const;
 export type TradingPointFormat = (typeof tradingPointFormats)[number];
+
+export type CohortSalesConfiguration = {
+  /** Baseline inherits the selected Financial Model scenario for this browser. */
+  mode: "baseline" | "custom";
+  checksPerDay: number | null;
+  averageCheckRub: number | null;
+};
 
 /** Runtime-only planning inputs for one independently scalable trading-point cohort. */
 export type TradingPointCohort = {
@@ -27,15 +35,39 @@ export type TradingPointCohort = {
   securityDepositMonths: number | null;
   preparationRub: number | null;
   barEnabled: boolean;
+  sales: CohortSalesConfiguration;
+  /** Location is independent from the point format and property tenure. */
+  locationType: LocationType;
+  extractionAvailable: boolean | null;
+  sharedSeating: boolean | null;
+  venueSecurityIncluded: boolean | null;
+  commonCleaningIncluded: boolean | null;
+  utilitiesIncluded: boolean | null;
+  utilitiesMonthlyRub: number | null;
+  serviceChargeMonthlyRub: number | null;
+  storageRentMonthlyRub: number | null;
+  revenueSharePercent: number | null;
+  minimumGuaranteeMonthlyRub: number | null;
+  fitoutAllowanceRub: number | null;
+  videoAllowanceRub: number | null;
+  alarmAllowanceRub: number | null;
+  initialInventoryDays: number;
 };
 
 export type NetworkScalingConfiguration = {
   cohorts: TradingPointCohort[];
   productionGrowEnabled: boolean;
+  productionSchedule: "one_main_shift" | "custom";
+  logistics: {
+    mode: "auto" | "external" | "own";
+    externalMonthlyRub: number | null;
+    ownedVehicleCapexRub: number | null;
+    ownedMonthlyTotalRub: number | null;
+  };
 };
 
 export type InvestorConfiguration = {
-  schemaVersion: 2;
+  schemaVersion: 4;
   scenarioId: InvestorScenarioId;
   /** A local override; it is never written back to the Financial Model source. */
   customChecksPerDay: number | null;
@@ -49,6 +81,10 @@ function finiteOrNull(value: unknown) {
   return typeof value === "number" && Number.isFinite(value) && value >= 0 ? value : null;
 }
 
+function positiveFiniteOrNull(value: unknown) {
+  return typeof value === "number" && Number.isFinite(value) && value > 0 ? value : null;
+}
+
 function nonnegativeInteger(value: unknown, fallback = 1) {
   return typeof value === "number" && Number.isFinite(value) && value >= 0 ? Math.floor(value) : fallback;
 }
@@ -57,8 +93,24 @@ function permittedMonths(value: unknown, permitted: number[]) {
   return permitted.includes(Number(value)) ? Number(value) : null;
 }
 
+function booleanOrNull(value: unknown) {
+  return typeof value === "boolean" ? value : null;
+}
+
 function valueOrDefault<T extends object, K extends keyof T>(value: T, key: K, fallback: T[K]) {
   return Object.prototype.hasOwnProperty.call(value, key) ? value[key] : fallback;
+}
+
+function restoreCohortSales(value: unknown): CohortSalesConfiguration {
+  if (!value || typeof value !== "object") {
+    return { mode: "baseline", checksPerDay: null, averageCheckRub: null };
+  }
+  const input = value as Partial<CohortSalesConfiguration>;
+  return {
+    mode: input.mode === "custom" ? "custom" : "baseline",
+    checksPerDay: positiveFiniteOrNull(input.checksPerDay) === null ? null : Math.floor(input.checksPerDay as number),
+    averageCheckRub: positiveFiniteOrNull(input.averageCheckRub),
+  };
 }
 
 export function createTradingPointCohort(
@@ -89,6 +141,24 @@ export function createTradingPointCohort(
     // A new group follows the current canonical point baseline, never another
     // cohort's selected bar setting.
     barEnabled: typeof overrides.barEnabled === "boolean" ? overrides.barEnabled : launchBudget.barEnabled,
+    sales: restoreCohortSales(overrides.sales),
+    locationType: locationTypes.includes(overrides.locationType as LocationType)
+      ? overrides.locationType as LocationType
+      : "street",
+    extractionAvailable: booleanOrNull(valueOrDefault(overrides, "extractionAvailable", null)),
+    sharedSeating: booleanOrNull(valueOrDefault(overrides, "sharedSeating", null)),
+    venueSecurityIncluded: booleanOrNull(valueOrDefault(overrides, "venueSecurityIncluded", null)),
+    commonCleaningIncluded: booleanOrNull(valueOrDefault(overrides, "commonCleaningIncluded", null)),
+    utilitiesIncluded: booleanOrNull(valueOrDefault(overrides, "utilitiesIncluded", null)),
+    utilitiesMonthlyRub: finiteOrNull(valueOrDefault(overrides, "utilitiesMonthlyRub", null)),
+    serviceChargeMonthlyRub: finiteOrNull(valueOrDefault(overrides, "serviceChargeMonthlyRub", null)),
+    storageRentMonthlyRub: finiteOrNull(valueOrDefault(overrides, "storageRentMonthlyRub", null)),
+    revenueSharePercent: finiteOrNull(valueOrDefault(overrides, "revenueSharePercent", null)),
+    minimumGuaranteeMonthlyRub: finiteOrNull(valueOrDefault(overrides, "minimumGuaranteeMonthlyRub", null)),
+    fitoutAllowanceRub: finiteOrNull(valueOrDefault(overrides, "fitoutAllowanceRub", null)),
+    videoAllowanceRub: finiteOrNull(valueOrDefault(overrides, "videoAllowanceRub", null)),
+    alarmAllowanceRub: finiteOrNull(valueOrDefault(overrides, "alarmAllowanceRub", null)),
+    initialInventoryDays: nonnegativeInteger(valueOrDefault(overrides, "initialInventoryDays", 3), 3),
   };
 }
 
@@ -108,6 +178,8 @@ export function defaultNetworkScalingConfiguration(launchBudget = defaultLaunchB
   return {
     cohorts: [createTradingPointCohort(launchBudget, { format: "with_seating", realEstateMode: "rent", count: 1 })],
     productionGrowEnabled: launchBudget.growEnabled,
+    productionSchedule: "one_main_shift",
+    logistics: { mode: "auto", externalMonthlyRub: null, ownedVehicleCapexRub: null, ownedMonthlyTotalRub: null },
   };
 }
 
@@ -136,13 +208,20 @@ export function restoreNetworkScalingConfiguration(value: unknown, launchBudget:
   return {
     cohorts: cohorts.length ? cohorts : defaults.cohorts,
     productionGrowEnabled: typeof input.productionGrowEnabled === "boolean" ? input.productionGrowEnabled : defaults.productionGrowEnabled,
+    productionSchedule: input.productionSchedule === "custom" ? "custom" : "one_main_shift",
+    logistics: {
+      mode: input.logistics?.mode === "external" || input.logistics?.mode === "own" ? input.logistics.mode : "auto",
+      externalMonthlyRub: finiteOrNull(input.logistics?.externalMonthlyRub),
+      ownedVehicleCapexRub: finiteOrNull(input.logistics?.ownedVehicleCapexRub),
+      ownedMonthlyTotalRub: finiteOrNull(input.logistics?.ownedMonthlyTotalRub),
+    },
   };
 }
 
 export function defaultInvestorConfiguration(): InvestorConfiguration {
   const launchBudget = defaultLaunchBudgetState();
   return {
-    schemaVersion: 2,
+    schemaVersion: 4,
     scenarioId: "realistic",
     customChecksPerDay: null,
     launchBudget,
@@ -172,7 +251,7 @@ export function restoreInvestorConfiguration(value: unknown): InvestorConfigurat
   const input = value as Partial<InvestorConfiguration>;
   const launchBudget = restoreLaunchBudgetState(input.launchBudget);
   return {
-    schemaVersion: 2,
+    schemaVersion: 4,
     scenarioId: investorScenarioIds.includes(input.scenarioId as InvestorScenarioId)
       ? input.scenarioId as InvestorScenarioId
       : defaults.scenarioId,

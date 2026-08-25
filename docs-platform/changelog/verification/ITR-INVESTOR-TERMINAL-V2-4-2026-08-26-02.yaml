@@ -1,0 +1,32 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-02
+proposal_id: PROP-INVESTOR-TERMINAL-V2-4-2026-08-26-02
+decision_id: DEC-NETWORK-PLANNING-V2-4-2026-08-26-01
+change_set_id: CHG-INVESTOR-TERMINAL-V2-4-2026-08-26-02
+verified_at: 2026-08-26T00:10:00.000Z
+actor: Codex
+validation_status: passed
+approved_payload_sha256: cccdeac9e8e2fe53978e3b6f5eb946b940115eee4eb8bc80805e7562853e7074
+before_state_sha256: 43c124294960f112da6ec1c4009f46a6e783841775d1aa362fcd0960d952a25a
+after_state_sha256: aef63a1a371c117bf5a67e2521b62025db388b9416fa0d71d31041f28ea4f2ef
+checks:
+  - command: npx tsc -b --pretty false
+    result: passed
+  - command: npm run network:planning:check
+    result: passed
+  - command: node --test scripts/test-investor-journey.test.ts
+    result: passed
+    detail: 18 deterministic tests
+  - command: node scripts/test-investor-terminal.cjs
+    result: passed
+    detail: browser scenario with desktop and mobile review captures
+  - command: PATH=/Users/trbrmrdr/.nvm/versions/node/v22.15.1/bin:$PATH npm run verify:affected
+    result: passed
+    detail: 24 checks; Financial Model schema/projection/unit and browser scenario passed
+  - command: npm run governance:validate
+    result: passed
+  - command: npm run artifact:validate
+    result: passed
+  - command: npm run project:onboard
+    result: passed
+    detail: Handoff stale: no

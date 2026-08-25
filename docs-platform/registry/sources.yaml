@@ -1431,3 +1431,12 @@ sources:
     accessed_at: 2026-08-19
     reliability: primary
     notes: Первичный источник уже утверждённых защищённых финансовых допущений, помесячного ramp-up и сезонности, зависимых локальных представлений, append-only supersession и последующего sealed deployment без Google операций.
+  - id: SRC-NETWORK-PLANNING-V2-4-BRIEF-2026-08-26
+    title: Утверждённые planning assumptions для Network Planning Model v2.4
+    type: instruction
+    location: User instruction, 2026-08-26
+    publisher: project owner
+    publication_date: 2026-08-26
+    accessed_at: 2026-08-26
+    reliability: primary
+    notes: Первичный источник owner-approved planning policy для staffing, roster, location types, direct point contribution, shared costs, logistics и launch allowances. Не заменяет canonical Financial Model integrated pilot и не утверждает полноценную network EBITDA, IRR, NPV, capacity или Google integration.

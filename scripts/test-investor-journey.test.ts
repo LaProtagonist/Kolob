@@ -15,6 +15,11 @@ import {
 import { economicsData } from "../src/lib/economics.js";
 import { launchModel } from "../src/lib/launch-budget.js";
 import { networkScalingProjection } from "../src/lib/network-scaling.js";
+import { pointOperationalProjection } from "../src/lib/point-operations.js";
+import { pointStaffingProjection, productionStaffingProjection, sharedManagerPayrollProjection } from "../src/lib/network-planning.js";
+import { calculateRevenueModel } from "../src/lib/revenue-model.js";
+import { capexData } from "../src/lib/capex-runtime.js";
+import { financialModelAllocationItemIds, investorStartAllocationFieldIds, networkPlanningAllocationItemIds, physicalAllocationIntegrityErrors, physicalAllocationMap } from "../src/lib/physical-allocation.js";
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const canonicalPaths = [
@@ -156,7 +161,7 @@ test("runtime configuration is safely restored and never mutates canonical sourc
     launchBudget: { ...defaultInvestorConfiguration().launchBudget, monthlyRentRub: 475_000 },
   });
 
-  assert.equal(restored.schemaVersion, 2);
+  assert.equal(restored.schemaVersion, 4);
   assert.equal(restored.scenarioId, "optimistic");
   assert.equal(restored.launchBudget.monthlyRentRub, 475_000);
   assert.deepEqual(restoreInvestorConfiguration({ scenarioId: "invalid" }), defaultInvestorConfiguration());
@@ -181,7 +186,7 @@ test("custom checks per day is a local scenario override and canonical reset sta
   assert.deepEqual(sourceHashes(), before);
 });
 
-test("v2.1 single-point state migrates safely into a v2.2 point cohort", () => {
+test("v2.1 through v2.3 saved state migrates safely into v2.4 cohorts", () => {
   const launchBudget = defaultInvestorConfiguration().launchBudget;
   const migrated = restoreInvestorConfiguration({
     schemaVersion: 1,
@@ -194,7 +199,7 @@ test("v2.1 single-point state migrates safely into a v2.2 point cohort", () => {
     },
   });
 
-  assert.equal(migrated.schemaVersion, 2);
+  assert.equal(migrated.schemaVersion, 4);
   assert.equal(migrated.networkScaling.cohorts.length, 1);
   assert.deepEqual(migrated.networkScaling.cohorts[0], {
     ...createTradingPointCohort(launchBudget, {
@@ -216,6 +221,9 @@ test("v2.1 single-point state migrates safely into a v2.2 point cohort", () => {
     guestAreaM2: null,
   });
   assert.equal(migrated.networkScaling.productionGrowEnabled, true);
+  assert.equal(migrated.networkScaling.cohorts[0].locationType, "street");
+  assert.equal(migrated.networkScaling.cohorts[0].extractionAvailable, null);
+  assert.equal(migrated.networkScaling.cohorts[0].initialInventoryDays, 3);
 
   const nullablePlanningInput = restoreInvestorConfiguration({
     schemaVersion: 2,
@@ -227,6 +235,11 @@ test("v2.1 single-point state migrates safely into a v2.2 point cohort", () => {
   });
   assert.equal(nullablePlanningInput.networkScaling.cohorts[0].monthlyRentRub, null);
   assert.equal(nullablePlanningInput.networkScaling.cohorts[0].preparationRub, null);
+  assert.deepEqual(nullablePlanningInput.networkScaling.cohorts[0].sales, {
+    mode: "baseline",
+    checksPerDay: null,
+    averageCheckRub: null,
+  });
 });
 
 test("fresh and reset network defaults use one neutral point cohort without inherited integrated premises", () => {
@@ -247,6 +260,11 @@ test("fresh and reset network defaults use one neutral point cohort without inhe
     assert.equal(cohort.prepaymentMonths, null);
     assert.equal(cohort.securityDepositMonths, null);
     assert.equal(cohort.preparationRub, null);
+    assert.equal(cohort.locationType, "street");
+    assert.equal(cohort.extractionAvailable, null);
+    assert.equal(cohort.utilitiesMonthlyRub, null);
+    assert.equal(cohort.initialInventoryDays, 3);
+    assert.deepEqual(cohort.sales, { mode: "baseline", checksPerDay: null, averageCheckRub: null });
   }
   const newTakeawayPurchase = createTradingPointCohort(fresh.launchBudget, { id: "cohort-new", format: "takeaway", realEstateMode: "purchase" });
   assert.equal(newTakeawayPurchase.count, 1);
@@ -259,6 +277,136 @@ test("fresh and reset network defaults use one neutral point cohort without inhe
   assert.equal(newTakeawayPurchase.prepaymentMonths, null);
   assert.equal(newTakeawayPurchase.securityDepositMonths, null);
   assert.equal(newTakeawayPurchase.preparationRub, null);
+  assert.deepEqual(newTakeawayPurchase.sales, { mode: "baseline", checksPerDay: null, averageCheckRub: null });
+});
+
+test("cohort operations keep sales, area constraints and concurrent staffing independent", () => {
+  const before = sourceHashes();
+  const canonical = canonicalInvestorConfiguration();
+  const seating = createTradingPointCohort(canonical.launchBudget, {
+    id: "seating",
+    format: "with_seating",
+    count: 5,
+    totalAreaM2: 59,
+    sales: { mode: "custom", checksPerDay: 250, averageCheckRub: 1400 },
+  });
+  const takeaway = createTradingPointCohort(canonical.launchBudget, {
+    id: "takeaway",
+    format: "takeaway",
+    count: 10,
+    totalAreaM2: 15,
+    sales: { mode: "custom", checksPerDay: 175, averageCheckRub: 900 },
+  });
+  const configuration = {
+    ...canonical,
+    networkScaling: { ...canonical.networkScaling, cohorts: [seating, takeaway] },
+  };
+  const seatingOperations = pointOperationalProjection(configuration, seating);
+  const takeawayOperations = pointOperationalProjection(configuration, takeaway);
+
+  assert.equal(seatingOperations.area.minimumM2, 60);
+  assert.equal(seatingOperations.area.status, "below-minimum");
+  assert.equal(seatingOperations.staffing.concurrentStaff, 4);
+  assert.equal(takeawayOperations.area.minimumM2, 10);
+  assert.equal(takeawayOperations.area.status, "valid");
+  assert.equal(takeawayOperations.staffing.concurrentStaff, 4);
+  assert.equal(takeawayOperations.staffing.rosterHeadcount, 8);
+  assert.equal(seatingOperations.sales.checksPerDay, 250);
+  assert.equal(takeawayOperations.sales.checksPerDay, 175);
+  assert.equal(seatingOperations.sales.averageCheckRub, 1400);
+  assert.equal(takeawayOperations.sales.averageCheckRub, 900);
+  assert.notEqual(seatingOperations.sales.revenuePerPointRub, takeawayOperations.sales.revenuePerPointRub);
+  assert.equal(takeawayOperations.sales.revenueCohortRub, takeawayOperations.sales.revenuePerPointRub! * 10);
+  assert.equal(
+    takeawayOperations.sales.revenuePerPointRub,
+    calculateRevenueModel({
+      trafficMode: "custom",
+      trafficScenario: configuration.scenarioId,
+      customChecksPerDay: 175,
+      customAverageCheckRub: 900,
+    }).salesPerMonthRub,
+    "cohort revenue uses the established revenue engine",
+  );
+
+  for (const [portionsPerDay, concurrent] of [[200, 3], [201, 4], [299, 4], [300, 5]] as Array<[number, number]>) {
+    assert.equal(pointStaffingProjection("takeaway", "street", portionsPerDay).concurrentStaff, concurrent, `${portionsPerDay} portions/day`);
+  }
+  const high = pointStaffingProjection("takeaway", "street", 300);
+  assert.equal(high.rosterHeadcount, 9, "2/2 core positions convert to two people; 5/2 sous-chef remains one");
+  assert.equal(high.roles.find(role => role.roleId === "SOUS_CHEF")?.rosterHeadcount, 1);
+  assert.equal(pointOperationalProjection(configuration, { ...takeaway, totalAreaM2: 9 }).area.status, "below-minimum");
+  assert.equal(pointOperationalProjection(configuration, { ...takeaway, totalAreaM2: 10 }).area.status, "valid");
+  assert.equal(pointOperationalProjection(configuration, { ...seating, totalAreaM2: 60 }).area.status, "valid");
+  assert.equal(pointOperationalProjection(configuration, { ...seating, totalAreaM2: null }).area.status, "unset");
+  assert.equal(pointOperationalProjection(configuration, { ...seating, sales: { ...seating.sales, checksPerDay: 800 } }).staffing.concurrentStaff, 4, "street seating has no invented traffic scaling");
+
+  const restored = restoreInvestorConfiguration({ schemaVersion: 3, ...configuration });
+  assert.deepEqual(restored.networkScaling.cohorts.map((cohort) => cohort.sales), [seating.sales, takeaway.sales]);
+  assert.deepEqual(sourceHashes(), before, "operational projection is read-only against canonical sources");
+});
+
+test("network planning payroll references canonical salaries and keeps production and manager shared", () => {
+  const base = pointStaffingProjection("takeaway", "street", 200);
+  assert.deepEqual(base.roles.map(role => [role.roleId, role.grossSalaryRub, role.rosterHeadcount]), [
+    ["CASHIER_BAR", 95_000, 2],
+    ["LINE_COOK", 115_000, 4],
+  ]);
+  assert.ok(base.employerContributionsRub > 0 && base.personnelReserveRub > 0, "existing employer-contribution treatment is applied");
+  assert.equal(productionStaffingProjection(300).concurrentPrepCooks, 1);
+  assert.equal(productionStaffingProjection(301).concurrentPrepCooks, 2);
+  assert.equal(productionStaffingProjection(301).capacityReviewRequired, true);
+  assert.equal(sharedManagerPayrollProjection(1)?.rosterHeadcount, 1);
+  assert.equal(sharedManagerPayrollProjection(5)?.rosterHeadcount, 1, "manager is shared, not multiplied by point count");
+});
+
+test("physical allocation retains point, production and wash boundaries for v2.4 selectors", () => {
+  const errors = physicalAllocationIntegrityErrors(physicalAllocationMap, {
+    equipmentModuleIds: new Set(capexData.modules.map(module => module.id)),
+    equipmentItemIds: new Set(capexData.items.map(item => item.id)),
+    preparationCategoryIds: new Set(launchModel.preparation.categories.map(category => category.id)),
+    financialModelItemIds: new Set(financialModelAllocationItemIds),
+    investorStartFieldIds: new Set(investorStartAllocationFieldIds),
+    networkPlanningItemIds: new Set(networkPlanningAllocationItemIds),
+  });
+  assert.deepEqual(errors, []);
+  assert.equal(physicalAllocationMap.find(item => item.id === "MOD-PREP")?.physicalScope, "production");
+  assert.equal(physicalAllocationMap.find(item => item.id === "MOD-GROW")?.physicalScope, "production");
+  assert.equal(physicalAllocationMap.find(item => item.id === "MOD-RETAIL-HOT")?.physicalScope, "both_point_formats");
+  assert.equal(physicalAllocationMap.find(item => item.id === "PREP-GUEST-AREA")?.physicalScope, "seating_point");
+  assert.equal(physicalAllocationMap.find(item => item.id === "MOD-WASH")?.physicalScope, "mixed");
+  assert.equal(physicalAllocationMap.find(item => item.id === "OPEX-LOGISTICS")?.physicalScope, "shared_network");
+});
+
+test("location semantics drive point contribution without creating a false EBITDA", () => {
+  const canonical = canonicalInvestorConfiguration();
+  const street = createTradingPointCohort(canonical.launchBudget, {
+    id: "street", format: "with_seating", count: 2, totalAreaM2: 60,
+    monthlyRentRub: 350_000, prepaymentMonths: 1, securityDepositMonths: 1,
+    utilitiesMonthlyRub: 80_000, extractionAvailable: true,
+    sales: { mode: "custom", checksPerDay: 150, averageCheckRub: 1165.4 },
+  });
+  const foodhall = createTradingPointCohort(canonical.launchBudget, {
+    id: "foodhall", format: "takeaway", count: 3, locationType: "foodhall", sharedSeating: true,
+    venueSecurityIncluded: true, commonCleaningIncluded: true, extractionAvailable: true,
+    revenueSharePercent: 12, minimumGuaranteeMonthlyRub: 120_000, utilitiesIncluded: true,
+    serviceChargeMonthlyRub: 30_000, fitoutAllowanceRub: 2_000_000,
+    sales: { mode: "custom", checksPerDay: 215, averageCheckRub: 1165.4 },
+  });
+  const projection = networkScalingProjection({
+    ...canonical,
+    networkScaling: { ...canonical.networkScaling, cohorts: [street, foodhall] },
+  });
+  const streetProjection = projection.cohorts.find(cohort => cohort.cohort.id === "street")!;
+  const foodhallProjection = projection.cohorts.find(cohort => cohort.cohort.id === "foodhall")!;
+  assert.equal(foodhallProjection.operational.area.minimumM2, null, "shared Foodhall seating does not impose a private 60m² hall");
+  assert.equal(foodhallProjection.pointItems.find(item => item.id.endsWith(":furniture"))?.included, false, "Foodhall shared seating has no own guest furniture");
+  assert.equal(foodhallProjection.directOpex.isPartial, false);
+  assert.ok(foodhallProjection.directOpex.operatingContributionPerPointRub !== null);
+  assert.equal(streetProjection.directOpex.isPartial, false);
+  assert.equal(projection.operating.logisticsMode, "own", "three or more points suggests one shared logistics path");
+  assert.equal(projection.operating.managerPayroll?.rosterHeadcount, 1);
+  assert.equal(projection.operating.fixedMarketingRub, 150_000, "fixed marketing is counted once");
+  assert.equal(pointOperationalProjection({ ...canonical, networkScaling: { ...canonical.networkScaling, cohorts: [street] } }, { ...street, extractionAvailable: false }).location.extractionStatus, "incompatible");
 });
 
 test("network scaling aggregates independent point cohorts without inventing network economics", () => {
@@ -270,6 +418,7 @@ test("network scaling aggregates independent point cohorts without inventing net
     realEstateMode: "rent",
     count: 5,
     barEnabled: true,
+    sales: { mode: "custom", checksPerDay: 250, averageCheckRub: 1400 },
   });
   const takeawayRent = createTradingPointCohort(canonical.launchBudget, {
     id: "takeaway-rent",
@@ -277,6 +426,7 @@ test("network scaling aggregates independent point cohorts without inventing net
     realEstateMode: "rent",
     count: 10,
     barEnabled: false,
+    sales: { mode: "custom", checksPerDay: 175, averageCheckRub: 900 },
   });
   const mixedNetwork = networkScalingProjection({
     ...canonical,
@@ -326,6 +476,31 @@ test("network scaling aggregates independent point cohorts without inventing net
   assert.equal(mixedNetwork.unresolvedItems.find((item) => item.id === "operating_reserve")?.multiplier, "not_aggregated");
   assert.equal(mixedNetwork.unresolvedItems.find((item) => item.id === "contingency")?.multiplier, "not_aggregated");
   assert.equal(mixedNetwork.isPartial, true);
+  assert.equal(mixedNetwork.sales.status, "complete");
+  assert.equal(mixedNetwork.sales.checksPerDay, 250 * 5 + 175 * 10);
+  assert.equal(
+    mixedNetwork.sales.revenuePerMonthRub,
+    seating.operational.sales.revenueCohortRub! + takeaway.operational.sales.revenueCohortRub!,
+    "network monthly revenue is the sum of cohort revenue projections",
+  );
+  assert.equal(
+    mixedNetwork.sales.weightedAverageCheckRub,
+    mixedNetwork.sales.revenuePerMonthRub! / ((mixedNetwork.sales.checksPerDay ?? 0) * seating.operational.sales.workingDaysPerMonth),
+    "network average check is weighted by total checks, not a simple cohort average",
+  );
+  const partialSales = networkScalingProjection({
+    ...canonical,
+    networkScaling: {
+      ...canonical.networkScaling,
+      cohorts: [{ ...takeawayRent, sales: { mode: "custom", checksPerDay: 175, averageCheckRub: null } }],
+    },
+  });
+  assert.deepEqual(partialSales.sales, {
+    status: "partial",
+    checksPerDay: null,
+    weightedAverageCheckRub: null,
+    revenuePerMonthRub: null,
+  }, "an incomplete sales cohort does not produce a misleading network aggregate");
   assert.deepEqual(sourceHashes(), before, "the selector is read-only against canonical sources");
 });
 
@@ -352,6 +527,8 @@ test("Investor Terminal is a compact runtime surface, not a second hardcoded mod
   assert.match(source, /resetToCanonicalConfiguration/);
   assert.match(scalingSource, /buildCapexRows/);
   assert.match(scalingSource, /configuredEconomicsScenario\(configuration\)/);
+  assert.match(scalingSource, /findPhysicalAllocation/, "new allocation semantics are read from the typed allocation map");
+  assert.match(scalingSource, /networkSalesSummary/, "network sales aggregation stays outside the React component");
   for (const legacyLiteral of ["45.37", "23 месяца", "61.33%", "36,701,298"]) {
     assert.equal(source.includes(legacyLiteral), false, `legacy KPI literal remains: ${legacyLiteral}`);
   }

@@ -59,6 +59,7 @@ export type AllocationSourceRef =
   | { kind: "preparation_category"; id: string }
   | { kind: "financial_model_item"; id: string }
   | { kind: "investor_start_field"; id: string }
+  | { kind: "network_planning_item"; id: string }
   | { kind: "capability_requirement"; id: string };
 
 export type PhysicalAllocationRecord = {
@@ -126,6 +127,12 @@ export const investorStartAllocationFieldIds = [
   "premises.security_deposit_months",
   "furniture.seats_x_profile",
   "staffing.integrated_reference",
+] as const;
+
+export const networkPlanningAllocationItemIds = [
+  "LOGISTICS",
+  "UNIFORM_PER_ROSTER_EMPLOYEE",
+  "INITIAL_INVENTORY_OPERATING_DAYS",
 ] as const;
 
 /**
@@ -589,28 +596,48 @@ export const physicalAllocationMap = [
       { kind: "financial_model_item", id: "food_cost" },
       { kind: "financial_model_item", id: "waste" },
     ],
+    physicalScope: "production",
+    scalingDriver: "revenue_percentage",
+    status: "owner_decision",
+    referenceContext: "canonical_financial_model",
+    pricingStatus: "canonical_source",
+    note: "Закупка и заготовка физически принадлежат Production; для point contribution расходы атрибутируются cohort revenue без двойного учёта.",
+  },
+  {
+    id: "OPEX-CONSUMER-PACKAGING",
+    category: "opex",
+    name: "Потребительская упаковка",
+    sourceRefs: [{ kind: "financial_model_item", id: "packaging" }],
+    physicalScope: "both_point_formats",
+    scalingDriver: "per_check",
+    status: "owner_decision",
+    referenceContext: "canonical_financial_model",
+    pricingStatus: "canonical_source",
+    note: "Торговая переменная статья, рассчитанная существующей механикой от checks/day.",
+  },
+  {
+    id: "OPEX-ACQUIRING",
+    category: "opex",
+    name: "Эквайринг",
+    sourceRefs: [{ kind: "financial_model_item", id: "acquiring" }],
+    physicalScope: "both_point_formats",
+    scalingDriver: "revenue_percentage",
+    status: "owner_decision",
+    referenceContext: "canonical_financial_model",
+    pricingStatus: "canonical_source",
+    note: "Торговая переменная статья, рассчитанная существующей ставкой от выручки точки.",
+  },
+  {
+    id: "OPEX-AGGREGATOR-COMMISSION",
+    category: "opex",
+    name: "Комиссии агрегаторов",
+    sourceRefs: [{ kind: "financial_model_item", id: "aggregator_commission" }],
     physicalScope: "unresolved",
     scalingDriver: "revenue_percentage",
     status: "unresolved",
     referenceContext: "canonical_financial_model",
     pricingStatus: "canonical_source",
-    note: "Нужна future allocation raw-material flow между производством и торговыми format units.",
-  },
-  {
-    id: "OPEX-POINT-SALES",
-    category: "opex",
-    name: "Упаковка, эквайринг и агрегаторы",
-    sourceRefs: [
-      { kind: "financial_model_item", id: "packaging" },
-      { kind: "financial_model_item", id: "acquiring" },
-      { kind: "financial_model_item", id: "aggregator_commission" },
-    ],
-    physicalScope: "both_point_formats",
-    scalingDriver: "per_check",
-    status: "inferred",
-    referenceContext: "canonical_financial_model",
-    pricingStatus: "canonical_source",
-    note: "Связаны с торговым потоком, но financial network allocation ещё не реализуется.",
+    note: "Доля агрегаторов и применимость к cohort не утверждены для planning network model.",
   },
   {
     id: "OPEX-LABOUR",
@@ -623,6 +650,78 @@ export const physicalAllocationMap = [
     referenceContext: "canonical_financial_model",
     pricingStatus: "canonical_source",
     note: "Нужны role ownership, schedules и FTE model; current protected labour floor не разложен.",
+  },
+  {
+    id: "OPEX-PRODUCTION-PREP-PAYROLL",
+    category: "opex",
+    name: "Planning payroll заготовочного производства",
+    sourceRefs: [{ kind: "financial_model_item", id: "labour" }],
+    physicalScope: "production",
+    scalingDriver: "per_staff",
+    status: "owner_decision",
+    referenceContext: "canonical_financial_model",
+    pricingStatus: "canonical_source",
+    note: "Prep Cook roster исходит из owner-approved Network Planning policy и канонической зарплаты роли.",
+  },
+  {
+    id: "OPEX-POINT-PLANNING-PAYROLL",
+    category: "opex",
+    name: "Planning payroll торговой точки",
+    sourceRefs: [{ kind: "financial_model_item", id: "labour" }],
+    physicalScope: "both_point_formats",
+    scalingDriver: "per_staff",
+    status: "owner_decision",
+    referenceContext: "canonical_financial_model",
+    pricingStatus: "canonical_source",
+    note: "Concurrent roles и roster преобразуются отдельным planning adapter; это не механическое деление integrated labour.",
+  },
+  {
+    id: "OPEX-NETWORK-MANAGER",
+    category: "opex",
+    name: "Управляющий сети",
+    sourceRefs: [{ kind: "financial_model_item", id: "labour" }],
+    physicalScope: "shared_network",
+    scalingDriver: "once",
+    status: "owner_decision",
+    referenceContext: "canonical_financial_model",
+    pricingStatus: "canonical_source",
+    note: "Один Manager с первой точки; не умножается на количество торговых точек.",
+  },
+  {
+    id: "OPEX-MARKETING-FIXED",
+    category: "opex",
+    name: "Базовый маркетинг сети",
+    sourceRefs: [{ kind: "financial_model_item", id: "marketing" }],
+    physicalScope: "shared_network",
+    scalingDriver: "once",
+    status: "owner_decision",
+    referenceContext: "canonical_financial_model",
+    pricingStatus: "canonical_source",
+    note: "Каноническая fixed часть маркетинга учитывается один раз на сеть.",
+  },
+  {
+    id: "OPEX-MARKETING-VARIABLE",
+    category: "opex",
+    name: "Переменный маркетинг",
+    sourceRefs: [{ kind: "financial_model_item", id: "marketing" }],
+    physicalScope: "shared_network",
+    scalingDriver: "revenue_percentage",
+    status: "owner_decision",
+    referenceContext: "canonical_financial_model",
+    pricingStatus: "canonical_source",
+    note: "Каноническая variable часть агрегируется по revenue cohort; не является fixed cost на каждую точку.",
+  },
+  {
+    id: "OPEX-LOGISTICS",
+    category: "opex",
+    name: "Логистика сети",
+    sourceRefs: [{ kind: "network_planning_item", id: "LOGISTICS" }],
+    physicalScope: "shared_network",
+    scalingDriver: "once",
+    status: "owner_decision",
+    referenceContext: "future_physical_object_requirement",
+    pricingStatus: "not_priced",
+    note: "Внешняя логистика или один planning рефрижератор обслуживают сеть; не умножаются на каждую точку.",
   },
   {
     id: "OPEX-RENT",
@@ -733,6 +832,7 @@ export type AllocationReferenceCatalog = {
   preparationCategoryIds: ReadonlySet<string>;
   financialModelItemIds: ReadonlySet<string>;
   investorStartFieldIds: ReadonlySet<string>;
+  networkPlanningItemIds?: ReadonlySet<string>;
 };
 
 /** Narrow validation used by tests and future map consumers. */
@@ -763,6 +863,7 @@ export function physicalAllocationIntegrityErrors(
       if (reference.kind === "preparation_category" && !catalog.preparationCategoryIds.has(reference.id)) errors.push(`${record.id} references unknown preparation category ${reference.id}.`);
       if (reference.kind === "financial_model_item" && !catalog.financialModelItemIds.has(reference.id)) errors.push(`${record.id} references unknown Financial Model item ${reference.id}.`);
       if (reference.kind === "investor_start_field" && !catalog.investorStartFieldIds.has(reference.id)) errors.push(`${record.id} references unknown Investor Start field ${reference.id}.`);
+      if (reference.kind === "network_planning_item" && !catalog.networkPlanningItemIds?.has(reference.id)) errors.push(`${record.id} references unknown Network Planning item ${reference.id}.`);
     }
   }
   return errors;

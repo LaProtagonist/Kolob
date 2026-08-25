@@ -1,0 +1,11 @@
+schema_version: 1
+iteration_id: ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-01
+proposal_id: PROP-INVESTOR-TERMINAL-V2-4-2026-08-26-01
+decision_id: DEC-NETWORK-PLANNING-V2-4-2026-08-26-01
+change_set_id: CHG-INVESTOR-TERMINAL-V2-4-2026-08-26-01
+status: passed
+mutation_performed: false
+scope: Local deterministic planning source, runtime projection and Investor Terminal UI only.
+canonical_business_facts: unchanged
+google: unused
+deployment: unused

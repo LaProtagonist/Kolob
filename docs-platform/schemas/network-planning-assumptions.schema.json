@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["document", "references", "point_schedule", "staffing", "locations", "traffic_presets", "opex", "launch", "logistics"],
+  "properties": {
+    "document": { "type": "object", "required": ["id", "version", "status", "provenance", "boundary"], "properties": { "id": {"const": "DOC-NETWORK-PLANNING-ASSUMPTIONS"}, "version": {"const": "1.0"}, "status": {"const": "owner_approved_planning"}, "provenance": {"type": "string"}, "boundary": {"type": "string"} }, "additionalProperties": true },
+    "references": { "type": "object", "required": ["financial_model", "revenue_model", "physical_allocation"], "properties": { "financial_model": {"type": "string"}, "revenue_model": {"type": "string"}, "physical_allocation": {"type": "string"} }, "additionalProperties": false },
+    "point_schedule": { "type": "object", "required": ["core", "peak"], "additionalProperties": true },
+    "staffing": { "type": "object", "required": ["payroll_contribution_scenario", "takeaway", "seating", "production", "shared_manager"], "additionalProperties": true },
+    "locations": { "type": "object", "required": ["types"], "additionalProperties": true },
+    "traffic_presets": { "type": "object", "required": ["street_takeaway", "creative_cluster", "foodhall"], "additionalProperties": true },
+    "opex": { "type": "object", "required": ["marketing"], "additionalProperties": true },
+    "launch": { "type": "object", "required": ["uniform_per_roster_employee_rub", "initial_inventory_operating_days"], "additionalProperties": true },
+    "logistics": { "type": "object", "required": ["own_vehicle_suggested_from_point_count", "own_vehicle_capex_rub", "own_vehicle_monthly_total_rub", "driver_salary_rub"], "additionalProperties": true }
+  },
+  "additionalProperties": false
+}

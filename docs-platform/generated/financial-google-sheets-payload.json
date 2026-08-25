@@ -5,8 +5,8 @@
     "title": "04 — Финансовая модель пилотного объекта",
     "folder_name": "Колобочная — Investment",
     "native_google_sheet": true,
-    "content_state_sha256": "964ed09c82f3e872183c56ec79929762bce100259f2c0ad2d2749148dc3b3262",
-    "financial_projection_sha256": "78b0085f7f26e1b19ae93967eb3cdf4d6c39592c003fbb02a9990874bbda5640",
+    "content_state_sha256": "f09ba76c9dbc38102f5d4b788a42553ef60756d62c7d7bec776491527c64d2a3",
+    "financial_projection_sha256": "a751dc718817cdc3db7842f3d3c1a985a89054f913b7aef96651eb55b2740a72",
     "formula_input_mode": "USER_ENTERED"
   },
   "sheets": [
@@ -44,7 +44,7 @@
         ],
         [
           "Content state SHA-256",
-          "964ed09c82f3e872183c56ec79929762bce100259f2c0ad2d2749148dc3b3262"
+          "f09ba76c9dbc38102f5d4b788a42553ef60756d62c7d7bec776491527c64d2a3"
         ],
         [
           "Источник Revenue",

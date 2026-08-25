@@ -103,17 +103,32 @@ async function run() {
     }
     assert.equal(await page.getByLabel("Предоплата").inputValue(), "", "fresh prepayment is unknown");
     assert.equal(await page.getByLabel("Обеспечительный платёж").inputValue(), "", "fresh security deposit is unknown");
+    assert.equal(await page.getByTestId("scaling-cohort-sales-mode-cohort-1").inputValue(), "baseline", "fresh cohort inherits the Financial Model baseline");
+    assert.equal(await page.getByTestId("scaling-cohort-checks-cohort-1").inputValue(), "300", "baseline checks are visible per cohort");
+    assert.equal(await page.getByTestId("scaling-cohort-checks-cohort-1").isDisabled(), true, "baseline sales are not accidentally edited as a custom scenario");
+    assert.equal(await page.getByTestId("scaling-cohort-area-minimum-cohort-1").innerText(), "60 м²", "seating minimum area is visible without inventing a default");
+    assert.equal(await page.getByTestId("scaling-cohort-minimum-staff-cohort-1").innerText(), "4", "seating shows concurrent staff, not FTE");
     await page.evaluate(() => window.scrollTo(0, 0));
-    await page.screenshot({ path: path.join(projectRoot, ".cache/verification/screenshots/investor-terminal-v22-desktop.png"), fullPage: true });
+    await page.screenshot({ path: path.join(projectRoot, ".cache/verification/screenshots/investor-terminal-v24-desktop.png"), fullPage: true });
     await page.setViewportSize({ width: 390, height: 844 });
     await page.evaluate(() => window.scrollTo(0, 0));
     await page.waitForTimeout(100);
-    await page.screenshot({ path: path.join(projectRoot, ".cache/verification/screenshots/investor-terminal-v22-mobile.png"), fullPage: true });
+    await page.screenshot({ path: path.join(projectRoot, ".cache/verification/screenshots/investor-terminal-v24-mobile.png"), fullPage: true });
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.waitForTimeout(100);
 
     // The neutral point can then be configured deterministically by the investor.
     await setCount("cohort-1", 5);
+    await page.getByTestId("scaling-cohort-sales-mode-cohort-1").selectOption("custom");
+    await page.getByTestId("scaling-cohort-checks-cohort-1").fill("250");
+    await page.getByTestId("scaling-cohort-average-check-cohort-1").fill("1400");
+    await page.getByTestId("scaling-cohort-area-cohort-1").fill("59");
+    await page.getByTestId("scaling-cohort-area-cohort-1").press("Tab");
+    await page.getByTestId("scaling-cohort-area-warning-cohort-1").waitFor();
+    await page.getByTestId("scaling-cohort-area-cohort-1").fill("60");
+    await page.getByTestId("scaling-cohort-area-cohort-1").press("Tab");
+    assert.equal(await page.getByTestId("scaling-cohort-area-warning-cohort-1").count(), 0, "seating area warning clears at 60 m²");
+    assert.equal(await page.getByTestId("scaling-cohort-minimum-staff-cohort-1").innerText(), "4", "seating does not invent a traffic staffing rule");
     await page.getByTestId("scaling-cohort-rent-cohort-1").fill("350000");
     await page.getByTestId("scaling-cohort-rent-cohort-1").press("Tab");
     await page.getByLabel("Предоплата").selectOption("1");
@@ -136,12 +151,32 @@ async function run() {
     }
     assert.equal(await page.getByLabel("Предоплата").inputValue(), "", "new cohort does not inherit prepayment");
     assert.equal(await page.getByLabel("Обеспечительный платёж").inputValue(), "", "new cohort does not inherit deposit");
+    assert.equal(await page.getByTestId("scaling-cohort-sales-mode-cohort-2").inputValue(), "baseline", "new cohort starts from a clear baseline rule");
+    assert.equal(await page.getByTestId("scaling-cohort-checks-cohort-2").inputValue(), "300", "baseline sales are inherited, not copied from cohort one");
     await setCount("cohort-2", 10);
+    await page.getByTestId("scaling-cohort-sales-mode-cohort-2").selectOption("custom");
+    await page.getByTestId("scaling-cohort-checks-cohort-2").fill("175");
+    await page.getByTestId("scaling-cohort-average-check-cohort-2").fill("900");
+    await page.getByTestId("scaling-cohort-area-cohort-2").fill("9");
+    await page.getByTestId("scaling-cohort-area-cohort-2").press("Tab");
+    await page.getByTestId("scaling-cohort-area-warning-cohort-2").waitFor();
+    await page.getByTestId("scaling-cohort-area-cohort-2").fill("15");
+    await page.getByTestId("scaling-cohort-area-cohort-2").press("Tab");
+    assert.equal(await page.getByTestId("scaling-cohort-area-warning-cohort-2").count(), 0, "takeaway area warning clears at 10 m² and above");
+    assert.equal(await page.getByTestId("scaling-cohort-minimum-staff-cohort-2").innerText(), "4", "175 checks/day maps through the canonical portions/check workload proxy");
     await page.getByTestId("scaling-cohort-rent-cohort-2").fill("210000");
     await page.getByTestId("scaling-cohort-rent-cohort-2").press("Tab");
     await page.getByLabel("Предоплата").selectOption("1");
     await page.getByLabel("Обеспечительный платёж").selectOption("1");
+    const takeawayRevenue = await amount("scaling-cohort-revenue-cohort-2");
     await setSwitch("scaling-cohort-bar-cohort-2", false);
+    await page.getByTestId("scaling-cohort-row-cohort-1").click();
+    const seatingRevenue = await amount("scaling-cohort-revenue-cohort-1");
+    await page.getByTestId("scaling-cohort-row-cohort-2").click();
+    assert.equal(await page.getByTestId("scaling-network-checks").getAttribute("data-checks-per-day"), "3000", "network checks aggregate each cohort by its own count");
+    assert.equal(await amount("scaling-network-revenue"), seatingRevenue + takeawayRevenue, "network revenue is the sum of cohort revenue projections");
+    assert.ok(Math.abs((await amount("scaling-network-average-check")) - (seatingRevenue + takeawayRevenue) / (3000 * 30)) < 0.01, "network average check is weighted by total checks");
+    assert.match(await page.getByTestId("scaling-network-sales-status").innerText(), /Продажи групп агрегированы/i, "sales aggregation remains separate from the planning operating result");
     const takeawayUnit = await amount("scaling-cohort-unit-cohort-2");
     assert.equal(await amount("scaling-cohort-total-cohort-2"), takeawayUnit * 10, "takeaway cohort aggregates independently");
     await page.getByTestId("scaling-cohort-editor-cohort-2").locator("details.cohort-items > summary").click();
@@ -180,6 +215,11 @@ async function run() {
     await page.locator(".terminal-tabs").getByRole("button", { name: "Масштабирование" }).click();
     await page.getByTestId("scaling-cohort-row-cohort-3").waitFor();
     assert.equal(await page.getByTestId("scaling-cohort-count-cohort-1").inputValue(), "5", "first cohort is persisted after refresh");
+    assert.equal(await page.getByTestId("scaling-cohort-sales-mode-cohort-1").inputValue(), "custom", "cohort-one sales mode persists after refresh");
+    assert.equal(await page.getByTestId("scaling-cohort-checks-cohort-1").inputValue(), "250", "cohort-one checks persist independently");
+    await page.getByTestId("scaling-cohort-row-cohort-2").click();
+    assert.equal(await page.getByTestId("scaling-cohort-checks-cohort-2").inputValue(), "175", "takeaway cohort keeps its own traffic after refresh");
+    assert.equal(await page.getByTestId("scaling-cohort-average-check-cohort-2").inputValue(), "900", "takeaway cohort keeps its own average check after refresh");
     assert.match(await page.getByTestId("scaling-cohort-row-cohort-1").innerText(), /×5/);
     assert.match(await page.getByTestId("scaling-cohort-row-cohort-2").innerText(), /×10/);
 
@@ -188,6 +228,7 @@ async function run() {
     assert.equal(await page.getByTestId("scaling-cohort-row-cohort-2").count(), 0, "reset restores the canonical single-cohort state");
     assert.match(await page.getByTestId("scaling-cohort-row-cohort-1").innerText(), /С посадочным залом[\s\S]*Аренда[\s\S]*×1/, "reset restores the neutral point structure");
     assert.equal(await page.getByLabel("Площадь помещения").inputValue(), "", "reset restores nullable planning inputs");
+    assert.equal(await page.getByTestId("scaling-cohort-sales-mode-cohort-1").inputValue(), "baseline", "reset restores baseline cohort sales");
     await page.getByRole("button", { name: "Экономика точки" }).click();
     await checks.waitFor();
     assert.equal(await checks.inputValue(), "300", "reset restores canonical traffic too");

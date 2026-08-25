@@ -1,0 +1,280 @@
+{
+  "meta": {
+    "schemaVersion": 1,
+    "dataVersion": "1.0",
+    "contentStateSha256": "fe9ef7722e8a700a99de03eebf2cf4bb66936d408d95a18d35523afbea88bd78",
+    "sourceFiles": [
+      {
+        "path": "docs-platform/working/network-planning-assumptions.yaml",
+        "sha256": "2e74dd6bb407b79315c442d262efe48caf35a09a82a869fbaf317c2a8fe3da9b"
+      },
+      {
+        "path": "docs-platform/schemas/network-planning-assumptions.schema.json",
+        "sha256": "5c8497daa307dba79383c4e169ad2d480845ff2aa6dc5dfcceb7caedfb4df74d"
+      },
+      {
+        "path": "docs-platform/working/financial-model.yaml",
+        "sha256": "3f3d5956d83a115fbe20ec0413243e5207ceaaeba0b07c082d9e175ef9a64c43"
+      },
+      {
+        "path": "docs-platform/working/revenue-model.yaml",
+        "sha256": "bb8f97c95b18024ed5c60aa2f71c3c44bf83e8e5932b1eb781c82c31f89817f8"
+      },
+      {
+        "path": "src/lib/physical-allocation.ts",
+        "sha256": "86f831693d69eff11990246027b29aa79f91980966209c2dc04617a908c61d36"
+      },
+      {
+        "path": "src/lib/employer-contributions.ts",
+        "sha256": "c6bbd725b90dd1e89d8dedf1f9e79df99c4d0afefe0581d908594dc51d67eae9"
+      },
+      {
+        "path": "docs-platform/app/src/investor/network-planning.ts",
+        "sha256": "049fd440fb5034764e244950f186174041dc0151f7964accdef2186683a29146"
+      }
+    ],
+    "provenance": "owner-approved investor-terminal-v2.4 brief, 2026-08-25",
+    "boundary": "Planning assumptions for a future network. They do not replace the canonical integrated-pilot Financial Model or amend its historical facts."
+  },
+  "planning": {
+    "document": {
+      "id": "DOC-NETWORK-PLANNING-ASSUMPTIONS",
+      "version": "1.0",
+      "status": "owner_approved_planning",
+      "title": "Network Planning Model — Investor Terminal v2.4",
+      "provenance": "owner-approved investor-terminal-v2.4 brief, 2026-08-25",
+      "boundary": "Planning assumptions for a future network. They do not replace the canonical integrated-pilot Financial Model or amend its historical facts."
+    },
+    "references": {
+      "financial_model": "docs-platform/working/financial-model.yaml",
+      "revenue_model": "docs-platform/working/revenue-model.yaml",
+      "physical_allocation": "src/lib/physical-allocation.ts"
+    },
+    "point_schedule": {
+      "core": {
+        "label": "2/2 · 12 часов",
+        "roster_employees_per_concurrent_position": 2
+      },
+      "peak": {
+        "label": "5/2 · 8 часов",
+        "roster_employees_per_concurrent_position": 1
+      }
+    },
+    "staffing": {
+      "payroll_contribution_scenario": "reduced",
+      "takeaway": {
+        "portions_per_check_source": "revenue_model.product_model.food_portions_per_check",
+        "base": {
+          "up_to_portions_per_day": 200,
+          "roles": {
+            "CASHIER_BAR": 1,
+            "LINE_COOK": 2
+          }
+        },
+        "growth": {
+          "from_portions_per_day": 201,
+          "through_portions_per_day": 299,
+          "roles": {
+            "CASHIER_BAR": 1,
+            "LINE_COOK": 3
+          }
+        },
+        "high_traffic": {
+          "from_portions_per_day": 300,
+          "core_roles": {
+            "CASHIER_BAR": 1,
+            "LINE_COOK": 2,
+            "ADMINISTRATOR": 1
+          },
+          "peak_roles": {
+            "SOUS_CHEF": 1
+          }
+        }
+      },
+      "seating": {
+        "minimum_total_area_m2": 60,
+        "core_roles": {
+          "CASHIER_BAR": 1,
+          "LINE_COOK": 2,
+          "TECHNICAL": 1
+        },
+        "provisional_role_mapping": "Технический / универсальная функция зала и уборки"
+      },
+      "production": {
+        "up_to_network_checks_per_day": 300,
+        "prep_cooks_at_or_below_threshold": 1,
+        "prep_cooks_above_threshold": 2,
+        "capacity_review_after_two_prep_cooks": true,
+        "schedule_default": "one_main_shift"
+      },
+      "shared_manager": {
+        "role_id": "MANAGER",
+        "count_when_point_count_at_least": 1
+      }
+    },
+    "locations": {
+      "types": {
+        "street": {
+          "label": "Street",
+          "extraction_required": true,
+          "planning_utility_suggestion_rub": {
+            "takeaway": 45000,
+            "with_seating": 80000
+          },
+          "video_allowance_reference_rub": 70000,
+          "alarm_allowance_reference_rub": 35000
+        },
+        "foodhall": {
+          "label": "Foodhall",
+          "extraction_required": true,
+          "defaults": {
+            "shared_seating": true,
+            "venue_security_included": true,
+            "common_cleaning_included": true,
+            "fitout_allowance_rub": 2000000
+          },
+          "fitout_reference_range_rub": [
+            1500000,
+            2500000
+          ]
+        },
+        "creative_cluster": {
+          "label": "Creative Cluster",
+          "extraction_required": true,
+          "defaults": {
+            "shared_seating": null,
+            "venue_security_included": null,
+            "common_cleaning_included": null,
+            "fitout_allowance_rub": 2000000
+          },
+          "fitout_reference_range_rub": [
+            1500000,
+            2500000
+          ]
+        },
+        "foodtruck": {
+          "label": "Foodtruck",
+          "status": "advanced_optional",
+          "extraction_required": true
+        }
+      }
+    },
+    "traffic_presets": {
+      "street_takeaway": {
+        "checks_per_day": 150,
+        "label": "Street takeaway — planning reference"
+      },
+      "creative_cluster": {
+        "checks_per_day": 175,
+        "label": "Creative Cluster — planning reference"
+      },
+      "foodhall": {
+        "checks_per_day": 215,
+        "label": "Foodhall — planning reference"
+      }
+    },
+    "opex": {
+      "consumer_packaging": {
+        "source": "canonical",
+        "point_scope": true
+      },
+      "food_cost_and_waste": {
+        "source": "canonical",
+        "physical_scope": "production",
+        "contribution_attribution": "cohort_revenue"
+      },
+      "acquiring": {
+        "source": "canonical",
+        "point_scope": true
+      },
+      "marketing": {
+        "fixed_scope": "shared_network",
+        "variable_scope": "cohort_revenue"
+      },
+      "production_packaging": {
+        "status": "unresolved_manual"
+      }
+    },
+    "launch": {
+      "uniform_per_roster_employee_rub": 12000,
+      "initial_inventory_operating_days": 3,
+      "launch_marketing_scope": "shared_network"
+    },
+    "logistics": {
+      "delivery_window": "night_or_off_peak",
+      "external_logistics_monthly_rub": null,
+      "own_vehicle_suggested_from_point_count": 3,
+      "own_vehicle_capex_rub": 5000000,
+      "own_vehicle_monthly_total_rub": 250000,
+      "driver_salary_rub": 150000
+    }
+  },
+  "canonicalReferences": {
+    "roles": {
+      "SOUS_CHEF": {
+        "id": "SOUS_CHEF",
+        "name": "Су-шеф",
+        "grossSalaryRub": 150000
+      },
+      "PREP_COOK": {
+        "id": "PREP_COOK",
+        "name": "Повар-заготовщик",
+        "grossSalaryRub": 120000
+      },
+      "LINE_COOK": {
+        "id": "LINE_COOK",
+        "name": "Повар основной линии",
+        "grossSalaryRub": 115000
+      },
+      "CASHIER_BAR": {
+        "id": "CASHIER_BAR",
+        "name": "Кассир / бар",
+        "grossSalaryRub": 95000
+      },
+      "ADMINISTRATOR": {
+        "id": "ADMINISTRATOR",
+        "name": "Администратор",
+        "grossSalaryRub": 125000
+      },
+      "TECHNICAL": {
+        "id": "TECHNICAL",
+        "name": "Технический сотрудник / мойщик",
+        "grossSalaryRub": 90000
+      },
+      "MANAGER": {
+        "id": "MANAGER",
+        "name": "Управляющий",
+        "grossSalaryRub": 150000
+      }
+    },
+    "payrollPolicy": {
+      "defaultScenario": "reduced",
+      "reduced": {
+        "mrotRub": 27093,
+        "thresholdMultiple": 1.5,
+        "rateBelowThreshold": 0.3,
+        "rateAboveThreshold": 0.15
+      },
+      "standard": {
+        "rate": 0.3
+      },
+      "personnelReserveRate": 0.1
+    },
+    "revenue": {
+      "workingDaysPerMonth": 30,
+      "foodPortionsPerCheck": 1.4
+    },
+    "opex": {
+      "rawMaterialsRate": 0.3,
+      "wasteRate": 0.04,
+      "packagingBaselineChecksPerDay": 300,
+      "packagingBaselineMonthlyRub": 250000,
+      "acquiringRateOfGrossRevenue": 0.02,
+      "marketingFixedMonthlyRub": 150000,
+      "marketingVariableRateOfNetRevenue": 0.024
+    },
+    "launch": {
+      "launchMarketingRub": 700000
+    }
+  }
+}

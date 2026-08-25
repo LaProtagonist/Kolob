@@ -1,0 +1,7 @@
+schema_version: 2
+change_id: CHG-INVESTOR-TERMINAL-V2-4-2026-08-26-02
+iteration_id: ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-02
+applied_at: 2026-08-26T00:04:00.000Z
+actor: Codex
+status: applied
+summary: Applied Network Planning Model, planning adapters and Investor Terminal presentation; regenerated dependent local financial projections without external operations.

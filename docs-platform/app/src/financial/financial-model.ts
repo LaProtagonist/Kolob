@@ -10,6 +10,7 @@ import { canonical, sha256 } from "../governance/util.js";
 import { buildRevenueContentState, readRevenueModel } from "../investor/revenue-model.js";
 import { calculateLaunchBudget, defaultLaunchBudgetState, launchModel } from "../../../../src/lib/launch-budget.js";
 import { buildCapexRows, capexData, emptyCapexParameters, summarizeEquipment } from "../../../../src/lib/capex-runtime.js";
+import { calculateEmployerContributions, type EmployerContributionPolicy } from "../../../../src/lib/employer-contributions.js";
 
 const projectRoot = path.resolve(platformRoot, "..");
 let capexSnapshotValidationError: string | null | undefined;
@@ -114,27 +115,26 @@ export function calculateStaffing(scenario: SalesScenarioId, contributionScenari
   const roles = model.staffing.roles as any[];
   const key = scenarioHeadcountKey(scenario);
   const headcount = sum(roles.map(role => Number(role[key])));
-  const payroll = sum(roles.map(role => Number(role[key]) * Number(role.gross_salary_rub)));
-  let employerContributions = 0;
-  if (contributionScenario === "standard") {
-    employerContributions = payroll * Number(model.staffing.employer_contributions.standard.rate);
-  } else {
-    const reduced = model.staffing.employer_contributions.reduced;
-    const threshold = Number(reduced.mrot_rub) * Number(reduced.threshold_multiple);
-    employerContributions = sum(roles.map(role => {
-      const salary = Number(role.gross_salary_rub);
-      const perEmployee = Math.min(salary, threshold) * Number(reduced.rate_below_threshold)
-        + Math.max(salary - threshold, 0) * Number(reduced.rate_above_threshold);
-      return Number(role[key]) * perEmployee;
-    }));
-  }
-  const personnelReserve = (payroll + employerContributions) * Number(model.staffing.personnel_reserve_rate);
+  const contributions = calculateEmployerContributions(
+    roles.map(role => ({ headcount: Number(role[key]), grossSalaryRub: Number(role.gross_salary_rub) })),
+    {
+      scenario: contributionScenario,
+      reduced: {
+        mrotRub: Number(model.staffing.employer_contributions.reduced.mrot_rub),
+        thresholdMultiple: Number(model.staffing.employer_contributions.reduced.threshold_multiple),
+        rateBelowThreshold: Number(model.staffing.employer_contributions.reduced.rate_below_threshold),
+        rateAboveThreshold: Number(model.staffing.employer_contributions.reduced.rate_above_threshold),
+      },
+      standard: { rate: Number(model.staffing.employer_contributions.standard.rate) },
+      personnelReserveRate: Number(model.staffing.personnel_reserve_rate),
+    } satisfies EmployerContributionPolicy,
+  );
   return {
     headcount,
-    payroll_rub: round(payroll),
-    employer_contributions_rub: round(employerContributions),
-    personnel_reserve_rub: round(personnelReserve),
-    total_labor_rub: round(payroll + employerContributions + personnelReserve),
+    payroll_rub: contributions.payrollRub,
+    employer_contributions_rub: contributions.employerContributionsRub,
+    personnel_reserve_rub: contributions.personnelReserveRub,
+    total_labor_rub: contributions.totalLaborRub,
     rows: roles.map(role => ({
       id: role.id,
       role: role.role,

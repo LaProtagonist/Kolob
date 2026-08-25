@@ -328,3 +328,19 @@ documents:
     governance_level: working
     local_path: docs-platform/working/investor-financial-summary.yaml
     updated_at: 2026-08-19
+  - id: DOC-NETWORK-PLANNING-ASSUMPTIONS
+    title: Network Planning Model — Investor Terminal v2.4
+    type: working_network_planning_model
+    status: approved
+    google_file_id: null
+    template: null
+    sections:
+      - Границы модели
+      - Персонал и графики
+      - Типы локаций
+      - OPEX и запуск
+      - Логистика
+    version: "1.0"
+    governance_level: working
+    local_path: docs-platform/working/network-planning-assumptions.yaml
+    updated_at: 2026-08-26
