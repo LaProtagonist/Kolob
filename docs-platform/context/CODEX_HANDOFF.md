@@ -9,16 +9,16 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 ## 2. Текущая ветка и governed iteration
 
 - Branch: `feat/investor-terminal-v2`.
-- Latest closed iteration: `ITR-FINANCIAL-PREPARATION-PROVENANCE-2026-08-25-01`.
-- Latest iteration tag: `iteration/ITR-FINANCIAL-PREPARATION-PROVENANCE-2026-08-25-01`.
-- Latest content commit: `98150db139d58c47e0fb437e73213a9c0a37b556`.
+- Latest closed iteration: `ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-03`.
+- Latest iteration tag: `iteration/ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-03`.
+- Latest content commit: `edf007925834ded34b470e4e55108e65fd4d0226`.
 - Текущий Git HEAD намеренно не записывается: его вычисляет `npm run project:onboard`.
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-FINANCIAL-PREPARATION-PROVENANCE-2026-08-25-01-COMMITTED`.
-- Hash: `c9c3181307d288284f905167090d7e2ffb872fc133c5481a236d4152080a94e2`.
-- generated_from_event_hash: `c9c3181307d288284f905167090d7e2ffb872fc133c5481a236d4152080a94e2`.
+- Event: `EVT-ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-03-COMMITTED`.
+- Hash: `f5e15595bc55d76ba8c264168ea4f2e137f23ab622e310e2d764d2341280c028`.
+- generated_from_event_hash: `f5e15595bc55d76ba8c264168ea4f2e137f23ab622e310e2d764d2341280c028`.
 
 ## 4. Канонические документы
 
@@ -37,15 +37,16 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 | DOC-FINANCIAL-MODEL | research | `docs-platform/working/financial-model.yaml` | `6a76990d3635e62ac633610754415d401edba989f1a49a463091e2cece1e329b` |
 | DOC-FOUNDATION | approved | `docs-platform/00-foundation.md` | `5b4d457184c055ba11f8c4d05cc263139d2eb4f623981bcdc198c0114a50c0bb` |
 | DOC-INVESTMENT-MEMO | proposed | `docs-platform/templates/investment-memorandum.md` | `464e46d307aaa98e57cab3a098cd639e212d32b51f82a06688de228f0e7fb4cd` |
-| DOC-INVESTOR-FINANCIAL-SUMMARY | research | `docs-platform/working/investor-financial-summary.yaml` | `008aaa644847e09c4ae89199143e219f37eeb4e8828fd26091771965d540e212` |
+| DOC-INVESTOR-FINANCIAL-SUMMARY | research | `docs-platform/working/investor-financial-summary.yaml` | `ce7ae8451898dc22583646b1aee2067ca0136013c2a9f6cb10318dc0a07173c9` |
 | DOC-INVESTOR-START-MODEL | research | `docs-platform/working/investor-start-model.yaml` | `b81a6c4e8988a4532c9ba2749d492b3f96e37d83af822396afc82930244b2985` |
+| DOC-NETWORK-PLANNING-ASSUMPTIONS | approved | `docs-platform/working/network-planning-assumptions.yaml` | `86a136bcbaae0aef7ef28caeab9f582fb9ba3b5af6c8e10dc2cb8cdb3f36f57e` |
 | DOC-PILOT-CAPEX-ASSUMPTIONS | research | `docs-platform/working/pilot-capex-assumptions.yaml` | `25e11d4db20050b3a95cab40797ef0a29e56fad93c73d33d4a39415a8071d4ac` |
 | DOC-README | approved | `docs-platform/README.md` | `04e947f296a158a1c37ceb8d4c959d1f4e31cf609d16c99bee2d3c3b79b824ab` |
 | DOC-REVENUE-MODEL | research | `docs-platform/working/revenue-model.yaml` | `ab68399813d62d861522752c8e94df9cfc5d5a48e9b7723c60f2c968c4cba721` |
 
 ## 5. Текущая рабочая тема
 
-Financial Model preparation provenance reconciliation
+Seal verified Investor Terminal v2.4 delivery after metadata correction
 
 ## 6. Decisions и change sets
 
