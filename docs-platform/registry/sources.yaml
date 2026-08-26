@@ -1440,3 +1440,12 @@ sources:
     accessed_at: 2026-08-26
     reliability: primary
     notes: Первичный источник owner-approved planning policy для staffing, roster, location types, direct point contribution, shared costs, logistics и launch allowances. Не заменяет canonical Financial Model integrated pilot и не утверждает полноценную network EBITDA, IRR, NPV, capacity или Google integration.
+  - id: SRC-INVESTOR-TERMINAL-V2-RELEASE-BRIEF-2026-08-26
+    title: Задание на интеграцию и production-публикацию Investor Terminal v2
+    type: instruction
+    location: User instruction, 2026-08-26
+    publisher: project owner
+    publication_date: 2026-08-26
+    accessed_at: 2026-08-26
+    reliability: primary
+    notes: Прямое разрешение владельца закрыть принятую feature-линию Investor Terminal v2, штатно интегрировать её в актуальную production-ветку и опубликовать после полного release verification.

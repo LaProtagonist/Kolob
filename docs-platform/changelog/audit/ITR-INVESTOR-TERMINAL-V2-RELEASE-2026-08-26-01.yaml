@@ -1,0 +1,11 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01
+actor: Codex
+status: passed
+scope: Accepted Investor Terminal v2 feature line and final release-facing UI copy.
+financial_boundary: Canonical Financial Model and current Base Object remain source layers; the feature does not introduce browser-side financial formulas.
+release_boundary: Production integration must use a normal merge of the sealed feature branch; no partial component transfer or history rewrite is allowed.
+reviewed_user_facing_changes:
+  - «Investor Terminal» becomes «Терминал инвестора» in page, metadata, menu, mobile menu and tab accessibility copy.
+  - Investor navigation order is «Модель развития», «Материалы проекта», «Терминал инвестора», «Обсудить участие».
+  - Summary duration values are a no-wrap value column, while labels may wrap.

@@ -5,7 +5,10 @@ const path = require("node:path");
 const { spawn } = require("node:child_process");
 
 const projectRoot = path.resolve(__dirname, "..");
-const baseUrl = "http://127.0.0.1:5182";
+// Verification may run multiple browser domains concurrently. A per-process
+// port prevents another local Vite check from taking down this scenario.
+const port = Number(process.env.INVESTOR_TERMINAL_TEST_PORT ?? 9_000 + (process.pid % 1_000));
+const baseUrl = `http://127.0.0.1:${port}`;
 const canonicalPaths = [
   "docs-platform/working/financial-model.yaml",
   "docs-platform/generated/financial-model-projection.json",
@@ -31,7 +34,7 @@ async function responds() {
 
 async function startServer() {
   if (await responds()) return { stop: async () => {} };
-  const server = spawn(process.execPath, ["node_modules/vite/bin/vite.js", "--host", "127.0.0.1", "--port", "5182", "--strictPort"], {
+  const server = spawn(process.execPath, ["node_modules/vite/bin/vite.js", "--host", "127.0.0.1", "--port", String(port), "--strictPort"], {
     cwd: projectRoot,
     env: process.env,
     stdio: "ignore",
@@ -54,7 +57,7 @@ async function run() {
   const browser = await chromium.launch({ headless: true });
   const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
   const page = await context.newPage();
-  page.setDefaultTimeout(5_000);
+  page.setDefaultTimeout(10_000);
   const pageErrors = [];
   page.on("pageerror", (error) => pageErrors.push(error.message));
 
@@ -86,152 +89,205 @@ async function run() {
     await page.goto(`${baseUrl}/investor-terminal`, { waitUntil: "domcontentloaded" });
     const checks = page.getByTestId("terminal-checks-input");
     await checks.waitFor();
-    assert.equal(await checks.inputValue(), "300", "the Terminal opens with the canonical baseline");
-    assert.equal(await page.getByTestId("terminal-scenario-status").innerText(), "Financial Model baseline");
+    assert.match(await page.locator(".terminal-header > div > p").innerText(), /терминал инвестора/i, "the public page name is localized");
+    assert.equal(await page.locator(".terminal-tabs").getAttribute("aria-label"), "Режим терминала инвестора", "the tab accessibility label is localized");
+    await page.locator(".desktop-nav").getByRole("button", { name: "Инвесторам", exact: true }).click();
+    assert.deepEqual(
+      await page.locator(".desktop-nav .nav-dropdown.is-open .nav-dropdown-panel a").allTextContents(),
+      ["Модель развития", "Материалы проекта", "Терминал инвестора", "Обсудить участие"],
+      "the desktop investor menu keeps the approved release order",
+    );
+    await page.locator("h1").first().click();
+    assert.equal(await checks.inputValue(), "300", "the Terminal opens with the approved sales baseline");
+    assert.equal(await page.getByTestId("terminal-scenario-status").innerText(), "Сценарий: готовое помещение");
+    assert.equal(await page.getByLabel("Арендные каникулы").inputValue(), "2", "the Base Object receives its governed rent-free default");
+
+    const baseObjectInvestment = await amount("terminal-start-investment");
+    assert.match(await page.getByTestId("terminal-start-investment").innerText(), /^\d{1,3}(?: \d{3})* ₽$/, "money uses regular spaces as thousand separators");
+    assert.match(await page.getByLabel("Способ задания подготовки помещения").getAttribute("class"), /terminal-select-control/, "economy selects use the shared select control");
 
     await page.locator(".terminal-tabs").getByRole("button", { name: "Масштабирование" }).click();
     await page.getByRole("heading", { name: "Масштабирование" }).waitFor();
-    assert.equal(await page.getByTestId("scaling-production-multiplier").innerText(), "×1", "production is explicitly created once");
-    const production = await amount("scaling-production-investment");
-    await setSwitch("scaling-grow-toggle", true);
+    await page.locator("#base-object-title").waitFor();
+    assert.match(await page.getByText("Базовый объект объединяет первую торговую точку с посадочным залом и заготовочное производство.").innerText(), /заготовочное производство/i, "the base object is presented as the first point plus production");
+    assert.equal(await amount("scaling-base-object-total"), baseObjectInvestment, "Scaling reuses the complete Point Economics base-object result");
+    assert.equal(await amount("scaling-base-object-summary"), baseObjectInvestment, "the sticky summary uses the same complete base-object result");
+    assert.equal(await page.getByTestId("scaling-cohort-row-cohort-1").count(), 0, "the first point is never listed as an additional point");
 
-    assert.equal(await page.getByTestId("scaling-cohort-row-cohort-2").count(), 0, "fresh state has no demo cohorts");
-    assert.match(await page.getByTestId("scaling-cohort-row-cohort-1").innerText(), /С посадочным залом[\s\S]*Аренда[\s\S]*×1/, "fresh state starts with one rented seating point");
-    await page.getByTestId("scaling-cohort-editor-cohort-1").waitFor();
-    for (const label of ["Площадь помещения", "Рабочая зона", "Посадочный зал", "Аренда в месяц", "Подготовка точки"]) {
-      assert.equal(await page.getByLabel(label).inputValue(), "", `${label} is unknown instead of inherited from the integrated object`);
-    }
-    assert.equal(await page.getByLabel("Предоплата").inputValue(), "", "fresh prepayment is unknown");
-    assert.equal(await page.getByLabel("Обеспечительный платёж").inputValue(), "", "fresh security deposit is unknown");
-    assert.equal(await page.getByTestId("scaling-cohort-sales-mode-cohort-1").inputValue(), "baseline", "fresh cohort inherits the Financial Model baseline");
-    assert.equal(await page.getByTestId("scaling-cohort-checks-cohort-1").inputValue(), "300", "baseline checks are visible per cohort");
-    assert.equal(await page.getByTestId("scaling-cohort-checks-cohort-1").isDisabled(), true, "baseline sales are not accidentally edited as a custom scenario");
-    assert.equal(await page.getByTestId("scaling-cohort-area-minimum-cohort-1").innerText(), "60 м²", "seating minimum area is visible without inventing a default");
-    assert.equal(await page.getByTestId("scaling-cohort-minimum-staff-cohort-1").innerText(), "4", "seating shows concurrent staff, not FTE");
-    await page.evaluate(() => window.scrollTo(0, 0));
-    await page.screenshot({ path: path.join(projectRoot, ".cache/verification/screenshots/investor-terminal-v24-desktop.png"), fullPage: true });
-    await page.setViewportSize({ width: 390, height: 844 });
-    await page.evaluate(() => window.scrollTo(0, 0));
+    const nevskyId = "rollout-nevsky-premium";
+    const foodhallId = "rollout-central-high-traffic";
+    const historicId = "rollout-historic-center-core";
+    const kolomnaId = "rollout-historic-center-value";
+    await page.getByTestId(`scaling-cohort-row-${nevskyId}`).waitFor();
+    assert.equal(await page.locator('[data-testid^="scaling-cohort-row-rollout-"]').count(), 4, "fresh state starts with four rollout groups");
+    assert.equal(await page.getByTestId("scaling-additional-points").innerText(), "4", "the summary states the real number of additional points");
+    assert.equal(await page.getByTestId("scaling-network-points").innerText(), "5", "the base point is counted once in the network total");
+    assert.equal(await page.getByTestId("scaling-network-checks").getAttribute("data-checks-per-day"), "1015", "network checks aggregate the base object and the four approved additional profiles");
+    assert.equal(await page.getByTestId(`scaling-rollout-4`).getAttribute("class"), "is-selected", "the four-point rollout is selected by default");
+    assert.equal(await page.getByTestId(`scaling-cohort-area-${nevskyId}`).inputValue(), "40");
+    assert.equal(await page.getByTestId(`scaling-cohort-checks-${nevskyId}`).inputValue(), "175");
+    assert.equal(await page.getByTestId(`scaling-cohort-minimum-staff-${nevskyId}`).innerText(), "3", "the compact-point rounding band keeps 175 checks at three people on shift");
+    assert.equal(await page.getByTestId(`scaling-cohort-bar-${nevskyId}`).getAttribute("aria-checked"), "true", "the optional bar is on for rollout points by default");
+    assert.equal(await page.getByTestId(`scaling-cohort-opening-${nevskyId}`).inputValue(), "4", "the first additional point has its own opening month");
+    assert.equal(await page.getByTestId(`scaling-cohort-rent-free-${nevskyId}`).inputValue(), "2", "Creative Cluster has the approved two-month rent-free period");
+    assert.match(await page.getByTestId(`scaling-cohort-editor-${nevskyId}`).innerText(), /Разгон[\s\S]*Сезонность/i, "the selected group makes the time model visible without a 60-month form");
+
+    await page.getByTestId(`scaling-cohort-row-${historicId}`).click();
+    assert.equal(await page.getByTestId(`scaling-cohort-area-${historicId}`).inputValue(), "60", "the standalone seating rollout point respects the 60 m² minimum");
+    assert.equal(await page.getByTestId(`scaling-cohort-rent-rate-${historicId}`).inputValue(), "3 500");
+    assert.equal(await page.getByTestId(`scaling-cohort-rent-${historicId}`).inputValue(), "210 000");
+    assert.equal(await page.getByLabel("Предоплата").inputValue(), "12", "street rent defaults to twelve months prepaid rent");
+    assert.equal(await page.getByLabel("Обеспечительный платёж").inputValue(), "2", "street rent defaults to a two-month deposit");
+    assert.equal(await page.getByLabel("Коммунальные / месяц").inputValue(), "80 000", "the approved street-seating utility default is placed directly in the field");
+    assert.equal(await page.getByLabel("Видеонаблюдение").inputValue(), "70 000", "the approved street security default is placed directly in the field");
+    await page.getByTestId(`scaling-cohort-rent-${historicId}`).fill("220000");
+    await page.getByTestId(`scaling-cohort-rent-${historicId}`).press("Tab");
+    assert.equal(await page.getByTestId(`scaling-cohort-rent-${historicId}`).inputValue(), "220 000", "money inputs format with spaces after blur");
     await page.waitForTimeout(100);
-    await page.screenshot({ path: path.join(projectRoot, ".cache/verification/screenshots/investor-terminal-v24-mobile.png"), fullPage: true });
-    await page.setViewportSize({ width: 1440, height: 900 });
-    await page.waitForTimeout(100);
-
-    // The neutral point can then be configured deterministically by the investor.
-    await setCount("cohort-1", 5);
-    await page.getByTestId("scaling-cohort-sales-mode-cohort-1").selectOption("custom");
-    await page.getByTestId("scaling-cohort-checks-cohort-1").fill("250");
-    await page.getByTestId("scaling-cohort-average-check-cohort-1").fill("1400");
-    await page.getByTestId("scaling-cohort-area-cohort-1").fill("59");
-    await page.getByTestId("scaling-cohort-area-cohort-1").press("Tab");
-    await page.getByTestId("scaling-cohort-area-warning-cohort-1").waitFor();
-    await page.getByTestId("scaling-cohort-area-cohort-1").fill("60");
-    await page.getByTestId("scaling-cohort-area-cohort-1").press("Tab");
-    assert.equal(await page.getByTestId("scaling-cohort-area-warning-cohort-1").count(), 0, "seating area warning clears at 60 m²");
-    assert.equal(await page.getByTestId("scaling-cohort-minimum-staff-cohort-1").innerText(), "4", "seating does not invent a traffic staffing rule");
-    await page.getByTestId("scaling-cohort-rent-cohort-1").fill("350000");
-    await page.getByTestId("scaling-cohort-rent-cohort-1").press("Tab");
-    await page.getByLabel("Предоплата").selectOption("1");
-    await page.getByLabel("Обеспечительный платёж").selectOption("1");
-    await setSwitch("scaling-cohort-bar-cohort-1", true);
-    const seatingUnit = await amount("scaling-cohort-unit-cohort-1");
-    assert.equal(await amount("scaling-cohort-total-cohort-1"), seatingUnit * 5, "seating cohort aggregates by its own count");
-    await page.getByTestId("scaling-cohort-editor-cohort-1").locator("details.cohort-items > summary").click();
-    const seatingItems = await page.getByTestId("scaling-cohort-editor-cohort-1").innerText();
-    assert.match(seatingItems, /Мебель посадочного зала/, "seating cohort includes furniture");
-    assert.match(seatingItems, /Бар и напитки/, "bar applies to the seating cohort only");
-
-    await page.getByTestId("scaling-add-format").selectOption("takeaway");
-    await page.getByTestId("scaling-add-estate").selectOption("rent");
-    await page.getByTestId("scaling-add-cohort").click();
-    await page.getByTestId("scaling-cohort-editor-cohort-2").waitFor();
-    assert.equal(await page.getByTestId("scaling-cohort-count-cohort-2").inputValue(), "1", "new cohort count defaults to one");
-    for (const label of ["Площадь помещения", "Рабочая зона", "Аренда в месяц", "Подготовка точки"]) {
-      assert.equal(await page.getByLabel(label).inputValue(), "", `new takeaway ${label} is not copied from another cohort`);
-    }
-    assert.equal(await page.getByLabel("Предоплата").inputValue(), "", "new cohort does not inherit prepayment");
-    assert.equal(await page.getByLabel("Обеспечительный платёж").inputValue(), "", "new cohort does not inherit deposit");
-    assert.equal(await page.getByTestId("scaling-cohort-sales-mode-cohort-2").inputValue(), "baseline", "new cohort starts from a clear baseline rule");
-    assert.equal(await page.getByTestId("scaling-cohort-checks-cohort-2").inputValue(), "300", "baseline sales are inherited, not copied from cohort one");
-    await setCount("cohort-2", 10);
-    await page.getByTestId("scaling-cohort-sales-mode-cohort-2").selectOption("custom");
-    await page.getByTestId("scaling-cohort-checks-cohort-2").fill("175");
-    await page.getByTestId("scaling-cohort-average-check-cohort-2").fill("900");
-    await page.getByTestId("scaling-cohort-area-cohort-2").fill("9");
-    await page.getByTestId("scaling-cohort-area-cohort-2").press("Tab");
-    await page.getByTestId("scaling-cohort-area-warning-cohort-2").waitFor();
-    await page.getByTestId("scaling-cohort-area-cohort-2").fill("15");
-    await page.getByTestId("scaling-cohort-area-cohort-2").press("Tab");
-    assert.equal(await page.getByTestId("scaling-cohort-area-warning-cohort-2").count(), 0, "takeaway area warning clears at 10 m² and above");
-    assert.equal(await page.getByTestId("scaling-cohort-minimum-staff-cohort-2").innerText(), "4", "175 checks/day maps through the canonical portions/check workload proxy");
-    await page.getByTestId("scaling-cohort-rent-cohort-2").fill("210000");
-    await page.getByTestId("scaling-cohort-rent-cohort-2").press("Tab");
-    await page.getByLabel("Предоплата").selectOption("1");
-    await page.getByLabel("Обеспечительный платёж").selectOption("1");
-    const takeawayRevenue = await amount("scaling-cohort-revenue-cohort-2");
-    await setSwitch("scaling-cohort-bar-cohort-2", false);
-    await page.getByTestId("scaling-cohort-row-cohort-1").click();
-    const seatingRevenue = await amount("scaling-cohort-revenue-cohort-1");
-    await page.getByTestId("scaling-cohort-row-cohort-2").click();
-    assert.equal(await page.getByTestId("scaling-network-checks").getAttribute("data-checks-per-day"), "3000", "network checks aggregate each cohort by its own count");
-    assert.equal(await amount("scaling-network-revenue"), seatingRevenue + takeawayRevenue, "network revenue is the sum of cohort revenue projections");
-    assert.ok(Math.abs((await amount("scaling-network-average-check")) - (seatingRevenue + takeawayRevenue) / (3000 * 30)) < 0.01, "network average check is weighted by total checks");
-    assert.match(await page.getByTestId("scaling-network-sales-status").innerText(), /Продажи групп агрегированы/i, "sales aggregation remains separate from the planning operating result");
-    const takeawayUnit = await amount("scaling-cohort-unit-cohort-2");
-    assert.equal(await amount("scaling-cohort-total-cohort-2"), takeawayUnit * 10, "takeaway cohort aggregates independently");
-    await page.getByTestId("scaling-cohort-editor-cohort-2").locator("details.cohort-items > summary").click();
-    const takeawayItems = await page.getByTestId("scaling-cohort-editor-cohort-2").innerText();
-    assert.match(await page.getByTestId("scaling-cohort-row-cohort-2").innerText(), /Только на вынос/, "takeaway format is explicit in the table");
-    assert.doesNotMatch(takeawayItems, /Бар и напитки/, "bar is not inherited by a different cohort");
-    assert.match(takeawayItems, /Мебель посадочного зала[\s\S]*Не применяется/, "takeaway does not include seating furniture");
-    assert.equal(await amount("scaling-production-investment"), production, "production and grow remain ×1 while cohorts change");
-
-    await page.getByTestId("scaling-add-format").selectOption("takeaway");
-    await page.getByTestId("scaling-add-estate").selectOption("purchase");
-    await page.getByTestId("scaling-add-cohort").click();
-    await page.getByTestId("scaling-cohort-editor-cohort-3").waitFor();
-    assert.equal(await page.getByTestId("scaling-cohort-estate-cohort-3").inputValue(), "purchase", "purchase is configured per cohort, not globally");
-    assert.equal(await page.getByTestId("scaling-cohort-count-cohort-3").inputValue(), "1", "new purchase cohort count defaults to one");
-    assert.equal(await page.getByTestId("scaling-cohort-rent-cohort-3").count(), 0, "purchase cohort has no rent entry input");
-    assert.equal(await page.getByTestId("scaling-cohort-purchase-cohort-3").count(), 1, "purchase cohort has its own property input");
-    assert.equal(await page.getByTestId("scaling-cohort-purchase-cohort-3").inputValue(), "", "purchase price is not inherited from the integrated object");
-    await page.getByTestId("scaling-cohort-purchase-cohort-3").fill("27000000");
-    await page.getByTestId("scaling-cohort-purchase-cohort-3").press("Tab");
-    assert.notEqual(await amount("scaling-cohort-unit-cohort-3"), takeawayUnit, "rent and purchase entry costs are not mixed");
-
-    const expectedTotal = production + seatingUnit * 5 + takeawayUnit * 10 + await amount("scaling-cohort-unit-cohort-3");
-    assert.equal(await amount("scaling-confirmed-total"), expectedTotal, "network total sums only production and independently confirmed cohorts");
-    assert.equal(await page.getByTestId("scaling-unresolved").count(), 0, "unresolved items stay collapsed by default");
-    await page.getByRole("button", { name: /Показать статьи/ }).click();
-    const unresolvedMultipliers = await page.getByTestId("scaling-unresolved").locator("[data-multiplier]").evaluateAll((items) => items.map((item) => item.getAttribute("data-multiplier")));
-    assert.ok(unresolvedMultipliers.length > 0 && unresolvedMultipliers.every((multiplier) => multiplier === "not_aggregated"), "unallocated items stay out of the confirmed total");
-    assert.doesNotMatch(await page.getByTestId("scaling-cohort-editor-cohort-3").innerText(), /Стоимость открытия одной точки/, "partial point cost is not labelled as a full opening cost");
-    await page.getByRole("button", { name: "Скрыть список" }).click();
-
-    await page.getByRole("button", { name: "Вернуться к экономике точки" }).click();
-    await checks.waitFor();
-    assert.match(await page.getByTestId("terminal-point-configuration").innerText(), /с посадочным залом[\s\S]*аренда[\s\S]*бар включён/, "the compatible first cohort is preserved on Point Economics");
     await page.reload({ waitUntil: "domcontentloaded" });
     await page.locator(".terminal-tabs").getByRole("button", { name: "Масштабирование" }).click();
-    await page.getByTestId("scaling-cohort-row-cohort-3").waitFor();
-    assert.equal(await page.getByTestId("scaling-cohort-count-cohort-1").inputValue(), "5", "first cohort is persisted after refresh");
-    assert.equal(await page.getByTestId("scaling-cohort-sales-mode-cohort-1").inputValue(), "custom", "cohort-one sales mode persists after refresh");
-    assert.equal(await page.getByTestId("scaling-cohort-checks-cohort-1").inputValue(), "250", "cohort-one checks persist independently");
-    await page.getByTestId("scaling-cohort-row-cohort-2").click();
-    assert.equal(await page.getByTestId("scaling-cohort-checks-cohort-2").inputValue(), "175", "takeaway cohort keeps its own traffic after refresh");
-    assert.equal(await page.getByTestId("scaling-cohort-average-check-cohort-2").inputValue(), "900", "takeaway cohort keeps its own average check after refresh");
-    assert.match(await page.getByTestId("scaling-cohort-row-cohort-1").innerText(), /×5/);
-    assert.match(await page.getByTestId("scaling-cohort-row-cohort-2").innerText(), /×10/);
-
+    await page.getByTestId(`scaling-cohort-row-${historicId}`).click();
+    assert.equal(await page.getByTestId(`scaling-cohort-rent-${historicId}`).inputValue(), "220 000", "manual rent persists after refresh");
     await page.getByTestId("terminal-reset").click();
-    await page.getByTestId("scaling-cohort-row-cohort-1").waitFor();
-    assert.equal(await page.getByTestId("scaling-cohort-row-cohort-2").count(), 0, "reset restores the canonical single-cohort state");
-    assert.match(await page.getByTestId("scaling-cohort-row-cohort-1").innerText(), /С посадочным залом[\s\S]*Аренда[\s\S]*×1/, "reset restores the neutral point structure");
-    assert.equal(await page.getByLabel("Площадь помещения").inputValue(), "", "reset restores nullable planning inputs");
-    assert.equal(await page.getByTestId("scaling-cohort-sales-mode-cohort-1").inputValue(), "baseline", "reset restores baseline cohort sales");
+    assert.equal(await page.getByTestId(`scaling-cohort-row-${historicId}`).count(), 1, "reset restores the four approved rollout groups");
+    await page.getByTestId(`scaling-cohort-row-${foodhallId}`).click();
+    assert.equal(await page.getByTestId(`scaling-cohort-area-${foodhallId}`).inputValue(), "25", "Foodhall uses its compact area profile");
+    assert.equal(await page.getByTestId(`scaling-cohort-checks-${foodhallId}`).inputValue(), "215", "Foodhall keeps its own traffic profile");
+    assert.equal(await page.getByTestId(`scaling-cohort-minimum-staff-${foodhallId}`).innerText(), "5", "Foodhall traffic reaches the high-load staffing profile");
+    assert.equal(await page.getByTestId(`scaling-cohort-rent-${foodhallId}`).count(), 0, "Foodhall does not inherit the street-rent input");
+    assert.equal(await page.getByLabel("Процент площадке").inputValue(), "17", "Foodhall receives its revenue-share default from the planning model");
+    assert.equal(await page.getByLabel("Минимальный платёж").inputValue(), "250 000", "Foodhall receives its minimum-payment default from the planning model");
+    assert.equal(await page.getByLabel("Эксплуатация и коммунальные").inputValue(), "50 000", "Foodhall receives its service-and-utilities default from the planning model");
+    assert.equal(await page.getByLabel("Склад").inputValue(), "20 000", "Foodhall receives its storage default from the planning model");
+    assert.equal(await page.getByTestId(`scaling-cohort-editor-${foodhallId}`).locator(".cohort-static-value output").count(), 3, "Foodhall visibly excludes street prepayment, deposit and rent holidays");
+    assert.match(await page.getByTestId(`scaling-cohort-editor-${foodhallId}`).innerText(), /Подготовка помещения\s*712 500 ₽/i, "Foodhall includes its venue adaptation preparation by default");
+    assert.equal(await page.getByTestId(`scaling-cohort-preparation-${foodhallId}`).getByText("Показать состав").count(), 1);
+    await page.getByTestId(`scaling-cohort-preparation-${foodhallId}`).getByText("Показать состав").click();
+    const foodhallPreparation = page.getByTestId(`scaling-cohort-preparation-${foodhallId}`);
+    assert.match(await foodhallPreparation.innerText(), /Общестроительная адаптация[\s\S]*375 000 ₽/i, "Foodhall preparation exposes the category calculation");
+    assert.equal(await foodhallPreparation.locator("label").filter({ hasText: "Электроснабжение" }).locator("input").isChecked(), false, "Foodhall engineering categories remain optional");
+    assert.match(await foodhallPreparation.innerText(), /Подготовка торгового зала[\s\S]*Не применяется/i, "Foodhall shared seating excludes guest-area preparation");
+    await page.getByTestId(`scaling-cohort-row-${nevskyId}`).click();
+    assert.equal(await page.getByTestId(`scaling-cohort-rent-rate-${nevskyId}`).inputValue(), "4 000", "Creative Cluster receives its rent-rate default from the planning model");
+    assert.equal(await page.getByTestId(`scaling-cohort-rent-${nevskyId}`).inputValue(), "160 000", "Creative Cluster receives its monthly rent default from the planning model");
+    assert.equal(await page.getByLabel("Предоплата").inputValue(), "1", "Creative Cluster receives its one-month prepayment default");
+    assert.equal(await page.getByLabel("Обеспечительный платёж").inputValue(), "1", "Creative Cluster receives its one-month deposit default");
+    assert.equal(await page.getByLabel("Коммунальные и эксплуатационные расходы").inputValue(), "30 000", "Creative Cluster receives its utility default from the planning model");
+    assert.notEqual(await page.getByTestId("scaling-rollout-8").getAttribute("class"), "is-selected", "the default distribution remains four points before a preset change");
+    await page.getByTestId("scaling-rollout-8").click();
+    assert.equal(await page.getByTestId("scaling-network-points").innerText(), "9", "eight additional points create a nine-point network with the base object");
+    await page.getByTestId("scaling-rollout-12").click();
+    assert.equal(await page.getByTestId("scaling-network-points").innerText(), "13", "twelve additional points create a thirteen-point network with the base object");
+    await page.getByTestId("terminal-reset").click();
+    const foodhallRow = page.getByTestId(`scaling-cohort-row-${foodhallId}`);
+    if ((await foodhallRow.getAttribute("aria-expanded")) !== "true") await foodhallRow.click();
+
+    assert.match(await page.getByLabel("График производства").getAttribute("class"), /terminal-select-control/, "production schedule uses the shared select control");
+    assert.match(await page.getByTestId("scaling-add-format").getAttribute("class"), /terminal-select-control/, "add-group controls use the shared select control");
+    const sharedInvestment = await amount("scaling-shared-investment");
+    const additionalInvestment = await amount("scaling-additional-investment");
+    const expansionReserve = await amount("scaling-expansion-reserve");
+    assert.equal(await amount("scaling-network-total"), baseObjectInvestment + additionalInvestment + sharedInvestment + expansionReserve, "network investment includes base, additional point launch, shared infrastructure and the separate expansion reserve exactly once");
+
+    await page.setViewportSize({ width: 1440, height: 650 });
+    const stickySummary = await page.locator(".scaling-results").evaluate((element) => ({
+      position: getComputedStyle(element).position,
+      overflowY: getComputedStyle(element).overflowY,
+      maxHeight: getComputedStyle(element).maxHeight,
+      scrollHeight: element.scrollHeight,
+      clientHeight: element.clientHeight,
+      scrollTop: (() => { element.scrollTop = element.scrollHeight; return element.scrollTop; })(),
+    }));
+    assert.equal(stickySummary.position, "sticky", "desktop summary remains pinned below the site header");
+    assert.equal(stickySummary.overflowY, "auto", "desktop summary has independent overflow when the viewport is short");
+    assert.ok(stickySummary.maxHeight !== "none" && stickySummary.scrollHeight >= stickySummary.clientHeight && stickySummary.scrollTop > 0, "lower summary rows remain reachable inside the sticky summary");
+    const summary = page.locator(".scaling-results");
+    async function moveToSummary() {
+      const box = await summary.boundingBox();
+      assert.ok(box, "sticky summary remains visible for pointer interaction");
+      await page.mouse.move(box.x + Math.min(40, box.width / 2), box.y + Math.min(80, box.height / 2));
+    }
+    await page.evaluate(() => {
+      window.scrollTo(0, 500);
+      const element = document.querySelector(".scaling-results");
+      if (element) element.scrollTop = 0;
+    });
+    await moveToSummary();
+    const summaryBeforeWheel = await summary.evaluate((element) => element.scrollTop);
+    await page.mouse.wheel(0, 240);
+    await page.waitForTimeout(120);
+    assert.ok(await summary.evaluate((element) => element.scrollTop) > summaryBeforeWheel, "wheel over the summary scrolls its reachable inner rows");
+    await summary.evaluate((element) => { element.scrollTop = element.scrollHeight - element.clientHeight; });
+    await moveToSummary();
+    const pageBeforeLowerBoundary = await page.evaluate(() => window.scrollY);
+    await page.mouse.wheel(0, 480);
+    await page.waitForTimeout(120);
+    assert.ok(await page.evaluate(() => window.scrollY) > pageBeforeLowerBoundary, "wheel continues to the document after the summary reaches its lower boundary");
+    await page.locator(".scaling-section.is-unresolved").evaluate((element) => {
+      element.scrollIntoView({ block: "center" });
+      const summaryElement = document.querySelector(".scaling-results");
+      if (summaryElement) summaryElement.scrollTop = 0;
+    });
+    await page.waitForTimeout(120);
+    await moveToSummary();
+    const pageBeforeUpperBoundary = await page.evaluate(() => window.scrollY);
+    assert.ok(pageBeforeUpperBoundary > 0, "upper-boundary test starts below the top of the document");
+    await page.mouse.wheel(0, -480);
+    await page.waitForTimeout(120);
+    assert.ok(await page.evaluate(() => window.scrollY) < pageBeforeUpperBoundary, "wheel continues to the document after the summary reaches its upper boundary");
+    const leftColumnTarget = page.locator(".cohort-table");
+    await leftColumnTarget.evaluate((element) => element.scrollIntoView({ block: "center" }));
+    await page.waitForTimeout(120);
+    const pageBeforeLeftColumn = await page.evaluate(() => window.scrollY);
+    assert.ok(pageBeforeLeftColumn > 0, "left-column test starts below the top of the document");
+    assert.equal(await page.evaluate(() => Boolean(document.elementFromPoint(120, 450)?.closest(".scaling-results"))), false, "left-column pointer target is outside the summary");
+    await page.mouse.move(120, 450);
+    await page.mouse.wheel(0, 360);
+    await page.waitForTimeout(120);
+    const pageAfterLeftColumn = await page.evaluate(() => window.scrollY);
+    assert.notEqual(pageAfterLeftColumn, pageBeforeLeftColumn, `wheel over the left column always scrolls the document (${pageBeforeLeftColumn} → ${pageAfterLeftColumn})`);
+    await page.evaluate(() => {
+      window.scrollTo(0, Math.max(0, document.documentElement.scrollHeight - window.innerHeight - 700));
+      const element = document.querySelector(".scaling-results");
+      if (element) element.scrollTop = 0;
+    });
+    await moveToSummary();
+    const summaryBeforePageEnd = await summary.evaluate((element) => element.scrollTop);
+    await page.mouse.wheel(0, 240);
+    await page.waitForTimeout(120);
+    assert.ok(await summary.evaluate((element) => element.scrollTop) > summaryBeforePageEnd, "summary remains responsive near the end of the page");
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.evaluate(() => {
+      window.scrollTo(0, 0);
+      const element = document.querySelector(".scaling-results");
+      if (element) element.scrollTop = 0;
+    });
+    await page.screenshot({ path: path.join(projectRoot, ".cache/verification/screenshots/investor-terminal-ui-review-normal-desktop.png"), fullPage: true });
+
+    await page.getByRole("button", { name: /Показать статьи/ }).click();
+    await page.locator("details.base-object-details, details.cohort-rent-preset-reference, details.cohort-preparation-details, details.cohort-items, details.cohort-temporal-details, details.scaling-item").evaluateAll((elements) => elements.forEach((element) => { element.open = true; }));
+    await page.addStyleTag({ content: ".site-header, .scaling-results { position: static !important; max-height: none !important; overflow: visible !important; }" });
+    await page.screenshot({ path: path.join(projectRoot, ".cache/verification/screenshots/investor-terminal-ui-review-full-desktop.png"), fullPage: true });
+    await page.screenshot({ path: path.join(projectRoot, ".cache/verification/screenshots/investor-terminal-ui-review-audit-desktop.png"), fullPage: true });
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.locator("details.base-object-details, details.cohort-rent-preset-reference, details.cohort-preparation-details, details.cohort-items, details.cohort-temporal-details, details.scaling-item").evaluateAll((elements) => elements.forEach((element) => { element.open = false; }));
+    if (await page.getByRole("button", { name: "Скрыть список" }).count()) await page.getByRole("button", { name: "Скрыть список" }).click();
+    await page.screenshot({ path: path.join(projectRoot, ".cache/verification/screenshots/investor-terminal-ui-review-mobile.png"), fullPage: true });
+    await page.getByRole("button", { name: "Открыть меню", exact: true }).click();
+    await page.getByRole("button", { name: /Инвесторам/ }).click();
+    assert.deepEqual(
+      await page.locator(".mobile-nav-group.is-open .mobile-nav-submenu a").allTextContents(),
+      ["Модель развития", "Материалы проекта", "Терминал инвестора", "Обсудить участие"],
+      "the mobile investor menu keeps the approved release order",
+    );
+    await page.getByRole("button", { name: "Закрыть меню", exact: true }).click();
+    await page.setViewportSize({ width: 1440, height: 900 });
+
     await page.getByRole("button", { name: "Экономика точки" }).click();
     await checks.waitFor();
-    assert.equal(await checks.inputValue(), "300", "reset restores canonical traffic too");
+    assert.equal(await checks.inputValue(), "300", "reset restores the approved traffic baseline too");
+    await page.getByRole("button", { name: "Показать состав", exact: true }).click();
+    await page.screenshot({ path: path.join(projectRoot, ".cache/verification/screenshots/investor-terminal-base-object-preparation-audit-desktop.png"), fullPage: true });
 
     for (const route of ["/revenue-model", "/launch-budget", "/economics"]) {
       const response = await page.goto(`${baseUrl}${route}`, { waitUntil: "domcontentloaded" });

@@ -4,8 +4,31 @@ import {
   restoreLaunchBudgetState,
   type LaunchBudgetState,
   type PremisesScenario,
+  type PreparationMode,
 } from "./launch-budget";
-import { locationTypes, type LocationType } from "./network-planning";
+import { defaultPointPreparationCategoryIds, pointPreparationCategoryIds } from "./point-preparation";
+import { calculateAverageCheck } from "./revenue-model";
+import {
+  defaultLocationRentPresetId,
+  defaultRentFreeMonths,
+  canonicalTemporalAssumptions,
+  baseObjectPlanningReference,
+  isLocationRentPresetId,
+  locationPlanningDefaults,
+  locationRentPreset,
+  locationTypes,
+  networkRolloutDefaults,
+  networkRolloutDistrictPresetIds,
+  networkRolloutGroups,
+  networkRolloutSchedule,
+  rolloutOpeningWaves,
+  networkRolloutPointsPerDistrict,
+  networkRolloutSizeIds,
+  standardStreetRentEntryDefaults,
+  type LocationRentPresetId,
+  type LocationType,
+  type NetworkRolloutSize,
+} from "./network-planning";
 
 export const investorScenarioIds = ["pessimistic", "realistic", "optimistic"] as const;
 export type InvestorScenarioId = (typeof investorScenarioIds)[number];
@@ -20,20 +43,36 @@ export type CohortSalesConfiguration = {
   averageCheckRub: number | null;
 };
 
+/** A wave lets identical points open sequentially without cloning their economics. */
+export type OpeningWave = {
+  openingMonth: number;
+  count: number;
+};
+
 /** Runtime-only planning inputs for one independently scalable trading-point cohort. */
 export type TradingPointCohort = {
   id: string;
   format: TradingPointFormat;
   realEstateMode: PremisesScenario;
   count: number;
+  openingWaves: OpeningWave[];
+  rentFreeMonths: number;
   totalAreaM2: number | null;
   kitchenAreaM2: number | null;
   guestAreaM2: number | null;
   monthlyRentRub: number | null;
+  /** A planning selector only. The Financial Model receives monthlyRentRub. */
+  locationRentPresetId: LocationRentPresetId;
+  /** Editable source for monthly rent when a location preset is being used. */
+  rentPerM2Rub: number | null;
   purchasePriceRub: number | null;
   prepaymentMonths: number | null;
   securityDepositMonths: number | null;
+  /** Legacy manual point preparation value; retained for persisted v5 compatibility. */
   preparationRub: number | null;
+  preparationMode: PreparationMode;
+  preparationEnabledCategoryIds: string[];
+  preparationManualRub: number | null;
   barEnabled: boolean;
   sales: CohortSalesConfiguration;
   /** Location is independent from the point format and property tenure. */
@@ -58,6 +97,7 @@ export type NetworkScalingConfiguration = {
   cohorts: TradingPointCohort[];
   productionGrowEnabled: boolean;
   productionSchedule: "one_main_shift" | "custom";
+  calendarStartMonth: number;
   logistics: {
     mode: "auto" | "external" | "own";
     externalMonthlyRub: number | null;
@@ -67,7 +107,7 @@ export type NetworkScalingConfiguration = {
 };
 
 export type InvestorConfiguration = {
-  schemaVersion: 4;
+  schemaVersion: 8;
   scenarioId: InvestorScenarioId;
   /** A local override; it is never written back to the Financial Model source. */
   customChecksPerDay: number | null;
@@ -76,6 +116,20 @@ export type InvestorConfiguration = {
 };
 
 export const investorConfigurationStorageKey = "kolobochnaya.investor-journey.v1";
+
+/**
+ * The Investor Terminal uses the latest approved flagship rent as its working
+ * Base Object input. The historical 350 000 ₽ Financial Model is retained in
+ * its governed source and is adjusted through the existing configured core.
+ */
+export function baseObjectLaunchBudgetState(): LaunchBudgetState {
+  const reference = baseObjectPlanningReference();
+  return {
+    ...defaultLaunchBudgetState(),
+    monthlyRentRub: reference.monthlyRentRub,
+    rentFreeMonths: reference.rentFreeMonths,
+  };
+}
 
 function finiteOrNull(value: unknown) {
   return typeof value === "number" && Number.isFinite(value) && value >= 0 ? value : null;
@@ -87,6 +141,27 @@ function positiveFiniteOrNull(value: unknown) {
 
 function nonnegativeInteger(value: unknown, fallback = 1) {
   return typeof value === "number" && Number.isFinite(value) && value >= 0 ? Math.floor(value) : fallback;
+}
+
+function openingMonth(value: unknown, fallback = 0) {
+  return typeof value === "number" && Number.isFinite(value) && value >= 0 ? Math.floor(value) : fallback;
+}
+
+function calendarMonth(value: unknown, fallback = 1) {
+  const month = openingMonth(value, fallback);
+  return month >= 1 && month <= 12 ? month : fallback;
+}
+
+function restoredOpeningWaves(value: unknown, count: number, fallbackMonth: number) {
+  if (!Array.isArray(value)) return rolloutOpeningWaves(fallbackMonth, count);
+  const waves = value
+    .filter((wave): wave is Record<string, unknown> => Boolean(wave) && typeof wave === "object")
+    .map((wave) => ({ openingMonth: openingMonth(wave.openingMonth, fallbackMonth), count: nonnegativeInteger(wave.count, 0) }))
+    .filter((wave) => wave.count > 0)
+    .sort((left, right) => left.openingMonth - right.openingMonth);
+  const total = waves.reduce((sum, wave) => sum + wave.count, 0);
+  if (total === count) return waves;
+  return rolloutOpeningWaves(fallbackMonth, count);
 }
 
 function permittedMonths(value: unknown, permitted: number[]) {
@@ -113,6 +188,21 @@ function restoreCohortSales(value: unknown): CohortSalesConfiguration {
   };
 }
 
+function restoredLocationRentPresetId(value: unknown): LocationRentPresetId {
+  return isLocationRentPresetId(value) ? value : "custom";
+}
+
+function restoredPointPreparationMode(value: unknown, legacyManualRub: number | null): PreparationMode {
+  if (value === "manual" || value === "breakdown") return value;
+  return legacyManualRub === null ? "breakdown" : "manual";
+}
+
+function restoredPointPreparationCategoryIds(value: unknown, format: TradingPointFormat, locationType: LocationType, sharedSeating: boolean | null) {
+  const allowed = new Set(pointPreparationCategoryIds);
+  if (!Array.isArray(value)) return defaultPointPreparationCategoryIds(format, locationType, sharedSeating);
+  return [...new Set(value.filter((id): id is string => typeof id === "string" && allowed.has(id)))];
+}
+
 export function createTradingPointCohort(
   launchBudget = defaultLaunchBudgetState(),
   overrides: Partial<TradingPointCohort> = {},
@@ -120,6 +210,12 @@ export function createTradingPointCohort(
   const format = tradingPointFormats.includes(overrides.format as TradingPointFormat)
     ? overrides.format as TradingPointFormat
     : "with_seating";
+  const locationType = locationTypes.includes(overrides.locationType as LocationType)
+    ? overrides.locationType as LocationType
+    : "street";
+  const sharedSeating = booleanOrNull(valueOrDefault(overrides, "sharedSeating", null));
+  const legacyPreparationRub = finiteOrNull(valueOrDefault(overrides, "preparationRub", null));
+  const preparationManualRub = finiteOrNull(valueOrDefault(overrides, "preparationManualRub", legacyPreparationRub));
   return {
     id: typeof overrides.id === "string" && overrides.id.trim() ? overrides.id : "cohort-1",
     format,
@@ -127,6 +223,8 @@ export function createTradingPointCohort(
       ? overrides.realEstateMode
       : "rent",
     count: nonnegativeInteger(overrides.count),
+    openingWaves: restoredOpeningWaves(overrides.openingWaves, nonnegativeInteger(overrides.count), 0),
+    rentFreeMonths: nonnegativeInteger(valueOrDefault(overrides, "rentFreeMonths", defaultRentFreeMonths(locationType)), defaultRentFreeMonths(locationType)),
     // The existing LaunchBudget defaults describe an integrated object, not a
     // format-specific retail point. Fresh cohorts therefore start unknown until
     // a format-specific canonical assumption is available or the user enters it.
@@ -134,19 +232,22 @@ export function createTradingPointCohort(
     kitchenAreaM2: finiteOrNull(valueOrDefault(overrides, "kitchenAreaM2", null)),
     guestAreaM2: format === "with_seating" ? finiteOrNull(valueOrDefault(overrides, "guestAreaM2", null)) : null,
     monthlyRentRub: finiteOrNull(valueOrDefault(overrides, "monthlyRentRub", null)),
+    locationRentPresetId: restoredLocationRentPresetId(valueOrDefault(overrides, "locationRentPresetId", "custom")),
+    rentPerM2Rub: positiveFiniteOrNull(valueOrDefault(overrides, "rentPerM2Rub", null)),
     purchasePriceRub: finiteOrNull(valueOrDefault(overrides, "purchasePriceRub", null)),
     prepaymentMonths: permittedMonths(valueOrDefault(overrides, "prepaymentMonths", null), [1, 3, 12]),
     securityDepositMonths: permittedMonths(valueOrDefault(overrides, "securityDepositMonths", null), [1, 2, 3]),
-    preparationRub: finiteOrNull(valueOrDefault(overrides, "preparationRub", null)),
+    preparationRub: legacyPreparationRub,
+    preparationMode: restoredPointPreparationMode(overrides.preparationMode, legacyPreparationRub),
+    preparationEnabledCategoryIds: restoredPointPreparationCategoryIds(overrides.preparationEnabledCategoryIds, format, locationType, sharedSeating),
+    preparationManualRub,
     // A new group follows the current canonical point baseline, never another
     // cohort's selected bar setting.
     barEnabled: typeof overrides.barEnabled === "boolean" ? overrides.barEnabled : launchBudget.barEnabled,
     sales: restoreCohortSales(overrides.sales),
-    locationType: locationTypes.includes(overrides.locationType as LocationType)
-      ? overrides.locationType as LocationType
-      : "street",
+    locationType,
     extractionAvailable: booleanOrNull(valueOrDefault(overrides, "extractionAvailable", null)),
-    sharedSeating: booleanOrNull(valueOrDefault(overrides, "sharedSeating", null)),
+    sharedSeating,
     venueSecurityIncluded: booleanOrNull(valueOrDefault(overrides, "venueSecurityIncluded", null)),
     commonCleaningIncluded: booleanOrNull(valueOrDefault(overrides, "commonCleaningIncluded", null)),
     utilitiesIncluded: booleanOrNull(valueOrDefault(overrides, "utilitiesIncluded", null)),
@@ -162,9 +263,242 @@ export function createTradingPointCohort(
   };
 }
 
+/**
+ * A new scalable point starts from the approved Historic Center B+ planning
+ * reference. The base integrated object remains a separate canonical result.
+ */
+export function createNetworkPointCohort(
+  launchBudget = defaultLaunchBudgetState(),
+  overrides: Partial<TradingPointCohort> = {},
+): TradingPointCohort {
+  const presetId = restoredLocationRentPresetId(overrides.locationRentPresetId ?? defaultLocationRentPresetId);
+  const preset = presetId === "custom" ? null : locationRentPreset(presetId);
+  const format = tradingPointFormats.includes(overrides.format as TradingPointFormat)
+    ? overrides.format as TradingPointFormat
+    : "takeaway";
+  const rentEntryDefaults = standardStreetRentEntryDefaults();
+  const rolloutDefaults = networkRolloutDefaults();
+  const presetAreaIsTooSmallForOwnHall = format === "with_seating"
+    && preset?.locationType === "street"
+    && preset.baselineAreaM2 < 60;
+  return createTradingPointCohort(launchBudget, {
+    ...locationPlanningDefaults(preset?.locationType ?? "street", format),
+    format,
+    realEstateMode: preset?.realEstateMode ?? "rent",
+    count: 1,
+    locationType: preset?.locationType ?? "street",
+    totalAreaM2: presetAreaIsTooSmallForOwnHall ? null : preset?.baselineAreaM2 ?? null,
+    monthlyRentRub: presetAreaIsTooSmallForOwnHall ? null : preset?.monthlyRentRub ?? null,
+    rentPerM2Rub: preset?.rentPerM2MonthRub ?? null,
+    purchasePriceRub: preset?.purchasePriceRub ?? null,
+    locationRentPresetId: preset?.id ?? "custom",
+    prepaymentMonths: preset?.locationType === "street" && preset.realEstateMode === "rent" ? rentEntryDefaults.prepaymentMonths : null,
+    securityDepositMonths: preset?.locationType === "street" && preset.realEstateMode === "rent" ? rentEntryDefaults.securityDepositMonths : null,
+    barEnabled: typeof overrides.barEnabled === "boolean" ? overrides.barEnabled : rolloutDefaults.barEnabled,
+    ...overrides,
+  });
+}
+
+export function applyLocationRentPreset(cohort: TradingPointCohort, presetId: LocationRentPresetId): TradingPointCohort {
+  if (presetId === "custom") return { ...cohort, locationRentPresetId: "custom", rentPerM2Rub: null };
+  const preset = locationRentPreset(presetId);
+  const presetAreaIsTooSmallForOwnHall = cohort.format === "with_seating"
+    && preset.locationType === "street"
+    && preset.baselineAreaM2 < 60;
+  const rentEntryDefaults = standardStreetRentEntryDefaults();
+  return {
+    ...cohort,
+    ...locationPlanningDefaults(preset.locationType, cohort.format),
+    locationRentPresetId: preset.id,
+    locationType: preset.locationType,
+    realEstateMode: preset.realEstateMode,
+    totalAreaM2: presetAreaIsTooSmallForOwnHall ? null : preset.baselineAreaM2,
+    rentPerM2Rub: preset.rentPerM2MonthRub,
+    monthlyRentRub: presetAreaIsTooSmallForOwnHall ? null : preset.monthlyRentRub,
+    purchasePriceRub: preset.purchasePriceRub,
+    prepaymentMonths: preset.locationType === "street" && preset.realEstateMode === "rent" ? rentEntryDefaults.prepaymentMonths : null,
+    securityDepositMonths: preset.locationType === "street" && preset.realEstateMode === "rent" ? rentEntryDefaults.securityDepositMonths : null,
+  };
+}
+
+function rolloutCohortId(presetId: Exclude<LocationRentPresetId, "custom">) {
+  return `rollout-${presetId}`;
+}
+
+function createRolloutCohort(
+  launchBudget: LaunchBudgetState,
+  presetId: Exclude<LocationRentPresetId, "custom">,
+  count: number,
+  id = rolloutCohortId(presetId),
+) {
+  const group = networkRolloutGroups().find((candidate) => candidate.presetId === presetId);
+  if (!group) throw new Error(`Network rollout group ${presetId} is missing.`);
+  const rentPreset = locationRentPreset(presetId);
+  const streetRent = group.locationType === "street" && group.realEstateMode === "rent";
+  const rentEntryDefaults = standardStreetRentEntryDefaults();
+  const locationDefaults = locationPlanningDefaults(group.locationType, group.format);
+  return createNetworkPointCohort(launchBudget, {
+    id,
+    locationRentPresetId: presetId,
+    count,
+    openingWaves: rolloutOpeningWaves(group.firstOpeningMonth, count),
+    format: group.format,
+    locationType: group.locationType,
+    realEstateMode: group.realEstateMode,
+    ...locationDefaults,
+    totalAreaM2: group.baselineAreaM2,
+    rentPerM2Rub: streetRent ? rentPreset.rentPerM2MonthRub : locationDefaults.rentPerM2Rub,
+    monthlyRentRub: streetRent ? group.baselineAreaM2 * rentPreset.rentPerM2MonthRub : locationDefaults.monthlyRentRub,
+    purchasePriceRub: null,
+    prepaymentMonths: streetRent ? rentEntryDefaults.prepaymentMonths : locationDefaults.prepaymentMonths,
+    securityDepositMonths: streetRent ? rentEntryDefaults.securityDepositMonths : locationDefaults.securityDepositMonths,
+    sharedSeating: group.sharedSeating,
+    barEnabled: group.barEnabled,
+    preparationEnabledCategoryIds: group.preparationEnabledCategoryIds,
+    sales: {
+      mode: "custom",
+      checksPerDay: group.checksPerDay,
+      averageCheckRub: calculateAverageCheck(),
+    },
+  });
+}
+
+/**
+ * Applies only the 4/8/12 distribution. Existing district groups retain their
+ * independently edited point parameters; unrelated custom groups are never removed.
+ */
+export function applyNetworkRolloutPreset(
+  configuration: NetworkScalingConfiguration,
+  launchBudget: LaunchBudgetState,
+  size: NetworkRolloutSize,
+): NetworkScalingConfiguration {
+  const perDistrict = networkRolloutPointsPerDistrict(size);
+  const districts = networkRolloutDistrictPresetIds();
+  const usedIds = new Set(configuration.cohorts.map((cohort) => cohort.id));
+  const additions: TradingPointCohort[] = [];
+  const cohorts = configuration.cohorts.map((cohort) => {
+    const district = districts.find((presetId) => cohort.id === rolloutCohortId(presetId) || cohort.locationRentPresetId === presetId);
+    if (!district) return cohort;
+    const group = networkRolloutGroups().find((candidate) => candidate.presetId === district);
+    return {
+      ...cohort,
+      count: perDistrict,
+      openingWaves: rolloutOpeningWaves(group?.firstOpeningMonth ?? networkRolloutSchedule().firstAdditionalOpeningMonth, perDistrict),
+    };
+  });
+  for (const district of districts) {
+    const exists = cohorts.some((cohort) => cohort.id === rolloutCohortId(district) || cohort.locationRentPresetId === district);
+    if (exists) continue;
+    let id = rolloutCohortId(district);
+    let index = 2;
+    while (usedIds.has(id)) id = `${rolloutCohortId(district)}-${index++}`;
+    usedIds.add(id);
+    additions.push(createRolloutCohort(launchBudget, district, perDistrict, id));
+  }
+  return { ...configuration, cohorts: [...cohorts, ...additions] };
+}
+
+export function currentNetworkRolloutSize(configuration: NetworkScalingConfiguration): NetworkRolloutSize | "custom" {
+  const districts = networkRolloutDistrictPresetIds();
+  const additional = configuration.cohorts.slice(1);
+  for (const size of networkRolloutSizeIds) {
+    const expected = networkRolloutPointsPerDistrict(size);
+    const matchesDistricts = districts.every((presetId) => {
+      const group = additional.find((cohort) => cohort.id === rolloutCohortId(presetId) || cohort.locationRentPresetId === presetId);
+      return group?.count === expected;
+    });
+    const otherPositiveGroups = additional.some((cohort) => {
+      const isDistrict = districts.some((presetId) => cohort.id === rolloutCohortId(presetId) || cohort.locationRentPresetId === presetId);
+      return !isDistrict && cohort.count > 0;
+    });
+    if (matchesDistricts && !otherPositiveGroups) return size;
+  }
+  return "custom";
+}
+
+/** State synchronization for input editing; it does not calculate financial output. */
+export function updateCohortAreaFromRentPreset(cohort: TradingPointCohort, totalAreaM2: number | null): TradingPointCohort {
+  return {
+    ...cohort,
+    totalAreaM2,
+    monthlyRentRub: totalAreaM2 === null || cohort.rentPerM2Rub === null ? cohort.monthlyRentRub : totalAreaM2 * cohort.rentPerM2Rub,
+    locationRentPresetId: "custom",
+  };
+}
+
+export function updateCohortRentRate(cohort: TradingPointCohort, rentPerM2Rub: number | null): TradingPointCohort {
+  return {
+    ...cohort,
+    rentPerM2Rub,
+    monthlyRentRub: rentPerM2Rub === null || cohort.totalAreaM2 === null ? cohort.monthlyRentRub : cohort.totalAreaM2 * rentPerM2Rub,
+    locationRentPresetId: "custom",
+  };
+}
+
+export function updateCohortMonthlyRent(cohort: TradingPointCohort, monthlyRentRub: number | null): TradingPointCohort {
+  return { ...cohort, monthlyRentRub, rentPerM2Rub: null, locationRentPresetId: "custom" };
+}
+
+/**
+ * Keeps a group’s opening plan coherent when its total is edited in the UI.
+ * Existing waves are preserved first; added identical points use the approved
+ * repeated-wave cadence instead of silently opening on the same month.
+ */
+export function updateCohortCount(cohort: TradingPointCohort, nextCount: number): TradingPointCohort {
+  const count = Math.max(0, Math.floor(nextCount));
+  const waves = cohort.openingWaves
+    .filter((wave) => wave.count > 0)
+    .sort((left, right) => left.openingMonth - right.openingMonth)
+    .map((wave) => ({ ...wave }));
+  let represented = waves.reduce((sum, wave) => sum + wave.count, 0);
+  if (represented > count) {
+    let remaining = count;
+    const trimmed = waves.flatMap((wave) => {
+      if (remaining <= 0) return [];
+      const waveCount = Math.min(wave.count, remaining);
+      remaining -= waveCount;
+      return [{ ...wave, count: waveCount }];
+    });
+    return { ...cohort, count, openingWaves: trimmed };
+  }
+  const cadence = networkRolloutSchedule().repeatedGroupWaveIntervalMonths;
+  let nextMonth = waves.at(-1)?.openingMonth ?? networkRolloutSchedule().firstAdditionalOpeningMonth;
+  while (represented < count) {
+    nextMonth = represented === 0 ? nextMonth : nextMonth + cadence;
+    waves.push({ openingMonth: nextMonth, count: 1 });
+    represented += 1;
+  }
+  return { ...cohort, count, openingWaves: waves };
+}
+
+/** Moves a group’s representative first opening while preserving wave spacing. */
+export function updateCohortFirstOpeningMonth(cohort: TradingPointCohort, nextMonth: number): TradingPointCohort {
+  const first = cohort.openingWaves.at(0)?.openingMonth ?? networkRolloutSchedule().firstAdditionalOpeningMonth;
+  const normalized = openingMonth(nextMonth, first);
+  const delta = normalized - first;
+  return {
+    ...cohort,
+    openingWaves: cohort.openingWaves.map((wave) => ({ ...wave, openingMonth: Math.max(0, wave.openingMonth + delta) })),
+  };
+}
+
 function restoreTradingPointCohort(value: unknown, launchBudget: LaunchBudgetState, fallbackId: string): TradingPointCohort {
   if (!value || typeof value !== "object") return createTradingPointCohort(launchBudget, { id: fallbackId });
   return createTradingPointCohort(launchBudget, { ...(value as Partial<TradingPointCohort>), id: (value as Partial<TradingPointCohort>).id || fallbackId });
+}
+
+function applyKnownStreetDefaults(cohort: TradingPointCohort): TradingPointCohort {
+  if (cohort.locationType !== "street" || cohort.realEstateMode !== "rent" || cohort.locationRentPresetId === "custom") return cohort;
+  const locationDefaults = locationPlanningDefaults("street", cohort.format);
+  const rentEntryDefaults = standardStreetRentEntryDefaults();
+  return {
+    ...cohort,
+    prepaymentMonths: cohort.prepaymentMonths ?? rentEntryDefaults.prepaymentMonths,
+    securityDepositMonths: cohort.securityDepositMonths ?? rentEntryDefaults.securityDepositMonths,
+    utilitiesMonthlyRub: cohort.utilitiesMonthlyRub ?? locationDefaults.utilitiesMonthlyRub,
+    videoAllowanceRub: cohort.videoAllowanceRub ?? locationDefaults.videoAllowanceRub,
+    alarmAllowanceRub: cohort.alarmAllowanceRub ?? locationDefaults.alarmAllowanceRub,
+  };
 }
 
 type LegacyNetworkScalingConfiguration = {
@@ -174,11 +508,17 @@ type LegacyNetworkScalingConfiguration = {
   productionGrowEnabled?: unknown;
 };
 
-export function defaultNetworkScalingConfiguration(launchBudget = defaultLaunchBudgetState()): NetworkScalingConfiguration {
+export function defaultNetworkScalingConfiguration(launchBudget = baseObjectLaunchBudgetState()): NetworkScalingConfiguration {
+  const defaultSize: NetworkRolloutSize = 4;
+  const perDistrict = networkRolloutPointsPerDistrict(defaultSize);
   return {
-    cohorts: [createTradingPointCohort(launchBudget, { format: "with_seating", realEstateMode: "rent", count: 1 })],
+    cohorts: [
+      createTradingPointCohort(launchBudget, { format: "with_seating", realEstateMode: "rent", count: 1, openingWaves: [{ openingMonth: networkRolloutSchedule().baseObjectOpeningMonth, count: 1 }] }),
+      ...networkRolloutGroups().map((group) => createRolloutCohort(launchBudget, group.presetId, perDistrict)),
+    ],
     productionGrowEnabled: launchBudget.growEnabled,
     productionSchedule: "one_main_shift",
+    calendarStartMonth: canonicalTemporalAssumptions().openingCalendarMonth,
     logistics: { mode: "auto", externalMonthlyRub: null, ownedVehicleCapexRub: null, ownedMonthlyTotalRub: null },
   };
 }
@@ -205,10 +545,23 @@ export function restoreNetworkScalingConfiguration(value: unknown, launchBudget:
       securityDepositMonths: launchBudget.securityDepositMonths,
       preparationRub: null,
     })];
+  const rawCohorts = Array.isArray(input.cohorts) ? input.cohorts as Array<Partial<TradingPointCohort>> : [];
+  const resolvedCohorts = (cohorts.length ? cohorts : defaults.cohorts).map((cohort, index) => {
+    const rollout = networkRolloutGroups().find((group) => cohort.id === rolloutCohortId(group.presetId) || cohort.locationRentPresetId === group.presetId);
+    const fallbackOpeningMonth = index === 0
+      ? networkRolloutSchedule().baseObjectOpeningMonth
+      : rollout?.firstOpeningMonth ?? networkRolloutSchedule().firstAdditionalOpeningMonth + (index - 1) * networkRolloutSchedule().additionalOpeningIntervalMonths;
+    return {
+      ...cohort,
+      openingWaves: restoredOpeningWaves(rawCohorts[index]?.openingWaves, cohort.count, fallbackOpeningMonth),
+      rentFreeMonths: nonnegativeInteger(rawCohorts[index]?.rentFreeMonths, cohort.rentFreeMonths),
+    };
+  });
   return {
-    cohorts: cohorts.length ? cohorts : defaults.cohorts,
+    cohorts: resolvedCohorts,
     productionGrowEnabled: typeof input.productionGrowEnabled === "boolean" ? input.productionGrowEnabled : defaults.productionGrowEnabled,
     productionSchedule: input.productionSchedule === "custom" ? "custom" : "one_main_shift",
+    calendarStartMonth: calendarMonth(input.calendarStartMonth, defaults.calendarStartMonth),
     logistics: {
       mode: input.logistics?.mode === "external" || input.logistics?.mode === "own" ? input.logistics.mode : "auto",
       externalMonthlyRub: finiteOrNull(input.logistics?.externalMonthlyRub),
@@ -219,9 +572,9 @@ export function restoreNetworkScalingConfiguration(value: unknown, launchBudget:
 }
 
 export function defaultInvestorConfiguration(): InvestorConfiguration {
-  const launchBudget = defaultLaunchBudgetState();
+  const launchBudget = baseObjectLaunchBudgetState();
   return {
-    schemaVersion: 4,
+    schemaVersion: 8,
     scenarioId: "realistic",
     customChecksPerDay: null,
     launchBudget,
@@ -249,9 +602,16 @@ export function restoreInvestorConfiguration(value: unknown): InvestorConfigurat
   const defaults = defaultInvestorConfiguration();
   if (!value || typeof value !== "object") return defaults;
   const input = value as Partial<InvestorConfiguration>;
-  const launchBudget = restoreLaunchBudgetState(input.launchBudget);
+  // Missing legacy state must recover the current governed Base Object default,
+  // rather than the historical raw form default embedded in Launch Budget.
+  const restoredLaunchBudget = input.launchBudget ? restoreLaunchBudgetState(input.launchBudget) : defaults.launchBudget;
+  const legacyLaunchBudget = input.launchBudget as Record<string, unknown> | undefined;
+  const launchBudget = legacyLaunchBudget && !Object.prototype.hasOwnProperty.call(legacyLaunchBudget, "rentFreeMonths")
+    ? { ...restoredLaunchBudget, rentFreeMonths: defaults.launchBudget.rentFreeMonths }
+    : restoredLaunchBudget;
+  const networkScaling = restoreNetworkScalingConfiguration(input.networkScaling, launchBudget);
   return {
-    schemaVersion: 4,
+    schemaVersion: 8,
     scenarioId: investorScenarioIds.includes(input.scenarioId as InvestorScenarioId)
       ? input.scenarioId as InvestorScenarioId
       : defaults.scenarioId,
@@ -261,7 +621,7 @@ export function restoreInvestorConfiguration(value: unknown): InvestorConfigurat
       ? Math.floor(input.customChecksPerDay)
       : null,
     launchBudget,
-    networkScaling: restoreNetworkScalingConfiguration(input.networkScaling, launchBudget),
+    networkScaling: { ...networkScaling, cohorts: networkScaling.cohorts.map(applyKnownStreetDefaults) },
   };
 }
 

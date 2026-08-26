@@ -1,0 +1,21 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01
+proposal_id: PROP-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01
+decision_id: DEC-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01
+change_set_id: CHG-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01
+verified_at: 2026-08-26T14:02:41.000Z
+actor: Codex
+validation_status: passed
+approved_payload_sha256: 7d57668e4b2458b0948d8de81856beb8c964ac905a639ace42cf96ece1bc318a
+before_state_sha256: 6e17d784191db35164329d6218cda5e3321a3c463e7c07bbadf90006335801a9
+after_state_sha256: 063ee60e1c5be285a3ec0343514aa986fc03143176eb17a993d83b9265fb13d5
+checks:
+  - command: PATH=/opt/homebrew/bin:$PATH npm run verify:affected
+    result: passed
+    scope: affected financial, investor, site, governance, desktop and mobile visual domains
+  - command: PATH=/opt/homebrew/bin:$PATH npm run verify:release
+    result: passed
+    scope: release gates, financial and investor projections, governance, production build and artifact validation
+  - command: PATH=/opt/homebrew/bin:$PATH INVESTOR_TERMINAL_TEST_PORT=9174 node scripts/test-investor-terminal.cjs
+    result: passed
+    scope: desktop/mobile Terminal route, Russian navigation and duration layout assertions

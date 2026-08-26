@@ -1,7 +1,10 @@
-import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 import { calculateAverageCheck } from "../lib/revenue-model";
 import { economicsData, economicsScenarioIds } from "../lib/economics";
 import { configuredEconomicsScenario } from "../lib/configured-economics";
+import {
+  baseObjectPlanningReference,
+} from "../lib/network-planning";
 import {
   investorConfigurationIsCanonical,
   investorConfigurationIsReadyPremisesDefault,
@@ -13,21 +16,20 @@ import {
   type LaunchBudgetState,
   type PremisesScenario,
 } from "../lib/launch-budget";
+import { baseObjectFinancialProjection } from "../lib/network-scaling";
 import { useInvestorConfiguration } from "./InvestorConfigurationProvider";
 import { NetworkScalingPanel } from "./NetworkScalingPanel";
+import { FormattedNumberInput, formatNumber } from "./FormattedNumberInput";
 import "./InvestorTerminal.css";
 
-const money = new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 0 });
-const decimal = new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 1 });
 const percent = new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 1 });
-const terminalVisitedKey = "kolobochnaya.investor-terminal.v2.visited";
 
 function formatRub(value: number | null | undefined) {
-  return value === null || value === undefined ? "—" : `${money.format(Math.round(value))} ₽`;
+  return value === null || value === undefined ? "—" : `${formatNumber(value, true)} ₽`;
 }
 
 function formatMillion(value: number | null | undefined) {
-  return value === null || value === undefined ? "—" : `${decimal.format(value / 1_000_000)} млн ₽`;
+  return formatRub(value);
 }
 
 function formatPercent(value: number | null) {
@@ -40,13 +42,6 @@ function paybackText(value: number | null) {
   const last = value % 10;
   const suffix = lastTwo >= 11 && lastTwo <= 14 ? "месяцев" : last === 1 ? "месяц" : last >= 2 && last <= 4 ? "месяца" : "месяцев";
   return `${value} ${suffix}`;
-}
-
-function parseNumber(value: string, integer = false) {
-  if (value.trim() === "") return null;
-  const parsed = Number(value.replace(",", "."));
-  if (!Number.isFinite(parsed) || parsed < 0) return null;
-  return integer ? Math.floor(parsed) : parsed;
 }
 
 function TerminalSection({ title, note, children }: { title: string; note?: string; children: ReactNode }) {
@@ -77,7 +72,7 @@ function TerminalRow({ label, children, baseline, hint, derived = false, testId 
       </div>
       <div className="terminal-row-value">
         {children}
-        {baseline ? <small className="terminal-baseline">baseline: {baseline}</small> : null}
+        {baseline ? <small className="terminal-baseline">Базовое значение: {baseline}</small> : null}
       </div>
     </div>
   );
@@ -95,19 +90,10 @@ function NumberCell({ value, onChange, suffix, integer = false, baseline, ariaLa
   return (
     <>
       <label className="terminal-number-cell">
-        <input
-          aria-label={ariaLabel}
-          data-testid={testId}
-          type="number"
-          min="0"
-          step={integer ? "1" : "any"}
-          inputMode={integer ? "numeric" : "decimal"}
-          value={value ?? ""}
-          onChange={(event) => onChange(parseNumber(event.target.value, integer))}
-        />
+        <FormattedNumberInput ariaLabel={ariaLabel} testId={testId} value={value} onChange={onChange} integer={integer} />
         {suffix ? <span>{suffix}</span> : null}
       </label>
-      {baseline ? <small className="terminal-baseline">baseline: {baseline}</small> : null}
+      {baseline ? <small className="terminal-baseline">Базовое значение: {baseline}</small> : null}
     </>
   );
 }
@@ -119,7 +105,7 @@ function SelectCell({ value, onChange, options, ariaLabel }: {
   ariaLabel: string;
 }) {
   return (
-    <select className="terminal-select-cell" aria-label={ariaLabel} value={value} onChange={(event) => onChange(event.target.value)}>
+    <select className="terminal-select-cell terminal-select-control" aria-label={ariaLabel} value={value} onChange={(event) => onChange(event.target.value)}>
       {options.map((option) => <option key={String(option.value)} value={option.value}>{option.label}</option>)}
     </select>
   );
@@ -142,7 +128,7 @@ export function InvestorTerminalPage() {
   const {
     configuration,
     applyReadyPremisesPreset,
-    resetToCanonicalConfiguration,
+    resetConfiguration,
     setCustomChecksPerDay,
     setLaunchBudget,
     setScenarioId,
@@ -151,10 +137,10 @@ export function InvestorTerminalPage() {
   const [preparationOpen, setPreparationOpen] = useState(false);
   const [investmentDetailsOpen, setInvestmentDetailsOpen] = useState(false);
   const [pnlDetailsOpen, setPnlDetailsOpen] = useState(false);
-  const firstTerminalVisit = useRef(true);
   const scenarioId = configuration.scenarioId;
   const canonicalScenario = economicsData.scenariosById[scenarioId];
   const scenario = configuredEconomicsScenario(configuration);
+  const baseObjectProjection = useMemo(() => baseObjectFinancialProjection(scenario), [scenario]);
   const launchBudget = configuration.launchBudget;
   const launch = useMemo(() => calculateLaunchBudget(launchBudget), [launchBudget]);
   const isCanonical = investorConfigurationIsCanonical(configuration);
@@ -170,18 +156,6 @@ export function InvestorTerminalPage() {
   const pointConfigurationText = primaryPointCohort?.format === "with_seating"
     ? "с посадочным залом"
     : "только на вынос";
-
-  useEffect(() => {
-    if (!firstTerminalVisit.current) return;
-    firstTerminalVisit.current = false;
-    try {
-      const visited = window.sessionStorage.getItem(terminalVisitedKey);
-      if (!visited && isReadyPremises) resetToCanonicalConfiguration();
-      window.sessionStorage.setItem(terminalVisitedKey, "true");
-    } catch {
-      if (isReadyPremises) resetToCanonicalConfiguration();
-    }
-  }, [isReadyPremises, resetToCanonicalConfiguration]);
 
   function updateBudget<K extends keyof LaunchBudgetState>(key: K, value: LaunchBudgetState[K]) {
     setLaunchBudget((current) => ({ ...current, [key]: value }));
@@ -215,9 +189,9 @@ export function InvestorTerminalPage() {
   }
 
   const scenarioStatus = isCanonical
-    ? "Financial Model baseline"
+    ? "Базовая финансовая модель"
     : isReadyPremises
-      ? "Preset: готовое помещение"
+      ? "Сценарий: готовое помещение"
       : "Пользовательский сценарий";
 
   return (
@@ -225,21 +199,29 @@ export function InvestorTerminalPage() {
       <section className="investor-terminal" aria-labelledby="investor-terminal-title">
         <header className="terminal-header">
           <div>
-            <p>Investor Terminal</p>
+            <p>Терминал инвестора</p>
             <h1 id="investor-terminal-title">Финансовая модель объекта</h1>
           </div>
           <div className="terminal-header-actions">
             <span className={`terminal-status${isCustom ? " is-custom" : ""}`} data-testid="terminal-scenario-status">{scenarioStatus}</span>
-            <button type="button" className="terminal-reset" onClick={resetToCanonicalConfiguration} data-testid="terminal-reset">Сбросить изменения</button>
+            <button type="button" className="terminal-reset" onClick={resetConfiguration} data-testid="terminal-reset">Сбросить изменения</button>
           </div>
         </header>
 
-        <nav className="terminal-tabs" aria-label="Режим Investor Terminal">
+        <nav className="terminal-tabs" aria-label="Режим терминала инвестора">
           <ScenarioTab active={tab === "unit"} onClick={() => setTab("unit")}>Экономика точки</ScenarioTab>
           <ScenarioTab active={tab === "scale"} onClick={() => setTab("scale")}>Масштабирование</ScenarioTab>
         </nav>
 
-        {tab === "scale" ? <NetworkScalingPanel onReturnToUnit={() => setTab("unit")} /> : (
+        {tab === "scale" ? <NetworkScalingPanel
+          baseObject={{
+            ...baseObjectProjection,
+            investmentBreakdown: scenario.investmentBreakdown,
+            cashFlows: scenario.cashFlows,
+            monthlyProjection: scenario.monthlyProjection,
+          }}
+          onReturnToUnit={() => setTab("unit")}
+        /> : (
           <div className="terminal-workspace">
             <div className="terminal-inputs">
               <section className="terminal-scenario-bar" aria-label="Канонический сценарий">
@@ -256,7 +238,7 @@ export function InvestorTerminalPage() {
                 </div>
                 <button type="button" className="terminal-preset-button" onClick={applyReadyPremisesPreset}>Готовое помещение</button>
               </section>
-              <p className="terminal-point-configuration" data-testid="terminal-point-configuration">Точка первой группы сети: <strong>{pointConfigurationText}</strong> · {primaryPointCohort?.realEstateMode === "purchase" ? "покупка" : "аренда"} · бар {primaryPointCohort?.barEnabled ? "включён" : "выключен"}. Настраивается во вкладке «Масштабирование».</p>
+              <p className="terminal-point-configuration" data-testid="terminal-point-configuration">Первая точка сети: <strong>{pointConfigurationText}</strong> · {primaryPointCohort?.realEstateMode === "purchase" ? "покупка" : "аренда"} · бар {primaryPointCohort?.barEnabled ? "включён" : "выключен"}.</p>
 
               <TerminalSection title="Доходы" note="Вводимые ячейки меняют только локальный сценарий этого браузера.">
                 <TerminalRow label="Чеков в день" testId="terminal-checks-per-day">
@@ -277,7 +259,7 @@ export function InvestorTerminalPage() {
                   <output>{economicsData.assumptions.days_per_month} в месяц</output>
                 </TerminalRow>
                 <TerminalRow label="Выручка в месяц" derived>
-                  <output data-testid="terminal-sales-result">{formatRub(scenario.salesPerMonthRub)}</output>
+                  <output data-testid="terminal-sales-result" data-amount-rub={scenario.salesPerMonthRub}>{formatRub(scenario.salesPerMonthRub)}</output>
                 </TerminalRow>
               </TerminalSection>
 
@@ -294,7 +276,7 @@ export function InvestorTerminalPage() {
                 {launchBudget.premisesScenario === "rent" ? (
                   <>
                     <TerminalRow label="Аренда в месяц">
-                      <NumberCell value={launchBudget.monthlyRentRub} onChange={(value) => updateBudget("monthlyRentRub", value)} suffix="₽" ariaLabel="Аренда в месяц" baseline={isCustom && launchBudget.monthlyRentRub !== 350_000 ? formatRub(350_000) : null} />
+                      <NumberCell value={launchBudget.monthlyRentRub} onChange={(value) => updateBudget("monthlyRentRub", value)} suffix="₽" ariaLabel="Аренда в месяц" baseline={isCustom && launchBudget.monthlyRentRub !== baseObjectPlanningReference().monthlyRentRub ? formatRub(baseObjectPlanningReference().monthlyRentRub) : null} />
                     </TerminalRow>
                     <TerminalRow label="Предоплата аренды">
                       <SelectCell value={launchBudget.prepaymentMonths} ariaLabel="Предоплата аренды" options={[1, 3, 12].map((value) => ({ value, label: `${value} мес.` }))} onChange={(value) => updateBudget("prepaymentMonths", Number(value) as 1 | 3 | 12)} />
@@ -302,15 +284,20 @@ export function InvestorTerminalPage() {
                     <TerminalRow label="Обеспечительный платёж">
                       <SelectCell value={launchBudget.securityDepositMonths} ariaLabel="Обеспечительный платёж" options={[1, 2, 3].map((value) => ({ value, label: `${value} мес.` }))} onChange={(value) => updateBudget("securityDepositMonths", Number(value) as 1 | 2 | 3)} />
                     </TerminalRow>
+                    <TerminalRow label="Арендные каникулы" hint="Период после получения помещения, когда аренда не начисляется.">
+                      <NumberCell value={launchBudget.rentFreeMonths} onChange={(value) => updateBudget("rentFreeMonths", Math.max(0, Math.floor(value ?? 0)))} suffix="мес." integer ariaLabel="Арендные каникулы" />
+                    </TerminalRow>
                   </>
                 ) : (
-                  <TerminalRow label="Стоимость помещения">
-                    <NumberCell value={launchBudget.purchasePriceRub} onChange={(value) => updateBudget("purchasePriceRub", value)} suffix="₽" ariaLabel="Стоимость помещения" />
-                  </TerminalRow>
+                  <>
+                    <TerminalRow label="Стоимость помещения">
+                      <NumberCell value={launchBudget.purchasePriceRub} onChange={(value) => updateBudget("purchasePriceRub", value)} suffix="₽" ariaLabel="Стоимость помещения" />
+                    </TerminalRow>
+                    <TerminalRow label="Арендные каникулы" derived>
+                      <output>Не применяются</output>
+                    </TerminalRow>
+                  </>
                 )}
-                <TerminalRow label="Льготный период" derived hint="Параметр не задан в текущей канонической модели.">
-                  <output>Не задан</output>
-                </TerminalRow>
                 <TerminalRow label="Общая площадь">
                   <NumberCell value={launchBudget.totalAreaM2} onChange={(value) => updateBudget("totalAreaM2", value)} suffix="м²" ariaLabel="Общая площадь" />
                 </TerminalRow>
@@ -322,7 +309,7 @@ export function InvestorTerminalPage() {
                 </TerminalRow>
               </TerminalSection>
 
-              <TerminalSection title="Запуск" note="Подготовка помещения — planning assumption, а не договорная строительная смета.">
+              <TerminalSection title="Запуск" note="Подготовка помещения — расчётное допущение, а не договорная строительная смета.">
                 <TerminalRow label="Подготовка помещения" hint={launchBudget.preparationMode === "manual" ? "Введённая сумма" : "Сумма выбранных категорий"}>
                   {launchBudget.preparationMode === "manual" ? (
                     <NumberCell value={launchBudget.preparationManualRub} onChange={(value) => updateBudget("preparationManualRub", value)} suffix="₽" ariaLabel="Подготовка помещения" />
@@ -368,21 +355,21 @@ export function InvestorTerminalPage() {
                 <h2 id="terminal-results-title">Экономика</h2>
               </div>
               <dl aria-live="polite">
-                <div><dt>Стартовые инвестиции</dt><dd data-testid="terminal-start-investment">{formatMillion(scenario.startInvestmentRub)}</dd></div>
+                <div><dt>Стартовые инвестиции</dt><dd data-testid="terminal-start-investment" data-amount-rub={scenario.startInvestmentRub}>{formatMillion(scenario.startInvestmentRub)}</dd></div>
                 <div><dt>Выручка</dt><dd>{formatMillion(scenario.salesPerMonthRub)}</dd></div>
-                <div><dt>OPEX</dt><dd>{formatMillion(operatingOpexRub)}</dd></div>
+                <div><dt>Операционные расходы</dt><dd>{formatMillion(operatingOpexRub)}</dd></div>
                 <div className="is-total"><dt>EBITDA</dt><dd data-testid="terminal-ebitda-result">{formatMillion(scenario.ebitdaRub)}</dd></div>
-                <div><dt>Cash flow</dt><dd>{formatMillion(scenario.freeCashFlowRub)}</dd></div>
+                <div><dt>Денежный поток</dt><dd>{formatMillion(scenario.freeCashFlowRub)}</dd></div>
                 <div><dt>Окупаемость</dt><dd>{paybackText(scenario.paybackMonth)}</dd></div>
-                <div><dt>IRR</dt><dd>{formatPercent(scenario.irr)}</dd></div>
-                <div><dt>NPV</dt><dd>{formatMillion(scenario.npvRub)}</dd></div>
+                <div><dt>Доходность (IRR)</dt><dd>{formatPercent(scenario.irr)}</dd></div>
+                <div><dt>Стоимость проекта (NPV)</dt><dd>{formatMillion(scenario.npvRub)}</dd></div>
               </dl>
               <button type="button" className="terminal-result-details-button" aria-expanded={investmentDetailsOpen} onClick={() => setInvestmentDetailsOpen((open) => !open)}>{investmentDetailsOpen ? "Скрыть состав инвестиций" : "Состав стартовых инвестиций"}</button>
               {investmentDetailsOpen ? <dl className="terminal-result-details" aria-label="Состав стартовых инвестиций">
                 {scenario.investmentBreakdown.map((item) => <div key={item.key}><dt>{item.name}</dt><dd>{formatRub(item.amount_rub)}</dd></div>)}
               </dl> : null}
-              <button type="button" className="terminal-result-details-button" aria-expanded={pnlDetailsOpen} onClick={() => setPnlDetailsOpen((open) => !open)}>{pnlDetailsOpen ? "Скрыть детализацию OPEX" : "Детализация OPEX / P&L"}</button>
-              {pnlDetailsOpen ? <dl className="terminal-result-details" aria-label="Детализация OPEX и P&L">
+              <button type="button" className="terminal-result-details-button" aria-expanded={pnlDetailsOpen} onClick={() => setPnlDetailsOpen((open) => !open)}>{pnlDetailsOpen ? "Скрыть расходы" : "Подробные операционные расходы"}</button>
+              {pnlDetailsOpen ? <dl className="terminal-result-details" aria-label="Подробные операционные расходы">
                 <div><dt>Прямые затраты</dt><dd>{formatRub(scenario.pnl.productCostRub)}</dd></div>
                 <div><dt>Персонал</dt><dd>{formatRub(scenario.pnl.personnelRub)}</dd></div>
                 <div><dt>Помещение</dt><dd>{formatRub(scenario.pnl.premisesRub)}</dd></div>
@@ -393,7 +380,7 @@ export function InvestorTerminalPage() {
                 <div><dt>Налог</dt><dd>{formatRub(scenario.pnl.taxRub)}</dd></div>
               </dl> : null}
               {!scenario.configurationComplete ? <p className="terminal-result-warning">Для расчёта заполните все обязательные параметры запуска.</p> : null}
-              {configuration.customChecksPerDay !== null ? <p className="terminal-runtime-note">Поток изменён локально. Остальные операционные допущения остаются из выбранного канонического сценария.</p> : null}
+              {configuration.customChecksPerDay !== null ? <p className="terminal-runtime-note">Поток изменён только в этом сценарии. Остальные значения остаются из выбранного базового сценария.</p> : null}
               <p className="terminal-full-model" aria-disabled="true">Полная финансовая модель — по запросу</p>
             </aside>
           </div>

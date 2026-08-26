@@ -49,14 +49,14 @@
         },
         {
           "path": "src/lib/capex-runtime.ts",
-          "sha256": "b4b2ff89e9f589d93d2ddc0e3909d59588bfb8c1aa09f8fbdcbb7ac428474501"
+          "sha256": "69109c7cc1e45cdc32937e99620f4dd5cd48ec861fbe209a1b1196c2c3626a8a"
         },
         {
           "path": "src/lib/launch-budget.ts",
-          "sha256": "783bdd16c8a9b83535010a63609f9205fd2d4461357e87de069d719f5ec8c2ab"
+          "sha256": "d9234af629a60c19207312c88b91dfc69c5891cb88eec098bd95fc9e534a7969"
         }
       ],
-      "content_state_sha256": "f09ba76c9dbc38102f5d4b788a42553ef60756d62c7d7bec776491527c64d2a3"
+      "content_state_sha256": "fd595158fc5e44d8ee3d884beb4473d855b1785d8337ee22bc71ba51765edc81"
     },
     "imported_revenue_content_state_sha256": "90727a6c51f959b617d6c972b898593a1b6dba6742d51b30bb75230f3f606c38",
     "imported_capex_content_state_sha256": "a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239",
@@ -15285,7 +15285,7 @@
         "real_estate_return": 0,
         "real_estate_irr_annual": 0,
         "combined_payback_month": 31,
-        "combined_irr_annual": 0.4393689912688634,
+        "combined_irr_annual": 0.4393689912688632,
         "combined_npv_rub": 64557493.11,
         "restaurant_cash_flows": [
           -44724292.36,

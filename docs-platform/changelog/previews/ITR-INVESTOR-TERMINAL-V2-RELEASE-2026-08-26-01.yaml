@@ -1,0 +1,8 @@
+schema_version: 1
+iteration_id: ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01
+status: passed
+mutation_performed: false
+scope: Local release-candidate review of the dependency-complete Investor Terminal v2 feature line.
+canonical_financial_model_change: false
+google: unused
+production: pending_release_verification

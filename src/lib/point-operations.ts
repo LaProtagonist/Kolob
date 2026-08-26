@@ -57,16 +57,11 @@ function cohortRevenueState(configuration: InvestorConfiguration, cohort: Tradin
   };
 }
 
-/**
- * Uses canonical revenue calculations for sales and the governed Network
- * Planning policy for staffing. This returns people concurrently on shift and
- * a planning roster/payroll, never a claimed FTE calculation.
- */
-export function pointOperationalProjection(
+function projectionFromRevenueState(
   configuration: InvestorConfiguration,
   cohort: TradingPointCohort,
+  revenueState: RevenueModelState | null,
 ): PointOperationalProjection {
-  const revenueState = cohortRevenueState(configuration, cohort);
   const revenue = revenueState ? calculateRevenueModel(revenueState) : null;
   const minimumM2 = locationMinimumAreaM2(cohort.format, cohort.locationType, cohort.sharedSeating);
   const areaStatus: PointAreaStatus = minimumM2 === null
@@ -98,4 +93,34 @@ export function pointOperationalProjection(
     },
     staffing: pointStaffingProjection(cohort.format, cohort.locationType, foodPortionsPerDay),
   };
+}
+
+/**
+ * Uses canonical revenue calculations for sales and the governed Network
+ * Planning policy for staffing. This returns people concurrently on shift and
+ * a planning roster/payroll, never a claimed FTE calculation.
+ */
+export function pointOperationalProjection(
+  configuration: InvestorConfiguration,
+  cohort: TradingPointCohort,
+): PointOperationalProjection {
+  return projectionFromRevenueState(configuration, cohort, cohortRevenueState(configuration, cohort));
+}
+
+/** Reuses calculateRevenueModel for an actual monthly point workload. */
+export function pointOperationalProjectionForMonthlyChecks(
+  configuration: InvestorConfiguration,
+  cohort: TradingPointCohort,
+  checksPerDay: number | null,
+  averageCheckRub: number | null,
+): PointOperationalProjection {
+  const revenueState: RevenueModelState | null = checksPerDay === null || averageCheckRub === null
+    ? null
+    : {
+      trafficMode: "custom",
+      trafficScenario: configuration.scenarioId,
+      customChecksPerDay: checksPerDay,
+      customAverageCheckRub: averageCheckRub,
+    };
+  return projectionFromRevenueState(configuration, cohort, revenueState);
 }

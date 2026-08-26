@@ -816,7 +816,7 @@ function renderPage(path: string) {
       );
     case "/investor-terminal":
       return (
-        <Suspense fallback={<main className="plain-page"><div className="section-inner"><p>Загружается Investor Terminal…</p></div></main>}>
+        <Suspense fallback={<main className="plain-page"><div className="section-inner"><p>Загружается терминал инвестора…</p></div></main>}>
           <InvestorTerminalPage />
         </Suspense>
       );

@@ -1,0 +1,28 @@
+schema_version: 2
+payload_id: PAYLOAD-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01
+iteration_id: ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01
+proposal_id: PROP-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01
+decision_id: DEC-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01
+change_set_id: CHG-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01
+title: Investor Terminal v2 accepted feature release candidate
+status: approved
+approved_by: project owner
+approved_at: 2026-08-26T00:30:00.000Z
+scope:
+  - Close the accepted feat/investor-terminal-v2 line as one governed delivery: runtime configuration and migration, Financial Model adapters, governed Network Planning Model and snapshot, point preparation, equipment applicability, temporal rollout projection, UI and deterministic tests.
+  - Apply the final presentation correction: localize the investor-facing name to «Терминал инвестора», preserve duration values on one line in the summary and order the investor menu as approved.
+  - Preserve all existing financial formulas, Base Object semantics, Network Planning values, rollout presets and calculation boundaries.
+  - Prepare the sealed feature branch for a normal merge onto the current production branch and the existing static production deployment workflow.
+forbidden_scope:
+  - New business assumptions, Financial Model formula changes or manual financial totals.
+  - Partial transfer of files instead of feature integration.
+  - Rewriting sealed history, force-push, rebase, resetting the worktree or deleting feature branches, review artifacts or backup stashes.
+  - Production deployment before successful integration and release verification.
+release_acceptance:
+  public_name: Терминал инвестора
+  investor_navigation:
+    - Модель развития
+    - Материалы проекта
+    - Терминал инвестора
+    - Обсудить участие
+  production_url: https://colob.spi.ski

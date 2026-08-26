@@ -77,7 +77,17 @@ function linkConditionSatisfied(condition: string | null, parameters: CapexParam
   return true;
 }
 
-export function buildCapexRows(activeModuleIds: Set<string>, scenario: ScenarioId, parameters: CapexParameters): ComputedCapexRow[] {
+/**
+ * A caller may supply a governed configuration-specific quantity rule. This
+ * keeps the item price and module ownership in the canonical equipment
+ * register while allowing a point-composition adapter to state applicability.
+ */
+export function buildCapexRows(
+  activeModuleIds: Set<string>,
+  scenario: ScenarioId,
+  parameters: CapexParameters,
+  quantityOverrides: Readonly<Record<string, number>> = {},
+): ComputedCapexRow[] {
   const itemById = new Map(capexData.items.map(item => [item.id, item]));
   const linksByItem = new Map<string, ModuleLink[]>();
   for (const link of capexData.moduleItems) {
@@ -89,7 +99,10 @@ export function buildCapexRows(activeModuleIds: Set<string>, scenario: ScenarioI
     const price = item.scenarios[scenario] as ScenarioPrice | null;
     const rules = computedFromLinks(links, parameters);
     const parameterDriven = links.some(link => link.quantityRuleType.startsWith("per_") && driverForRule(link.quantityRuleType, parameters) !== null && link.quantityRuleValue !== null);
-    const quantity = parameterDriven ? rules.quantity : price?.quantity ?? rules.quantity;
+    const overriddenQuantity = quantityOverrides[itemId];
+    const quantity = typeof overriddenQuantity === "number"
+      ? overriddenQuantity
+      : parameterDriven ? rules.quantity : price?.quantity ?? rules.quantity;
     const includedInParent = item.inclusionStatus === "included_in_parent" || item.recordType === "component";
     const independentProcurement = ["standalone", "purchased_separately"].includes(item.inclusionStatus) && !["component", "engineering_connection", "open_question"].includes(item.recordType);
     const unitPrice = price?.unitPriceRub ?? null;
@@ -103,7 +116,9 @@ export function buildCapexRows(activeModuleIds: Set<string>, scenario: ScenarioI
       requirement,
       quantity,
       quantityStatus: quantity === null ? "Требует расчёта производительности" : quantity === 0 ? "Не входит в сценарий" : "Рассчитано по данным",
-      quantityRule: parameterDriven ? rules.rule : price ? `Сценарий: ${capexData.scenarios.find(entry => entry.id === scenario)?.label ?? scenario}` : rules.rule,
+      quantityRule: typeof overriddenQuantity === "number"
+        ? "Конфигурация точки"
+        : parameterDriven ? rules.rule : price ? `Сценарий: ${capexData.scenarios.find(entry => entry.id === scenario)?.label ?? scenario}` : rules.rule,
       price,
       unitPrice,
       lineTotal,
