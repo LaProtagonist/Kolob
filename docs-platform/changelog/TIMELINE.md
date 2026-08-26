@@ -4,10 +4,10 @@
 
 ## 1. Current state
 
-- Events: 237.
-- Timeline head event: `EVT-ITR-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01-COMMITTED`.
-- Timeline head SHA-256: `1f396b3d3dad7e9e50f7cbc8b813024d58aa34af174dc5c211cda4e2320981a3`.
-- Latest recorded iteration: `ITR-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01`.
+- Events: 247.
+- Timeline head event: `EVT-ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01-COMMITTED`.
+- Timeline head SHA-256: `f2ebbc07db2adfb2b040c1ad3d1d7f5cc68ddeda917a92f629d760f35d4ffb3a`.
+- Latest recorded iteration: `ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01`.
 
 ## 2. Modern governed iterations
 
@@ -56,6 +56,8 @@
 | 2026-08-26T14:41:00.000Z | deployed | Investor Terminal v2 accepted feature release candidate | ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01 | DEC-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01 | CHG-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01 | 9cb055dd4fac66192602c4d361b93c8e1b153b74 | iteration/ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01 | — | docs-platform/changelog/deployments/DEPLOY-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01.yaml | — | Sealed content state a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239 deployed to https://colob.spi.ski; smoke test passed. |
 | 2026-08-26T16:26:20.355Z | failed | Synchronize current canonical financial publications | ITR-FINANCIAL-PUBLICATIONS-SYNC-2026-08-26-01 | DEC-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01 | CHG-FINANCIAL-PUBLICATIONS-SYNC-2026-08-26-01 | — | — | docs-platform/changelog/google-sync/2026-08-26-DOC-FINANCIAL-MODEL.yaml | — | — | Financial Model publication passed, but Investor Summary readback failed because historical merged cells were cleared after, rather than before, the canonical value write. |
 | 2026-08-26T18:28:41.000Z | committed | Correct Investor Summary merged-cell publication ordering | ITR-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01 | DEC-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01 | CHG-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01 | fb5de422456cecbd06612ab38f0749cfa6fd1a9a | iteration/ITR-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01 | docs-platform/changelog/google-sync/2026-08-26-DOC-INVESTOR-FINANCIAL-SUMMARY-MERGE-FIX.yaml | — | — | Correct Investor Summary merged-cell publication ordering: content commit verified and linked to the governed lifecycle before sealing. |
+| 2026-08-26T20:58:00.000Z | failed | Register Financial Core v2 feature-worktree governance context | ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01 | DEC-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01 | CHG-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01 | — | — | — | — | — | Pre-commit scope guard refused the unlisted verification receipt; no content was staged or committed. A narrow successor will correct the governance scope without altering this approved payload. |
+| 2026-08-26T21:03:15.000Z | committed | Correct Financial Core v2 feature-worktree context scope | ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01 | DEC-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01 | CHG-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01 | ad927266a787fe89235011a6a3c6d7da7b4f6c99 | iteration/ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01 | — | — | — | Correct Financial Core v2 feature-worktree context scope: content commit verified and linked to the governed lifecycle before sealing. |
 
 ## 3. Legacy imported history
 

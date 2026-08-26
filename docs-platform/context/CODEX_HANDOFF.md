@@ -8,17 +8,17 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 2. Текущая ветка и governed iteration
 
-- Branch: `master`.
-- Latest closed iteration: `ITR-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01`.
-- Latest iteration tag: `iteration/ITR-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01`.
-- Latest content commit: `fb5de422456cecbd06612ab38f0749cfa6fd1a9a`.
+- Branch: `feat/financial-core-consolidation-v2`.
+- Latest closed iteration: `ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01`.
+- Latest iteration tag: `iteration/ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01`.
+- Latest content commit: `ad927266a787fe89235011a6a3c6d7da7b4f6c99`.
 - Текущий Git HEAD намеренно не записывается: его вычисляет `npm run project:onboard`.
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01-COMMITTED`.
-- Hash: `1f396b3d3dad7e9e50f7cbc8b813024d58aa34af174dc5c211cda4e2320981a3`.
-- generated_from_event_hash: `1f396b3d3dad7e9e50f7cbc8b813024d58aa34af174dc5c211cda4e2320981a3`.
+- Event: `EVT-ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01-COMMITTED`.
+- Hash: `f2ebbc07db2adfb2b040c1ad3d1d7f5cc68ddeda917a92f629d760f35d4ffb3a`.
+- generated_from_event_hash: `f2ebbc07db2adfb2b040c1ad3d1d7f5cc68ddeda917a92f629d760f35d4ffb3a`.
 
 ## 4. Канонические документы
 
@@ -46,7 +46,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 5. Текущая рабочая тема
 
-Correct Investor Summary merged-cell publication ordering
+Correct Financial Core v2 feature-worktree context scope
 
 ## 6. Decisions и change sets
 
@@ -61,7 +61,7 @@ Correct Investor Summary merged-cell publication ordering
 
 ## 8. Google / MCP / deployment
 
-- Google: `{"configured":true,"historical_receipts":14,"receipts_with_machine_readback_hash":11,"live_drift_check":"not_run_by_context_build"}`.
+- Google: `{"configured":false,"historical_receipts":14,"receipts_with_machine_readback_hash":11,"live_drift_check":"not_run_by_context_build"}`.
 - MCP: `{"implementation_present":true,"canonical_access":"registry_document_ids_only","live_status":"not_probed_by_context_build"}`.
 - Deployment: `{"status":"receipts_present","receipts":6,"production_url":null}`.
 
