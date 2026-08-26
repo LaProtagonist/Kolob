@@ -8,6 +8,7 @@ import {
 } from "./launch-budget";
 import { defaultPointPreparationCategoryIds, pointPreparationCategoryIds } from "./point-preparation";
 import { calculateAverageCheck } from "./revenue-model";
+import type { FinancialProjectionContext } from "./financial-core";
 import {
   defaultLocationRentPresetId,
   defaultRentFreeMonths,
@@ -128,6 +129,36 @@ export function baseObjectLaunchBudgetState(): LaunchBudgetState {
     ...defaultLaunchBudgetState(),
     monthlyRentRub: reference.monthlyRentRub,
     rentFreeMonths: reference.rentFreeMonths,
+  };
+}
+
+function fullPreparationLaunchBudgetState(launchBudget: LaunchBudgetState): LaunchBudgetState {
+  return {
+    ...launchBudget,
+    preparationEnabledCategoryIds: launchModel.preparation.categories
+      .filter((category) => category.enabled_by_default)
+      .map((category) => category.id),
+  };
+}
+
+/**
+ * The immutable historical reference used by Financial Model v0.2.  It is not
+ * a reset target for the Current Base Object: its 350k rent, zero rent-free
+ * term and full integrated preparation belong to a different context.
+ */
+export function historicalIntegratedPilotConfiguration(): InvestorConfiguration {
+  const reference = baseObjectPlanningReference();
+  const launchBudget = fullPreparationLaunchBudgetState({
+    ...defaultLaunchBudgetState(),
+    monthlyRentRub: reference.historicalFinancialModelRentRub,
+    rentFreeMonths: 0,
+  });
+  return {
+    schemaVersion: 8,
+    scenarioId: "realistic",
+    customChecksPerDay: null,
+    launchBudget,
+    networkScaling: defaultNetworkScalingConfiguration(launchBudget),
   };
 }
 
@@ -571,7 +602,8 @@ export function restoreNetworkScalingConfiguration(value: unknown, launchBudget:
   };
 }
 
-export function defaultInvestorConfiguration(): InvestorConfiguration {
+/** Current approved planning context for the flagship Base Object. */
+export function currentBaseObjectInvestorConfiguration(): InvestorConfiguration {
   const launchBudget = baseObjectLaunchBudgetState();
   return {
     schemaVersion: 8,
@@ -582,20 +614,20 @@ export function defaultInvestorConfiguration(): InvestorConfiguration {
   };
 }
 
-/** The Financial Model baseline: rent and the full canonical preparation scope. */
-export function canonicalInvestorConfiguration(): InvestorConfiguration {
-  const defaults = defaultInvestorConfiguration();
-  const launchBudget = {
-    ...defaults.launchBudget,
-    preparationEnabledCategoryIds: launchModel.preparation.categories
-      .filter((category) => category.enabled_by_default)
-      .map((category) => category.id),
-  };
+/** Current Base assumptions with the full preparation scope enabled. */
+export function currentBaseObjectFullPreparationConfiguration(): InvestorConfiguration {
+  const defaults = currentBaseObjectInvestorConfiguration();
+  const launchBudget = fullPreparationLaunchBudgetState(defaults.launchBudget);
   return {
     ...defaults,
     launchBudget,
     networkScaling: defaultNetworkScalingConfiguration(launchBudget),
   };
+}
+
+/** Kept as the runtime default; its context is explicitly Current Base Object. */
+export function defaultInvestorConfiguration(): InvestorConfiguration {
+  return currentBaseObjectInvestorConfiguration();
 }
 
 export function restoreInvestorConfiguration(value: unknown): InvestorConfiguration {
@@ -636,10 +668,18 @@ function calculationState(configuration: InvestorConfiguration) {
   return { ...configuration, launchBudget };
 }
 
-export function investorConfigurationIsCanonical(configuration: InvestorConfiguration) {
-  const baseline = canonicalInvestorConfiguration();
+export function investorConfigurationIsCurrentBaseFullPreparation(configuration: InvestorConfiguration) {
+  const baseline = currentBaseObjectFullPreparationConfiguration();
   return JSON.stringify({ ...calculationState(configuration), scenarioId: baseline.scenarioId })
     === JSON.stringify(calculationState(baseline));
+}
+
+export function financialProjectionContextForConfiguration(configuration: InvestorConfiguration): FinancialProjectionContext {
+  const historical = historicalIntegratedPilotConfiguration();
+  return JSON.stringify({ ...calculationState(configuration), scenarioId: historical.scenarioId })
+    === JSON.stringify(calculationState(historical))
+    ? "historical_integrated_pilot"
+    : "current_base_object";
 }
 
 export function investorConfigurationIsReadyPremisesDefault(configuration: InvestorConfiguration) {

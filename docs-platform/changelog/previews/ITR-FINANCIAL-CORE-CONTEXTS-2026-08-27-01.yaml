@@ -1,0 +1,20 @@
+receipt_version: 1
+iteration_id: ITR-FINANCIAL-CORE-CONTEXTS-2026-08-27-01
+previewed_at: 2026-08-27T00:24:00.000Z
+result: reviewed
+before_state_sha256: 4e4f516f7c92ecce0bac026d867b58cdeef05c1c310db73e69b94f65c6510a30
+after_state_sha256: 1aa374be3411304af90edf5887015e1f8ee39eacdf481ac5f89d9c27e3706b0c
+current_base_regression_controls:
+  rent_rub: 500000
+  rent_free_months: 2
+  start_investment_rub: 39220380.74
+  revenue_rub: 10488600
+  ebitda_rub: 2263464.4
+  free_cash_flow_rub: 2045009.8
+  payback_month: 20
+historical_reference_controls:
+  rent_rub: 350000
+  rent_free_months: 0
+  start_investment_rub: 45370380.74
+  payback_month: 23
+external_changes: []

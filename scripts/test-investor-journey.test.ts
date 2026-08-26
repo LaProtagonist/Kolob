@@ -6,14 +6,16 @@ import test from "node:test";
 import { fileURLToPath } from "node:url";
 import { configuredEconomicsScenario, configuredEconomicsScenarios } from "../src/lib/configured-economics.js";
 import {
-  canonicalInvestorConfiguration,
+  currentBaseObjectFullPreparationConfiguration,
+  historicalIntegratedPilotConfiguration,
   applyNetworkRolloutPreset,
   applyLocationRentPreset,
   createNetworkPointCohort,
   createTradingPointCohort,
   defaultInvestorConfiguration,
   currentNetworkRolloutSize,
-  investorConfigurationIsCanonical,
+  financialProjectionContextForConfiguration,
+  investorConfigurationIsCurrentBaseFullPreparation,
   restoreInvestorConfiguration,
   updateCohortAreaFromRentPreset,
   updateCohortMonthlyRent,
@@ -206,7 +208,7 @@ test("runtime configuration is safely restored and never mutates canonical sourc
 
 test("custom checks per day is a local scenario override and canonical reset stays exact", () => {
   const before = sourceHashes();
-  const canonical = canonicalInvestorConfiguration();
+  const canonical = currentBaseObjectFullPreparationConfiguration();
   const canonicalEconomics = configuredEconomicsScenario(canonical);
   const restored = restoreInvestorConfiguration({ ...canonical, customChecksPerDay: 175 });
   const custom = configuredEconomicsScenario(restored);
@@ -298,7 +300,7 @@ test("v2.1 through v2.3 saved state migrates safely into v2.4 cohorts", () => {
 
 test("fresh and reset network defaults retain the base object and add the approved first-stage rollout", () => {
   const fresh = defaultInvestorConfiguration();
-  const reset = canonicalInvestorConfiguration();
+  const reset = currentBaseObjectFullPreparationConfiguration();
   for (const configuration of [fresh, reset]) {
     assert.equal(configuration.networkScaling.cohorts.length, 5);
     const baseCohort = configuration.networkScaling.cohorts[0];
@@ -528,7 +530,7 @@ test("location rent presets remain state inputs and switch to a custom value aft
 
 test("cohort operations keep sales, area constraints and concurrent staffing independent", () => {
   const before = sourceHashes();
-  const canonical = canonicalInvestorConfiguration();
+  const canonical = currentBaseObjectFullPreparationConfiguration();
   const seating = createTradingPointCohort(canonical.launchBudget, {
     id: "seating",
     format: "with_seating",
@@ -622,7 +624,7 @@ test("physical allocation retains point, production and wash boundaries for v2.4
   assert.equal(physicalAllocationMap.find(item => item.id === "MOD-WASH")?.physicalScope, "mixed");
   assert.equal(physicalAllocationMap.find(item => item.id === "OPEX-LOGISTICS")?.physicalScope, "shared_network");
 
-  const scaling = networkScalingProjection(canonicalInvestorConfiguration());
+  const scaling = networkScalingProjection(currentBaseObjectFullPreparationConfiguration());
   assert.ok(
     scaling.cohorts.slice(1).every((cohort) => cohort.pointItems.every((item) => !item.name.includes("посудомоеч"))),
     "the integrated pilot wash zone is never treated as a repeatable point item",
@@ -634,7 +636,7 @@ test("physical allocation retains point, production and wash boundaries for v2.4
 });
 
 test("location semantics drive point contribution without creating a false EBITDA", () => {
-  const canonical = canonicalInvestorConfiguration();
+  const canonical = currentBaseObjectFullPreparationConfiguration();
   const street = createTradingPointCohort(canonical.launchBudget, {
     id: "street", format: "with_seating", count: 2, totalAreaM2: 60,
     monthlyRentRub: 350_000, prepaymentMonths: 1, securityDepositMonths: 1,
@@ -667,7 +669,7 @@ test("location semantics drive point contribution without creating a false EBITD
 
 test("network scaling aggregates independent point cohorts without inventing network economics", () => {
   const before = sourceHashes();
-  const canonical = canonicalInvestorConfiguration();
+  const canonical = currentBaseObjectFullPreparationConfiguration();
   const seatingRent = createTradingPointCohort(canonical.launchBudget, {
     id: "seating-rent",
     format: "with_seating",
@@ -789,10 +791,23 @@ test("expansion reserve uses additional point OPEX and does not count the base-o
   assert.equal(economics.expansion.incompletePointCohortCount, 0, "default venue contracts are complete once their owner-approved terms are supplied");
 });
 
-test("canonical scenario selection is not presented as a user override", () => {
-  const canonical = canonicalInvestorConfiguration();
-  assert.equal(investorConfigurationIsCanonical({ ...canonical, scenarioId: "pessimistic" }), true);
-  assert.equal(investorConfigurationIsCanonical({ ...canonical, customChecksPerDay: 175 }), false);
+test("Current Base full-preparation selection is not presented as a user override", () => {
+  const currentBaseFullPreparation = currentBaseObjectFullPreparationConfiguration();
+  assert.equal(investorConfigurationIsCurrentBaseFullPreparation({ ...currentBaseFullPreparation, scenarioId: "pessimistic" }), true);
+  assert.equal(investorConfigurationIsCurrentBaseFullPreparation({ ...currentBaseFullPreparation, customChecksPerDay: 175 }), false);
+});
+
+test("Historical Integrated Pilot and Current Base are explicit, separate contexts", () => {
+  const historical = historicalIntegratedPilotConfiguration();
+  const currentBase = defaultInvestorConfiguration();
+  assert.equal(historical.launchBudget.monthlyRentRub, 350_000);
+  assert.equal(historical.launchBudget.rentFreeMonths, 0);
+  assert.equal(historical.launchBudget.preparationEnabledCategoryIds.length, 8);
+  assert.equal(currentBase.launchBudget.monthlyRentRub, 500_000);
+  assert.equal(currentBase.launchBudget.rentFreeMonths, 2);
+  assert.equal(currentBase.launchBudget.preparationEnabledCategoryIds.length, 4);
+  assert.equal(financialProjectionContextForConfiguration(historical), "historical_integrated_pilot");
+  assert.equal(financialProjectionContextForConfiguration(currentBase), "current_base_object");
 });
 
 test("economics UI has no legacy KPI literals and only consumes configured projection values", () => {

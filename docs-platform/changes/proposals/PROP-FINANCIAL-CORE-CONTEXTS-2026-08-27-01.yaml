@@ -1,0 +1,10 @@
+schema_version: 2
+proposal_id: PROP-FINANCIAL-CORE-CONTEXTS-2026-08-27-01
+iteration_id: ITR-FINANCIAL-CORE-CONTEXTS-2026-08-27-01
+title: Establish explicit financial contexts and shared calculation primitives
+status: approved
+proposed_by: project owner
+proposed_at: 2026-08-27T00:24:00.000Z
+summary: Start Phase B1 of Financial Documents v2: separate historical and current Base contexts, introduce shared calculation primitives, and correct only the confirmed LOGISTICS fixture catalog omission.
+approved_payload_path: docs-platform/changelog/payloads/ITR-FINANCIAL-CORE-CONTEXTS-2026-08-27-01-approved.yaml
+approved_payload_sha256: 843f2482056eae7de01b786bd8f23920778e55e49b8810293b6602ad77273ea1

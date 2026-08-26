@@ -7,6 +7,7 @@ import {
   financialModelAllocationItemIds,
   findPhysicalAllocation,
   investorStartAllocationFieldIds,
+  networkPlanningAllocationItemIds,
   physicalAllocationIntegrityErrors,
   physicalAllocationMap,
 } from "../src/lib/physical-allocation.js";
@@ -17,6 +18,7 @@ const catalog = {
   preparationCategoryIds: new Set(launchModel.preparation.categories.map((category) => category.id)),
   financialModelItemIds: new Set(financialModelAllocationItemIds),
   investorStartFieldIds: new Set(investorStartAllocationFieldIds),
+  networkPlanningItemIds: new Set(networkPlanningAllocationItemIds),
 };
 
 test("physical allocation map has only known source references and no duplicate semantics", () => {

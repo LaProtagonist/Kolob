@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import {
-  canonicalInvestorConfiguration,
+  currentBaseObjectFullPreparationConfiguration,
   defaultInvestorConfiguration,
   defaultNetworkScalingConfiguration,
   investorConfigurationStorageKey,
@@ -18,7 +18,7 @@ type InvestorConfigurationContextValue = {
   setLaunchBudget: (next: LaunchBudgetState | ((current: LaunchBudgetState) => LaunchBudgetState)) => void;
   setNetworkScaling: (next: NetworkScalingConfiguration | ((current: NetworkScalingConfiguration) => NetworkScalingConfiguration)) => void;
   resetConfiguration: () => void;
-  resetToCanonicalConfiguration: () => void;
+  resetToCurrentBaseFullPreparation: () => void;
   applyReadyPremisesPreset: () => void;
 };
 
@@ -84,13 +84,13 @@ export function InvestorConfigurationProvider({ children }: { children: ReactNod
       }
       setConfiguration(defaultInvestorConfiguration());
     },
-    resetToCanonicalConfiguration: () => {
+    resetToCurrentBaseFullPreparation: () => {
       try {
         window.localStorage.removeItem(investorConfigurationStorageKey);
       } catch {
         // The in-memory reset remains available when storage is unavailable.
       }
-      setConfiguration(canonicalInvestorConfiguration());
+      setConfiguration(currentBaseObjectFullPreparationConfiguration());
     },
     applyReadyPremisesPreset: () => setConfiguration(defaultInvestorConfiguration()),
   }), [configuration]);

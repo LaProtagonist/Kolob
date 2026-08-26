@@ -1,0 +1,12 @@
+receipt_version: 1
+iteration_id: ITR-FINANCIAL-CORE-CONTEXTS-2026-08-27-01
+audited_at: 2026-08-27T00:24:00.000Z
+result: passed
+findings:
+  - canonicalInvestorConfiguration previously named a Current Base configuration with full preparation, rather than the Historical Integrated Pilot.
+  - Current Base accepted values remain unchanged after extracting shared primitives.
+  - Existing Physical Allocation integrity test omitted the already-governed LOGISTICS catalog ID; production calculation semantics were not changed.
+  - Monthly Current Base projection now exposes tax, depreciation and maintenance fields required for B2 parity without recalculating its business inputs.
+external_state:
+  google_apply: not_run
+  production_deploy: not_run
