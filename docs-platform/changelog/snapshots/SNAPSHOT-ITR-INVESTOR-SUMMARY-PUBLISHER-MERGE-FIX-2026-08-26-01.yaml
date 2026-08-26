@@ -1,0 +1,93 @@
+schema_version: 2
+snapshot_id: SNAPSHOT-ITR-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01
+reason: governed_iteration_seal
+created_at: 2026-08-26T18:28:59.000Z
+timeline_event_id: EVT-ITR-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01-COMMITTED
+timeline_event_hash: 1f396b3d3dad7e9e50f7cbc8b813024d58aa34af174dc5c211cda4e2320981a3
+iteration_tag: iteration/ITR-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01
+content_commit_hash: fb5de422456cecbd06612ab38f0749cfa6fd1a9a
+registry_hash: bd5a9a62c4c240c07716c55a3c0bc79ae2c70e12b1499f04a4ea18b4d0eba09e
+canonical_document_hashes:
+  - document_id: DOC-README
+    local_path: docs-platform/README.md
+    sha256: 04e947f296a158a1c37ceb8d4c959d1f4e31cf609d16c99bee2d3c3b79b824ab
+  - document_id: DOC-AGENTS
+    local_path: docs-platform/AGENTS.md
+    sha256: 8589a2fb1075f53a4f114ff945a22465068996eab577bfd2e073a6dc66e61bba
+  - document_id: DOC-AUDIT
+    local_path: docs-platform/AUDIT.md
+    sha256: f43cb183f4c025ba74d4f77c2a498cb0ad07e7b0622e47f38afd6212173689e7
+  - document_id: DOC-INVESTMENT-MEMO
+    local_path: docs-platform/templates/investment-memorandum.md
+    sha256: 464e46d307aaa98e57cab3a098cd639e212d32b51f82a06688de228f0e7fb4cd
+  - document_id: DOC-FOUNDATION
+    local_path: docs-platform/00-foundation.md
+    sha256: 5b4d457184c055ba11f8c4d05cc263139d2eb4f623981bcdc198c0114a50c0bb
+  - document_id: DOC-BUSINESS-MODEL-ARCHITECTURE
+    local_path: docs-platform/01-business-model-architecture.md
+    sha256: 1584d836a159f6e3c5859ccf539830248b2cd782ed2c7005c5963ac8730c556b
+  - document_id: DOC-CAPEX-EQUIPMENT-SPECIFICATION
+    local_path: docs-platform/working/capex-equipment-specification.md
+    sha256: 2157364e09699173fecfbfe861edf4e6fac85a0437e23aebe100caebeab599d6
+  - document_id: DOC-CAPEX-EQUIPMENT-REGISTER
+    local_path: docs-platform/working/capex-equipment-register.yaml
+    sha256: c8853fe61ad8407ab96d0fbafb79702853842f970cbf699b6c2138b23f32c7aa
+  - document_id: DOC-CAPEX-MODULES
+    local_path: docs-platform/working/capex-modules.yaml
+    sha256: 2fb31d90b852a5aaae6500d99412c7fabba0bbe9187f08106e3f37c7a52ae33a
+  - document_id: DOC-CAPEX-POINT-FORMATS
+    local_path: docs-platform/working/capex-point-formats.yaml
+    sha256: 4b6d5a8806f696f499dbbab8fa061020c7ba77b670eb2a1f7d3ccdcc78b2e523
+  - document_id: DOC-CAPEX-CONFIGURATIONS
+    local_path: docs-platform/working/capex-configurations.yaml
+    sha256: 3810fa84efa969d8d95e2f0b0b49ede044b854d9be21ac92f5787d9ff8369f3c
+  - document_id: DOC-CAPEX-GENERATED-EQUIPMENT-BOM
+    local_path: docs-platform/working/configurations/CFG-PILOT-001/equipment-bom.yaml
+    sha256: d001d531247e1c64820a6bd00df1db755908d483358f5f677b3ca6acb6d8fa4a
+  - document_id: DOC-CAPEX-PRICE-RESEARCH
+    local_path: docs-platform/working/capex-price-research.yaml
+    sha256: b2b752f1822db8b529d58d822b83b32d44bcba9a0110ae35062d3b561f08249d
+  - document_id: DOC-PILOT-CAPEX-ASSUMPTIONS
+    local_path: docs-platform/working/pilot-capex-assumptions.yaml
+    sha256: 25e11d4db20050b3a95cab40797ef0a29e56fad93c73d33d4a39415a8071d4ac
+  - document_id: DOC-INVESTOR-START-MODEL
+    local_path: docs-platform/working/investor-start-model.yaml
+    sha256: b81a6c4e8988a4532c9ba2749d492b3f96e37d83af822396afc82930244b2985
+  - document_id: DOC-REVENUE-MODEL
+    local_path: docs-platform/working/revenue-model.yaml
+    sha256: ab68399813d62d861522752c8e94df9cfc5d5a48e9b7723c60f2c968c4cba721
+  - document_id: DOC-FINANCIAL-MODEL
+    local_path: docs-platform/working/financial-model.yaml
+    sha256: 6a76990d3635e62ac633610754415d401edba989f1a49a463091e2cece1e329b
+  - document_id: DOC-INVESTOR-FINANCIAL-SUMMARY
+    local_path: docs-platform/working/investor-financial-summary.yaml
+    sha256: b786d62f1b04e20a11742cd0bf06f0b39299daf3b95f4bff08c0967cdc9f9d3a
+  - document_id: DOC-NETWORK-PLANNING-ASSUMPTIONS
+    local_path: docs-platform/working/network-planning-assumptions.yaml
+    sha256: 12e8220efac9c759decaa05904aaa2452e1ea6a13f5dd267670d8772b5f9a9e0
+google_readback_hashes:
+  - receipt: docs-platform/changelog/google-sync/2026-08-01-DOC-CAPEX-EQUIPMENT-REGISTER-MODULAR-CONFIGURATOR.yaml
+    sha256: c604177c441ae825da10ae3da9f41d5123a218eba933132e13dadd8e4d59ec73
+  - receipt: docs-platform/changelog/google-sync/2026-08-01-DOC-CAPEX-EQUIPMENT-REGISTER.yaml
+    sha256: b6e6485482a2bcbc07058a922f60f175965178700a270f499e2589bb2daeb34e
+  - receipt: docs-platform/changelog/google-sync/2026-08-02-DOC-CAPEX-EQUIPMENT-REGISTER-PRICE-RESEARCH.yaml
+    sha256: e2b92dd2003a64f912a3811c4eb45c8fc57b5026d568eaf4f6dfaed095272abc
+  - receipt: docs-platform/changelog/google-sync/2026-08-03-DOC-CAPEX-EQUIPMENT-REGISTER-PILOT-BASELINE.yaml
+    sha256: f622e951d74e7b80e0aff6c449d5624ea5ebd47298bcf676f34977e0ecb200e5
+  - receipt: docs-platform/changelog/google-sync/2026-08-03-DOC-CAPEX-EQUIPMENT-REGISTER-WEB-CONFIGURATOR.yaml
+    sha256: 8f25ba4acbdc09406f70ab1b79a9d40dd019c668f177dfce2767d62fbbb5c370
+  - receipt: docs-platform/changelog/google-sync/2026-08-05-DOC-CAPEX-EQUIPMENT-REGISTER-REMAINING-PRICES.yaml
+    sha256: f9df132f8cb7a173387f075c5b89bd936d0e33353be223a58ee2d6441904ee44
+  - receipt: docs-platform/changelog/google-sync/2026-08-16-DOC-FINANCIAL-MODEL.yaml
+    sha256: c44e09779be49f0546b42aa821f21d71398a4d7896bc2628861f6d3964851351
+  - receipt: docs-platform/changelog/google-sync/2026-08-16-DOC-INVESTOR-FINANCIAL-SUMMARY-02.yaml
+    sha256: 1ee8fbe3e3eb3491aa8376bd6d007d94e39c4e21a9a5733cfa815171eef27a50
+  - receipt: docs-platform/changelog/google-sync/2026-08-16-DOC-INVESTOR-FINANCIAL-SUMMARY.yaml
+    sha256: 1ee8fbe3e3eb3491aa8376bd6d007d94e39c4e21a9a5733cfa815171eef27a50
+  - receipt: docs-platform/changelog/google-sync/2026-08-26-DOC-FINANCIAL-MODEL.yaml
+    sha256: 600e33ee49e898e5382f80a340a1c4e97397eeaf7048d514b156a67e96214ef1
+  - receipt: docs-platform/changelog/google-sync/2026-08-26-DOC-INVESTOR-FINANCIAL-SUMMARY-MERGE-FIX.yaml
+    sha256: 0184ecc77ab3ffb65f1ae915bb75e6edd8c7dc50c3a1a5f08741b13d0d23b09e
+deployment_url: null
+open_questions:
+  - Archive pending visual review artifacts in durable storage.

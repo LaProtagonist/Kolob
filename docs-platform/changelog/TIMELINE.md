@@ -4,10 +4,10 @@
 
 ## 1. Current state
 
-- Events: 227.
-- Timeline head event: `EVT-ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01-DEPLOYED-DEPLOY-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01`.
-- Timeline head SHA-256: `dc7b76519e64bcd902ad6865dac9e12fb5d226563ee0630df23d847c6f3a7c3b`.
-- Latest recorded iteration: `ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01`.
+- Events: 237.
+- Timeline head event: `EVT-ITR-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01-COMMITTED`.
+- Timeline head SHA-256: `1f396b3d3dad7e9e50f7cbc8b813024d58aa34af174dc5c211cda4e2320981a3`.
+- Latest recorded iteration: `ITR-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01`.
 
 ## 2. Modern governed iterations
 
@@ -54,6 +54,8 @@
 | 2026-08-26T00:11:00.000Z | failed | Network Planning Model and Investor Terminal v2.4 — deterministic projection successor | ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-02 | DEC-NETWORK-PLANNING-V2-4-2026-08-26-01 | CHG-INVESTOR-TERMINAL-V2-4-2026-08-26-02 | 0c398e9a730707c4611540e8a1316d8fb85f5ff2 | — | — | — | — | Seal was correctly blocked before writing a committed event because the iteration metadata omitted required affected_document_ids and affected_section_ids. The content commit remains immutable; a minimal append-only successor will supply complete metadata and seal the verified delivery. |
 | 2026-08-25T21:38:02.000Z | committed | Seal verified Investor Terminal v2.4 delivery after metadata correction | ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-03 | DEC-NETWORK-PLANNING-V2-4-2026-08-26-01 | CHG-INVESTOR-TERMINAL-V2-4-2026-08-26-03 | edf007925834ded34b470e4e55108e65fd4d0226 | iteration/ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-03 | — | — | — | Seal verified Investor Terminal v2.4 delivery after metadata correction: content commit verified and linked to the governed lifecycle before sealing. |
 | 2026-08-26T14:41:00.000Z | deployed | Investor Terminal v2 accepted feature release candidate | ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01 | DEC-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01 | CHG-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01 | 9cb055dd4fac66192602c4d361b93c8e1b153b74 | iteration/ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01 | — | docs-platform/changelog/deployments/DEPLOY-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01.yaml | — | Sealed content state a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239 deployed to https://colob.spi.ski; smoke test passed. |
+| 2026-08-26T16:26:20.355Z | failed | Synchronize current canonical financial publications | ITR-FINANCIAL-PUBLICATIONS-SYNC-2026-08-26-01 | DEC-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01 | CHG-FINANCIAL-PUBLICATIONS-SYNC-2026-08-26-01 | — | — | docs-platform/changelog/google-sync/2026-08-26-DOC-FINANCIAL-MODEL.yaml | — | — | Financial Model publication passed, but Investor Summary readback failed because historical merged cells were cleared after, rather than before, the canonical value write. |
+| 2026-08-26T18:28:41.000Z | committed | Correct Investor Summary merged-cell publication ordering | ITR-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01 | DEC-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01 | CHG-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01 | fb5de422456cecbd06612ab38f0749cfa6fd1a9a | iteration/ITR-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01 | docs-platform/changelog/google-sync/2026-08-26-DOC-INVESTOR-FINANCIAL-SUMMARY-MERGE-FIX.yaml | — | — | Correct Investor Summary merged-cell publication ordering: content commit verified and linked to the governed lifecycle before sealing. |
 
 ## 3. Legacy imported history
 
@@ -111,6 +113,8 @@
 | 2026-08-20T12:38:53.000Z | ITR-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01 | deployed | — | docs-platform/changelog/deployments/DEPLOY-INVESTOR-JOURNEY-UI-CONSOLIDATION-2026-08-20-01.yaml | https://colob.spi.ski |
 | 2026-08-20T22:13:44.000Z | ITR-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01 | deployed | — | docs-platform/changelog/deployments/DEPLOY-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01.yaml | https://colob.spi.ski |
 | 2026-08-26T14:41:00.000Z | ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01 | deployed | — | docs-platform/changelog/deployments/DEPLOY-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01.yaml | https://colob.spi.ski |
+| 2026-08-26T16:26:20.355Z | ITR-FINANCIAL-PUBLICATIONS-SYNC-2026-08-26-01 | failed | docs-platform/changelog/google-sync/2026-08-26-DOC-FINANCIAL-MODEL.yaml | — | — |
+| 2026-08-26T16:31:34.975Z | ITR-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01 | verified | docs-platform/changelog/google-sync/2026-08-26-DOC-INVESTOR-FINANCIAL-SUMMARY-MERGE-FIX.yaml | — | — |
 
 ## 6. Open issues
 

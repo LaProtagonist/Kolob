@@ -1,12 +1,12 @@
 schema_version: 2
-generated_at: 2026-08-26T14:42:21.777Z
+generated_at: 2026-08-26T18:28:59.000Z
 project: Колобочная
 branch: master
-latest_timeline_event_id: EVT-ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01-DEPLOYED-DEPLOY-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01
-latest_timeline_event_hash: dc7b76519e64bcd902ad6865dac9e12fb5d226563ee0630df23d847c6f3a7c3b
-latest_closed_iteration_id: ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01
-latest_iteration_tag: iteration/ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01
-latest_content_commit_hash: 9cb055dd4fac66192602c4d361b93c8e1b153b74
+latest_timeline_event_id: EVT-ITR-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01-COMMITTED
+latest_timeline_event_hash: 1f396b3d3dad7e9e50f7cbc8b813024d58aa34af174dc5c211cda4e2320981a3
+latest_closed_iteration_id: ITR-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01
+latest_iteration_tag: iteration/ITR-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01
+latest_content_commit_hash: fb5de422456cecbd06612ab38f0749cfa6fd1a9a
 registry_hash: 3ffe84a46b66cf98fefdb6e19cc9390a46a1c1fb4ee147c325fa10774c6ab9dd
 canonical_document_hashes:
   - document_id: DOC-AGENTS
@@ -92,12 +92,12 @@ open_questions:
   - Archive pending review artifacts in durable storage before treating visual verification as portable.
   - Create deployment receipts when the next governed deployment is performed.
   - Decide whether malformed superseded legacy YAML evidence should receive a separate correction event.
-current_workstream: Investor Terminal v2 accepted feature release candidate
+current_workstream: Correct Investor Summary merged-cell publication ordering
 next_task: Select the next task through a new governed proposal; no business task is pre-authorized.
 google_integration_status:
   configured: true
-  historical_receipts: 12
-  receipts_with_machine_readback_hash: 9
+  historical_receipts: 14
+  receipts_with_machine_readback_hash: 11
   live_drift_check: not_run_by_context_build
 mcp_status:
   implementation_present: true

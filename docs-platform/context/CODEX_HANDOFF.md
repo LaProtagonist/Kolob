@@ -9,16 +9,16 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 ## 2. Текущая ветка и governed iteration
 
 - Branch: `master`.
-- Latest closed iteration: `ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01`.
-- Latest iteration tag: `iteration/ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01`.
-- Latest content commit: `9cb055dd4fac66192602c4d361b93c8e1b153b74`.
+- Latest closed iteration: `ITR-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01`.
+- Latest iteration tag: `iteration/ITR-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01`.
+- Latest content commit: `fb5de422456cecbd06612ab38f0749cfa6fd1a9a`.
 - Текущий Git HEAD намеренно не записывается: его вычисляет `npm run project:onboard`.
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01-DEPLOYED-DEPLOY-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01`.
-- Hash: `dc7b76519e64bcd902ad6865dac9e12fb5d226563ee0630df23d847c6f3a7c3b`.
-- generated_from_event_hash: `dc7b76519e64bcd902ad6865dac9e12fb5d226563ee0630df23d847c6f3a7c3b`.
+- Event: `EVT-ITR-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01-COMMITTED`.
+- Hash: `1f396b3d3dad7e9e50f7cbc8b813024d58aa34af174dc5c211cda4e2320981a3`.
+- generated_from_event_hash: `1f396b3d3dad7e9e50f7cbc8b813024d58aa34af174dc5c211cda4e2320981a3`.
 
 ## 4. Канонические документы
 
@@ -46,7 +46,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 5. Текущая рабочая тема
 
-Investor Terminal v2 accepted feature release candidate
+Correct Investor Summary merged-cell publication ordering
 
 ## 6. Decisions и change sets
 
@@ -61,7 +61,7 @@ Investor Terminal v2 accepted feature release candidate
 
 ## 8. Google / MCP / deployment
 
-- Google: `{"configured":true,"historical_receipts":12,"receipts_with_machine_readback_hash":9,"live_drift_check":"not_run_by_context_build"}`.
+- Google: `{"configured":true,"historical_receipts":14,"receipts_with_machine_readback_hash":11,"live_drift_check":"not_run_by_context_build"}`.
 - MCP: `{"implementation_present":true,"canonical_access":"registry_document_ids_only","live_status":"not_probed_by_context_build"}`.
 - Deployment: `{"status":"receipts_present","receipts":6,"production_url":null}`.
 
