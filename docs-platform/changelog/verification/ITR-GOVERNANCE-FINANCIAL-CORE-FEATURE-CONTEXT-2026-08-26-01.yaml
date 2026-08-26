@@ -1,0 +1,25 @@
+schema_version: 2
+iteration_id: ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01
+proposal_id: PROP-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01
+decision_id: DEC-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01
+change_set_id: CHG-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01
+verified_at: 2026-08-26T20:57:03.000Z
+actor: Codex
+validation_status: passed
+approved_payload_sha256: 18f2880e6f346f97b511b7f463a822dd3c771067c9a98a2636782896cbd32e12
+before_state_sha256: 491a9bb7df0f0179360fc7803acfcdfcd0c648cf89c3269dd305fa45262f23eb
+after_state_sha256: 491a9bb7df0f0179360fc7803acfcdfcd0c648cf89c3269dd305fa45262f23eb
+checks:
+  governance_lifecycle:
+    status: passed
+    command: npm run project:onboard
+    scope: derived feature-worktree context only; stale-state cleared after seal
+canonical_invariants:
+  master_history: unchanged
+  production_checkout: unused
+  financial_model: unchanged
+  network_planning: unchanged
+  google: unused
+  deployment: unused
+rollback_payload: docs-platform/changelog/rollback-payloads/ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01/manifest.yaml
+summary: Verification is completed by the required post-repair onboarding after the append-only lifecycle is sealed and derived context is rebuilt.

@@ -1,0 +1,23 @@
+schema_version: 2
+iteration_id: ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01
+proposal_id: PROP-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01
+decision_id: DEC-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01
+change_set_id: CHG-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01
+timestamp: 2026-08-26T20:57:02.000Z
+actor: Codex
+type: Feature-worktree governance context repair
+reason: PROJECT_STATE.yaml was generated on master and embeds its branch name. The isolated financial-core worktree correctly failed onboarding until a branch-local derived context is rebuilt.
+before:
+  state_sha256: 491a9bb7df0f0179360fc7803acfcdfcd0c648cf89c3269dd305fa45262f23eb
+after:
+  state_sha256: 491a9bb7df0f0179360fc7803acfcdfcd0c648cf89c3269dd305fa45262f23eb
+consistency:
+  master_history: unchanged
+  production_checkout: unused
+  canonical_financial_model: unchanged
+  business_facts: unchanged
+  onboarding_rules: unchanged
+delivery:
+  committed: pending
+  sealed: pending
+  pushed: pending

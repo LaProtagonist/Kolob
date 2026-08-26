@@ -1,0 +1,45 @@
+schema_version: 2
+payload_id: PAYLOAD-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01
+iteration_id: ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01
+proposal_id: PROP-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01
+decision_id: DEC-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01
+change_set_id: CHG-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01
+title: Register the Financial Core v2 feature-worktree context
+status: approved
+approved_by: project owner
+approved_at: 2026-08-26T20:56:00.000Z
+scope:
+  - Register feat/financial-core-consolidation-v2 as an isolated local governed worktree.
+  - Rebuild only branch-sensitive derived governance context from the append-only event chain.
+  - Preserve master, production, Google documents, financial facts and calculation behavior byte-for-byte.
+forbidden_scope:
+  - Financial model, Network Planning, Terminal, generated artifact or business-fact changes.
+  - Google operations, deployment, branch merge, history rewrite, reset, rebase or stash mutation.
+state_hash_paths:
+  - docs-platform/app/src/governance/context.ts
+content_paths:
+  - docs-platform/changes/proposals/PROP-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01.yaml
+  - docs-platform/changes/decisions/DEC-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01.yaml
+  - docs-platform/changes/CHG-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01.yaml
+  - docs-platform/changes/iterations/ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01.yaml
+  - docs-platform/changelog/payloads/ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01-approved.yaml
+  - docs-platform/changelog/audit/ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01.yaml
+  - docs-platform/changelog/previews/ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01.yaml
+  - docs-platform/changelog/change-receipts/CHG-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01.yaml
+  - docs-platform/changelog/iterations/ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01-proposed.yaml
+  - docs-platform/changelog/iterations/ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01-approved.yaml
+  - docs-platform/changelog/iterations/ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01-applied.yaml
+  - docs-platform/changelog/iterations/ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01-verified.yaml
+  - docs-platform/changelog/rollback-payloads/ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01/manifest.yaml
+  - docs-platform/changelog/events.ndjson
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+  - docs-platform/changelog/snapshots/SNAPSHOT-ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01.yaml
+allowed_dirty_paths: []
+rollback_contract:
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true

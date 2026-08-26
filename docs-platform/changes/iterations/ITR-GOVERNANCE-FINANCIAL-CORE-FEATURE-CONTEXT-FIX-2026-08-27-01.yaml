@@ -1,0 +1,62 @@
+schema_version: 2
+iteration_id: ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01
+proposal_id: PROP-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01
+decision_id: DEC-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01
+change_set_id: CHG-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01
+title: Correct Financial Core v2 feature-worktree context scope
+status: approved
+approved_by: project owner
+approved_at: 2026-08-27T00:00:01.000Z
+actor: Codex
+scope: Append-only technical successor correcting only the predecessor context iteration's incomplete content scope. It commits no financial, Terminal, Google or production change.
+approved_payload_path: docs-platform/changelog/payloads/ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01-approved.yaml
+approved_payload_sha256: e9803cfbaa3e23a1eaf369462e4cc1c8eefb63f947176fe467137137fac5db5f
+before_state_sha256: 491a9bb7df0f0179360fc7803acfcdfcd0c648cf89c3269dd305fa45262f23eb
+after_state_sha256: 491a9bb7df0f0179360fc7803acfcdfcd0c648cf89c3269dd305fa45262f23eb
+state_hash_paths:
+  - docs-platform/app/src/governance/context.ts
+affected_document_ids: []
+affected_section_ids:
+  - governance.feature-worktree-context
+  - governance.scope-guard
+content_paths:
+  - docs-platform/changes/proposals/PROP-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01.yaml
+  - docs-platform/changes/decisions/DEC-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01.yaml
+  - docs-platform/changes/CHG-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01.yaml
+  - docs-platform/changes/iterations/ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01.yaml
+  - docs-platform/changelog/payloads/ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01-approved.yaml
+  - docs-platform/changelog/audit/ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01.yaml
+  - docs-platform/changelog/previews/ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01.yaml
+  - docs-platform/changelog/change-receipts/CHG-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01.yaml
+  - docs-platform/changelog/iterations/ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01-proposed.yaml
+  - docs-platform/changelog/iterations/ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01-approved.yaml
+  - docs-platform/changelog/iterations/ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01-applied.yaml
+  - docs-platform/changelog/iterations/ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01-verified.yaml
+  - docs-platform/changelog/verification/ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01.yaml
+  - docs-platform/changelog/rollback-payloads/ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01/manifest.yaml
+  - docs-platform/changes/proposals/PROP-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01.yaml
+  - docs-platform/changes/CHG-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01.yaml
+  - docs-platform/changes/iterations/ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01.yaml
+  - docs-platform/changelog/payloads/ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01-approved.yaml
+  - docs-platform/changelog/audit/ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01.yaml
+  - docs-platform/changelog/previews/ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01.yaml
+  - docs-platform/changelog/change-receipts/CHG-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01.yaml
+  - docs-platform/changelog/iterations/ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01-proposed.yaml
+  - docs-platform/changelog/iterations/ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01-approved.yaml
+  - docs-platform/changelog/iterations/ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01-applied.yaml
+  - docs-platform/changelog/iterations/ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01-verified.yaml
+  - docs-platform/changelog/verification/ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01.yaml
+  - docs-platform/changelog/rollback-payloads/ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01/manifest.yaml
+  - docs-platform/changelog/events.ndjson
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+  - docs-platform/changelog/snapshots/SNAPSHOT-ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01.yaml
+allowed_dirty_paths: []
+rollback_payload: docs-platform/changelog/rollback-payloads/ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01/manifest.yaml
+rollback_contract:
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true

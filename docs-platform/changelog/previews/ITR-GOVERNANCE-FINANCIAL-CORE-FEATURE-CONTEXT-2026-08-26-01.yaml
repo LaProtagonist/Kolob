@@ -1,0 +1,17 @@
+schema_version: 2
+iteration_id: ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01
+decision_id: DEC-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01
+change_set_id: CHG-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01
+previewed_at: 2026-08-26T20:57:00.000Z
+status: passed
+mutation_performed: false
+planned_changes:
+  - Append feature-worktree context lifecycle evidence without modifying historical records.
+  - Rebuild derived governance context against feat/financial-core-consolidation-v2.
+invariants:
+  master_history_edited: false
+  production_checkout_used: false
+  canonical_documents_written: false
+  google_action: false
+  deployment_action: false
+  onboarding_rule_changed: false

@@ -1,0 +1,19 @@
+schema_version: 2
+change_id: CHG-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01
+iteration_id: ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01
+proposal_id: PROP-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01
+decision_id: DEC-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01
+title: Append Financial Core v2 feature-context evidence
+status: approved
+approved_payload_path: docs-platform/changelog/payloads/ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01-approved.yaml
+approved_payload_sha256: 18f2880e6f346f97b511b7f463a822dd3c771067c9a98a2636782896cbd32e12
+operations:
+  - append proposed, approved, applied and verified lifecycle evidence for the feature-worktree context
+  - regenerate branch-sensitive PROJECT_STATE, CODEX_HANDOFF and TIMELINE from append-only events
+  - preserve all canonical business and financial sources byte-for-byte
+preview:
+  status: passed
+  mutation_performed: false
+  canonical_financial_model_change: false
+  google_operation: false
+  production_or_deployment_change: false
