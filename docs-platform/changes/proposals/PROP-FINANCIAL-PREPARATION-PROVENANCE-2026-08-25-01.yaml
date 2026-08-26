@@ -1,0 +1,9 @@
+schema_version: 2
+proposal_id: PROP-FINANCIAL-PREPARATION-PROVENANCE-2026-08-25-01
+iteration_id: ITR-FINANCIAL-PREPARATION-PROVENANCE-2026-08-25-01
+title: Reconcile Financial Model preparation provenance with Ready Premises
+status: proposed
+proposed_at: 2026-08-25T00:00:00.000Z
+scope: Correct only the technical selection boundary that allowed the Ready Premises runtime subset into the full Integrated Pilot Financial Model import.
+approved_payload_path: docs-platform/changelog/payloads/ITR-FINANCIAL-PREPARATION-PROVENANCE-2026-08-25-01-approved.yaml
+approved_payload_sha256: 873364b42979eafaed47bf998ebeab880b2b74b3055c22a61ffb66a62efed4b9

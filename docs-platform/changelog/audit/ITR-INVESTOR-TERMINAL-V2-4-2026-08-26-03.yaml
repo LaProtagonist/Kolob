@@ -1,0 +1,8 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-03
+timestamp: 2026-08-26T00:12:00.000Z
+actor: Codex
+type: Append-only v2.4 seal correction
+reason: The predecessor v2.4 lifecycle omitted required affected-scope fields, so sealing was correctly blocked before a committed event was appended.
+preserved_content_commit: 0c398e9a730707c4611540e8a1316d8fb85f5ff2
+product_state_change: none

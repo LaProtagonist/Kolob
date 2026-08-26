@@ -1,0 +1,18 @@
+schema_version: 2
+change_id: CHG-FINANCIAL-PREPARATION-PROVENANCE-2026-08-25-01
+iteration_id: ITR-FINANCIAL-PREPARATION-PROVENANCE-2026-08-25-01
+proposal_id: PROP-FINANCIAL-PREPARATION-PROVENANCE-2026-08-25-01
+decision_id: DEC-FINANCIAL-PREPARATION-PROVENANCE-2026-08-25-01
+title: Repair full-baseline preparation selection in Financial Model import
+status: approved
+approved_payload_path: docs-platform/changelog/payloads/ITR-FINANCIAL-PREPARATION-PROVENANCE-2026-08-25-01-approved.yaml
+approved_payload_sha256: 873364b42979eafaed47bf998ebeab880b2b74b3055c22a61ffb66a62efed4b9
+operations:
+  - Select all enabled preparation categories only for the Financial Model's full Integrated Pilot import.
+  - Preserve the Ready Premises subset in the public Launch Budget default unchanged.
+  - Regenerate deterministic local financial and investor-summary projections.
+preview:
+  status: passed
+  mutation_performed: false
+  canonical_business_fact_change: false
+  external_operations: none

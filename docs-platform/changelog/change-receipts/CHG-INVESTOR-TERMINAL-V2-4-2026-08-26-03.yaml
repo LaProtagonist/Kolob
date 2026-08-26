@@ -1,0 +1,7 @@
+schema_version: 2
+change_id: CHG-INVESTOR-TERMINAL-V2-4-2026-08-26-03
+iteration_id: ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-03
+applied_at: 2026-08-26T00:12:00.000Z
+actor: Codex
+status: applied
+summary: Added a complete successor lifecycle without modifying the verified v2.4 content commit.

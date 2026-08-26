@@ -70,6 +70,10 @@ const EconomicsPage = lazy(() =>
   import("./components/Economics").then((module) => ({ default: module.EconomicsPage }))
 );
 
+const InvestorTerminalPage = lazy(() =>
+  import("./components/InvestorTerminal").then((module) => ({ default: module.InvestorTerminalPage }))
+);
+
 function normalizePath(pathname: string) {
   return pathname === "" ? "/" : pathname.replace(/\/+$/, "") || "/";
 }
@@ -808,6 +812,12 @@ function renderPage(path: string) {
       return (
         <Suspense fallback={<main className="plain-page"><div className="section-inner"><p>Загружается экономика объекта…</p></div></main>}>
           <EconomicsPage />
+        </Suspense>
+      );
+    case "/investor-terminal":
+      return (
+        <Suspense fallback={<main className="plain-page"><div className="section-inner"><p>Загружается терминал инвестора…</p></div></main>}>
+          <InvestorTerminalPage />
         </Suspense>
       );
     case "/404":

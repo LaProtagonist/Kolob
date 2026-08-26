@@ -1,0 +1,9 @@
+schema_version: 2
+proposal_id: PROP-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01
+iteration_id: ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01
+title: Register a feature-worktree governance context without rewriting history
+status: proposed
+proposed_at: 2026-08-23T18:11:22.000Z
+scope: Append-only repair of the derived governance context for feat/investor-terminal-v2. The repair registers the feature worktree as its own local development line; no master, production, canonical financial data or validation policy changes.
+approved_payload_path: docs-platform/changelog/payloads/ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01-approved.yaml
+approved_payload_sha256: 0c02bc8bf446f35c7382c92dafc34d59362b67d89d73f92d3fcb47378db339c7

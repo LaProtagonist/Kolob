@@ -1,0 +1,100 @@
+schema_version: 2
+payload_id: PAYLOAD-INVESTOR-TERMINAL-V2-4-2026-08-26-01
+iteration_id: ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-01
+proposal_id: PROP-INVESTOR-TERMINAL-V2-4-2026-08-26-01
+decision_id: DEC-NETWORK-PLANNING-V2-4-2026-08-26-01
+change_set_id: CHG-INVESTOR-TERMINAL-V2-4-2026-08-26-01
+title: Network Planning Model and Investor Terminal v2.4
+status: approved
+approved_by: project owner
+approved_at: 2026-08-26T00:00:00.000Z
+scope:
+  - Restore the v2.3 cohort sales and operational draft as the base of this successor iteration.
+  - Add a governed Network Planning Model and generated local snapshot without replacing the canonical integrated-pilot Financial Model.
+  - Use the existing Revenue Model and canonical salary / employer-contribution treatment for cohort sales, portions workload, roster and payroll planning.
+  - Add location type, commercial-extraction validation, direct point OPEX, planning launch allowances and a partial network operating result to Investor Terminal.
+  - Extend physical allocation metadata only for owner-approved OPEX semantics and keep MOD-WASH unpriced / unresolved for points.
+forbidden_scope:
+  - Changing canonical Financial Model business values, historic Integrated Pilot facts, 11000000 / 3500000 preparation semantics or formulas
+  - Claiming canonical point or network EBITDA, FCF, IRR, NPV, payback, capacity economics, tax model or full OPEX allocation
+  - Google access, deployment, production checkout, master or deletion of either v2.3 backup stash
+state_hash_paths:
+  - docs-platform/app/package.json
+  - docs-platform/app/src/cli.ts
+  - docs-platform/app/src/financial/financial-model.ts
+  - docs-platform/app/src/investor/network-planning.ts
+  - docs-platform/registry/decisions.yaml
+  - docs-platform/registry/documents.yaml
+  - docs-platform/registry/sources.yaml
+  - docs-platform/schemas/network-planning-assumptions.schema.json
+  - docs-platform/working/network-planning-assumptions.yaml
+  - package.json
+  - scripts/test-investor-journey.test.ts
+  - scripts/test-investor-terminal.cjs
+  - src/components/InvestorTerminal.css
+  - src/components/NetworkScalingPanel.tsx
+  - src/content/network-planning-data.json
+  - src/lib/employer-contributions.ts
+  - src/lib/investor-configuration.ts
+  - src/lib/network-planning.ts
+  - src/lib/network-scaling.ts
+  - src/lib/physical-allocation.ts
+  - src/lib/point-operations.ts
+  - src/lib/revenue-model.ts
+content_paths:
+  - docs-platform/app/package.json
+  - docs-platform/app/src/cli.ts
+  - docs-platform/app/src/financial/financial-model.ts
+  - docs-platform/app/src/investor/network-planning.ts
+  - docs-platform/registry/decisions.yaml
+  - docs-platform/registry/documents.yaml
+  - docs-platform/registry/sources.yaml
+  - docs-platform/schemas/network-planning-assumptions.schema.json
+  - docs-platform/working/network-planning-assumptions.yaml
+  - package.json
+  - scripts/test-investor-journey.test.ts
+  - scripts/test-investor-terminal.cjs
+  - src/components/InvestorTerminal.css
+  - src/components/NetworkScalingPanel.tsx
+  - src/content/network-planning-data.json
+  - src/lib/employer-contributions.ts
+  - src/lib/investor-configuration.ts
+  - src/lib/network-planning.ts
+  - src/lib/network-scaling.ts
+  - src/lib/physical-allocation.ts
+  - src/lib/point-operations.ts
+  - src/lib/revenue-model.ts
+  - docs-platform/changes/proposals/PROP-INVESTOR-TERMINAL-V2-4-2026-08-26-01.yaml
+  - docs-platform/changes/decisions/DEC-NETWORK-PLANNING-V2-4-2026-08-26-01.yaml
+  - docs-platform/changes/CHG-INVESTOR-TERMINAL-V2-4-2026-08-26-01.yaml
+  - docs-platform/changes/iterations/ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-01.yaml
+  - docs-platform/changelog/payloads/ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-01-approved.yaml
+  - docs-platform/changelog/audit/ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-01.yaml
+  - docs-platform/changelog/previews/ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-01.yaml
+  - docs-platform/changelog/change-receipts/CHG-INVESTOR-TERMINAL-V2-4-2026-08-26-01.yaml
+  - docs-platform/changelog/verification/ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-01.yaml
+  - docs-platform/changelog/rollback-payloads/ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-01/
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+  - docs-platform/changelog/snapshots/SNAPSHOT-ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-01.yaml
+allowed_dirty_paths:
+  - output/pdf/launch-budget-review.pdf
+  - output/review/launch-budget-page-full.jpg
+  - docs-platform/changelog/audit/ITR-INVESTOR-TERMINAL-V2-3-
+  - docs-platform/changelog/change-receipts/CHG-INVESTOR-TERMINAL-V2-3-
+  - docs-platform/changelog/iterations/ITR-INVESTOR-TERMINAL-V2-3-
+  - docs-platform/changelog/payloads/ITR-INVESTOR-TERMINAL-V2-3-
+  - docs-platform/changelog/previews/ITR-INVESTOR-TERMINAL-V2-3-
+  - docs-platform/changelog/rollback-payloads/ITR-INVESTOR-TERMINAL-V2-3-
+  - docs-platform/changelog/verification/ITR-INVESTOR-TERMINAL-V2-3-
+  - docs-platform/changes/CHG-INVESTOR-TERMINAL-V2-3-
+  - docs-platform/changes/decisions/DEC-INVESTOR-TERMINAL-V2-3-
+  - docs-platform/changes/iterations/ITR-INVESTOR-TERMINAL-V2-3-
+  - docs-platform/changes/proposals/PROP-INVESTOR-TERMINAL-V2-3-
+rollback_contract:
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true

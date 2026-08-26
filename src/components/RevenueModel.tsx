@@ -84,7 +84,7 @@ function SummaryMetric({ label, value }: { label: string; value: string }) {
 
 export function RevenueModelPage() {
   const model = revenueModel;
-  const { setScenarioId } = useInvestorConfiguration();
+  const { setCustomChecksPerDay, setScenarioId } = useInvestorConfiguration();
   const defaults = useMemo(() => defaultRevenueModelState(), []);
   const [state, setState] = useState<RevenueModelState>(() => {
     try {
@@ -116,6 +116,8 @@ export function RevenueModelPage() {
   function reset() {
     window.localStorage.removeItem(model.form.local_storage_key);
     setState(defaultRevenueModelState());
+    setScenarioId("realistic");
+    setCustomChecksPerDay(null);
     setCheckBreakdownOpen(false);
     setFoodBreakdownOpen(false);
     setCapacityOpen(false);
@@ -149,14 +151,19 @@ export function RevenueModelPage() {
                 <div className="revenue-scenario-control">
                   <Segmented label="Сценарий потока" value={state.trafficScenario} dataName="traffic-scenario" options={model.traffic.scenarios.map(item => ({ value: item.id, label: item.name, hint: `${item.checks_per_day} чеков в день` }))} onChange={value => {
                     const scenario = value as TrafficScenario;
-                    update("trafficScenario", scenario);
-                    setScenarioId(scenario);
+                  update("trafficScenario", scenario);
+                  setScenarioId(scenario);
+                  setCustomChecksPerDay(null);
                   }} />
                 </div>
               ) : (
                 <label className="launch-field revenue-custom-field" htmlFor="custom-checks-per-day">
                   <span>{model.public_presentation.custom_checks_label}</span>
-                  <span className="launch-input-wrap"><input id="custom-checks-per-day" inputMode="numeric" type="number" min="1" step="1" value={state.customChecksPerDay ?? ""} onChange={event => update("customChecksPerDay", event.target.value === "" ? null : Number(event.target.value))} /></span>
+                  <span className="launch-input-wrap"><input id="custom-checks-per-day" inputMode="numeric" type="number" min="1" step="1" value={state.customChecksPerDay ?? ""} onChange={event => {
+                    const checksPerDay = event.target.value === "" ? null : Number(event.target.value);
+                    update("customChecksPerDay", checksPerDay);
+                    setCustomChecksPerDay(Number.isFinite(checksPerDay) && checksPerDay !== null && checksPerDay > 0 ? Math.floor(checksPerDay) : null);
+                  }} /></span>
                   {customInvalid ? <small className="revenue-field-error" role="alert">Укажите целое положительное значение.</small> : null}
                 </label>
               )}

@@ -1,0 +1,45 @@
+schema_version: 2
+iteration_id: ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01
+proposal_id: PROP-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01
+decision_id: DEC-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01
+change_set_id: CHG-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01
+title: Register Investor Terminal feature-worktree governance context
+status: approved
+approved_by: project owner
+approved_at: 2026-08-23T18:11:23.000Z
+actor: Codex
+scope: Append-only governance repair registering feat/investor-terminal-v2 as the current local worktree context and rebuilding its derived projections only. This is distinct from the subsequent Investor Terminal v2.3 product iteration.
+approved_payload_path: docs-platform/changelog/payloads/ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01-approved.yaml
+approved_payload_sha256: 0c02bc8bf446f35c7382c92dafc34d59362b67d89d73f92d3fcb47378db339c7
+before_state_sha256: 491a9bb7df0f0179360fc7803acfcdfcd0c648cf89c3269dd305fa45262f23eb
+after_state_sha256: 491a9bb7df0f0179360fc7803acfcdfcd0c648cf89c3269dd305fa45262f23eb
+state_hash_paths:
+  - docs-platform/app/src/governance/context.ts
+affected_document_ids: []
+affected_section_ids:
+  - governance.feature-worktree-context
+  - governance.append-only-context-repair
+rollback_payload: docs-platform/changelog/rollback-payloads/ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01/manifest.yaml
+content_paths:
+  - docs-platform/changes/CHG-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01.yaml
+  - docs-platform/changes/decisions/DEC-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01.yaml
+  - docs-platform/changes/iterations/ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01.yaml
+  - docs-platform/changes/proposals/PROP-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01.yaml
+  - docs-platform/changelog/audit/ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01.yaml
+  - docs-platform/changelog/change-receipts/CHG-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01.yaml
+  - docs-platform/changelog/iterations/ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01-proposed.yaml
+  - docs-platform/changelog/iterations/ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01-approved.yaml
+  - docs-platform/changelog/iterations/ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01-applied.yaml
+  - docs-platform/changelog/iterations/ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01-verified.yaml
+  - docs-platform/changelog/payloads/ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01-approved.yaml
+  - docs-platform/changelog/previews/ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01.yaml
+  - docs-platform/changelog/rollback-payloads/ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01/manifest.yaml
+  - docs-platform/changelog/verification/ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01.yaml
+  - docs-platform/changelog/events.ndjson
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+  - docs-platform/changelog/snapshots/SNAPSHOT-ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01.yaml
+allowed_dirty_paths: []

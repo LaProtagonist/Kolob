@@ -1,0 +1,45 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-01
+proposal_id: PROP-INVESTOR-TERMINAL-V2-4-2026-08-26-01
+decision_id: DEC-NETWORK-PLANNING-V2-4-2026-08-26-01
+change_set_id: CHG-INVESTOR-TERMINAL-V2-4-2026-08-26-01
+title: Network Planning Model and Investor Terminal v2.4
+status: approved
+approved_by: project owner
+approved_at: 2026-08-26T00:00:00.000Z
+actor: Codex
+scope: Governed successor to the restored v2.3 Investor Terminal draft: Network Planning source, staffing/payroll, location economics and partial operating presentation.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-01-approved.yaml
+approved_payload_sha256: f8a10f32e2c40e80bd9316c06fe3d8b73ef5251f7b844abafd8ca0af1827dbc3
+before_state_sha256: d2fdea6af97aa1f68fedfd64fbc3927e981c201ee5bf3af01839c939bdcdbfea
+after_state_sha256: f364d3b64c1b58c521693db9569d2fbcf43d485dffcff21d44a616630c1f12d3
+state_hash_paths:
+  - docs-platform/app/package.json
+  - docs-platform/app/src/cli.ts
+  - docs-platform/app/src/financial/financial-model.ts
+  - docs-platform/app/src/investor/network-planning.ts
+  - docs-platform/registry/decisions.yaml
+  - docs-platform/registry/documents.yaml
+  - docs-platform/registry/sources.yaml
+  - docs-platform/schemas/network-planning-assumptions.schema.json
+  - docs-platform/working/network-planning-assumptions.yaml
+  - package.json
+  - scripts/test-investor-journey.test.ts
+  - scripts/test-investor-terminal.cjs
+  - src/components/InvestorTerminal.css
+  - src/components/NetworkScalingPanel.tsx
+  - src/content/network-planning-data.json
+  - src/lib/employer-contributions.ts
+  - src/lib/investor-configuration.ts
+  - src/lib/network-planning.ts
+  - src/lib/network-scaling.ts
+  - src/lib/physical-allocation.ts
+  - src/lib/point-operations.ts
+  - src/lib/revenue-model.ts
+affected_document_ids: [DOC-NETWORK-PLANNING-ASSUMPTIONS, DOC-FINANCIAL-MODEL, DOC-INVESTOR-START-MODEL]
+affected_section_ids:
+  - investor-terminal.network-planning
+  - investor-terminal.cohort-staffing-and-payroll
+  - investor-terminal.location-economics
+  - financial-model.shared-employer-contribution-treatment
+rollback_payload: docs-platform/changelog/rollback-payloads/ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-01/manifest.yaml

@@ -296,3 +296,34 @@ decisions:
     source_ids:
       - SRC-FINANCIAL-MODEL-V0-2-BRIEF-2026-08-18
     updated_at: 2026-08-19
+  - id: DEC-NETWORK-PLANNING-V2-4-2026-08-26-01
+    title: Создать planning layer сети для Investor Terminal v2.4
+    status: approved
+    decision: Создать отдельный governed Network Planning Model поверх canonical integrated-pilot Financial Model. Использовать owner-approved staffing, roster, location, OPEX, logistics и launch policy только как editable planning assumptions; отображать результат точки до центральных расходов и partial network operating result, не называя их canonical EBITDA или полной сетевой экономикой.
+    rationale: Прямое решение владельца от 2026-08-26. Existing canonical prices, formulas, historical Integrated Pilot baseline и physical allocation boundary сохраняются; новые planning values не становятся financial-model defaults.
+    affected_documents:
+      - DOC-NETWORK-PLANNING-ASSUMPTIONS
+      - DOC-FINANCIAL-MODEL
+      - DOC-INVESTOR-START-MODEL
+    approved_by: project owner
+    approved_at: 2026-08-26
+    supersedes: null
+    source_ids:
+      - SRC-NETWORK-PLANNING-V2-4-BRIEF-2026-08-26
+    updated_at: 2026-08-26
+  - id: DEC-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01
+    title: Выпустить Investor Terminal v2 в составе основного сайта
+    status: approved
+    decision: Принятую целостную feature-линию feat/investor-terminal-v2 после verification и seal штатно merge-интегрировать с актуальной production-веткой и опубликовать на https://colob.spi.ski. Investor-facing название — «Терминал инвестора»; порядок investor navigation — «Модель развития», «Материалы проекта», «Терминал инвестора», «Обсудить участие».
+    rationale: Прямое решение владельца от 2026-08-26. Не утверждает новые финансовые формулы или бизнес-допущения; release включает уже принятые runtime, state, planning и calculation dependencies feature-линии как единое целое.
+    affected_documents:
+      - DOC-NETWORK-PLANNING-ASSUMPTIONS
+      - DOC-FINANCIAL-MODEL
+      - DOC-INVESTOR-FINANCIAL-SUMMARY
+      - DOC-INVESTOR-START-MODEL
+    approved_by: project owner
+    approved_at: 2026-08-26
+    supersedes: null
+    source_ids:
+      - SRC-INVESTOR-TERMINAL-V2-RELEASE-BRIEF-2026-08-26
+    updated_at: 2026-08-26

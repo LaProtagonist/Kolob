@@ -1,0 +1,40 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-03
+proposal_id: PROP-INVESTOR-TERMINAL-V2-4-2026-08-26-03
+decision_id: DEC-NETWORK-PLANNING-V2-4-2026-08-26-01
+change_set_id: CHG-INVESTOR-TERMINAL-V2-4-2026-08-26-03
+title: Seal verified Investor Terminal v2.4 delivery after metadata correction
+status: approved
+approved_by: project owner
+approved_at: 2026-08-26T00:12:00.000Z
+actor: Codex
+scope: Append-only technical successor that seals the immutable verified v2.4 delivery after correcting missing required scope metadata in its predecessor lifecycle.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-03-approved.yaml
+approved_payload_sha256: 4d4280c3346780369eb9a07643fc7c6cd4b7eda7abf324c327ae74f0ce918edf
+before_state_sha256: f9c931dc8bdef34e9a693bba927ddd957235c1e334d2f7ff3c7041dc92ab93ee
+after_state_sha256: f9c931dc8bdef34e9a693bba927ddd957235c1e334d2f7ff3c7041dc92ab93ee
+state_hash_paths:
+  - docs-platform/changes/iterations/ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-02.yaml
+affected_document_ids:
+  - DOC-NETWORK-PLANNING-ASSUMPTIONS
+  - DOC-FINANCIAL-MODEL
+  - DOC-INVESTOR-FINANCIAL-SUMMARY
+  - DOC-INVESTOR-START-MODEL
+affected_section_ids:
+  - governance.iteration-metadata
+  - investor-terminal.network-planning
+  - financial-projections.deterministic-refresh
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+  - docs-platform/changelog/snapshots/SNAPSHOT-ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-03.yaml
+allowed_dirty_paths:
+  - output/pdf/launch-budget-review.pdf
+  - output/review/launch-budget-page-full.jpg
+rollback_payload: docs-platform/changelog/rollback-payloads/ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-03/manifest.yaml
+rollback_contract:
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true

@@ -1,0 +1,18 @@
+schema_version: 2
+change_id: CHG-INVESTOR-TERMINAL-V2-4-2026-08-26-02
+iteration_id: ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-02
+proposal_id: PROP-INVESTOR-TERMINAL-V2-4-2026-08-26-02
+decision_id: DEC-NETWORK-PLANNING-V2-4-2026-08-26-01
+title: Apply Network Planning Model and Investor Terminal v2.4 with deterministic projections
+status: approved
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-02-approved.yaml
+approved_payload_sha256: cccdeac9e8e2fe53978e3b6f5eb946b940115eee4eb8bc80805e7562853e7074
+operations:
+  - Retain the planning source, generated snapshot, runtime selectors and Investor Terminal presentation from the owner-approved v2.4 scope.
+  - Regenerate Financial Model and Investor Summary projections from unchanged canonical business data after the shared formula extraction.
+  - Preserve the partial/result boundaries and Physical Allocation semantics.
+preview:
+  status: passed
+  mutation_performed: false
+  canonical_business_fact_change: false
+  external_operations: none

@@ -8,17 +8,17 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 2. Текущая ветка и governed iteration
 
-- Branch: `master`.
-- Latest closed iteration: `ITR-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01`.
-- Latest iteration tag: `iteration/ITR-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01`.
-- Latest content commit: `2fe665af1acad113613d83e8838d86a6b1cd81d0`.
+- Branch: `feat/investor-terminal-v2`.
+- Latest closed iteration: `ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01`.
+- Latest iteration tag: `iteration/ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01`.
+- Latest content commit: `9cb055dd4fac66192602c4d361b93c8e1b153b74`.
 - Текущий Git HEAD намеренно не записывается: его вычисляет `npm run project:onboard`.
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01-DEPLOYED-DEPLOY-PUBLIC-SITE-MOBILE-RESPONSIVE-2026-08-21-01`.
-- Hash: `af4472dc2851e6c5fd077c5a776fec35c6d8d053cb4a577824e2faa49adbc836`.
-- generated_from_event_hash: `af4472dc2851e6c5fd077c5a776fec35c6d8d053cb4a577824e2faa49adbc836`.
+- Event: `EVT-ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01-COMMITTED`.
+- Hash: `44205711b76dbe30086c8c33a34cb526ef7be043f803f552925836f2737acf20`.
+- generated_from_event_hash: `44205711b76dbe30086c8c33a34cb526ef7be043f803f552925836f2737acf20`.
 
 ## 4. Канонические документы
 
@@ -37,15 +37,16 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 | DOC-FINANCIAL-MODEL | research | `docs-platform/working/financial-model.yaml` | `6a76990d3635e62ac633610754415d401edba989f1a49a463091e2cece1e329b` |
 | DOC-FOUNDATION | approved | `docs-platform/00-foundation.md` | `5b4d457184c055ba11f8c4d05cc263139d2eb4f623981bcdc198c0114a50c0bb` |
 | DOC-INVESTMENT-MEMO | proposed | `docs-platform/templates/investment-memorandum.md` | `464e46d307aaa98e57cab3a098cd639e212d32b51f82a06688de228f0e7fb4cd` |
-| DOC-INVESTOR-FINANCIAL-SUMMARY | research | `docs-platform/working/investor-financial-summary.yaml` | `0aded90fe9bf703684ac0d829bdda6d476180c2eae9a761afe6ffa3b4a7090ec` |
+| DOC-INVESTOR-FINANCIAL-SUMMARY | research | `docs-platform/working/investor-financial-summary.yaml` | `b786d62f1b04e20a11742cd0bf06f0b39299daf3b95f4bff08c0967cdc9f9d3a` |
 | DOC-INVESTOR-START-MODEL | research | `docs-platform/working/investor-start-model.yaml` | `b81a6c4e8988a4532c9ba2749d492b3f96e37d83af822396afc82930244b2985` |
+| DOC-NETWORK-PLANNING-ASSUMPTIONS | approved | `docs-platform/working/network-planning-assumptions.yaml` | `12e8220efac9c759decaa05904aaa2452e1ea6a13f5dd267670d8772b5f9a9e0` |
 | DOC-PILOT-CAPEX-ASSUMPTIONS | research | `docs-platform/working/pilot-capex-assumptions.yaml` | `25e11d4db20050b3a95cab40797ef0a29e56fad93c73d33d4a39415a8071d4ac` |
 | DOC-README | approved | `docs-platform/README.md` | `04e947f296a158a1c37ceb8d4c959d1f4e31cf609d16c99bee2d3c3b79b824ab` |
 | DOC-REVENUE-MODEL | research | `docs-platform/working/revenue-model.yaml` | `ab68399813d62d861522752c8e94df9cfc5d5a48e9b7723c60f2c968c4cba721` |
 
 ## 5. Текущая рабочая тема
 
-Release approved public-site mobile responsive corrections
+Investor Terminal v2 accepted feature release candidate
 
 ## 6. Decisions и change sets
 
@@ -60,7 +61,7 @@ Release approved public-site mobile responsive corrections
 
 ## 8. Google / MCP / deployment
 
-- Google: `{"configured":true,"historical_receipts":12,"receipts_with_machine_readback_hash":9,"live_drift_check":"not_run_by_context_build"}`.
+- Google: `{"configured":false,"historical_receipts":12,"receipts_with_machine_readback_hash":9,"live_drift_check":"not_run_by_context_build"}`.
 - MCP: `{"implementation_present":true,"canonical_access":"registry_document_ids_only","live_status":"not_probed_by_context_build"}`.
 - Deployment: `{"status":"receipts_present","receipts":5,"production_url":null}`.
 

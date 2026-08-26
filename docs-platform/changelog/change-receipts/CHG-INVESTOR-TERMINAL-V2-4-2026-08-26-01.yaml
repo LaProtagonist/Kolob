@@ -1,0 +1,10 @@
+schema_version: 2
+change_id: CHG-INVESTOR-TERMINAL-V2-4-2026-08-26-01
+iteration_id: ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-01
+status: applied
+applied_at: 2026-08-26T00:00:00.000Z
+actor: Codex
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-01-approved.yaml
+  sha256: f8a10f32e2c40e80bd9316c06fe3d8b73ef5251f7b844abafd8ca0af1827dbc3
+summary: Restored v2.3 cohort sales work now uses a governed Network Planning source for payroll, locations, direct OPEX and partial network operating presentation.

@@ -1,0 +1,29 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-01
+proposal_id: PROP-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-01
+decision_id: DEC-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-01
+change_set_id: CHG-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-01
+verified_at: 2026-08-24T21:15:58.000Z
+actor: Codex
+validation_status: passed
+approved_payload_sha256: cf23edce3d05bc35bcabd4dc1a00e6627a8809e32d8e04ecb83d8c4925ba6c11
+before_state_sha256: 38d805c991ab03069ef29ad9a9c341624f4df6fba47eac9b5bfac6ac11bf21d1
+after_state_sha256: 9d494bcf747ac909a86b34ff3e1468d2b9a77aa146ea900226fc784cc39a4cfb
+checks:
+  allocation_integrity:
+    status: passed
+    command: npm --prefix docs-platform/app exec -- tsx --test /Users/trbrmrdr/Documents/Project/Kolob/kolobochnaya-investor-terminal/scripts/test-physical-allocation-map.test.ts
+    scope: Stable source IDs, scope/driver boundaries, integrated references and absence of copied values.
+  typescript:
+    status: passed
+    command: npx tsc -b --pretty false
+    scope: Site type graph including the new typed metadata module.
+canonical_invariants:
+  financial_model: unchanged
+  preparation_reconciliation: untouched
+  investor_terminal_v2_3: untouched
+  production_checkout: unused
+  google: unused
+  deployment: unused
+rollback_payload: docs-platform/changelog/rollback-payloads/ITR-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-01/manifest.yaml
+summary: Physical allocation metadata passed targeted integrity and TypeScript checks. No browser-visible behavior or financial calculation was changed.
