@@ -103,10 +103,19 @@ test("Investor Summary preview is read-only, apply uses the approved decision an
   assert.doesNotMatch(previewBody, /files\.create|values\.batchUpdate|spreadsheets\.batchUpdate/);
   const applyBody = source.slice(source.indexOf("export async function applyInvestorSummarySheet"), source.indexOf("export async function readbackInvestorSummarySheet"));
   assert.match(applyBody, /Apply requires --apply --decision/);
-  assert.equal(INVESTOR_SUMMARY_DECISION_ID, "DEC-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01");
+  assert.equal(INVESTOR_SUMMARY_DECISION_ID, "DEC-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01");
   assert.match(source, /prior\.payload_sha256 === saved\.payload_sha256/);
   assert.match(source, /readback: "REUSED"/);
   assert.match(source, /unmergeCells/);
   assert.match(source, /getAuthorizedClient/);
   assert.doesNotMatch(source, /@google-cloud\/local-auth|new google\.auth\.OAuth2/);
+});
+
+test("Investor Summary clears historical merges before writing the payload", () => {
+  const source = fs.readFileSync(path.join(platform, "app/src/google/investor-summary-publisher.ts"), "utf8");
+  const publishBody = source.slice(source.indexOf("async function publish"), source.indexOf("export async function applyInvestorSummarySheet"));
+  const unmerge = publishBody.indexOf("await unmergeContractCells");
+  const values = publishBody.indexOf("values.batchUpdate");
+  assert.ok(unmerge >= 0, "publish must explicitly clear historical merged ranges");
+  assert.ok(values > unmerge, "merged ranges must be cleared before values.batchUpdate");
 });

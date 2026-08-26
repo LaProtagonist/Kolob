@@ -15,19 +15,26 @@ import { sha256 } from "../governance/util.js";
 import { getAuthorizedClient } from "./auth.js";
 import { loadConfig, platformRoot, writeSecretJson } from "./config.js";
 import {
+  FINANCIAL_MODEL_GOOGLE_RECEIPT_PATH,
+  FINANCIAL_PUBLICATION_CHANGE_SET_ID,
+  FINANCIAL_PUBLICATION_DECISION_ID,
+  FINANCIAL_PUBLICATION_ITERATION_ID,
+} from "./financial-publication-context.js";
+import {
   asDriveFile,
   assertKnownFile,
   driveFileFields,
   findNamedSpreadsheetsInProjectFolder,
   getProjectFolder,
 } from "./drive.js";
+import { writeYaml } from "../governance/registry.js";
 import { requireProjectFolder } from "./guard.js";
 import { SHEET_MIME, type DriveFile, type GoogleConfig } from "./types.js";
 
 export const FINANCIAL_MODEL_DOCUMENT_ID = "DOC-FINANCIAL-MODEL";
-export const FINANCIAL_MODEL_DECISION_ID = "DEC-FINANCIAL-MODEL-2026-08-16-01";
-export const FINANCIAL_MODEL_CHANGE_SET_ID = "CHG-FINANCIAL-MODEL-2026-08-16-01";
-export const FINANCIAL_MODEL_ITERATION_ID = "ITR-FINANCIAL-MODEL-2026-08-16-01";
+export const FINANCIAL_MODEL_DECISION_ID = FINANCIAL_PUBLICATION_DECISION_ID;
+export const FINANCIAL_MODEL_CHANGE_SET_ID = FINANCIAL_PUBLICATION_CHANGE_SET_ID;
+export const FINANCIAL_MODEL_ITERATION_ID = FINANCIAL_PUBLICATION_ITERATION_ID;
 export const FINANCIAL_MODEL_GOOGLE_TITLE = "04 — Финансовая модель пилотного объекта";
 export const FINANCIAL_FORMULA_INPUT_LOCALE = "en_US";
 
@@ -450,6 +457,35 @@ export async function readbackFinancialModelSheet() {
   const result = await readback(sheets, file.id, payload.sheets);
   if (saved.payload_sha256 !== sha256(fs.readFileSync(path.join(projectRoot, FINANCIAL_SHEET_PAYLOAD_PATH)))) throw new Error("Local Financial Model Google payload changed after publication.");
   if (saved.readback_hash !== result.readback_hash) throw new Error("Financial Model Google readback hash changed after publication.");
+  const receiptFile = path.join(projectRoot, FINANCIAL_MODEL_GOOGLE_RECEIPT_PATH);
+  if (fs.existsSync(receiptFile)) throw new Error("A Financial Model readback receipt already exists for this governed publication iteration.");
+  writeYaml(receiptFile, {
+    receipt_version: 1,
+    registry_id: FINANCIAL_MODEL_DOCUMENT_ID,
+    decision_id: FINANCIAL_MODEL_DECISION_ID,
+    change_set_id: FINANCIAL_MODEL_CHANGE_SET_ID,
+    iteration_id: FINANCIAL_MODEL_ITERATION_ID,
+    local_path: FINANCIAL_MODEL_PATH,
+    local_source_sha256: sha256(fs.readFileSync(path.join(projectRoot, FINANCIAL_MODEL_PATH))),
+    projection_path: FINANCIAL_SHEET_PAYLOAD_PATH,
+    payload_sha256: saved.payload_sha256,
+    content_state_sha256: payload.meta.content_state_sha256,
+    google_file_id: file.id,
+    google_mime_type: file.mimeType,
+    google_title: file.name,
+    web_view_link: file.webViewLink,
+    synced_at: new Date().toISOString(),
+    action: saved.action,
+    source_status: "research",
+    source_version: "0.2",
+    sheets: result.titles,
+    readback_hash: result.readback_hash,
+    remote_readback_sha256: result.readback_hash,
+    readback: "passed",
+    validation_status: "passed",
+    result: "passed",
+    validation: { folder_guard: "passed", native_google_sheet: true, exact_single_file: true, localized_sheet_order: "passed", formula_readback: "passed", google_checks: result.check_count, formula_errors: result.formula_errors },
+  });
   const output = { google_file_id_masked: mask(file.id), web_view_link: file.webViewLink, ...result, validation: "passed" };
   console.log(JSON.stringify(output, null, 2));
   return output;

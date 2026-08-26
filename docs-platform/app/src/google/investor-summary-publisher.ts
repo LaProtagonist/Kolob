@@ -20,6 +20,12 @@ import { sha256, writeYaml } from "../governance/util.js";
 import { getAuthorizedClient } from "./auth.js";
 import { loadConfig, platformRoot, writeSecretJson } from "./config.js";
 import {
+  FINANCIAL_PUBLICATION_DECISION_ID,
+  INVESTOR_SUMMARY_PUBLISHER_FIX_CHANGE_SET_ID,
+  INVESTOR_SUMMARY_PUBLISHER_FIX_ITERATION_ID,
+  INVESTOR_SUMMARY_PUBLISHER_FIX_RECEIPT_PATH,
+} from "./financial-publication-context.js";
+import {
   asDriveFile,
   assertKnownFile,
   driveFileFields,
@@ -30,11 +36,11 @@ import { requireProjectFolder } from "./guard.js";
 import { SHEET_MIME, type DriveFile, type GoogleConfig } from "./types.js";
 
 export const INVESTOR_SUMMARY_DOCUMENT_ID = "DOC-INVESTOR-FINANCIAL-SUMMARY";
-export const INVESTOR_SUMMARY_DECISION_ID = "DEC-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01";
-export const INVESTOR_SUMMARY_CHANGE_SET_ID = "CHG-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01";
-export const INVESTOR_SUMMARY_ITERATION_ID = "ITR-INVESTOR-FINANCIAL-SUMMARY-2026-08-16-01";
+export const INVESTOR_SUMMARY_DECISION_ID = FINANCIAL_PUBLICATION_DECISION_ID;
+export const INVESTOR_SUMMARY_CHANGE_SET_ID = INVESTOR_SUMMARY_PUBLISHER_FIX_CHANGE_SET_ID;
+export const INVESTOR_SUMMARY_ITERATION_ID = INVESTOR_SUMMARY_PUBLISHER_FIX_ITERATION_ID;
 export const INVESTOR_SUMMARY_GOOGLE_TITLE = "05 — Финансовая модель — инвестиционная сводка";
-export const INVESTOR_SUMMARY_GOOGLE_RECEIPT_PATH = "docs-platform/changelog/google-sync/2026-08-16-DOC-INVESTOR-FINANCIAL-SUMMARY-02.yaml";
+export const INVESTOR_SUMMARY_GOOGLE_RECEIPT_PATH = INVESTOR_SUMMARY_PUBLISHER_FIX_RECEIPT_PATH;
 
 const projectRoot = path.resolve(platformRoot, "..");
 const runtimePreviewPath = path.join(platformRoot, ".runtime", "investor-financial-summary-preview.json");
@@ -285,7 +291,6 @@ export function formatRequests(sheetIds: Map<string, number>, contract: Investor
     const sheetId = sheetIds.get(item.name)!;
     const rows = item.values.length;
     const columns = maximumColumns(item);
-    requests.push({ unmergeCells: { range: { sheetId, startRowIndex: 0, endRowIndex: rows, startColumnIndex: 0, endColumnIndex: columns } } });
     requests.push(repeat(sheetId, 0, rows, 0, columns, { userEnteredFormat: {} }, "userEnteredFormat"));
     requests.push({ updateSheetProperties: { properties: { sheetId, gridProperties: { frozenRowCount: item.frozen_rows, frozenColumnCount: item.frozen_columns, hideGridlines: true } }, fields: "gridProperties(frozenRowCount,frozenColumnCount,hideGridlines)" } });
     requests.push(repeat(sheetId, 0, rows, 0, columns, { userEnteredFormat: { backgroundColor: rgb("FFFFFF"), textFormat: { fontFamily: "Arial", fontSize: 10, foregroundColor: ink }, verticalAlignment: "MIDDLE", wrapStrategy: "WRAP" } }, "userEnteredFormat(backgroundColor,textFormat,verticalAlignment,wrapStrategy)"));
@@ -476,8 +481,31 @@ async function readback(sheets: sheets_v4.Sheets, spreadsheetId: string, contrac
   return { ...validateInvestorSummaryReadback(contract, actual, titles, frozen, rendered), titles };
 }
 
+async function unmergeContractCells(sheets: sheets_v4.Sheets, spreadsheetId: string, sheetIds: Map<string, number>, contract: InvestorSummarySheet[]) {
+  await sheets.spreadsheets.batchUpdate({
+    spreadsheetId,
+    requestBody: {
+      requests: contract.map(item => ({
+        unmergeCells: {
+          range: {
+            sheetId: sheetIds.get(item.name)!,
+            startRowIndex: 0,
+            endRowIndex: item.values.length,
+            startColumnIndex: 0,
+            endColumnIndex: maximumColumns(item),
+          },
+        },
+      })),
+    },
+  });
+}
+
 async function publish(drive: drive_v3.Drive, sheets: sheets_v4.Sheets, file: DriveFile, contract: InvestorSummarySheet[]) {
   const sheetIds = await ensureSheetContract(sheets, file.id, contract);
+  // Existing investor sheets can contain historical merged rows. Google only
+  // retains the top-left value when values are written into a still-merged
+  // range, so merges must be cleared before the payload write.
+  await unmergeContractCells(sheets, file.id, sheetIds, contract);
   await sheets.spreadsheets.values.batchClear({ spreadsheetId: file.id, requestBody: { ranges: contract.map(item => `'${item.name}'!A:Z`) } });
   await sheets.spreadsheets.values.batchUpdate({
     spreadsheetId: file.id,

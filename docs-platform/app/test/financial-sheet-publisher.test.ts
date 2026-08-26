@@ -81,7 +81,7 @@ test("Financial Sheet preview is read-only and apply is bound to the approved de
   assert.doesNotMatch(previewBody, /files\.create|values\.batchUpdate|spreadsheets\.batchUpdate/);
   const applyBody = source.slice(source.indexOf("export async function applyFinancialModelSheet"), source.indexOf("export async function readbackFinancialModelSheet"));
   assert.match(applyBody, /Apply requires --apply --decision \$\{FINANCIAL_MODEL_DECISION_ID\}/);
-  assert.equal(FINANCIAL_MODEL_DECISION_ID, "DEC-FINANCIAL-MODEL-2026-08-16-01");
+  assert.equal(FINANCIAL_MODEL_DECISION_ID, "DEC-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01");
   assert.match(source, /getAuthorizedClient/);
   assert.doesNotMatch(source, /@google-cloud\/local-auth|new google\.auth\.OAuth2/);
 });

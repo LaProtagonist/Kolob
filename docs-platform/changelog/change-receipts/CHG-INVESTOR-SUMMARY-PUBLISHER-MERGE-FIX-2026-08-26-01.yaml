@@ -1,0 +1,23 @@
+receipt_version: 2
+change_id: CHG-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01
+iteration_id: ITR-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01
+proposal_id: PROP-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01
+decision_id: DEC-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01
+source_change_set: docs-platform/changes/CHG-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01.yaml
+status: applied
+applied_at: 2026-08-26T16:26:53.562Z
+actor: Codex
+tool: docs-platform change:apply
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01-approved.yaml
+  sha256: 31a56fd7b898beaa949df9f3cb1f378010578effb41f5f5db32d1befd77515b7
+before_hash: 633023758c8f3622d361ee9ca0650988197c57cf90992f037e616098ec41e37e
+after_hash: 633023758c8f3622d361ee9ca0650988197c57cf90992f037e616098ec41e37e
+touched_registry_files: []
+operations: []
+validation_result: passed
+git_commit_hash: null
+rollback:
+  source_receipt: docs-platform/changelog/change-receipts/CHG-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01.yaml
+  command: npm run change:reverse:preview -- ../changelog/change-receipts/CHG-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01.yaml --change-id CHG-ROLLBACK-XXX --decision DEC-ROLLBACK-XXX
+  rollback_of: CHG-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01

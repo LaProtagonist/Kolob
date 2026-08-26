@@ -1,0 +1,59 @@
+schema_version: 2
+payload_id: PAYLOAD-FINANCIAL-PUBLICATIONS-SYNC-2026-08-26-01
+iteration_id: ITR-FINANCIAL-PUBLICATIONS-SYNC-2026-08-26-01
+proposal_id: PROP-FINANCIAL-PUBLICATIONS-SYNC-2026-08-26-01
+decision_id: DEC-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01
+change_set_id: CHG-FINANCIAL-PUBLICATIONS-SYNC-2026-08-26-01
+title: Synchronize current canonical financial publications
+status: approved
+approved_by: project owner
+approved_at: 2026-08-26T16:00:00.000Z
+scope:
+  - Regenerate and validate the current canonical Financial Model and Investor Summary projections and their supported Google Sheets payloads.
+  - Preview, update in place and read back only the registered Financial Model and Investor Financial Summary Google Sheets.
+  - Read and verify the registered CAPEX Equipment Sheet; do not alter it if its canonical source and remote representation are already current.
+constraints:
+  - Do not change financial assumptions, formulas, business facts, document identities, folders, permissions or Google Sheets schema.
+  - Do not publish Network Planning, rollout, physical allocation or rent-holiday layers through the existing Financial Model or Investor Summary schemas.
+  - Do not redesign the five-tab Investor Summary.
+  - Preserve Google comments and existing registered targets; no copies or new documents.
+publication_targets:
+  - DOC-CAPEX-EQUIPMENT-REGISTER
+  - DOC-FINANCIAL-MODEL
+  - DOC-INVESTOR-FINANCIAL-SUMMARY
+state_hash_paths:
+  - docs-platform/app/src/google/financial-publication-context.ts
+  - docs-platform/app/src/google/financial-model-publisher.ts
+  - docs-platform/app/src/google/investor-summary-publisher.ts
+  - docs-platform/app/test/financial-sheet-publisher.test.ts
+  - docs-platform/app/test/investor-financial-summary-publisher.test.ts
+  - docs-platform/generated/financial-model-projection.json
+  - docs-platform/generated/financial-google-sheets-payload.json
+  - docs-platform/generated/investor-financial-summary.json
+  - docs-platform/generated/investor-financial-summary-google-sheets-payload.json
+content_paths:
+  - docs-platform/app/src/google/financial-publication-context.ts
+  - docs-platform/app/src/google/financial-model-publisher.ts
+  - docs-platform/app/src/google/investor-summary-publisher.ts
+  - docs-platform/app/test/financial-sheet-publisher.test.ts
+  - docs-platform/app/test/investor-financial-summary-publisher.test.ts
+  - docs-platform/generated/financial-model-projection.json
+  - docs-platform/generated/financial-google-sheets-payload.json
+  - docs-platform/generated/investor-financial-summary.json
+  - docs-platform/generated/investor-financial-summary-google-sheets-payload.json
+  - docs-platform/changes/
+  - docs-platform/changelog/google-sync/
+  - docs-platform/changelog/verification/
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+allowed_dirty_paths:
+  - output/pdf/launch-budget-review.pdf
+  - output/review/launch-budget-page-full.jpg
+rollback_contract:
+  mode: governed_reverse_change_set
+  historical_events: retain_append_only
+  git_reset_forbidden: true

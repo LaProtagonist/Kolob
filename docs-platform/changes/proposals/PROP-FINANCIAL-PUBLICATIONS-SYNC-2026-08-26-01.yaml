@@ -1,0 +1,18 @@
+schema_version: 2
+proposal_id: PROP-FINANCIAL-PUBLICATIONS-SYNC-2026-08-26-01
+iteration_id: ITR-FINANCIAL-PUBLICATIONS-SYNC-2026-08-26-01
+title: Synchronize current canonical financial publications
+status: approved
+proposed_by: project owner
+proposed_at: 2026-08-26T16:00:00.000Z
+summary: Update the registered financial Google Sheets strictly from the current governed repository state and then audit the actual investor-facing representation.
+scope:
+  - CAPEX, Financial Model and Investor Summary registered Google Sheets only
+  - generated projections, supported payloads, preview, apply, readback and publication receipts
+  - no financial fact, model, permission, folder or sheet-schema change
+excludes:
+  - Investor Sheet redesign
+  - Network Planning publication through the legacy schemas
+  - new Google documents, manual Google edits and Google Cloud configuration changes
+approved_payload_path: docs-platform/changelog/payloads/ITR-FINANCIAL-PUBLICATIONS-SYNC-2026-08-26-01-approved.yaml
+approved_payload_sha256: 4d7a6b034872fb2edaefcf77f518d6b3264867c43e463f3eb28a98808b05fcbb

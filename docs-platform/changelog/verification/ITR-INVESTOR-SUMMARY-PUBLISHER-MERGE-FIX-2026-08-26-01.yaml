@@ -1,0 +1,72 @@
+receipt_version: 1
+iteration_id: ITR-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01
+decision_id: DEC-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01
+change_set_id: CHG-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01
+verified_at: 2026-08-26T16:30:00.000Z
+result: passed
+scope:
+  - Preserve the successful in-place Financial Model publication from the preceding, failed-at-Investor-readback iteration.
+  - Correct Investor Summary publisher merge ordering and verify the same registered five-tab Google Sheet.
+  - Verify CAPEX canonical source and registered target without a no-op external write.
+publication_evidence:
+  capex:
+    document_id: 1J7sHM8P2IoMfHVLEHfY-UJLIZ-HBid89G6n6BS4BSJA
+    action: previewed_no_apply
+    source_sha256: c8853fe61ad8407ab96d0fbafb79702853842f970cbf699b6c2138b23f32c7aa
+    tabs:
+      - Описание
+      - Конфигуратор
+      - Комплектация
+      - Переопределения
+      - Оснащение
+      - Модули
+      - Форматы точек
+      - Состав форматов
+      - Открытые параметры
+      - Недостающие разделы
+      - Справочники
+    rationale: Canonical CAPEX register source matched the current registered publication state; no manual or empty Google rewrite was performed.
+  financial_model:
+    document_id: 1C5rxrxCxXq6q2D3Nm5sF7CHNMVlS3FddK8hPxV8DiCk
+    receipt: docs-platform/changelog/google-sync/2026-08-26-DOC-FINANCIAL-MODEL.yaml
+    action: updated_in_place
+    readback_hash: 600e33ee49e898e5382f80a340a1c4e97397eeaf7048d514b156a67e96214ef1
+    tab_count: 16
+    formula_check_count: 11
+    formula_errors: 0
+  investor_summary:
+    document_id: 1AW-JONG-vkxCEIG_pY5SSPgsMpXLycLJAk7iY5saVus
+    receipt: docs-platform/changelog/google-sync/2026-08-26-DOC-INVESTOR-FINANCIAL-SUMMARY-MERGE-FIX.yaml
+    action: updated_in_place_after_merge_order_fix
+    readback_hash: 0184ecc77ab3ffb65f1ae915bb75e6edd8c7dc50c3a1a5f08741b13d0d23b09e
+    tab_count: 5
+    formula_errors: 0
+    key_readback: Основные показатели!B24 equals canonical raw_materials_rate 0.3.
+canonical_controls:
+  rent_per_month_rub: 350000
+  prepaid_rent_months: 12
+  deposit_months: 2
+  checks_per_day: 300
+  average_check_rub: 1165.4
+  ramp_up: [0.6, 0.7, 0.8, 0.85, 0.9, 0.95, 1]
+  seasonality: [0.75, 0.78, 0.86, 0.94, 1, 1.03, 1.08, 1.06, 1.03, 1.08, 1.12, 1.18]
+  start_investment_rub: 45370380.74
+  payback_month: 23
+  equipment_controls:
+    priced_procurement_records: 51
+    quote_required_records: 27
+    unpriced_eligible_procurement_records: 0
+checks:
+  - financial:model:check
+  - financial:sheet:check
+  - investor:summary:check
+  - investor:summary:sheet:check
+  - capex:register:validate
+  - targeted Financial and Investor Summary publisher tests: 13 passed
+publisher_correction:
+  defect: Historical merged rows were removed after values.batchUpdate, allowing Google to retain only top-left cell values.
+  correction: Remove historical merge ranges before clear/write; retain formatting merge requests after canonical values exist.
+  result: exact five-tab readback passed without formula errors.
+limitations:
+  - The existing Investor Summary schema does not publish Network Planning, sequential rollout, 5/9/13 point scenarios, location presets, physical allocation, or network temporal cash flow.
+  - Rent holidays are not a current canonical financial-model input; prepaid rent and deposit remain distinct published assumptions.

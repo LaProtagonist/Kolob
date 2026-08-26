@@ -1,0 +1,48 @@
+receipt_version: 1
+registry_id: DOC-FINANCIAL-MODEL
+decision_id: DEC-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01
+change_set_id: CHG-FINANCIAL-PUBLICATIONS-SYNC-2026-08-26-01
+iteration_id: ITR-FINANCIAL-PUBLICATIONS-SYNC-2026-08-26-01
+local_path: docs-platform/working/financial-model.yaml
+local_source_sha256: 6a76990d3635e62ac633610754415d401edba989f1a49a463091e2cece1e329b
+projection_path: docs-platform/generated/financial-google-sheets-payload.json
+payload_sha256: 7b2ea49fe221a9163f4b9c4b6242f92866b348f9b759383d13291811b032f23f
+content_state_sha256: fd595158fc5e44d8ee3d884beb4473d855b1785d8337ee22bc71ba51765edc81
+google_file_id: 1C5rxrxCxXq6q2D3Nm5sF7CHNMVlS3FddK8hPxV8DiCk
+google_mime_type: application/vnd.google-apps.spreadsheet
+google_title: 04 — Финансовая модель пилотного объекта
+web_view_link: https://docs.google.com/spreadsheets/d/1C5rxrxCxXq6q2D3Nm5sF7CHNMVlS3FddK8hPxV8DiCk/edit?usp=drivesdk
+synced_at: 2026-08-26T16:20:00.378Z
+action: reuse
+source_status: research
+source_version: "0.2"
+sheets:
+  - 01 Описание
+  - 02 Допущения
+  - 03 Продажи
+  - 04 Меню и себестоимость
+  - 05 Персонал
+  - 06 OPEX
+  - 07 CAPEX
+  - 08 P&L
+  - 09 Денежный поток
+  - 10 Инвестиции
+  - 11 Сценарии
+  - 12 Чувствительность
+  - 13 Недвижимость
+  - 14 Производственный центр
+  - 15 Источники
+  - 16 Проверки
+readback_hash: 600e33ee49e898e5382f80a340a1c4e97397eeaf7048d514b156a67e96214ef1
+remote_readback_sha256: 600e33ee49e898e5382f80a340a1c4e97397eeaf7048d514b156a67e96214ef1
+readback: passed
+validation_status: passed
+result: passed
+validation:
+  folder_guard: passed
+  native_google_sheet: true
+  exact_single_file: true
+  localized_sheet_order: passed
+  formula_readback: passed
+  google_checks: 11
+  formula_errors: 0

@@ -1,0 +1,10 @@
+change_id: CHG-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01
+title: Register Investor Summary publisher merge-order correction
+status: approved
+created_at: 2026-08-26
+decision_id: DEC-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01
+iteration_id: ITR-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01
+proposal_id: PROP-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01-approved.yaml
+approved_payload_sha256: 31a56fd7b898beaa949df9f3cb1f378010578effb41f5f5db32d1befd77515b7
+operations: []

@@ -1,0 +1,10 @@
+schema_version: 2
+proposal_id: PROP-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01
+iteration_id: ITR-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01
+title: Correct Investor Summary merged-cell publication ordering
+status: approved
+proposed_by: project owner
+proposed_at: 2026-08-26T16:24:00.000Z
+summary: Correct the observed publisher defect and complete verified synchronization of the existing Investor Summary only.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01-approved.yaml
+approved_payload_sha256: 31a56fd7b898beaa949df9f3cb1f378010578effb41f5f5db32d1befd77515b7

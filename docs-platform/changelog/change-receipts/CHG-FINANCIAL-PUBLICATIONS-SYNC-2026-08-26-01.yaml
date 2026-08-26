@@ -1,0 +1,23 @@
+receipt_version: 2
+change_id: CHG-FINANCIAL-PUBLICATIONS-SYNC-2026-08-26-01
+iteration_id: ITR-FINANCIAL-PUBLICATIONS-SYNC-2026-08-26-01
+proposal_id: PROP-FINANCIAL-PUBLICATIONS-SYNC-2026-08-26-01
+decision_id: DEC-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01
+source_change_set: docs-platform/changes/CHG-FINANCIAL-PUBLICATIONS-SYNC-2026-08-26-01.yaml
+status: applied
+applied_at: 2026-08-26T16:15:21.599Z
+actor: Codex
+tool: docs-platform change:apply
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-FINANCIAL-PUBLICATIONS-SYNC-2026-08-26-01-approved.yaml
+  sha256: 4d7a6b034872fb2edaefcf77f518d6b3264867c43e463f3eb28a98808b05fcbb
+before_hash: 633023758c8f3622d361ee9ca0650988197c57cf90992f037e616098ec41e37e
+after_hash: 633023758c8f3622d361ee9ca0650988197c57cf90992f037e616098ec41e37e
+touched_registry_files: []
+operations: []
+validation_result: passed
+git_commit_hash: null
+rollback:
+  source_receipt: docs-platform/changelog/change-receipts/CHG-FINANCIAL-PUBLICATIONS-SYNC-2026-08-26-01.yaml
+  command: npm run change:reverse:preview -- ../changelog/change-receipts/CHG-FINANCIAL-PUBLICATIONS-SYNC-2026-08-26-01.yaml --change-id CHG-ROLLBACK-XXX --decision DEC-ROLLBACK-XXX
+  rollback_of: CHG-FINANCIAL-PUBLICATIONS-SYNC-2026-08-26-01

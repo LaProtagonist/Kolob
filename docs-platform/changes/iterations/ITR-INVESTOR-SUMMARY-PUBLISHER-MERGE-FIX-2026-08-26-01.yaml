@@ -1,0 +1,58 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01
+proposal_id: PROP-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01
+decision_id: DEC-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01
+change_set_id: CHG-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01
+title: Correct Investor Summary merged-cell publication ordering
+status: approved
+approved_by: project owner
+approved_at: 2026-08-26T16:24:00.000Z
+actor: Codex
+scope: Correct the verified historical-merge write defect and publish/read back the existing Investor Summary without changing financial content or structure.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01-approved.yaml
+approved_payload_sha256: 31a56fd7b898beaa949df9f3cb1f378010578effb41f5f5db32d1befd77515b7
+before_state_sha256: d72eac04bb3538300879a29de9d1fcd8a6a6a1f7482d58e2f121725d9ded5a99
+after_state_sha256: 360daee878a6201f63e23c3986e8e98c19453e8c8eaffb1c3f20b196cbe3f2c2
+affected_document_ids:
+  - DOC-INVESTOR-FINANCIAL-SUMMARY
+affected_section_ids:
+  - investor-summary.google-representation
+  - investor-summary.publisher.merge-order
+state_hash_paths:
+  - docs-platform/app/src/google/financial-publication-context.ts
+  - docs-platform/app/src/google/financial-model-publisher.ts
+  - docs-platform/app/src/google/investor-summary-publisher.ts
+  - docs-platform/app/test/financial-sheet-publisher.test.ts
+  - docs-platform/app/test/investor-financial-summary-publisher.test.ts
+  - docs-platform/generated/financial-model-projection.json
+  - docs-platform/generated/financial-google-sheets-payload.json
+  - docs-platform/generated/investor-financial-summary.json
+  - docs-platform/generated/investor-financial-summary-google-sheets-payload.json
+content_paths:
+  - docs-platform/app/src/google/financial-publication-context.ts
+  - docs-platform/app/src/google/financial-model-publisher.ts
+  - docs-platform/app/src/google/investor-summary-publisher.ts
+  - docs-platform/app/test/financial-sheet-publisher.test.ts
+  - docs-platform/app/test/investor-financial-summary-publisher.test.ts
+  - docs-platform/generated/financial-model-projection.json
+  - docs-platform/generated/financial-google-sheets-payload.json
+  - docs-platform/generated/investor-financial-summary.json
+  - docs-platform/generated/investor-financial-summary-google-sheets-payload.json
+  - docs-platform/changes/
+  - docs-platform/changelog/changes.log
+  - docs-platform/changelog/2026-08-26T16-15-21-599Z-CHG-FINANCIAL-PUBLICATIONS-SYNC-2026-08-26-01.md
+  - docs-platform/changelog/2026-08-26T16-26-53-562Z-CHG-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01.md
+  - docs-platform/changelog/change-receipts/
+  - docs-platform/changelog/google-sync/
+  - docs-platform/changelog/payloads/
+  - docs-platform/changelog/verification/
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+allowed_dirty_paths:
+  - output/pdf/launch-budget-review.pdf
+  - output/review/launch-budget-page-full.jpg
+rollback_payload: null
