@@ -1,0 +1,10 @@
+schema_version: 2
+proposal_id: PROP-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-01
+iteration_id: ITR-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-01
+title: Consolidate Network P&L and FCF through the shared financial core
+status: approved
+proposed_by: project owner
+proposed_at: 2026-08-27T00:31:00.000Z
+summary: Phase B2 of Financial Documents v2: consolidate Current Base, Network Expansion and Consolidated Network onto shared P&L/FCF primitives while preserving Historical Integrated Pilot and accepted Current Base controls.
+approved_payload_path: docs-platform/changelog/payloads/ITR-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-01-approved.yaml
+approved_payload_sha256: 097c8fd2eb32ca451e8f3b27f05e81429adc99b2d730d2053695baca8230efc6

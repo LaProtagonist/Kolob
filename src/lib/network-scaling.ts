@@ -1,5 +1,13 @@
 import { buildCapexRows, capexData, emptyCapexParameters, type ComputedCapexRow } from "./capex-runtime";
-import type { ConfiguredEconomicsScenario } from "./configured-economics";
+import { configuredFinancialPolicy, type ConfiguredEconomicsScenario } from "./configured-economics";
+import {
+  buildNetworkSteadyState,
+  combineBaseAndExpansionPnl,
+  sharedNetworkOpexForActivePoints,
+  type BaseFinancialLayerInput,
+  type NetworkFinancialExclusion,
+} from "./network-financial-core";
+import type { FinancialCoverage } from "./financial-core";
 import type { InvestorConfiguration, TradingPointCohort, TradingPointFormat } from "./investor-configuration";
 import { calculateLaunchBudget, calculateSeatCount, launchModel, type LaunchBudgetState } from "./launch-budget";
 import { pointOperationalProjection, type PointOperationalProjection } from "./point-operations";
@@ -7,11 +15,8 @@ import { pointPreparationProjection } from "./point-preparation";
 import { findPhysicalAllocation, type PhysicalScope } from "./physical-allocation";
 import {
   canonicalPointOpexConstants,
-  logisticsPlanning,
   networkPlanningLaunchConstants,
   networkBarEquipmentRules,
-  productionStaffingProjection,
-  sharedManagerPayrollProjection,
   type PayrollProjection,
 } from "./network-planning";
 
@@ -29,7 +34,7 @@ export type NetworkScalingItem = {
   source: string;
   reason: string;
   partial?: boolean;
-  detail?: Array<{ id: string; name: string; amountRub: number | null; quantity: number | null }>;
+  detail?: Array<{ id: string; name: string; amountRub: number | null; quantity: number | null; moduleIds?: string[] }>;
 };
 
 export type NetworkPointCohortProjection = {
@@ -128,14 +133,9 @@ export type NetworkScalingProjection = {
   planningLaunch: NetworkPlanningLaunchSummary;
 };
 
-export type BaseObjectFinancialProjection = {
-  investmentRub: number;
-  revenueRub: number;
-  opexRub: number;
+export type BaseObjectFinancialProjection = BaseFinancialLayerInput & {
+  /** Backward-compatible investor-facing alias for EBITDA. */
   operatingResultRub: number;
-  cashFlowRub: number;
-  paybackMonth: number | null;
-  operatingReserveRub: number | null;
 };
 
 /**
@@ -145,14 +145,22 @@ export type BaseObjectFinancialProjection = {
  */
 export function baseObjectFinancialProjection(
   scenario: Pick<ConfiguredEconomicsScenario,
-    "startInvestmentRub" | "salesPerMonthRub" | "ebitdaRub" | "freeCashFlowRub" | "paybackMonth" | "operatingReserveRub"
+    "context" | "startInvestmentRub" | "salesPerMonthRub" | "ebitdaRub" | "freeCashFlowRub" | "paybackMonth" | "operatingReserveRub" | "pnl"
   >,
 ): BaseObjectFinancialProjection {
+  const maintenanceCapexRub = scenario.ebitdaRub - scenario.pnl.taxRub - scenario.freeCashFlowRub;
   return {
+    context: scenario.context,
     investmentRub: scenario.startInvestmentRub,
     revenueRub: scenario.salesPerMonthRub,
+    netRevenueRub: scenario.pnl.salesRub,
     opexRub: scenario.salesPerMonthRub - scenario.ebitdaRub,
+    ebitdaRub: scenario.ebitdaRub,
     operatingResultRub: scenario.ebitdaRub,
+    taxRub: scenario.pnl.taxRub,
+    depreciationRub: scenario.pnl.depreciationRub,
+    maintenanceCapexRub,
+    operatingFreeCashFlowRub: scenario.freeCashFlowRub,
     cashFlowRub: scenario.freeCashFlowRub,
     paybackMonth: scenario.paybackMonth,
     operatingReserveRub: scenario.operatingReserveRub,
@@ -160,7 +168,10 @@ export function baseObjectFinancialProjection(
 }
 
 export type NetworkEconomicsProjection = {
-  status: "complete" | "partial" | "unset";
+  status: "complete" | "partial" | "invalid";
+  coverage: FinancialCoverage;
+  warnings: string[];
+  exclusions: NetworkFinancialExclusion[];
   expansion: {
     additionalPointCount: number;
     pointInvestmentRub: number;
@@ -173,6 +184,10 @@ export type NetworkEconomicsProjection = {
     sharedOpexRub: number | null;
     opexRub: number | null;
     operatingResultRub: number | null;
+    taxRub: number | null;
+    depreciationRub: number | null;
+    maintenanceCapexRub: number | null;
+    operatingFreeCashFlowRub: number | null;
     cashFlowRub: number | null;
     paybackMonths: number | null;
     incompletePointCohortCount: number;
@@ -183,6 +198,10 @@ export type NetworkEconomicsProjection = {
     revenueRub: number | null;
     opexRub: number | null;
     operatingResultRub: number | null;
+    taxRub: number | null;
+    depreciationRub: number | null;
+    maintenanceCapexRub: number | null;
+    operatingFreeCashFlowRub: number | null;
     cashFlowRub: number | null;
     paybackMonths: number | null;
   };
@@ -337,6 +356,7 @@ function groupEquipment(id: string, name: string, ownership: NetworkOwnership, r
       name: investorEquipmentName(row.item.id, row.item.name),
       amountRub: row.lineTotal,
       quantity: row.quantity,
+      moduleIds: [...row.moduleIds],
     })),
   };
 }
@@ -639,54 +659,36 @@ function networkOperatingSummary(
   const pointContributionRub = directIncomplete
     ? null
     : additionalCohorts.reduce((total, cohort) => total + (cohort.directOpex.operatingContributionCohortRub ?? 0), 0);
-  const productionPayroll = productionStaffingProjection(sales.checksPerDay, configuration.networkScaling.productionSchedule);
   const baseChecksPerDay = cohorts[0]?.operational.sales.checksPerDay ?? null;
-  const baseProductionPayroll = baseChecksPerDay === null
+  const shared = sharedNetworkOpexForActivePoints(configuration, {
+    totalPointCount,
+    additionalPointCount: additionalCohorts.reduce((total, cohort) => total + cohort.cohort.count, 0),
+    totalChecksPerDay: sales.checksPerDay,
+    baseChecksPerDay,
+  });
+  const operatingContributionRub = pointContributionRub === null || shared.sharedExpansionOpexRub === null
     ? null
-    : productionStaffingProjection(baseChecksPerDay, configuration.networkScaling.productionSchedule);
-  const expansionProductionPayrollRub = baseProductionPayroll === null
-    ? null
-    : Math.max(0, productionPayroll.totalPayrollRub - baseProductionPayroll.totalPayrollRub);
-  const managerPayroll = sharedManagerPayrollProjection(totalPointCount);
-  const baseManagerPayroll = sharedManagerPayrollProjection(cohorts[0]?.cohort.count ?? 0);
-  const expansionManagerPayrollRub = managerPayroll === null
-    ? 0
-    : Math.max(0, managerPayroll.totalPayrollRub - (baseManagerPayroll?.totalPayrollRub ?? 0));
-  const logistics = logisticsPlanning(totalPointCount);
-  const settings = configuration.networkScaling.logistics;
-  const logisticsMode = settings.mode === "auto"
-    ? logistics.ownsVehicleSuggested ? "own" : "external"
-    : settings.mode;
-  const logisticsRub = logisticsMode === "own"
-    ? settings.ownedMonthlyTotalRub ?? logistics.ownedMonthlyTotalRub
-    : settings.externalMonthlyRub ?? logistics.externalMonthlyRub;
-  const expansionFixedMarketingRub = 0;
-  const sharedExpansionOpexRub = expansionProductionPayrollRub === null || logisticsRub === null
-    ? null
-    : expansionProductionPayrollRub + expansionManagerPayrollRub + expansionFixedMarketingRub + logisticsRub;
-  const operatingContributionRub = pointContributionRub === null || sharedExpansionOpexRub === null
-    ? null
-    : pointContributionRub - sharedExpansionOpexRub;
+    : pointContributionRub - shared.sharedExpansionOpexRub;
   const totalRosterHeadcount = cohorts.reduce((total, cohort) => total + cohort.operational.staffing.rosterHeadcount * cohort.cohort.count, 0)
-    + productionPayroll.rosterHeadcount + (managerPayroll?.rosterHeadcount ?? 0);
-  const partial = directIncomplete || logisticsRub === null || sales.status !== "complete";
+    + (shared.productionPayroll?.rosterHeadcount ?? 0) + (shared.managerPayroll?.rosterHeadcount ?? 0);
+  const partial = directIncomplete || shared.logisticsRub === null || sales.status !== "complete";
   return {
     status: partial ? "partial" : "complete",
     pointDirectOpexRub,
     pointContributionRub,
-    productionPayroll,
-    baseProductionPayroll,
-    expansionProductionPayrollRub,
-    managerPayroll,
-    expansionManagerPayrollRub,
-    fixedMarketingRub: canonicalPointOpexConstants().marketingFixedMonthlyRub,
-    expansionFixedMarketingRub,
-    logisticsRub,
-    sharedExpansionOpexRub,
+    productionPayroll: shared.productionPayroll,
+    baseProductionPayroll: shared.baseProductionPayroll,
+    expansionProductionPayrollRub: shared.expansionProductionPayrollRub,
+    managerPayroll: shared.managerPayroll,
+    expansionManagerPayrollRub: shared.expansionManagerPayrollRub,
+    fixedMarketingRub: shared.fixedMarketingRub,
+    expansionFixedMarketingRub: shared.expansionFixedMarketingRub,
+    logisticsRub: shared.logisticsRub,
+    sharedExpansionOpexRub: shared.sharedExpansionOpexRub,
     operatingContributionRub,
     totalRosterHeadcount,
-    logisticsMode,
-    logisticsVehicleCapexRub: logisticsMode === "own" ? settings.ownedVehicleCapexRub ?? logistics.vehicleCapexRub : null,
+    logisticsMode: shared.logisticsMode,
+    logisticsVehicleCapexRub: shared.logisticsVehicleCapexRub,
     incompletePointCohortCount,
     note: partial
       ? "Предварительный расчёт: известная часть расходов показана отдельно от условий, которые ещё нужно уточнить."
@@ -841,18 +843,15 @@ export function networkScalingProjection(configuration: InvestorConfiguration): 
     productionInvestmentRub,
     confirmedPointInvestmentRub,
     confirmedInvestmentSubtotalRub: productionInvestmentRub + confirmedPointInvestmentRub,
-    isPartial: true,
+    isPartial: unresolvedItems.some((item) => item.amountRub === null || item.partial === true)
+      || cohorts.some((cohort) => cohort.isPartial || cohort.directOpex.isPartial),
     capacityNote: "При росте сети потребуется проверить, хватает ли мощности текущего производства.",
     contingencyNote: "Резерв запуска пока не включён: его текущая база смешивает включённые и требующие уточнения статьи.",
-    reserveNote: "Операционный запас расширения рассчитывается из известных ежемесячных расходов дополнительных точек.",
+    reserveNote: "Операционный запас расширения рассчитывается из известной recurring Point + Production + Shared OPEX; налоги и CAPEX в него не входят.",
     sales,
     operating,
     planningLaunch: networkPlanningLaunchSummary(cohorts, operating),
   };
-}
-
-function knownAdditionalRevenue(cohorts: NetworkPointCohortProjection[]) {
-  return cohorts.slice(1).reduce((total, cohort) => total + (cohort.operational.sales.revenueCohortRub ?? 0), 0);
 }
 
 function stableMonthlyPayback(investmentRub: number | null, cashFlowRub: number | null) {
@@ -861,65 +860,56 @@ function stableMonthlyPayback(investmentRub: number | null, cashFlowRub: number 
 }
 
 /**
- * Combines the immutable configured Base Object result with incremental network
- * planning outputs. The base is never rebuilt here; this adapter only adds the
- * additional groups, their reserve and their shared infrastructure.
+ * Combines the immutable configured Base Object with the structured expansion
+ * P&L. Network tax is recalculated from the consolidated revenue and eligible
+ * OPEX rather than summing independently presented tax cards.
  */
 export function networkEconomicsProjection(
   configuration: InvestorConfiguration,
   baseObject: BaseObjectFinancialProjection,
+  suppliedScaling = networkScalingProjection(configuration),
 ): NetworkEconomicsProjection {
-  const scaling = networkScalingProjection(configuration);
-  const additionalCohorts = scaling.cohorts.slice(1);
-  const additionalPointCount = additionalCohorts.reduce((total, cohort) => total + cohort.cohort.count, 0);
-  const pointInvestmentRub = additionalCohorts.reduce((total, cohort) => total + cohort.confirmedCohortInvestmentRub, 0);
-  const sharedInfrastructureRub = sumKnown(scaling.sharedItems);
-  const reserveMonths = configuration.launchBudget.operatingReserveMonths;
-  const operatingReserveRub = scaling.operating.pointDirectOpexRub === null
-    ? null
-    : scaling.operating.pointDirectOpexRub * reserveMonths;
-  const investmentRub = operatingReserveRub === null
-    ? null
-    : pointInvestmentRub + sharedInfrastructureRub + operatingReserveRub;
-  const revenueRub = knownAdditionalRevenue(scaling.cohorts);
-  const directOpexRub = scaling.operating.pointDirectOpexRub;
-  const sharedOpexRub = scaling.operating.sharedExpansionOpexRub;
-  const opexRub = directOpexRub === null || sharedOpexRub === null ? null : directOpexRub + sharedOpexRub;
-  const operatingResultRub = opexRub === null ? null : revenueRub - opexRub;
-  const status = scaling.operating.status;
-  const expansionCashFlowRub = operatingResultRub;
-  const expansion = {
-    additionalPointCount,
-    pointInvestmentRub,
-    sharedInfrastructureRub,
-    operatingReserveRub,
-    reserveMonths,
-    investmentRub,
-    revenueRub: scaling.sales.status === "unset" ? null : revenueRub,
-    directOpexRub,
-    sharedOpexRub,
-    opexRub,
-    operatingResultRub,
-    cashFlowRub: expansionCashFlowRub,
-    paybackMonths: stableMonthlyPayback(investmentRub, expansionCashFlowRub),
-    incompletePointCohortCount: scaling.operating.incompletePointCohortCount,
-  };
-  const networkInvestmentRub = investmentRub === null ? null : baseObject.investmentRub + investmentRub;
-  const networkRevenueRub = expansion.revenueRub === null ? null : baseObject.revenueRub + expansion.revenueRub;
-  const networkOpexRub = expansion.opexRub === null ? null : baseObject.opexRub + expansion.opexRub;
-  const networkOperatingResultRub = expansion.operatingResultRub === null ? null : baseObject.operatingResultRub + expansion.operatingResultRub;
-  const networkCashFlowRub = expansion.cashFlowRub === null ? null : baseObject.cashFlowRub + expansion.cashFlowRub;
+  const policy = configuredFinancialPolicy(configuration.scenarioId);
+  const expansionState = buildNetworkSteadyState(configuration, suppliedScaling, policy);
+  const networkPnl = combineBaseAndExpansionPnl(baseObject, expansionState, policy);
+  const networkInvestmentRub = expansionState.investmentRub === null ? null : baseObject.investmentRub + expansionState.investmentRub;
   return {
-    status,
-    expansion,
+    status: expansionState.status,
+    coverage: expansionState.coverage,
+    warnings: expansionState.warnings,
+    exclusions: expansionState.exclusions,
+    expansion: {
+      additionalPointCount: expansionState.additionalPointCount,
+      pointInvestmentRub: expansionState.pointInvestmentRub,
+      sharedInfrastructureRub: expansionState.sharedInfrastructureRub,
+      operatingReserveRub: expansionState.operatingReserveRub,
+      reserveMonths: expansionState.reserveMonths,
+      investmentRub: expansionState.investmentRub,
+      revenueRub: expansionState.pnl.revenueRub,
+      directOpexRub: expansionState.directOpexRub,
+      sharedOpexRub: expansionState.sharedOpexRub,
+      opexRub: expansionState.pnl.opexRub,
+      operatingResultRub: expansionState.pnl.ebitdaRub,
+      taxRub: expansionState.pnl.taxRub,
+      depreciationRub: expansionState.pnl.depreciationRub,
+      maintenanceCapexRub: expansionState.pnl.maintenanceCapexRub,
+      operatingFreeCashFlowRub: expansionState.pnl.operatingFreeCashFlowRub,
+      cashFlowRub: expansionState.pnl.operatingFreeCashFlowRub,
+      paybackMonths: expansionState.paybackMonths,
+      incompletePointCohortCount: suppliedScaling.operating.incompletePointCohortCount,
+    },
     network: {
-      pointCount: configuration.networkScaling.cohorts.reduce((total, cohort) => total + cohort.count, 0),
+      pointCount: suppliedScaling.cohorts.reduce((total, cohort) => total + cohort.cohort.count, 0),
       investmentRub: networkInvestmentRub,
-      revenueRub: networkRevenueRub,
-      opexRub: networkOpexRub,
-      operatingResultRub: networkOperatingResultRub,
-      cashFlowRub: networkCashFlowRub,
-      paybackMonths: stableMonthlyPayback(networkInvestmentRub, networkCashFlowRub),
+      revenueRub: networkPnl.revenueRub,
+      opexRub: networkPnl.opexRub,
+      operatingResultRub: networkPnl.ebitdaRub,
+      taxRub: networkPnl.taxRub,
+      depreciationRub: networkPnl.depreciationRub,
+      maintenanceCapexRub: networkPnl.maintenanceCapexRub,
+      operatingFreeCashFlowRub: networkPnl.operatingFreeCashFlowRub,
+      cashFlowRub: networkPnl.operatingFreeCashFlowRub,
+      paybackMonths: stableMonthlyPayback(networkInvestmentRub, networkPnl.operatingFreeCashFlowRub),
     },
   };
 }

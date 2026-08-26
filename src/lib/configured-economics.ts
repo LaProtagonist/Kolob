@@ -74,6 +74,20 @@ export type ConfiguredEconomicsScenario = Omit<EconomicsScenario, "paybackMonth"
   monthlyProjection: ConfiguredMonthlyProjection[];
 };
 
+/**
+ * Financial policy is derived from the governed generated Financial Model,
+ * rather than copied into Network Planning or a browser component.
+ */
+export type ConfiguredFinancialPolicy = {
+  taxRules: {
+    regularUsnRate: number;
+    minimumUsnRate: number;
+  };
+  maintenanceAnnualRate: number;
+  discountRateAnnual: number;
+  vatStatus: "current_baseline_requires_confirmation";
+};
+
 function calculationInputsEqual(left: InvestorConfiguration["launchBudget"], right: InvestorConfiguration["launchBudget"]) {
   return left.premisesScenario === right.premisesScenario
     && left.purchasePriceRub === right.purchasePriceRub
@@ -125,6 +139,22 @@ function referenceRates(master: FinancialScenario) {
     regularUsnRate: detail.regular_usn_rub / detail.taxable_base_management_proxy_rub,
     minimumUsnRate: minimum.minimum_usn_rub / minimum.net_revenue_rub,
     cashPayrollRub: master.staffing.payroll_rub + master.staffing.employer_contributions_rub,
+  };
+}
+
+export function configuredFinancialPolicy(id: InvestorScenarioId): ConfiguredFinancialPolicy {
+  const master = financialProjection.scenarios.rent[id];
+  const rates = referenceRates(master);
+  const maintenanceBasisRub = master.capex.equipment_rub + master.capex.furniture_rub;
+  if (maintenanceBasisRub <= 0) throw new Error("Configured economics cannot derive the canonical maintenance basis.");
+  return {
+    taxRules: {
+      regularUsnRate: rates.regularUsnRate,
+      minimumUsnRate: rates.minimumUsnRate,
+    },
+    maintenanceAnnualRate: master.maintenance_capex_rub * 12 / maintenanceBasisRub,
+    discountRateAnnual: investorSummary.assumptions.discount_rate,
+    vatStatus: "current_baseline_requires_confirmation",
   };
 }
 

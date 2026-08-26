@@ -42,6 +42,8 @@
     "financial:model:validate": "npm --prefix docs-platform/app run financial:model:validate",
     "financial:model:sync": "npm --prefix docs-platform/app run financial:model:sync",
     "financial:model:check": "npm --prefix docs-platform/app run financial:model:check",
+    "financial:core:sync": "node docs-platform/app/node_modules/tsx/dist/cli.mjs scripts/generate-financial-core-projection.ts",
+    "financial:core:check": "node docs-platform/app/node_modules/tsx/dist/cli.mjs scripts/generate-financial-core-projection.ts --check",
     "financial:sheet:payload": "npm --prefix docs-platform/app run financial:sheet:payload",
     "financial:sheet:check": "npm --prefix docs-platform/app run financial:sheet:check",
     "financial:sheet:preview": "npm --prefix docs-platform/app run financial:sheet:preview",

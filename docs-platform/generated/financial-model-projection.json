@@ -21,7 +21,7 @@
         },
         {
           "path": "docs-platform/app/src/financial/financial-model.ts",
-          "sha256": "452fab1981758e74277fb0f03425632c76574802cafcffd3592085cc933bb70d"
+          "sha256": "9583ee44a7dac6061b4096f824888747d5e69c3f2d134e54073886abdef7dbf7"
         },
         {
           "path": "docs-platform/app/src/financial/google-sheet.ts",
@@ -52,11 +52,15 @@
           "sha256": "69109c7cc1e45cdc32937e99620f4dd5cd48ec861fbe209a1b1196c2c3626a8a"
         },
         {
+          "path": "src/lib/financial-assets.ts",
+          "sha256": "76a979397b25aa246ae8400656bc87ae4595209cf2ef72a0d0abc931abb840f6"
+        },
+        {
           "path": "src/lib/launch-budget.ts",
           "sha256": "d9234af629a60c19207312c88b91dfc69c5891cb88eec098bd95fc9e534a7969"
         }
       ],
-      "content_state_sha256": "fd595158fc5e44d8ee3d884beb4473d855b1785d8337ee22bc71ba51765edc81"
+      "content_state_sha256": "57d4e47a4490b1e7a52db9a5a74952d8409883d52a4947b6f1383c30577e68ea"
     },
     "imported_revenue_content_state_sha256": "90727a6c51f959b617d6c972b898593a1b6dba6742d51b30bb75230f3f606c38",
     "imported_capex_content_state_sha256": "a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239",
@@ -481,17 +485,65 @@
         "mapping_status": "mapped"
       },
       {
-        "item_id": "PREP-ENGINEERING",
-        "name": "Инженерные системы подготовки помещения",
-        "amount_rub": 4900000,
+        "item_id": "PREP-BUILDING",
+        "name": "Общестроительная адаптация",
+        "amount_rub": 3000000,
+        "category": "FIT_OUT",
+        "useful_life_years": 7,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "PREP-ELECTRICAL",
+        "name": "Электроснабжение",
+        "amount_rub": 1200000,
         "category": "ENGINEERING",
         "useful_life_years": 10,
         "mapping_status": "mapped"
       },
       {
-        "item_id": "PREP-FIT-OUT",
-        "name": "Подготовка помещения / fit-out",
-        "amount_rub": 6100000,
+        "item_id": "PREP-WATER-DRAINAGE",
+        "name": "Водоснабжение и канализация",
+        "amount_rub": 800000,
+        "category": "ENGINEERING",
+        "useful_life_years": 10,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "PREP-VENTILATION",
+        "name": "Приточно-вытяжная вентиляция",
+        "amount_rub": 2500000,
+        "category": "ENGINEERING",
+        "useful_life_years": 10,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "PREP-LIGHTING",
+        "name": "Освещение",
+        "amount_rub": 400000,
+        "category": "ENGINEERING",
+        "useful_life_years": 10,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "PREP-GUEST-AREA",
+        "name": "Подготовка торгового зала",
+        "amount_rub": 800000,
+        "category": "FIT_OUT",
+        "useful_life_years": 7,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "PREP-BUILT-IN",
+        "name": "Стойки и встроенная мебель",
+        "amount_rub": 1300000,
+        "category": "FIT_OUT",
+        "useful_life_years": 7,
+        "mapping_status": "mapped"
+      },
+      {
+        "item_id": "PREP-DESIGN",
+        "name": "Проектирование и согласования",
+        "amount_rub": 1000000,
         "category": "FIT_OUT",
         "useful_life_years": 7,
         "mapping_status": "mapped"
@@ -2817,17 +2869,65 @@
               "mapping_status": "mapped"
             },
             {
-              "item_id": "PREP-ENGINEERING",
-              "name": "Инженерные системы подготовки помещения",
-              "amount_rub": 4900000,
+              "item_id": "PREP-BUILDING",
+              "name": "Общестроительная адаптация",
+              "amount_rub": 3000000,
+              "category": "FIT_OUT",
+              "useful_life_years": 7,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-ELECTRICAL",
+              "name": "Электроснабжение",
+              "amount_rub": 1200000,
               "category": "ENGINEERING",
               "useful_life_years": 10,
               "mapping_status": "mapped"
             },
             {
-              "item_id": "PREP-FIT-OUT",
-              "name": "Подготовка помещения / fit-out",
-              "amount_rub": 6100000,
+              "item_id": "PREP-WATER-DRAINAGE",
+              "name": "Водоснабжение и канализация",
+              "amount_rub": 800000,
+              "category": "ENGINEERING",
+              "useful_life_years": 10,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-VENTILATION",
+              "name": "Приточно-вытяжная вентиляция",
+              "amount_rub": 2500000,
+              "category": "ENGINEERING",
+              "useful_life_years": 10,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-LIGHTING",
+              "name": "Освещение",
+              "amount_rub": 400000,
+              "category": "ENGINEERING",
+              "useful_life_years": 10,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-GUEST-AREA",
+              "name": "Подготовка торгового зала",
+              "amount_rub": 800000,
+              "category": "FIT_OUT",
+              "useful_life_years": 7,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-BUILT-IN",
+              "name": "Стойки и встроенная мебель",
+              "amount_rub": 1300000,
+              "category": "FIT_OUT",
+              "useful_life_years": 7,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-DESIGN",
+              "name": "Проектирование и согласования",
+              "amount_rub": 1000000,
               "category": "FIT_OUT",
               "useful_life_years": 7,
               "mapping_status": "mapped"
@@ -5300,17 +5400,65 @@
               "mapping_status": "mapped"
             },
             {
-              "item_id": "PREP-ENGINEERING",
-              "name": "Инженерные системы подготовки помещения",
-              "amount_rub": 4900000,
+              "item_id": "PREP-BUILDING",
+              "name": "Общестроительная адаптация",
+              "amount_rub": 3000000,
+              "category": "FIT_OUT",
+              "useful_life_years": 7,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-ELECTRICAL",
+              "name": "Электроснабжение",
+              "amount_rub": 1200000,
               "category": "ENGINEERING",
               "useful_life_years": 10,
               "mapping_status": "mapped"
             },
             {
-              "item_id": "PREP-FIT-OUT",
-              "name": "Подготовка помещения / fit-out",
-              "amount_rub": 6100000,
+              "item_id": "PREP-WATER-DRAINAGE",
+              "name": "Водоснабжение и канализация",
+              "amount_rub": 800000,
+              "category": "ENGINEERING",
+              "useful_life_years": 10,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-VENTILATION",
+              "name": "Приточно-вытяжная вентиляция",
+              "amount_rub": 2500000,
+              "category": "ENGINEERING",
+              "useful_life_years": 10,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-LIGHTING",
+              "name": "Освещение",
+              "amount_rub": 400000,
+              "category": "ENGINEERING",
+              "useful_life_years": 10,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-GUEST-AREA",
+              "name": "Подготовка торгового зала",
+              "amount_rub": 800000,
+              "category": "FIT_OUT",
+              "useful_life_years": 7,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-BUILT-IN",
+              "name": "Стойки и встроенная мебель",
+              "amount_rub": 1300000,
+              "category": "FIT_OUT",
+              "useful_life_years": 7,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-DESIGN",
+              "name": "Проектирование и согласования",
+              "amount_rub": 1000000,
               "category": "FIT_OUT",
               "useful_life_years": 7,
               "mapping_status": "mapped"
@@ -7783,17 +7931,65 @@
               "mapping_status": "mapped"
             },
             {
-              "item_id": "PREP-ENGINEERING",
-              "name": "Инженерные системы подготовки помещения",
-              "amount_rub": 4900000,
+              "item_id": "PREP-BUILDING",
+              "name": "Общестроительная адаптация",
+              "amount_rub": 3000000,
+              "category": "FIT_OUT",
+              "useful_life_years": 7,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-ELECTRICAL",
+              "name": "Электроснабжение",
+              "amount_rub": 1200000,
               "category": "ENGINEERING",
               "useful_life_years": 10,
               "mapping_status": "mapped"
             },
             {
-              "item_id": "PREP-FIT-OUT",
-              "name": "Подготовка помещения / fit-out",
-              "amount_rub": 6100000,
+              "item_id": "PREP-WATER-DRAINAGE",
+              "name": "Водоснабжение и канализация",
+              "amount_rub": 800000,
+              "category": "ENGINEERING",
+              "useful_life_years": 10,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-VENTILATION",
+              "name": "Приточно-вытяжная вентиляция",
+              "amount_rub": 2500000,
+              "category": "ENGINEERING",
+              "useful_life_years": 10,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-LIGHTING",
+              "name": "Освещение",
+              "amount_rub": 400000,
+              "category": "ENGINEERING",
+              "useful_life_years": 10,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-GUEST-AREA",
+              "name": "Подготовка торгового зала",
+              "amount_rub": 800000,
+              "category": "FIT_OUT",
+              "useful_life_years": 7,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-BUILT-IN",
+              "name": "Стойки и встроенная мебель",
+              "amount_rub": 1300000,
+              "category": "FIT_OUT",
+              "useful_life_years": 7,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-DESIGN",
+              "name": "Проектирование и согласования",
+              "amount_rub": 1000000,
               "category": "FIT_OUT",
               "useful_life_years": 7,
               "mapping_status": "mapped"
@@ -10268,17 +10464,65 @@
               "mapping_status": "mapped"
             },
             {
-              "item_id": "PREP-ENGINEERING",
-              "name": "Инженерные системы подготовки помещения",
-              "amount_rub": 4900000,
+              "item_id": "PREP-BUILDING",
+              "name": "Общестроительная адаптация",
+              "amount_rub": 3000000,
+              "category": "FIT_OUT",
+              "useful_life_years": 7,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-ELECTRICAL",
+              "name": "Электроснабжение",
+              "amount_rub": 1200000,
               "category": "ENGINEERING",
               "useful_life_years": 10,
               "mapping_status": "mapped"
             },
             {
-              "item_id": "PREP-FIT-OUT",
-              "name": "Подготовка помещения / fit-out",
-              "amount_rub": 6100000,
+              "item_id": "PREP-WATER-DRAINAGE",
+              "name": "Водоснабжение и канализация",
+              "amount_rub": 800000,
+              "category": "ENGINEERING",
+              "useful_life_years": 10,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-VENTILATION",
+              "name": "Приточно-вытяжная вентиляция",
+              "amount_rub": 2500000,
+              "category": "ENGINEERING",
+              "useful_life_years": 10,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-LIGHTING",
+              "name": "Освещение",
+              "amount_rub": 400000,
+              "category": "ENGINEERING",
+              "useful_life_years": 10,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-GUEST-AREA",
+              "name": "Подготовка торгового зала",
+              "amount_rub": 800000,
+              "category": "FIT_OUT",
+              "useful_life_years": 7,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-BUILT-IN",
+              "name": "Стойки и встроенная мебель",
+              "amount_rub": 1300000,
+              "category": "FIT_OUT",
+              "useful_life_years": 7,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-DESIGN",
+              "name": "Проектирование и согласования",
+              "amount_rub": 1000000,
               "category": "FIT_OUT",
               "useful_life_years": 7,
               "mapping_status": "mapped"
@@ -12751,17 +12995,65 @@
               "mapping_status": "mapped"
             },
             {
-              "item_id": "PREP-ENGINEERING",
-              "name": "Инженерные системы подготовки помещения",
-              "amount_rub": 4900000,
+              "item_id": "PREP-BUILDING",
+              "name": "Общестроительная адаптация",
+              "amount_rub": 3000000,
+              "category": "FIT_OUT",
+              "useful_life_years": 7,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-ELECTRICAL",
+              "name": "Электроснабжение",
+              "amount_rub": 1200000,
               "category": "ENGINEERING",
               "useful_life_years": 10,
               "mapping_status": "mapped"
             },
             {
-              "item_id": "PREP-FIT-OUT",
-              "name": "Подготовка помещения / fit-out",
-              "amount_rub": 6100000,
+              "item_id": "PREP-WATER-DRAINAGE",
+              "name": "Водоснабжение и канализация",
+              "amount_rub": 800000,
+              "category": "ENGINEERING",
+              "useful_life_years": 10,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-VENTILATION",
+              "name": "Приточно-вытяжная вентиляция",
+              "amount_rub": 2500000,
+              "category": "ENGINEERING",
+              "useful_life_years": 10,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-LIGHTING",
+              "name": "Освещение",
+              "amount_rub": 400000,
+              "category": "ENGINEERING",
+              "useful_life_years": 10,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-GUEST-AREA",
+              "name": "Подготовка торгового зала",
+              "amount_rub": 800000,
+              "category": "FIT_OUT",
+              "useful_life_years": 7,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-BUILT-IN",
+              "name": "Стойки и встроенная мебель",
+              "amount_rub": 1300000,
+              "category": "FIT_OUT",
+              "useful_life_years": 7,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-DESIGN",
+              "name": "Проектирование и согласования",
+              "amount_rub": 1000000,
               "category": "FIT_OUT",
               "useful_life_years": 7,
               "mapping_status": "mapped"
@@ -15234,17 +15526,65 @@
               "mapping_status": "mapped"
             },
             {
-              "item_id": "PREP-ENGINEERING",
-              "name": "Инженерные системы подготовки помещения",
-              "amount_rub": 4900000,
+              "item_id": "PREP-BUILDING",
+              "name": "Общестроительная адаптация",
+              "amount_rub": 3000000,
+              "category": "FIT_OUT",
+              "useful_life_years": 7,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-ELECTRICAL",
+              "name": "Электроснабжение",
+              "amount_rub": 1200000,
               "category": "ENGINEERING",
               "useful_life_years": 10,
               "mapping_status": "mapped"
             },
             {
-              "item_id": "PREP-FIT-OUT",
-              "name": "Подготовка помещения / fit-out",
-              "amount_rub": 6100000,
+              "item_id": "PREP-WATER-DRAINAGE",
+              "name": "Водоснабжение и канализация",
+              "amount_rub": 800000,
+              "category": "ENGINEERING",
+              "useful_life_years": 10,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-VENTILATION",
+              "name": "Приточно-вытяжная вентиляция",
+              "amount_rub": 2500000,
+              "category": "ENGINEERING",
+              "useful_life_years": 10,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-LIGHTING",
+              "name": "Освещение",
+              "amount_rub": 400000,
+              "category": "ENGINEERING",
+              "useful_life_years": 10,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-GUEST-AREA",
+              "name": "Подготовка торгового зала",
+              "amount_rub": 800000,
+              "category": "FIT_OUT",
+              "useful_life_years": 7,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-BUILT-IN",
+              "name": "Стойки и встроенная мебель",
+              "amount_rub": 1300000,
+              "category": "FIT_OUT",
+              "useful_life_years": 7,
+              "mapping_status": "mapped"
+            },
+            {
+              "item_id": "PREP-DESIGN",
+              "name": "Проектирование и согласования",
+              "amount_rub": 1000000,
               "category": "FIT_OUT",
               "useful_life_years": 7,
               "mapping_status": "mapped"
@@ -15285,7 +15625,7 @@
         "real_estate_return": 0,
         "real_estate_irr_annual": 0,
         "combined_payback_month": 31,
-        "combined_irr_annual": 0.4393689912688634,
+        "combined_irr_annual": 0.4393689912688632,
         "combined_npv_rub": 64557493.11,
         "restaurant_cash_flows": [
           -44724292.36,

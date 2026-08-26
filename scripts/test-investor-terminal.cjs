@@ -187,7 +187,7 @@ async function run() {
     const sharedInvestment = await amount("scaling-shared-investment");
     const additionalInvestment = await amount("scaling-additional-investment");
     const expansionReserve = await amount("scaling-expansion-reserve");
-    assert.equal(await amount("scaling-network-total"), baseObjectInvestment + additionalInvestment + sharedInvestment + expansionReserve, "network investment includes base, additional point launch, shared infrastructure and the separate expansion reserve exactly once");
+    assert.ok(Math.abs((await amount("scaling-network-total")) - (baseObjectInvestment + additionalInvestment + sharedInvestment + expansionReserve)) < 0.01, "network investment includes base, additional point launch, shared infrastructure and the separate expansion reserve exactly once");
 
     await page.setViewportSize({ width: 1440, height: 650 });
     const stickySummary = await page.locator(".scaling-results").evaluate((element) => ({

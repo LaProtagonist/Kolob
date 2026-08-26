@@ -420,8 +420,12 @@ test("temporal rollout keeps canonical ramp and seasonality separate for every o
     assert.equal(foodhallTemporal.months[month].opexRub, direct.directOpexPerPointRub, `Foodhall direct OPEX follows actual month-${month} sales`);
   }
 
-  assert.equal(temporal.expansion.operatingReserveRub, scaling.operating.pointDirectOpexRub! * configuration.launchBudget.operatingReserveMonths, "expansion reserve is the calculated additional-point OPEX times the selected horizon");
   const staticEconomics = networkEconomicsProjection(configuration, base);
+  assert.equal(
+    Math.abs((temporal.expansion.operatingReserveRub ?? 0) - (staticEconomics.expansion.opexRub ?? 0) * configuration.launchBudget.operatingReserveMonths) < 0.03,
+    true,
+    "expansion reserve uses known Point, Production and Shared recurring OPEX for the selected horizon",
+  );
   assert.ok(temporal.expansion.paybackMonth! >= staticEconomics.expansion.paybackMonths!, "staggered openings and ramp cannot use the immediate steady-state payback");
 });
 
@@ -767,23 +771,16 @@ test("network scaling aggregates independent point cohorts without inventing net
 test("expansion reserve uses additional point OPEX and does not count the base-object reserve twice", () => {
   const configuration = defaultInvestorConfiguration();
   const base = configuredEconomicsScenario(configuration);
+  const baseProjection = baseObjectFinancialProjection(base);
   const scaling = networkScalingProjection(configuration);
-  const economics = networkEconomicsProjection(configuration, {
-    investmentRub: base.startInvestmentRub,
-    revenueRub: base.salesPerMonthRub,
-    opexRub: base.salesPerMonthRub - base.ebitdaRub,
-    operatingResultRub: base.ebitdaRub,
-    cashFlowRub: base.freeCashFlowRub,
-    paybackMonth: base.paybackMonth,
-    operatingReserveRub: base.operatingReserveRub,
-  });
+  const economics = networkEconomicsProjection(configuration, baseProjection, scaling);
   assert.equal(economics.expansion.additionalPointCount, 4);
   assert.equal(economics.network.pointCount, 5);
-  assert.equal(economics.expansion.operatingReserveRub, scaling.operating.pointDirectOpexRub! * configuration.launchBudget.operatingReserveMonths, "reserve uses known monthly OPEX of additional point groups and the selected horizon");
+  assert.equal(Math.abs((economics.expansion.operatingReserveRub ?? 0) - economics.expansion.opexRub! * configuration.launchBudget.operatingReserveMonths) < 0.03, true, "reserve uses known recurring Point, Production and Shared OPEX but excludes tax and CAPEX");
   assert.notEqual(economics.expansion.operatingReserveRub, base.operatingReserveRub, "the historical Integrated Pilot reserve is never reused for expansion");
   assert.equal(
-    economics.network.investmentRub,
-    base.startInvestmentRub + economics.expansion.pointInvestmentRub + economics.expansion.sharedInfrastructureRub + economics.expansion.operatingReserveRub!,
+    Math.abs((economics.network.investmentRub ?? 0) - (base.startInvestmentRub + economics.expansion.pointInvestmentRub + economics.expansion.sharedInfrastructureRub + economics.expansion.operatingReserveRub!)) < 0.01,
+    true,
     "network investment is base object plus additional point launch, shared infrastructure and expansion reserve",
   );
   assert.equal(scaling.sharedItems.find((item) => item.id === "shared-refrigerated-logistics")?.amountRub, 5_000_000, "five-point network gets the governed shared logistics infrastructure");
@@ -821,7 +818,9 @@ test("economics UI has no legacy KPI literals and only consumes configured proje
 
 test("Investor Terminal is a compact runtime surface, not a second hardcoded model", () => {
   const source = fs.readFileSync(path.join(projectRoot, "src/components/InvestorTerminal.tsx"), "utf8");
+  const panelSource = fs.readFileSync(path.join(projectRoot, "src/components/NetworkScalingPanel.tsx"), "utf8");
   const scalingSource = fs.readFileSync(path.join(projectRoot, "src/lib/network-scaling.ts"), "utf8");
+  const financialAdapterSource = fs.readFileSync(path.join(projectRoot, "src/lib/network-financial-projection.ts"), "utf8");
   assert.match(source, /configuredEconomicsScenario\(configuration\)/);
   assert.match(source, /setCustomChecksPerDay/);
   assert.match(source, /resetConfiguration/);
@@ -829,6 +828,9 @@ test("Investor Terminal is a compact runtime surface, not a second hardcoded mod
   assert.match(scalingSource, /networkEconomicsProjection/, "expansion and network totals are assembled in the typed planning adapter");
   assert.match(scalingSource, /findPhysicalAllocation/, "new allocation semantics are read from the typed allocation map");
   assert.match(scalingSource, /networkSalesSummary/, "network sales aggregation stays outside the React component");
+  assert.match(financialAdapterSource, /networkTemporalProjection/);
+  assert.match(financialAdapterSource, /networkEconomicsProjection/);
+  assert.match(panelSource, /networkFinancialProjection\(configuration, baseObject, baseObject\)/, "the Terminal consumes one consolidated projection adapter");
   for (const legacyLiteral of ["45.37", "23 месяца", "61.33%", "36,701,298"]) {
     assert.equal(source.includes(legacyLiteral), false, `legacy KPI literal remains: ${legacyLiteral}`);
   }

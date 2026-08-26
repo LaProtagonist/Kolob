@@ -11,6 +11,15 @@ import { buildRevenueContentState, readRevenueModel } from "../investor/revenue-
 import { calculateLaunchBudget, defaultLaunchBudgetState, launchModel } from "../../../../src/lib/launch-budget.js";
 import { buildCapexRows, capexData, emptyCapexParameters, summarizeEquipment } from "../../../../src/lib/capex-runtime.js";
 import { calculateEmployerContributions, type EmployerContributionPolicy } from "../../../../src/lib/employer-contributions.js";
+import {
+  equipmentDepreciationAsset,
+  financialDepreciationUsefulLives,
+  furnitureDepreciationAsset,
+  monthlyDepreciation,
+  preparationDepreciationAsset,
+  preparationEngineeringCategoryIds,
+  smallEquipmentDepreciationAsset,
+} from "../../../../src/lib/financial-assets.js";
 
 const projectRoot = path.resolve(platformRoot, "..");
 let capexSnapshotValidationError: string | null | undefined;
@@ -32,6 +41,7 @@ export const FINANCIAL_CONTENT_SOURCE_PATHS = [
   "docs-platform/working/configurations/CFG-PILOT-001/equipment-bom.yaml",
   "src/content/capex-configurator-data.json",
   "src/lib/capex-runtime.ts",
+  "src/lib/financial-assets.ts",
   "src/lib/launch-budget.ts",
 ] as const;
 
@@ -184,45 +194,18 @@ export function importedLaunchCapital(model = readFinancialModel()) {
   const equipmentRows = buildCapexRows(activeModuleIds, "base", parameters);
   const equipment = summarizeEquipment(equipmentRows, model.imports.capex.excluded_item_prefixes, model.imports.capex.excluded_item_ids);
   const preparationCategories = (launchModel as any).preparation.categories as any[];
-  const engineeringIds = new Set(model.depreciation.preparation_engineering_category_ids as string[]);
-  const engineeringPreparation = sum(preparationCategories.filter(item => engineeringIds.has(item.id)).map(item => Number(item.amount_rub)));
-  const fitOutPreparation = sum(preparationCategories.filter(item => !engineeringIds.has(item.id)).map(item => Number(item.amount_rub)));
-
   const equipmentDepreciation = equipment.rows
     .filter(row => row.independentProcurement && row.lineTotal !== null && row.quantity !== 0)
-    .map(row => {
-      let category = "UNCLASSIFIED";
-      let usefulLifeYears = 5;
-      let mappingStatus = "mapping_requires_review";
-      if (["CAPEX-01-001", "CAPEX-01-002"].includes(row.item.id)) {
-        category = "COLD_FREEZER";
-        usefulLifeYears = 10;
-        mappingStatus = "mapped";
-      } else if (row.moduleIds.some(id => id === "MOD-POS" || id === "MOD-KDS")) {
-        category = "POS_KDS_IT_SMALL";
-        usefulLifeYears = 3;
-        mappingStatus = "mapped";
-      } else if (row.moduleIds.includes("MOD-GROW")) {
-        category = "GROW";
-        usefulLifeYears = 5;
-        mappingStatus = "mapped";
-      } else if (row.moduleIds.some(id => ["MOD-PREP", "MOD-RETAIL-HOT", "MOD-BAR", "MOD-WASH", "MOD-TAKEAWAY"].includes(id))) {
-        category = "MAIN_KITCHEN";
-        usefulLifeYears = 5;
-        mappingStatus = "mapped";
-      }
-      return { item_id: row.item.id, name: row.item.name, amount_rub: row.lineTotal!, category, useful_life_years: usefulLifeYears, mapping_status: mappingStatus };
-    });
+    .map(row => equipmentDepreciationAsset({ id: row.item.id, name: row.item.name, amountRub: row.lineTotal!, moduleIds: row.moduleIds }));
 
   const depreciationAssets = [
     ...equipmentDepreciation,
-    { item_id: "FURNITURE", name: "Мебель посадочного зала", amount_rub: result.furnitureRub ?? 0, category: "FURNITURE", useful_life_years: 5, mapping_status: "mapped" },
-    { item_id: "PREP-ENGINEERING", name: "Инженерные системы подготовки помещения", amount_rub: engineeringPreparation, category: "ENGINEERING", useful_life_years: 10, mapping_status: "mapped" },
-    { item_id: "PREP-FIT-OUT", name: "Подготовка помещения / fit-out", amount_rub: fitOutPreparation, category: "FIT_OUT", useful_life_years: 7, mapping_status: "mapped" },
-    { item_id: "LAUNCH-VIDEO", name: "Видеонаблюдение", amount_rub: Number(model.launch_investment.video_surveillance_rub), category: "POS_KDS_IT_SMALL", useful_life_years: 3, mapping_status: "mapped" },
-    { item_id: "LAUNCH-ALARM", name: "Охранная сигнализация", amount_rub: Number(model.launch_investment.alarm_rub), category: "POS_KDS_IT_SMALL", useful_life_years: 3, mapping_status: "mapped" },
+    furnitureDepreciationAsset("FURNITURE", "Мебель посадочного зала", result.furnitureRub ?? 0),
+    ...preparationCategories.map(item => preparationDepreciationAsset({ id: item.id, name: item.name, amountRub: Number(item.amount_rub) })),
+    smallEquipmentDepreciationAsset("LAUNCH-VIDEO", "Видеонаблюдение", Number(model.launch_investment.video_surveillance_rub)),
+    smallEquipmentDepreciationAsset("LAUNCH-ALARM", "Охранная сигнализация", Number(model.launch_investment.alarm_rub)),
   ];
-  const monthlyDepreciation = sum(depreciationAssets.map(asset => asset.amount_rub / (asset.useful_life_years * 12)));
+  const monthlyDepreciationRub = monthlyDepreciation(depreciationAssets);
   return {
     equipment_rub: round(equipment.total),
     equipment_control_rub_rounded: Math.round(equipment.total),
@@ -236,7 +219,7 @@ export function importedLaunchCapital(model = readFinancialModel()) {
     contingency_rub: round(result.contingencyRub),
     seat_count: result.seatCount,
     depreciation_assets: depreciationAssets,
-    monthly_depreciation_rub: round(monthlyDepreciation),
+    monthly_depreciation_rub: round(monthlyDepreciationRub),
     mapping_requires_review_count: depreciationAssets.filter(asset => asset.mapping_status === "mapping_requires_review").length,
   };
 }
@@ -798,6 +781,18 @@ export function validateFinancialModel(model = readFinancialModel(), root = proj
   if (capital.equipment_bom_configuration_id !== "CFG-PILOT-001") errors.push(`Financial Model must use generated Equipment BOM CFG-PILOT-001, got ${capital.equipment_bom_configuration_id}.`);
   if (!capital.equipment_active_module_ids.includes("MOD-BAR") || !capital.equipment_active_module_ids.includes("MOD-GROW")) errors.push("Financial Model equipment configuration must enable BAR and GROW.");
   if (capital.equipment_unpriced_count !== 0) errors.push(`Financial Model equipment configuration has ${capital.equipment_unpriced_count} unpriced items.`);
+
+  const governedUsefulLives = Object.fromEntries((model.depreciation.categories as any[]).map(item => [String(item.id), Number(item.useful_life_years)]));
+  for (const [category, usefulLifeYears] of Object.entries(financialDepreciationUsefulLives)) {
+    if (governedUsefulLives[category] !== usefulLifeYears) {
+      errors.push(`Shared depreciation policy diverges from Financial Model for ${category}: expected ${governedUsefulLives[category]}, got ${usefulLifeYears}.`);
+    }
+  }
+  const governedEngineering = [...(model.depreciation.preparation_engineering_category_ids as string[])].sort();
+  const sharedEngineering = [...preparationEngineeringCategoryIds].sort();
+  if (JSON.stringify(governedEngineering) !== JSON.stringify(sharedEngineering)) {
+    errors.push("Shared preparation depreciation routing diverges from Financial Model engineering-category policy.");
+  }
 
   for (const id of ["pessimistic", "realistic", "optimistic"] as SalesScenarioId[]) {
     const result = calculateFinancialScenario(id, {}, model);

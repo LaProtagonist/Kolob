@@ -61,6 +61,10 @@
       "cost": "targeted",
       "command": ["node", "docs-platform/app/node_modules/tsx/dist/cli.mjs", "--test", "docs-platform/app/test/financial-model.test.ts"]
     },
+    "financial-core:projection": {
+      "cost": "targeted",
+      "command": ["npm", "run", "financial:core:check", "--silent"]
+    },
     "investor:schema": {
       "cost": "fast",
       "command": ["npm", "run", "investor:summary:validate", "--silent"]
@@ -111,7 +115,7 @@
     },
     "investor-journey:unit": {
       "cost": "targeted",
-      "command": ["node", "docs-platform/app/node_modules/tsx/dist/cli.mjs", "--test", "scripts/test-investor-journey.test.ts"]
+      "command": ["node", "docs-platform/app/node_modules/tsx/dist/cli.mjs", "--test", "scripts/test-financial-core.test.ts", "scripts/test-physical-allocation-map.test.ts", "scripts/test-investor-journey.test.ts"]
     },
     "investor-terminal:browser": {
       "cost": "integration",
@@ -243,12 +247,12 @@
       "releaseRequired": true
     },
     "investor-journey": {
-      "patterns": ["src/components/InvestorConfigurationProvider.tsx", "src/components/InvestorTerminal.*", "src/components/NetworkScalingPanel.*", "src/lib/investor-configuration.ts", "src/lib/configured-economics.ts", "src/lib/network-scaling.ts", "scripts/test-investor-journey.test.ts", "scripts/test-investor-terminal.cjs"],
+      "patterns": ["src/components/InvestorConfigurationProvider.tsx", "src/components/InvestorTerminal.*", "src/components/NetworkScalingPanel.*", "src/lib/investor-configuration.ts", "src/lib/configured-economics.ts", "src/lib/financial-assets.ts", "src/lib/financial-core.ts", "src/lib/network-financial-core.ts", "src/lib/network-financial-projection.ts", "src/lib/network-scaling.ts", "src/lib/network-temporal.ts", "src/lib/physical-allocation.ts", "scripts/generate-financial-core-projection.ts", "docs-platform/generated/financial-core-projection.json", "scripts/test-financial-core.test.ts", "scripts/test-physical-allocation-map.test.ts", "scripts/test-investor-journey.test.ts", "scripts/test-investor-terminal.cjs"],
       "upstream": ["financial", "investor-summary", "launch-budget", "economics-ui", "revenue-ui"],
       "downstream": [],
-      "testInputs": ["scripts/test-investor-journey.test.ts", "scripts/test-investor-terminal.cjs"],
+      "testInputs": ["scripts/test-financial-core.test.ts", "scripts/test-physical-allocation-map.test.ts", "scripts/test-investor-journey.test.ts", "scripts/test-investor-terminal.cjs"],
       "fast": [],
-      "targeted": ["typescript:site", "investor-journey:unit", "investor-terminal:browser"],
+      "targeted": ["typescript:site", "financial-core:projection", "investor-journey:unit", "investor-terminal:browser"],
       "integration": [],
       "dependency": ["investor-journey:unit"],
       "visual": {"route": "/investor-terminal", "requiredSelectors": [".investor-terminal", "#investor-terminal-title"], "defaultImpact": "high"},

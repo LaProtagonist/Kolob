@@ -816,6 +816,131 @@ export const physicalAllocationMap = [
   },
 ] as const satisfies readonly PhysicalAllocationRecord[];
 
+/**
+ * Line-by-line treatment of every historical recurring Financial Model OPEX
+ * line. This is deliberately colocated with the physical-allocation map: it
+ * records ownership/provenance, never a copied price, quantity or formula.
+ */
+export const historicalOpexLineIds = [
+  "food_cost",
+  "waste",
+  "packaging",
+  "labour",
+  "rent",
+  "acquiring",
+  "aggregator_commission",
+  "admin_reserve",
+  "marketing",
+  "household",
+  "utilities",
+  "equipment_service",
+  "accounting",
+  "ventilation_grease",
+  "uniform_renewal",
+  "music",
+  "pest_control",
+  "software",
+  "medical",
+  "security",
+  "banking",
+  "other_opex",
+] as const;
+
+export type HistoricalOpexLineId = (typeof historicalOpexLineIds)[number];
+export type HistoricalOpexTreatmentStatus = "active_base" | "mapped" | "superseded" | "not_applicable" | "unresolved";
+export type HistoricalOpexBaseStatus = "active" | "not_applicable" | "unresolved";
+export type OpexEconomicScope = "base" | "point" | "production" | "shared_network";
+
+export type HistoricalOpexTreatment = {
+  lineId: HistoricalOpexLineId;
+  name: string;
+  allocationIds: readonly string[];
+  /** Current Base / historical Financial Model treatment, separate from scaling. */
+  baseStatus: HistoricalOpexBaseStatus;
+  status: HistoricalOpexTreatmentStatus;
+  networkScopes: readonly OpexEconomicScope[];
+  /** True only when the current Network Projection has a governed driver. */
+  includedInKnownExpansion: boolean;
+  note: string;
+};
+
+const historicalOpexNetworkTreatmentCatalog: readonly Omit<HistoricalOpexTreatment, "baseStatus">[] = [
+  { lineId: "food_cost", name: "Сырьё", allocationIds: ["OPEX-FOOD-COST"], status: "mapped", networkScopes: ["point"], includedInKnownExpansion: true, note: "Физическая закупка остаётся Production; экономически атрибутируется revenue cohort ровно один раз." },
+  { lineId: "waste", name: "Списания", allocationIds: ["OPEX-FOOD-COST"], status: "mapped", networkScopes: ["point"], includedInKnownExpansion: true, note: "Каноническая доля от сырья, атрибутируемая cohort revenue без дублирования в Production." },
+  { lineId: "packaging", name: "Потребительская упаковка", allocationIds: ["OPEX-CONSUMER-PACKAGING"], status: "mapped", networkScopes: ["point"], includedInKnownExpansion: true, note: "Каноническая per-check mechanics торговой точки." },
+  { lineId: "labour", name: "ФОТ и взносы", allocationIds: ["OPEX-LABOUR", "OPEX-PRODUCTION-PREP-PAYROLL", "OPEX-POINT-PLANNING-PAYROLL", "OPEX-NETWORK-MANAGER"], status: "mapped", networkScopes: ["point", "production", "shared_network"], includedInKnownExpansion: true, note: "Historical integrated labour заменён доказуемыми point, production и one-manager planning projections; не делится пропорционально." },
+  { lineId: "rent", name: "Аренда", allocationIds: ["OPEX-RENT"], status: "mapped", networkScopes: ["point"], includedInKnownExpansion: true, note: "Только contract-level occupancy дополнительных cohort; base rent остаётся в Base context." },
+  { lineId: "acquiring", name: "Эквайринг", allocationIds: ["OPEX-ACQUIRING"], status: "mapped", networkScopes: ["point"], includedInKnownExpansion: true, note: "Канонические 2% gross revenue для каждой cohort." },
+  { lineId: "aggregator_commission", name: "Комиссии агрегаторов", allocationIds: ["OPEX-AGGREGATOR-COMMISSION"], status: "not_applicable", networkScopes: ["point"], includedInKnownExpansion: false, note: "Текущая approved cohort configuration имеет aggregator share = 0; при появлении share расчёт должен быть включён только для соответствующей cohort." },
+  { lineId: "admin_reserve", name: "Административный резерв", allocationIds: ["OPEX-SHARED-CANDIDATES"], status: "unresolved", networkScopes: ["shared_network"], includedInKnownExpansion: false, note: "Historical rate не получает automatic network scaling без отдельного ownership rule." },
+  { lineId: "marketing", name: "Маркетинг", allocationIds: ["OPEX-MARKETING-FIXED", "OPEX-MARKETING-VARIABLE"], status: "mapped", networkScopes: ["point", "shared_network"], includedInKnownExpansion: true, note: "2.4% net revenue атрибутируется point revenue; fixed 150k already belongs to Base and is not multiplied by points." },
+  { lineId: "household", name: "Хозяйственные и эксплуатационные расходники", allocationIds: ["OPEX-CLEANING-AND-UTILITIES"], status: "unresolved", networkScopes: ["point", "production", "shared_network"], includedInKnownExpansion: false, note: "Current integrated formula has no approved physical ownership or scaling for expansion." },
+  { lineId: "utilities", name: "Коммунальные услуги", allocationIds: ["OPEX-CLEANING-AND-UTILITIES"], status: "mapped", networkScopes: ["point"], includedInKnownExpansion: true, note: "Contract-level point utilities/service charges are used where supplied; this does not copy the historical integrated fixed amount." },
+  { lineId: "equipment_service", name: "Обслуживание оборудования", allocationIds: ["OPEX-CLEANING-AND-UTILITIES"], status: "unresolved", networkScopes: ["production", "point", "shared_network"], includedInKnownExpansion: false, note: "No approved ownership/scaling rule for additional assets." },
+  { lineId: "accounting", name: "Бухгалтерский аутсорсинг", allocationIds: ["OPEX-SHARED-CANDIDATES"], status: "unresolved", networkScopes: ["shared_network"], includedInKnownExpansion: false, note: "Clearly central in character, but the historical amount has no approved network scaling rule." },
+  { lineId: "ventilation_grease", name: "Вентиляция и жироуловители", allocationIds: ["OPEX-CLEANING-AND-UTILITIES"], status: "unresolved", networkScopes: ["production", "point"], includedInKnownExpansion: false, note: "Requires object-specific technical ownership and contract rule." },
+  { lineId: "uniform_renewal", name: "Обновление спецодежды", allocationIds: ["OPEX-CLEANING-AND-UTILITIES"], status: "unresolved", networkScopes: ["point", "production"], includedInKnownExpansion: false, note: "Launch uniforms are priced separately; recurring renewal has no approved scaling rule." },
+  { lineId: "music", name: "Музыка и права", allocationIds: ["OPEX-CLEANING-AND-UTILITIES"], status: "unresolved", networkScopes: ["point", "shared_network"], includedInKnownExpansion: false, note: "Applicability differs by format and venue; no approved allocation rule." },
+  { lineId: "pest_control", name: "Pest control", allocationIds: ["OPEX-CLEANING-AND-UTILITIES"], status: "unresolved", networkScopes: ["production", "point"], includedInKnownExpansion: false, note: "Requires contract and physical-scope confirmation." },
+  { lineId: "software", name: "YUMA / кассовые сервисы", allocationIds: ["OPEX-SHARED-CANDIDATES"], status: "unresolved", networkScopes: ["shared_network", "point"], includedInKnownExpansion: false, note: "Central/point licensing split and scaling are not yet governed." },
+  { lineId: "medical", name: "Медосмотры и санитарные документы", allocationIds: ["OPEX-CLEANING-AND-UTILITIES"], status: "unresolved", networkScopes: ["point", "production"], includedInKnownExpansion: false, note: "No approved recurring roster-based scaling rule." },
+  { lineId: "security", name: "Пультовая охрана", allocationIds: ["OPEX-SHARED-CANDIDATES"], status: "unresolved", networkScopes: ["point", "shared_network"], includedInKnownExpansion: false, note: "Launch alarm is separate; recurring monitoring ownership is not governed for each format." },
+  { lineId: "banking", name: "Банковское обслуживание", allocationIds: ["OPEX-SHARED-CANDIDATES"], status: "unresolved", networkScopes: ["shared_network"], includedInKnownExpansion: false, note: "Current amount is 0 / TBD and must remain explicitly not priced." },
+  { lineId: "other_opex", name: "Прочие регулярные расходы", allocationIds: ["OPEX-SHARED-CANDIDATES"], status: "unresolved", networkScopes: ["shared_network"], includedInKnownExpansion: false, note: "Historical catch-all cannot be copied into Network without a governed definition." },
+];
+
+/**
+ * Every historical line remains visible in Current Base even when its Network
+ * ownership/scaling has not yet been approved.  No price is copied here.
+ */
+const historicalOpexBaseStatuses: Record<HistoricalOpexLineId, HistoricalOpexBaseStatus> = {
+  food_cost: "active",
+  waste: "active",
+  packaging: "active",
+  labour: "active",
+  rent: "active",
+  acquiring: "active",
+  aggregator_commission: "not_applicable",
+  admin_reserve: "active",
+  marketing: "active",
+  household: "active",
+  utilities: "active",
+  equipment_service: "active",
+  accounting: "active",
+  ventilation_grease: "active",
+  uniform_renewal: "active",
+  music: "active",
+  pest_control: "active",
+  software: "active",
+  medical: "active",
+  security: "active",
+  banking: "unresolved",
+  other_opex: "active",
+};
+
+export const historicalOpexTreatmentCatalog: readonly HistoricalOpexTreatment[] = historicalOpexNetworkTreatmentCatalog.map((entry) => ({
+  ...entry,
+  baseStatus: historicalOpexBaseStatuses[entry.lineId],
+}));
+
+export function historicalOpexTreatmentErrors(catalog = historicalOpexTreatmentCatalog): string[] {
+  const errors: string[] = [];
+  const expected = new Set<string>(historicalOpexLineIds);
+  const allocationIds = new Set<string>(physicalAllocationMap.map((record) => record.id));
+  const seen = new Set<string>();
+  for (const entry of catalog) {
+    if (seen.has(entry.lineId)) errors.push(`Duplicate historical OPEX treatment: ${entry.lineId}.`);
+    seen.add(entry.lineId);
+    if (!expected.has(entry.lineId)) errors.push(`Unknown historical OPEX treatment: ${entry.lineId}.`);
+    if (!entry.baseStatus) errors.push(`Historical OPEX treatment ${entry.lineId} has no Current Base status.`);
+    if (!entry.networkScopes.length) errors.push(`Historical OPEX treatment ${entry.lineId} has no stated network scope.`);
+    if (entry.status === "mapped" && !entry.includedInKnownExpansion) errors.push(`Mapped historical OPEX treatment ${entry.lineId} must state whether it is included.`);
+    for (const allocationId of entry.allocationIds) if (!allocationIds.has(allocationId)) errors.push(`Historical OPEX treatment ${entry.lineId} references unknown Physical Allocation ${allocationId}.`);
+  }
+  for (const id of expected) if (!seen.has(id)) errors.push(`Historical OPEX line has no explicit treatment: ${id}.`);
+  return errors;
+}
+
 export type PhysicalAllocationMap = typeof physicalAllocationMap;
 
 export function allocationRecordsFor(scope: PhysicalScope) {

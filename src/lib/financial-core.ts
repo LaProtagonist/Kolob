@@ -93,11 +93,17 @@ export function calculateFinancialMonthlyResult(
   };
 }
 
+/**
+ * First non-negative cumulative month after actual programme activity. This
+ * avoids treating a pre-opening run of zero cash flows as instant payback.
+ */
 export function firstPaybackMonth(cashFlows: readonly number[]) {
   let cumulative = 0;
+  let started = false;
   for (let month = 0; month < cashFlows.length; month += 1) {
     cumulative += cashFlows[month];
-    if (cumulative >= 0) return month;
+    if (cashFlows[month] !== 0) started = true;
+    if (started && cumulative >= 0) return month;
   }
   return null;
 }
