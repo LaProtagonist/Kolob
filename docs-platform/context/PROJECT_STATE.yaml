@@ -1,12 +1,12 @@
 schema_version: 2
-generated_at: 2026-08-27T00:00:03.001Z
+generated_at: 2026-08-27T00:24:03.001Z
 project: Колобочная
 branch: feat/financial-core-consolidation-v2
-latest_timeline_event_id: EVT-ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01-COMMITTED
-latest_timeline_event_hash: f2ebbc07db2adfb2b040c1ad3d1d7f5cc68ddeda917a92f629d760f35d4ffb3a
-latest_closed_iteration_id: ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01
-latest_iteration_tag: iteration/ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01
-latest_content_commit_hash: ad927266a787fe89235011a6a3c6d7da7b4f6c99
+latest_timeline_event_id: EVT-ITR-FINANCIAL-CORE-CONTEXTS-2026-08-27-01-COMMITTED
+latest_timeline_event_hash: e24c41e8ba8b333a83f0af0f6700b280ff6a276ad9010d5f758e69133070f79f
+latest_closed_iteration_id: ITR-FINANCIAL-CORE-CONTEXTS-2026-08-27-01
+latest_iteration_tag: iteration/ITR-FINANCIAL-CORE-CONTEXTS-2026-08-27-01
+latest_content_commit_hash: c6596447bd9c890e74dc4062590dfaa75a622a3a
 registry_hash: 3ffe84a46b66cf98fefdb6e19cc9390a46a1c1fb4ee147c325fa10774c6ab9dd
 canonical_document_hashes:
   - document_id: DOC-AGENTS
@@ -92,7 +92,7 @@ open_questions:
   - Archive pending review artifacts in durable storage before treating visual verification as portable.
   - Create deployment receipts when the next governed deployment is performed.
   - Decide whether malformed superseded legacy YAML evidence should receive a separate correction event.
-current_workstream: Correct Financial Core v2 feature-worktree context scope
+current_workstream: Establish explicit financial contexts and shared calculation primitives
 next_task: Select the next task through a new governed proposal; no business task is pre-authorized.
 google_integration_status:
   configured: false

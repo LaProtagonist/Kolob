@@ -9,16 +9,16 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 ## 2. Текущая ветка и governed iteration
 
 - Branch: `feat/financial-core-consolidation-v2`.
-- Latest closed iteration: `ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01`.
-- Latest iteration tag: `iteration/ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01`.
-- Latest content commit: `ad927266a787fe89235011a6a3c6d7da7b4f6c99`.
+- Latest closed iteration: `ITR-FINANCIAL-CORE-CONTEXTS-2026-08-27-01`.
+- Latest iteration tag: `iteration/ITR-FINANCIAL-CORE-CONTEXTS-2026-08-27-01`.
+- Latest content commit: `c6596447bd9c890e74dc4062590dfaa75a622a3a`.
 - Текущий Git HEAD намеренно не записывается: его вычисляет `npm run project:onboard`.
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01-COMMITTED`.
-- Hash: `f2ebbc07db2adfb2b040c1ad3d1d7f5cc68ddeda917a92f629d760f35d4ffb3a`.
-- generated_from_event_hash: `f2ebbc07db2adfb2b040c1ad3d1d7f5cc68ddeda917a92f629d760f35d4ffb3a`.
+- Event: `EVT-ITR-FINANCIAL-CORE-CONTEXTS-2026-08-27-01-COMMITTED`.
+- Hash: `e24c41e8ba8b333a83f0af0f6700b280ff6a276ad9010d5f758e69133070f79f`.
+- generated_from_event_hash: `e24c41e8ba8b333a83f0af0f6700b280ff6a276ad9010d5f758e69133070f79f`.
 
 ## 4. Канонические документы
 
@@ -46,7 +46,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 5. Текущая рабочая тема
 
-Correct Financial Core v2 feature-worktree context scope
+Establish explicit financial contexts and shared calculation primitives
 
 ## 6. Decisions и change sets
 

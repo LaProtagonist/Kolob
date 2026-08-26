@@ -4,10 +4,10 @@
 
 ## 1. Current state
 
-- Events: 247.
-- Timeline head event: `EVT-ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01-COMMITTED`.
-- Timeline head SHA-256: `f2ebbc07db2adfb2b040c1ad3d1d7f5cc68ddeda917a92f629d760f35d4ffb3a`.
-- Latest recorded iteration: `ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01`.
+- Events: 252.
+- Timeline head event: `EVT-ITR-FINANCIAL-CORE-CONTEXTS-2026-08-27-01-COMMITTED`.
+- Timeline head SHA-256: `e24c41e8ba8b333a83f0af0f6700b280ff6a276ad9010d5f758e69133070f79f`.
+- Latest recorded iteration: `ITR-FINANCIAL-CORE-CONTEXTS-2026-08-27-01`.
 
 ## 2. Modern governed iterations
 
@@ -58,6 +58,7 @@
 | 2026-08-26T18:28:41.000Z | committed | Correct Investor Summary merged-cell publication ordering | ITR-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01 | DEC-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01 | CHG-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01 | fb5de422456cecbd06612ab38f0749cfa6fd1a9a | iteration/ITR-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01 | docs-platform/changelog/google-sync/2026-08-26-DOC-INVESTOR-FINANCIAL-SUMMARY-MERGE-FIX.yaml | — | — | Correct Investor Summary merged-cell publication ordering: content commit verified and linked to the governed lifecycle before sealing. |
 | 2026-08-26T20:58:00.000Z | failed | Register Financial Core v2 feature-worktree governance context | ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01 | DEC-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01 | CHG-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01 | — | — | — | — | — | Pre-commit scope guard refused the unlisted verification receipt; no content was staged or committed. A narrow successor will correct the governance scope without altering this approved payload. |
 | 2026-08-26T21:03:15.000Z | committed | Correct Financial Core v2 feature-worktree context scope | ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01 | DEC-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01 | CHG-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01 | ad927266a787fe89235011a6a3c6d7da7b4f6c99 | iteration/ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01 | — | — | — | Correct Financial Core v2 feature-worktree context scope: content commit verified and linked to the governed lifecycle before sealing. |
+| 2026-08-26T21:29:09.000Z | committed | Establish explicit financial contexts and shared calculation primitives | ITR-FINANCIAL-CORE-CONTEXTS-2026-08-27-01 | DEC-FINANCIAL-CORE-CONTEXTS-2026-08-27-01 | CHG-FINANCIAL-CORE-CONTEXTS-2026-08-27-01 | c6596447bd9c890e74dc4062590dfaa75a622a3a | iteration/ITR-FINANCIAL-CORE-CONTEXTS-2026-08-27-01 | — | — | — | Establish explicit financial contexts and shared calculation primitives: content commit verified and linked to the governed lifecycle before sealing. |
 
 ## 3. Legacy imported history
 
