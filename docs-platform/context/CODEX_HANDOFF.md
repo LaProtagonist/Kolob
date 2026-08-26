@@ -8,7 +8,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 2. Текущая ветка и governed iteration
 
-- Branch: `feat/investor-terminal-v2`.
+- Branch: `master`.
 - Latest closed iteration: `ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01`.
 - Latest iteration tag: `iteration/ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01`.
 - Latest content commit: `9cb055dd4fac66192602c4d361b93c8e1b153b74`.
@@ -16,9 +16,9 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01-COMMITTED`.
-- Hash: `44205711b76dbe30086c8c33a34cb526ef7be043f803f552925836f2737acf20`.
-- generated_from_event_hash: `44205711b76dbe30086c8c33a34cb526ef7be043f803f552925836f2737acf20`.
+- Event: `EVT-ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01-DEPLOYED-DEPLOY-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01`.
+- Hash: `dc7b76519e64bcd902ad6865dac9e12fb5d226563ee0630df23d847c6f3a7c3b`.
+- generated_from_event_hash: `dc7b76519e64bcd902ad6865dac9e12fb5d226563ee0630df23d847c6f3a7c3b`.
 
 ## 4. Канонические документы
 
@@ -61,9 +61,9 @@ Investor Terminal v2 accepted feature release candidate
 
 ## 8. Google / MCP / deployment
 
-- Google: `{"configured":false,"historical_receipts":12,"receipts_with_machine_readback_hash":9,"live_drift_check":"not_run_by_context_build"}`.
+- Google: `{"configured":true,"historical_receipts":12,"receipts_with_machine_readback_hash":9,"live_drift_check":"not_run_by_context_build"}`.
 - MCP: `{"implementation_present":true,"canonical_access":"registry_document_ids_only","live_status":"not_probed_by_context_build"}`.
-- Deployment: `{"status":"receipts_present","receipts":5,"production_url":null}`.
+- Deployment: `{"status":"receipts_present","receipts":6,"production_url":null}`.
 
 ## 9. Команды проверки
 

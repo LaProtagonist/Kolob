@@ -1,9 +1,9 @@
 schema_version: 2
-generated_at: 2026-08-26T14:05:37.302Z
+generated_at: 2026-08-26T14:42:21.777Z
 project: Колобочная
-branch: feat/investor-terminal-v2
-latest_timeline_event_id: EVT-ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01-COMMITTED
-latest_timeline_event_hash: 44205711b76dbe30086c8c33a34cb526ef7be043f803f552925836f2737acf20
+branch: master
+latest_timeline_event_id: EVT-ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01-DEPLOYED-DEPLOY-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01
+latest_timeline_event_hash: dc7b76519e64bcd902ad6865dac9e12fb5d226563ee0630df23d847c6f3a7c3b
 latest_closed_iteration_id: ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01
 latest_iteration_tag: iteration/ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01
 latest_content_commit_hash: 9cb055dd4fac66192602c4d361b93c8e1b153b74
@@ -95,7 +95,7 @@ open_questions:
 current_workstream: Investor Terminal v2 accepted feature release candidate
 next_task: Select the next task through a new governed proposal; no business task is pre-authorized.
 google_integration_status:
-  configured: false
+  configured: true
   historical_receipts: 12
   receipts_with_machine_readback_hash: 9
   live_drift_check: not_run_by_context_build
@@ -105,7 +105,7 @@ mcp_status:
   live_status: not_probed_by_context_build
 deployment_status:
   status: receipts_present
-  receipts: 5
+  receipts: 6
   production_url: null
 known_drift:
   - malformed_legacy_yaml:docs-platform/changelog/audit/ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01.yaml

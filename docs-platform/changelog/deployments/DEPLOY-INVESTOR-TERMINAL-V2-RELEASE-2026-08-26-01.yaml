@@ -1,0 +1,14 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01
+content_state_sha256: a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239
+content_commit_hash: 9cb055dd4fac66192602c4d361b93c8e1b153b74
+seal_commit_hash: 5534327bb79df5c4c624d755d14bdd33b54ef789
+repository_head_at_build: 3f85015d882c7d019231526d54e266afaf3a76ca
+dist_sha256: 631161fa89c6fb32fc864967c5dfb0254bdbbeda17db5bb3db0ff7916fe567e0
+deployment_id: DEPLOY-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01
+production_url: https://colob.spi.ski
+built_at: 2026-08-26T14:41:00.000Z
+deployed_at: 2026-08-26T14:41:00.000Z
+build_hash: 631161fa89c6fb32fc864967c5dfb0254bdbbeda17db5bb3db0ff7916fe567e0
+smoke_test_result: passed
+recorded_at: 2026-08-26T14:42:21.755Z
