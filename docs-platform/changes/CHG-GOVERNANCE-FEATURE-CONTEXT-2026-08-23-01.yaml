@@ -1,0 +1,19 @@
+schema_version: 2
+change_id: CHG-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01
+iteration_id: ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01
+proposal_id: PROP-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01
+decision_id: DEC-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01
+title: Append feature-worktree governance context evidence
+status: approved
+approved_payload_path: docs-platform/changelog/payloads/ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01-approved.yaml
+approved_payload_sha256: 0c02bc8bf446f35c7382c92dafc34d59362b67d89d73f92d3fcb47378db339c7
+operations:
+  - append proposed, approved, applied and verified lifecycle evidence for the existing feature-worktree context
+  - regenerate derived PROJECT_STATE, CODEX_HANDOFF and TIMELINE from the append-only event chain
+  - preserve all business and canonical financial sources byte-for-byte
+preview:
+  status: passed
+  mutation_performed: false
+  canonical_financial_model_change: false
+  google_operation: false
+  production_or_deployment_change: false

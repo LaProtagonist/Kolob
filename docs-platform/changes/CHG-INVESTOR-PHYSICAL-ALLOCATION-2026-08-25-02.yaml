@@ -1,0 +1,20 @@
+schema_version: 2
+change_id: CHG-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-02
+iteration_id: ITR-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-02
+proposal_id: PROP-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-02
+decision_id: DEC-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-02
+title: Finalize typed physical allocation metadata
+status: approved
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-02-approved.yaml
+approved_payload_sha256: 9ee0de23c9c0fc0eb7bb478b44467d729983290431e657bd82e334341cdb251b
+operations:
+  - Preserve the superseded unsealed allocation lifecycle as append-only evidence.
+  - Deliver the same typed map and integrity test without changing any canonical financial source.
+  - Retain existing local review artifacts only as validation provenance; they are not content of this allocation map.
+preview:
+  status: passed
+  mutation_performed: false
+  canonical_financial_model_change: false
+  investor_terminal_v2_3_change: false
+  google_operation: false
+  production_or_deployment_change: false

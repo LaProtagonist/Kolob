@@ -1,0 +1,12 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-01
+proposal_id: PROP-INVESTOR-TERMINAL-V2-4-2026-08-26-01
+decision_id: DEC-NETWORK-PLANNING-V2-4-2026-08-26-01
+change_set_id: CHG-INVESTOR-TERMINAL-V2-4-2026-08-26-01
+verified_at: 2026-08-26T00:00:00.000Z
+actor: Codex
+validation_status: pending_final_verification
+approved_payload_sha256: f8a10f32e2c40e80bd9316c06fe3d8b73ef5251f7b844abafd8ca0af1827dbc3
+before_state_sha256: d2fdea6af97aa1f68fedfd64fbc3927e981c201ee5bf3af01839c939bdcdbfea
+after_state_sha256: f364d3b64c1b58c521693db9569d2fbcf43d485dffcff21d44a616630c1f12d3
+checks: {}

@@ -1,0 +1,9 @@
+schema_version: 2
+proposal_id: PROP-INVESTOR-TERMINAL-V2-4-2026-08-26-01
+iteration_id: ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-01
+title: Network Planning Model and Investor Terminal v2.4
+status: proposed
+proposed_at: 2026-08-26T00:00:00.000Z
+scope: Continue the restored v2.3 local UI draft through a separate governed planning layer for staffing, locations, direct cohort contribution and partial network results.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-01-approved.yaml
+approved_payload_sha256: f8a10f32e2c40e80bd9316c06fe3d8b73ef5251f7b844abafd8ca0af1827dbc3

@@ -1,0 +1,7 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-03
+previewed_at: 2026-08-26T00:12:00.000Z
+actor: Codex
+status: passed
+mutation_performed: false
+summary: Metadata-only append-only lifecycle correction; no product or external mutation.

@@ -1,0 +1,17 @@
+schema_version: 2
+change_id: CHG-INVESTOR-TERMINAL-V2-4-2026-08-26-03
+iteration_id: ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-03
+proposal_id: PROP-INVESTOR-TERMINAL-V2-4-2026-08-26-03
+decision_id: DEC-NETWORK-PLANNING-V2-4-2026-08-26-01
+title: Seal verified Investor Terminal v2.4 delivery after metadata correction
+status: approved
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-03-approved.yaml
+approved_payload_sha256: 4d4280c3346780369eb9a07643fc7c6cd4b7eda7abf324c327ae74f0ce918edf
+operations:
+  - Preserve the verified v2.4 content commit without amendment.
+  - Add complete lifecycle metadata and seal it as an append-only successor.
+preview:
+  status: passed
+  mutation_performed: false
+  canonical_business_fact_change: false
+  external_operations: none

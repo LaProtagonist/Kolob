@@ -23,6 +23,7 @@ export type LaunchBudgetState = {
   monthlyRentRub: number | null;
   prepaymentMonths: number;
   securityDepositMonths: number;
+  rentFreeMonths: number;
   totalAreaM2: number | null;
   kitchenAreaM2: number | null;
   guestAreaM2: number | null;
@@ -161,6 +162,9 @@ export function defaultLaunchBudgetState(model = launchModel): LaunchBudgetState
     monthlyRentRub: model.premises.scenarios.rent.default_monthly_rent_rub,
     prepaymentMonths: model.premises.scenarios.rent.default_prepayment_months,
     securityDepositMonths: model.premises.scenarios.rent.default_security_deposit_months,
+    // The generic Launch Budget is also imported by the historical Financial
+    // Model. The Base Object applies its approved planning term separately.
+    rentFreeMonths: 0,
     totalAreaM2: model.area.defaults.total_area_m2,
     kitchenAreaM2: model.area.defaults.kitchen_and_production_area_m2,
     guestAreaM2: model.area.defaults.guest_area_m2,
@@ -207,6 +211,7 @@ export function normalizeLaunchBudgetState(value: unknown, model = launchModel):
     monthlyRentRub: finiteOrNull(input.monthlyRentRub),
     prepaymentMonths: [1, 3, 12].includes(Number(input.prepaymentMonths)) ? Number(input.prepaymentMonths) : defaults.prepaymentMonths,
     securityDepositMonths: [1, 2, 3].includes(Number(input.securityDepositMonths)) ? Number(input.securityDepositMonths) : defaults.securityDepositMonths,
+    rentFreeMonths: nonnegativeIntegerOrNull(input.rentFreeMonths) ?? defaults.rentFreeMonths,
     totalAreaM2: finiteOrNull(input.totalAreaM2),
     kitchenAreaM2: finiteOrNull(input.kitchenAreaM2),
     guestAreaM2: finiteOrNull(input.guestAreaM2),

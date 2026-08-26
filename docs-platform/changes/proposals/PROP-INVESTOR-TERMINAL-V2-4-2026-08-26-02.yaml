@@ -1,0 +1,9 @@
+schema_version: 2
+proposal_id: PROP-INVESTOR-TERMINAL-V2-4-2026-08-26-02
+iteration_id: ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-02
+title: Network Planning Model and Investor Terminal v2.4 — deterministic projection successor
+status: proposed
+proposed_at: 2026-08-26T00:04:00.000Z
+scope: Continue the owner-approved v2.4 work with generated Financial Model and Investor Summary projections explicitly included after the predecessor failed only its governed scope-parity check.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-02-approved.yaml
+approved_payload_sha256: cccdeac9e8e2fe53978e3b6f5eb946b940115eee4eb8bc80805e7562853e7074

@@ -1,0 +1,13 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-02
+proposal_id: PROP-INVESTOR-TERMINAL-V2-4-2026-08-26-02
+decision_id: DEC-NETWORK-PLANNING-V2-4-2026-08-26-01
+change_set_id: CHG-INVESTOR-TERMINAL-V2-4-2026-08-26-02
+timestamp: 2026-08-26T00:04:00.000Z
+actor: Codex
+type: Network Planning Model and Investor Terminal v2.4
+predecessor: ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-01 failed only because deterministic Financial Model and Investor Summary projection artifacts were outside its approved content scope.
+source_boundary: Canonical Financial Model remains the integrated-pilot reference; owner-approved Network Planning values remain a separate editable planning source.
+calculation_boundary: Revenue remains in calculateRevenueModel; payroll reuses the exact canonical employer-contribution treatment; React consumes projections only.
+financial_claim_boundary: Point Operating Contribution and network operating result are planning/partial and are not canonical EBITDA.
+external_operations: none

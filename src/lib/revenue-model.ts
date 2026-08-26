@@ -7,6 +7,11 @@ export type RevenueModelState = {
   trafficMode: TrafficMode;
   trafficScenario: TrafficScenario;
   customChecksPerDay: number | null;
+  /**
+   * Runtime-only sales input for a local scenario. The canonical product mix
+   * remains the source when this value is null.
+   */
+  customAverageCheckRub?: number | null;
 };
 
 type RevenueScenario = {
@@ -27,6 +32,7 @@ export type RevenueCalculation = {
   calculated: boolean;
   scenarioLabel: string;
   checksPerDay: number | null;
+  averageCheckRub: number | null;
   foodPortionsPerDay: number | null;
   kolobokPortionsPerDay: number | null;
   manchesPerDay: number | null;
@@ -61,6 +67,12 @@ function nonnegativeIntegerOrNull(value: unknown): number | null {
   return Number.isInteger(numeric) && numeric >= 0 ? numeric : null;
 }
 
+function positiveNumberOrNull(value: unknown): number | null {
+  if (value === null || value === undefined || value === "") return null;
+  const numeric = Number(value);
+  return Number.isFinite(numeric) && numeric > 0 ? numeric : null;
+}
+
 export function defaultRevenueModelState(model = revenueModel): RevenueModelState {
   return {
     trafficMode: model.traffic.default_mode as TrafficMode,
@@ -74,10 +86,12 @@ export function normalizeRevenueModelState(value: unknown, model = revenueModel)
   if (!value || typeof value !== "object") return defaults;
   const input = value as Partial<RevenueModelState>;
   const scenarios = new Set(model.traffic.scenarios.map(item => item.id));
+  const customAverageCheckRub = positiveNumberOrNull(input.customAverageCheckRub);
   return {
     trafficMode: input.trafficMode === "scenario" || input.trafficMode === "custom" ? input.trafficMode : defaults.trafficMode,
     trafficScenario: scenarios.has(input.trafficScenario as TrafficScenario) ? input.trafficScenario as TrafficScenario : defaults.trafficScenario,
     customChecksPerDay: nonnegativeIntegerOrNull(input.customChecksPerDay),
+    ...(customAverageCheckRub === null ? {} : { customAverageCheckRub }),
   };
 }
 
@@ -122,6 +136,7 @@ export function calculateRevenueModel(state: RevenueModelState, model = revenueM
       calculated: false,
       scenarioLabel,
       checksPerDay: null,
+      averageCheckRub: null,
       foodPortionsPerDay: null,
       kolobokPortionsPerDay: null,
       manchesPerDay: null,
@@ -141,7 +156,9 @@ export function calculateRevenueModel(state: RevenueModelState, model = revenueM
   const kolobok = food * product.food_mix.kolobok_share;
   const manches = food * product.food_mix.manches_share;
   const drinks = checks * product.drinks.per_check;
-  const averageCheck = calculateAverageCheck(model);
+  const averageCheck = state.trafficMode === "custom" && typeof state.customAverageCheckRub === "number" && state.customAverageCheckRub > 0
+    ? state.customAverageCheckRub
+    : calculateAverageCheck(model);
   const salesPerDayRub = rubCents(checks * averageCheck);
   const peakChecksExact = checks * production.peak_share / production.peak_hours;
   const peakFoodExact = food * production.peak_share / production.peak_hours;
@@ -154,6 +171,7 @@ export function calculateRevenueModel(state: RevenueModelState, model = revenueM
     calculated: true,
     scenarioLabel,
     checksPerDay: checks,
+    averageCheckRub: averageCheck,
     foodPortionsPerDay: food,
     kolobokPortionsPerDay: kolobok,
     manchesPerDay: manches,

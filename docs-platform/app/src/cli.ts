@@ -28,6 +28,7 @@ import { applyPublication, buildPublicationPreview } from "./google/publisher.js
 import { cleanupTests, createTests, doctor, inspectFolder, readTests, updateTests } from "./google/workspace.js";
 import { applyInvestorStartModel, checkInvestorStartModel, previewInvestorStartModel, previewInvestorStartReverse } from "./investor/start-model.js";
 import { checkRevenueWebSnapshot, validateRevenueModel, writeRevenueWebSnapshot } from "./investor/revenue-model.js";
+import { checkNetworkPlanningSnapshot, validateNetworkPlanningModel, writeNetworkPlanningSnapshot } from "./investor/network-planning.js";
 import { checkFinancialProjection, readFinancialModel, validateFinancialModel, writeFinancialProjection } from "./financial/financial-model.js";
 import { checkFinancialGoogleSheetsPayload, writeFinancialGoogleSheetsPayload } from "./financial/google-sheet.js";
 import { applyFinancialModelSheet, previewFinancialModelSheet, readbackFinancialModelSheet } from "./google/financial-model-publisher.js";
@@ -225,6 +226,14 @@ try {
     console.log(JSON.stringify(writeRevenueWebSnapshot(), null, 2));
   } else if (command === "revenue:web:check") {
     console.log(JSON.stringify(checkRevenueWebSnapshot(), null, 2));
+  } else if (command === "network:planning:validate") {
+    const errors = validateNetworkPlanningModel();
+    if (errors.length) throw new Error(errors.join("\n"));
+    console.log("network planning model validation: OK");
+  } else if (command === "network:planning:sync") {
+    console.log(JSON.stringify(writeNetworkPlanningSnapshot(), null, 2));
+  } else if (command === "network:planning:check") {
+    console.log(JSON.stringify(checkNetworkPlanningSnapshot(), null, 2));
   } else if (command === "financial:model:validate") {
     const errors = validateFinancialModel(readFinancialModel());
     if (errors.length) throw new Error(errors.join("\n"));

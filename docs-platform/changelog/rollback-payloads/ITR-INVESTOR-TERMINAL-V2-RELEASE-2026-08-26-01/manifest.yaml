@@ -1,0 +1,6 @@
+schema_version: 1
+iteration_id: ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01
+mode: governed_reverse_change_set
+preserves_history: true
+git_reset_forbidden: true
+scope: Reverse only through a new governed compensation; preserve all sealed feature and release history.

@@ -1,18 +1,25 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import {
+  canonicalInvestorConfiguration,
   defaultInvestorConfiguration,
+  defaultNetworkScalingConfiguration,
   investorConfigurationStorageKey,
   restoreInvestorConfiguration,
   type InvestorConfiguration,
   type InvestorScenarioId,
+  type NetworkScalingConfiguration,
 } from "../lib/investor-configuration";
 import { launchModel, restoreLaunchBudgetState, type LaunchBudgetState } from "../lib/launch-budget";
 
 type InvestorConfigurationContextValue = {
   configuration: InvestorConfiguration;
   setScenarioId: (scenarioId: InvestorScenarioId) => void;
+  setCustomChecksPerDay: (checksPerDay: number | null) => void;
   setLaunchBudget: (next: LaunchBudgetState | ((current: LaunchBudgetState) => LaunchBudgetState)) => void;
+  setNetworkScaling: (next: NetworkScalingConfiguration | ((current: NetworkScalingConfiguration) => NetworkScalingConfiguration)) => void;
   resetConfiguration: () => void;
+  resetToCanonicalConfiguration: () => void;
+  applyReadyPremisesPreset: () => void;
 };
 
 const InvestorConfigurationContext = createContext<InvestorConfigurationContextValue | null>(null);
@@ -22,9 +29,13 @@ function initialConfiguration() {
     const saved = window.localStorage.getItem(investorConfigurationStorageKey);
     if (saved) return restoreInvestorConfiguration(JSON.parse(saved));
     const legacyLaunchState = window.localStorage.getItem(launchModel.form.local_storage_key);
-    return legacyLaunchState
-      ? { ...defaultInvestorConfiguration(), launchBudget: restoreLaunchBudgetState(JSON.parse(legacyLaunchState)) }
-      : defaultInvestorConfiguration();
+    if (!legacyLaunchState) return defaultInvestorConfiguration();
+    const launchBudget = restoreLaunchBudgetState(JSON.parse(legacyLaunchState));
+    return {
+      ...defaultInvestorConfiguration(),
+      launchBudget,
+      networkScaling: defaultNetworkScalingConfiguration(launchBudget),
+    };
   } catch {
     return defaultInvestorConfiguration();
   }
@@ -44,9 +55,26 @@ export function InvestorConfigurationProvider({ children }: { children: ReactNod
   const value = useMemo<InvestorConfigurationContextValue>(() => ({
     configuration,
     setScenarioId: (scenarioId) => setConfiguration(current => ({ ...current, scenarioId })),
-    setLaunchBudget: (next) => setConfiguration(current => ({
+    setCustomChecksPerDay: (customChecksPerDay) => setConfiguration(current => ({ ...current, customChecksPerDay })),
+    setLaunchBudget: (next) => setConfiguration(current => {
+      const launchBudget = typeof next === "function" ? next(current.launchBudget) : next;
+      return {
+        ...current,
+        launchBudget,
+        // Legacy point economics still exposes one integrated bar control.
+        // It edits the first cohort only; other cohorts remain independent.
+        networkScaling: {
+          ...current.networkScaling,
+          productionGrowEnabled: launchBudget.growEnabled,
+          cohorts: current.networkScaling.cohorts.map((cohort, index) => index === 0
+            ? { ...cohort, barEnabled: launchBudget.barEnabled }
+            : cohort),
+        },
+      };
+    }),
+    setNetworkScaling: (next) => setConfiguration(current => ({
       ...current,
-      launchBudget: typeof next === "function" ? next(current.launchBudget) : next,
+      networkScaling: typeof next === "function" ? next(current.networkScaling) : next,
     })),
     resetConfiguration: () => {
       try {
@@ -56,6 +84,15 @@ export function InvestorConfigurationProvider({ children }: { children: ReactNod
       }
       setConfiguration(defaultInvestorConfiguration());
     },
+    resetToCanonicalConfiguration: () => {
+      try {
+        window.localStorage.removeItem(investorConfigurationStorageKey);
+      } catch {
+        // The in-memory reset remains available when storage is unavailable.
+      }
+      setConfiguration(canonicalInvestorConfiguration());
+    },
+    applyReadyPremisesPreset: () => setConfiguration(defaultInvestorConfiguration()),
   }), [configuration]);
 
   return <InvestorConfigurationContext.Provider value={value}>{children}</InvestorConfigurationContext.Provider>;

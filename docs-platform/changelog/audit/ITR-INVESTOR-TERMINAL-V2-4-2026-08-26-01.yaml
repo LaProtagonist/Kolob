@@ -1,0 +1,13 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-01
+proposal_id: PROP-INVESTOR-TERMINAL-V2-4-2026-08-26-01
+decision_id: DEC-NETWORK-PLANNING-V2-4-2026-08-26-01
+change_set_id: CHG-INVESTOR-TERMINAL-V2-4-2026-08-26-01
+timestamp: 2026-08-26T00:00:00.000Z
+actor: Codex
+type: Network Planning Model and Investor Terminal v2.4
+source_boundary: Canonical Financial Model remains an integrated-pilot reference; owner-approved Network Planning values are separate editable planning assumptions.
+calculation_boundary: Revenue remains in calculateRevenueModel; employer contributions are reused by a shared helper; React consumes only projections.
+physical_boundary: Production and Grow remain once; point wash kits remain required but unpriced; old MOD-WASH remains mixed and excluded from point totals.
+financial_claim_boundary: Point Operating Contribution and network operating result exclude unresolved central / tax / capacity costs and are not canonical EBITDA.
+external_operations: none

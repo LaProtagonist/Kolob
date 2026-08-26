@@ -1,0 +1,10 @@
+schema_version: 2
+proposal_id: PROP-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-01
+iteration_id: ITR-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-01
+title: Create a typed physical allocation map for Investor Model sources
+status: proposed
+proposed_at: 2026-08-24T21:15:55.000Z
+source: Owner instruction, 2026-08-25
+scope: Formalize the owner-approved physical decomposition of the existing integrated Investor Model as typed metadata only. No financial values or formulas are changed.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-01-approved.yaml
+approved_payload_sha256: cf23edce3d05bc35bcabd4dc1a00e6627a8809e32d8e04ecb83d8c4925ba6c11

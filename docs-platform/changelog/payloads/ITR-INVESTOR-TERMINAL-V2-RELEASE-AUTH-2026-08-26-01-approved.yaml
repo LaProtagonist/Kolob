@@ -1,0 +1,18 @@
+schema_version: 2
+payload_id: PAYLOAD-INVESTOR-TERMINAL-V2-RELEASE-AUTH-2026-08-26-01
+title: Authorize Investor Terminal v2 release integration and production publication
+status: approved
+approved_by: project owner
+approved_at: 2026-08-26T00:30:00.000Z
+scope:
+  - Record the owner instruction to release the accepted Investor Terminal v2 feature line as one integrated dependency graph.
+  - Authorize production publication at https://colob.spi.ski after the required feature, integration and release checks pass.
+  - Preserve the canonical Financial Model, Base Object and all existing financial/planning formulas.
+forbidden_scope:
+  - Partial file transfer or cherry-picking of Investor Terminal runtime dependencies.
+  - Rewriting sealed history, force-push, rebase or deletion of feature branches and backup stashes.
+  - Production deployment before release verification and a sealed release record.
+owner_decision:
+  - Public investor-facing name is «Терминал инвестора».
+  - Investor navigation order is «Модель развития», «Материалы проекта», «Терминал инвестора», «Обсудить участие».
+  - The accepted feature branch is integrated with the current production branch by a normal merge and deployed through the existing static-site workflow.

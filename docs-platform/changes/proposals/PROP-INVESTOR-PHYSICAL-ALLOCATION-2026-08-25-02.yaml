@@ -1,0 +1,9 @@
+schema_version: 2
+proposal_id: PROP-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-02
+iteration_id: ITR-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-02
+title: Finalize physical allocation map with preserved review artifacts
+status: proposed
+proposed_at: 2026-08-24T21:16:10.000Z
+scope: Succeed the unsealed allocation map lifecycle only to allow two existing historical review artifacts as pre-existing dirty paths. Product and financial scope are unchanged.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-PHYSICAL-ALLOCATION-2026-08-25-02-approved.yaml
+approved_payload_sha256: 9ee0de23c9c0fc0eb7bb478b44467d729983290431e657bd82e334341cdb251b

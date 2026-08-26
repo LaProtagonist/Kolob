@@ -1,0 +1,57 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-02
+proposal_id: PROP-INVESTOR-TERMINAL-V2-4-2026-08-26-02
+decision_id: DEC-NETWORK-PLANNING-V2-4-2026-08-26-01
+change_set_id: CHG-INVESTOR-TERMINAL-V2-4-2026-08-26-02
+title: Network Planning Model and Investor Terminal v2.4 — deterministic projection successor
+status: approved
+approved_by: project owner
+approved_at: 2026-08-26T00:04:00.000Z
+actor: Codex
+scope: Successor to the failed v2.4 scope-parity iteration; finishes the same owner-approved planning/runtime/UI work and includes required deterministic Financial Model and Investor Summary projection artifacts.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-02-approved.yaml
+approved_payload_sha256: cccdeac9e8e2fe53978e3b6f5eb946b940115eee4eb8bc80805e7562853e7074
+before_state_sha256: 43c124294960f112da6ec1c4009f46a6e783841775d1aa362fcd0960d952a25a
+after_state_sha256: aef63a1a371c117bf5a67e2521b62025db388b9416fa0d71d31041f28ea4f2ef
+state_hash_paths:
+  - docs-platform/app/package.json
+  - docs-platform/app/src/cli.ts
+  - docs-platform/app/src/financial/financial-model.ts
+  - docs-platform/app/src/investor/network-planning.ts
+  - docs-platform/generated/financial-google-sheets-payload.json
+  - docs-platform/generated/financial-model-projection.json
+  - docs-platform/generated/investor-financial-summary-google-sheets-payload.json
+  - docs-platform/generated/investor-financial-summary.json
+  - docs-platform/registry/decisions.yaml
+  - docs-platform/registry/documents.yaml
+  - docs-platform/registry/sources.yaml
+  - docs-platform/schemas/network-planning-assumptions.schema.json
+  - docs-platform/working/investor-financial-summary.yaml
+  - docs-platform/working/network-planning-assumptions.yaml
+  - package.json
+  - scripts/test-investor-journey.test.ts
+  - scripts/test-investor-terminal.cjs
+  - src/components/InvestorTerminal.css
+  - src/components/NetworkScalingPanel.tsx
+  - src/content/network-planning-data.json
+  - src/lib/employer-contributions.ts
+  - src/lib/investor-configuration.ts
+  - src/lib/network-planning.ts
+  - src/lib/network-scaling.ts
+  - src/lib/physical-allocation.ts
+  - src/lib/point-operations.ts
+  - src/lib/revenue-model.ts
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+  - docs-platform/changelog/snapshots/SNAPSHOT-ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-02.yaml
+allowed_dirty_paths:
+  - output/pdf/launch-budget-review.pdf
+  - output/review/launch-budget-page-full.jpg
+rollback_payload: docs-platform/changelog/rollback-payloads/ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-02/manifest.yaml
+rollback_contract:
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true

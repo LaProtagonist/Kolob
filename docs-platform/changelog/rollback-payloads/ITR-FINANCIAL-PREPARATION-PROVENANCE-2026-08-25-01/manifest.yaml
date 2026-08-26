@@ -1,0 +1,6 @@
+schema_version: 1
+iteration_id: ITR-FINANCIAL-PREPARATION-PROVENANCE-2026-08-25-01
+mode: governed_reverse_change_set
+preserves_history: true
+git_reset_forbidden: true
+scope: Reverse only the selector/provenance correction through a new approved change; never alter the 11000000 RUB baseline or 3500000 RUB Ready Premises preset.

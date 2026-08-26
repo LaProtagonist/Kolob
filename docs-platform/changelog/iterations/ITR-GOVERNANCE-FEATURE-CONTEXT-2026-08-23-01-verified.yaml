@@ -1,0 +1,23 @@
+event_id: EVT-ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01-VERIFIED
+event_type: verified
+occurred_at: 2026-08-23T18:11:26.000Z
+recorded_at: 2026-08-23T18:11:26.000Z
+iteration_id: ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01
+proposal_id: PROP-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01
+decision_id: DEC-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01
+change_set_id: CHG-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01
+actor: Codex
+tool: governance context validation
+scope: Derived feature-worktree context and append-only lifecycle only.
+summary: Lifecycle evidence is ready for derived context rebuild and required post-repair onboarding; no production or canonical system was used.
+approved_payload_sha256: 0c02bc8bf446f35c7382c92dafc34d59362b67d89d73f92d3fcb47378db339c7
+before_hash: 491a9bb7df0f0179360fc7803acfcdfcd0c648cf89c3269dd305fa45262f23eb
+after_hash: 491a9bb7df0f0179360fc7803acfcdfcd0c648cf89c3269dd305fa45262f23eb
+affected_document_ids: []
+affected_section_ids: [governance.feature-worktree-context, governance.append-only-context-repair]
+source_refs: [docs-platform/changes/iterations/ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01.yaml, docs-platform/changelog/verification/ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01.yaml, docs-platform/changelog/audit/ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01.yaml]
+git: { content_commit_hash: null, seal_commit_ref: null, iteration_tag: null, commit_message_verified: null, trailers_verified: null }
+external: { google_sync_receipts: [], deployment_receipt: null, remote_readback_hash: null, production_url: null }
+rollback: { rollback_payload: docs-platform/changelog/rollback-payloads/ITR-GOVERNANCE-FEATURE-CONTEXT-2026-08-23-01/manifest.yaml, compensates_iteration_id: null, restores_hash: 491a9bb7df0f0179360fc7803acfcdfcd0c648cf89c3269dd305fa45262f23eb, dependency_check: Append-only feature context repair; master history and validation rules remain unchanged. }
+artifacts: { manifest_refs: [] }
+confidence: exact

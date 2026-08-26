@@ -8,6 +8,7 @@ export type RouteId =
   | "investorQuestions"
   | "privacy"
   | "capexConfigurator"
+  | "investorTerminal"
   | "launchBudget"
   | "revenueModel"
   | "economics"

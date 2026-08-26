@@ -1,0 +1,38 @@
+schema_version: 2
+iteration_id: ITR-FINANCIAL-PREPARATION-PROVENANCE-2026-08-25-01
+proposal_id: PROP-FINANCIAL-PREPARATION-PROVENANCE-2026-08-25-01
+decision_id: DEC-FINANCIAL-PREPARATION-PROVENANCE-2026-08-25-01
+change_set_id: CHG-FINANCIAL-PREPARATION-PROVENANCE-2026-08-25-01
+verified_at: 2026-08-25T00:00:00.000Z
+actor: Codex
+validation_status: passed
+approved_payload_sha256: 873364b42979eafaed47bf998ebeab880b2b74b3055c22a61ffb66a62efed4b9
+before_state_sha256: e8edd9beb5607e733e892c6d67d09ca7008dbbe392307e3cc00060576f47df80
+after_state_sha256: 1b9505e375c62789e81e6deec8f85ea2836ab56033a0f054108059f4fa3e933a
+checks:
+  financial_schema:
+    status: passed
+    command: npm run financial:model:validate
+  financial_model_unit:
+    status: passed
+    command: node docs-platform/app/node_modules/tsx/dist/cli.mjs --test docs-platform/app/test/financial-model.test.ts
+    pass_count: 31
+  deterministic_projections:
+    status: passed
+    commands:
+      - npm run financial:model:sync
+      - npm run financial:sheet:payload
+      - npm run investor:summary:sync
+      - npm run investor:summary:sheet:payload
+  release_verification:
+    status: passed
+    command: npm run verify:release
+    duration_seconds: 999.2
+canonical_invariants:
+  integrated_pilot_preparation_rub: 11000000
+  ready_premises_runtime_preparation_rub: 3500000
+  business_facts: unchanged
+  validator_behavior: unchanged
+  google: unused
+  deployment: unused
+summary: The full Financial Model and its dependent generated projections now distinguish the full Integrated Pilot preparation baseline from the Ready Premises public runtime preset.

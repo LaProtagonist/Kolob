@@ -8,7 +8,7 @@ document:
 dependency:
   document_id: DOC-FINANCIAL-MODEL
   projection_path: docs-platform/generated/financial-model-projection.json
-  content_state_sha256: 8e933d6b3a503b97cc68a856c73cb855258c5d3e2cffc8d91e4c10516c366c81
+  content_state_sha256: fd595158fc5e44d8ee3d884beb4473d855b1785d8337ee22bc71ba51765edc81
 
 google:
   title: 05 — Финансовая модель — инвестиционная сводка

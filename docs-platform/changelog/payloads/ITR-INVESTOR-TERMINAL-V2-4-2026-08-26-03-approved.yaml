@@ -1,0 +1,42 @@
+schema_version: 2
+payload_id: PAYLOAD-INVESTOR-TERMINAL-V2-4-2026-08-26-03
+iteration_id: ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-03
+proposal_id: PROP-INVESTOR-TERMINAL-V2-4-2026-08-26-03
+decision_id: DEC-NETWORK-PLANNING-V2-4-2026-08-26-01
+change_set_id: CHG-INVESTOR-TERMINAL-V2-4-2026-08-26-03
+title: Seal verified Investor Terminal v2.4 delivery after metadata correction
+status: approved
+approved_by: project owner
+approved_at: 2026-08-26T00:12:00.000Z
+scope:
+  - Append complete governed lifecycle metadata after the verified v2.4 content commit could not seal because its predecessor iteration record omitted required affected-scope fields.
+  - Preserve the immutable v2.4 content commit, its code, Financial Model values, generated projections and all prior timeline events.
+forbidden_scope:
+  - Altering canonical business facts, v2.4 code or deterministic projections.
+  - Rewriting previous content commits, timeline events or backup stashes.
+  - Google access, deployment, production checkout or master.
+state_hash_paths:
+  - docs-platform/changes/iterations/ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-02.yaml
+content_paths:
+  - docs-platform/changes/proposals/PROP-INVESTOR-TERMINAL-V2-4-2026-08-26-03.yaml
+  - docs-platform/changes/CHG-INVESTOR-TERMINAL-V2-4-2026-08-26-03.yaml
+  - docs-platform/changes/iterations/ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-03.yaml
+  - docs-platform/changelog/payloads/ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-03-approved.yaml
+  - docs-platform/changelog/audit/ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-03.yaml
+  - docs-platform/changelog/previews/ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-03.yaml
+  - docs-platform/changelog/change-receipts/CHG-INVESTOR-TERMINAL-V2-4-2026-08-26-03.yaml
+  - docs-platform/changelog/verification/ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-03.yaml
+  - docs-platform/changelog/rollback-payloads/ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-03/
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+  - docs-platform/changelog/snapshots/SNAPSHOT-ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-03.yaml
+allowed_dirty_paths:
+  - output/pdf/launch-budget-review.pdf
+  - output/review/launch-budget-page-full.jpg
+rollback_contract:
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true

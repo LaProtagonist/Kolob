@@ -1,0 +1,11 @@
+schema_version: 2
+decision_id: DEC-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01
+iteration_id: ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01
+title: Approve Investor Terminal v2 release integration and production publication
+status: approved
+approved_by: project owner
+approved_at: 2026-08-26T00:30:00.000Z
+scope: Publish the accepted integrated Investor Terminal v2 feature line after full release verification. The release includes its state, planning, calculation, generated-artifact and UI dependencies as one mergeable feature, and makes /investor-terminal available from public investor navigation.
+excludes: [new Financial Model formulas, Base Object changes, Network Planning business changes, salary changes, external Google publication, force-push, rebase, deletion of feature branch or stashes]
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-TERMINAL-V2-RELEASE-AUTH-2026-08-26-01-approved.yaml
+approved_payload_sha256: 2fd186fc9872f88f7872fe4baf02f8ff7b2cf8df29a0dd8d30c577eea3142b15

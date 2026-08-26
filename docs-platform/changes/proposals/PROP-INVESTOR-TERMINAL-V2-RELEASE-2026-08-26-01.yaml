@@ -1,0 +1,9 @@
+schema_version: 2
+proposal_id: PROP-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01
+iteration_id: ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01
+title: Close and release accepted Investor Terminal v2 feature line
+status: proposed
+proposed_at: 2026-08-26T00:30:00.000Z
+scope: Close the accepted feature candidate as one dependency-complete delivery, integrate it by normal merge with current production and deploy only after release verification.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01-approved.yaml
+approved_payload_sha256: 7d57668e4b2458b0948d8de81856beb8c964ac905a639ace42cf96ece1bc318a
