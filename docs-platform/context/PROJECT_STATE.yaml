@@ -1,13 +1,13 @@
 schema_version: 2
-generated_at: 2026-08-26T00:15:00.001Z
+generated_at: 2026-08-26T14:05:37.302Z
 project: Колобочная
 branch: feat/investor-terminal-v2
-latest_timeline_event_id: EVT-ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-03-COMMITTED
-latest_timeline_event_hash: f5e15595bc55d76ba8c264168ea4f2e137f23ab622e310e2d764d2341280c028
-latest_closed_iteration_id: ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-03
-latest_iteration_tag: iteration/ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-03
-latest_content_commit_hash: edf007925834ded34b470e4e55108e65fd4d0226
-registry_hash: 56881fb91b62596449eaacf6bb1306fccdf09d3f3fcf518f411ddb39bdfd3b32
+latest_timeline_event_id: EVT-ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01-COMMITTED
+latest_timeline_event_hash: 44205711b76dbe30086c8c33a34cb526ef7be043f803f552925836f2737acf20
+latest_closed_iteration_id: ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01
+latest_iteration_tag: iteration/ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01
+latest_content_commit_hash: 9cb055dd4fac66192602c4d361b93c8e1b153b74
+registry_hash: 3ffe84a46b66cf98fefdb6e19cc9390a46a1c1fb4ee147c325fa10774c6ab9dd
 canonical_document_hashes:
   - document_id: DOC-AGENTS
     local_path: docs-platform/AGENTS.md
@@ -63,7 +63,7 @@ canonical_document_hashes:
     status: proposed
   - document_id: DOC-INVESTOR-FINANCIAL-SUMMARY
     local_path: docs-platform/working/investor-financial-summary.yaml
-    sha256: ce7ae8451898dc22583646b1aee2067ca0136013c2a9f6cb10318dc0a07173c9
+    sha256: b786d62f1b04e20a11742cd0bf06f0b39299daf3b95f4bff08c0967cdc9f9d3a
     status: research
   - document_id: DOC-INVESTOR-START-MODEL
     local_path: docs-platform/working/investor-start-model.yaml
@@ -71,7 +71,7 @@ canonical_document_hashes:
     status: research
   - document_id: DOC-NETWORK-PLANNING-ASSUMPTIONS
     local_path: docs-platform/working/network-planning-assumptions.yaml
-    sha256: 86a136bcbaae0aef7ef28caeab9f582fb9ba3b5af6c8e10dc2cb8cdb3f36f57e
+    sha256: 12e8220efac9c759decaa05904aaa2452e1ea6a13f5dd267670d8772b5f9a9e0
     status: approved
   - document_id: DOC-PILOT-CAPEX-ASSUMPTIONS
     local_path: docs-platform/working/pilot-capex-assumptions.yaml
@@ -92,7 +92,7 @@ open_questions:
   - Archive pending review artifacts in durable storage before treating visual verification as portable.
   - Create deployment receipts when the next governed deployment is performed.
   - Decide whether malformed superseded legacy YAML evidence should receive a separate correction event.
-current_workstream: Seal verified Investor Terminal v2.4 delivery after metadata correction
+current_workstream: Investor Terminal v2 accepted feature release candidate
 next_task: Select the next task through a new governed proposal; no business task is pre-authorized.
 google_integration_status:
   configured: false

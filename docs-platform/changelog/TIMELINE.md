@@ -4,10 +4,10 @@
 
 ## 1. Current state
 
-- Events: 221.
-- Timeline head event: `EVT-ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-03-COMMITTED`.
-- Timeline head SHA-256: `f5e15595bc55d76ba8c264168ea4f2e137f23ab622e310e2d764d2341280c028`.
-- Latest recorded iteration: `ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-03`.
+- Events: 226.
+- Timeline head event: `EVT-ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01-COMMITTED`.
+- Timeline head SHA-256: `44205711b76dbe30086c8c33a34cb526ef7be043f803f552925836f2737acf20`.
+- Latest recorded iteration: `ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01`.
 
 ## 2. Modern governed iterations
 
@@ -53,6 +53,7 @@
 | 2026-08-26T00:03:00.000Z | failed | ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-01 | ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-01 | DEC-NETWORK-PLANNING-V2-4-2026-08-26-01 | CHG-INVESTOR-TERMINAL-V2-4-2026-08-26-01 | — | — | — | — | — | Affected verification correctly found stale Financial Model and Investor Summary generated projections after the shared employer-contribution helper changed source content state; the approved scope omitted those deterministic artifacts. No business fact or validation rule failed. |
 | 2026-08-26T00:11:00.000Z | failed | Network Planning Model and Investor Terminal v2.4 — deterministic projection successor | ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-02 | DEC-NETWORK-PLANNING-V2-4-2026-08-26-01 | CHG-INVESTOR-TERMINAL-V2-4-2026-08-26-02 | 0c398e9a730707c4611540e8a1316d8fb85f5ff2 | — | — | — | — | Seal was correctly blocked before writing a committed event because the iteration metadata omitted required affected_document_ids and affected_section_ids. The content commit remains immutable; a minimal append-only successor will supply complete metadata and seal the verified delivery. |
 | 2026-08-25T21:38:02.000Z | committed | Seal verified Investor Terminal v2.4 delivery after metadata correction | ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-03 | DEC-NETWORK-PLANNING-V2-4-2026-08-26-01 | CHG-INVESTOR-TERMINAL-V2-4-2026-08-26-03 | edf007925834ded34b470e4e55108e65fd4d0226 | iteration/ITR-INVESTOR-TERMINAL-V2-4-2026-08-26-03 | — | — | — | Seal verified Investor Terminal v2.4 delivery after metadata correction: content commit verified and linked to the governed lifecycle before sealing. |
+| 2026-08-26T14:05:21.000Z | committed | Investor Terminal v2 accepted feature release candidate | ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01 | DEC-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01 | CHG-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01 | 9cb055dd4fac66192602c4d361b93c8e1b153b74 | iteration/ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01 | — | — | — | Investor Terminal v2 accepted feature release candidate: content commit verified and linked to the governed lifecycle before sealing. |
 
 ## 3. Legacy imported history
 
