@@ -4,10 +4,10 @@
 
 ## 1. Current state
 
-- Events: 252.
-- Timeline head event: `EVT-ITR-FINANCIAL-CORE-CONTEXTS-2026-08-27-01-COMMITTED`.
-- Timeline head SHA-256: `e24c41e8ba8b333a83f0af0f6700b280ff6a276ad9010d5f758e69133070f79f`.
-- Latest recorded iteration: `ITR-FINANCIAL-CORE-CONTEXTS-2026-08-27-01`.
+- Events: 261.
+- Timeline head event: `EVT-ITR-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-02-COMMITTED`.
+- Timeline head SHA-256: `9745db20f0cbb31fa4fd4351c468f214bce062e780536a3d9e454404725fe851`.
+- Latest recorded iteration: `ITR-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-02`.
 
 ## 2. Modern governed iterations
 
@@ -59,6 +59,8 @@
 | 2026-08-26T20:58:00.000Z | failed | Register Financial Core v2 feature-worktree governance context | ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01 | DEC-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01 | CHG-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01 | — | — | — | — | — | Pre-commit scope guard refused the unlisted verification receipt; no content was staged or committed. A narrow successor will correct the governance scope without altering this approved payload. |
 | 2026-08-26T21:03:15.000Z | committed | Correct Financial Core v2 feature-worktree context scope | ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01 | DEC-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01 | CHG-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01 | ad927266a787fe89235011a6a3c6d7da7b4f6c99 | iteration/ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01 | — | — | — | Correct Financial Core v2 feature-worktree context scope: content commit verified and linked to the governed lifecycle before sealing. |
 | 2026-08-26T21:29:09.000Z | committed | Establish explicit financial contexts and shared calculation primitives | ITR-FINANCIAL-CORE-CONTEXTS-2026-08-27-01 | DEC-FINANCIAL-CORE-CONTEXTS-2026-08-27-01 | CHG-FINANCIAL-CORE-CONTEXTS-2026-08-27-01 | c6596447bd9c890e74dc4062590dfaa75a622a3a | iteration/ITR-FINANCIAL-CORE-CONTEXTS-2026-08-27-01 | — | — | — | Establish explicit financial contexts and shared calculation primitives: content commit verified and linked to the governed lifecycle before sealing. |
+| 2026-08-27T00:31:03.000Z | failed | Consolidate Network P&L and FCF through the shared financial core | ITR-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-01 | DEC-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-01 | CHG-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-01 | — | — | — | — | — | Release verification found a required Network Planning snapshot refresh outside the already-hashed payload scope. The preliminary iteration is closed without a content commit; a successor records the exact refreshed scope. |
+| 2026-08-26T22:50:09.000Z | committed | Consolidate Network P&L and FCF through the shared financial core | ITR-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-02 | DEC-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-02 | CHG-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-02 | 6fcbf67919f3a86f7aae6ba1ab14166310e4f34c | iteration/ITR-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-02 | — | — | — | Consolidate Network P&L and FCF through the shared financial core: content commit verified and linked to the governed lifecycle before sealing. |
 
 ## 3. Legacy imported history
 

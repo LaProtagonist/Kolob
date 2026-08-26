@@ -1,12 +1,12 @@
 schema_version: 2
-generated_at: 2026-08-27T00:24:03.001Z
+generated_at: 2026-08-27T00:32:03.001Z
 project: Колобочная
 branch: feat/financial-core-consolidation-v2
-latest_timeline_event_id: EVT-ITR-FINANCIAL-CORE-CONTEXTS-2026-08-27-01-COMMITTED
-latest_timeline_event_hash: e24c41e8ba8b333a83f0af0f6700b280ff6a276ad9010d5f758e69133070f79f
-latest_closed_iteration_id: ITR-FINANCIAL-CORE-CONTEXTS-2026-08-27-01
-latest_iteration_tag: iteration/ITR-FINANCIAL-CORE-CONTEXTS-2026-08-27-01
-latest_content_commit_hash: c6596447bd9c890e74dc4062590dfaa75a622a3a
+latest_timeline_event_id: EVT-ITR-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-02-COMMITTED
+latest_timeline_event_hash: 9745db20f0cbb31fa4fd4351c468f214bce062e780536a3d9e454404725fe851
+latest_closed_iteration_id: ITR-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-02
+latest_iteration_tag: iteration/ITR-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-02
+latest_content_commit_hash: 6fcbf67919f3a86f7aae6ba1ab14166310e4f34c
 registry_hash: 3ffe84a46b66cf98fefdb6e19cc9390a46a1c1fb4ee147c325fa10774c6ab9dd
 canonical_document_hashes:
   - document_id: DOC-AGENTS
@@ -63,7 +63,7 @@ canonical_document_hashes:
     status: proposed
   - document_id: DOC-INVESTOR-FINANCIAL-SUMMARY
     local_path: docs-platform/working/investor-financial-summary.yaml
-    sha256: b786d62f1b04e20a11742cd0bf06f0b39299daf3b95f4bff08c0967cdc9f9d3a
+    sha256: 429aca4726de5284a37d87ee9522959e7de787edb0bbbe4b03694f287bcb18fa
     status: research
   - document_id: DOC-INVESTOR-START-MODEL
     local_path: docs-platform/working/investor-start-model.yaml
@@ -92,7 +92,7 @@ open_questions:
   - Archive pending review artifacts in durable storage before treating visual verification as portable.
   - Create deployment receipts when the next governed deployment is performed.
   - Decide whether malformed superseded legacy YAML evidence should receive a separate correction event.
-current_workstream: Establish explicit financial contexts and shared calculation primitives
+current_workstream: Consolidate Network P&L and FCF through the shared financial core
 next_task: Select the next task through a new governed proposal; no business task is pre-authorized.
 google_integration_status:
   configured: false
