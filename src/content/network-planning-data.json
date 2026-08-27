@@ -1,16 +1,16 @@
 {
   "meta": {
     "schemaVersion": 1,
-    "dataVersion": "1.6",
-    "contentStateSha256": "aa902619fa2cfebdca5fc6002bc2690f0f889f78551d87284365dd3a8fc918b4",
+    "dataVersion": "1.7",
+    "contentStateSha256": "24fa26ec8649a345d8aaecb7c68f4f528b8e4e970f28a8c02c546bf4a95739aa",
     "sourceFiles": [
       {
         "path": "docs-platform/working/network-planning-assumptions.yaml",
-        "sha256": "c44ec0973129f995d2e7acbd1f39a080587172f790711f1f98903d9e29660e72"
+        "sha256": "a380d45451bbc78bab550ea7c7d9ab80a6e322ad956d340f3927851432b93d1d"
       },
       {
         "path": "docs-platform/schemas/network-planning-assumptions.schema.json",
-        "sha256": "82258c5c370a74d02658da8faa08e913ac4ce9a3af3b6e71e337a19307b345da"
+        "sha256": "1f4f512c3262ceaa0df9d52b497660a6de6ffdfd6ff21876d794b0d626f93cae"
       },
       {
         "path": "docs-platform/working/financial-model.yaml",
@@ -21,8 +21,12 @@
         "sha256": "bb8f97c95b18024ed5c60aa2f71c3c44bf83e8e5932b1eb781c82c31f89817f8"
       },
       {
+        "path": "src/content/capex-configurator-data.json",
+        "sha256": "7e578f410623f1ef49d29ffc8b0c5a301b484d327c0c893c0602d11d0f0684b4"
+      },
+      {
         "path": "src/lib/physical-allocation.ts",
-        "sha256": "6604740fab45563e1fb655880890acefe60d135c00f5d0a95c103f5c900e0fee"
+        "sha256": "90d98d152c657047ee7dcdd291e5118bf5d1bef135851c7171fc5c9e224b0d27"
       },
       {
         "path": "src/lib/employer-contributions.ts",
@@ -30,7 +34,7 @@
       },
       {
         "path": "docs-platform/app/src/investor/network-planning.ts",
-        "sha256": "648232832d51957d19609f28f84dd1836d0c85c38b72b818a2f3d9131db7aa64"
+        "sha256": "70016d6bfe93b7eca58e2457c3dfe7454839ab828318c30029b7275b9b1d258c"
       }
     ],
     "provenance": "owner-approved Investor Terminal temporal-network brief, 2026-08-26",
@@ -39,7 +43,7 @@
   "planning": {
     "document": {
       "id": "DOC-NETWORK-PLANNING-ASSUMPTIONS",
-      "version": "1.6",
+      "version": "1.7",
       "status": "owner_approved_planning",
       "title": "Network Planning Model — Investor Terminal v2.4",
       "provenance": "owner-approved Investor Terminal temporal-network brief, 2026-08-26",
@@ -129,7 +133,14 @@
         "prep_cooks_at_or_below_threshold": 1,
         "prep_cooks_above_threshold": 2,
         "capacity_review_after_two_prep_cooks": true,
-        "schedule_default": "one_main_shift"
+        "schedule_default": "one_main_shift",
+        "capacity_evidence": {
+          "demand_metric": "food_portions_per_day",
+          "demand_source": "revenue_model.product_model.food_portions_per_check",
+          "equipment_capacity_status": "open_parameters",
+          "bottleneck": "Производительность основной линии не утверждена: параметры пароконвектомата, sous-vide и охлаждения остаются открытыми в CAPEX register.",
+          "second_shift_status": "requires_capacity_and_roster_decision"
+        }
       },
       "shared_manager": {
         "role_id": "MANAGER",
@@ -155,6 +166,7 @@
             "shared_seating": true,
             "venue_security_included": true,
             "common_cleaning_included": true,
+            "venue_music_included": true,
             "utilities_included": true,
             "service_charge_monthly_rub": 50000,
             "storage_rent_monthly_rub": 20000,
@@ -179,6 +191,7 @@
             "shared_seating": true,
             "venue_security_included": true,
             "common_cleaning_included": true,
+            "venue_music_included": true,
             "utilities_included": false,
             "utilities_monthly_rub": 30000,
             "rent_per_m2_month_rub": 4000,
@@ -494,6 +507,77 @@
       },
       "production_packaging": {
         "status": "unresolved_manual"
+      },
+      "network_completion": {
+        "physical_allocation_source": "src/lib/physical-allocation.ts",
+        "historical_integrated_calibration": {
+          "roster_scenario": "realistic",
+          "premises_area_source": "preparation.point_area_proxy.reference_area_m2"
+        },
+        "administrative_reserve": {
+          "scope": "shared_network",
+          "driver": "consolidated_net_revenue_percentage",
+          "expansion_treatment": "incremental_revenue_only"
+        },
+        "household": {
+          "scope": "point",
+          "driver": "canonical_household_formula_per_point"
+        },
+        "equipment_service": {
+          "scope": "point",
+          "driver": "incremental_equipment_asset_value_relative_to_current_base",
+          "semantic_boundary": "Recurring service, preventative maintenance and minor repair; separate from maintenance CAPEX replacement reserve."
+        },
+        "accounting": {
+          "scope": "shared_network",
+          "treatment": "one_current_base_function"
+        },
+        "ventilation_grease": {
+          "scope": "point",
+          "driver": "historical_integrated_rate_per_applicable_m2",
+          "venue_service_treatment": "No venue contract currently confirms inclusion; a point with cooking ventilation retains the planning OPEX."
+        },
+        "uniform_renewal": {
+          "scope": "point_and_incremental_production",
+          "driver": "historical_realistic_roster_calibration"
+        },
+        "music": {
+          "scope": "point",
+          "street_seating_treatment": "own_public_performance_line",
+          "takeaway_default": 0,
+          "venue_treatment": "venue_provided"
+        },
+        "pest_control": {
+          "scope": "point",
+          "driver": "historical_integrated_rate_per_applicable_m2"
+        },
+        "software": {
+          "scope": "shared_network",
+          "treatment": "requires_confirmation",
+          "note": "The historical YUMA amount remains in Current Base once; point versus central licensing has no governed contract evidence."
+        },
+        "medical": {
+          "scope": "point_and_incremental_production",
+          "driver": "historical_realistic_roster_calibration",
+          "excludes": [
+            "shared_manager_without_food_operation_requirement"
+          ]
+        },
+        "security_monitoring": {
+          "scope": "point",
+          "driver": "per_self_managed_premises",
+          "venue_security_treatment": "venue_security_included_means_zero"
+        },
+        "banking": {
+          "scope": "shared_network",
+          "treatment": "tbd_non_acquiring_service",
+          "materiality": "minor_assumption_gap"
+        },
+        "other_opex": {
+          "scope": "shared_network",
+          "treatment": "current_base_contingency_once",
+          "expansion_treatment": "no_second_copy"
+        }
       }
     },
     "launch": {
@@ -505,9 +589,19 @@
       "delivery_window": "night_or_off_peak",
       "external_logistics_monthly_rub": null,
       "own_vehicle_suggested_from_point_count": 3,
+      "own_vehicle_point_count_scope": "additional_network_points",
       "own_vehicle_capex_rub": 5000000,
       "own_vehicle_monthly_total_rub": 250000,
-      "driver_salary_rub": 150000
+      "driver_salary_rub": 150000,
+      "vehicle_financial_treatment": {
+        "depreciation": "requires_useful_life_decision",
+        "maintenance": "included_in_owned_monthly_opex",
+        "generic_equipment_maintenance_capex": "excluded"
+      },
+      "external_logistics_coverage": {
+        "one_to_two_additional_points": "configurable_input_required",
+        "network_three_or_more_points": "conditional_early_rollout_assumption_not_a_steady_state_blocker"
+      }
     },
     "equipment": {
       "bar_enabled_point_items": [
@@ -516,7 +610,78 @@
           "quantity_per_bar_enabled_point": 1,
           "provenance": "owner_approved_point_bar_applicability"
         }
-      ]
+      ],
+      "point_wash_packages": {
+        "source": "CAPEX register research prices; does not activate the integrated MOD-WASH module",
+        "takeaway": {
+          "allocation_id": "POINT-WASH-TAKEAWAY",
+          "name": "Локальная мойка и sanitation-kit точки на вынос",
+          "no_dome_dishwasher": true,
+          "components": [
+            {
+              "item_id": "CAPEX-01-019",
+              "quantity": 1,
+              "asset_class": "equipment",
+              "purpose": "Мойка рабочего инвентаря"
+            },
+            {
+              "item_id": "CAPEX-01-020",
+              "quantity": 1,
+              "asset_class": "equipment",
+              "purpose": "Рукомойник персонала"
+            },
+            {
+              "item_id": "CAPEX-01-021",
+              "quantity": 1,
+              "asset_class": "small_equipment",
+              "purpose": "Мыло, антисептик и полотенца"
+            },
+            {
+              "item_id": "CAPEX-01-006",
+              "quantity": 1,
+              "asset_class": "furniture",
+              "purpose": "Компактное хранение cleaning-инвентаря"
+            }
+          ]
+        },
+        "with_seating": {
+          "allocation_id": "POINT-WASH-SEATING",
+          "name": "Локальная мойка и cleaning-kit точки с посадкой",
+          "no_dome_dishwasher": true,
+          "components": [
+            {
+              "item_id": "CAPEX-01-019",
+              "quantity": 1,
+              "asset_class": "equipment",
+              "purpose": "Мойка рабочего инвентаря"
+            },
+            {
+              "item_id": "CAPEX-01-020",
+              "quantity": 1,
+              "asset_class": "equipment",
+              "purpose": "Рукомойник персонала"
+            },
+            {
+              "item_id": "CAPEX-01-021",
+              "quantity": 1,
+              "asset_class": "small_equipment",
+              "purpose": "Мыло, антисептик и полотенца"
+            },
+            {
+              "item_id": "CAPEX-01-006",
+              "quantity": 1,
+              "asset_class": "furniture",
+              "purpose": "Хранение cleaning-инвентаря"
+            },
+            {
+              "item_id": "CAPEX-01-007",
+              "quantity": 1,
+              "asset_class": "furniture",
+              "purpose": "Сушка и хранение чистого инвентаря"
+            }
+          ]
+        }
+      }
     }
   },
   "canonicalReferences": {
@@ -581,7 +746,23 @@
       "packagingBaselineMonthlyRub": 250000,
       "acquiringRateOfGrossRevenue": 0.02,
       "marketingFixedMonthlyRub": 150000,
-      "marketingVariableRateOfNetRevenue": 0.024
+      "marketingVariableRateOfNetRevenue": 0.024,
+      "administrativeReserveRateOfNetRevenue": 0.02,
+      "householdFixedMonthlyRub": 50000,
+      "householdVariableMonthlyRub": 50000,
+      "householdBaselineChecksPerDay": 300,
+      "equipmentServiceMonthlyRub": 100000,
+      "accountingMonthlyRub": 25000,
+      "ventilationGreaseMonthlyRub": 15000,
+      "uniformRenewalMonthlyRub": 15000,
+      "musicRightsMonthlyRub": 7000,
+      "pestControlMonthlyRub": 6000,
+      "softwareMonthlyRub": 6000,
+      "medicalMonthlyRub": 5000,
+      "securityMonitoringMonthlyRub": 4000,
+      "bankingMonthlyRub": 0,
+      "otherOpexMonthlyRub": 66500,
+      "historicalRealisticRosterHeadcount": 16
     },
     "launch": {
       "launchMarketingRub": 700000

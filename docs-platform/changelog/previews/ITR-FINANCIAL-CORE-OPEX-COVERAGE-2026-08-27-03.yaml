@@ -1,0 +1,82 @@
+receipt_version: 1
+iteration_id: ITR-FINANCIAL-CORE-OPEX-COVERAGE-2026-08-27-03
+previewed_at: 2026-08-27T13:15:02.000Z
+result: reviewed
+before_state_sha256: a07832349373485655f3b5a311621cbba3c5fea8ae63faf9bd800742f743b110
+after_state_sha256: d584ac8f16154cf30b904637c7f1388f71eb63508f55613a06419edc0bd324a3
+current_base_regression_controls:
+  context: current_base_object
+  start_investment_rub: 39220380.74
+  revenue_rub: 10488600
+  opex_rub: 8225135.6
+  ebitda_rub: 2263464.4
+  tax_rub: 204144.61
+  maintenance_capex_rub: 14309.99
+  free_cash_flow_rub: 2045009.8
+  payback_month: 20
+  status: unchanged
+network_known_basis_preview:
+  total_5_points:
+    before:
+      investment_rub: 161516536.73
+      opex_rub: 24306723.04
+      ebitda_rub: 11179706.96
+      free_cash_flow_rub: 10365758.48
+      payback_month: 23
+    after:
+      investment_rub: 168151035.59
+      opex_rub: 25330206.67
+      ebitda_rub: 10156223.33
+      free_cash_flow_rub: 9412766.33
+      payback_month: 25
+    delta:
+      investment_rub: 6634498.86
+      opex_rub: 1023483.63
+      ebitda_rub: -1023483.63
+      free_cash_flow_rub: -952992.15
+      payback_month: 2
+  total_9_points:
+    before:
+      investment_rub: 276361659.66
+      opex_rub: 39979804.98
+      ebitda_rub: 20504455.02
+      free_cash_flow_rub: 19020715.19
+      payback_month: 29
+    after:
+      investment_rub: 289623157.44
+      opex_rub: 42025522.24
+      ebitda_rub: 18458737.76
+      free_cash_flow_rub: 17115893.36
+      payback_month: 31
+    delta:
+      investment_rub: 13261497.78
+      opex_rub: 2045717.26
+      ebitda_rub: -2045717.26
+      free_cash_flow_rub: -1904821.83
+      payback_month: 2
+  total_13_points:
+    before:
+      investment_rub: 391206782.59
+      opex_rub: 55652886.91
+      ebitda_rub: 29829203.09
+      free_cash_flow_rub: 27675671.89
+      payback_month: 34
+    after:
+      investment_rub: 411095279.23
+      opex_rub: 58720837.8
+      ebitda_rub: 26761252.2
+      free_cash_flow_rub: 24819020.41
+      payback_month: 36
+    delta:
+      investment_rub: 19888496.64
+      opex_rub: 3067950.89
+      ebitda_rub: -3067950.89
+      free_cash_flow_rub: -2856651.48
+      payback_month: 2
+coverage:
+  calculation: complete
+  pricing: partial
+  assumptions: requires_confirmation
+  capacity: review_required
+  known_basis_note: The numerical Network result excludes furniture and derivative launch contingency for rollout-historic-center-core until a guest-area/seat input is approved; formulas remain available on the known basis.
+external_changes: []

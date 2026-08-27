@@ -207,7 +207,11 @@ function groupMonthProjection(
     const rentChargeRub = cohort.cohort.locationType === "foodhall" || operatingMonth > cohort.cohort.rentFreeMonths
       ? undefined
       : 0;
-    const direct = pointDirectOpexProjection(cohort.cohort, operational, rentChargeRub === undefined ? {} : { rentChargeRub });
+    const direct = pointDirectOpexProjection(cohort.cohort, operational, {
+      ...(rentChargeRub === undefined ? {} : { rentChargeRub }),
+      baseEquipmentServiceAssetBasisRub: cohort.baseEquipmentServiceAssetBasisRub,
+      equipmentServiceAssetBasisRub: cohort.equipmentServiceAssetBasisRub,
+    });
     return {
       revenueRub: operational.sales.revenuePerPointRub === null ? null : operational.sales.revenuePerPointRub * wave.count,
       directOpexRub: direct.directOpexPerPointRub === null ? null : direct.directOpexPerPointRub * wave.count,
@@ -355,20 +359,27 @@ export function networkTemporalProjection(
       additionalPointCount: activePointCount,
       totalChecksPerDay: checks === null || baseChecks === null ? null : baseChecks + checks,
       baseChecksPerDay: baseChecks,
+      additionalNetRevenueRub: revenueRub,
+      plannedAdditionalPointCount: additionalPointCount,
     });
     // Keep calculating the known basis if a contract-priced shared line (for
     // example early external logistics) is not supplied yet. The gap is kept
     // in coverage and never represented as a priced zero.
     const opexRub = sumKnown([directOpexRub, shared.knownSharedExpansionOpexRub, shared.logisticsRub ?? 0]);
-    for (const line of shared.unpricedRecurringLines) {
+    for (const line of [...shared.unpricedRecurringLines, ...shared.conditionalAssumptionLines]) {
       if (temporalIssues.some((issue) => issue.id === line.id)) continue;
       temporalIssues.push({
         id: line.id,
-        category: "unresolved_recurring_opex",
+        category: shared.unpricedRecurringLines.some((candidate) => candidate.id === line.id) ? "unresolved_recurring_opex" : "exclusion",
         message: `${line.name}: ${line.reason}`,
-        material: true,
+        material: shared.unpricedRecurringLines.some((candidate) => candidate.id === line.id),
+        dimension: shared.unpricedRecurringLines.some((candidate) => candidate.id === line.id) ? "pricing" : "assumptions",
+        ...(shared.unpricedRecurringLines.some((candidate) => candidate.id === line.id) ? {} : { assumptionStatus: "planning" as const }),
       });
-      temporalExclusions.push({ ...line, category: "unresolved_recurring_opex" });
+      temporalExclusions.push({
+        ...line,
+        category: shared.unpricedRecurringLines.some((candidate) => candidate.id === line.id) ? "unresolved_recurring_opex" : "exclusion",
+      });
     }
     const assets = activeExpansionAssets(groups, scaling, month, configuration);
     const pnl = calculateFinancialPnl(revenueRub, opexRub, assets.depreciationRub, assets.maintenanceCapexRub, policy);
@@ -440,7 +451,10 @@ export function networkTemporalProjection(
   const coverage = financialCoverage([...steady.coverage.issues, ...temporalIssues]);
   const warnings = [...new Set([...steady.warnings, ...temporalIssues.map((issue) => issue.message)])];
   const exclusions = [...steady.exclusions, ...temporalExclusions];
-  const partial = coverage.status !== "complete";
+  // Calculation availability is deliberately narrower than disclosure
+  // caveats: VAT confirmation or a capacity review must not erase a valid
+  // known-basis cash-flow series.
+  const partial = coverage.calculation !== "complete" || coverage.pricing !== "complete";
   return {
     status: coverage.status,
     coverage,

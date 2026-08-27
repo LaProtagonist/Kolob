@@ -20,13 +20,14 @@ import type { ConfiguredFinancialPolicy } from "./configured-economics";
 import type { InvestorConfiguration } from "./investor-configuration";
 import {
   historicalOpexTreatmentCatalog,
-  type HistoricalOpexTreatment,
 } from "./physical-allocation";
 import {
-  canonicalPointOpexConstants,
+  canonicalNetworkOpexConstants,
   logisticsPlanning,
+  productionCapacityProjection,
   productionStaffingProjection,
   sharedManagerPayrollProjection,
+  type ProductionCapacityProjection,
   type PayrollProjection,
 } from "./network-planning";
 import type {
@@ -74,6 +75,8 @@ export type NetworkAssetSummary = {
   maintenanceAssetBasisRub: number;
   maintenanceCapexRub: number;
   vehicleMaintenanceIncluded: false;
+  vehicleMaintenanceTreatment: "included_in_logistics_opex";
+  vehicleDepreciationTreatment: "requires_useful_life_decision";
 };
 
 export type SharedNetworkOpex = {
@@ -83,15 +86,21 @@ export type SharedNetworkOpex = {
   managerPayroll: PayrollProjection | null;
   expansionManagerPayrollRub: number | null;
   logisticsRub: number | null;
+  administrativeReserveRub: number | null;
+  incrementalUniformRenewalRub: number | null;
+  incrementalMedicalRub: number | null;
   fixedMarketingRub: number;
   expansionFixedMarketingRub: number;
   /** Calculable portion only; unpriced shared lines are disclosed separately. */
   knownSharedExpansionOpexRub: number | null;
   sharedExpansionOpexRub: number | null;
   unpricedRecurringLines: Array<{ id: string; name: string; reason: string }>;
+  /** Rollout-only caveats that do not invalidate a >=3-point steady-state plan. */
+  conditionalAssumptionLines: Array<{ id: string; name: string; reason: string }>;
   logisticsMode: "external" | "own" | "unknown";
   logisticsVehicleCapexRub: number | null;
   capacityReviewRequired: boolean;
+  productionCapacity: ProductionCapacityProjection | null;
 };
 
 export type NetworkSteadyStateProjection = {
@@ -127,8 +136,12 @@ function pointCount(cohorts: readonly NetworkPointCohortProjection[]) {
 function selectedLogistics(
   configuration: InvestorConfiguration,
   totalPointCount: number,
+  additionalPointCount: number,
 ): Pick<SharedNetworkOpex, "logisticsMode" | "logisticsRub" | "logisticsVehicleCapexRub"> {
-  const planning = logisticsPlanning(totalPointCount);
+  // The governed threshold is expressed for additional network points. The
+  // Base Object is already present and must not make a 1–2-point expansion
+  // appear to have an owned refrigerated vehicle.
+  const planning = logisticsPlanning(additionalPointCount);
   const logisticsMode = configuration.networkScaling.logistics.mode === "auto"
     ? planning.ownsVehicleSuggested ? "own" : "external"
     : configuration.networkScaling.logistics.mode;
@@ -155,9 +168,16 @@ export function sharedNetworkOpexForActivePoints(
     additionalPointCount: number;
     totalChecksPerDay: number | null;
     baseChecksPerDay: number | null;
+    additionalNetRevenueRub?: number | null;
+    /** Final expansion size, distinct from temporarily active rollout points. */
+    plannedAdditionalPointCount?: number;
   },
 ): SharedNetworkOpex {
-  const fixedMarketingRub = canonicalPointOpexConstants().marketingFixedMonthlyRub;
+  const constants = canonicalNetworkOpexConstants();
+  const fixedMarketingRub = constants.marketingFixedMonthlyRub;
+  const productionCapacity = input.totalChecksPerDay === null
+    ? null
+    : productionCapacityProjection(input.totalChecksPerDay, configuration.networkScaling.productionSchedule);
   if (input.additionalPointCount <= 0) {
     return {
       productionPayroll: input.totalChecksPerDay === null ? null : productionStaffingProjection(input.totalChecksPerDay, configuration.networkScaling.productionSchedule),
@@ -166,14 +186,19 @@ export function sharedNetworkOpexForActivePoints(
       managerPayroll: sharedManagerPayrollProjection(input.totalPointCount),
       expansionManagerPayrollRub: 0,
       logisticsRub: 0,
+      administrativeReserveRub: 0,
+      incrementalUniformRenewalRub: 0,
+      incrementalMedicalRub: 0,
       fixedMarketingRub,
       expansionFixedMarketingRub: 0,
       knownSharedExpansionOpexRub: 0,
       sharedExpansionOpexRub: 0,
       unpricedRecurringLines: [],
+      conditionalAssumptionLines: [],
       logisticsMode: "unknown",
       logisticsVehicleCapexRub: null,
       capacityReviewRequired: false,
+      productionCapacity,
     };
   }
   const productionPayroll = input.totalChecksPerDay === null
@@ -190,20 +215,46 @@ export function sharedNetworkOpexForActivePoints(
   const expansionManagerPayrollRub = managerPayroll === null
     ? 0
     : Math.max(0, managerPayroll.totalPayrollRub - (baseManagerPayroll?.totalPayrollRub ?? 0));
-  const logistics = selectedLogistics(configuration, input.totalPointCount);
-  const knownSharedExpansionOpexRub = expansionProductionPayrollRub === null
+  const logistics = selectedLogistics(configuration, input.totalPointCount, input.additionalPointCount);
+  const administrativeReserveRub = input.additionalNetRevenueRub === null || input.additionalNetRevenueRub === undefined
     ? null
-    : expansionProductionPayrollRub + expansionManagerPayrollRub;
-  const unpricedRecurringLines = logistics.logisticsRub === null
+    : input.additionalNetRevenueRub * constants.administrativeReserveRateOfNetRevenue;
+  const incrementalProductionRoster = productionPayroll === null || baseProductionPayroll === null
+    ? null
+    : Math.max(0, productionPayroll.rosterHeadcount - baseProductionPayroll.rosterHeadcount);
+  const incrementalUniformRenewalRub = incrementalProductionRoster === null || constants.historicalRealisticRosterHeadcount <= 0
+    ? null
+    : incrementalProductionRoster * constants.uniformRenewalMonthlyRub / constants.historicalRealisticRosterHeadcount;
+  const incrementalMedicalRub = incrementalProductionRoster === null || constants.historicalRealisticRosterHeadcount <= 0
+    ? null
+    : incrementalProductionRoster * constants.medicalMonthlyRub / constants.historicalRealisticRosterHeadcount;
+  const knownSharedExpansionOpexRub = expansionProductionPayrollRub === null
+    || administrativeReserveRub === null
+    || incrementalUniformRenewalRub === null
+    || incrementalMedicalRub === null
+    ? null
+    : expansionProductionPayrollRub + expansionManagerPayrollRub + administrativeReserveRub + incrementalUniformRenewalRub + incrementalMedicalRub;
+  const isFinalOneOrTwoAdditionalPointPlan = (input.plannedAdditionalPointCount ?? input.additionalPointCount) <= 2;
+  const unpricedRecurringLines = logistics.logisticsRub === null && isFinalOneOrTwoAdditionalPointPlan
     ? [{
       id: "logistics:external-monthly",
       name: "Внешняя логистика",
       reason: "Стоимость внешней логистики для этого числа активных точек не задана договором.",
     }]
     : [];
-  const sharedExpansionOpexRub = knownSharedExpansionOpexRub === null || logistics.logisticsRub === null
+  const conditionalAssumptionLines = logistics.logisticsRub === null && !isFinalOneOrTwoAdditionalPointPlan
+    ? [{
+      id: "logistics:early-rollout-external",
+      name: "Внешняя логистика на ранних открытиях",
+      reason: "До перехода на owned logistics цена временной внешней развозки не задана; это rollout assumption, а не steady-state blocker сети из трёх и более точек.",
+    }]
+    : [];
+  // A missing external quote is never converted into a known commercial rate.
+  // The numerical known basis remains available and its coverage disclosure
+  // carries the omitted contract value.
+  const sharedExpansionOpexRub = knownSharedExpansionOpexRub === null
     ? null
-    : knownSharedExpansionOpexRub + logistics.logisticsRub;
+    : knownSharedExpansionOpexRub + (logistics.logisticsRub ?? 0);
   return {
     productionPayroll,
     baseProductionPayroll,
@@ -211,6 +262,9 @@ export function sharedNetworkOpexForActivePoints(
     managerPayroll,
     expansionManagerPayrollRub,
     logisticsRub: logistics.logisticsRub,
+    administrativeReserveRub,
+    incrementalUniformRenewalRub,
+    incrementalMedicalRub,
     // The 150k fixed marketing amount remains in Current Base. Only the
     // revenue-linked component is attributed to points by direct OPEX.
     fixedMarketingRub,
@@ -218,9 +272,11 @@ export function sharedNetworkOpexForActivePoints(
     knownSharedExpansionOpexRub,
     sharedExpansionOpexRub,
     unpricedRecurringLines,
+    conditionalAssumptionLines,
     logisticsMode: logistics.logisticsMode,
     logisticsVehicleCapexRub: logistics.logisticsVehicleCapexRub,
-    capacityReviewRequired: productionPayroll?.capacityReviewRequired ?? false,
+    capacityReviewRequired: productionCapacity?.status === "review_required",
+    productionCapacity,
   };
 }
 
@@ -246,6 +302,26 @@ export function cohortAssetSummary(
           moduleIds: detail.moduleIds ?? [],
         }));
       }
+    } else if (item.id.endsWith(":point-wash")) {
+      // The package is made of independent CAPEX rows.  Its details become
+      // assets once; the package parent is never booked as a second asset.
+      for (const detail of item.detail ?? []) {
+        if (detail.amountRub === null) continue;
+        const detailAmount = detail.amountRub * count;
+        maintenanceAssetBasisRub += detailAmount;
+        if (detail.assetClass === "furniture") {
+          assets.push(furnitureDepreciationAsset(`${cohort.cohort.id}:${detail.id}`, detail.name, detailAmount));
+        } else if (detail.assetClass === "small_equipment") {
+          assets.push(smallEquipmentDepreciationAsset(`${cohort.cohort.id}:${detail.id}`, detail.name, detailAmount));
+        } else {
+          assets.push(equipmentDepreciationAsset({
+            id: `${cohort.cohort.id}:${detail.id}`,
+            name: detail.name,
+            amountRub: detailAmount,
+            moduleIds: detail.moduleIds ?? ["MOD-WASH"],
+          }));
+        }
+      }
     } else if (item.id.endsWith(":furniture")) {
       maintenanceAssetBasisRub += amount;
       assets.push(furnitureDepreciationAsset(`${cohort.cohort.id}:FURNITURE`, item.name, amount));
@@ -270,6 +346,8 @@ export function cohortAssetSummary(
     maintenanceAssetBasisRub,
     maintenanceCapexRub: monthlyMaintenanceCapex(maintenanceAssetBasisRub, policy.maintenanceAnnualRate),
     vehicleMaintenanceIncluded: false,
+    vehicleMaintenanceTreatment: "included_in_logistics_opex",
+    vehicleDepreciationTreatment: "requires_useful_life_decision",
   };
 }
 
@@ -286,6 +364,8 @@ export function expansionAssetSummary(
     maintenanceAssetBasisRub,
     maintenanceCapexRub: summaries.reduce((total, item) => total + item.maintenanceCapexRub, 0),
     vehicleMaintenanceIncluded: false,
+    vehicleMaintenanceTreatment: "included_in_logistics_opex",
+    vehicleDepreciationTreatment: "requires_useful_life_decision",
   };
 }
 
@@ -339,13 +419,7 @@ function coverageForNetwork(
     category: "unpriced_capex",
     reason: item.reason,
   }));
-  const recurringUnresolved = historicalOpexTreatmentCatalog.filter((line) => line.status === "unresolved");
-  exclusions.push(...recurringUnresolved.map((line) => ({
-    id: `opex:${line.lineId}`,
-    name: line.name,
-    category: "unresolved_recurring_opex" as const,
-    reason: line.note,
-  })));
+  const confirmationRequired = historicalOpexTreatmentCatalog.filter((line) => line.networkTreatment === "requires_confirmation");
   const issues: FinancialCoverageIssue[] = [
     ...scaling.unresolvedItems.map((item) => ({
       id: item.id,
@@ -353,35 +427,60 @@ function coverageForNetwork(
       message: `${item.name}: ${item.reason}`,
       material: true,
     })),
-    ...recurringUnresolved.map((line: HistoricalOpexTreatment) => ({
+    ...confirmationRequired.map((line) => ({
       id: `opex:${line.lineId}`,
-      category: "unresolved_recurring_opex" as const,
+      category: "exclusion" as const,
       message: `${line.name}: ${line.note}`,
-      material: true,
+      material: false,
+      dimension: "assumptions" as const,
+      assumptionStatus: "requires_confirmation" as const,
     })),
     {
       id: "tax:vat-confirmation",
       category: "tax_assumption" as const,
       message: "VAT assumption requires confirmation; the current Financial Model baseline remains the calculation input.",
-      material: policy.vatStatus === "current_baseline_requires_confirmation",
+      material: false,
+      dimension: "assumptions" as const,
+      assumptionStatus: policy.vatStatus === "current_baseline_requires_confirmation" ? "requires_confirmation" as const : "planning" as const,
     },
   ];
+  exclusions.push(...confirmationRequired.map((line) => ({
+    id: `opex:${line.lineId}`,
+    name: line.name,
+    category: "exclusion" as const,
+    reason: line.note,
+  })));
   issues.push(...shared.unpricedRecurringLines.map((line) => ({
     id: line.id,
     category: "unresolved_recurring_opex" as const,
     message: `${line.name}: ${line.reason}`,
     material: true,
+    dimension: "pricing" as const,
   })));
   exclusions.push(...shared.unpricedRecurringLines.map((line) => ({
     ...line,
     category: "unresolved_recurring_opex" as const,
   })));
+  issues.push(...shared.conditionalAssumptionLines.map((line) => ({
+    id: line.id,
+    category: "exclusion" as const,
+    message: `${line.name}: ${line.reason}`,
+    material: false,
+    dimension: "assumptions" as const,
+    assumptionStatus: "planning" as const,
+  })));
+  exclusions.push(...shared.conditionalAssumptionLines.map((line) => ({
+    ...line,
+    category: "exclusion" as const,
+  })));
   if (shared.capacityReviewRequired) {
     issues.push({
       id: "production:capacity-review",
       category: "capacity",
-      message: "Current production policy has reached two prep cooks; a second production shift / capacity expansion requires a separate decision.",
+      message: "Требуется проверка мощности производства: спрос в portions/day рассчитан, но пропускная способность линии и вторая смена не имеют утверждённых параметров.",
       material: true,
+      dimension: "capacity",
+      capacityStatus: "review_required",
     });
     exclusions.push({
       id: "production:capacity-expansion",
@@ -394,14 +493,16 @@ function coverageForNetwork(
     issues.push({
       id: "logistics:vehicle-depreciation-maintenance",
       category: "exclusion",
-      message: "The logistics vehicle is included in investment, but current equipment/furniture useful-life and maintenance rules do not price vehicle depreciation or maintenance separately.",
-      material: true,
+      message: "Vehicle maintenance is included in owned logistics OPEX; useful life for vehicle depreciation requires a separate policy decision and is not placed into the generic 3% maintenance formula.",
+      material: false,
+      dimension: "assumptions",
+      assumptionStatus: "requires_confirmation",
     });
     exclusions.push({
       id: "logistics:vehicle-depreciation-maintenance",
       name: "Амортизация и maintenance рефрижератора",
       category: "exclusion",
-      reason: "Рефрижератор не добавляется автоматически в 3% equipment/furniture maintenance formula; отдельная asset policy ещё не утверждена.",
+      reason: "Maintenance/repair already stays inside Logistics OPEX. Vehicle is excluded from generic 3% maintenance CAPEX; useful-life policy is not yet approved.",
     });
   }
   if (directOpexRub === null || shared.knownSharedExpansionOpexRub === null) {
@@ -410,6 +511,7 @@ function coverageForNetwork(
       category: "invalid_input",
       message: "At least one required cohort contract, sales or shared operating input is missing.",
       material: true,
+      dimension: "calculation",
     });
   }
   const coverage = financialCoverage(issues);
@@ -443,6 +545,8 @@ export function buildNetworkSteadyState(
     additionalPointCount,
     totalChecksPerDay,
     baseChecksPerDay,
+    additionalNetRevenueRub: revenueRub,
+    plannedAdditionalPointCount: additionalPointCount,
   });
   // A partial projection still computes the known basis. Unpriced shared
   // recurring lines stay in coverage/exclusions instead of silently becoming
@@ -452,7 +556,12 @@ export function buildNetworkSteadyState(
   const pnl = calculateFinancialPnl(revenueRub, opexRub, assets.depreciationRub, assets.maintenanceCapexRub, policy);
   const pointInvestmentRub = additionalCohorts.reduce((total, cohort) => total + cohort.confirmedCohortInvestmentRub, 0);
   const sharedInfrastructureRub = scaling.sharedItems.reduce((total, item) => total + (item.amountRub ?? 0), 0);
-  const operatingReserveRub = opexRub === null ? null : roundFinancial(opexRub * configuration.launchBudget.operatingReserveMonths);
+  // Reserve is a financing buffer over the disclosed recurring P&L basis.
+  // Use the rounded financial line rather than the pre-round aggregation so
+  // the visible monthly OPEX × horizon invariant remains exact to kopecks.
+  const operatingReserveRub = pnl.opexRub === null
+    ? null
+    : roundFinancial(pnl.opexRub * configuration.launchBudget.operatingReserveMonths);
   const investmentRub = operatingReserveRub === null ? null : roundFinancial(pointInvestmentRub + sharedInfrastructureRub + operatingReserveRub);
   const status = coverageForNetwork(scaling, shared, policy, directOpexRub);
   return {

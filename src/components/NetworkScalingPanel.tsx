@@ -366,7 +366,7 @@ function CohortEditor({
         <summary>Показать включённые статьи</summary>
         <ItemList items={projection.pointItems} multiplier="per_point" />
       </details>
-      <p className="cohort-partial-note">Не включает расходы, стоимость которых требует отдельного уточнения.</p>
+      <p className="cohort-partial-note">Не включает статьи, для которых требуется отдельное уточнение.</p>
     </section>
   );
 }
@@ -390,6 +390,11 @@ export function NetworkScalingPanel({ baseObject, onReturnToUnit }: { baseObject
   const networkInvestmentRub = temporal.expansion.investmentRub === null
     ? null
     : baseObject.investmentRub + temporal.expansion.investmentRub;
+  const coverageSummary = financial.coverage.calculation === "invalid"
+    ? "Недостаточно входных данных"
+    : financial.coverage.hasCaveats
+      ? "Расчёт выполнен с оговорками"
+      : "Расчёт выполнен";
 
   useEffect(() => {
     if (expandedCohortId && !configuration.networkScaling.cohorts.some((cohort) => cohort.id === expandedCohortId)) {
@@ -482,7 +487,7 @@ export function NetworkScalingPanel({ baseObject, onReturnToUnit }: { baseObject
               {additionalCohorts.map((cohort) => {
                 const cohortTemporal = temporal.expansion.groups.find((item) => item.cohortId === cohort.cohort.id);
                 return <button key={cohort.cohort.id} type="button" className={`cohort-table-row${expandedCohortId === cohort.cohort.id ? " is-expanded" : ""}`} data-testid={`scaling-cohort-row-${cohort.cohort.id}`} onClick={() => setExpandedCohortId((current) => current === cohort.cohort.id ? null : cohort.cohort.id)} aria-expanded={expandedCohortId === cohort.cohort.id}>
-                  <span>{cohort.cohort.locationRentPresetId === "custom" ? "Свой вариант" : locationRentPreset(cohort.cohort.locationRentPresetId).shortLabel}<small>{cohort.cohort.locationType === "street" && cohort.cohort.rentPerM2Rub !== null ? `${formatNumber(cohort.cohort.rentPerM2Rub, true)} ₽/м²` : "Условия площадки"}</small></span><span>{cohort.formatName}</span><span>{locationLabel(cohort.cohort.locationType)}<small>{cohortEstateLabel(cohort.cohort)}</small></span><strong>{cohort.cohort.totalAreaM2 === null ? "Требует уточнения" : `${formatNumber(cohort.cohort.totalAreaM2)} м²`}</strong><strong>{formatCount(cohort.operational.sales.checksPerDay)}</strong><strong>{formatCount(cohort.cohort.count)}</strong><strong>{monthText(cohortTemporal?.firstOpeningMonth ?? null)}<small>{cohortTemporal?.openingWaves.length && cohortTemporal.openingWaves.length > 1 ? openingWavesText(cohortTemporal.openingWaves.slice(1)) : "по графику"}</small></strong><strong>{formatMillion(cohort.confirmedPointInvestmentRub)}<small>{cohort.isPartial ? "не все расходы оценены" : "расчётная стоимость"}</small></strong>
+                  <span>{cohort.cohort.locationRentPresetId === "custom" ? "Свой вариант" : locationRentPreset(cohort.cohort.locationRentPresetId).shortLabel}<small>{cohort.cohort.locationType === "street" && cohort.cohort.rentPerM2Rub !== null ? `${formatNumber(cohort.cohort.rentPerM2Rub, true)} ₽/м²` : "Условия площадки"}</small></span><span>{cohort.formatName}</span><span>{locationLabel(cohort.cohort.locationType)}<small>{cohortEstateLabel(cohort.cohort)}</small></span><strong>{cohort.cohort.totalAreaM2 === null ? "Требует уточнения" : `${formatNumber(cohort.cohort.totalAreaM2)} м²`}</strong><strong>{formatCount(cohort.operational.sales.checksPerDay)}</strong><strong>{formatCount(cohort.cohort.count)}</strong><strong>{monthText(cohortTemporal?.firstOpeningMonth ?? null)}<small>{cohortTemporal?.openingWaves.length && cohortTemporal.openingWaves.length > 1 ? openingWavesText(cohortTemporal.openingWaves.slice(1)) : "по графику"}</small></strong><strong>{formatMillion(cohort.confirmedPointInvestmentRub)}<small>{cohort.isPartial ? "не все статьи оценены" : "расчётная стоимость"}</small></strong>
                 </button>;
               })}
             </div>
@@ -508,13 +513,17 @@ export function NetworkScalingPanel({ baseObject, onReturnToUnit }: { baseObject
             </div>
             <div className="scaling-row"><span>Управляющий сети</span><strong>{formatRub(projection.operating.managerPayroll?.totalPayrollRub ?? null)}</strong></div>
             <div className="scaling-row"><span>Общий маркетинг / месяц</span><strong>{formatRub(projection.operating.fixedMarketingRub)}</strong></div>
-            <div className="scaling-row is-note"><span>Прочие общие расходы</span><small>Уточняются по мере развития сети и пока не входят в итог.</small></div>
+            <div className="scaling-row"><span>Административный резерв расширения</span><strong>{formatRub(projection.operating.administrativeReserveRub)}</strong></div>
+            <div className="scaling-row is-note"><span>Бухгалтерия и прочие shared расходы</span><small>Уже учтены один раз в базовом объекте; в расширении не дублируются.</small></div>
+            <div className="scaling-row is-note"><span>Мощность производства</span><small>{projection.operating.productionCapacity?.status === "review_required" ? "Требуется проверка мощности производства." : "Покрыто текущей staffing policy."}</small></div>
             <p className="scaling-row is-note"><span>Развозка</span><small>Преимущественно ночью или вне пикового трафика. При росте сети можно рассмотреть собственный автомобиль.</small></p>
           </section>
 
           <section className="scaling-section is-unresolved" aria-labelledby="unresolved-title">
-            <header><div><p>Покрытие модели</p><h3 id="unresolved-title">Требует уточнения</h3></div><strong className="scaling-multiplier">{financial.exclusions.length}</strong></header>
-            <div className="scaling-unresolved-brief" data-testid="scaling-reserve"><p>Расчёт показывает известную часть; эти статьи не имеют утверждённой цены или правила масштабирования.</p></div>
+            <header><div><p>Покрытие модели</p><h3 id="unresolved-title">{coverageSummary}</h3></div><strong className="scaling-multiplier">{financial.exclusions.length}</strong></header>
+            <div className="scaling-unresolved-brief" data-testid="scaling-reserve"><p>{financial.coverage.pricing === "partial" ? "Не включено в расчёт: отдельные цены или договоры ещё не подтверждены." : "Расчёт выполнен на известной базе; ниже раскрыты требующие подтверждения условия."}</p></div>
+            {financial.coverage.assumptions !== "confirmed" ? <p className="scaling-row is-note"><span>Требует подтверждения</span><small>Налоговый режим, банковский тариф, условия YUMA и срок амортизации рефрижератора.</small></p> : null}
+            {financial.coverage.capacity !== "covered" ? <p className="scaling-row is-note"><span>Мощность производства</span><small>Требуется проверка мощности производства.</small></p> : null}
             <button type="button" className="scaling-details-button" aria-expanded={unresolvedDetailsOpen} onClick={() => setUnresolvedDetailsOpen((open) => !open)}>{unresolvedDetailsOpen ? "Скрыть список" : `Показать статьи (${financial.exclusions.length})`}</button>
             {unresolvedDetailsOpen ? <div data-testid="scaling-unresolved"><ul className="scaling-item-list">{financial.exclusions.map((item) => <li key={item.id} className="scaling-item is-unresolved"><strong>{item.name}</strong><p>{item.reason}</p></li>)}</ul></div> : null}
           </section>
@@ -544,7 +553,7 @@ export function NetworkScalingPanel({ baseObject, onReturnToUnit }: { baseObject
               <div><dt>FCF после выхода на режим</dt><dd>{formatRub(economics.expansion.cashFlowRub)}</dd></div>
               <div className="is-total"><dt>Окупаемость программы расширения</dt><dd>{paybackText(temporal.expansion.paybackMonth)}</dd></div>
             </dl>
-            <small>{temporal.expansion.isPartial ? `Предварительный расчёт: ${financial.exclusions.length} существенных условий остаются вне covered basis.` : `Разгон и сезонность учтены до ${monthText(temporal.fullScaleMonth)}.`}</small>
+            <small>{temporal.expansion.isPartial ? `Не включено в расчёт: ${financial.exclusions.length} условий раскрыты отдельно.` : financial.coverage.hasCaveats ? `${coverageSummary}. Разгон и сезонность учтены до ${monthText(temporal.fullScaleMonth)}.` : `Разгон и сезонность учтены до ${monthText(temporal.fullScaleMonth)}.`}</small>
           </section>
           <section className="scaling-network-sales" aria-label="Сеть целиком" data-testid="scaling-network-sales">
             <p>Сеть целиком</p>
@@ -558,7 +567,7 @@ export function NetworkScalingPanel({ baseObject, onReturnToUnit }: { baseObject
               <div><dt>FCF после выхода на режим</dt><dd>{formatRub(economics.network.cashFlowRub)}</dd></div>
               <div className="is-total"><dt>Совокупный денежный поток выходит в плюс</dt><dd>{paybackText(temporal.network.paybackMonth)}</dd></div>
             </dl>
-            <small data-testid="scaling-network-sales-status">{temporal.network.isPartial ? "Предварительный расчёт: известная часть расходов показана отдельно от условий, которые ещё нужно уточнить." : `Все точки вышли на плановый режим: ${monthText(temporal.fullScaleMonth)}.`}</small>
+            <small data-testid="scaling-network-sales-status">{temporal.network.isPartial ? "Не включено в расчёт: часть входных данных требует уточнения." : financial.coverage.hasCaveats ? `${coverageSummary}. Все точки вышли на плановый режим: ${monthText(temporal.fullScaleMonth)}.` : `Все точки вышли на плановый режим: ${monthText(temporal.fullScaleMonth)}.`}</small>
           </section>
           <section className="scaling-network-sales scaling-network-operating" aria-label="Общие расходы сети" data-testid="scaling-network-operating">
             <p>Общие расходы сети</p>
@@ -566,13 +575,16 @@ export function NetworkScalingPanel({ baseObject, onReturnToUnit }: { baseObject
               <div><dt>Прямые расходы точек{projection.operating.incompletePointCohortCount > 0 ? " (предварительно)" : ""}</dt><dd data-testid="scaling-network-direct-opex">{formatRub(projection.operating.pointDirectOpexRub)}{projection.operating.incompletePointCohortCount > 0 ? <small>Требует уточнения: {projection.operating.incompletePointCohortCount} {projection.operating.incompletePointCohortCount === 1 ? "группа" : "группы"}</small> : null}</dd></div>
               <div><dt>Заготовочное производство</dt><dd>{formatRub(projection.operating.expansionProductionPayrollRub)}</dd></div>
               <div><dt>Управляющий сети</dt><dd data-testid="scaling-manager-payroll">{formatRub(projection.operating.expansionManagerPayrollRub)}</dd></div>
+              <div><dt>Административный резерв</dt><dd>{formatRub(projection.operating.administrativeReserveRub)}</dd></div>
+              <div><dt>Обновление спецодежды</dt><dd>{formatRub(projection.operating.incrementalUniformRenewalRub)}</dd></div>
+              <div><dt>Медосмотры и документы</dt><dd>{formatRub(projection.operating.incrementalMedicalRub)}</dd></div>
               <div><dt>Логистика</dt><dd data-testid="scaling-logistics-opex">{formatRub(projection.operating.logisticsRub)}</dd></div>
               <div><dt>Общий маркетинг</dt><dd>{formatRub(projection.operating.expansionFixedMarketingRub)}</dd></div>
               <div className="is-total"><dt>Расходы расширения</dt><dd data-testid="scaling-base-network-opex">{formatRub(economics.expansion.sharedOpexRub)}</dd></div>
             </dl>
             <small data-testid="scaling-network-operating-status">Один управляющий и общий маркетинг уже относятся к базовому объекту; в расширении показано только дополнительное влияние.</small>
           </section>
-          <p className="scaling-partial-note">Статус модели: {financial.status === "complete" ? "полное покрытие" : financial.status === "invalid" ? "недостаточно входных данных" : `partial · ${financial.exclusions.length} условий раскрыты отдельно`}.</p>
+          <p className="scaling-partial-note">Статус модели: {coverageSummary.toLocaleLowerCase()}{financial.coverage.capacity === "review_required" ? " · Требуется проверка мощности производства" : ""}{financial.coverage.pricing === "partial" ? " · Не включено в расчёт: отдельные цены" : ""}.</p>
           <button type="button" className="terminal-secondary-action" onClick={onReturnToUnit}>Изменить базовый объект</button>
         </aside>
       </div>

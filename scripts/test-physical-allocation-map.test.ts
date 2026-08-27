@@ -72,7 +72,7 @@ test("seating-only records never apply to takeaway", () => {
   }
 });
 
-test("integrated wash is unresolved while local point wash remains an unpriced capability", () => {
+test("integrated wash remains unresolved while B3 local point wash uses priced register components", () => {
   const integratedWash = findPhysicalAllocation("MOD-WASH")!;
   assert.equal(integratedWash.physicalScope, "mixed");
   assert.equal(integratedWash.status, "unresolved");
@@ -81,8 +81,8 @@ test("integrated wash is unresolved while local point wash remains an unpriced c
 
   for (const id of ["POINT-WASH-SEATING", "POINT-WASH-TAKEAWAY"]) {
     const record = findPhysicalAllocation(id)!;
-    assert.equal(record.pricingStatus, "not_priced");
-    assert.equal(record.status, "unresolved");
+    assert.equal(record.pricingStatus, "canonical_source");
+    assert.equal(record.status, "owner_decision");
     assert.equal(record.scalingDriver, "per_point");
   }
 });

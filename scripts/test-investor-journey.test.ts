@@ -396,15 +396,19 @@ test("temporal rollout keeps canonical ramp and seasonality separate for every o
 
   const creative = scaling.cohorts.find((cohort) => cohort.cohort.locationType === "creative_cluster")!;
   const creativeTemporal = temporal.expansion.groups.find((group) => group.cohortId === creative.cohort.id)!;
+  const directOpexOptions = (cohort: typeof creative) => ({
+    baseEquipmentServiceAssetBasisRub: cohort.baseEquipmentServiceAssetBasisRub,
+    equipmentServiceAssetBasisRub: cohort.equipmentServiceAssetBasisRub,
+  });
   const aprilSeasonality = assumptions.seasonalityProfile.find((row) => row.month === 4)!.factor;
   const openingChecks = creative.operational.sales.checksPerDay! * assumptions.rampUpProfile[0].factor * aprilSeasonality;
   const creativeOpeningOperations = pointOperationalProjectionForMonthlyChecks(configuration, creative.cohort, openingChecks, creative.operational.sales.averageCheckRub!);
-  const rentFreeDirectOpex = pointDirectOpexProjection(creative.cohort, creativeOpeningOperations, { rentChargeRub: 0 });
+  const rentFreeDirectOpex = pointDirectOpexProjection(creative.cohort, creativeOpeningOperations, { ...directOpexOptions(creative), rentChargeRub: 0 });
   assert.equal(creativeTemporal.months[4].opexRub, rentFreeDirectOpex.directOpexPerPointRub, "creative-cluster rent is zero during its two rent-free months");
   const juneSeasonality = assumptions.seasonalityProfile.find((row) => row.month === 6)!.factor;
   const postHolidayChecks = creative.operational.sales.checksPerDay! * assumptions.rampUpProfile[2].factor * juneSeasonality;
   const postHolidayOperations = pointOperationalProjectionForMonthlyChecks(configuration, creative.cohort, postHolidayChecks, creative.operational.sales.averageCheckRub!);
-  const postHolidayDirectOpex = pointDirectOpexProjection(creative.cohort, postHolidayOperations);
+  const postHolidayDirectOpex = pointDirectOpexProjection(creative.cohort, postHolidayOperations, directOpexOptions(creative));
   assert.equal(creativeTemporal.months[6].opexRub, postHolidayDirectOpex.directOpexPerPointRub, "normal rent begins after the rent-free period");
 
   const foodhall = scaling.cohorts.find((cohort) => cohort.cohort.locationType === "foodhall")!;
@@ -414,7 +418,7 @@ test("temporal rollout keeps canonical ramp and seasonality separate for every o
     const factor = assumptions.rampUpProfile[Math.min(operatingAge, assumptions.rampUpProfile.length) - 1]!.factor
       * assumptions.seasonalityProfile[(month - 1) % assumptions.seasonalityProfile.length]!.factor;
     const operational = pointOperationalProjectionForMonthlyChecks(configuration, foodhall.cohort, foodhall.operational.sales.checksPerDay! * factor, foodhall.operational.sales.averageCheckRub!);
-    const direct = pointDirectOpexProjection(foodhall.cohort, operational);
+    const direct = pointDirectOpexProjection(foodhall.cohort, operational, directOpexOptions(foodhall));
     const occupancy = direct.lines.find((line) => line.id === "foodhall-occupancy")!;
     assert.equal(occupancy.amountRub, Math.max(operational.sales.revenuePerPointRub! * 0.17, 250_000), `Foodhall payment uses actual month-${month} sales`);
     assert.equal(foodhallTemporal.months[month].opexRub, direct.directOpexPerPointRub, `Foodhall direct OPEX follows actual month-${month} sales`);
@@ -649,6 +653,7 @@ test("location semantics drive point contribution without creating a false EBITD
   });
   const foodhall = createTradingPointCohort(canonical.launchBudget, {
     id: "foodhall", format: "takeaway", count: 3, locationType: "foodhall", sharedSeating: true,
+    totalAreaM2: 25,
     venueSecurityIncluded: true, commonCleaningIncluded: true, extractionAvailable: true,
     revenueSharePercent: 12, minimumGuaranteeMonthlyRub: 120_000, utilitiesIncluded: true,
     serviceChargeMonthlyRub: 30_000, fitoutAllowanceRub: 2_000_000,
@@ -736,8 +741,9 @@ test("network scaling aggregates independent point cohorts without inventing net
   assert.match(takeawayPurchase.cohorts[0].pointItems.find((item) => item.id.endsWith(":premises"))?.name ?? "", /Покупка помещения/);
   assert.ok(mixedNetwork.unresolvedItems.every((item) => item.ownership === "unresolved"));
   assert.equal(mixedNetwork.unresolvedItems.find((item) => item.id === "operating_reserve"), undefined, "the old integrated reserve is not presented as an unresolved additional-point cost");
-  assert.equal(mixedNetwork.unresolvedItems.find((item) => item.id === "POINT-WASH-TAKEAWAY")?.multiplier, "per_point");
-  assert.equal(mixedNetwork.unresolvedItems.find((item) => item.id === "POINT-WASH-SEATING")?.amountRub, null);
+  assert.equal(mixedNetwork.unresolvedItems.find((item) => item.id === "POINT-WASH-TAKEAWAY"), undefined, "B3 wash kits are now priced point items, not generic unresolved rows");
+  assert.equal(takeaway.pointItems.find((item) => item.id.endsWith(":point-wash"))?.multiplier, "per_point");
+  assert.equal(seating.pointItems.find((item) => item.id.endsWith(":point-wash"))?.amountRub, 134_534);
   assert.ok(takeaway.pointItems.some((item) => item.name === "Резерв на запуск"), "contingency is calculated from the applicable point base");
   assert.equal(mixedNetwork.isPartial, true);
   assert.equal(mixedNetwork.sales.status, "complete");

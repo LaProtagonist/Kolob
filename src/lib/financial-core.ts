@@ -16,15 +16,39 @@ export type FinancialProjectionContext = (typeof financialProjectionContextIds)[
 
 export type FinancialCoverageStatus = "complete" | "partial" | "invalid";
 
+/**
+ * A coverage caveat belongs to a specific layer.  A missing wash-kit price,
+ * for example, is not the same failure as an invalid revenue input or an
+ * unconfirmed VAT assumption.  Consumers can therefore keep showing a
+ * calculated known basis without labelling it as fully investor-ready.
+ */
+export type FinancialCoverageDimension = "calculation" | "pricing" | "assumptions" | "capacity";
+export type FinancialPricingCoverageStatus = "complete" | "partial";
+export type FinancialAssumptionCoverageStatus = "confirmed" | "planning" | "requires_confirmation";
+export type FinancialCapacityCoverageStatus = "covered" | "review_required" | "exceeded";
+
 export type FinancialCoverageIssue = {
   id: string;
   category: "unpriced_capex" | "unresolved_recurring_opex" | "capacity" | "tax_assumption" | "exclusion" | "invalid_input";
   message: string;
   material: boolean;
+  /** Defaults from category for legacy callers; new callers should be explicit. */
+  dimension?: FinancialCoverageDimension;
+  /** Used only for an assumption disclosure. */
+  assumptionStatus?: Exclude<FinancialAssumptionCoverageStatus, "confirmed">;
+  /** Used only for a capacity disclosure. */
+  capacityStatus?: Exclude<FinancialCapacityCoverageStatus, "covered">;
 };
 
 export type FinancialCoverage = {
+  /** Calculation availability. `complete` means all formulas have known inputs. */
   status: FinancialCoverageStatus;
+  calculation: FinancialCoverageStatus;
+  pricing: FinancialPricingCoverageStatus;
+  assumptions: FinancialAssumptionCoverageStatus;
+  capacity: FinancialCapacityCoverageStatus;
+  /** A complete calculation can still need investor-facing disclosure. */
+  hasCaveats: boolean;
   issues: FinancialCoverageIssue[];
 };
 
@@ -141,15 +165,42 @@ export function annualIrr(cashFlows: readonly number[]) {
   return monthly === null ? null : (1 + monthly) ** 12 - 1;
 }
 
+function issueDimension(issue: FinancialCoverageIssue): FinancialCoverageDimension {
+  if (issue.dimension) return issue.dimension;
+  if (issue.category === "invalid_input" || issue.category === "unresolved_recurring_opex") return "calculation";
+  if (issue.category === "unpriced_capex") return "pricing";
+  if (issue.category === "capacity") return "capacity";
+  return "assumptions";
+}
+
 /** Coverage is independent from calculation availability: a partial model may still calculate known FCF. */
 export function financialCoverage(issues: readonly FinancialCoverageIssue[]): FinancialCoverage {
   const copied = [...issues];
+  const calculation = copied.some((issue) => issue.category === "invalid_input")
+    ? "invalid"
+    : copied.some((issue) => issueDimension(issue) === "calculation" && issue.material)
+      ? "partial"
+      : "complete";
+  const pricing: FinancialPricingCoverageStatus = copied.some((issue) => issueDimension(issue) === "pricing" && issue.material)
+    ? "partial"
+    : "complete";
+  const assumptions: FinancialAssumptionCoverageStatus = copied.some((issue) => issueDimension(issue) === "assumptions" && issue.assumptionStatus === "requires_confirmation")
+    ? "requires_confirmation"
+    : copied.some((issue) => issueDimension(issue) === "assumptions")
+      ? "planning"
+      : "confirmed";
+  const capacity: FinancialCapacityCoverageStatus = copied.some((issue) => issueDimension(issue) === "capacity" && issue.capacityStatus === "exceeded")
+    ? "exceeded"
+    : copied.some((issue) => issueDimension(issue) === "capacity")
+      ? "review_required"
+      : "covered";
   return {
-    status: copied.some((issue) => issue.category === "invalid_input")
-      ? "invalid"
-      : copied.some((issue) => issue.material)
-        ? "partial"
-        : "complete",
+    status: calculation,
+    calculation,
+    pricing,
+    assumptions,
+    capacity,
+    hasCaveats: calculation !== "complete" || pricing !== "complete" || assumptions !== "confirmed" || capacity !== "covered",
     issues: copied,
   };
 }

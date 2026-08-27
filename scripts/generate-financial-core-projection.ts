@@ -19,6 +19,8 @@ const financialModelProjectionPath = path.join(root, "docs-platform/generated/fi
 const sourcePaths = [
   "docs-platform/generated/financial-model-projection.json",
   "docs-platform/working/network-planning-assumptions.yaml",
+  "docs-platform/app/src/investor/network-planning.ts",
+  "src/content/capex-configurator-data.json",
   "src/content/network-planning-data.json",
   "src/lib/configured-economics.ts",
   "src/lib/financial-assets.ts",
@@ -94,6 +96,13 @@ function scenarioArtifact(additionalPointCount: 4 | 8 | 12) {
     coverage: projection.coverage,
     warnings: projection.warnings,
     exclusions: projection.exclusions,
+    capacity: projection.scaling.operating.productionCapacity,
+    shared_opex: {
+      administrative_reserve_rub: projection.scaling.operating.administrativeReserveRub,
+      incremental_uniform_renewal_rub: projection.scaling.operating.incrementalUniformRenewalRub,
+      incremental_medical_rub: projection.scaling.operating.incrementalMedicalRub,
+      logistics_rub: projection.scaling.operating.logisticsRub,
+    },
     expansion: {
       launch: {
         point_investment_rub: economics.expansion.pointInvestmentRub,
@@ -134,7 +143,7 @@ function scenarioArtifact(additionalPointCount: 4 | 8 | 12) {
 export function buildFinancialCoreProjectionArtifact() {
   return {
     meta: {
-      schema_version: 1,
+      schema_version: 2,
       artifact: "Financial Core Projection",
       contexts: ["historical_integrated_pilot", "current_base_object", "network_expansion", "consolidated_network"],
       financial_model_content_state_sha256: currentFinancialModelContentState(),
@@ -144,6 +153,12 @@ export function buildFinancialCoreProjectionArtifact() {
         baseline_months: 6,
         includes: "known recurring Point + Production + Shared operating OPEX",
         excludes: ["income tax", "maintenance CAPEX", "launch CAPEX", "depreciation", "terminal reserve recovery"],
+      },
+      coverage_contract: {
+        calculation: ["complete", "partial", "invalid"],
+        pricing: ["complete", "partial"],
+        assumptions: ["confirmed", "planning", "requires_confirmation"],
+        capacity: ["covered", "review_required", "exceeded"],
       },
       opex_catalog: historicalOpexTreatmentCatalog,
     },

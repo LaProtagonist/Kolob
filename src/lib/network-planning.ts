@@ -126,6 +126,31 @@ export type NetworkTemporalAssumptions = {
   rentFreeMonths: Record<Exclude<LocationType, "foodtruck">, number>;
 };
 
+export type PointWashAssetClass = "equipment" | "furniture" | "small_equipment";
+
+export type PointWashPackage = {
+  allocationId: "POINT-WASH-SEATING" | "POINT-WASH-TAKEAWAY";
+  name: string;
+  noDomeDishwasher: boolean;
+  components: Array<{
+    itemId: string;
+    quantity: number;
+    assetClass: PointWashAssetClass;
+    purpose: string;
+  }>;
+};
+
+export type ProductionCapacityProjection = {
+  dailyProductionDemandPortions: number | null;
+  availableDailyProductionCapacityPortions: null;
+  utilizationPercent: null;
+  bottleneck: string;
+  currentPrepCooks: number;
+  schedule: string;
+  status: "covered_by_current_staffing_policy" | "review_required";
+  secondShiftStatus: "not_modelled_requires_decision";
+};
+
 export function networkRolloutDistrictPresetIds(): Exclude<LocationRentPresetId, "custom">[] {
   return (planning.network_rollout.district_preset_ids as string[])
     .filter((id): id is Exclude<LocationRentPresetId, "custom"> => isLocationRentPresetId(id) && id !== "custom");
@@ -355,6 +380,19 @@ export function locationPlanningDefaults(locationType: LocationType, format: "wi
   };
 }
 
+/** Venue defaults that affect recurring OPEX but are not editable financial facts. */
+export function locationOpexDefaults(locationType: LocationType) {
+  const defaults = planning.locations.types[locationType]?.defaults ?? {};
+  return {
+    venueMusicIncluded: defaults.venue_music_included === true,
+  };
+}
+
+/** Calibration area for historical recurring premises services; it is not a new point area default. */
+export function historicalIntegratedPremisesAreaM2() {
+  return numericPreset(planning.preparation.point_area_proxy?.reference_area_m2);
+}
+
 export function locationMinimumAreaM2(format: "with_seating" | "takeaway", locationType: LocationType, sharedSeating: boolean | null) {
   if ((locationType === "foodhall" || locationType === "creative_cluster") && sharedSeating === true) return null;
   return format === "with_seating" ? Number(planning.staffing.seating.minimum_total_area_m2) : standardNetworkPointRentDefaults().minimumUiAreaM2;
@@ -424,20 +462,85 @@ export function productionStaffingProjection(networkChecksPerDay: number | null,
   };
 }
 
+/**
+ * The current CAPEX register gives no approved kg/day, batch or machine-hour
+ * capacities for the production line.  We can calculate demand, but cannot
+ * invent utilization or a second-shift staffing/capex answer from that gap.
+ */
+export function productionCapacityProjection(networkChecksPerDay: number | null, schedule: "one_main_shift" | "custom" = "one_main_shift"): ProductionCapacityProjection {
+  const staffing = productionStaffingProjection(networkChecksPerDay, schedule);
+  const capacityEvidence = planning.staffing.production.capacity_evidence ?? {};
+  const portionsPerCheck = Number(canonical.revenue.foodPortionsPerCheck);
+  return {
+    dailyProductionDemandPortions: networkChecksPerDay === null ? null : networkChecksPerDay * portionsPerCheck,
+    availableDailyProductionCapacityPortions: null,
+    utilizationPercent: null,
+    bottleneck: String(capacityEvidence.bottleneck ?? "Производительность производственной линии требует отдельного технического подтверждения."),
+    currentPrepCooks: staffing.concurrentPrepCooks,
+    schedule: staffing.schedule,
+    status: staffing.capacityReviewRequired ? "review_required" : "covered_by_current_staffing_policy",
+    secondShiftStatus: "not_modelled_requires_decision",
+  };
+}
+
 export function sharedManagerPayrollProjection(totalPointCount: number): PayrollProjection | null {
   if (totalPointCount < Number(planning.staffing.shared_manager.count_when_point_count_at_least)) return null;
   return payrollFromRoles(roleLines({ [planning.staffing.shared_manager.role_id]: 1 }, {}, true));
 }
 
+export type CanonicalNetworkOpexConstants = {
+  rawMaterialsRate: number;
+  wasteRate: number;
+  packagingBaselineChecksPerDay: number;
+  packagingBaselineMonthlyRub: number;
+  acquiringRateOfGrossRevenue: number;
+  marketingFixedMonthlyRub: number;
+  marketingVariableRateOfNetRevenue: number;
+  administrativeReserveRateOfNetRevenue: number;
+  householdFixedMonthlyRub: number;
+  householdVariableMonthlyRub: number;
+  householdBaselineChecksPerDay: number;
+  equipmentServiceMonthlyRub: number;
+  accountingMonthlyRub: number;
+  ventilationGreaseMonthlyRub: number;
+  uniformRenewalMonthlyRub: number;
+  musicRightsMonthlyRub: number;
+  pestControlMonthlyRub: number;
+  softwareMonthlyRub: number;
+  medicalMonthlyRub: number;
+  securityMonitoringMonthlyRub: number;
+  bankingMonthlyRub: number;
+  otherOpexMonthlyRub: number;
+  historicalRealisticRosterHeadcount: number;
+};
+
+/** All amounts remain sourced from the generated canonical Financial Model snapshot. */
+export function canonicalNetworkOpexConstants(): CanonicalNetworkOpexConstants {
+  return canonical.opex as CanonicalNetworkOpexConstants;
+}
+
+/** Compatibility alias for existing point-level callers. */
 export function canonicalPointOpexConstants() {
-  return canonical.opex as {
-    rawMaterialsRate: number;
-    wasteRate: number;
-    packagingBaselineChecksPerDay: number;
-    packagingBaselineMonthlyRub: number;
-    acquiringRateOfGrossRevenue: number;
-    marketingFixedMonthlyRub: number;
-    marketingVariableRateOfNetRevenue: number;
+  return canonicalNetworkOpexConstants();
+}
+
+export function pointWashPackage(format: "with_seating" | "takeaway"): PointWashPackage {
+  const source = planning.equipment.point_wash_packages?.[format];
+  if (!source) throw new Error(`Network Planning point wash package ${format} is unavailable.`);
+  const allocationId = String(source.allocation_id);
+  if (allocationId !== "POINT-WASH-SEATING" && allocationId !== "POINT-WASH-TAKEAWAY") throw new Error(`Point wash package ${format} has an invalid allocation ID.`);
+  const components = Array.isArray(source.components) ? source.components.map((component: any) => ({
+    itemId: String(component.item_id),
+    quantity: numericPreset(component.quantity),
+    assetClass: component.asset_class === "furniture" || component.asset_class === "small_equipment" ? component.asset_class : "equipment" as PointWashAssetClass,
+    purpose: String(component.purpose ?? ""),
+  })) : [];
+  if (!components.length) throw new Error(`Point wash package ${format} has no components.`);
+  return {
+    allocationId,
+    name: String(source.name),
+    noDomeDishwasher: source.no_dome_dishwasher === true,
+    components,
   };
 }
 
@@ -449,9 +552,9 @@ export function networkPlanningLaunchConstants() {
   };
 }
 
-export function logisticsPlanning(totalPointCount: number) {
+export function logisticsPlanning(additionalNetworkPointCount: number) {
   const logistics = planning.logistics;
-  const ownsVehicleSuggested = totalPointCount >= Number(logistics.own_vehicle_suggested_from_point_count);
+  const ownsVehicleSuggested = additionalNetworkPointCount >= Number(logistics.own_vehicle_suggested_from_point_count);
   return {
     ownsVehicleSuggested,
     externalMonthlyRub: logistics.external_logistics_monthly_rub === null ? null : Number(logistics.external_logistics_monthly_rub),

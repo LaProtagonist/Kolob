@@ -1,6 +1,6 @@
 document:
   id: DOC-NETWORK-PLANNING-ASSUMPTIONS
-  version: "1.6"
+  version: "1.7"
   status: owner_approved_planning
   title: Network Planning Model — Investor Terminal v2.4
   provenance: owner-approved Investor Terminal temporal-network brief, 2026-08-26
@@ -69,6 +69,12 @@ staffing:
     prep_cooks_above_threshold: 2
     capacity_review_after_two_prep_cooks: true
     schedule_default: "one_main_shift"
+    capacity_evidence:
+      demand_metric: food_portions_per_day
+      demand_source: revenue_model.product_model.food_portions_per_check
+      equipment_capacity_status: open_parameters
+      bottleneck: "Производительность основной линии не утверждена: параметры пароконвектомата, sous-vide и охлаждения остаются открытыми в CAPEX register."
+      second_shift_status: requires_capacity_and_roster_decision
   shared_manager:
     role_id: MANAGER
     count_when_point_count_at_least: 1
@@ -89,6 +95,7 @@ locations:
         shared_seating: true
         venue_security_included: true
         common_cleaning_included: true
+        venue_music_included: true
         utilities_included: true
         service_charge_monthly_rub: 50000
         storage_rent_monthly_rub: 20000
@@ -109,6 +116,7 @@ locations:
         shared_seating: true
         venue_security_included: true
         common_cleaning_included: true
+        venue_music_included: true
         utilities_included: false
         utilities_monthly_rub: 30000
         rent_per_m2_month_rub: 4000
@@ -313,6 +321,60 @@ opex:
     fixed_scope: shared_network
     variable_scope: cohort_revenue
   production_packaging: { status: unresolved_manual }
+  network_completion:
+    physical_allocation_source: src/lib/physical-allocation.ts
+    historical_integrated_calibration:
+      roster_scenario: realistic
+      premises_area_source: preparation.point_area_proxy.reference_area_m2
+    administrative_reserve:
+      scope: shared_network
+      driver: consolidated_net_revenue_percentage
+      expansion_treatment: incremental_revenue_only
+    household:
+      scope: point
+      driver: canonical_household_formula_per_point
+    equipment_service:
+      scope: point
+      driver: incremental_equipment_asset_value_relative_to_current_base
+      semantic_boundary: "Recurring service, preventative maintenance and minor repair; separate from maintenance CAPEX replacement reserve."
+    accounting:
+      scope: shared_network
+      treatment: one_current_base_function
+    ventilation_grease:
+      scope: point
+      driver: historical_integrated_rate_per_applicable_m2
+      venue_service_treatment: "No venue contract currently confirms inclusion; a point with cooking ventilation retains the planning OPEX."
+    uniform_renewal:
+      scope: point_and_incremental_production
+      driver: historical_realistic_roster_calibration
+    music:
+      scope: point
+      street_seating_treatment: own_public_performance_line
+      takeaway_default: 0
+      venue_treatment: venue_provided
+    pest_control:
+      scope: point
+      driver: historical_integrated_rate_per_applicable_m2
+    software:
+      scope: shared_network
+      treatment: requires_confirmation
+      note: "The historical YUMA amount remains in Current Base once; point versus central licensing has no governed contract evidence."
+    medical:
+      scope: point_and_incremental_production
+      driver: historical_realistic_roster_calibration
+      excludes: [shared_manager_without_food_operation_requirement]
+    security_monitoring:
+      scope: point
+      driver: per_self_managed_premises
+      venue_security_treatment: venue_security_included_means_zero
+    banking:
+      scope: shared_network
+      treatment: tbd_non_acquiring_service
+      materiality: minor_assumption_gap
+    other_opex:
+      scope: shared_network
+      treatment: current_base_contingency_once
+      expansion_treatment: no_second_copy
 launch:
   uniform_per_roster_employee_rub: 12000
   initial_inventory_operating_days: 3
@@ -321,11 +383,40 @@ logistics:
   delivery_window: night_or_off_peak
   external_logistics_monthly_rub: null
   own_vehicle_suggested_from_point_count: 3
+  own_vehicle_point_count_scope: additional_network_points
   own_vehicle_capex_rub: 5000000
   own_vehicle_monthly_total_rub: 250000
   driver_salary_rub: 150000
+  vehicle_financial_treatment:
+    depreciation: requires_useful_life_decision
+    maintenance: included_in_owned_monthly_opex
+    generic_equipment_maintenance_capex: excluded
+  external_logistics_coverage:
+    one_to_two_additional_points: configurable_input_required
+    network_three_or_more_points: conditional_early_rollout_assumption_not_a_steady_state_blocker
 equipment:
   bar_enabled_point_items:
     - item_id: CAPEX-02-013
       quantity_per_bar_enabled_point: 1
       provenance: owner_approved_point_bar_applicability
+  point_wash_packages:
+    source: CAPEX register research prices; does not activate the integrated MOD-WASH module
+    takeaway:
+      allocation_id: POINT-WASH-TAKEAWAY
+      name: "Локальная мойка и sanitation-kit точки на вынос"
+      no_dome_dishwasher: true
+      components:
+        - { item_id: CAPEX-01-019, quantity: 1, asset_class: equipment, purpose: "Мойка рабочего инвентаря" }
+        - { item_id: CAPEX-01-020, quantity: 1, asset_class: equipment, purpose: "Рукомойник персонала" }
+        - { item_id: CAPEX-01-021, quantity: 1, asset_class: small_equipment, purpose: "Мыло, антисептик и полотенца" }
+        - { item_id: CAPEX-01-006, quantity: 1, asset_class: furniture, purpose: "Компактное хранение cleaning-инвентаря" }
+    with_seating:
+      allocation_id: POINT-WASH-SEATING
+      name: "Локальная мойка и cleaning-kit точки с посадкой"
+      no_dome_dishwasher: true
+      components:
+        - { item_id: CAPEX-01-019, quantity: 1, asset_class: equipment, purpose: "Мойка рабочего инвентаря" }
+        - { item_id: CAPEX-01-020, quantity: 1, asset_class: equipment, purpose: "Рукомойник персонала" }
+        - { item_id: CAPEX-01-021, quantity: 1, asset_class: small_equipment, purpose: "Мыло, антисептик и полотенца" }
+        - { item_id: CAPEX-01-006, quantity: 1, asset_class: furniture, purpose: "Хранение cleaning-инвентаря" }
+        - { item_id: CAPEX-01-007, quantity: 1, asset_class: furniture, purpose: "Сушка и хранение чистого инвентаря" }
