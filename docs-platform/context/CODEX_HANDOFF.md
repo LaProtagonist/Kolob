@@ -9,16 +9,16 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 ## 2. Текущая ветка и governed iteration
 
 - Branch: `feat/financial-core-consolidation-v2`.
-- Latest closed iteration: `ITR-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-02`.
-- Latest iteration tag: `iteration/ITR-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-02`.
-- Latest content commit: `6fcbf67919f3a86f7aae6ba1ab14166310e4f34c`.
+- Latest closed iteration: `ITR-FINANCIAL-CORE-OPEX-COVERAGE-2026-08-27-03`.
+- Latest iteration tag: `iteration/ITR-FINANCIAL-CORE-OPEX-COVERAGE-2026-08-27-03`.
+- Latest content commit: `4c5158528a76a57cc15a6901cfd340d597ef79f1`.
 - Текущий Git HEAD намеренно не записывается: его вычисляет `npm run project:onboard`.
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-02-COMMITTED`.
-- Hash: `9745db20f0cbb31fa4fd4351c468f214bce062e780536a3d9e454404725fe851`.
-- generated_from_event_hash: `9745db20f0cbb31fa4fd4351c468f214bce062e780536a3d9e454404725fe851`.
+- Event: `EVT-ITR-FINANCIAL-CORE-OPEX-COVERAGE-2026-08-27-03-COMMITTED`.
+- Hash: `b7ae1f3ca4017901364fd5b8f17eb7cd5c3d777edc4a3b22ac804e66c50d7f07`.
+- generated_from_event_hash: `b7ae1f3ca4017901364fd5b8f17eb7cd5c3d777edc4a3b22ac804e66c50d7f07`.
 
 ## 4. Канонические документы
 
@@ -39,14 +39,14 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 | DOC-INVESTMENT-MEMO | proposed | `docs-platform/templates/investment-memorandum.md` | `464e46d307aaa98e57cab3a098cd639e212d32b51f82a06688de228f0e7fb4cd` |
 | DOC-INVESTOR-FINANCIAL-SUMMARY | research | `docs-platform/working/investor-financial-summary.yaml` | `429aca4726de5284a37d87ee9522959e7de787edb0bbbe4b03694f287bcb18fa` |
 | DOC-INVESTOR-START-MODEL | research | `docs-platform/working/investor-start-model.yaml` | `b81a6c4e8988a4532c9ba2749d492b3f96e37d83af822396afc82930244b2985` |
-| DOC-NETWORK-PLANNING-ASSUMPTIONS | approved | `docs-platform/working/network-planning-assumptions.yaml` | `12e8220efac9c759decaa05904aaa2452e1ea6a13f5dd267670d8772b5f9a9e0` |
+| DOC-NETWORK-PLANNING-ASSUMPTIONS | approved | `docs-platform/working/network-planning-assumptions.yaml` | `fdb96e43bf550122c8d3fcec08c0b7fd7315bd8cc88cceea8b3db2743c0fdd03` |
 | DOC-PILOT-CAPEX-ASSUMPTIONS | research | `docs-platform/working/pilot-capex-assumptions.yaml` | `25e11d4db20050b3a95cab40797ef0a29e56fad93c73d33d4a39415a8071d4ac` |
 | DOC-README | approved | `docs-platform/README.md` | `04e947f296a158a1c37ceb8d4c959d1f4e31cf609d16c99bee2d3c3b79b824ab` |
 | DOC-REVENUE-MODEL | research | `docs-platform/working/revenue-model.yaml` | `ab68399813d62d861522752c8e94df9cfc5d5a48e9b7723c60f2c968c4cba721` |
 
 ## 5. Текущая рабочая тема
 
-Consolidate Network P&L and FCF through the shared financial core
+Complete Network OPEX mapping, wash BOM and investor-grade coverage
 
 ## 6. Decisions и change sets
 
