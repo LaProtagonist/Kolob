@@ -187,7 +187,9 @@ test("scenario switching stays inside the configured projection", () => {
 
   assert.deepEqual(scenarios.map((item) => item.id), ["pessimistic", "realistic", "optimistic"]);
   assert.deepEqual(scenarios.map((item) => item.checksPerDay), [200, 300, 450]);
-  assert.ok(scenarios.every((item, index) => item.startInvestmentRub < economicsData.scenarios[index].startInvestmentRub));
+  assert.ok(scenarios.every((item) => item.context === "current_base_object"));
+  assert.ok(scenarios.every((item) => item.currentBaseReserveProjection?.totalReserveRub === item.operatingReserveRub));
+  assert.ok(scenarios.every((item) => item.investmentBreakdown.find((line) => line.key === "operating_reserve")?.amount_rub === item.operatingReserveRub));
 });
 
 test("runtime configuration is safely restored and never mutates canonical source files", () => {

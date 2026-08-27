@@ -56,6 +56,39 @@ export type ConfiguredMonthlyProjection = {
   cashFlowRub: number;
 };
 
+export type CurrentBaseReserveLine = {
+  id: string;
+  name: string;
+  monthlyAmountRub: number;
+};
+
+/**
+ * The Current Base Object has a distinct liquidity policy from the immutable
+ * Historical Integrated Pilot.  It reserves six months of the governed
+ * fixed/semi-fixed Current Base costs, excluding costs that are either
+ * revenue-variable or financed by another launch line.
+ */
+export type CurrentBaseReserveProjection = {
+  context: "current_base_object";
+  policy: "six_months_current_base_fixed_and_semi_fixed_opex";
+  scenarioId: InvestorScenarioId;
+  months: number;
+  monthlyBasisRub: number;
+  includedLines: CurrentBaseReserveLine[];
+  excludedLineIds: string[];
+  prepaidCoverage: {
+    monthlyRentRub: number;
+    prepaidMonths: number;
+    prepaidRentRub: number;
+    reserveMonths: number;
+    coveredRentMonths: number;
+    uncoveredRentMonths: number;
+    rentFreeMonths: number;
+  };
+  uncoveredRentRub: number;
+  totalReserveRub: number;
+};
+
 export type ConfiguredEconomicsScenario = Omit<EconomicsScenario, "paybackMonth" | "irr"> & {
   paybackMonth: number | null;
   irr: number | null;
@@ -72,6 +105,11 @@ export type ConfiguredEconomicsScenario = Omit<EconomicsScenario, "paybackMonth"
    * base-object revenue, OPEX or tax calculations.
    */
   monthlyProjection: ConfiguredMonthlyProjection[];
+  /**
+   * Present only for the Current Base context. The Historical Pilot keeps its
+   * own immutable reserve in the generated historical projection.
+   */
+  currentBaseReserveProjection: CurrentBaseReserveProjection | null;
 };
 
 /**
@@ -352,7 +390,7 @@ function canonicalScenario(id: InvestorScenarioId) {
   return economicsData.scenariosById[id];
 }
 
-function scenarioLaunchFinancials(id: InvestorScenarioId) {
+function historicalScenarioLaunchFinancials(id: InvestorScenarioId) {
   const master = financialProjection.scenarios.rent[id];
   const monthlyScenarioOpexRub = master.marketing_rub + master.household_rub;
   return {
@@ -364,6 +402,124 @@ function scenarioLaunchFinancials(id: InvestorScenarioId) {
     monthlyScenarioOpexRub,
     monthlyLaborRub: master.calculated_staffing_labor_rub,
     restaurantInvestedCapitalRub: master.restaurant_invested_capital_rub,
+  };
+}
+
+const currentBaseReserveFixedOpexLines = [
+  ["UTILITIES", "Коммунальные услуги"],
+  ["EQUIPMENT_SERVICE", "Обслуживание оборудования"],
+  ["ACCOUNTING", "Бухгалтерия"],
+  ["VENT_GREASE", "Вентиляция и жироуловитель"],
+  ["UNIFORM_RENEWAL", "Обновление формы"],
+  ["MUSIC_RIGHTS", "Музыкальное сопровождение"],
+  ["PEST", "Дератизация и дезинсекция"],
+  ["YUMA", "YUMA / ПО"],
+  ["MEDICAL", "Медицинские расходы"],
+  ["SECURITY_MONITORING", "Охранный мониторинг"],
+  ["BANKING", "Банковское обслуживание (TBD)"],
+  ["OTHER", "Прочие операционные расходы"],
+] as const;
+
+const currentBaseReserveExcludedLineIds = [
+  "raw_materials",
+  "waste",
+  "consumer_packaging",
+  "acquiring",
+  "aggregator_commission",
+  "administrative_reserve",
+  "depreciation",
+  "maintenance_capex",
+  "income_tax",
+  "equipment_purchase",
+  "preparation",
+  "security_deposit",
+  "prepaid_rent",
+  "initial_inventory",
+];
+
+/**
+ * Builds the Current Base reserve directly from the Current Base P&L inputs.
+ * In particular it uses the protected labour basis (`labor_rub`), not the
+ * Historical Pilot's calculated staffing labour used by its legacy reserve.
+ */
+export function currentBaseReserveProjection(
+  configuration: InvestorConfiguration,
+  id: InvestorScenarioId = configuration.scenarioId,
+): CurrentBaseReserveProjection | null {
+  if (financialProjectionContextForConfiguration(configuration) !== "current_base_object") return null;
+  if (configuration.launchBudget.operatingExpenseMode !== "baseline") return null;
+
+  const master = financialProjection.scenarios.rent[id];
+  const opexEntries = master.opex_entries_rub as Record<string, number>;
+  const reserveMonths = configuration.launchBudget.operatingReserveMonths;
+  const monthlyRentRub = configuration.launchBudget.premisesScenario === "rent"
+    ? configuration.launchBudget.monthlyRentRub ?? master.rent_rub
+    : 0;
+  const prepaidMonths = configuration.launchBudget.premisesScenario === "rent"
+    ? configuration.launchBudget.prepaymentMonths
+    : 0;
+  const uncoveredRentMonths = Math.max(0, reserveMonths - prepaidMonths);
+  const uncoveredRentRub = round(monthlyRentRub * uncoveredRentMonths);
+  const includedLines: CurrentBaseReserveLine[] = [
+    { id: "labor", name: "Персонал Current Base", monthlyAmountRub: master.labor_rub },
+    ...currentBaseReserveFixedOpexLines.map(([lineId, name]) => ({
+      id: lineId.toLowerCase(),
+      name,
+      monthlyAmountRub: opexEntries[lineId] ?? 0,
+    })),
+    { id: "marketing", name: "Маркетинг зрелого месяца", monthlyAmountRub: master.marketing_rub },
+    { id: "household", name: "Хозяйственные расходы", monthlyAmountRub: master.household_rub },
+    {
+      id: "uncovered_rent",
+      name: "Непокрытая арендная плата",
+      monthlyAmountRub: reserveMonths === 0 ? 0 : round(uncoveredRentRub / reserveMonths),
+    },
+  ];
+  const fixedAndSemiFixedMonthlyRub = sum(includedLines
+    .filter((line) => line.id !== "uncovered_rent")
+    .map((line) => line.monthlyAmountRub));
+  const totalReserveRub = round(fixedAndSemiFixedMonthlyRub * reserveMonths + uncoveredRentRub);
+
+  return {
+    context: "current_base_object",
+    policy: "six_months_current_base_fixed_and_semi_fixed_opex",
+    scenarioId: id,
+    months: reserveMonths,
+    monthlyBasisRub: reserveMonths === 0 ? 0 : round(totalReserveRub / reserveMonths),
+    includedLines,
+    excludedLineIds: currentBaseReserveExcludedLineIds,
+    prepaidCoverage: {
+      monthlyRentRub,
+      prepaidMonths,
+      prepaidRentRub: round(monthlyRentRub * prepaidMonths),
+      reserveMonths,
+      coveredRentMonths: Math.min(reserveMonths, prepaidMonths),
+      uncoveredRentMonths,
+      rentFreeMonths: configuration.launchBudget.rentFreeMonths,
+    },
+    uncoveredRentRub,
+    totalReserveRub,
+  };
+}
+
+function launchFinancialsForConfiguration(
+  id: InvestorScenarioId,
+  reserve: CurrentBaseReserveProjection | null,
+) {
+  const historical = historicalScenarioLaunchFinancials(id);
+  if (!reserve) return historical;
+  return {
+    ...historical,
+    reserveMonths: reserve.months,
+    operatingReserveRub: reserve.totalReserveRub,
+    monthlyReserveBaseRub: reserve.monthlyBasisRub,
+    monthlyFixedOpexRub: sum(reserve.includedLines
+      .filter((line) => line.id !== "labor" && line.id !== "marketing" && line.id !== "household" && line.id !== "uncovered_rent")
+      .map((line) => line.monthlyAmountRub)),
+    monthlyScenarioOpexRub: sum(reserve.includedLines
+      .filter((line) => line.id === "marketing" || line.id === "household")
+      .map((line) => line.monthlyAmountRub)),
+    monthlyLaborRub: reserve.includedLines.find((line) => line.id === "labor")?.monthlyAmountRub ?? 0,
   };
 }
 
@@ -422,7 +578,8 @@ function calculatedMonthlyProjection(rows: Array<{
 export function configuredEconomicsScenario(configuration: InvestorConfiguration, id: InvestorScenarioId = configuration.scenarioId): ConfiguredEconomicsScenario {
   const canonical = canonicalScenario(id);
   const context = financialProjectionContextForConfiguration(configuration);
-  const capital = calculateLaunchBudget(configuration.launchBudget, undefined, scenarioLaunchFinancials(id));
+  const reserveProjection = currentBaseReserveProjection(configuration, id);
+  const capital = calculateLaunchBudget(configuration.launchBudget, undefined, launchFinancialsForConfiguration(id, reserveProjection));
   const hasCustomTraffic = configuration.customChecksPerDay !== null;
   const masterRentScenario = financialProjection.scenarios.rent[id];
   const isConfigured = hasCustomTraffic || !calculationInputsEqual(configuration.launchBudget, baseObjectLaunchBudgetState());
@@ -444,6 +601,7 @@ export function configuredEconomicsScenario(configuration: InvestorConfiguration
       investmentGroups: canonical.investmentGroups,
       cashFlows: master.restaurant_cash_flows,
       monthlyProjection: generatedMonthlyProjection(master),
+      currentBaseReserveProjection: null,
     };
   }
 
@@ -458,6 +616,7 @@ export function configuredEconomicsScenario(configuration: InvestorConfiguration
       investmentGroups: configuredInvestmentGroups(configuredInvestmentBreakdown(configuration, capital)),
       cashFlows: [],
       monthlyProjection: [],
+      currentBaseReserveProjection: reserveProjection,
     };
   }
 
@@ -566,6 +725,7 @@ export function configuredEconomicsScenario(configuration: InvestorConfiguration
       premisesScenario: configuration.launchBudget.premisesScenario,
       cashFlows,
       monthlyProjection: calculatedMonthlyProjection(monthlyRows, master),
+      currentBaseReserveProjection: reserveProjection,
     };
   }
 
@@ -589,6 +749,7 @@ export function configuredEconomicsScenario(configuration: InvestorConfiguration
       premisesScenario: "rent",
       cashFlows,
       monthlyProjection: generatedMonthlyProjection(master),
+      currentBaseReserveProjection: reserveProjection,
     };
   }
 
@@ -630,6 +791,7 @@ export function configuredEconomicsScenario(configuration: InvestorConfiguration
       premisesScenario: "purchase",
       cashFlows,
       monthlyProjection: generatedMonthlyProjection(master),
+      currentBaseReserveProjection: reserveProjection,
     };
   }
 
@@ -708,6 +870,7 @@ export function configuredEconomicsScenario(configuration: InvestorConfiguration
     premisesScenario: "rent",
     cashFlows,
     monthlyProjection: calculatedMonthlyProjection(monthlyRows, master),
+    currentBaseReserveProjection: reserveProjection,
   };
 }
 

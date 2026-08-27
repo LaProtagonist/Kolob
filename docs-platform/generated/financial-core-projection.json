@@ -40,7 +40,11 @@
       },
       {
         "path": "src/lib/configured-economics.ts",
-        "sha256": "ffef8a84a2ba6b26878e1f2fe7045510b67135367cc3f32961f5e6abf5dece8c"
+        "sha256": "8827f757e12f59fac376c5b9d852c40a75e674af9b914b835fd73f584e794ef1"
+      },
+      {
+        "path": "src/lib/launch-budget.ts",
+        "sha256": "0093114173e76f343f4379162cd9958c26308ccf0e5ad9c539a56d019ba8c535"
       },
       {
         "path": "src/lib/financial-assets.ts",
@@ -463,36 +467,62 @@
       "financial_model_content_state_sha256": "57d4e47a4490b1e7a52db9a5a74952d8409883d52a4947b6f1383c30577e68ea"
     },
     "launch": {
-      "investment_rub": 39220380.74,
-      "operating_reserve_rub": 20088988.08
+      "investment_rub": 41830283.06,
+      "operating_reserve_rub": 22698890.4
     },
     "reserve_decomposition": {
       "context": "current_base_object",
-      "policy": "canonical_financial_model_fixed_opex_reserve",
-      "source_metric": "financial_model.scenarios.rent.realistic.fixed_opex_reserve_rub",
+      "policy": "six_months_current_base_fixed_and_semi_fixed_opex",
+      "source_metric": "current_base_reserve_projection",
       "reserve_months": 6,
       "monthly_current_pnl_opex_rub": 8225135.6,
-      "monthly_reserve_basis_rub": 3348164.6799999997,
-      "operating_reserve_rub": 20088988.08,
+      "monthly_reserve_basis_rub": 3783148.4,
+      "operating_reserve_rub": 22698890.4,
       "included_monthly_basis_rub": {
-        "calculated_staffing_labor_rub": 2396938.28,
-        "fixed_opex_without_labor_rent_rub": 449500,
-        "scenario_marketing_rub": 401726.4,
-        "scenario_household_rub": 100000,
-        "uncovered_rent_rub": 0
+        "labor": 2831922,
+        "utilities": 200000,
+        "equipment_service": 100000,
+        "accounting": 25000,
+        "vent_grease": 15000,
+        "uniform_renewal": 15000,
+        "music_rights": 7000,
+        "pest": 6000,
+        "yuma": 6000,
+        "medical": 5000,
+        "security_monitoring": 4000,
+        "banking": 0,
+        "other": 66500,
+        "marketing": 401726.4,
+        "household": 100000,
+        "uncovered_rent": 0
       },
       "excludes": [
         "raw_materials",
         "waste",
-        "packaging",
+        "consumer_packaging",
         "acquiring",
         "aggregator_commission",
         "administrative_reserve",
-        "income_tax",
+        "depreciation",
         "maintenance_capex",
-        "prepaid_rent"
+        "income_tax",
+        "equipment_purchase",
+        "preparation",
+        "security_deposit",
+        "prepaid_rent",
+        "initial_inventory"
       ],
-      "note": "Base reserve is a fixed-OPEX liquidity policy inherited from the Financial Model, not a full Current Base P&L × reserve months calculation."
+      "prepaid_coverage": {
+        "monthlyRentRub": 500000,
+        "prepaidMonths": 12,
+        "prepaidRentRub": 6000000,
+        "reserveMonths": 6,
+        "coveredRentMonths": 6,
+        "uncoveredRentMonths": 0,
+        "rentFreeMonths": 2
+      },
+      "uncovered_rent_rub": 0,
+      "note": "Current Base reserve is calculated from Current Base fixed and semi-fixed P&L inputs. Variable costs and separately financed launch items are excluded."
     },
     "pnl": {
       "revenue_rub": 10488600,
@@ -505,9 +535,9 @@
       "operating_free_cash_flow_rub": 2045009.8
     },
     "metrics": {
-      "payback_month": 20,
-      "irr": 0.7335561455483743,
-      "npv_rub": 39824232.74
+      "payback_month": 21,
+      "irr": 0.6669260500786507,
+      "npv_rub": 37214330.42
     },
     "monthly_cash_flows": [
       {
@@ -523,10 +553,10 @@
         "depreciationRub": 0,
         "maintenanceCapexRub": 0,
         "operatingFreeCashFlowRub": 0,
-        "capexRub": 39220380.74,
-        "operatingReserveRub": 20088988.08,
-        "cashFlowRub": -39220380.74,
-        "cumulativeCashFlowRub": -39220380.74
+        "capexRub": 41830283.06,
+        "operatingReserveRub": 22698890.4,
+        "cashFlowRub": -41830283.06,
+        "cumulativeCashFlowRub": -41830283.06
       },
       {
         "month": 1,
@@ -544,7 +574,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 255835.29,
-        "cumulativeCashFlowRub": -38964545.45
+        "cumulativeCashFlowRub": -41574447.77
       },
       {
         "month": 2,
@@ -562,7 +592,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 44908.31,
-        "cumulativeCashFlowRub": -38919637.14
+        "cumulativeCashFlowRub": -41529539.46
       },
       {
         "month": 3,
@@ -580,7 +610,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 1189027.4,
-        "cumulativeCashFlowRub": -37730609.74
+        "cumulativeCashFlowRub": -40340512.06
       },
       {
         "month": 4,
@@ -598,7 +628,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 1818542.97,
-        "cumulativeCashFlowRub": -35912066.77
+        "cumulativeCashFlowRub": -38521969.09
       },
       {
         "month": 5,
@@ -616,7 +646,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 2283401.27,
-        "cumulativeCashFlowRub": -33628665.5
+        "cumulativeCashFlowRub": -36238567.82
       },
       {
         "month": 6,
@@ -634,7 +664,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 2264141.7,
-        "cumulativeCashFlowRub": -31364523.8
+        "cumulativeCashFlowRub": -33974426.12
       },
       {
         "month": 7,
@@ -652,7 +682,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 2425976.91,
-        "cumulativeCashFlowRub": -28938546.89
+        "cumulativeCashFlowRub": -31548449.21
       },
       {
         "month": 8,
@@ -670,7 +700,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 2485493.36,
-        "cumulativeCashFlowRub": -26453053.53
+        "cumulativeCashFlowRub": -29062955.85
       },
       {
         "month": 9,
@@ -688,7 +718,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 2902108.49,
-        "cumulativeCashFlowRub": -23550945.04
+        "cumulativeCashFlowRub": -26160847.36
       },
       {
         "month": 10,
@@ -706,7 +736,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 3021141.38,
-        "cumulativeCashFlowRub": -20529803.66
+        "cumulativeCashFlowRub": -23139705.98
       },
       {
         "month": 11,
@@ -724,7 +754,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 2842592.04,
-        "cumulativeCashFlowRub": -17687211.62
+        "cumulativeCashFlowRub": -20297113.94
       },
       {
         "month": 12,
@@ -742,7 +772,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 3080657.83,
-        "cumulativeCashFlowRub": -14606553.79
+        "cumulativeCashFlowRub": -17216456.11
       },
       {
         "month": 13,
@@ -760,7 +790,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 2336702.24,
-        "cumulativeCashFlowRub": -12269851.55
+        "cumulativeCashFlowRub": -14879753.87
       },
       {
         "month": 14,
@@ -778,7 +808,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 1528057.44,
-        "cumulativeCashFlowRub": -10741794.11
+        "cumulativeCashFlowRub": -13351696.43
       },
       {
         "month": 15,
@@ -796,7 +826,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 1687911.12,
-        "cumulativeCashFlowRub": -9053882.99
+        "cumulativeCashFlowRub": -11663785.31
       },
       {
         "month": 16,
@@ -814,7 +844,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 1896218.69,
-        "cumulativeCashFlowRub": -7157664.3
+        "cumulativeCashFlowRub": -9767566.62
       },
       {
         "month": 17,
@@ -832,7 +862,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 2104526.24,
-        "cumulativeCashFlowRub": -5053138.06
+        "cumulativeCashFlowRub": -7663040.38
       },
       {
         "month": 18,
@@ -850,7 +880,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 1925976.91,
-        "cumulativeCashFlowRub": -3127161.15
+        "cumulativeCashFlowRub": -5737063.47
       },
       {
         "month": 19,
@@ -868,7 +898,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 1925976.91,
-        "cumulativeCashFlowRub": -1201184.24
+        "cumulativeCashFlowRub": -3811086.56
       },
       {
         "month": 20,
@@ -886,7 +916,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 1985493.36,
-        "cumulativeCashFlowRub": 784309.12
+        "cumulativeCashFlowRub": -1825593.2
       },
       {
         "month": 21,
@@ -904,7 +934,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 2402108.49,
-        "cumulativeCashFlowRub": 3186417.61
+        "cumulativeCashFlowRub": 576515.29
       },
       {
         "month": 22,
@@ -922,7 +952,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 2521141.38,
-        "cumulativeCashFlowRub": 5707558.99
+        "cumulativeCashFlowRub": 3097656.67
       },
       {
         "month": 23,
@@ -940,7 +970,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 2342592.04,
-        "cumulativeCashFlowRub": 8050151.03
+        "cumulativeCashFlowRub": 5440248.71
       },
       {
         "month": 24,
@@ -958,7 +988,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 2580657.83,
-        "cumulativeCashFlowRub": 10630808.86
+        "cumulativeCashFlowRub": 8020906.54
       },
       {
         "month": 25,
@@ -976,7 +1006,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 1836702.24,
-        "cumulativeCashFlowRub": 12467511.1
+        "cumulativeCashFlowRub": 9857608.78
       },
       {
         "month": 26,
@@ -994,7 +1024,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 1028057.44,
-        "cumulativeCashFlowRub": 13495568.54
+        "cumulativeCashFlowRub": 10885666.22
       },
       {
         "month": 27,
@@ -1012,7 +1042,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 1687911.12,
-        "cumulativeCashFlowRub": 15183479.66
+        "cumulativeCashFlowRub": 12573577.34
       },
       {
         "month": 28,
@@ -1030,7 +1060,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 1896218.69,
-        "cumulativeCashFlowRub": 17079698.35
+        "cumulativeCashFlowRub": 14469796.03
       },
       {
         "month": 29,
@@ -1048,7 +1078,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 2104526.24,
-        "cumulativeCashFlowRub": 19184224.59
+        "cumulativeCashFlowRub": 16574322.27
       },
       {
         "month": 30,
@@ -1066,7 +1096,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 1925976.91,
-        "cumulativeCashFlowRub": 21110201.5
+        "cumulativeCashFlowRub": 18500299.18
       },
       {
         "month": 31,
@@ -1084,7 +1114,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 1925976.91,
-        "cumulativeCashFlowRub": 23036178.41
+        "cumulativeCashFlowRub": 20426276.09
       },
       {
         "month": 32,
@@ -1102,7 +1132,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 1985493.36,
-        "cumulativeCashFlowRub": 25021671.77
+        "cumulativeCashFlowRub": 22411769.45
       },
       {
         "month": 33,
@@ -1120,7 +1150,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 2402108.49,
-        "cumulativeCashFlowRub": 27423780.26
+        "cumulativeCashFlowRub": 24813877.94
       },
       {
         "month": 34,
@@ -1138,7 +1168,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 2521141.38,
-        "cumulativeCashFlowRub": 29944921.64
+        "cumulativeCashFlowRub": 27335019.32
       },
       {
         "month": 35,
@@ -1156,7 +1186,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 2342592.04,
-        "cumulativeCashFlowRub": 32287513.68
+        "cumulativeCashFlowRub": 29677611.36
       },
       {
         "month": 36,
@@ -1174,7 +1204,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 2580657.83,
-        "cumulativeCashFlowRub": 34868171.51
+        "cumulativeCashFlowRub": 32258269.19
       },
       {
         "month": 37,
@@ -1192,7 +1222,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 1836702.24,
-        "cumulativeCashFlowRub": 36704873.75
+        "cumulativeCashFlowRub": 34094971.43
       },
       {
         "month": 38,
@@ -1210,7 +1240,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 1028057.44,
-        "cumulativeCashFlowRub": 37732931.19
+        "cumulativeCashFlowRub": 35123028.87
       },
       {
         "month": 39,
@@ -1228,7 +1258,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 1687911.12,
-        "cumulativeCashFlowRub": 39420842.31
+        "cumulativeCashFlowRub": 36810939.99
       },
       {
         "month": 40,
@@ -1246,7 +1276,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 1896218.69,
-        "cumulativeCashFlowRub": 41317061
+        "cumulativeCashFlowRub": 38707158.68
       },
       {
         "month": 41,
@@ -1264,7 +1294,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 2104526.24,
-        "cumulativeCashFlowRub": 43421587.24
+        "cumulativeCashFlowRub": 40811684.92
       },
       {
         "month": 42,
@@ -1282,7 +1312,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 1925976.91,
-        "cumulativeCashFlowRub": 45347564.15
+        "cumulativeCashFlowRub": 42737661.83
       },
       {
         "month": 43,
@@ -1300,7 +1330,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 1925976.91,
-        "cumulativeCashFlowRub": 47273541.06
+        "cumulativeCashFlowRub": 44663638.74
       },
       {
         "month": 44,
@@ -1318,7 +1348,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 1985493.36,
-        "cumulativeCashFlowRub": 49259034.42
+        "cumulativeCashFlowRub": 46649132.1
       },
       {
         "month": 45,
@@ -1336,7 +1366,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 2402108.49,
-        "cumulativeCashFlowRub": 51661142.91
+        "cumulativeCashFlowRub": 49051240.59
       },
       {
         "month": 46,
@@ -1354,7 +1384,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 2521141.38,
-        "cumulativeCashFlowRub": 54182284.29
+        "cumulativeCashFlowRub": 51572381.97
       },
       {
         "month": 47,
@@ -1372,7 +1402,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 2342592.04,
-        "cumulativeCashFlowRub": 56524876.33
+        "cumulativeCashFlowRub": 53914974.01
       },
       {
         "month": 48,
@@ -1390,7 +1420,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 2580657.83,
-        "cumulativeCashFlowRub": 59105534.16
+        "cumulativeCashFlowRub": 56495631.84
       },
       {
         "month": 49,
@@ -1408,7 +1438,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 1836702.24,
-        "cumulativeCashFlowRub": 60942236.4
+        "cumulativeCashFlowRub": 58332334.08
       },
       {
         "month": 50,
@@ -1426,7 +1456,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 1028057.44,
-        "cumulativeCashFlowRub": 61970293.84
+        "cumulativeCashFlowRub": 59360391.52
       },
       {
         "month": 51,
@@ -1444,7 +1474,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 1687911.12,
-        "cumulativeCashFlowRub": 63658204.96
+        "cumulativeCashFlowRub": 61048302.64
       },
       {
         "month": 52,
@@ -1462,7 +1492,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 1896218.69,
-        "cumulativeCashFlowRub": 65554423.65
+        "cumulativeCashFlowRub": 62944521.33
       },
       {
         "month": 53,
@@ -1480,7 +1510,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 2104526.24,
-        "cumulativeCashFlowRub": 67658949.89
+        "cumulativeCashFlowRub": 65049047.57
       },
       {
         "month": 54,
@@ -1498,7 +1528,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 1925976.91,
-        "cumulativeCashFlowRub": 69584926.8
+        "cumulativeCashFlowRub": 66975024.48
       },
       {
         "month": 55,
@@ -1516,7 +1546,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 1925976.91,
-        "cumulativeCashFlowRub": 71510903.71
+        "cumulativeCashFlowRub": 68901001.39
       },
       {
         "month": 56,
@@ -1534,7 +1564,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 1985493.36,
-        "cumulativeCashFlowRub": 73496397.07
+        "cumulativeCashFlowRub": 70886494.75
       },
       {
         "month": 57,
@@ -1552,7 +1582,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 2402108.49,
-        "cumulativeCashFlowRub": 75898505.56
+        "cumulativeCashFlowRub": 73288603.24
       },
       {
         "month": 58,
@@ -1570,7 +1600,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 2521141.38,
-        "cumulativeCashFlowRub": 78419646.94
+        "cumulativeCashFlowRub": 75809744.62
       },
       {
         "month": 59,
@@ -1588,7 +1618,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 2342592.04,
-        "cumulativeCashFlowRub": 80762238.98
+        "cumulativeCashFlowRub": 78152336.66
       },
       {
         "month": 60,
@@ -1606,7 +1636,7 @@
         "capexRub": 0,
         "operatingReserveRub": 0,
         "cashFlowRub": 2580657.83,
-        "cumulativeCashFlowRub": 83342896.81
+        "cumulativeCashFlowRub": 80732994.49
       }
     ]
   },
@@ -1620,8 +1650,8 @@
       "operating_reserve_rub": 20088988.08
     },
     "reserve_decomposition": {
-      "context": "current_base_object",
-      "policy": "canonical_financial_model_fixed_opex_reserve",
+      "context": "historical_integrated_pilot",
+      "policy": "historical_financial_model_fixed_opex_reserve",
       "source_metric": "financial_model.scenarios.rent.realistic.fixed_opex_reserve_rub",
       "reserve_months": 6,
       "monthly_current_pnl_opex_rub": 8075135.6,
@@ -1645,7 +1675,7 @@
         "maintenance_capex",
         "prepaid_rent"
       ],
-      "note": "Base reserve is a fixed-OPEX liquidity policy inherited from the Financial Model, not a full Current Base P&L × reserve months calculation."
+      "note": "Historical Integrated Pilot retains its governed fixed-OPEX liquidity reserve; it is not a Current Base input."
     },
     "pnl": {
       "revenue_rub": 10488600,
@@ -3001,31 +3031,57 @@
       "reserve_decomposition": {
         "base": {
           "context": "current_base_object",
-          "policy": "canonical_financial_model_fixed_opex_reserve",
-          "source_metric": "financial_model.scenarios.rent.realistic.fixed_opex_reserve_rub",
+          "policy": "six_months_current_base_fixed_and_semi_fixed_opex",
+          "source_metric": "current_base_reserve_projection",
           "reserve_months": 6,
           "monthly_current_pnl_opex_rub": 8225135.6,
-          "monthly_reserve_basis_rub": 3348164.6799999997,
-          "operating_reserve_rub": 20088988.08,
+          "monthly_reserve_basis_rub": 3783148.4,
+          "operating_reserve_rub": 22698890.4,
           "included_monthly_basis_rub": {
-            "calculated_staffing_labor_rub": 2396938.28,
-            "fixed_opex_without_labor_rent_rub": 449500,
-            "scenario_marketing_rub": 401726.4,
-            "scenario_household_rub": 100000,
-            "uncovered_rent_rub": 0
+            "labor": 2831922,
+            "utilities": 200000,
+            "equipment_service": 100000,
+            "accounting": 25000,
+            "vent_grease": 15000,
+            "uniform_renewal": 15000,
+            "music_rights": 7000,
+            "pest": 6000,
+            "yuma": 6000,
+            "medical": 5000,
+            "security_monitoring": 4000,
+            "banking": 0,
+            "other": 66500,
+            "marketing": 401726.4,
+            "household": 100000,
+            "uncovered_rent": 0
           },
           "excludes": [
             "raw_materials",
             "waste",
-            "packaging",
+            "consumer_packaging",
             "acquiring",
             "aggregator_commission",
             "administrative_reserve",
-            "income_tax",
+            "depreciation",
             "maintenance_capex",
-            "prepaid_rent"
+            "income_tax",
+            "equipment_purchase",
+            "preparation",
+            "security_deposit",
+            "prepaid_rent",
+            "initial_inventory"
           ],
-          "note": "Base reserve is a fixed-OPEX liquidity policy inherited from the Financial Model, not a full Current Base P&L × reserve months calculation."
+          "prepaid_coverage": {
+            "monthlyRentRub": 500000,
+            "prepaidMonths": 12,
+            "prepaidRentRub": 6000000,
+            "reserveMonths": 6,
+            "coveredRentMonths": 6,
+            "uncoveredRentMonths": 0,
+            "rentFreeMonths": 2
+          },
+          "uncovered_rent_rub": 0,
+          "note": "Current Base reserve is calculated from Current Base fixed and semi-fixed P&L inputs. Variable costs and separately financed launch items are excluded."
         },
         "expansion": {
           "context": "network_expansion",
@@ -3045,8 +3101,8 @@
         "consolidated": {
           "context": "consolidated_network",
           "monthly_current_pnl_opex_rub": 25330206.67,
-          "financing_requirement_reserve_rub": 122719414.5,
-          "formula": "current_base_fixed_opex_reserve + incremental_expansion_recurring_opex_reserve",
+          "financing_requirement_reserve_rub": 125329316.82,
+          "formula": "current_base_fixed_and_semi_fixed_opex_reserve + incremental_expansion_recurring_opex_reserve",
           "composition": "Base and Expansion reserves are added once each; they retain their distinct governed bases.",
           "comparable_to_network_pnl_opex_times_months": false
         }
@@ -4181,7 +4237,7 @@
       },
       "network": {
         "launch": {
-          "investment_rub": 168842728.89000002
+          "investment_rub": 171452631.21
         },
         "pnl": {
           "revenue_rub": 35486430,
@@ -4193,7 +4249,7 @@
           "operating_free_cash_flow_rub": 9412362.58
         },
         "metrics": {
-          "steady_state_payback_months": 17.9,
+          "steady_state_payback_months": 18.2,
           "temporal_payback_month": 25
         },
         "monthly_cash_flows": [
@@ -4210,10 +4266,10 @@
             "depreciationRub": 0,
             "maintenanceCapexRub": 0,
             "operatingFreeCashFlowRub": 0,
-            "capexRub": 39220380.74,
-            "operatingReserveRub": 20088988.08,
-            "cashFlowRub": -39220380.74,
-            "cumulativeCashFlowRub": -39220380.74
+            "capexRub": 41830283.06,
+            "operatingReserveRub": 22698890.4,
+            "cashFlowRub": -41830283.06,
+            "cumulativeCashFlowRub": -41830283.06
           },
           {
             "month": 1,
@@ -4231,7 +4287,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 255835.29,
-            "cumulativeCashFlowRub": -38964545.45
+            "cumulativeCashFlowRub": -41574447.77
           },
           {
             "month": 2,
@@ -4249,7 +4305,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 44908.31,
-            "cumulativeCashFlowRub": -38919637.14
+            "cumulativeCashFlowRub": -41529539.46
           },
           {
             "month": 3,
@@ -4267,7 +4323,7 @@
             "capexRub": 8847652.453333333,
             "operatingReserveRub": 102630426.42,
             "cashFlowRub": -110289051.47,
-            "cumulativeCashFlowRub": -149208688.61
+            "cumulativeCashFlowRub": -151818590.93
           },
           {
             "month": 4,
@@ -4285,7 +4341,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 2693092.06,
-            "cumulativeCashFlowRub": -146515596.55
+            "cumulativeCashFlowRub": -149125498.87
           },
           {
             "month": 5,
@@ -4303,7 +4359,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 3659994.51,
-            "cumulativeCashFlowRub": -142855602.04
+            "cumulativeCashFlowRub": -145465504.36
           },
           {
             "month": 6,
@@ -4321,7 +4377,7 @@
             "capexRub": 3140368.362666667,
             "operatingReserveRub": 0,
             "cashFlowRub": 533321.13,
-            "cumulativeCashFlowRub": -142322280.91
+            "cumulativeCashFlowRub": -144932183.23
           },
           {
             "month": 7,
@@ -4339,7 +4395,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 4761627.29,
-            "cumulativeCashFlowRub": -137560653.62
+            "cumulativeCashFlowRub": -140170555.94
           },
           {
             "month": 8,
@@ -4357,7 +4413,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 5375825.25,
-            "cumulativeCashFlowRub": -132184828.37
+            "cumulativeCashFlowRub": -134794730.69
           },
           {
             "month": 9,
@@ -4375,7 +4431,7 @@
             "capexRub": 9178602.153333334,
             "operatingReserveRub": 0,
             "cashFlowRub": -2688082.35,
-            "cumulativeCashFlowRub": -134872910.72
+            "cumulativeCashFlowRub": -137482813.04
           },
           {
             "month": 10,
@@ -4393,7 +4449,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 8126886.65,
-            "cumulativeCashFlowRub": -126746024.07
+            "cumulativeCashFlowRub": -129355926.39
           },
           {
             "month": 11,
@@ -4411,7 +4467,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 7995768.33,
-            "cumulativeCashFlowRub": -118750255.74
+            "cumulativeCashFlowRub": -121360158.06
           },
           {
             "month": 12,
@@ -4429,7 +4485,7 @@
             "capexRub": 5825298.76,
             "operatingReserveRub": 0,
             "cashFlowRub": 3271781.67,
-            "cumulativeCashFlowRub": -115478474.07
+            "cumulativeCashFlowRub": -118088376.39
           },
           {
             "month": 13,
@@ -4447,7 +4503,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 7540831.45,
-            "cumulativeCashFlowRub": -107937642.62
+            "cumulativeCashFlowRub": -110547544.94
           },
           {
             "month": 14,
@@ -4465,7 +4521,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 5368772.31,
-            "cumulativeCashFlowRub": -102568870.31
+            "cumulativeCashFlowRub": -105178772.63
           },
           {
             "month": 15,
@@ -4483,7 +4539,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 7060318.37,
-            "cumulativeCashFlowRub": -95508551.94
+            "cumulativeCashFlowRub": -98118454.26
           },
           {
             "month": 16,
@@ -4501,7 +4557,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 8414584.18,
-            "cumulativeCashFlowRub": -87093967.76
+            "cumulativeCashFlowRub": -89703870.08
           },
           {
             "month": 17,
@@ -4519,7 +4575,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 9432716.35,
-            "cumulativeCashFlowRub": -77661251.41
+            "cumulativeCashFlowRub": -80271153.73
           },
           {
             "month": 18,
@@ -4537,7 +4593,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 8847274.38,
-            "cumulativeCashFlowRub": -68813977.03
+            "cumulativeCashFlowRub": -71423879.35
           },
           {
             "month": 19,
@@ -4555,7 +4611,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 8986660.24,
-            "cumulativeCashFlowRub": -59827316.79
+            "cumulativeCashFlowRub": -62437219.11
           },
           {
             "month": 20,
@@ -4573,7 +4629,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 9303208.98,
-            "cumulativeCashFlowRub": -50524107.81
+            "cumulativeCashFlowRub": -53134010.13
           },
           {
             "month": 21,
@@ -4591,7 +4647,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 11026274.23,
-            "cumulativeCashFlowRub": -39497833.58
+            "cumulativeCashFlowRub": -42107735.9
           },
           {
             "month": 22,
@@ -4609,7 +4665,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 11659371.71,
-            "cumulativeCashFlowRub": -27838461.87
+            "cumulativeCashFlowRub": -30448364.19
           },
           {
             "month": 23,
@@ -4627,7 +4683,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 10709725.5,
-            "cumulativeCashFlowRub": -17128736.37
+            "cumulativeCashFlowRub": -19738638.69
           },
           {
             "month": 24,
@@ -4645,7 +4701,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 11975920.44,
-            "cumulativeCashFlowRub": -5152815.93
+            "cumulativeCashFlowRub": -7762718.25
           },
           {
             "month": 25,
@@ -4663,7 +4719,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 8511837.14,
-            "cumulativeCashFlowRub": 3359021.21
+            "cumulativeCashFlowRub": 749118.89
           },
           {
             "month": 26,
@@ -4681,7 +4737,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 5694392.28,
-            "cumulativeCashFlowRub": 9053413.49
+            "cumulativeCashFlowRub": 6443511.17
           },
           {
             "month": 27,
@@ -4699,7 +4755,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 7720465.31,
-            "cumulativeCashFlowRub": 16773878.8
+            "cumulativeCashFlowRub": 14163976.48
           },
           {
             "month": 28,
@@ -4717,7 +4773,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 8828385.87,
-            "cumulativeCashFlowRub": 25602264.67
+            "cumulativeCashFlowRub": 22992362.35
           },
           {
             "month": 29,
@@ -4735,7 +4791,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 9728911.31,
-            "cumulativeCashFlowRub": 35331175.98
+            "cumulativeCashFlowRub": 32721273.66
           },
           {
             "month": 30,
@@ -4753,7 +4809,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 8986660.24,
-            "cumulativeCashFlowRub": 44317836.22
+            "cumulativeCashFlowRub": 41707933.9
           },
           {
             "month": 31,
@@ -4771,7 +4827,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 8986660.24,
-            "cumulativeCashFlowRub": 53304496.46
+            "cumulativeCashFlowRub": 50694594.14
           },
           {
             "month": 32,
@@ -4789,7 +4845,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 9303208.98,
-            "cumulativeCashFlowRub": 62607705.44
+            "cumulativeCashFlowRub": 59997803.12
           },
           {
             "month": 33,
@@ -4807,7 +4863,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 11026274.23,
-            "cumulativeCashFlowRub": 73633979.67
+            "cumulativeCashFlowRub": 71024077.35
           },
           {
             "month": 34,
@@ -4825,7 +4881,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 11659371.71,
-            "cumulativeCashFlowRub": 85293351.38
+            "cumulativeCashFlowRub": 82683449.06
           },
           {
             "month": 35,
@@ -4843,7 +4899,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 10709725.5,
-            "cumulativeCashFlowRub": 96003076.88
+            "cumulativeCashFlowRub": 93393174.56
           },
           {
             "month": 36,
@@ -4861,7 +4917,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 11975920.44,
-            "cumulativeCashFlowRub": 107978997.32
+            "cumulativeCashFlowRub": 105369095
           },
           {
             "month": 37,
@@ -4879,7 +4935,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 8511837.14,
-            "cumulativeCashFlowRub": 116490834.46
+            "cumulativeCashFlowRub": 113880932.14
           },
           {
             "month": 38,
@@ -4897,7 +4953,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 5694392.28,
-            "cumulativeCashFlowRub": 122185226.74
+            "cumulativeCashFlowRub": 119575324.42
           },
           {
             "month": 39,
@@ -4915,7 +4971,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 7720465.31,
-            "cumulativeCashFlowRub": 129905692.05
+            "cumulativeCashFlowRub": 127295789.73
           },
           {
             "month": 40,
@@ -4933,7 +4989,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 8828385.87,
-            "cumulativeCashFlowRub": 138734077.92
+            "cumulativeCashFlowRub": 136124175.6
           },
           {
             "month": 41,
@@ -4951,7 +5007,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 9728911.31,
-            "cumulativeCashFlowRub": 148462989.23
+            "cumulativeCashFlowRub": 145853086.91
           },
           {
             "month": 42,
@@ -4969,7 +5025,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 8986660.24,
-            "cumulativeCashFlowRub": 157449649.47
+            "cumulativeCashFlowRub": 154839747.15
           },
           {
             "month": 43,
@@ -4987,7 +5043,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 8986660.24,
-            "cumulativeCashFlowRub": 166436309.71
+            "cumulativeCashFlowRub": 163826407.39
           },
           {
             "month": 44,
@@ -5005,7 +5061,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 9303208.98,
-            "cumulativeCashFlowRub": 175739518.69
+            "cumulativeCashFlowRub": 173129616.37
           },
           {
             "month": 45,
@@ -5023,7 +5079,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 11026274.23,
-            "cumulativeCashFlowRub": 186765792.92
+            "cumulativeCashFlowRub": 184155890.6
           },
           {
             "month": 46,
@@ -5041,7 +5097,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 11659371.71,
-            "cumulativeCashFlowRub": 198425164.63
+            "cumulativeCashFlowRub": 195815262.31
           },
           {
             "month": 47,
@@ -5059,7 +5115,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 10709725.5,
-            "cumulativeCashFlowRub": 209134890.13
+            "cumulativeCashFlowRub": 206524987.81
           },
           {
             "month": 48,
@@ -5077,7 +5133,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 11975920.44,
-            "cumulativeCashFlowRub": 221110810.57
+            "cumulativeCashFlowRub": 218500908.25
           },
           {
             "month": 49,
@@ -5095,7 +5151,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 8511837.14,
-            "cumulativeCashFlowRub": 229622647.71
+            "cumulativeCashFlowRub": 227012745.39
           },
           {
             "month": 50,
@@ -5113,7 +5169,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 5694392.28,
-            "cumulativeCashFlowRub": 235317039.99
+            "cumulativeCashFlowRub": 232707137.67
           },
           {
             "month": 51,
@@ -5131,7 +5187,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 7720465.31,
-            "cumulativeCashFlowRub": 243037505.3
+            "cumulativeCashFlowRub": 240427602.98
           },
           {
             "month": 52,
@@ -5149,7 +5205,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 8828385.87,
-            "cumulativeCashFlowRub": 251865891.17
+            "cumulativeCashFlowRub": 249255988.85
           },
           {
             "month": 53,
@@ -5167,7 +5223,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 9728911.31,
-            "cumulativeCashFlowRub": 261594802.48
+            "cumulativeCashFlowRub": 258984900.16
           },
           {
             "month": 54,
@@ -5185,7 +5241,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 8986660.24,
-            "cumulativeCashFlowRub": 270581462.72
+            "cumulativeCashFlowRub": 267971560.4
           },
           {
             "month": 55,
@@ -5203,7 +5259,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 8986660.24,
-            "cumulativeCashFlowRub": 279568122.96
+            "cumulativeCashFlowRub": 276958220.64
           },
           {
             "month": 56,
@@ -5221,7 +5277,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 9303208.98,
-            "cumulativeCashFlowRub": 288871331.94
+            "cumulativeCashFlowRub": 286261429.62
           },
           {
             "month": 57,
@@ -5239,7 +5295,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 11026274.23,
-            "cumulativeCashFlowRub": 299897606.17
+            "cumulativeCashFlowRub": 297287703.85
           },
           {
             "month": 58,
@@ -5257,7 +5313,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 11659371.71,
-            "cumulativeCashFlowRub": 311556977.88
+            "cumulativeCashFlowRub": 308947075.56
           },
           {
             "month": 59,
@@ -5275,7 +5331,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 10709725.5,
-            "cumulativeCashFlowRub": 322266703.38
+            "cumulativeCashFlowRub": 319656801.06
           },
           {
             "month": 60,
@@ -5293,7 +5349,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 11975920.44,
-            "cumulativeCashFlowRub": 334242623.82
+            "cumulativeCashFlowRub": 331632721.5
           }
         ]
       }
@@ -5535,31 +5591,57 @@
       "reserve_decomposition": {
         "base": {
           "context": "current_base_object",
-          "policy": "canonical_financial_model_fixed_opex_reserve",
-          "source_metric": "financial_model.scenarios.rent.realistic.fixed_opex_reserve_rub",
+          "policy": "six_months_current_base_fixed_and_semi_fixed_opex",
+          "source_metric": "current_base_reserve_projection",
           "reserve_months": 6,
           "monthly_current_pnl_opex_rub": 8225135.6,
-          "monthly_reserve_basis_rub": 3348164.6799999997,
-          "operating_reserve_rub": 20088988.08,
+          "monthly_reserve_basis_rub": 3783148.4,
+          "operating_reserve_rub": 22698890.4,
           "included_monthly_basis_rub": {
-            "calculated_staffing_labor_rub": 2396938.28,
-            "fixed_opex_without_labor_rent_rub": 449500,
-            "scenario_marketing_rub": 401726.4,
-            "scenario_household_rub": 100000,
-            "uncovered_rent_rub": 0
+            "labor": 2831922,
+            "utilities": 200000,
+            "equipment_service": 100000,
+            "accounting": 25000,
+            "vent_grease": 15000,
+            "uniform_renewal": 15000,
+            "music_rights": 7000,
+            "pest": 6000,
+            "yuma": 6000,
+            "medical": 5000,
+            "security_monitoring": 4000,
+            "banking": 0,
+            "other": 66500,
+            "marketing": 401726.4,
+            "household": 100000,
+            "uncovered_rent": 0
           },
           "excludes": [
             "raw_materials",
             "waste",
-            "packaging",
+            "consumer_packaging",
             "acquiring",
             "aggregator_commission",
             "administrative_reserve",
-            "income_tax",
+            "depreciation",
             "maintenance_capex",
-            "prepaid_rent"
+            "income_tax",
+            "equipment_purchase",
+            "preparation",
+            "security_deposit",
+            "prepaid_rent",
+            "initial_inventory"
           ],
-          "note": "Base reserve is a fixed-OPEX liquidity policy inherited from the Financial Model, not a full Current Base P&L × reserve months calculation."
+          "prepaid_coverage": {
+            "monthlyRentRub": 500000,
+            "prepaidMonths": 12,
+            "prepaidRentRub": 6000000,
+            "reserveMonths": 6,
+            "coveredRentMonths": 6,
+            "uncoveredRentMonths": 0,
+            "rentFreeMonths": 2
+          },
+          "uncovered_rent_rub": 0,
+          "note": "Current Base reserve is calculated from Current Base fixed and semi-fixed P&L inputs. Variable costs and separately financed launch items are excluded."
         },
         "expansion": {
           "context": "network_expansion",
@@ -5579,8 +5661,8 @@
         "consolidated": {
           "context": "consolidated_network",
           "monthly_current_pnl_opex_rub": 42025522.24,
-          "financing_requirement_reserve_rub": 222891307.92000002,
-          "formula": "current_base_fixed_opex_reserve + incremental_expansion_recurring_opex_reserve",
+          "financing_requirement_reserve_rub": 225501210.24,
+          "formula": "current_base_fixed_and_semi_fixed_opex_reserve + incremental_expansion_recurring_opex_reserve",
           "composition": "Base and Expansion reserves are added once each; they retain their distinct governed bases.",
           "comparable_to_network_pnl_opex_times_months": false
         }
@@ -6715,7 +6797,7 @@
       },
       "network": {
         "launch": {
-          "investment_rub": 291006544.04
+          "investment_rub": 293616446.36
         },
         "pnl": {
           "revenue_rub": 60484260,
@@ -6727,7 +6809,7 @@
           "operating_free_cash_flow_rub": 17115085.86
         },
         "metrics": {
-          "steady_state_payback_months": 17,
+          "steady_state_payback_months": 17.2,
           "temporal_payback_month": 31
         },
         "monthly_cash_flows": [
@@ -6744,10 +6826,10 @@
             "depreciationRub": 0,
             "maintenanceCapexRub": 0,
             "operatingFreeCashFlowRub": 0,
-            "capexRub": 39220380.74,
-            "operatingReserveRub": 20088988.08,
-            "cashFlowRub": -39220380.74,
-            "cumulativeCashFlowRub": -39220380.74
+            "capexRub": 41830283.06,
+            "operatingReserveRub": 22698890.4,
+            "cashFlowRub": -41830283.06,
+            "cumulativeCashFlowRub": -41830283.06
           },
           {
             "month": 1,
@@ -6765,7 +6847,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 255835.29,
-            "cumulativeCashFlowRub": -38964545.45
+            "cumulativeCashFlowRub": -41574447.77
           },
           {
             "month": 2,
@@ -6783,7 +6865,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 44908.31,
-            "cumulativeCashFlowRub": -38919637.14
+            "cumulativeCashFlowRub": -41529539.46
           },
           {
             "month": 3,
@@ -6801,7 +6883,7 @@
             "capexRub": 8847652.453333333,
             "operatingReserveRub": 202802319.84,
             "cashFlowRub": -210460944.89,
-            "cumulativeCashFlowRub": -249380582.03
+            "cumulativeCashFlowRub": -251990484.35
           },
           {
             "month": 4,
@@ -6819,7 +6901,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 2693092.06,
-            "cumulativeCashFlowRub": -246687489.97
+            "cumulativeCashFlowRub": -249297392.29
           },
           {
             "month": 5,
@@ -6837,7 +6919,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 3659994.51,
-            "cumulativeCashFlowRub": -243027495.46
+            "cumulativeCashFlowRub": -245637397.78
           },
           {
             "month": 6,
@@ -6855,7 +6937,7 @@
             "capexRub": 3140368.362666667,
             "operatingReserveRub": 0,
             "cashFlowRub": 533321.13,
-            "cumulativeCashFlowRub": -242494174.33
+            "cumulativeCashFlowRub": -245104076.65
           },
           {
             "month": 7,
@@ -6873,7 +6955,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 4761627.29,
-            "cumulativeCashFlowRub": -237732547.04
+            "cumulativeCashFlowRub": -240342449.36
           },
           {
             "month": 8,
@@ -6891,7 +6973,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 5375825.25,
-            "cumulativeCashFlowRub": -232356721.79
+            "cumulativeCashFlowRub": -234966624.11
           },
           {
             "month": 9,
@@ -6909,7 +6991,7 @@
             "capexRub": 9178602.153333334,
             "operatingReserveRub": 0,
             "cashFlowRub": -2688082.35,
-            "cumulativeCashFlowRub": -235044804.14
+            "cumulativeCashFlowRub": -237654706.46
           },
           {
             "month": 10,
@@ -6927,7 +7009,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 8126886.65,
-            "cumulativeCashFlowRub": -226917917.49
+            "cumulativeCashFlowRub": -229527819.81
           },
           {
             "month": 11,
@@ -6945,7 +7027,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 7995768.33,
-            "cumulativeCashFlowRub": -218922149.16
+            "cumulativeCashFlowRub": -221532051.48
           },
           {
             "month": 12,
@@ -6963,7 +7045,7 @@
             "capexRub": 5825298.76,
             "operatingReserveRub": 0,
             "cashFlowRub": 3271781.67,
-            "cumulativeCashFlowRub": -215650367.49
+            "cumulativeCashFlowRub": -218260269.81
           },
           {
             "month": 13,
@@ -6981,7 +7063,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 7540831.45,
-            "cumulativeCashFlowRub": -208109536.04
+            "cumulativeCashFlowRub": -210719438.36
           },
           {
             "month": 14,
@@ -6999,7 +7081,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 5368772.31,
-            "cumulativeCashFlowRub": -202740763.73
+            "cumulativeCashFlowRub": -205350666.05
           },
           {
             "month": 15,
@@ -7017,7 +7099,7 @@
             "capexRub": 3847652.4533333336,
             "operatingReserveRub": 0,
             "cashFlowRub": 3212665.92,
-            "cumulativeCashFlowRub": -199528097.81
+            "cumulativeCashFlowRub": -202138000.13
           },
           {
             "month": 16,
@@ -7035,7 +7117,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 9422452.64,
-            "cumulativeCashFlowRub": -190105645.17
+            "cumulativeCashFlowRub": -192715547.49
           },
           {
             "month": 17,
@@ -7053,7 +7135,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 10928435.33,
-            "cumulativeCashFlowRub": -179177209.84
+            "cumulativeCashFlowRub": -181787112.16
           },
           {
             "month": 18,
@@ -7071,7 +7153,7 @@
             "capexRub": 3140368.362666667,
             "operatingReserveRub": 0,
             "cashFlowRub": 7236768.95,
-            "cumulativeCashFlowRub": -171940440.89
+            "cumulativeCashFlowRub": -174550343.21
           },
           {
             "month": 19,
@@ -7089,7 +7171,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 11433110.52,
-            "cumulativeCashFlowRub": -160507330.37
+            "cumulativeCashFlowRub": -163117232.69
           },
           {
             "month": 20,
@@ -7107,7 +7189,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 12300376.08,
-            "cumulativeCashFlowRub": -148206954.29
+            "cumulativeCashFlowRub": -150816856.61
           },
           {
             "month": 21,
@@ -7125,7 +7207,7 @@
             "capexRub": 9178602.153333334,
             "operatingReserveRub": 0,
             "cashFlowRub": 5515165.78,
-            "cumulativeCashFlowRub": -142691788.51
+            "cumulativeCashFlowRub": -145301690.83
           },
           {
             "month": 22,
@@ -7143,7 +7225,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 17068769.97,
-            "cumulativeCashFlowRub": -125623018.54
+            "cumulativeCashFlowRub": -128232920.86
           },
           {
             "month": 23,
@@ -7161,7 +7243,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 16178448.85,
-            "cumulativeCashFlowRub": -109444569.69
+            "cumulativeCashFlowRub": -112054472.01
           },
           {
             "month": 24,
@@ -7179,7 +7261,7 @@
             "capexRub": 5825298.76,
             "operatingReserveRub": 0,
             "cashFlowRub": 12466732.58,
-            "cumulativeCashFlowRub": -96977837.11
+            "cumulativeCashFlowRub": -99587739.43
           },
           {
             "month": 25,
@@ -7197,7 +7279,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 14065213.28,
-            "cumulativeCashFlowRub": -82912623.83
+            "cumulativeCashFlowRub": -85522526.15
           },
           {
             "month": 26,
@@ -7215,7 +7297,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 9900926.52,
-            "cumulativeCashFlowRub": -73011697.31
+            "cumulativeCashFlowRub": -75621599.63
           },
           {
             "month": 27,
@@ -7233,7 +7315,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 13452031.19,
-            "cumulativeCashFlowRub": -59559666.12
+            "cumulativeCashFlowRub": -62169568.44
           },
           {
             "month": 28,
@@ -7251,7 +7333,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 15692033.61,
-            "cumulativeCashFlowRub": -43867632.51
+            "cumulativeCashFlowRub": -46477534.83
           },
           {
             "month": 29,
@@ -7269,7 +7351,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 17388507.23,
-            "cumulativeCashFlowRub": -26479125.28
+            "cumulativeCashFlowRub": -29089027.6
           },
           {
             "month": 30,
@@ -7287,7 +7369,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 16251257.6,
-            "cumulativeCashFlowRub": -10227867.68
+            "cumulativeCashFlowRub": -12837770
           },
           {
             "month": 31,
@@ -7305,7 +7387,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 16390643.47,
-            "cumulativeCashFlowRub": 6162775.79
+            "cumulativeCashFlowRub": 3552873.47
           },
           {
             "month": 32,
@@ -7323,7 +7405,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 16960259.8,
-            "cumulativeCashFlowRub": 23123035.59
+            "cumulativeCashFlowRub": 20513133.27
           },
           {
             "month": 33,
@@ -7341,7 +7423,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 19962022.35,
-            "cumulativeCashFlowRub": 43085057.94
+            "cumulativeCashFlowRub": 40475155.62
           },
           {
             "month": 34,
@@ -7359,7 +7441,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 21101255.01,
-            "cumulativeCashFlowRub": 64186312.95
+            "cumulativeCashFlowRub": 61576410.63
           },
           {
             "month": 35,
@@ -7377,7 +7459,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 19392406.01,
-            "cumulativeCashFlowRub": 83578718.96
+            "cumulativeCashFlowRub": 80968816.64
           },
           {
             "month": 36,
@@ -7395,7 +7477,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 21670871.35,
-            "cumulativeCashFlowRub": 105249590.31
+            "cumulativeCashFlowRub": 102639687.99
           },
           {
             "month": 37,
@@ -7413,7 +7495,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 15536218.97,
-            "cumulativeCashFlowRub": 120785809.28
+            "cumulativeCashFlowRub": 118175906.96
           },
           {
             "month": 38,
@@ -7431,7 +7513,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 10726546.49,
-            "cumulativeCashFlowRub": 131512355.77
+            "cumulativeCashFlowRub": 128902453.45
           },
           {
             "month": 39,
@@ -7449,7 +7531,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 14112178.13,
-            "cumulativeCashFlowRub": 145624533.9
+            "cumulativeCashFlowRub": 143014631.58
           },
           {
             "month": 40,
@@ -7467,7 +7549,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 16105835.31,
-            "cumulativeCashFlowRub": 161730369.21
+            "cumulativeCashFlowRub": 159120466.89
           },
           {
             "month": 41,
@@ -7485,7 +7567,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 17684702.19,
-            "cumulativeCashFlowRub": 179415071.4
+            "cumulativeCashFlowRub": 176805169.08
           },
           {
             "month": 42,
@@ -7503,7 +7585,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 16390643.47,
-            "cumulativeCashFlowRub": 195805714.87
+            "cumulativeCashFlowRub": 193195812.55
           },
           {
             "month": 43,
@@ -7521,7 +7603,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 16390643.47,
-            "cumulativeCashFlowRub": 212196358.34
+            "cumulativeCashFlowRub": 209586456.02
           },
           {
             "month": 44,
@@ -7539,7 +7621,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 16960259.8,
-            "cumulativeCashFlowRub": 229156618.14
+            "cumulativeCashFlowRub": 226546715.82
           },
           {
             "month": 45,
@@ -7557,7 +7639,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 19962022.35,
-            "cumulativeCashFlowRub": 249118640.49
+            "cumulativeCashFlowRub": 246508738.17
           },
           {
             "month": 46,
@@ -7575,7 +7657,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 21101255.01,
-            "cumulativeCashFlowRub": 270219895.5
+            "cumulativeCashFlowRub": 267609993.18
           },
           {
             "month": 47,
@@ -7593,7 +7675,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 19392406.01,
-            "cumulativeCashFlowRub": 289612301.51
+            "cumulativeCashFlowRub": 287002399.19
           },
           {
             "month": 48,
@@ -7611,7 +7693,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 21670871.35,
-            "cumulativeCashFlowRub": 311283172.86
+            "cumulativeCashFlowRub": 308673270.54
           },
           {
             "month": 49,
@@ -7629,7 +7711,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 15536218.97,
-            "cumulativeCashFlowRub": 326819391.83
+            "cumulativeCashFlowRub": 324209489.51
           },
           {
             "month": 50,
@@ -7647,7 +7729,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 10726546.49,
-            "cumulativeCashFlowRub": 337545938.32
+            "cumulativeCashFlowRub": 334936036
           },
           {
             "month": 51,
@@ -7665,7 +7747,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 14112178.13,
-            "cumulativeCashFlowRub": 351658116.45
+            "cumulativeCashFlowRub": 349048214.13
           },
           {
             "month": 52,
@@ -7683,7 +7765,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 16105835.31,
-            "cumulativeCashFlowRub": 367763951.76
+            "cumulativeCashFlowRub": 365154049.44
           },
           {
             "month": 53,
@@ -7701,7 +7783,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 17684702.19,
-            "cumulativeCashFlowRub": 385448653.95
+            "cumulativeCashFlowRub": 382838751.63
           },
           {
             "month": 54,
@@ -7719,7 +7801,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 16390643.47,
-            "cumulativeCashFlowRub": 401839297.42
+            "cumulativeCashFlowRub": 399229395.1
           },
           {
             "month": 55,
@@ -7737,7 +7819,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 16390643.47,
-            "cumulativeCashFlowRub": 418229940.89
+            "cumulativeCashFlowRub": 415620038.57
           },
           {
             "month": 56,
@@ -7755,7 +7837,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 16960259.8,
-            "cumulativeCashFlowRub": 435190200.69
+            "cumulativeCashFlowRub": 432580298.37
           },
           {
             "month": 57,
@@ -7773,7 +7855,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 19962022.35,
-            "cumulativeCashFlowRub": 455152223.04
+            "cumulativeCashFlowRub": 452542320.72
           },
           {
             "month": 58,
@@ -7791,7 +7873,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 21101255.01,
-            "cumulativeCashFlowRub": 476253478.05
+            "cumulativeCashFlowRub": 473643575.73
           },
           {
             "month": 59,
@@ -7809,7 +7891,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 19392406.01,
-            "cumulativeCashFlowRub": 495645884.06
+            "cumulativeCashFlowRub": 493035981.74
           },
           {
             "month": 60,
@@ -7827,7 +7909,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 21670871.35,
-            "cumulativeCashFlowRub": 517316755.41
+            "cumulativeCashFlowRub": 514706853.09
           }
         ]
       }
@@ -8069,31 +8151,57 @@
       "reserve_decomposition": {
         "base": {
           "context": "current_base_object",
-          "policy": "canonical_financial_model_fixed_opex_reserve",
-          "source_metric": "financial_model.scenarios.rent.realistic.fixed_opex_reserve_rub",
+          "policy": "six_months_current_base_fixed_and_semi_fixed_opex",
+          "source_metric": "current_base_reserve_projection",
           "reserve_months": 6,
           "monthly_current_pnl_opex_rub": 8225135.6,
-          "monthly_reserve_basis_rub": 3348164.6799999997,
-          "operating_reserve_rub": 20088988.08,
+          "monthly_reserve_basis_rub": 3783148.4,
+          "operating_reserve_rub": 22698890.4,
           "included_monthly_basis_rub": {
-            "calculated_staffing_labor_rub": 2396938.28,
-            "fixed_opex_without_labor_rent_rub": 449500,
-            "scenario_marketing_rub": 401726.4,
-            "scenario_household_rub": 100000,
-            "uncovered_rent_rub": 0
+            "labor": 2831922,
+            "utilities": 200000,
+            "equipment_service": 100000,
+            "accounting": 25000,
+            "vent_grease": 15000,
+            "uniform_renewal": 15000,
+            "music_rights": 7000,
+            "pest": 6000,
+            "yuma": 6000,
+            "medical": 5000,
+            "security_monitoring": 4000,
+            "banking": 0,
+            "other": 66500,
+            "marketing": 401726.4,
+            "household": 100000,
+            "uncovered_rent": 0
           },
           "excludes": [
             "raw_materials",
             "waste",
-            "packaging",
+            "consumer_packaging",
             "acquiring",
             "aggregator_commission",
             "administrative_reserve",
-            "income_tax",
+            "depreciation",
             "maintenance_capex",
-            "prepaid_rent"
+            "income_tax",
+            "equipment_purchase",
+            "preparation",
+            "security_deposit",
+            "prepaid_rent",
+            "initial_inventory"
           ],
-          "note": "Base reserve is a fixed-OPEX liquidity policy inherited from the Financial Model, not a full Current Base P&L × reserve months calculation."
+          "prepaid_coverage": {
+            "monthlyRentRub": 500000,
+            "prepaidMonths": 12,
+            "prepaidRentRub": 6000000,
+            "reserveMonths": 6,
+            "coveredRentMonths": 6,
+            "uncoveredRentMonths": 0,
+            "rentFreeMonths": 2
+          },
+          "uncovered_rent_rub": 0,
+          "note": "Current Base reserve is calculated from Current Base fixed and semi-fixed P&L inputs. Variable costs and separately financed launch items are excluded."
         },
         "expansion": {
           "context": "network_expansion",
@@ -8113,8 +8221,8 @@
         "consolidated": {
           "context": "consolidated_network",
           "monthly_current_pnl_opex_rub": 58720837.8,
-          "financing_requirement_reserve_rub": 323063201.28,
-          "formula": "current_base_fixed_opex_reserve + incremental_expansion_recurring_opex_reserve",
+          "financing_requirement_reserve_rub": 325673103.59999996,
+          "formula": "current_base_fixed_and_semi_fixed_opex_reserve + incremental_expansion_recurring_opex_reserve",
           "composition": "Base and Expansion reserves are added once each; they retain their distinct governed bases.",
           "comparable_to_network_pnl_opex_times_months": false
         }
@@ -9249,7 +9357,7 @@
       },
       "network": {
         "launch": {
-          "investment_rub": 413170359.13
+          "investment_rub": 415780261.45
         },
         "pnl": {
           "revenue_rub": 85482090,
@@ -9261,7 +9369,7 @@
           "operating_free_cash_flow_rub": 24817809.16
         },
         "metrics": {
-          "steady_state_payback_months": 16.6,
+          "steady_state_payback_months": 16.8,
           "temporal_payback_month": 36
         },
         "monthly_cash_flows": [
@@ -9278,10 +9386,10 @@
             "depreciationRub": 0,
             "maintenanceCapexRub": 0,
             "operatingFreeCashFlowRub": 0,
-            "capexRub": 39220380.74,
-            "operatingReserveRub": 20088988.08,
-            "cashFlowRub": -39220380.74,
-            "cumulativeCashFlowRub": -39220380.74
+            "capexRub": 41830283.06,
+            "operatingReserveRub": 22698890.4,
+            "cashFlowRub": -41830283.06,
+            "cumulativeCashFlowRub": -41830283.06
           },
           {
             "month": 1,
@@ -9299,7 +9407,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 255835.29,
-            "cumulativeCashFlowRub": -38964545.45
+            "cumulativeCashFlowRub": -41574447.77
           },
           {
             "month": 2,
@@ -9317,7 +9425,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 44908.31,
-            "cumulativeCashFlowRub": -38919637.14
+            "cumulativeCashFlowRub": -41529539.46
           },
           {
             "month": 3,
@@ -9335,7 +9443,7 @@
             "capexRub": 8847652.453333333,
             "operatingReserveRub": 302974213.2,
             "cashFlowRub": -310632838.25,
-            "cumulativeCashFlowRub": -349552475.39
+            "cumulativeCashFlowRub": -352162377.71
           },
           {
             "month": 4,
@@ -9353,7 +9461,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 2693092.06,
-            "cumulativeCashFlowRub": -346859383.33
+            "cumulativeCashFlowRub": -349469285.65
           },
           {
             "month": 5,
@@ -9371,7 +9479,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 3659994.51,
-            "cumulativeCashFlowRub": -343199388.82
+            "cumulativeCashFlowRub": -345809291.14
           },
           {
             "month": 6,
@@ -9389,7 +9497,7 @@
             "capexRub": 3140368.362666667,
             "operatingReserveRub": 0,
             "cashFlowRub": 533321.13,
-            "cumulativeCashFlowRub": -342666067.69
+            "cumulativeCashFlowRub": -345275970.01
           },
           {
             "month": 7,
@@ -9407,7 +9515,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 4761627.29,
-            "cumulativeCashFlowRub": -337904440.4
+            "cumulativeCashFlowRub": -340514342.72
           },
           {
             "month": 8,
@@ -9425,7 +9533,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 5375825.25,
-            "cumulativeCashFlowRub": -332528615.15
+            "cumulativeCashFlowRub": -335138517.47
           },
           {
             "month": 9,
@@ -9443,7 +9551,7 @@
             "capexRub": 9178602.153333334,
             "operatingReserveRub": 0,
             "cashFlowRub": -2688082.35,
-            "cumulativeCashFlowRub": -335216697.5
+            "cumulativeCashFlowRub": -337826599.82
           },
           {
             "month": 10,
@@ -9461,7 +9569,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 8126886.65,
-            "cumulativeCashFlowRub": -327089810.85
+            "cumulativeCashFlowRub": -329699713.17
           },
           {
             "month": 11,
@@ -9479,7 +9587,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 7995768.33,
-            "cumulativeCashFlowRub": -319094042.52
+            "cumulativeCashFlowRub": -321703944.84
           },
           {
             "month": 12,
@@ -9497,7 +9605,7 @@
             "capexRub": 5825298.76,
             "operatingReserveRub": 0,
             "cashFlowRub": 3271781.67,
-            "cumulativeCashFlowRub": -315822260.85
+            "cumulativeCashFlowRub": -318432163.17
           },
           {
             "month": 13,
@@ -9515,7 +9623,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 7540831.45,
-            "cumulativeCashFlowRub": -308281429.4
+            "cumulativeCashFlowRub": -310891331.72
           },
           {
             "month": 14,
@@ -9533,7 +9641,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 5368772.31,
-            "cumulativeCashFlowRub": -302912657.09
+            "cumulativeCashFlowRub": -305522559.41
           },
           {
             "month": 15,
@@ -9551,7 +9659,7 @@
             "capexRub": 3847652.4533333336,
             "operatingReserveRub": 0,
             "cashFlowRub": 3212665.92,
-            "cumulativeCashFlowRub": -299699991.17
+            "cumulativeCashFlowRub": -302309893.49
           },
           {
             "month": 16,
@@ -9569,7 +9677,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 9422452.64,
-            "cumulativeCashFlowRub": -290277538.53
+            "cumulativeCashFlowRub": -292887440.85
           },
           {
             "month": 17,
@@ -9587,7 +9695,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 10928435.33,
-            "cumulativeCashFlowRub": -279349103.2
+            "cumulativeCashFlowRub": -281959005.52
           },
           {
             "month": 18,
@@ -9605,7 +9713,7 @@
             "capexRub": 3140368.362666667,
             "operatingReserveRub": 0,
             "cashFlowRub": 7236768.95,
-            "cumulativeCashFlowRub": -272112334.25
+            "cumulativeCashFlowRub": -274722236.57
           },
           {
             "month": 19,
@@ -9623,7 +9731,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 11433110.52,
-            "cumulativeCashFlowRub": -260679223.73
+            "cumulativeCashFlowRub": -263289126.05
           },
           {
             "month": 20,
@@ -9641,7 +9749,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 12300376.08,
-            "cumulativeCashFlowRub": -248378847.65
+            "cumulativeCashFlowRub": -250988749.97
           },
           {
             "month": 21,
@@ -9659,7 +9767,7 @@
             "capexRub": 9178602.153333334,
             "operatingReserveRub": 0,
             "cashFlowRub": 5515165.78,
-            "cumulativeCashFlowRub": -242863681.87
+            "cumulativeCashFlowRub": -245473584.19
           },
           {
             "month": 22,
@@ -9677,7 +9785,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 17068769.97,
-            "cumulativeCashFlowRub": -225794911.9
+            "cumulativeCashFlowRub": -228404814.22
           },
           {
             "month": 23,
@@ -9695,7 +9803,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 16178448.85,
-            "cumulativeCashFlowRub": -209616463.05
+            "cumulativeCashFlowRub": -212226365.37
           },
           {
             "month": 24,
@@ -9713,7 +9821,7 @@
             "capexRub": 5825298.76,
             "operatingReserveRub": 0,
             "cashFlowRub": 12466732.58,
-            "cumulativeCashFlowRub": -197149730.47
+            "cumulativeCashFlowRub": -199759632.79
           },
           {
             "month": 25,
@@ -9731,7 +9839,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 14065213.28,
-            "cumulativeCashFlowRub": -183084517.19
+            "cumulativeCashFlowRub": -185694419.51
           },
           {
             "month": 26,
@@ -9749,7 +9857,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 9900926.52,
-            "cumulativeCashFlowRub": -173183590.67
+            "cumulativeCashFlowRub": -175793492.99
           },
           {
             "month": 27,
@@ -9767,7 +9875,7 @@
             "capexRub": 3847652.4533333336,
             "operatingReserveRub": 0,
             "cashFlowRub": 9604378.74,
-            "cumulativeCashFlowRub": -163579211.93
+            "cumulativeCashFlowRub": -166189114.25
           },
           {
             "month": 28,
@@ -9785,7 +9893,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 16699902.07,
-            "cumulativeCashFlowRub": -146879309.86
+            "cumulativeCashFlowRub": -149489212.18
           },
           {
             "month": 29,
@@ -9803,7 +9911,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 18884226.23,
-            "cumulativeCashFlowRub": -127995083.63
+            "cumulativeCashFlowRub": -130604985.95
           },
           {
             "month": 30,
@@ -9821,7 +9929,7 @@
             "capexRub": 3140368.362666667,
             "operatingReserveRub": 0,
             "cashFlowRub": 14640752.19,
-            "cumulativeCashFlowRub": -113354331.44
+            "cumulativeCashFlowRub": -115964233.76
           },
           {
             "month": 31,
@@ -9839,7 +9947,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 18837093.77,
-            "cumulativeCashFlowRub": -94517237.67
+            "cumulativeCashFlowRub": -97127139.99
           },
           {
             "month": 32,
@@ -9857,7 +9965,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 19957426.91,
-            "cumulativeCashFlowRub": -74559810.76
+            "cumulativeCashFlowRub": -77169713.08
           },
           {
             "month": 33,
@@ -9875,7 +9983,7 @@
             "capexRub": 9178602.153333334,
             "operatingReserveRub": 0,
             "cashFlowRub": 14450913.9,
-            "cumulativeCashFlowRub": -60108896.86
+            "cumulativeCashFlowRub": -62718799.18
           },
           {
             "month": 34,
@@ -9893,7 +10001,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 26510653.27,
-            "cumulativeCashFlowRub": -33598243.59
+            "cumulativeCashFlowRub": -36208145.91
           },
           {
             "month": 35,
@@ -9911,7 +10019,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 24861129.37,
-            "cumulativeCashFlowRub": -8737114.22
+            "cumulativeCashFlowRub": -11347016.54
           },
           {
             "month": 36,
@@ -9929,7 +10037,7 @@
             "capexRub": 5825298.76,
             "operatingReserveRub": 0,
             "cashFlowRub": 22161683.49,
-            "cumulativeCashFlowRub": 13424569.27
+            "cumulativeCashFlowRub": 10814666.95
           },
           {
             "month": 37,
@@ -9947,7 +10055,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 21089595.12,
-            "cumulativeCashFlowRub": 34514164.39
+            "cumulativeCashFlowRub": 31904262.07
           },
           {
             "month": 38,
@@ -9965,7 +10073,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 14933080.74,
-            "cumulativeCashFlowRub": 49447245.13
+            "cumulativeCashFlowRub": 46837342.81
           },
           {
             "month": 39,
@@ -9983,7 +10091,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 19843744.04,
-            "cumulativeCashFlowRub": 69290989.17
+            "cumulativeCashFlowRub": 66681086.85
           },
           {
             "month": 40,
@@ -10001,7 +10109,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 22969483.04,
-            "cumulativeCashFlowRub": 92260472.21
+            "cumulativeCashFlowRub": 89650569.89
           },
           {
             "month": 41,
@@ -10019,7 +10127,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 25344298.13,
-            "cumulativeCashFlowRub": 117604770.34
+            "cumulativeCashFlowRub": 114994868.02
           },
           {
             "month": 42,
@@ -10037,7 +10145,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 23655240.83,
-            "cumulativeCashFlowRub": 141260011.17
+            "cumulativeCashFlowRub": 138650108.85
           },
           {
             "month": 43,
@@ -10055,7 +10163,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 23794626.7,
-            "cumulativeCashFlowRub": 165054637.87
+            "cumulativeCashFlowRub": 162444735.55
           },
           {
             "month": 44,
@@ -10073,7 +10181,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 24617310.64,
-            "cumulativeCashFlowRub": 189671948.51
+            "cumulativeCashFlowRub": 187062046.19
           },
           {
             "month": 45,
@@ -10091,7 +10199,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 28897770.47,
-            "cumulativeCashFlowRub": 218569718.98
+            "cumulativeCashFlowRub": 215959816.66
           },
           {
             "month": 46,
@@ -10109,7 +10217,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 30543138.33,
-            "cumulativeCashFlowRub": 249112857.31
+            "cumulativeCashFlowRub": 246502954.99
           },
           {
             "month": 47,
@@ -10127,7 +10235,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 28075086.54,
-            "cumulativeCashFlowRub": 277187943.85
+            "cumulativeCashFlowRub": 274578041.53
           },
           {
             "month": 48,
@@ -10145,7 +10253,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 31365822.26,
-            "cumulativeCashFlowRub": 308553766.11
+            "cumulativeCashFlowRub": 305943863.79
           },
           {
             "month": 49,
@@ -10163,7 +10271,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 22560600.81,
-            "cumulativeCashFlowRub": 331114366.92
+            "cumulativeCashFlowRub": 328504464.6
           },
           {
             "month": 50,
@@ -10181,7 +10289,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 15758700.71,
-            "cumulativeCashFlowRub": 346873067.63
+            "cumulativeCashFlowRub": 344263165.31
           },
           {
             "month": 51,
@@ -10199,7 +10307,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 20503890.98,
-            "cumulativeCashFlowRub": 367376958.61
+            "cumulativeCashFlowRub": 364767056.29
           },
           {
             "month": 52,
@@ -10217,7 +10325,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 23383284.74,
-            "cumulativeCashFlowRub": 390760243.35
+            "cumulativeCashFlowRub": 388150341.03
           },
           {
             "month": 53,
@@ -10235,7 +10343,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 25640493.09,
-            "cumulativeCashFlowRub": 416400736.44
+            "cumulativeCashFlowRub": 413790834.12
           },
           {
             "month": 54,
@@ -10253,7 +10361,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 23794626.7,
-            "cumulativeCashFlowRub": 440195363.14
+            "cumulativeCashFlowRub": 437585460.82
           },
           {
             "month": 55,
@@ -10271,7 +10379,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 23794626.7,
-            "cumulativeCashFlowRub": 463989989.84
+            "cumulativeCashFlowRub": 461380087.52
           },
           {
             "month": 56,
@@ -10289,7 +10397,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 24617310.64,
-            "cumulativeCashFlowRub": 488607300.48
+            "cumulativeCashFlowRub": 485997398.16
           },
           {
             "month": 57,
@@ -10307,7 +10415,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 28897770.47,
-            "cumulativeCashFlowRub": 517505070.95
+            "cumulativeCashFlowRub": 514895168.63
           },
           {
             "month": 58,
@@ -10325,7 +10433,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 30543138.33,
-            "cumulativeCashFlowRub": 548048209.28
+            "cumulativeCashFlowRub": 545438306.96
           },
           {
             "month": 59,
@@ -10343,7 +10451,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 28075086.54,
-            "cumulativeCashFlowRub": 576123295.82
+            "cumulativeCashFlowRub": 573513393.5
           },
           {
             "month": 60,
@@ -10361,7 +10469,7 @@
             "capexRub": 0,
             "operatingReserveRub": 0,
             "cashFlowRub": 31365822.26,
-            "cumulativeCashFlowRub": 607489118.08
+            "cumulativeCashFlowRub": 604879215.76
           }
         ]
       }

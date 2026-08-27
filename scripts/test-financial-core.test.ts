@@ -7,7 +7,7 @@ import {
   calculateManagementTax,
   financialCoverage,
 } from "../src/lib/financial-core.js";
-import { defaultInvestorConfiguration } from "../src/lib/investor-configuration.js";
+import { defaultInvestorConfiguration, historicalIntegratedPilotConfiguration } from "../src/lib/investor-configuration.js";
 import { networkFinancialProjection } from "../src/lib/network-financial-projection.js";
 import { cohortAssetSummary } from "../src/lib/network-financial-core.js";
 import { baseObjectFinancialProjection, networkScalingProjection } from "../src/lib/network-scaling.js";
@@ -52,7 +52,42 @@ test("Current Base monthly FCF exposes the same EBITDA-tax-maintenance identity 
   }
 });
 
-test("Current Base retains the accepted regression baseline during Network consolidation", () => {
+test("Current Base reserve is an explicit Current Base projection, not the Historical Pilot reserve", () => {
+  const current = configuredEconomicsScenario(defaultInvestorConfiguration());
+  const historical = configuredEconomicsScenario(historicalIntegratedPilotConfiguration());
+  const reserve = current.currentBaseReserveProjection;
+  assert.ok(reserve, "Current Base must expose a typed reserve projection");
+  assert.equal(reserve.context, "current_base_object");
+  assert.equal(reserve.months, 6);
+  assert.equal(reserve.monthlyBasisRub, 3_783_148.4);
+  assert.equal(reserve.totalReserveRub, 22_698_890.4);
+  assert.equal(current.operatingReserveRub, reserve.totalReserveRub);
+  assert.notEqual(current.operatingReserveRub, historical.operatingReserveRub, "Current Base must not route through Historical Pilot fixed_opex_reserve_rub");
+  assert.equal(historical.operatingReserveRub, 20_088_988.08, "the Historical Pilot reserve remains immutable");
+  assert.equal(historical.currentBaseReserveProjection, null, "Historical context cannot claim Current Base reserve provenance");
+});
+
+test("Current Base reserve includes protected labour and excludes prepaid, variable and launch-financed items", () => {
+  const scenario = configuredEconomicsScenario(defaultInvestorConfiguration());
+  const reserve = scenario.currentBaseReserveProjection!;
+  const amount = (id: string) => reserve.includedLines.find((line) => line.id === id)?.monthlyAmountRub;
+  assert.equal(amount("labor"), 2_831_922, "Current Base protected labour, not historical calculated staffing, is reserved");
+  assert.equal(amount("uncovered_rent"), 0, "12 months prepaid rent fully covers the six-month reserve horizon");
+  assert.equal(reserve.uncoveredRentRub, 0);
+  assert.deepEqual(
+    reserve.excludedLineIds,
+    [
+      "raw_materials", "waste", "consumer_packaging", "acquiring", "aggregator_commission", "administrative_reserve",
+      "depreciation", "maintenance_capex", "income_tax", "equipment_purchase", "preparation", "security_deposit",
+      "prepaid_rent", "initial_inventory",
+    ],
+    "variable costs and independently financed launch items cannot be silently included in the fixed/semi-fixed reserve",
+  );
+  assert.equal(scenario.investmentBreakdown.find((item) => item.key === "prepaid_rent")?.amount_rub, 6_000_000, "prepaid rent remains a separate launch-financing item");
+  assert.equal(scenario.investmentBreakdown.find((item) => item.key === "inventory")?.amount_rub, 1_000_000, "initial inventory remains a separate launch requirement");
+});
+
+test("Current Base correction changes only the approved stale reserve routing", () => {
   const scenario = configuredEconomicsScenario(defaultInvestorConfiguration());
   assert.deepEqual(
     {
@@ -67,17 +102,17 @@ test("Current Base retains the accepted regression baseline during Network conso
       npv: scenario.npvRub,
     },
     {
-      investment: 39_220_380.74,
+      investment: 41_830_283.06,
       revenue: 10_488_600,
       opex: 8_225_135.6,
       ebitda: 2_263_464.4,
       freeCashFlow: 2_045_009.8,
-      reserve: 20_088_988.08,
-      payback: 20,
-      irr: 0.7335561455483743,
-      npv: 39_824_232.74,
+      reserve: 22_698_890.4,
+      payback: 21,
+      irr: 0.6669260500786507,
+      npv: 37_214_330.42,
     },
-    "Financial Core extraction must not silently change the accepted Current Base output",
+    "the approved Current Base correction changes financing metrics through reserve only; mature P&L and FCF remain intact",
   );
 });
 
@@ -170,6 +205,19 @@ test("Network Expansion and Consolidated Network use the shared tax-maintenance-
   assert.ok(projection.exclusions.some((item) => item.id === "opex:banking"));
   assert.ok(projection.exclusions.some((item) => item.id === "production:capacity-expansion"));
   assert.ok(projection.exclusions.some((item) => item.id === "logistics:vehicle-depreciation-maintenance"), "vehicle CAPEX is disclosed without inventing an equipment/furniture maintenance rule");
+});
+
+test("Consolidated Network includes the corrected Base reserve exactly once", () => {
+  const configuration = defaultInvestorConfiguration();
+  const scenario = configuredEconomicsScenario(configuration);
+  const base = baseObjectFinancialProjection(scenario);
+  const projection = networkFinancialProjection(configuration, base, scenario);
+  assert.equal(
+    Math.abs((projection.economics.network.investmentRub ?? 0) - base.investmentRub - (projection.economics.expansion.investmentRub ?? 0)) < 0.02,
+    true,
+    "Network investment is Current Base once plus incremental Expansion once",
+  );
+  assert.equal(base.operatingReserveRub, scenario.currentBaseReserveProjection?.totalReserveRub);
 });
 
 test("B4 maps wash, approved Historic Centre furniture, recurring point OPEX and location services without point-level double-counting", () => {
@@ -275,7 +323,7 @@ test("generated Financial Core artifact preserves explicit contexts and 5/9/13 N
       true,
       "Expansion reserve uses the disclosed recurring OPEX basis and not tax, maintenance CAPEX or launch CAPEX",
     );
-    assert.equal(scenario.reserve_decomposition.base.policy, "canonical_financial_model_fixed_opex_reserve", "Base reserve retains its separately governed fixed-OPEX policy instead of silently claiming to be full P&L × six months");
+    assert.equal(scenario.reserve_decomposition.base.policy, "six_months_current_base_fixed_and_semi_fixed_opex", "Current Base reserve is derived from its own fixed/semi-fixed P&L inputs rather than the Historical Pilot fixed reserve");
     assert.equal(scenario.reserve_decomposition.consolidated.comparable_to_network_pnl_opex_times_months, false, "consolidated financing reserve cannot be misrepresented as a single Network P&L × six-month rule while Base and Expansion bases differ");
     assert.equal(
       Math.abs(scenario.network.launch.investment_rub - artifact.current_base.launch.investment_rub - scenario.expansion.launch.investment_rub) < 0.02,

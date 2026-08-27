@@ -1,0 +1,24 @@
+receipt_version: 1
+iteration_id: ITR-FINANCIAL-CORE-CURRENT-BASE-RESERVE-2026-08-27-05
+decision_id: DEC-FINANCIAL-CORE-CURRENT-BASE-RESERVE-2026-08-27-05
+change_set_id: CHG-FINANCIAL-CORE-CURRENT-BASE-RESERVE-2026-08-27-05
+verified_at: 2026-08-27T21:23:03.000Z
+result: passed
+approved_payload_sha256: 17b253c6b41c2927cb590f6712414ab6fa06e2627377af79372dfcade4618482
+before_state_sha256: 11b81d6a334175664707ae31e986a340feda423e058395dcc88f3b473dbf685f
+after_state_sha256: 1abe0e5ac21068f4f0e8ed3dbcfee899b6f0a8789ed01396de56ff4e9eb6778b
+checks:
+  - env PATH=/Users/trbrmrdr/.nvm/versions/node/v22.15.1/bin:$PATH npx tsc --noEmit --project tsconfig.app.json (passed)
+  - env PATH=/Users/trbrmrdr/.nvm/versions/node/v22.15.1/bin:$PATH docs-platform/app/node_modules/.bin/tsx --test scripts/test-financial-core.test.ts scripts/test-investor-journey.test.ts (38 passed)
+  - env PATH=/Users/trbrmrdr/.nvm/versions/node/v22.15.1/bin:$PATH npm run financial:core:check (passed)
+  - env PATH=/Users/trbrmrdr/.nvm/versions/node/v22.15.1/bin:$PATH npm run verify:affected (passed)
+  - env PATH=/Users/trbrmrdr/.nvm/versions/node/v22.15.1/bin:$PATH npm run verify:release (passed; no deployment)
+invariants:
+  current_base_reserve_independent_of_historical_reserve: passed
+  historical_pilot_reserve_unchanged: passed
+  protected_labour_in_current_base_reserve: passed
+  prepaid_rent_not_double_counted: passed
+  initial_inventory_excluded_from_reserve: passed
+  variable_costs_excluded_from_reserve: passed
+  base_reserve_counted_once_in_network: passed
+external_changes: []

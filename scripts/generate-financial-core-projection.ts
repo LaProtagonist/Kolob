@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { configuredEconomicsScenario } from "../src/lib/configured-economics.js";
+import { configuredEconomicsScenario, type ConfiguredEconomicsScenario } from "../src/lib/configured-economics.js";
 import {
   applyNetworkRolloutPreset,
   defaultInvestorConfiguration,
@@ -25,6 +25,7 @@ const sourcePaths = [
   "src/content/capex-configurator-data.json",
   "src/content/network-planning-data.json",
   "src/lib/configured-economics.ts",
+  "src/lib/launch-budget.ts",
   "src/lib/financial-assets.ts",
   "src/lib/financial-core.ts",
   "src/lib/network-financial-core.ts",
@@ -59,19 +60,12 @@ function financialModelScenario(scenarioId: string) {
   };
 }
 
-/**
- * The historical/current Base Object preserves the Financial Model's fixed
- * OPEX reserve. It is intentionally not represented as Current Base P&L × 6:
- * variable costs, tax and covered prepaid rent are excluded by that governed
- * policy. Expansion uses the B-phase recurring-OPEX reserve policy. Keeping
- * both bases explicit prevents a false no-double-count claim.
- */
-function baseReserveDecomposition(scenarioId: string, base: ReturnType<typeof baseObjectFinancialProjection>, reserveMonths: number) {
+function historicalBaseReserveDecomposition(scenarioId: string, base: ReturnType<typeof baseObjectFinancialProjection>, reserveMonths: number) {
   const source = financialModelScenario(scenarioId);
   const fixedReserve = source.fixed_opex_reserve_rub;
   return {
-    context: "current_base_object",
-    policy: "canonical_financial_model_fixed_opex_reserve",
+    context: "historical_integrated_pilot",
+    policy: "historical_financial_model_fixed_opex_reserve",
     source_metric: `financial_model.scenarios.rent.${scenarioId}.fixed_opex_reserve_rub`,
     reserve_months: reserveMonths,
     monthly_current_pnl_opex_rub: base.opexRub,
@@ -85,7 +79,30 @@ function baseReserveDecomposition(scenarioId: string, base: ReturnType<typeof ba
       uncovered_rent_rub: 0,
     },
     excludes: ["raw_materials", "waste", "packaging", "acquiring", "aggregator_commission", "administrative_reserve", "income_tax", "maintenance_capex", "prepaid_rent"],
-    note: "Base reserve is a fixed-OPEX liquidity policy inherited from the Financial Model, not a full Current Base P&L × reserve months calculation.",
+    note: "Historical Integrated Pilot retains its governed fixed-OPEX liquidity reserve; it is not a Current Base input.",
+  };
+}
+
+function baseReserveDecomposition(
+  scenario: ConfiguredEconomicsScenario,
+  base: ReturnType<typeof baseObjectFinancialProjection>,
+  reserveMonths: number,
+) {
+  const reserve = scenario.currentBaseReserveProjection;
+  if (!reserve) return historicalBaseReserveDecomposition(scenario.id, base, reserveMonths);
+  return {
+    context: reserve.context,
+    policy: reserve.policy,
+    source_metric: "current_base_reserve_projection",
+    reserve_months: reserve.months,
+    monthly_current_pnl_opex_rub: base.opexRub,
+    monthly_reserve_basis_rub: reserve.monthlyBasisRub,
+    operating_reserve_rub: reserve.totalReserveRub,
+    included_monthly_basis_rub: Object.fromEntries(reserve.includedLines.map((line) => [line.id, line.monthlyAmountRub])),
+    excludes: reserve.excludedLineIds,
+    prepaid_coverage: reserve.prepaidCoverage,
+    uncovered_rent_rub: reserve.uncoveredRentRub,
+    note: "Current Base reserve is calculated from Current Base fixed and semi-fixed P&L inputs. Variable costs and separately financed launch items are excluded.",
   };
 }
 
@@ -106,7 +123,7 @@ function baseArtifact(configuration: InvestorConfiguration) {
       investment_rub: base.investmentRub,
       operating_reserve_rub: base.operatingReserveRub,
     },
-    reserve_decomposition: baseReserveDecomposition(scenario.id, base, configuration.launchBudget.operatingReserveMonths),
+    reserve_decomposition: baseReserveDecomposition(scenario, base, configuration.launchBudget.operatingReserveMonths),
     pnl: {
       revenue_rub: base.revenueRub,
       net_revenue_rub: base.netRevenueRub,
@@ -136,7 +153,7 @@ function scenarioArtifact(additionalPointCount: 4 | 8 | 12) {
   const base = baseObjectFinancialProjection(scenario);
   const projection = networkFinancialProjection(configuration, base, scenario);
   const { economics, temporal } = projection;
-  const baseReserve = baseReserveDecomposition(scenario.id, base, configuration.launchBudget.operatingReserveMonths);
+  const baseReserve = baseReserveDecomposition(scenario, base, configuration.launchBudget.operatingReserveMonths);
   const baseReserveRub = baseReserve.operating_reserve_rub;
   const expansionReserveRub = economics.expansion.operatingReserveRub;
   const consolidatedReserveRub = baseReserveRub === null || expansionReserveRub === null
@@ -164,7 +181,7 @@ function scenarioArtifact(additionalPointCount: 4 | 8 | 12) {
         context: "consolidated_network",
         monthly_current_pnl_opex_rub: economics.network.opexRub,
         financing_requirement_reserve_rub: consolidatedReserveRub,
-        formula: "current_base_fixed_opex_reserve + incremental_expansion_recurring_opex_reserve",
+        formula: "current_base_fixed_and_semi_fixed_opex_reserve + incremental_expansion_recurring_opex_reserve",
         composition: "Base and Expansion reserves are added once each; they retain their distinct governed bases.",
         comparable_to_network_pnl_opex_times_months: false,
       },

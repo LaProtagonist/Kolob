@@ -1,0 +1,10 @@
+schema_version: 2
+proposal_id: PROP-FINANCIAL-CORE-CURRENT-BASE-RESERVE-2026-08-27-05
+iteration_id: ITR-FINANCIAL-CORE-CURRENT-BASE-RESERVE-2026-08-27-05
+title: Correct stale Historical Pilot routing for Current Base operating reserve
+status: approved
+proposed_by: project owner
+proposed_at: 2026-08-27T21:23:00.000Z
+summary: Replace only the proven stale Current Base reserve routing with a typed Current Base reserve projection; preserve the Historical Pilot and stop before publication work.
+approved_payload_path: docs-platform/changelog/payloads/ITR-FINANCIAL-CORE-CURRENT-BASE-RESERVE-2026-08-27-05-approved.yaml
+approved_payload_sha256: 17b253c6b41c2927cb590f6712414ab6fa06e2627377af79372dfcade4618482
