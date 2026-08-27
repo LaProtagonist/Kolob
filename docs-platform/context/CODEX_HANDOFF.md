@@ -9,16 +9,16 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 ## 2. Текущая ветка и governed iteration
 
 - Branch: `feat/financial-core-consolidation-v2`.
-- Latest closed iteration: `ITR-FINANCIAL-CORE-PREPUBLICATION-2026-08-27-04`.
-- Latest iteration tag: `iteration/ITR-FINANCIAL-CORE-PREPUBLICATION-2026-08-27-04`.
-- Latest content commit: `d0008241d5e681a02f59e2de64f5faad31a1d9cb`.
+- Latest closed iteration: `ITR-FINANCIAL-CORE-CURRENT-BASE-RESERVE-2026-08-27-05`.
+- Latest iteration tag: `iteration/ITR-FINANCIAL-CORE-CURRENT-BASE-RESERVE-2026-08-27-05`.
+- Latest content commit: `4c275876d8bc9aaa2ddd65cd67b3364d395063b5`.
 - Текущий Git HEAD намеренно не записывается: его вычисляет `npm run project:onboard`.
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-FINANCIAL-CORE-PREPUBLICATION-2026-08-27-04-COMMITTED`.
-- Hash: `d78441250079d65c4cf323b83d91286e3d87d113aa5d133bedd17e77f841e581`.
-- generated_from_event_hash: `d78441250079d65c4cf323b83d91286e3d87d113aa5d133bedd17e77f841e581`.
+- Event: `EVT-ITR-FINANCIAL-CORE-CURRENT-BASE-RESERVE-2026-08-27-05-COMMITTED`.
+- Hash: `d2d83e474ea91476ebb559ebd466f13f20c06f6645673b992e011c8a24c71832`.
+- generated_from_event_hash: `d2d83e474ea91476ebb559ebd466f13f20c06f6645673b992e011c8a24c71832`.
 
 ## 4. Канонические документы
 
@@ -46,7 +46,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 5. Текущая рабочая тема
 
-Close Historic Centre furniture and document pre-publication capacity and reserve evidence
+Correct stale Historical Pilot routing for Current Base operating reserve
 
 ## 6. Decisions и change sets
 
