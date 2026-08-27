@@ -1,13 +1,13 @@
 schema_version: 2
-generated_at: 2026-08-27T13:31:24.973Z
+generated_at: 2026-08-27T20:06:23.694Z
 project: Колобочная
 branch: feat/financial-core-consolidation-v2
-latest_timeline_event_id: EVT-ITR-FINANCIAL-CORE-OPEX-COVERAGE-2026-08-27-03-COMMITTED
-latest_timeline_event_hash: b7ae1f3ca4017901364fd5b8f17eb7cd5c3d777edc4a3b22ac804e66c50d7f07
-latest_closed_iteration_id: ITR-FINANCIAL-CORE-OPEX-COVERAGE-2026-08-27-03
-latest_iteration_tag: iteration/ITR-FINANCIAL-CORE-OPEX-COVERAGE-2026-08-27-03
-latest_content_commit_hash: 4c5158528a76a57cc15a6901cfd340d597ef79f1
-registry_hash: 3ffe84a46b66cf98fefdb6e19cc9390a46a1c1fb4ee147c325fa10774c6ab9dd
+latest_timeline_event_id: EVT-ITR-FINANCIAL-CORE-PREPUBLICATION-2026-08-27-04-COMMITTED
+latest_timeline_event_hash: d78441250079d65c4cf323b83d91286e3d87d113aa5d133bedd17e77f841e581
+latest_closed_iteration_id: ITR-FINANCIAL-CORE-PREPUBLICATION-2026-08-27-04
+latest_iteration_tag: iteration/ITR-FINANCIAL-CORE-PREPUBLICATION-2026-08-27-04
+latest_content_commit_hash: d0008241d5e681a02f59e2de64f5faad31a1d9cb
+registry_hash: cdd416d8d9dafde0becc05d1a31acff406e92227541526d4ef5ff754e28ead3d
 canonical_document_hashes:
   - document_id: DOC-AGENTS
     local_path: docs-platform/AGENTS.md
@@ -71,7 +71,7 @@ canonical_document_hashes:
     status: research
   - document_id: DOC-NETWORK-PLANNING-ASSUMPTIONS
     local_path: docs-platform/working/network-planning-assumptions.yaml
-    sha256: fdb96e43bf550122c8d3fcec08c0b7fd7315bd8cc88cceea8b3db2743c0fdd03
+    sha256: 94a55dafca9379b6c1fc8e8abd5343ba76f5b8c3c8a99640a78e9a9a3ca867a4
     status: approved
   - document_id: DOC-PILOT-CAPEX-ASSUMPTIONS
     local_path: docs-platform/working/pilot-capex-assumptions.yaml
@@ -92,7 +92,7 @@ open_questions:
   - Archive pending review artifacts in durable storage before treating visual verification as portable.
   - Create deployment receipts when the next governed deployment is performed.
   - Decide whether malformed superseded legacy YAML evidence should receive a separate correction event.
-current_workstream: Complete Network OPEX mapping, wash BOM and investor-grade coverage
+current_workstream: Close Historic Centre furniture and document pre-publication capacity and reserve evidence
 next_task: Select the next task through a new governed proposal; no business task is pre-authorized.
 google_integration_status:
   configured: false

@@ -4,10 +4,10 @@
 
 ## 1. Current state
 
-- Events: 266.
-- Timeline head event: `EVT-ITR-FINANCIAL-CORE-OPEX-COVERAGE-2026-08-27-03-COMMITTED`.
-- Timeline head SHA-256: `b7ae1f3ca4017901364fd5b8f17eb7cd5c3d777edc4a3b22ac804e66c50d7f07`.
-- Latest recorded iteration: `ITR-FINANCIAL-CORE-OPEX-COVERAGE-2026-08-27-03`.
+- Events: 271.
+- Timeline head event: `EVT-ITR-FINANCIAL-CORE-PREPUBLICATION-2026-08-27-04-COMMITTED`.
+- Timeline head SHA-256: `d78441250079d65c4cf323b83d91286e3d87d113aa5d133bedd17e77f841e581`.
+- Latest recorded iteration: `ITR-FINANCIAL-CORE-PREPUBLICATION-2026-08-27-04`.
 
 ## 2. Modern governed iterations
 
@@ -62,6 +62,7 @@
 | 2026-08-27T00:31:03.000Z | failed | Consolidate Network P&L and FCF through the shared financial core | ITR-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-01 | DEC-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-01 | CHG-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-01 | — | — | — | — | — | Release verification found a required Network Planning snapshot refresh outside the already-hashed payload scope. The preliminary iteration is closed without a content commit; a successor records the exact refreshed scope. |
 | 2026-08-26T22:50:09.000Z | committed | Consolidate Network P&L and FCF through the shared financial core | ITR-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-02 | DEC-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-02 | CHG-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-02 | 6fcbf67919f3a86f7aae6ba1ab14166310e4f34c | iteration/ITR-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-02 | — | — | — | Consolidate Network P&L and FCF through the shared financial core: content commit verified and linked to the governed lifecycle before sealing. |
 | 2026-08-27T13:30:16.000Z | committed | Complete Network OPEX mapping, wash BOM and investor-grade coverage | ITR-FINANCIAL-CORE-OPEX-COVERAGE-2026-08-27-03 | DEC-FINANCIAL-CORE-OPEX-COVERAGE-2026-08-27-03 | CHG-FINANCIAL-CORE-OPEX-COVERAGE-2026-08-27-03 | 4c5158528a76a57cc15a6901cfd340d597ef79f1 | iteration/ITR-FINANCIAL-CORE-OPEX-COVERAGE-2026-08-27-03 | — | — | — | Complete Network OPEX mapping, wash BOM and investor-grade coverage: content commit verified and linked to the governed lifecycle before sealing. |
+| 2026-08-27T20:04:39.000Z | committed | Close Historic Centre furniture and document pre-publication capacity and reserve evidence | ITR-FINANCIAL-CORE-PREPUBLICATION-2026-08-27-04 | DEC-FINANCIAL-CORE-PREPUBLICATION-2026-08-27-04 | CHG-FINANCIAL-CORE-PREPUBLICATION-2026-08-27-04 | d0008241d5e681a02f59e2de64f5faad31a1d9cb | iteration/ITR-FINANCIAL-CORE-PREPUBLICATION-2026-08-27-04 | — | — | — | Close Historic Centre furniture and document pre-publication capacity and reserve evidence: content commit verified and linked to the governed lifecycle before sealing. |
 
 ## 3. Legacy imported history
 
