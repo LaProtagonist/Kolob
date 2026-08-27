@@ -9,16 +9,16 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 ## 2. Текущая ветка и governed iteration
 
 - Branch: `feat/financial-core-consolidation-v2`.
-- Latest closed iteration: `ITR-FINANCIAL-CORE-CURRENT-BASE-RESERVE-2026-08-27-05`.
-- Latest iteration tag: `iteration/ITR-FINANCIAL-CORE-CURRENT-BASE-RESERVE-2026-08-27-05`.
-- Latest content commit: `4c275876d8bc9aaa2ddd65cd67b3364d395063b5`.
+- Latest closed iteration: `ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-08`.
+- Latest iteration tag: `iteration/ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-08`.
+- Latest content commit: `ee577bcc24602e502003dc04c398ee4ef0803b59`.
 - Текущий Git HEAD намеренно не записывается: его вычисляет `npm run project:onboard`.
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-FINANCIAL-CORE-CURRENT-BASE-RESERVE-2026-08-27-05-COMMITTED`.
-- Hash: `d2d83e474ea91476ebb559ebd466f13f20c06f6645673b992e011c8a24c71832`.
-- generated_from_event_hash: `d2d83e474ea91476ebb559ebd466f13f20c06f6645673b992e011c8a24c71832`.
+- Event: `EVT-ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-08-COMMITTED`.
+- Hash: `3479db32b318d54add20b8d25a0d84e450f75e9ba0983826ac12956dc63d35e5`.
+- generated_from_event_hash: `3479db32b318d54add20b8d25a0d84e450f75e9ba0983826ac12956dc63d35e5`.
 
 ## 4. Канонические документы
 
@@ -39,14 +39,14 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 | DOC-INVESTMENT-MEMO | proposed | `docs-platform/templates/investment-memorandum.md` | `464e46d307aaa98e57cab3a098cd639e212d32b51f82a06688de228f0e7fb4cd` |
 | DOC-INVESTOR-FINANCIAL-SUMMARY | research | `docs-platform/working/investor-financial-summary.yaml` | `429aca4726de5284a37d87ee9522959e7de787edb0bbbe4b03694f287bcb18fa` |
 | DOC-INVESTOR-START-MODEL | research | `docs-platform/working/investor-start-model.yaml` | `b81a6c4e8988a4532c9ba2749d492b3f96e37d83af822396afc82930244b2985` |
-| DOC-NETWORK-PLANNING-ASSUMPTIONS | approved | `docs-platform/working/network-planning-assumptions.yaml` | `94a55dafca9379b6c1fc8e8abd5343ba76f5b8c3c8a99640a78e9a9a3ca867a4` |
+| DOC-NETWORK-PLANNING-ASSUMPTIONS | approved | `docs-platform/working/network-planning-assumptions.yaml` | `1136e30e205cf03abef7232fb1618b624f2f4d1744d14de966089908d4c2022b` |
 | DOC-PILOT-CAPEX-ASSUMPTIONS | research | `docs-platform/working/pilot-capex-assumptions.yaml` | `25e11d4db20050b3a95cab40797ef0a29e56fad93c73d33d4a39415a8071d4ac` |
 | DOC-README | approved | `docs-platform/README.md` | `04e947f296a158a1c37ceb8d4c959d1f4e31cf609d16c99bee2d3c3b79b824ab` |
 | DOC-REVENUE-MODEL | research | `docs-platform/working/revenue-model.yaml` | `ab68399813d62d861522752c8e94df9cfc5d5a48e9b7723c60f2c968c4cba721` |
 
 ## 5. Текущая рабочая тема
 
-Correct stale Historical Pilot routing for Current Base operating reserve
+Finalize unified reserve and rollout funding after failed pre-commit continuations
 
 ## 6. Decisions и change sets
 

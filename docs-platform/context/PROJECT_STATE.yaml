@@ -1,13 +1,13 @@
 schema_version: 2
-generated_at: 2026-08-27T21:38:05.210Z
+generated_at: 2026-08-27T23:22:54.972Z
 project: Колобочная
 branch: feat/financial-core-consolidation-v2
-latest_timeline_event_id: EVT-ITR-FINANCIAL-CORE-CURRENT-BASE-RESERVE-2026-08-27-05-COMMITTED
-latest_timeline_event_hash: d2d83e474ea91476ebb559ebd466f13f20c06f6645673b992e011c8a24c71832
-latest_closed_iteration_id: ITR-FINANCIAL-CORE-CURRENT-BASE-RESERVE-2026-08-27-05
-latest_iteration_tag: iteration/ITR-FINANCIAL-CORE-CURRENT-BASE-RESERVE-2026-08-27-05
-latest_content_commit_hash: 4c275876d8bc9aaa2ddd65cd67b3364d395063b5
-registry_hash: cdd416d8d9dafde0becc05d1a31acff406e92227541526d4ef5ff754e28ead3d
+latest_timeline_event_id: EVT-ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-08-COMMITTED
+latest_timeline_event_hash: 3479db32b318d54add20b8d25a0d84e450f75e9ba0983826ac12956dc63d35e5
+latest_closed_iteration_id: ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-08
+latest_iteration_tag: iteration/ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-08
+latest_content_commit_hash: ee577bcc24602e502003dc04c398ee4ef0803b59
+registry_hash: b59c96c1b256174cd21131cf955813e2d68fe507a4d4a85b9e581094a74264cc
 canonical_document_hashes:
   - document_id: DOC-AGENTS
     local_path: docs-platform/AGENTS.md
@@ -71,7 +71,7 @@ canonical_document_hashes:
     status: research
   - document_id: DOC-NETWORK-PLANNING-ASSUMPTIONS
     local_path: docs-platform/working/network-planning-assumptions.yaml
-    sha256: 94a55dafca9379b6c1fc8e8abd5343ba76f5b8c3c8a99640a78e9a9a3ca867a4
+    sha256: 1136e30e205cf03abef7232fb1618b624f2f4d1744d14de966089908d4c2022b
     status: approved
   - document_id: DOC-PILOT-CAPEX-ASSUMPTIONS
     local_path: docs-platform/working/pilot-capex-assumptions.yaml
@@ -92,7 +92,7 @@ open_questions:
   - Archive pending review artifacts in durable storage before treating visual verification as portable.
   - Create deployment receipts when the next governed deployment is performed.
   - Decide whether malformed superseded legacy YAML evidence should receive a separate correction event.
-current_workstream: Correct stale Historical Pilot routing for Current Base operating reserve
+current_workstream: Finalize unified reserve and rollout funding after failed pre-commit continuations
 next_task: Select the next task through a new governed proposal; no business task is pre-authorized.
 google_integration_status:
   configured: false

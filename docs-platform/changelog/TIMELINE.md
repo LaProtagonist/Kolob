@@ -4,10 +4,10 @@
 
 ## 1. Current state
 
-- Events: 276.
-- Timeline head event: `EVT-ITR-FINANCIAL-CORE-CURRENT-BASE-RESERVE-2026-08-27-05-COMMITTED`.
-- Timeline head SHA-256: `d2d83e474ea91476ebb559ebd466f13f20c06f6645673b992e011c8a24c71832`.
-- Latest recorded iteration: `ITR-FINANCIAL-CORE-CURRENT-BASE-RESERVE-2026-08-27-05`.
+- Events: 289.
+- Timeline head event: `EVT-ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-08-COMMITTED`.
+- Timeline head SHA-256: `3479db32b318d54add20b8d25a0d84e450f75e9ba0983826ac12956dc63d35e5`.
+- Latest recorded iteration: `ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-08`.
 
 ## 2. Modern governed iterations
 
@@ -64,6 +64,9 @@
 | 2026-08-27T13:30:16.000Z | committed | Complete Network OPEX mapping, wash BOM and investor-grade coverage | ITR-FINANCIAL-CORE-OPEX-COVERAGE-2026-08-27-03 | DEC-FINANCIAL-CORE-OPEX-COVERAGE-2026-08-27-03 | CHG-FINANCIAL-CORE-OPEX-COVERAGE-2026-08-27-03 | 4c5158528a76a57cc15a6901cfd340d597ef79f1 | iteration/ITR-FINANCIAL-CORE-OPEX-COVERAGE-2026-08-27-03 | — | — | — | Complete Network OPEX mapping, wash BOM and investor-grade coverage: content commit verified and linked to the governed lifecycle before sealing. |
 | 2026-08-27T20:04:39.000Z | committed | Close Historic Centre furniture and document pre-publication capacity and reserve evidence | ITR-FINANCIAL-CORE-PREPUBLICATION-2026-08-27-04 | DEC-FINANCIAL-CORE-PREPUBLICATION-2026-08-27-04 | CHG-FINANCIAL-CORE-PREPUBLICATION-2026-08-27-04 | d0008241d5e681a02f59e2de64f5faad31a1d9cb | iteration/ITR-FINANCIAL-CORE-PREPUBLICATION-2026-08-27-04 | — | — | — | Close Historic Centre furniture and document pre-publication capacity and reserve evidence: content commit verified and linked to the governed lifecycle before sealing. |
 | 2026-08-27T21:35:28.000Z | committed | Correct stale Historical Pilot routing for Current Base operating reserve | ITR-FINANCIAL-CORE-CURRENT-BASE-RESERVE-2026-08-27-05 | DEC-FINANCIAL-CORE-CURRENT-BASE-RESERVE-2026-08-27-05 | CHG-FINANCIAL-CORE-CURRENT-BASE-RESERVE-2026-08-27-05 | 4c275876d8bc9aaa2ddd65cd67b3364d395063b5 | iteration/ITR-FINANCIAL-CORE-CURRENT-BASE-RESERVE-2026-08-27-05 | — | — | — | Correct stale Historical Pilot routing for Current Base operating reserve: content commit verified and linked to the governed lifecycle before sealing. |
+| 2026-08-27T23:02:55.823Z | failed | Unify Operating Reserve and dated rollout funding semantics | ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-06 | DEC-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-06 | CHG-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-06 | — | — | — | — | — | Failed before content commit: affected TypeScript gate found an undeclared operatingReserve property in NetworkEconomicsProjection. A corrective continuation is required; no Google, production or Git content commit occurred. |
+| 2026-08-27T23:05:42.242Z | failed | Complete unified reserve and rollout funding implementation after TypeScript gate correction | ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-07 | DEC-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-07 | CHG-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-07 | — | — | — | — | — | Failed before content commit: strict TypeScript gate found nullable accumulator handling in ExpansionReserveProjection total. No Google, production or Git content commit occurred. |
+| 2026-08-27T23:22:40.000Z | committed | Finalize unified reserve and rollout funding after failed pre-commit continuations | ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-08 | DEC-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-08 | CHG-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-08 | ee577bcc24602e502003dc04c398ee4ef0803b59 | iteration/ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-08 | — | — | — | Finalize unified reserve and rollout funding after failed pre-commit continuations: content commit verified and linked to the governed lifecycle before sealing. |
 
 ## 3. Legacy imported history
 
