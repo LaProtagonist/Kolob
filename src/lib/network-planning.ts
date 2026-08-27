@@ -616,6 +616,9 @@ export function logisticsPlanning(additionalNetworkPointCount: number) {
   return {
     ownsVehicleSuggested,
     externalMonthlyRub: logistics.external_logistics_monthly_rub === null ? null : Number(logistics.external_logistics_monthly_rub),
+    externalLogisticsSourceIds: Array.isArray(logistics.external_logistics_source_ids)
+      ? logistics.external_logistics_source_ids.map((id: unknown) => String(id))
+      : [],
     vehicleCapexRub: Number(logistics.own_vehicle_capex_rub),
     ownedMonthlyTotalRub: Number(logistics.own_vehicle_monthly_total_rub),
     driverSalaryRub: Number(logistics.driver_salary_rub),

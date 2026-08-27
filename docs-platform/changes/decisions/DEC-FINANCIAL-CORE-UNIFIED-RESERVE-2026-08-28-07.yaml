@@ -1,0 +1,14 @@
+schema_version: 2
+decision_id: DEC-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-07
+iteration_id: ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-07
+title: Complete B5 reserve contract with a valid typed projection
+status: approved
+approved_by: project owner
+approved_at: 2026-08-28T12:10:01.000Z
+scope: >-
+  This corrective continuation preserves the approved B5 economics: Operating Reserve
+  is a six-month qualifying fixed/semi-fixed liquidity balance, Expansion is funded by
+  cohort/service dates, and programme total is separate from external funding. It only
+  corrects the typed projection contract that blocked the unsealed predecessor.
+approved_payload_path: docs-platform/changelog/payloads/ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-07-approved.yaml
+approved_payload_sha256: 7ea67e2e5ff97ef7ed6f6c9ef19e6f161e19477863f90c17b60a3cd39ad70fc7

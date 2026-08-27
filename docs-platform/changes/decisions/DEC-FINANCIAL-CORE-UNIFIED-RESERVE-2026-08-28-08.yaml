@@ -1,0 +1,15 @@
+schema_version: 2
+decision_id: DEC-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-08
+iteration_id: ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-08
+title: Approve final local B5 reserve and funding correction
+status: approved
+approved_by: project owner
+approved_at: 2026-08-27T23:15:30.000Z
+scope: >-
+  Operating Reserve is a six-month qualifying fixed/semi-fixed liquidity requirement;
+  Current Base and Expansion use the same classification, but physical scope and
+  contracts determine each included amount. Expansion funding is dated by cohort and
+  shared-cost trigger. Total Program Investment and Upfront Investor Funding are
+  deliberately distinct local projection outputs.
+approved_payload_path: docs-platform/changelog/payloads/ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-08-approved.yaml
+approved_payload_sha256: e80d8645bdc247f33b8d5b4e37dd48b5a98886ac1b4e682a679c2323e99a0fc8

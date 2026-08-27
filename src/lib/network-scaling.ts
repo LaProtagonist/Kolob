@@ -5,6 +5,7 @@ import {
   combineBaseAndExpansionPnl,
   sharedNetworkOpexForActivePoints,
   type BaseFinancialLayerInput,
+  type ExpansionReserveProjection,
   type NetworkFinancialExclusion,
 } from "./network-financial-core";
 import type { FinancialCoverage } from "./financial-core";
@@ -199,6 +200,7 @@ export type NetworkEconomicsProjection = {
     additionalPointCount: number;
     pointInvestmentRub: number;
     sharedInfrastructureRub: number;
+    operatingReserve: ExpansionReserveProjection | null;
     operatingReserveRub: number | null;
     reserveMonths: number;
     investmentRub: number | null;
@@ -979,7 +981,7 @@ export function networkScalingProjection(configuration: InvestorConfiguration): 
       || additionalCohorts.some((cohort) => cohort.isPartial || cohort.directOpex.isPartial),
     capacityNote: "Спрос в portions/day рассчитан, но производительность линии и второй shift требуют отдельного подтверждения оборудования и roster.",
     contingencyNote: "Резерв запуска включает оборудование, мебель, подготовку помещения и локальный wash kit; не включает property, deposit или prepaid rent.",
-    reserveNote: "Операционный запас расширения рассчитывается из известной recurring Point + Production + Shared OPEX; налоги и CAPEX в него не входят.",
+    reserveNote: "Операционный запас расширения — 6 месяцев постоянных и полу-постоянных расходов Point, Production и Shared, финансируемых по датам cohort/service triggers; variable P&L и launch CAPEX не входят.",
     sales,
     operating,
     planningLaunch: networkPlanningLaunchSummary(cohorts, operating),
@@ -1014,6 +1016,7 @@ export function networkEconomicsProjection(
       additionalPointCount: expansionState.additionalPointCount,
       pointInvestmentRub: expansionState.pointInvestmentRub,
       sharedInfrastructureRub: expansionState.sharedInfrastructureRub,
+      operatingReserve: expansionState.operatingReserve,
       operatingReserveRub: expansionState.operatingReserveRub,
       reserveMonths: expansionState.reserveMonths,
       investmentRub: expansionState.investmentRub,

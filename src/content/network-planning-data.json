@@ -2,11 +2,11 @@
   "meta": {
     "schemaVersion": 1,
     "dataVersion": "1.7",
-    "contentStateSha256": "f1d1e7c0033d152cdf701f20f8c3d7f04948c3fd959a690cc824882b64905c66",
+    "contentStateSha256": "e591343bbfea16db200a086a07da6dce6630c3371d06921b6ae9b9ff02bc5224",
     "sourceFiles": [
       {
         "path": "docs-platform/working/network-planning-assumptions.yaml",
-        "sha256": "a73035a467715dc260f0dc90743aa3d1ab74d6a61bcd52f2f5bc85a2edb38838"
+        "sha256": "29fbf9a42d6f74c71d2e8ba17e4f63bdcc796fe724ad40e1cbff533a190e739b"
       },
       {
         "path": "docs-platform/schemas/network-planning-assumptions.schema.json",
@@ -22,7 +22,7 @@
       },
       {
         "path": "docs-platform/registry/sources.yaml",
-        "sha256": "13757cb370d70591f4611ffca5d249a53da799cadc793e24884f86669ec0e110"
+        "sha256": "21c262a713588884d39cdc4a7eeebb83f22359ebf8be20611aafd0c8643f404f"
       },
       {
         "path": "docs-platform/working/capex-equipment-register.yaml",
@@ -693,7 +693,13 @@
     },
     "logistics": {
       "delivery_window": "night_or_off_peak",
-      "external_logistics_monthly_rub": null,
+      "external_logistics_monthly_rub": 150000,
+      "external_logistics_source_ids": [
+        "SRC-LOGISTICS-20260828-FIRSTEXPRESS-REFRIGERATED",
+        "SRC-LOGISTICS-20260828-GETTRUCK-REFRIGERATED",
+        "SRC-LOGISTICS-20260828-GRUZOVOZKIN-REFRIGERATED",
+        "SRC-LOGISTICS-20260828-B5-PLANNING-BASELINE"
+      ],
       "own_vehicle_suggested_from_point_count": 3,
       "own_vehicle_point_count_scope": "additional_network_points",
       "own_vehicle_capex_rub": 5000000,
@@ -705,8 +711,8 @@
         "generic_equipment_maintenance_capex": "excluded"
       },
       "external_logistics_coverage": {
-        "one_to_two_additional_points": "configurable_input_required",
-        "network_three_or_more_points": "conditional_early_rollout_assumption_not_a_steady_state_blocker"
+        "one_to_two_additional_points": "planning_baseline_requires_contract_confirmation",
+        "network_three_or_more_points": "planning_baseline_applies_during_early_rollout_until_owned_vehicle"
       }
     },
     "equipment": {

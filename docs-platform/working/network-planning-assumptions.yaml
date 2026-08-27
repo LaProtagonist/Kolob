@@ -438,7 +438,14 @@ launch:
   launch_marketing_scope: shared_network
 logistics:
   delivery_window: night_or_off_peak
-  external_logistics_monthly_rub: null
+  # Planning baseline for M4–M9 / one to two additional points. It is a
+  # research-backed allowance, not a signed carrier contract.
+  external_logistics_monthly_rub: 150000
+  external_logistics_source_ids:
+    - SRC-LOGISTICS-20260828-FIRSTEXPRESS-REFRIGERATED
+    - SRC-LOGISTICS-20260828-GETTRUCK-REFRIGERATED
+    - SRC-LOGISTICS-20260828-GRUZOVOZKIN-REFRIGERATED
+    - SRC-LOGISTICS-20260828-B5-PLANNING-BASELINE
   own_vehicle_suggested_from_point_count: 3
   own_vehicle_point_count_scope: additional_network_points
   own_vehicle_capex_rub: 5000000
@@ -449,8 +456,8 @@ logistics:
     maintenance: included_in_owned_monthly_opex
     generic_equipment_maintenance_capex: excluded
   external_logistics_coverage:
-    one_to_two_additional_points: configurable_input_required
-    network_three_or_more_points: conditional_early_rollout_assumption_not_a_steady_state_blocker
+    one_to_two_additional_points: planning_baseline_requires_contract_confirmation
+    network_three_or_more_points: planning_baseline_applies_during_early_rollout_until_owned_vehicle
 equipment:
   bar_enabled_point_items:
     - item_id: CAPEX-02-013

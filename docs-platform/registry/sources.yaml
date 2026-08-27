@@ -1458,6 +1458,42 @@ sources:
     accessed_at: 2026-08-27
     reliability: medium
     notes: B4 capacity evidence only. Vendor documentation lists 7 GN 1/1 or 600×400 levels, 10.5 kW, 30–260°C and a temperature probe. It does not establish product batch yield or cycle time for Kolobochnaya.
+  - id: SRC-LOGISTICS-20260828-FIRSTEXPRESS-REFRIGERATED
+    title: FirstExpress СПб — тарифы на рефрижераторные перевозки
+    type: supplier_tariff
+    location: https://spb.firstexpress.ru/gruzoperevozki/refrezirator-tc/
+    publisher: FirstExpress Санкт-Петербург
+    publication_date: null
+    accessed_at: 2026-08-28
+    reliability: medium
+    notes: "B5 external-logistics market evidence. Published examples: refrigerated Cabluк 2,500 ₽/4h, Sobol 2,750 ₽/4h and Gazelle 3,600 ₽/5h; up to three addresses are described on the tariff page. A 30-working-day Gazelle equivalent is 108,000 ₽ before extra time/km. The supplier states that monthly contracts can have discounts."
+  - id: SRC-LOGISTICS-20260828-GETTRUCK-REFRIGERATED
+    title: GetTruck СПб — рефрижераторные грузоперевозки
+    type: supplier_tariff
+    location: https://spb.gettruck.ru/perevozka-refrijeratorami
+    publisher: GetTruck Санкт-Петербург
+    publication_date: null
+    accessed_at: 2026-08-28
+    reliability: medium
+    notes: "B5 external-logistics market evidence. Published starting prices include 1.5t/10m³ from 3,500 ₽ for 3h and 2t/14m³ from 4,200 ₽ for 4h. Used as a commercial refrigerated-route comparison; actual daily route terms require a carrier quote."
+  - id: SRC-LOGISTICS-20260828-GRUZOVOZKIN-REFRIGERATED
+    title: Грузовозкин — рефрижераторные перевозки для ресторанных продуктов
+    type: supplier_tariff
+    location: https://www.gruzovozkin.pro/catalog/refrizheratornye-perevozki/perevozka-myasa-i-myasnoy-produkcii
+    publisher: Грузовозкин
+    publication_date: null
+    accessed_at: 2026-08-28
+    reliability: medium
+    notes: "B5 external-logistics market evidence. Published small refrigerated vehicle rates start at 400 ₽/h (0.6t), 500 ₽/h (1.5t) and 600 ₽/h (3t), with restaurant/food-product delivery applicability. It corroborates an allowance above the lowest ad-hoc day rate."
+  - id: SRC-LOGISTICS-20260828-B5-PLANNING-BASELINE
+    title: B5 planning baseline for early external refrigerated logistics
+    type: calculation_assumption
+    location: docs-platform/working/network-planning-assumptions.yaml#logistics
+    publisher: project owner via governed B5 instruction
+    publication_date: 2026-08-28
+    accessed_at: 2026-08-28
+    reliability: medium
+    notes: "Conservative planning allowance 150,000 ₽/month for approximately one daily commercial temperature-controlled route serving 1–2 additional points in Saint Petersburg. It is 39% above the 108,000 ₽/month FirstExpress Gazelle day-rate equivalent and remains subject to a carrier contract/route quote."
   - id: SRC-CAPACITY-20260827-TATRA-TSV2
     title: TATRA TSV2 — documented sous-vide envelope
     type: supplier_product_card

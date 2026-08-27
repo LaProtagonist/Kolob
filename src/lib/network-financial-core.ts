@@ -18,6 +18,7 @@ import {
 } from "./financial-assets";
 import type { ConfiguredFinancialPolicy } from "./configured-economics";
 import type { InvestorConfiguration } from "./investor-configuration";
+import { rentPrepaymentCoverage, type RentPrepaymentCoverage } from "./rent-prepayment";
 import {
   historicalOpexTreatmentCatalog,
 } from "./physical-allocation";
@@ -112,6 +113,8 @@ export type NetworkSteadyStateProjection = {
   additionalPointCount: number;
   pointInvestmentRub: number;
   sharedInfrastructureRub: number;
+  /** Dated liquidity funding; it is never part of monthly P&L. */
+  operatingReserve: ExpansionReserveProjection | null;
   operatingReserveRub: number | null;
   reserveMonths: number;
   investmentRub: number | null;
@@ -121,6 +124,65 @@ export type NetworkSteadyStateProjection = {
   assets: NetworkAssetSummary;
   pnl: FinancialPnl;
   paybackMonths: number | null;
+};
+
+export type ReserveQualifyingLine = {
+  id: string;
+  name: string;
+  scope: "point" | "production" | "shared_network";
+  monthlyAmountRub: number | null;
+  classification: "fixed" | "semi_fixed" | "contractual_minimum";
+  reason: string;
+};
+
+export type CohortReserveProjection = {
+  id: string;
+  cohortId: string;
+  openingMonth: number;
+  fundingMonth: number;
+  pointCount: number;
+  months: number;
+  qualifyingMonthlyBasisRub: number | null;
+  includedLines: ReserveQualifyingLine[];
+  excludedLineIds: string[];
+  prepaidCoverage: RentPrepaymentCoverage | null;
+  uncoveredRentRub: number | null;
+  totalReserveRub: number | null;
+};
+
+export type SharedReserveProjection = {
+  id: string;
+  name: string;
+  activationMonth: number;
+  fundingMonth: number;
+  months: number;
+  qualifyingMonthlyBasisRub: number | null;
+  includedLines: ReserveQualifyingLine[];
+  totalReserveRub: number | null;
+  reason: string;
+};
+
+export type ReserveFundingEvent = {
+  month: number;
+  id: string;
+  kind: "cohort_operating_reserve" | "shared_operating_reserve";
+  amountRub: number | null;
+};
+
+/**
+ * Operating reserve is a six-month liquidity balance for qualifying
+ * fixed/semi-fixed costs.  It deliberately excludes sales-driven P&L and all
+ * separately-funded launch lines, for both Current Base and Expansion.
+ */
+export type ExpansionReserveProjection = {
+  context: "network_expansion";
+  policy: "six_months_qualifying_fixed_and_semi_fixed_opex_by_cohort";
+  months: number;
+  cohortReserves: CohortReserveProjection[];
+  sharedReserves: SharedReserveProjection[];
+  fundingEvents: ReserveFundingEvent[];
+  totalReserveRub: number | null;
+  excludedLineIds: string[];
 };
 
 function sumNullable(values: readonly (number | null)[]) {
@@ -154,6 +216,266 @@ function selectedLogistics(
     logisticsVehicleCapexRub: logisticsMode === "own"
       ? configuration.networkScaling.logistics.ownedVehicleCapexRub ?? planning.vehicleCapexRub
       : null,
+  };
+}
+
+const reserveExcludedLineIds = [
+  "food",
+  "waste",
+  "consumer-packaging",
+  "acquiring",
+  "variable-marketing",
+  "foodhall-revenue-share-above-minimum",
+  "administrative-reserve",
+  "depreciation",
+  "maintenance-capex",
+  "income-tax",
+  "initial-inventory",
+  "launch-capex",
+] as const;
+
+function directLine(cohort: NetworkPointCohortProjection, id: string) {
+  return cohort.directOpex.lines.find((line) => line.id === id)?.amountRub ?? null;
+}
+
+function cohortReserveLines(
+  cohort: NetworkPointCohortProjection,
+  pointCountForWave: number,
+): ReserveQualifyingLine[] {
+  const constants = canonicalNetworkOpexConstants();
+  const multiply = (amount: number | null) => amount === null ? null : roundFinancial(amount * pointCountForWave);
+  const line = (id: string, name: string, classification: ReserveQualifyingLine["classification"], reason: string, amount = directLine(cohort, id)): ReserveQualifyingLine => ({
+    id,
+    name,
+    scope: "point",
+    monthlyAmountRub: multiply(amount),
+    classification,
+    reason,
+  });
+  const result: ReserveQualifyingLine[] = [
+    line("point-payroll", "Персонал точки", "fixed", "Защищённый roster/payroll точки."),
+    {
+      id: "household-fixed",
+      name: "Хозяйственные расходы · фиксированная часть",
+      scope: "point",
+      monthlyAmountRub: roundFinancial(constants.householdFixedMonthlyRub * pointCountForWave),
+      classification: "semi_fixed",
+      reason: "Traffic component исключён из operating reserve.",
+    },
+    line("equipment-service", "Сервис оборудования точки", "semi_fixed", "Регулярный сервис, отдельный от maintenance CAPEX."),
+    line("ventilation-grease", "Вентиляция и жироуловители", "semi_fixed", "Recurring service применимого помещения."),
+    line("uniform-renewal", "Обновление спецодежды", "semi_fixed", "Калибровано по roster точки."),
+    line("music", "Музыкальное сопровождение", "semi_fixed", "Только там, где оно не включено площадкой."),
+    line("pest-control", "Pest control", "semi_fixed", "Recurring sanitary service помещения."),
+    line("medical", "Медосмотры и санитарные документы", "semi_fixed", "Применяется к food-operation roster."),
+    line("security-monitoring", "Пультовая охрана", "semi_fixed", "Ноль, если безопасность включена площадкой."),
+    line("utilities", "Коммунальные", "semi_fixed", "Fixed/service contract component точки."),
+    line("service", "Обязательный сервис площадки", "semi_fixed", "Service charge по договору формата."),
+    line("storage", "Обязательное хранение", "semi_fixed", "Storage charge по договору формата."),
+  ];
+  if (cohort.cohort.locationType === "foodhall") {
+    result.push({
+      id: "foodhall-minimum-guarantee",
+      name: "Foodhall · минимальная гарантия",
+      scope: "point",
+      monthlyAmountRub: cohort.cohort.minimumGuaranteeMonthlyRub === null ? null : roundFinancial(cohort.cohort.minimumGuaranteeMonthlyRub * pointCountForWave),
+      classification: "contractual_minimum",
+      reason: "Revenue share сверх минимальной гарантии не является reserve basis.",
+    });
+  }
+  // Service/storage are format-specific contract lines. Their absence means
+  // “not applicable”, not an unresolved zero that would invalidate reserve.
+  return result.filter((item) => !["service", "storage"].includes(item.id)
+    || cohort.directOpex.lines.some((lineItem) => lineItem.id === item.id));
+}
+
+function reserveRentLine(
+  cohort: NetworkPointCohortProjection,
+  pointCountForWave: number,
+  reserveMonths: number,
+): { line: ReserveQualifyingLine | null; coverage: RentPrepaymentCoverage | null; uncoveredRentRub: number | null } {
+  if (cohort.cohort.locationType === "foodhall" || cohort.cohort.realEstateMode !== "rent") {
+    return { line: null, coverage: null, uncoveredRentRub: 0 };
+  }
+  if (cohort.cohort.monthlyRentRub === null || cohort.cohort.prepaymentMonths === null) {
+    return {
+      line: {
+        id: "uncovered-rent",
+        name: "Непокрытая аренда",
+        scope: "point",
+        monthlyAmountRub: null,
+        classification: "contractual_minimum",
+        reason: "Для reserve нужны contractual rent и prepayment terms.",
+      },
+      coverage: null,
+      uncoveredRentRub: null,
+    };
+  }
+  const coverage = rentPrepaymentCoverage({
+    monthlyRentRub: cohort.cohort.monthlyRentRub,
+    prepaidMonths: cohort.cohort.prepaymentMonths,
+    rentFreeMonths: cohort.cohort.rentFreeMonths,
+    reserveMonths,
+  });
+  const uncoveredRentRub = roundFinancial(coverage.uncoveredRentRub * pointCountForWave);
+  return {
+    line: {
+      id: "uncovered-rent",
+      name: "Непокрытая аренда",
+      scope: "point",
+      monthlyAmountRub: reserveMonths === 0 ? 0 : roundFinancial(uncoveredRentRub / reserveMonths),
+      classification: "contractual_minimum",
+      reason: "Только payable rent после rent-free периода и использования prepaid credit.",
+    },
+    coverage: { ...coverage, uncoveredRentRub },
+    uncoveredRentRub,
+  };
+}
+
+function activeAdditionalCohortsAtMonth(scaling: NetworkScalingProjection, month: number) {
+  return scaling.cohorts.slice(1).flatMap((cohort) => cohort.cohort.openingWaves
+    .filter((wave) => wave.openingMonth <= month)
+    .map((wave) => ({ cohort, count: wave.count })));
+}
+
+function sharedReserveLines(
+  configuration: InvestorConfiguration,
+  scaling: NetworkScalingProjection,
+  month: number,
+  plannedAdditionalPointCount: number,
+) {
+  const active = activeAdditionalCohortsAtMonth(scaling, month);
+  const activePointCount = active.reduce((sum, item) => sum + item.count, 0);
+  const totalChecks = active.reduce<number | null>((sum, item) => {
+    const checks = item.cohort.operational.sales.checksPerDay;
+    return sum === null || checks === null ? null : sum + checks * item.count;
+  }, scaling.cohorts[0]?.operational.sales.checksPerDay ?? null);
+  const additionalNetRevenue = active.reduce<number | null>((sum, item) => {
+    const revenue = item.cohort.operational.sales.revenueCohortRub;
+    const allCount = item.cohort.cohort.count || 1;
+    return sum === null || revenue === null ? null : sum + revenue / allCount * item.count;
+  }, 0);
+  const baseChecks = scaling.cohorts[0]?.operational.sales.checksPerDay ?? null;
+  const shared = sharedNetworkOpexForActivePoints(configuration, {
+    totalPointCount: 1 + activePointCount,
+    additionalPointCount: activePointCount,
+    totalChecksPerDay: totalChecks,
+    baseChecksPerDay: baseChecks,
+    additionalNetRevenueRub: additionalNetRevenue,
+    plannedAdditionalPointCount,
+  });
+  const candidateLines: ReserveQualifyingLine[] = [
+    {
+      id: "incremental-production-payroll",
+      name: "Incremental Production payroll",
+      scope: "production",
+      monthlyAmountRub: shared.expansionProductionPayrollRub,
+      classification: "fixed",
+      reason: "Increment only over Current Base production payroll.",
+    },
+    {
+      id: "incremental-production-uniforms",
+      name: "Production uniforms",
+      scope: "production",
+      monthlyAmountRub: shared.incrementalUniformRenewalRub,
+      classification: "semi_fixed",
+      reason: "Incremental food-operation roster only.",
+    },
+    {
+      id: "incremental-production-medical",
+      name: "Production medical",
+      scope: "production",
+      monthlyAmountRub: shared.incrementalMedicalRub,
+      classification: "semi_fixed",
+      reason: "Incremental food-operation roster only.",
+    },
+    {
+      id: `logistics-${shared.logisticsMode}`,
+      name: shared.logisticsMode === "own" ? "Owned refrigerated logistics" : "External refrigerated logistics",
+      scope: "shared_network",
+      monthlyAmountRub: shared.logisticsRub,
+      classification: "semi_fixed",
+      reason: "Activated only when this logistics mode is actually in use.",
+    },
+  ];
+  const lines = candidateLines.filter((line) => line.monthlyAmountRub !== 0);
+  return { lines, logisticsMode: shared.logisticsMode };
+}
+
+export function expansionReserveProjection(
+  configuration: InvestorConfiguration,
+  scaling: NetworkScalingProjection,
+): ExpansionReserveProjection {
+  const reserveMonths = configuration.launchBudget.operatingReserveMonths;
+  const temporalLead = 1;
+  const cohortReserves = scaling.cohorts.slice(1).flatMap((cohort) => cohort.cohort.openingWaves.map((wave, index) => {
+    const rent = reserveRentLine(cohort, wave.count, reserveMonths);
+    const includedLines = cohortReserveLines(cohort, wave.count);
+    if (rent.line) includedLines.push(rent.line);
+    const qualifyingMonthlyBasisRub = includedLines.some((line) => line.monthlyAmountRub === null)
+      ? null
+      : roundFinancial(includedLines.reduce((sum, line) => sum + (line.monthlyAmountRub ?? 0), 0));
+    const totalReserveRub = qualifyingMonthlyBasisRub === null || rent.uncoveredRentRub === null
+      ? null
+      : roundFinancial((qualifyingMonthlyBasisRub * reserveMonths));
+    return {
+      id: `${cohort.cohort.id}:wave-${index + 1}`,
+      cohortId: cohort.cohort.id,
+      openingMonth: wave.openingMonth,
+      fundingMonth: Math.max(0, wave.openingMonth - temporalLead),
+      pointCount: wave.count,
+      months: reserveMonths,
+      qualifyingMonthlyBasisRub,
+      includedLines,
+      excludedLineIds: [...reserveExcludedLineIds],
+      prepaidCoverage: rent.coverage,
+      uncoveredRentRub: rent.uncoveredRentRub,
+      totalReserveRub,
+    } satisfies CohortReserveProjection;
+  }));
+  const allActivationMonths = [...new Set(cohortReserves.map((item) => item.openingMonth))].sort((a, b) => a - b);
+  const sharedReserves: SharedReserveProjection[] = [];
+  let previousById = new Map<string, number>();
+  for (const activationMonth of allActivationMonths) {
+    const { lines, logisticsMode } = sharedReserveLines(configuration, scaling, activationMonth, cohortReserves.reduce((sum, item) => sum + item.pointCount, 0));
+    const nextById = new Map(lines.map((line) => [line.id, line.monthlyAmountRub ?? 0]));
+    for (const line of lines) {
+      const current = line.monthlyAmountRub;
+      const previous = previousById.get(line.id) ?? 0;
+      if (current === null || current <= previous) continue;
+      const delta = roundFinancial(current - previous);
+      sharedReserves.push({
+        id: `${line.id}:m${activationMonth}`,
+        name: line.name,
+        activationMonth,
+        fundingMonth: Math.max(0, activationMonth - temporalLead),
+        months: reserveMonths,
+        qualifyingMonthlyBasisRub: delta,
+        includedLines: [{ ...line, monthlyAmountRub: delta }],
+        totalReserveRub: roundFinancial(delta * reserveMonths),
+        reason: line.id.startsWith("logistics-") && logisticsMode === "own"
+          ? "Owned logistics reserve begins at the approved 3+ additional point trigger."
+          : "Incremental shared cost is funded only when its actual staffing/service trigger is reached.",
+      });
+    }
+    previousById = nextById;
+  }
+  const fundingEvents: ReserveFundingEvent[] = [
+    ...cohortReserves.map((item) => ({ month: item.fundingMonth, id: item.id, kind: "cohort_operating_reserve" as const, amountRub: item.totalReserveRub })),
+    ...sharedReserves.map((item) => ({ month: item.fundingMonth, id: item.id, kind: "shared_operating_reserve" as const, amountRub: item.totalReserveRub })),
+  ].sort((left, right) => left.month - right.month || left.id.localeCompare(right.id));
+  const allAmounts = fundingEvents.map((event) => event.amountRub);
+  return {
+    context: "network_expansion",
+    policy: "six_months_qualifying_fixed_and_semi_fixed_opex_by_cohort",
+    months: reserveMonths,
+    cohortReserves,
+    sharedReserves,
+    fundingEvents,
+    totalReserveRub: allAmounts.some((amount) => amount === null)
+      ? null
+      : roundFinancial(allAmounts.reduce<number>((sum, amount) => sum + (amount ?? 0), 0)),
+    excludedLineIds: [...reserveExcludedLineIds],
   };
 }
 
@@ -248,7 +570,13 @@ export function sharedNetworkOpexForActivePoints(
       name: "Внешняя логистика на ранних открытиях",
       reason: "До перехода на owned logistics цена временной внешней развозки не задана; это rollout assumption, а не steady-state blocker сети из трёх и более точек.",
     }]
-    : [];
+    : logistics.logisticsMode === "external" && configuration.networkScaling.logistics.externalMonthlyRub === null && logistics.logisticsRub !== null
+      ? [{
+        id: "logistics:external-planning-baseline",
+        name: "Внешняя логистика",
+        reason: "150k ₽/мес. — research-backed planning baseline для раннего rollout; нужен carrier contract/route quote.",
+      }]
+      : [];
   // A missing external quote is never converted into a known commercial rate.
   // The numerical known basis remains available and its coverage disclosure
   // carries the omitted contract value.
@@ -556,12 +884,8 @@ export function buildNetworkSteadyState(
   const pnl = calculateFinancialPnl(revenueRub, opexRub, assets.depreciationRub, assets.maintenanceCapexRub, policy);
   const pointInvestmentRub = additionalCohorts.reduce((total, cohort) => total + cohort.confirmedCohortInvestmentRub, 0);
   const sharedInfrastructureRub = scaling.sharedItems.reduce((total, item) => total + (item.amountRub ?? 0), 0);
-  // Reserve is a financing buffer over the disclosed recurring P&L basis.
-  // Use the rounded financial line rather than the pre-round aggregation so
-  // the visible monthly OPEX × horizon invariant remains exact to kopecks.
-  const operatingReserveRub = pnl.opexRub === null
-    ? null
-    : roundFinancial(pnl.opexRub * configuration.launchBudget.operatingReserveMonths);
+  const operatingReserve = expansionReserveProjection(configuration, scaling);
+  const operatingReserveRub = operatingReserve.totalReserveRub;
   const investmentRub = operatingReserveRub === null ? null : roundFinancial(pointInvestmentRub + sharedInfrastructureRub + operatingReserveRub);
   const status = coverageForNetwork(scaling, shared, policy, directOpexRub);
   return {
@@ -573,6 +897,7 @@ export function buildNetworkSteadyState(
     additionalPointCount,
     pointInvestmentRub,
     sharedInfrastructureRub,
+    operatingReserve,
     operatingReserveRub,
     reserveMonths: configuration.launchBudget.operatingReserveMonths,
     investmentRub,

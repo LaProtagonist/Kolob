@@ -1,0 +1,95 @@
+schema_version: 2
+payload_id: PAYLOAD-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-07
+iteration_id: ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-07
+proposal_id: PROP-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-07
+decision_id: DEC-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-07
+change_set_id: CHG-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-07
+title: Complete unified reserve and rollout funding implementation after TypeScript gate correction
+status: approved
+approved_by: project owner
+approved_at: 2026-08-28T12:10:01.000Z
+supersedes_failed_iteration: ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-06
+scope:
+  - Preserve the owner-approved B5 unified Operating Reserve policy and replace only the failed unsealed implementation attempt's TypeScript projection contract.
+  - Use one six-month qualifying fixed/semi-fixed reserve classification for Current Base and Expansion, with fixed-only marketing and household treatment.
+  - Consume prepaid rent after rent-free months and date Expansion reserve funding per cohort and shared-service activation.
+  - Expose separate Base Start Investment, Rollout Funding Requirement, Total Program Investment and Upfront Investor Funding in local projections.
+constraints:
+  - no Google apply, Google redesign, OAuth action or remote document mutation
+  - no production deployment, merge to master, branch change or Investor Sheet redesign
+  - no change to revenue, tax, CAPEX, rent, rent holidays, staffing ladder, salaries, point presets, rollout dates, capacity policy or Historical Integrated Pilot calculations
+  - no new reserve drawdown, terminal recovery, equity-return model or second-shift economics
+affected_document_ids:
+  - DOC-FINANCIAL-MODEL
+  - DOC-INVESTOR-FINANCIAL-SUMMARY
+  - DOC-NETWORK-PLANNING-ASSUMPTIONS
+affected_section_ids:
+  - financial-core.unified-operating-reserve
+  - financial-core.rent-prepayment-credit
+  - financial-core.cohort-rollout-funding
+  - financial-core.upfront-investor-funding
+  - network-planning.external-logistics
+  - investor-terminal.network-funding-labels
+  - financial-generated-artifacts
+state_hash_paths:
+  - docs-platform/generated/financial-core-projection.json
+  - docs-platform/registry/sources.yaml
+  - docs-platform/working/network-planning-assumptions.yaml
+  - scripts/generate-financial-core-projection.ts
+  - scripts/test-financial-core.test.ts
+  - scripts/test-investor-journey.test.ts
+  - scripts/test-investor-terminal.cjs
+  - src/components/NetworkScalingPanel.tsx
+  - src/content/network-planning-data.json
+  - src/lib/configured-economics.ts
+  - src/lib/network-financial-core.ts
+  - src/lib/network-planning.ts
+  - src/lib/network-scaling.ts
+  - src/lib/network-temporal.ts
+  - src/lib/rent-prepayment.ts
+content_paths:
+  - docs-platform/generated/financial-core-projection.json
+  - docs-platform/registry/sources.yaml
+  - docs-platform/working/network-planning-assumptions.yaml
+  - scripts/generate-financial-core-projection.ts
+  - scripts/test-financial-core.test.ts
+  - scripts/test-investor-journey.test.ts
+  - scripts/test-investor-terminal.cjs
+  - src/components/NetworkScalingPanel.tsx
+  - src/content/network-planning-data.json
+  - src/lib/configured-economics.ts
+  - src/lib/network-financial-core.ts
+  - src/lib/network-planning.ts
+  - src/lib/network-scaling.ts
+  - src/lib/network-temporal.ts
+  - src/lib/rent-prepayment.ts
+  - docs-platform/changes/proposals/PROP-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-06.yaml
+  - docs-platform/changes/decisions/DEC-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-06.yaml
+  - docs-platform/changes/CHG-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-06.yaml
+  - docs-platform/changes/iterations/ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-06.yaml
+  - docs-platform/changelog/payloads/ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-06-approved.yaml
+  - docs-platform/changelog/audit/ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-06.yaml
+  - docs-platform/changelog/previews/ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-06.yaml
+  - docs-platform/changes/proposals/PROP-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-07.yaml
+  - docs-platform/changes/decisions/DEC-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-07.yaml
+  - docs-platform/changes/CHG-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-07.yaml
+  - docs-platform/changes/iterations/ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-07.yaml
+  - docs-platform/changelog/payloads/ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-07-approved.yaml
+  - docs-platform/changelog/audit/ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-07.yaml
+  - docs-platform/changelog/previews/ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-07.yaml
+  - docs-platform/changelog/verification/ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-07.yaml
+  - docs-platform/changelog/events.ndjson
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/SNAPSHOT-ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-07.yaml
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+allowed_dirty_paths:
+  - analysis/
+  - output/
+rollback_payload: null
+rollback_contract:
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true

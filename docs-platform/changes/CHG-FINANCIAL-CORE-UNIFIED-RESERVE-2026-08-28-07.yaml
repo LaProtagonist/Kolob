@@ -1,0 +1,10 @@
+change_id: CHG-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-07
+title: Complete B5 typed reserve and rollout funding contract
+status: approved
+created_at: 2026-08-28
+decision_id: DEC-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-07
+iteration_id: ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-07
+proposal_id: PROP-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-07
+approved_payload_path: docs-platform/changelog/payloads/ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-07-approved.yaml
+approved_payload_sha256: 7ea67e2e5ff97ef7ed6f6c9ef19e6f161e19477863f90c17b60a3cd39ad70fc7
+operations: []

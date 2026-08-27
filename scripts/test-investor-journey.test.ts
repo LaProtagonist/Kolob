@@ -427,11 +427,9 @@ test("temporal rollout keeps canonical ramp and seasonality separate for every o
   }
 
   const staticEconomics = networkEconomicsProjection(configuration, base);
-  assert.equal(
-    Math.abs((temporal.expansion.operatingReserveRub ?? 0) - (staticEconomics.expansion.opexRub ?? 0) * configuration.launchBudget.operatingReserveMonths) < 0.03,
-    true,
-    "expansion reserve uses known Point, Production and Shared recurring OPEX for the selected horizon",
-  );
+  assert.equal(staticEconomics.expansion.operatingReserve?.policy, "six_months_qualifying_fixed_and_semi_fixed_opex_by_cohort");
+  assert.equal(creativeTemporal.months[6].prepaidRentCreditRub, 160_000, "one prepaid Creative Cluster month is consumed only after two rent-free months");
+  assert.equal(creativeTemporal.months[6].cashFlowRub, (creativeTemporal.months[6].operatingFreeCashFlowRub ?? 0) + 160_000, "prepaid rent credit avoids a second cash rent outflow");
   assert.ok(temporal.expansion.paybackMonth! >= staticEconomics.expansion.paybackMonths!, "staggered openings and ramp cannot use the immediate steady-state payback");
 });
 
@@ -776,7 +774,7 @@ test("network scaling aggregates independent point cohorts without inventing net
   assert.deepEqual(sourceHashes(), before, "the selector is read-only against canonical sources");
 });
 
-test("expansion reserve uses additional point OPEX and does not count the base-object reserve twice", () => {
+test("expansion reserve is dated, qualifying-only and does not count the base-object reserve twice", () => {
   const configuration = defaultInvestorConfiguration();
   const base = configuredEconomicsScenario(configuration);
   const baseProjection = baseObjectFinancialProjection(base);
@@ -784,7 +782,9 @@ test("expansion reserve uses additional point OPEX and does not count the base-o
   const economics = networkEconomicsProjection(configuration, baseProjection, scaling);
   assert.equal(economics.expansion.additionalPointCount, 4);
   assert.equal(economics.network.pointCount, 5);
-  assert.equal(Math.abs((economics.expansion.operatingReserveRub ?? 0) - economics.expansion.opexRub! * configuration.launchBudget.operatingReserveMonths) < 0.03, true, "reserve uses known recurring Point, Production and Shared OPEX but excludes tax and CAPEX");
+  assert.equal(economics.expansion.operatingReserve?.excludedLineIds.includes("variable-marketing"), true, "variable marketing remains in P&L but out of reserve");
+  assert.equal(economics.expansion.operatingReserve?.excludedLineIds.includes("administrative-reserve"), true, "revenue-based administrative reserve remains outside liquidity reserve");
+  assert.equal(economics.expansion.operatingReserve?.fundingEvents.some((event) => event.month === 12), true, "future cohort reserve is not pulled into M3");
   assert.notEqual(economics.expansion.operatingReserveRub, base.operatingReserveRub, "the historical Integrated Pilot reserve is never reused for expansion");
   assert.equal(
     Math.abs((economics.network.investmentRub ?? 0) - (base.startInvestmentRub + economics.expansion.pointInvestmentRub + economics.expansion.sharedInfrastructureRub + economics.expansion.operatingReserveRub!)) < 0.01,

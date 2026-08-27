@@ -12,6 +12,7 @@ import {
 } from "./financial-core";
 import { calculateLaunchBudget, defaultLaunchBudgetState } from "./launch-budget";
 import { launchFinancials } from "./launch-financials";
+import { rentPrepaymentCoverage, rentPrepaymentMonth } from "./rent-prepayment";
 import {
   baseObjectLaunchBudgetState,
   financialProjectionContextForConfiguration,
@@ -53,6 +54,8 @@ export type ConfiguredMonthlyProjection = {
   depreciationRub: number;
   maintenanceCapexRub: number;
   operatingFreeCashFlowRub: number;
+  /** Prepaid contractual rent consumed this month; it is not a second cash payment. */
+  prepaidRentCreditRub: number;
   cashFlowRub: number;
 };
 
@@ -205,7 +208,13 @@ function calculateConfiguredRentMonth(
 ) {
   const rates = referenceRates(master);
   const baseRentRub = master.rent_rub;
-  const monthlyRentRub = row.month <= rentFreeMonths ? 0 : configuredRentRub;
+  const rentSettlement = rentPrepaymentMonth({
+    operatingMonth: row.month,
+    monthlyRentRub: configuredRentRub,
+    prepaidMonths,
+    rentFreeMonths,
+  });
+  const monthlyRentRub = rentSettlement.contractualRentRub;
   const rentDeltaRub = monthlyRentRub - baseRentRub;
   const wasteRub = row.raw_materials_rub * rates.rawWasteRate;
   const packagingRub = row.gross_revenue_rub * rates.packagingRate;
@@ -222,12 +231,6 @@ function calculateConfiguredRentMonth(
     maintenanceCapexRub,
     rates,
   );
-  // Prepayment remains a Month 0 financing item. When a rent-free period
-  // precedes occupancy, the already-paid months start only after that period;
-  // this avoids booking the benefit both as zero rent and as a cash release.
-  const prepaidRentReleaseRub = row.month > rentFreeMonths && row.month <= rentFreeMonths + prepaidMonths
-    ? configuredRentRub
-    : 0;
   return {
     grossRevenueRub: round(row.gross_revenue_rub),
     netRevenueRub: round(row.net_revenue_rub),
@@ -236,7 +239,8 @@ function calculateConfiguredRentMonth(
     depreciationRub: round(master.depreciation_rub),
     maintenanceCapexRub: round(maintenanceCapexRub),
     operatingFreeCashFlowRub: round(financial.freeCashFlowRub),
-    netCashFlowRub: round(financial.freeCashFlowRub + prepaidRentReleaseRub),
+    prepaidRentCreditRub: round(rentSettlement.prepaidRentCreditRub),
+    netCashFlowRub: round(financial.freeCashFlowRub + rentSettlement.prepaidRentCreditRub),
   };
 }
 
@@ -273,7 +277,13 @@ function calculateCustomTrafficMonth(
   const householdRub = householdFormula.fixed_amount_rub
     + householdFormula.variable_amount_rub * (grossRevenueRub / master.gross_revenue_rub);
   const laborRub = row.labor_rub;
-  const monthlyRentRub = row.month <= rentFreeMonths ? 0 : configuredRentRub;
+  const rentSettlement = rentPrepaymentMonth({
+    operatingMonth: row.month,
+    monthlyRentRub: configuredRentRub,
+    prepaidMonths,
+    rentFreeMonths,
+  });
+  const monthlyRentRub = rentSettlement.contractualRentRub;
   const ebitdaRub = netRevenueRub - rawMaterialsRub - wasteRub - packagingRub - laborRub - monthlyRentRub
     - acquiringRub - aggregatorRub - administrativeReserveRub - marketingRub - householdRub
     - master.fixed_opex_without_labor_rent_rub;
@@ -287,9 +297,6 @@ function calculateCustomTrafficMonth(
     maintenanceCapexRub,
     rates,
   );
-  const prepaidRentReleaseRub = row.month > rentFreeMonths && row.month <= rentFreeMonths + prepaidMonths
-    ? configuredRentRub
-    : 0;
   return {
     grossRevenueRub: round(grossRevenueRub),
     netRevenueRub: round(netRevenueRub),
@@ -307,7 +314,8 @@ function calculateCustomTrafficMonth(
     depreciationRub: round(master.depreciation_rub),
     maintenanceCapexRub: round(maintenanceCapexRub),
     operatingFreeCashFlowRub: round(financial.freeCashFlowRub),
-    netCashFlowRub: round(financial.freeCashFlowRub + prepaidRentReleaseRub),
+    prepaidRentCreditRub: round(rentSettlement.prepaidRentCreditRub),
+    netCashFlowRub: round(financial.freeCashFlowRub + rentSettlement.prepaidRentCreditRub),
   };
 }
 
@@ -427,6 +435,9 @@ const currentBaseReserveExcludedLineIds = [
   "acquiring",
   "aggregator_commission",
   "administrative_reserve",
+  "variable_marketing",
+  "traffic_household",
+  "foodhall_revenue_share",
   "depreciation",
   "maintenance_capex",
   "income_tax",
@@ -458,8 +469,13 @@ export function currentBaseReserveProjection(
   const prepaidMonths = configuration.launchBudget.premisesScenario === "rent"
     ? configuration.launchBudget.prepaymentMonths
     : 0;
-  const uncoveredRentMonths = Math.max(0, reserveMonths - prepaidMonths);
-  const uncoveredRentRub = round(monthlyRentRub * uncoveredRentMonths);
+  const prepaidCoverage = rentPrepaymentCoverage({
+    monthlyRentRub,
+    prepaidMonths,
+    rentFreeMonths: configuration.launchBudget.rentFreeMonths,
+    reserveMonths,
+  });
+  const uncoveredRentRub = round(prepaidCoverage.uncoveredRentRub);
   const includedLines: CurrentBaseReserveLine[] = [
     { id: "labor", name: "Персонал Current Base", monthlyAmountRub: master.labor_rub },
     ...currentBaseReserveFixedOpexLines.map(([lineId, name]) => ({
@@ -467,8 +483,8 @@ export function currentBaseReserveProjection(
       name,
       monthlyAmountRub: opexEntries[lineId] ?? 0,
     })),
-    { id: "marketing", name: "Маркетинг зрелого месяца", monthlyAmountRub: master.marketing_rub },
-    { id: "household", name: "Хозяйственные расходы", monthlyAmountRub: master.household_rub },
+    { id: "fixed_marketing", name: "Маркетинг · фиксированная часть", monthlyAmountRub: master.marketing_formula.fixed_amount_rub },
+    { id: "fixed_household", name: "Хозяйственные расходы · фиксированная часть", monthlyAmountRub: master.household_formula.fixed_amount_rub },
     {
       id: "uncovered_rent",
       name: "Непокрытая арендная плата",
@@ -488,15 +504,7 @@ export function currentBaseReserveProjection(
     monthlyBasisRub: reserveMonths === 0 ? 0 : round(totalReserveRub / reserveMonths),
     includedLines,
     excludedLineIds: currentBaseReserveExcludedLineIds,
-    prepaidCoverage: {
-      monthlyRentRub,
-      prepaidMonths,
-      prepaidRentRub: round(monthlyRentRub * prepaidMonths),
-      reserveMonths,
-      coveredRentMonths: Math.min(reserveMonths, prepaidMonths),
-      uncoveredRentMonths,
-      rentFreeMonths: configuration.launchBudget.rentFreeMonths,
-    },
+    prepaidCoverage,
     uncoveredRentRub,
     totalReserveRub,
   };
@@ -514,10 +522,10 @@ function launchFinancialsForConfiguration(
     operatingReserveRub: reserve.totalReserveRub,
     monthlyReserveBaseRub: reserve.monthlyBasisRub,
     monthlyFixedOpexRub: sum(reserve.includedLines
-      .filter((line) => line.id !== "labor" && line.id !== "marketing" && line.id !== "household" && line.id !== "uncovered_rent")
+      .filter((line) => line.id !== "labor" && line.id !== "fixed_marketing" && line.id !== "fixed_household" && line.id !== "uncovered_rent")
       .map((line) => line.monthlyAmountRub)),
     monthlyScenarioOpexRub: sum(reserve.includedLines
-      .filter((line) => line.id === "marketing" || line.id === "household")
+      .filter((line) => line.id === "fixed_marketing" || line.id === "fixed_household")
       .map((line) => line.monthlyAmountRub)),
     monthlyLaborRub: reserve.includedLines.find((line) => line.id === "labor")?.monthlyAmountRub ?? 0,
   };
@@ -537,6 +545,7 @@ function generatedMonthlyProjection(master: FinancialScenario): ConfiguredMonthl
       depreciationRub: detail?.depreciation_rub ?? 0,
       maintenanceCapexRub: detail?.maintenance_capex_rub ?? round(row.ebitda_rub - row.tax_due_rub - row.operating_free_cash_flow_rub),
       operatingFreeCashFlowRub: row.operating_free_cash_flow_rub,
+      prepaidRentCreditRub: 0,
       cashFlowRub: row.net_cash_flow_rub,
     };
   });
@@ -550,6 +559,7 @@ function calculatedMonthlyProjection(rows: Array<{
   depreciationRub?: number;
   maintenanceCapexRub?: number;
   operatingFreeCashFlowRub?: number;
+  prepaidRentCreditRub?: number;
   netCashFlowRub: number;
 }>, source: FinancialScenario): ConfiguredMonthlyProjection[] {
   return rows.map((row, index) => {
@@ -570,6 +580,7 @@ function calculatedMonthlyProjection(rows: Array<{
       depreciationRub: row.depreciationRub ?? detailed?.depreciation_rub ?? 0,
       maintenanceCapexRub,
       operatingFreeCashFlowRub: row.operatingFreeCashFlowRub ?? source.monthly[index]?.operating_free_cash_flow_rub ?? row.ebitdaRub - taxRub - maintenanceCapexRub,
+      prepaidRentCreditRub: row.prepaidRentCreditRub ?? 0,
       cashFlowRub: row.netCashFlowRub,
     };
   });

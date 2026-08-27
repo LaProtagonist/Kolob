@@ -11,6 +11,7 @@ import { defaultInvestorConfiguration, historicalIntegratedPilotConfiguration } 
 import { networkFinancialProjection } from "../src/lib/network-financial-projection.js";
 import { cohortAssetSummary } from "../src/lib/network-financial-core.js";
 import { baseObjectFinancialProjection, networkScalingProjection } from "../src/lib/network-scaling.js";
+import { rentPrepaymentCoverage, rentPrepaymentMonth } from "../src/lib/rent-prepayment.js";
 import {
   historicalOpexLineIds,
   historicalOpexTreatmentCatalog,
@@ -52,6 +53,22 @@ test("Current Base monthly FCF exposes the same EBITDA-tax-maintenance identity 
   }
 });
 
+test("rent prepayment is consumed after rent-free months and never becomes a second cash rent payment", () => {
+  const creativeCoverage = rentPrepaymentCoverage({ monthlyRentRub: 160_000, prepaidMonths: 1, rentFreeMonths: 2, reserveMonths: 6 });
+  assert.deepEqual(
+    { covered: creativeCoverage.coveredRentMonths, uncovered: creativeCoverage.uncoveredRentMonths, amount: creativeCoverage.uncoveredRentRub },
+    { covered: 1, uncovered: 3, amount: 480_000 },
+    "Creative Cluster has two free months, then one prepaid payable month and three uncovered months in the six-month reserve horizon",
+  );
+  assert.deepEqual(rentPrepaymentMonth({ operatingMonth: 2, monthlyRentRub: 160_000, prepaidMonths: 1, rentFreeMonths: 2 }), {
+    operatingMonth: 2, contractualRentRub: 0, prepaidRentCreditRub: 0, cashRentPaymentRub: 0, remainingPrepaidMonths: 1,
+  });
+  assert.deepEqual(rentPrepaymentMonth({ operatingMonth: 3, monthlyRentRub: 160_000, prepaidMonths: 1, rentFreeMonths: 2 }), {
+    operatingMonth: 3, contractualRentRub: 160_000, prepaidRentCreditRub: 160_000, cashRentPaymentRub: 0, remainingPrepaidMonths: 0,
+  });
+  assert.equal(rentPrepaymentMonth({ operatingMonth: 4, monthlyRentRub: 160_000, prepaidMonths: 1, rentFreeMonths: 2 }).cashRentPaymentRub, 160_000);
+});
+
 test("Current Base reserve is an explicit Current Base projection, not the Historical Pilot reserve", () => {
   const current = configuredEconomicsScenario(defaultInvestorConfiguration());
   const historical = configuredEconomicsScenario(historicalIntegratedPilotConfiguration());
@@ -59,8 +76,8 @@ test("Current Base reserve is an explicit Current Base projection, not the Histo
   assert.ok(reserve, "Current Base must expose a typed reserve projection");
   assert.equal(reserve.context, "current_base_object");
   assert.equal(reserve.months, 6);
-  assert.equal(reserve.monthlyBasisRub, 3_783_148.4);
-  assert.equal(reserve.totalReserveRub, 22_698_890.4);
+  assert.equal(reserve.monthlyBasisRub, 3_481_422);
+  assert.equal(reserve.totalReserveRub, 20_888_532);
   assert.equal(current.operatingReserveRub, reserve.totalReserveRub);
   assert.notEqual(current.operatingReserveRub, historical.operatingReserveRub, "Current Base must not route through Historical Pilot fixed_opex_reserve_rub");
   assert.equal(historical.operatingReserveRub, 20_088_988.08, "the Historical Pilot reserve remains immutable");
@@ -72,12 +89,14 @@ test("Current Base reserve includes protected labour and excludes prepaid, varia
   const reserve = scenario.currentBaseReserveProjection!;
   const amount = (id: string) => reserve.includedLines.find((line) => line.id === id)?.monthlyAmountRub;
   assert.equal(amount("labor"), 2_831_922, "Current Base protected labour, not historical calculated staffing, is reserved");
+  assert.equal(amount("fixed_marketing"), 150_000, "only fixed marketing is a six-month liquidity requirement");
+  assert.equal(amount("fixed_household"), 50_000, "traffic-driven household is excluded from the reserve");
   assert.equal(amount("uncovered_rent"), 0, "12 months prepaid rent fully covers the six-month reserve horizon");
   assert.equal(reserve.uncoveredRentRub, 0);
   assert.deepEqual(
     reserve.excludedLineIds,
     [
-      "raw_materials", "waste", "consumer_packaging", "acquiring", "aggregator_commission", "administrative_reserve",
+      "raw_materials", "waste", "consumer_packaging", "acquiring", "aggregator_commission", "administrative_reserve", "variable_marketing", "traffic_household", "foodhall_revenue_share",
       "depreciation", "maintenance_capex", "income_tax", "equipment_purchase", "preparation", "security_deposit",
       "prepaid_rent", "initial_inventory",
     ],
@@ -102,17 +121,17 @@ test("Current Base correction changes only the approved stale reserve routing", 
       npv: scenario.npvRub,
     },
     {
-      investment: 41_830_283.06,
+      investment: 40_019_924.66,
       revenue: 10_488_600,
       opex: 8_225_135.6,
       ebitda: 2_263_464.4,
       freeCashFlow: 2_045_009.8,
-      reserve: 22_698_890.4,
+      reserve: 20_888_532,
       payback: 21,
-      irr: 0.6669260500786507,
-      npv: 37_214_330.42,
+      irr: 0.7121594990470324,
+      npv: 39_024_688.82,
     },
-    "the approved Current Base correction changes financing metrics through reserve only; mature P&L and FCF remain intact",
+    "the B5 unified reserve correction changes financing metrics through reserve only; mature P&L and FCF remain intact",
   );
 });
 
@@ -178,11 +197,17 @@ test("Network Expansion and Consolidated Network use the shared tax-maintenance-
 
   assert.equal(economics.expansion.depreciationRub! > 0, true, "Network assets have their own depreciation basis");
   assert.equal(economics.expansion.maintenanceCapexRub! > 0, true, "maintenance follows applicable point equipment and furniture assets");
-  assert.equal(
-    Math.abs((economics.expansion.operatingReserveRub ?? 0) - (economics.expansion.opexRub ?? 0) * configuration.launchBudget.operatingReserveMonths) < 0.04,
-    true,
-    "reserve covers known recurring Point + Production + Shared OPEX, never tax or CAPEX",
-  );
+  const reserve = economics.expansion.operatingReserve!;
+  assert.equal(reserve.policy, "six_months_qualifying_fixed_and_semi_fixed_opex_by_cohort");
+  assert.equal(reserve.totalReserveRub, economics.expansion.operatingReserveRub);
+  assert.ok(reserve.excludedLineIds.includes("variable-marketing"));
+  assert.ok(reserve.excludedLineIds.includes("administrative-reserve"));
+  assert.ok(reserve.fundingEvents.some((event) => event.month === 3));
+  assert.ok(reserve.fundingEvents.some((event) => event.month === 6));
+  assert.ok(reserve.fundingEvents.some((event) => event.month === 9));
+  assert.ok(reserve.fundingEvents.some((event) => event.month === 12), "future cohort reserve must not be funded at M3");
+  const foodhall = reserve.cohortReserves.find((item) => item.cohortId === "rollout-central-high-traffic")!;
+  assert.equal(foodhall.includedLines.find((line) => line.id === "foodhall-minimum-guarantee")?.monthlyAmountRub, 250_000, "Foodhall reserve uses minimum guarantee, not revenue share above it");
   assert.equal(scaling.operating.expansionManagerPayrollRub, 0, "the Base manager is not charged a second time to expansion");
   assert.equal(scaling.operating.expansionFixedMarketingRub, 0, "the fixed 150k marketing base is not multiplied by points");
   assert.equal(
@@ -194,6 +219,8 @@ test("Network Expansion and Consolidated Network use the shared tax-maintenance-
   assert.equal(scaling.operating.incrementalMedicalRub! > 0, true, "incremental production roster receives recurring medical documentation cost");
   assert.equal(temporal.expansion.months.some((month) => month.operatingReserveRub !== 0), true, "reserve is a one-time financing requirement");
   assert.equal(temporal.expansion.months.at(-1)?.operatingReserveRub, 0, "reserve has no automatic terminal recovery");
+  assert.notEqual(temporal.funding.totalProgramInvestmentRub, temporal.funding.upfrontInvestorFundingRub, "dated rollout funding must not be labelled as automatic M0 external funding");
+  assert.equal(temporal.funding.upfrontInvestorFundingRub, Math.max(0, -(temporal.funding.minimumUnfundedCumulativeCashRub ?? 0)));
   assert.equal(projection.status, "complete", "known-basis calculation remains available when disclosures remain");
   assert.deepEqual(
     { calculation: projection.coverage.calculation, pricing: projection.coverage.pricing, assumptions: projection.coverage.assumptions, capacity: projection.coverage.capacity },
@@ -252,16 +279,17 @@ test("B4 maps wash, approved Historic Centre furniture, recurring point OPEX and
   };
   const shortProjection = networkFinancialProjection(twoPointPlan, baseObjectFinancialProjection(scenario), scenario);
   assert.equal(shortProjection.coverage.calculation, "complete", "an unquoted external logistics term does not erase known-basis formulas");
-  assert.equal(shortProjection.coverage.pricing, "partial", "a final one-additional-point plan discloses the external logistics price gap");
-  assert.ok(shortProjection.exclusions.some((item) => item.id === "logistics:external-monthly"));
+  assert.equal(shortProjection.coverage.pricing, "complete", "research-backed early external logistics has a calculated planning baseline");
+  assert.equal(shortProjection.coverage.assumptions, "requires_confirmation", "the baseline remains a contract-confirmation disclosure");
+  assert.ok(shortProjection.exclusions.some((item) => item.id === "logistics:external-planning-baseline"));
 
   const twoAdditionalPlan = {
     ...configuration,
     networkScaling: { ...configuration.networkScaling, cohorts: configuration.networkScaling.cohorts.slice(0, 3) },
   };
   const twoAdditionalProjection = networkFinancialProjection(twoAdditionalPlan, baseObjectFinancialProjection(scenario), scenario);
-  assert.equal(twoAdditionalProjection.coverage.pricing, "partial", "two additional points retain the explicit external-logistics input gap until the three-additional-point owned-vehicle threshold");
-  assert.ok(twoAdditionalProjection.exclusions.some((item) => item.id === "logistics:external-monthly"));
+  assert.equal(twoAdditionalProjection.coverage.pricing, "complete", "the research-backed external baseline covers one and two additional points on a planning basis");
+  assert.ok(twoAdditionalProjection.exclusions.some((item) => item.id === "logistics:external-planning-baseline"));
 });
 
 test("Network depreciation uses each CAPEX detail once, includes local wash kits, and excludes vehicle from generic maintenance", () => {
@@ -318,11 +346,9 @@ test("generated Financial Core artifact preserves explicit contexts and 5/9/13 N
       true,
       "consolidated reserve equals Base reserve plus incremental Expansion reserve once each",
     );
-    assert.equal(
-      Math.abs(scenario.reserve_decomposition.expansion.operating_reserve_rub - scenario.reserve_decomposition.expansion.monthly_reserve_basis_rub * scenario.reserve_decomposition.expansion.reserve_months) < 0.02,
-      true,
-      "Expansion reserve uses the disclosed recurring OPEX basis and not tax, maintenance CAPEX or launch CAPEX",
-    );
+    assert.equal(scenario.reserve_decomposition.expansion.monthly_reserve_basis_rub, null, "a cohort-based reserve cannot be misrepresented as steady-state network OPEX × months");
+    assert.ok(scenario.reserve_decomposition.expansion.cohort_reserves.length >= totalPoints - 1);
+    assert.ok(scenario.reserve_decomposition.expansion.funding_events.some((event: { month: number }) => event.month > 3), "future cohorts retain their own funding dates");
     assert.equal(scenario.reserve_decomposition.base.policy, "six_months_current_base_fixed_and_semi_fixed_opex", "Current Base reserve is derived from its own fixed/semi-fixed P&L inputs rather than the Historical Pilot fixed reserve");
     assert.equal(scenario.reserve_decomposition.consolidated.comparable_to_network_pnl_opex_times_months, false, "consolidated financing reserve cannot be misrepresented as a single Network P&L × six-month rule while Base and Expansion bases differ");
     assert.equal(
@@ -330,6 +356,7 @@ test("generated Financial Core artifact preserves explicit contexts and 5/9/13 N
       true,
       "network financing requirement contains Base and Expansion investments once each",
     );
+    assert.notEqual(scenario.network.launch.total_program_investment_rub, scenario.network.launch.upfront_investor_funding_rub, "program total and minimum external funding are distinct investor metrics");
     assert.equal(scenario.network.monthly_cash_flows.length > 1, true);
   }
 });

@@ -9,6 +9,7 @@ import {
 } from "./financial-core";
 import type { InvestorConfiguration } from "./investor-configuration";
 import { canonicalTemporalAssumptions } from "./network-planning";
+import { rentPrepaymentMonth } from "./rent-prepayment";
 import {
   buildNetworkSteadyState,
   calculateFinancialPnl,
@@ -38,6 +39,8 @@ export type TemporalMonth = {
   depreciationRub: number | null;
   maintenanceCapexRub: number | null;
   operatingFreeCashFlowRub: number | null;
+  /** Contractual rent paid by a prior prepayment; not a second cash outflow. */
+  prepaidRentCreditRub: number | null;
   capexRub: number | null;
   operatingReserveRub: number | null;
   cashFlowRub: number | null;
@@ -105,6 +108,13 @@ export type NetworkTemporalProjection = {
     months: TemporalMonth[];
     isPartial: boolean;
   };
+  funding: {
+    baseStartInvestmentRub: number;
+    rolloutFundingRequirementRub: number | null;
+    totalProgramInvestmentRub: number | null;
+    upfrontInvestorFundingRub: number | null;
+    minimumUnfundedCumulativeCashRub: number | null;
+  };
 };
 
 function sumKnown(values: readonly (number | null)[]) {
@@ -154,6 +164,7 @@ function baseMonths(
       depreciationRub: month === 0 ? 0 : source?.depreciationRub ?? null,
       maintenanceCapexRub: month === 0 ? 0 : source?.maintenanceCapexRub ?? null,
       operatingFreeCashFlowRub: month === 0 ? 0 : source?.operatingFreeCashFlowRub ?? null,
+      prepaidRentCreditRub: month === 0 ? 0 : source?.prepaidRentCreditRub ?? 0,
       capexRub: month === 0 ? baseObject.investmentRub : 0,
       operatingReserveRub: month === 0 ? baseObject.operatingReserveRub : 0,
       cashFlowRub,
@@ -171,6 +182,7 @@ type GroupMonth = {
   maintenanceCapexRub: number | null;
   taxRub: number | null;
   operatingFreeCashFlowRub: number | null;
+  prepaidRentCreditRub: number;
   capexRub: number;
   cashFlowRub: number | null;
   missing: string[];
@@ -196,7 +208,7 @@ function groupMonthProjection(
     const steadyChecks = cohort.operational.sales.checksPerDay;
     const averageCheck = cohort.operational.sales.averageCheckRub;
     if (rampFactor === null || seasonalityFactor === null || steadyChecks === null || averageCheck === null) {
-      return { revenueRub: null, directOpexRub: null, missing: ["Продажи точки"] };
+      return { revenueRub: null, directOpexRub: null, prepaidRentCreditRub: 0, missing: ["Продажи точки"] };
     }
     const operational = pointOperationalProjectionForMonthlyChecks(
       configuration,
@@ -204,9 +216,15 @@ function groupMonthProjection(
       steadyChecks * rampFactor * seasonalityFactor,
       averageCheck,
     );
-    const rentChargeRub = cohort.cohort.locationType === "foodhall" || operatingMonth > cohort.cohort.rentFreeMonths
-      ? undefined
-      : 0;
+    const rentSettlement = cohort.cohort.locationType === "foodhall" || cohort.cohort.realEstateMode !== "rent"
+      ? null
+      : rentPrepaymentMonth({
+        operatingMonth,
+        monthlyRentRub: cohort.cohort.monthlyRentRub ?? 0,
+        prepaidMonths: cohort.cohort.prepaymentMonths ?? 0,
+        rentFreeMonths: cohort.cohort.rentFreeMonths,
+      });
+    const rentChargeRub = rentSettlement?.contractualRentRub;
     const direct = pointDirectOpexProjection(cohort.cohort, operational, {
       ...(rentChargeRub === undefined ? {} : { rentChargeRub }),
       baseEquipmentServiceAssetBasisRub: cohort.baseEquipmentServiceAssetBasisRub,
@@ -215,14 +233,16 @@ function groupMonthProjection(
     return {
       revenueRub: operational.sales.revenuePerPointRub === null ? null : operational.sales.revenuePerPointRub * wave.count,
       directOpexRub: direct.directOpexPerPointRub === null ? null : direct.directOpexPerPointRub * wave.count,
+      prepaidRentCreditRub: (rentSettlement?.prepaidRentCreditRub ?? 0) * wave.count,
       missing: direct.missing,
     };
   });
   const revenueRub = sumKnown(records.map((record) => record.revenueRub));
   const directOpexRub = sumKnown(records.map((record) => record.directOpexRub));
+  const prepaidRentCreditRub = records.reduce((sum, record) => sum + record.prepaidRentCreditRub, 0);
   const assets = cohortAssetSummary(cohort, policy, activePointCount);
   const pnl = calculateFinancialPnl(revenueRub, directOpexRub, assets.depreciationRub, assets.maintenanceCapexRub, policy);
-  const cashFlowRub = pnl.operatingFreeCashFlowRub === null ? null : roundFinancial(pnl.operatingFreeCashFlowRub - capexRub);
+  const cashFlowRub = pnl.operatingFreeCashFlowRub === null ? null : roundFinancial(pnl.operatingFreeCashFlowRub - capexRub + prepaidRentCreditRub);
   return {
     activePointCount,
     newOpenings: newOpenings.reduce((sum, wave) => sum + wave.count, 0),
@@ -232,6 +252,7 @@ function groupMonthProjection(
     maintenanceCapexRub: pnl.maintenanceCapexRub,
     taxRub: pnl.taxRub,
     operatingFreeCashFlowRub: pnl.operatingFreeCashFlowRub,
+    prepaidRentCreditRub,
     capexRub,
     cashFlowRub,
     missing: records.flatMap((record) => record.missing),
@@ -263,6 +284,7 @@ function groupTemporalProjection(configuration: InvestorConfiguration, cohort: N
       depreciationRub: result.depreciationRub,
       maintenanceCapexRub: result.maintenanceCapexRub,
       operatingFreeCashFlowRub: result.operatingFreeCashFlowRub,
+      prepaidRentCreditRub: result.prepaidRentCreditRub,
       capexRub: result.capexRub,
       operatingReserveRub: 0,
       cashFlowRub: result.cashFlowRub,
@@ -338,8 +360,9 @@ export function networkTemporalProjection(
   const groups = scaling.cohorts.slice(1).map((cohort) => groupTemporalProjection(configuration, cohort));
   const additionalPointCount = groups.reduce((sum, group) => sum + group.openingWaves.reduce((count, wave) => count + wave.count, 0), 0);
   const plannedNetworkPointCount = additionalPointCount + 1;
-  const firstAdditionalOpening = groups.flatMap((group) => group.openingWaves).map((wave) => wave.openingMonth).sort((a, b) => a - b)[0] ?? null;
-  const sharedCapexMonth = firstAdditionalOpening === null ? null : Math.max(0, firstAdditionalOpening - temporal.launchCapexLeadMonths);
+  const vehicleFundingMonth = steady.sharedInfrastructureRub <= 0
+    ? null
+    : steady.operatingReserve?.sharedReserves.find((item) => item.id.startsWith("logistics-own"))?.fundingMonth ?? null;
   let expansionCumulative: number | null = 0;
   let networkCumulative: number | null = 0;
   const groupMissing = new Set(groups.flatMap((group) => group.missing));
@@ -352,6 +375,7 @@ export function networkTemporalProjection(
     const revenueRub = sumKnown(groupMonths.map((item) => item.revenueRub));
     const directOpexRub = sumKnown(groupMonths.map((item) => item.opexRub));
     const pointCapexRub = groupMonths.reduce((sum, item) => sum + (item.capexRub ?? 0), 0);
+    const prepaidRentCreditRub = groupMonths.reduce((sum, item) => sum + (item.prepaidRentCreditRub ?? 0), 0);
     const checks = activeAdditionalChecks(groups, scaling, month);
     const baseChecks = scaling.cohorts[0]?.operational.sales.checksPerDay ?? null;
     const shared = sharedNetworkOpexForActivePoints(configuration, {
@@ -383,12 +407,15 @@ export function networkTemporalProjection(
     }
     const assets = activeExpansionAssets(groups, scaling, month, configuration);
     const pnl = calculateFinancialPnl(revenueRub, opexRub, assets.depreciationRub, assets.maintenanceCapexRub, policy);
-    const sharedCapexRub = sharedCapexMonth === month ? steady.sharedInfrastructureRub : 0;
-    const reserveRub = sharedCapexMonth === month ? steady.operatingReserveRub : 0;
+    const sharedCapexRub = vehicleFundingMonth === month ? steady.sharedInfrastructureRub : 0;
+    const reserveEvents = steady.operatingReserve?.fundingEvents.filter((event) => event.month === month) ?? [];
+    const reserveRub = reserveEvents.some((event) => event.amountRub === null)
+      ? null
+      : roundFinancial(reserveEvents.reduce((sum, event) => sum + (event.amountRub ?? 0), 0));
     const capexRub = pointCapexRub + sharedCapexRub;
     const cashFlowRub = pnl.operatingFreeCashFlowRub === null || reserveRub === null
       ? null
-      : roundFinancial(pnl.operatingFreeCashFlowRub - capexRub - reserveRub);
+      : roundFinancial(pnl.operatingFreeCashFlowRub - capexRub - reserveRub + prepaidRentCreditRub);
     if (cashFlowRub === null || expansionCumulative === null) expansionCumulative = null;
     else expansionCumulative += cashFlowRub;
     return {
@@ -404,6 +431,7 @@ export function networkTemporalProjection(
       depreciationRub: pnl.depreciationRub,
       maintenanceCapexRub: pnl.maintenanceCapexRub,
       operatingFreeCashFlowRub: pnl.operatingFreeCashFlowRub,
+      prepaidRentCreditRub,
       capexRub,
       operatingReserveRub: reserveRub,
       cashFlowRub,
@@ -422,7 +450,7 @@ export function networkTemporalProjection(
       : baseMonth.cashFlowRub - baseMonth.operatingFreeCashFlowRub;
     const cashFlowRub = pnl.operatingFreeCashFlowRub === null || baseCashAdjustmentRub === null || expansion.capexRub === null || expansion.operatingReserveRub === null
       ? null
-      : roundFinancial(pnl.operatingFreeCashFlowRub + baseCashAdjustmentRub - expansion.capexRub - expansion.operatingReserveRub);
+      : roundFinancial(pnl.operatingFreeCashFlowRub + baseCashAdjustmentRub - expansion.capexRub - expansion.operatingReserveRub + (expansion.prepaidRentCreditRub ?? 0));
     if (cashFlowRub === null || networkCumulative === null) networkCumulative = null;
     else networkCumulative += cashFlowRub;
     return {
@@ -438,6 +466,7 @@ export function networkTemporalProjection(
       depreciationRub: pnl.depreciationRub,
       maintenanceCapexRub: pnl.maintenanceCapexRub,
       operatingFreeCashFlowRub: pnl.operatingFreeCashFlowRub,
+      prepaidRentCreditRub: sumKnown([baseMonth.prepaidRentCreditRub, expansion.prepaidRentCreditRub]),
       capexRub: (baseMonth.capexRub ?? 0) + (expansion.capexRub ?? 0),
       operatingReserveRub: sumKnown([baseMonth.operatingReserveRub, expansion.operatingReserveRub]),
       cashFlowRub,
@@ -448,6 +477,13 @@ export function networkTemporalProjection(
   const lastOpeningMonth = groups.map((group) => group.lastOpeningMonth).filter((month): month is number => month !== null).sort((a, b) => b - a)[0] ?? null;
   const fullScaleMonth = lastOpeningMonth === null ? null : lastOpeningMonth + (temporal.rampUpProfile.at(-1)?.month ?? 1) - 1;
   const expansionInvestmentRub = steady.investmentRub;
+  const totalProgramInvestmentRub = expansionInvestmentRub === null ? null : roundFinancial(baseObject.investmentRub + expansionInvestmentRub);
+  const minimumUnfundedCumulativeCashRub = networkMonths.some((month) => month.cumulativeCashFlowRub === null)
+    ? null
+    : Math.min(...networkMonths.map((month) => month.cumulativeCashFlowRub ?? 0));
+  const upfrontInvestorFundingRub = minimumUnfundedCumulativeCashRub === null
+    ? null
+    : roundFinancial(Math.max(0, -minimumUnfundedCumulativeCashRub));
   const coverage = financialCoverage([...steady.coverage.issues, ...temporalIssues]);
   const warnings = [...new Set([...steady.warnings, ...temporalIssues.map((issue) => issue.message)])];
   const exclusions = [...steady.exclusions, ...temporalExclusions];
@@ -483,11 +519,18 @@ export function networkTemporalProjection(
     network: {
       context: "consolidated_network",
       pointCount: plannedNetworkPointCount,
-      investmentRub: expansionInvestmentRub === null ? null : baseObject.investmentRub + expansionInvestmentRub,
+      investmentRub: totalProgramInvestmentRub,
       paybackMonth: temporalPayback(networkMonths),
       cumulativeCashFlowRub: networkMonths.at(-1)?.cumulativeCashFlowRub ?? null,
       months: networkMonths,
       isPartial: partial || networkMonths.some((month) => month.cashFlowRub === null),
+    },
+    funding: {
+      baseStartInvestmentRub: baseObject.investmentRub,
+      rolloutFundingRequirementRub: expansionInvestmentRub,
+      totalProgramInvestmentRub,
+      upfrontInvestorFundingRub,
+      minimumUnfundedCumulativeCashRub,
     },
   };
 }

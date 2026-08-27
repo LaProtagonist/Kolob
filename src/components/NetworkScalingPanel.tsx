@@ -387,9 +387,7 @@ export function NetworkScalingPanel({ baseObject, onReturnToUnit }: { baseObject
     .map((group) => group.firstOpeningMonth)
     .filter((month): month is number => month !== null)
     .sort((left, right) => left - right)[0] ?? null;
-  const networkInvestmentRub = temporal.expansion.investmentRub === null
-    ? null
-    : baseObject.investmentRub + temporal.expansion.investmentRub;
+  const networkInvestmentRub = temporal.funding.totalProgramInvestmentRub;
   const coverageSummary = financial.coverage.calculation === "invalid"
     ? "Недостаточно входных данных"
     : financial.coverage.hasCaveats
@@ -546,7 +544,7 @@ export function NetworkScalingPanel({ baseObject, onReturnToUnit }: { baseObject
               <div><dt>Период открытий</dt><dd>{firstAdditionalOpening === null ? "Требует уточнения" : `${monthText(firstAdditionalOpening)} → ${monthText(temporal.lastOpeningMonth)}`}</dd></div>
               <div><dt>Инвестиции точек</dt><dd data-testid="scaling-additional-investment" data-amount-rub={temporal.expansion.pointInvestmentRub}>{formatRub(temporal.expansion.pointInvestmentRub)}</dd></div>
               {projection.sharedItems.map((item) => <div key={item.id}><dt>{item.name}</dt><dd data-testid="scaling-shared-investment" data-amount-rub={item.amountRub ?? undefined}>{formatRub(item.amountRub)}</dd></div>)}
-              <div><dt>Операционный запас расширения</dt><dd data-testid="scaling-expansion-reserve" data-amount-rub={temporal.expansion.operatingReserveRub ?? undefined}>{formatRub(temporal.expansion.operatingReserveRub)}<small>{configuration.launchBudget.operatingReserveMonths} мес. дополнительных расчётных расходов; запас Base уже находится в инвестициях Base.</small></dd></div>
+              <div><dt>Операционный запас расширения</dt><dd data-testid="scaling-expansion-reserve" data-amount-rub={temporal.expansion.operatingReserveRub ?? undefined}>{formatRub(temporal.expansion.operatingReserveRub)}<small>{configuration.launchBudget.operatingReserveMonths} мес. постоянных и полу-постоянных расходов; резерв финансируется перед открытием каждой группы, запас Base уже находится в инвестициях Base.</small></dd></div>
               <div><dt>Выручка после выхода на режим</dt><dd>{formatRub(economics.expansion.revenueRub)}</dd></div>
               <div><dt>Прямые расходы точек{temporal.expansion.isPartial ? " (предварительно)" : ""}</dt><dd>{formatRub(economics.expansion.directOpexRub)}</dd></div>
               <div><dt>Дополнительные общие расходы</dt><dd>{formatRub(economics.expansion.sharedOpexRub)}</dd></div>
@@ -559,7 +557,8 @@ export function NetworkScalingPanel({ baseObject, onReturnToUnit }: { baseObject
             <p>Сеть целиком</p>
             <dl>
               <div><dt>Всего точек</dt><dd data-testid="scaling-network-points">{formatCount(temporal.network.pointCount)}</dd></div>
-              <div><dt>Общие инвестиции</dt><dd data-testid="scaling-network-total" data-amount-rub={networkInvestmentRub ?? undefined}>{formatRub(networkInvestmentRub)}</dd></div>
+              <div><dt>Общая потребность программы</dt><dd data-testid="scaling-network-total" data-amount-rub={networkInvestmentRub ?? undefined}>{formatRub(networkInvestmentRub)}</dd></div>
+              <div><dt>Требуемое внешнее финансирование</dt><dd data-testid="scaling-upfront-funding" data-amount-rub={temporal.funding.upfrontInvestorFundingRub ?? undefined}>{formatRub(temporal.funding.upfrontInvestorFundingRub)}<small>Минимум внешнего капитала по помесячному rollout cash flow; не равен автоматически общей потребности программы.</small></dd></div>
               <div><dt>Чеков / день</dt><dd data-testid="scaling-network-checks" data-checks-per-day={projection.sales.checksPerDay ?? undefined}>{formatCount(projection.sales.checksPerDay)}</dd></div>
               <div><dt>Выручка после выхода на режим</dt><dd data-testid="scaling-network-revenue" data-amount-rub={economics.network.revenueRub ?? undefined}>{formatRub(economics.network.revenueRub)}</dd></div>
               <div><dt>Расходы после выхода на режим</dt><dd>{formatRub(economics.network.opexRub)}</dd></div>

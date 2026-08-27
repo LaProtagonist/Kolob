@@ -1,0 +1,30 @@
+receipt_version: 1
+iteration_id: ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-08
+decision_id: DEC-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-08
+change_set_id: CHG-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-08
+verified_at: 2026-08-27T23:21:31.000Z
+result: passed
+approved_payload_sha256: e80d8645bdc247f33b8d5b4e37dd48b5a98886ac1b4e682a679c2323e99a0fc8
+before_state_sha256: 2100acc34d68687ab32b14af78f0472235985be07cbb8fd69bfd35f6a1897fce
+after_state_sha256: 839fe84603cfaf077d31199c1f8095a167104e98df6950f51f7644830da064d1
+checks:
+  - env PATH=/Users/trbrmrdr/.nvm/versions/node/v22.15.1/bin:$PATH npm run financial:core:sync (passed)
+  - env PATH=/Users/trbrmrdr/.nvm/versions/node/v22.15.1/bin:$PATH npm run verify:affected (passed; strict TypeScript, generated financial projection, Investor Journey unit, Investor Terminal browser, governance, documentation and visual checks)
+  - env PATH=/Users/trbrmrdr/.nvm/versions/node/v22.15.1/bin:$PATH npm run verify:release (passed; no deployment; 205.4s)
+invariants:
+  current_base_and_expansion_share_qualifying_reserve_classification: passed
+  current_base_variable_marketing_excluded: passed
+  current_base_traffic_household_excluded: passed
+  foodhall_revenue_share_above_minimum_excluded: passed
+  prepaid_rent_consumed_after_rent_free: passed
+  prepaid_rent_not_cash_paid_twice: passed
+  future_cohort_reserve_not_funded_in_month_3: passed
+  shared_reserve_triggers_dated: passed
+  base_reserve_counted_once: passed
+  initial_inventory_not_duplicated: passed
+  reserve_not_in_monthly_opex: passed
+  total_program_investment_not_equal_to_upfront_funding_by_default: passed
+external_changes: []
+notes:
+  - Historical visual artifacts were provided to governance validation through temporary ignored symlinks to existing local evidence; no artifact was copied, changed or committed.
+  - Production capacity remains review_required by policy and was intentionally not changed.

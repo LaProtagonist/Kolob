@@ -1,0 +1,20 @@
+receipt_version: 1
+iteration_id: ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-07
+decision_id: DEC-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-07
+change_set_id: CHG-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-07
+previewed_at: 2026-08-28T12:10:02.000Z
+result: reviewed
+mutation_performed: false
+before_state_sha256: 2100acc34d68687ab32b14af78f0472235985be07cbb8fd69bfd35f6a1897fce
+after_state_sha256: 75cf9fca05edc73d05421a1cd7d1f60ddc5dc0852bb673be23faa4d58df70378
+predecessor: ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-06
+predecessor_status: failed_before_content_commit
+typed_contract_correction: NetworkEconomicsProjection.expansion.operatingReserve
+economic_preview:
+  current_base_operating_reserve_rub: 20888532
+  network_5_expansion_operating_reserve_rub: 34410155.34
+  network_5_total_program_investment_rub: 101422001.73
+  network_5_upfront_investor_funding_rub: 62088281.86
+external_changes:
+  google_apply: not_run
+  production_deploy: not_run
