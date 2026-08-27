@@ -273,9 +273,15 @@ function cohortLaunchState(configuration: InvestorConfiguration, cohort: Trading
 function equipmentParameters(configuration: InvestorConfiguration, cohort: TradingPointCohort) {
   const launch = cohortLaunchState(configuration, cohort);
   const seating = launchModel.seating.profiles.find((item) => item.id === launch.seatingProfileId)!;
-  const seatCount = cohort.format === "with_seating"
+  const calculatedSeatCount = cohort.format === "with_seating"
     ? calculateSeatCount(cohort.guestAreaM2, seating.square_metres_per_seat)
     : 0;
+  // Use the generic density path for every cohort unless the governed physical
+  // layout explicitly supplies a seat count. This is not a new furniture
+  // allowance: the existing per-seat formula and contingency still apply.
+  const seatCount = cohort.format === "with_seating" && cohort.approvedSeatCount !== null
+    ? cohort.approvedSeatCount
+    : calculatedSeatCount;
   return {
     seatCount,
     parameters: emptyCapexParameters({
@@ -587,7 +593,9 @@ function furnitureItem(configuration: InvestorConfiguration, cohort: TradingPoin
     reason: hasSeating
       ? seatCount === null
         ? "Для расчёта мебели нужна площадь посадочного зала."
-        : "Существующая формула мебели зависит от числа мест этой точки."
+        : cohort.approvedSeatCount !== null
+          ? "Существующая формула мебели применена к утверждённому числу мест этой точки."
+          : "Существующая формула мебели зависит от числа мест этой точки."
       : cohort.locationType === "foodhall" && cohort.sharedSeating === true
         ? "Для Foodhall с общей посадкой площадки собственная мебель гостевого зала не применяется."
         : "Для точки только на вынос посадочный зал и его мебель не применяются.",

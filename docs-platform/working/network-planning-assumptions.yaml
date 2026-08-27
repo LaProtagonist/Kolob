@@ -72,9 +72,63 @@ staffing:
     capacity_evidence:
       demand_metric: food_portions_per_day
       demand_source: revenue_model.product_model.food_portions_per_check
-      equipment_capacity_status: open_parameters
-      bottleneck: "Производительность основной линии не утверждена: параметры пароконвектомата, sous-vide и охлаждения остаются открытыми в CAPEX register."
-      second_shift_status: requires_capacity_and_roster_decision
+      operating_model: >-
+        Заготовочный цех производит тесто, начинки, подготовленные компоненты и
+        полуфабрикаты. Финальная сборка и приготовление колобков происходят на
+        торговых точках; продажная порция не является автоматически выпуском
+        одной центральной машины.
+      evidence_status: documented_machine_envelopes_without_process_capacity
+      source_registry: docs-platform/registry/sources.yaml
+      source_register: docs-platform/working/capex-equipment-register.yaml
+      operations:
+        - id: dough_mixing
+          label: Замес теста
+          asset_ids: [CAPEX-01-018]
+          documented_batch_capacity: "ROSSO B10S: максимум 5 кг загрузки чаши 10 л"
+          source_ids: [SRC-CAPACITY-20260827-ROSSO-B10S]
+          operation_demand_status: requires_technical_cards
+          limitation: "Нет граммовки теста на порцию, выхода теста и фактической длительности цикла."
+        - id: filling_mechanical_preparation
+          label: Механическая подготовка начинок
+          asset_ids: [CAPEX-01-014, CAPEX-01-015]
+          documented_batch_capacity: "Robot Coupe R 502: чаша 5,9 л; Hurakan HKN-22SC: паспортная производительность 250 кг/ч"
+          source_ids: [SRC-CAPACITY-20260827-ROBOT-COUPE-R502, SRC-CAPACITY-20260827-HURAKAN-HKN-22SC]
+          operation_demand_status: requires_technical_cards
+          limitation: "Robot Coupe остаётся рабочим ориентиром комплекта; состав начинок, маршрутизация и допустимая загрузка не подтверждены."
+        - id: thermal_preparation
+          label: Тепловая подготовка
+          asset_ids: [CAPEX-01-009, CAPEX-01-010]
+          documented_batch_capacity: "Apach AP7QT: 7 уровней GN 1/1; TATRA TSV2: рекомендованная ванна до 50 л, но количество термостатов в BOM — TBD"
+          source_ids: [SRC-CAPACITY-20260827-APACH-AP7QT, SRC-CAPACITY-20260827-TATRA-TSV2]
+          operation_demand_status: requires_technical_cards
+          limitation: "Не утверждены продуктовая загрузка GN/ванны, цикл, количество sous-vide и доля продукции, проходящая тепловую операцию."
+        - id: vacuum_packaging
+          label: Вакуумирование полуфабрикатов
+          asset_ids: [CAPEX-01-013]
+          documented_batch_capacity: "Hurakan HKN-VAC400E: камера 440×420×75 мм, насос 20 м³/ч, шов 390 мм"
+          source_ids: [SRC-CAPACITY-20260827-HURAKAN-HKN-VAC400E]
+          operation_demand_status: requires_technical_cards
+          limitation: "Нет стандарта фасовки, загрузки камеры и длительности цикла."
+        - id: cooling_and_storage
+          label: Охлаждение и хранение
+          asset_ids: [CAPEX-01-001, CAPEX-01-002, CAPEX-01-034]
+          documented_batch_capacity: "Brema CB840 HC: 80 кг льда/24 ч и бункер 40 кг; source URL камер с индексом 8.81 конфликтует с historical base-description 15,9 м³"
+          source_ids: [SRC-CAPACITY-20260827-BREMA-CB840-HC, SRC-CAPACITY-20260827-POLAIR-KHN-881]
+          operation_demand_status: requires_technical_cards_and_source_reconciliation
+          limitation: "Не выбран режим быстрого охлаждения (лёд или blast), нет нормы льда/охлаждения на кг, дней хранения, плотности укладки и согласованной модели камер."
+      required_parameters:
+        - id: production-tech-cards-and-routing
+          question: "Для каждого продуктового семейства подтвердить граммовки теста, начинки и центрально подготовленных компонентов на порцию, выход партии и границу между цехом и торговой точкой."
+          reason: "Преобразует 420/1421/2422/3423 food portions в demand конкретных операций и batch count."
+        - id: process-cycles-and-cooling-standard
+          question: "Подтвердить нормативную загрузку и длительность циклов combi/sous-vide/vacuum, а также технологию и норму быстрого охлаждения/хранения."
+          reason: "Определяет machine-hours, охлаждение и storage utilization."
+        - id: production-shift-and-utilization
+          question: "Подтвердить usable hours одной смены, санитарные/переналадочные потери и допустимость второй смены для этого процесса."
+          reason: "Определяет labour-hours, возможный эффект второй смены и её payroll; current salary semantics уже существуют."
+      equipment_capacity_status: requires_technical_cards_and_process_parameters
+      bottleneck: "Спрос в food portions/day рассчитан, но техкарты и утверждённые process cycles не позволяют превратить его в batch count, machine-hours, cooling/storage utilization или throughput линии."
+      second_shift_status: not_modelled_requires_process_parameters
   shared_manager:
     role_id: MANAGER
     count_when_point_count_at_least: 1
@@ -251,6 +305,9 @@ network_rollout:
       location_type: street
       real_estate_mode: rent
       baseline_area_m2: 60
+      guest_area_m2: 30
+      approved_seat_count: 19
+      furniture_provenance: owner_approved_phase_b4_2026-08-27
       checks_per_day: 175
       first_opening_month: 10
       bar_enabled: true

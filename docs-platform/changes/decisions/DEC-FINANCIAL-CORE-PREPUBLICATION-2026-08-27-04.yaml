@@ -1,0 +1,16 @@
+schema_version: 2
+decision_id: DEC-FINANCIAL-CORE-PREPUBLICATION-2026-08-27-04
+iteration_id: ITR-FINANCIAL-CORE-PREPUBLICATION-2026-08-27-04
+title: Approve Phase B4 furniture baseline and pre-publication evidence closure
+status: approved
+approved_by: project owner
+approved_at: 2026-08-27T16:45:01.000Z
+scope: >-
+  Apply the owner-provided Historic Centre 60 m² / 30 m² / 19-seat furniture
+  baseline via the existing calculation path; research and register real Production
+  machine envelopes without inventing process throughput; expose reserve composition;
+  and preserve B3 vehicle policy. No Google remote update, deployment, merge or redesign
+  is authorized.
+approved_payload_path: docs-platform/changelog/payloads/ITR-FINANCIAL-CORE-PREPUBLICATION-2026-08-27-04-approved.yaml
+approved_payload_sha256: ee2a13db4aa97833c0ddee7c6e343887427fee1fa49a5bc08266d87f01fafcdb
+change_id: CHG-FINANCIAL-CORE-PREPUBLICATION-2026-08-27-04

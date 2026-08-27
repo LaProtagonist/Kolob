@@ -162,29 +162,30 @@ test("Network Expansion and Consolidated Network use the shared tax-maintenance-
   assert.equal(projection.status, "complete", "known-basis calculation remains available when disclosures remain");
   assert.deepEqual(
     { calculation: projection.coverage.calculation, pricing: projection.coverage.pricing, assumptions: projection.coverage.assumptions, capacity: projection.coverage.capacity },
-    { calculation: "complete", pricing: "partial", assumptions: "requires_confirmation", capacity: "review_required" },
-    "a missing seating-area input, VAT/YUMA/banking disclosure and production capacity are different coverage dimensions",
+    { calculation: "complete", pricing: "complete", assumptions: "requires_confirmation", capacity: "review_required" },
+    "B4 closes the seating-furniture price gap while VAT/YUMA/banking disclosure and production capacity remain separate coverage dimensions",
   );
   assert.equal(projection.exclusions.some((item) => item.id.startsWith("POINT-WASH-")), false, "priced B3 wash packages are included rather than left as generic exclusions");
-  assert.ok(
-    projection.exclusions.some((item) => item.id === "unresolved:rollout-historic-center-core:furniture"),
-    "a seating point with no approved guest-area input is an explicit pricing exclusion rather than a silently omitted furniture cost",
-  );
+  assert.equal(projection.exclusions.some((item) => item.id === "unresolved:rollout-historic-center-core:furniture"), false, "B4 resolves Historic Centre furniture instead of retaining it as a hidden zero or an exclusion");
   assert.ok(projection.exclusions.some((item) => item.id === "opex:banking"));
   assert.ok(projection.exclusions.some((item) => item.id === "production:capacity-expansion"));
   assert.ok(projection.exclusions.some((item) => item.id === "logistics:vehicle-depreciation-maintenance"), "vehicle CAPEX is disclosed without inventing an equipment/furniture maintenance rule");
 });
 
-test("B3 maps wash, recurring point OPEX and location services without point-level double-counting", () => {
+test("B4 maps wash, approved Historic Centre furniture, recurring point OPEX and location services without point-level double-counting", () => {
   const configuration = defaultInvestorConfiguration();
   const scaling = networkScalingProjection(configuration);
-  const streetSeating = scaling.cohorts.find((cohort) => cohort.cohort.locationType === "street" && cohort.cohort.format === "with_seating")!;
+  const streetSeating = scaling.cohorts.find((cohort) => cohort.cohort.id === "rollout-historic-center-core")!;
   const takeaway = scaling.cohorts.find((cohort) => cohort.cohort.format === "takeaway")!;
   const foodhall = scaling.cohorts.find((cohort) => cohort.cohort.locationType === "foodhall")!;
   const creative = scaling.cohorts.find((cohort) => cohort.cohort.locationType === "creative_cluster")!;
 
   const line = (cohort: typeof streetSeating, id: string) => cohort.directOpex.lines.find((item) => item.id === id)?.amountRub;
   assert.equal(streetSeating.pointItems.find((item) => item.id.endsWith(":point-wash"))?.amountRub, 134_534, "seating wash kit reuses five researched CAPEX components");
+  assert.equal(streetSeating.cohort.id, "rollout-historic-center-core");
+  assert.deepEqual([streetSeating.cohort.totalAreaM2, streetSeating.cohort.guestAreaM2, streetSeating.cohort.approvedSeatCount], [60, 30, 19], "B4 keeps the approved 60m² / 30m² / 19-seat physical layout on the rollout cohort");
+  assert.equal(streetSeating.pointItems.find((item) => item.id.endsWith(":furniture"))?.amountRub, 161_500, "the existing 8,500 ₽ per-seat furniture formula uses the approved 19 seats");
+  assert.equal(streetSeating.pointItems.find((item) => item.id.endsWith(":furniture"))?.partial, undefined, "approved furniture is priced rather than left as a partial item");
   assert.equal(takeaway.pointItems.find((item) => item.id.endsWith(":point-wash"))?.amountRub, 108_807, "takeaway wash kit reuses four researched CAPEX components");
   assert.equal(line(streetSeating, "music"), 7_000, "only an independent street seating point receives the music line");
   assert.equal(line(takeaway, "music"), 0, "takeaway has no standalone music line by default");
@@ -254,13 +255,33 @@ test("generated Financial Core artifact preserves explicit contexts and 5/9/13 N
     const scenario = artifact.network_scenarios[key];
     assert.equal(scenario.total_point_count, totalPoints);
     assert.equal(scenario.coverage.calculation, "complete", "current 5/9/13 formulas are complete on their known basis");
-    assert.equal(scenario.coverage.pricing, "partial", "local wash packages are priced, but the historic-centre seating cohort still needs an approved guest-area input for furniture");
+    assert.equal(scenario.coverage.pricing, "complete", "B4 prices the approved Historic Centre furniture through the existing seat formula and contingency path");
     assert.equal(scenario.coverage.assumptions, "requires_confirmation");
     assert.equal(scenario.coverage.capacity, "review_required");
     assert.equal(scenario.exclusions.some((item: { id: string }) => item.id.startsWith("POINT-WASH-")), false);
-    assert.equal(scenario.exclusions.some((item: { id: string }) => item.id === "unresolved:rollout-historic-center-core:furniture"), true);
+    assert.equal(scenario.exclusions.some((item: { id: string }) => item.id === "unresolved:rollout-historic-center-core:furniture"), false);
     assert.equal(scenario.capacity.dailyProductionDemandPortions, totalPoints === 5 ? 1421 : totalPoints === 9 ? 2422 : 3423);
-    assert.equal(scenario.capacity.availableDailyProductionCapacityPortions, null, "no equipment throughput is invented from the CAPEX register");
+    assert.equal(scenario.capacity.availableDailyProductionCapacityPortions, null, "machine specifications cannot be converted to throughput without process cards");
+    assert.equal(scenario.capacity.operations.length, 5, "B4 persists an operation-level evidence table without fabricating batch count or machine hours");
+    assert.equal(scenario.capacity.operations.every((operation: { batchesPerDay: null; machineHoursPerDay: null; availableMachineHoursPerDay: null; utilizationPercent: null }) => operation.batchesPerDay === null && operation.machineHoursPerDay === null && operation.availableMachineHoursPerDay === null && operation.utilizationPercent === null), true);
+    assert.equal(scenario.capacity.requiredParameters.length, 3, "B4 returns exactly the three process parameters needed to calculate capacity rather than a vague capacity guess");
+    assert.equal(
+      Math.abs(scenario.reserve_decomposition.consolidated.financing_requirement_reserve_rub - scenario.reserve_decomposition.base.operating_reserve_rub - scenario.reserve_decomposition.expansion.operating_reserve_rub) < 0.02,
+      true,
+      "consolidated reserve equals Base reserve plus incremental Expansion reserve once each",
+    );
+    assert.equal(
+      Math.abs(scenario.reserve_decomposition.expansion.operating_reserve_rub - scenario.reserve_decomposition.expansion.monthly_reserve_basis_rub * scenario.reserve_decomposition.expansion.reserve_months) < 0.02,
+      true,
+      "Expansion reserve uses the disclosed recurring OPEX basis and not tax, maintenance CAPEX or launch CAPEX",
+    );
+    assert.equal(scenario.reserve_decomposition.base.policy, "canonical_financial_model_fixed_opex_reserve", "Base reserve retains its separately governed fixed-OPEX policy instead of silently claiming to be full P&L × six months");
+    assert.equal(scenario.reserve_decomposition.consolidated.comparable_to_network_pnl_opex_times_months, false, "consolidated financing reserve cannot be misrepresented as a single Network P&L × six-month rule while Base and Expansion bases differ");
+    assert.equal(
+      Math.abs(scenario.network.launch.investment_rub - artifact.current_base.launch.investment_rub - scenario.expansion.launch.investment_rub) < 0.02,
+      true,
+      "network financing requirement contains Base and Expansion investments once each",
+    );
     assert.equal(scenario.network.monthly_cash_flows.length > 1, true);
   }
 });

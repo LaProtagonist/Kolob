@@ -1449,3 +1449,75 @@ sources:
     accessed_at: 2026-08-26
     reliability: primary
     notes: Прямое разрешение владельца закрыть принятую feature-линию Investor Terminal v2, штатно интегрировать её в актуальную production-ветку и опубликовать после полного release verification.
+  - id: SRC-CAPACITY-20260827-APACH-AP7QT
+    title: Apach AP7QT — documented combi envelope
+    type: supplier_product_card
+    location: https://apach.ua/parokonvektomat-apach-ap7qt/
+    publisher: Apach vendor documentation
+    publication_date: null
+    accessed_at: 2026-08-27
+    reliability: medium
+    notes: B4 capacity evidence only. Vendor documentation lists 7 GN 1/1 or 600×400 levels, 10.5 kW, 30–260°C and a temperature probe. It does not establish product batch yield or cycle time for Kolobochnaya.
+  - id: SRC-CAPACITY-20260827-TATRA-TSV2
+    title: TATRA TSV2 — documented sous-vide envelope
+    type: supplier_product_card
+    location: https://tatra.center/catalog/termostaty/pogruzhnye-termostaty/termostat-pogruzhnoy-tatra-tsv2/pdf_specifications
+    publisher: TATRA vendor documentation
+    publication_date: null
+    accessed_at: 2026-08-27
+    reliability: medium
+    notes: B4 capacity evidence only. Documentation lists a recommended bath volume up to 50 L, 2 kW, 10–95°C and a 72-hour timer. The current BOM leaves quantity and process loading TBD.
+  - id: SRC-CAPACITY-20260827-ROBOT-COUPE-R502
+    title: Robot Coupe R 502 — official machine envelope
+    type: supplier_product_card
+    location: https://www.robot-coupe.com/uk/en_GB/p/food-processors-r-502/18336
+    publisher: Robot-Coupe
+    publication_date: null
+    accessed_at: 2026-08-27
+    reliability: high
+    notes: B4 capacity evidence only. Official documentation lists a 5.9 L cutter bowl. The project still requires product testing and final disc/configuration confirmation before it can be converted to output capacity.
+  - id: SRC-CAPACITY-20260827-HURAKAN-HKN-22SC
+    title: Hurakan HKN-22SC — official grinder rate
+    type: supplier_product_card
+    location: https://hurakan.ru/catalog/jelektromehanicheskoe-oborudovanie/mjasorubki/myasorubka-hurakan-hkn-22sc/
+    publisher: Hurakan
+    publication_date: null
+    accessed_at: 2026-08-27
+    reliability: high
+    notes: B4 capacity evidence only. Official card lists 250 kg/h. This applies only to meat grinding and cannot be translated into sold portions without recipe routing and meat share.
+  - id: SRC-CAPACITY-20260827-HURAKAN-HKN-VAC400E
+    title: Hurakan HKN-VAC400E — documented vacuum chamber envelope
+    type: supplier_product_card
+    location: https://hurakan.ua/ru/vakuumnyi-pakuvalnyk-hurakan-hkn-vac400e/
+    publisher: Hurakan vendor documentation
+    publication_date: null
+    accessed_at: 2026-08-27
+    reliability: medium
+    notes: B4 capacity evidence only. Documentation lists a 440×420×75 mm chamber, 20 m³/h pump and 390 mm seal. Package geometry, load and cycle time are not approved.
+  - id: SRC-CAPACITY-20260827-ROSSO-B10S
+    title: ROSSO B10S — documented mixer envelope
+    type: supplier_product_card
+    location: https://rosso.nt-rt.ru/images/manuals/5.pdf
+    publisher: ROSSO vendor technical documentation
+    publication_date: null
+    accessed_at: 2026-08-27
+    reliability: medium
+    notes: B4 capacity evidence only. Technical documentation lists 10 L bowl volume and maximum 5 kg load. Dough yield and cycle duration remain process inputs.
+  - id: SRC-CAPACITY-20260827-BREMA-CB840-HC
+    title: Brema CB840 HC — official ice-production envelope
+    type: supplier_product_card
+    location: https://www.bremagroup.it/prodotti_brema/cb840-hc/
+    publisher: Brema Group
+    publication_date: null
+    accessed_at: 2026-08-27
+    reliability: high
+    notes: B4 capacity evidence only. Official documentation lists 80 kg ice/24 h and a 40 kg storage bin under stated test conditions. It does not establish the project’s cooling method or ice demand per kg of product.
+  - id: SRC-CAPACITY-20260827-POLAIR-KHN-881
+    title: POLAIR KHN-8.81 — official cold-room volume
+    type: supplier_product_card
+    location: https://www.polair.com/en/products/cold-rooms/kkhn-8-81/
+    publisher: POLAIR
+    publication_date: null
+    accessed_at: 2026-08-27
+    reliability: high
+    notes: B4 capacity evidence only. Official product page identifies 8.81 m³. Existing historical base-price descriptions that pair a 15.9 m³ label with an 8.81 model URL are retained for provenance and require CAPEX source reconciliation before storage kg capacity is modelled.

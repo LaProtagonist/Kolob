@@ -1,0 +1,10 @@
+change_id: CHG-FINANCIAL-CORE-PREPUBLICATION-2026-08-27-04
+title: Register Phase B4 furniture, capacity evidence and reserve decomposition
+status: approved
+created_at: 2026-08-27
+decision_id: DEC-FINANCIAL-CORE-PREPUBLICATION-2026-08-27-04
+iteration_id: ITR-FINANCIAL-CORE-PREPUBLICATION-2026-08-27-04
+proposal_id: PROP-FINANCIAL-CORE-PREPUBLICATION-2026-08-27-04
+approved_payload_path: docs-platform/changelog/payloads/ITR-FINANCIAL-CORE-PREPUBLICATION-2026-08-27-04-approved.yaml
+approved_payload_sha256: ee2a13db4aa97833c0ddee7c6e343887427fee1fa49a5bc08266d87f01fafcdb
+operations: []

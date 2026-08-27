@@ -105,6 +105,9 @@ export type NetworkRolloutGroup = {
   locationType: LocationType;
   realEstateMode: "rent" | "purchase";
   baselineAreaM2: number;
+  guestAreaM2: number | null;
+  /** An approved physical layout may supersede generic density rounding. */
+  approvedSeatCount: number | null;
   checksPerDay: number;
   firstOpeningMonth: number;
   sharedSeating: boolean | null;
@@ -141,14 +144,32 @@ export type PointWashPackage = {
 };
 
 export type ProductionCapacityProjection = {
+  checksPerDay: number | null;
+  foodPortionsPerCheck: number;
   dailyProductionDemandPortions: number | null;
   availableDailyProductionCapacityPortions: null;
   utilizationPercent: null;
+  operations: Array<{
+    id: string;
+    label: string;
+    dailyDemandPortions: null;
+    batchCapacity: string | null;
+    batchesPerDay: null;
+    machineHoursPerDay: null;
+    availableMachineHoursPerDay: null;
+    utilizationPercent: null;
+    assetIds: string[];
+    sourceIds: string[];
+    status: "requires_technical_cards" | "requires_technical_cards_and_source_reconciliation";
+    limitation: string;
+  }>;
+  requiredParameters: Array<{ id: string; question: string; reason: string }>;
   bottleneck: string;
   currentPrepCooks: number;
   schedule: string;
-  status: "covered_by_current_staffing_policy" | "review_required";
-  secondShiftStatus: "not_modelled_requires_decision";
+  staffingPolicyStatus: "within_current_staffing_policy" | "review_required_after_two_prep_cooks";
+  status: "review_required";
+  secondShiftStatus: "not_modelled_requires_process_parameters";
 };
 
 export function networkRolloutDistrictPresetIds(): Exclude<LocationRentPresetId, "custom">[] {
@@ -251,6 +272,12 @@ export function networkRolloutGroups(): NetworkRolloutGroup[] {
       locationType: locationTypes.includes(group.location_type as LocationType) ? group.location_type as LocationType : "street",
       realEstateMode: group.real_estate_mode === "purchase" ? "purchase" : "rent",
       baselineAreaM2: numericPreset(group.baseline_area_m2, rentPreset.baselineAreaM2),
+      guestAreaM2: group.format === "with_seating" && typeof group.guest_area_m2 === "number" && Number.isFinite(group.guest_area_m2)
+        ? group.guest_area_m2
+        : null,
+      approvedSeatCount: group.format === "with_seating" && typeof group.approved_seat_count === "number" && Number.isFinite(group.approved_seat_count) && group.approved_seat_count > 0
+        ? Math.floor(group.approved_seat_count)
+        : null,
       checksPerDay: numericPreset(group.checks_per_day),
       firstOpeningMonth: numericPreset(group.first_opening_month),
       sharedSeating: typeof group.shared_seating === "boolean" ? group.shared_seating : null,
@@ -463,23 +490,54 @@ export function productionStaffingProjection(networkChecksPerDay: number | null,
 }
 
 /**
- * The current CAPEX register gives no approved kg/day, batch or machine-hour
- * capacities for the production line.  We can calculate demand, but cannot
- * invent utilization or a second-shift staffing/capex answer from that gap.
+ * B4 records documented machine envelopes, but the governed model still has
+ * no recipe routing, batch yields, cycle times or usable shift hours. It can
+ * therefore calculate demand in food portions only; all equipment utilization
+ * fields intentionally remain null until those process inputs are approved.
  */
 export function productionCapacityProjection(networkChecksPerDay: number | null, schedule: "one_main_shift" | "custom" = "one_main_shift"): ProductionCapacityProjection {
   const staffing = productionStaffingProjection(networkChecksPerDay, schedule);
   const capacityEvidence = planning.staffing.production.capacity_evidence ?? {};
   const portionsPerCheck = Number(canonical.revenue.foodPortionsPerCheck);
+  const operations = Array.isArray(capacityEvidence.operations)
+    ? capacityEvidence.operations.map((operation: any) => ({
+      id: String(operation.id),
+      label: String(operation.label),
+      dailyDemandPortions: null,
+      batchCapacity: typeof operation.documented_batch_capacity === "string" ? operation.documented_batch_capacity : null,
+      batchesPerDay: null,
+      machineHoursPerDay: null,
+      availableMachineHoursPerDay: null,
+      utilizationPercent: null,
+      assetIds: Array.isArray(operation.asset_ids) ? operation.asset_ids.filter((item: unknown): item is string => typeof item === "string") : [],
+      sourceIds: Array.isArray(operation.source_ids) ? operation.source_ids.filter((item: unknown): item is string => typeof item === "string") : [],
+      status: operation.operation_demand_status === "requires_technical_cards_and_source_reconciliation"
+        ? "requires_technical_cards_and_source_reconciliation" as const
+        : "requires_technical_cards" as const,
+      limitation: String(operation.limitation ?? "Для расчёта мощности требуется техкарта и process parameter."),
+    }))
+    : [];
+  const requiredParameters = Array.isArray(capacityEvidence.required_parameters)
+    ? capacityEvidence.required_parameters.map((parameter: any) => ({
+      id: String(parameter.id),
+      question: String(parameter.question),
+      reason: String(parameter.reason),
+    }))
+    : [];
   return {
+    checksPerDay: networkChecksPerDay,
+    foodPortionsPerCheck: portionsPerCheck,
     dailyProductionDemandPortions: networkChecksPerDay === null ? null : networkChecksPerDay * portionsPerCheck,
     availableDailyProductionCapacityPortions: null,
     utilizationPercent: null,
+    operations,
+    requiredParameters,
     bottleneck: String(capacityEvidence.bottleneck ?? "Производительность производственной линии требует отдельного технического подтверждения."),
     currentPrepCooks: staffing.concurrentPrepCooks,
     schedule: staffing.schedule,
-    status: staffing.capacityReviewRequired ? "review_required" : "covered_by_current_staffing_policy",
-    secondShiftStatus: "not_modelled_requires_decision",
+    staffingPolicyStatus: staffing.capacityReviewRequired ? "review_required_after_two_prep_cooks" : "within_current_staffing_policy",
+    status: "review_required",
+    secondShiftStatus: "not_modelled_requires_process_parameters",
   };
 }
 

@@ -1,0 +1,44 @@
+receipt_version: 1
+iteration_id: ITR-FINANCIAL-CORE-PREPUBLICATION-2026-08-27-04
+decision_id: DEC-FINANCIAL-CORE-PREPUBLICATION-2026-08-27-04
+change_set_id: CHG-FINANCIAL-CORE-PREPUBLICATION-2026-08-27-04
+verified_at: 2026-08-27T16:45:03.000Z
+result: passed
+checks:
+  - env PATH=/Users/trbrmrdr/.nvm/versions/node/v22.15.1/bin:$PATH npx tsc --noEmit (passed)
+  - env PATH=/Users/trbrmrdr/.nvm/versions/node/v22.15.1/bin:$PATH npm run network:planning:check (passed)
+  - env PATH=/Users/trbrmrdr/.nvm/versions/node/v22.15.1/bin:$PATH npm run financial:core:check (passed)
+  - node docs-platform/app/node_modules/tsx/dist/cli.mjs --test scripts/test-financial-core.test.ts (9 passed)
+  - node docs-platform/app/node_modules/tsx/dist/cli.mjs --test scripts/test-investor-journey.test.ts (26 passed)
+  - node docs-platform/app/node_modules/tsx/dist/cli.mjs --test scripts/test-physical-allocation-map.test.ts (9 passed)
+  - env PATH=/Users/trbrmrdr/.nvm/versions/node/v22.15.1/bin:$PATH node scripts/test-investor-terminal.cjs (passed)
+  - env PATH=/Users/trbrmrdr/.nvm/versions/node/v22.15.1/bin:$PATH npm run financial:model:check (passed)
+  - env PATH=/Users/trbrmrdr/.nvm/versions/node/v22.15.1/bin:$PATH npm run financial:sheet:check (passed; local payload only)
+  - env PATH=/Users/trbrmrdr/.nvm/versions/node/v22.15.1/bin:$PATH npm run investor:summary:check (passed)
+  - env PATH=/Users/trbrmrdr/.nvm/versions/node/v22.15.1/bin:$PATH npm run investor:summary:sheet:check (passed; local payload only)
+  - env PATH=/Users/trbrmrdr/.nvm/versions/node/v22.15.1/bin:$PATH npm run context:build (passed; derived context refreshed)
+  - env PATH=/Users/trbrmrdr/.nvm/versions/node/v22.15.1/bin:$PATH npm run context:validate (passed)
+  - env PATH=/Users/trbrmrdr/.nvm/versions/node/v22.15.1/bin:$PATH npm run verify:affected (passed; affected domains and visual checks)
+  - env PATH=/Users/trbrmrdr/.nvm/versions/node/v22.15.1/bin:$PATH npm run verify:release (passed; 13 release domains and all applicable release gates)
+  - env PATH=/Users/trbrmrdr/.nvm/versions/node/v22.15.1/bin:$PATH npm run governance:validate --silent (passed with temporary hash-verified historical review-artifact links)
+release_note: Historical screenshots/PDF/JPG artifacts were read from the existing Investor Terminal worktree only after each of 14 registered SHA-256 values matched. Temporary local links existed solely during validation, were outside content/seal staging paths, and were removed before the B4 governed content commit.
+current_base_parity:
+  context: current_base_object
+  start_investment_rub: 39220380.74
+  operating_reserve_rub: 20088988.08
+  revenue_rub: 10488600
+  opex_rub: 8225135.6
+  ebitda_rub: 2263464.4
+  tax_rub: 204144.61
+  depreciation_rub: 208616.15
+  maintenance_capex_rub: 14309.99
+  free_cash_flow_rub: 2045009.8
+  payback_month: 20
+  status: unchanged
+network_coverage:
+  calculation: complete
+  pricing: complete
+  assumptions: requires_confirmation
+  capacity: review_required
+  note: Furniture pricing is closed; process technical cards, cycles and shift parameters are still required before capacity can be called covered.
+external_changes: []

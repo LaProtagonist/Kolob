@@ -61,6 +61,8 @@ export type TradingPointCohort = {
   totalAreaM2: number | null;
   kitchenAreaM2: number | null;
   guestAreaM2: number | null;
+  /** Approved physical layout input; it overrides generic density rounding only for that cohort. */
+  approvedSeatCount: number | null;
   monthlyRentRub: number | null;
   /** A planning selector only. The Financial Model receives monthlyRentRub. */
   locationRentPresetId: LocationRentPresetId;
@@ -170,6 +172,11 @@ function positiveFiniteOrNull(value: unknown) {
   return typeof value === "number" && Number.isFinite(value) && value > 0 ? value : null;
 }
 
+function positiveIntegerOrNull(value: unknown) {
+  const numeric = positiveFiniteOrNull(value);
+  return numeric === null ? null : Math.floor(numeric);
+}
+
 function nonnegativeInteger(value: unknown, fallback = 1) {
   return typeof value === "number" && Number.isFinite(value) && value >= 0 ? Math.floor(value) : fallback;
 }
@@ -262,6 +269,7 @@ export function createTradingPointCohort(
     totalAreaM2: finiteOrNull(valueOrDefault(overrides, "totalAreaM2", null)),
     kitchenAreaM2: finiteOrNull(valueOrDefault(overrides, "kitchenAreaM2", null)),
     guestAreaM2: format === "with_seating" ? finiteOrNull(valueOrDefault(overrides, "guestAreaM2", null)) : null,
+    approvedSeatCount: format === "with_seating" ? positiveIntegerOrNull(valueOrDefault(overrides, "approvedSeatCount", null)) : null,
     monthlyRentRub: finiteOrNull(valueOrDefault(overrides, "monthlyRentRub", null)),
     locationRentPresetId: restoredLocationRentPresetId(valueOrDefault(overrides, "locationRentPresetId", "custom")),
     rentPerM2Rub: positiveFiniteOrNull(valueOrDefault(overrides, "rentPerM2Rub", null)),
@@ -378,6 +386,8 @@ function createRolloutCohort(
     realEstateMode: group.realEstateMode,
     ...locationDefaults,
     totalAreaM2: group.baselineAreaM2,
+    guestAreaM2: group.guestAreaM2,
+    approvedSeatCount: group.approvedSeatCount,
     rentPerM2Rub: streetRent ? rentPreset.rentPerM2MonthRub : locationDefaults.rentPerM2Rub,
     monthlyRentRub: streetRent ? group.baselineAreaM2 * rentPreset.rentPerM2MonthRub : locationDefaults.monthlyRentRub,
     purchasePriceRub: null,
@@ -579,11 +589,14 @@ export function restoreNetworkScalingConfiguration(value: unknown, launchBudget:
   const rawCohorts = Array.isArray(input.cohorts) ? input.cohorts as Array<Partial<TradingPointCohort>> : [];
   const resolvedCohorts = (cohorts.length ? cohorts : defaults.cohorts).map((cohort, index) => {
     const rollout = networkRolloutGroups().find((group) => cohort.id === rolloutCohortId(group.presetId) || cohort.locationRentPresetId === group.presetId);
+    const isDefaultRolloutCohort = rollout !== undefined && cohort.id === rolloutCohortId(rollout.presetId);
     const fallbackOpeningMonth = index === 0
       ? networkRolloutSchedule().baseObjectOpeningMonth
       : rollout?.firstOpeningMonth ?? networkRolloutSchedule().firstAdditionalOpeningMonth + (index - 1) * networkRolloutSchedule().additionalOpeningIntervalMonths;
     return {
       ...cohort,
+      guestAreaM2: isDefaultRolloutCohort && cohort.guestAreaM2 === null ? rollout.guestAreaM2 : cohort.guestAreaM2,
+      approvedSeatCount: isDefaultRolloutCohort && cohort.approvedSeatCount === null ? rollout.approvedSeatCount : cohort.approvedSeatCount,
       openingWaves: restoredOpeningWaves(rawCohorts[index]?.openingWaves, cohort.count, fallbackOpeningMonth),
       rentFreeMonths: nonnegativeInteger(rawCohorts[index]?.rentFreeMonths, cohort.rentFreeMonths),
     };

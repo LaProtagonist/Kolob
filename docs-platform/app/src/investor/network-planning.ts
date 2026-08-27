@@ -20,6 +20,8 @@ export const NETWORK_PLANNING_SOURCE_PATHS = [
   NETWORK_PLANNING_SCHEMA_PATH,
   "docs-platform/working/financial-model.yaml",
   "docs-platform/working/revenue-model.yaml",
+  "docs-platform/registry/sources.yaml",
+  "docs-platform/working/capex-equipment-register.yaml",
   "src/content/capex-configurator-data.json",
   "src/lib/physical-allocation.ts",
   "src/lib/employer-contributions.ts",
@@ -94,6 +96,10 @@ export function validateNetworkPlanningModel(model = readNetworkPlanningModel())
       errors.push(`Network rollout group ${id} does not match its approved first-stage profile.`);
     }
   }
+  const historicCenterCore = rollout?.groups?.["historic-center-core"];
+  if (historicCenterCore?.guest_area_m2 !== 30 || historicCenterCore?.approved_seat_count !== 19 || historicCenterCore?.furniture_provenance !== "owner_approved_phase_b4_2026-08-27") {
+    errors.push("Historic-center-core must retain the B4 30m² guest area and approved 19-seat furniture baseline.");
+  }
   if (rollout?.groups?.["nevsky-premium"]?.shared_seating !== true || rollout?.groups?.["central-high-traffic"]?.shared_seating !== true) errors.push("Creative Cluster and Foodhall rollout groups must use shared seating.");
   const foodhallDefaults = model.locations?.types?.foodhall?.defaults;
   if (foodhallDefaults?.revenue_share_percent !== 17 || foodhallDefaults?.minimum_guarantee_monthly_rub !== 250000 || foodhallDefaults?.service_charge_monthly_rub !== 50000 || foodhallDefaults?.storage_rent_monthly_rub !== 20000 || foodhallDefaults?.utilities_included !== true) {
@@ -152,6 +158,13 @@ export function validateNetworkPlanningModel(model = readNetworkPlanningModel())
     if (!Array.isArray(selected) || JSON.stringify(selected) !== JSON.stringify(expected) || washPackages?.[format]?.no_dome_dishwasher !== true) {
       errors.push(`Point wash package ${format} must use the approved priced component list and exclude a dome dishwasher.`);
     }
+  }
+  const capacityEvidence = model.staffing?.production?.capacity_evidence;
+  if (capacityEvidence?.evidence_status !== "documented_machine_envelopes_without_process_capacity" || !Array.isArray(capacityEvidence?.operations) || capacityEvidence.operations.length < 5) {
+    errors.push("Production capacity evidence must preserve B4 machine-level documentation without inventing output throughput.");
+  }
+  if (!Array.isArray(capacityEvidence?.required_parameters) || capacityEvidence.required_parameters.length !== 3) {
+    errors.push("Production capacity evidence must preserve the three precise process parameters required before capacity can be calculated.");
   }
   return errors;
 }
