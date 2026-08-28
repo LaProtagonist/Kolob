@@ -1,12 +1,12 @@
 schema_version: 2
-generated_at: 2026-08-28T14:34:25.609Z
+generated_at: 2026-08-28T14:43:00.153Z
 project: Колобочная
 branch: master
-latest_timeline_event_id: EVT-ITR-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01-DEPLOYED-DEPLOY-FINANCIAL-CORE-INVESTOR-TERMINAL-2026-08-28-01
-latest_timeline_event_hash: 8d6895accf57b7829f586498633e863f34c896ce0f78878aa1deaa1c2d714aea
-latest_closed_iteration_id: ITR-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01
-latest_iteration_tag: iteration/ITR-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01
-latest_content_commit_hash: f0e6f3cdbcdceec939a0667d0867589c3f321a01
+latest_timeline_event_id: EVT-ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02-COMMITTED
+latest_timeline_event_hash: 31711c3e95ddc2e5457835c52f6c78475c569e272ccb3dd2ea664b5fc53c173c
+latest_closed_iteration_id: ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02
+latest_iteration_tag: iteration/ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02
+latest_content_commit_hash: 50a64fbb88a30a3554cea7437914ecc915e418c7
 registry_hash: b59c96c1b256174cd21131cf955813e2d68fe507a4d4a85b9e581094a74264cc
 canonical_document_hashes:
   - document_id: DOC-AGENTS
@@ -92,7 +92,7 @@ open_questions:
   - Archive pending review artifacts in durable storage before treating visual verification as portable.
   - Create deployment receipts when the next governed deployment is performed.
   - Decide whether malformed superseded legacy YAML evidence should receive a separate correction event.
-current_workstream: Refresh local Financial Model dependency chain for Terminal release
+current_workstream: Prerender public Investor Terminal route for production release
 next_task: Select the next task through a new governed proposal; no business task is pre-authorized.
 google_integration_status:
   configured: true

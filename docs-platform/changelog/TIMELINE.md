@@ -4,10 +4,10 @@
 
 ## 1. Current state
 
-- Events: 307.
-- Timeline head event: `EVT-ITR-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01-DEPLOYED-DEPLOY-FINANCIAL-CORE-INVESTOR-TERMINAL-2026-08-28-01`.
-- Timeline head SHA-256: `8d6895accf57b7829f586498633e863f34c896ce0f78878aa1deaa1c2d714aea`.
-- Latest recorded iteration: `ITR-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01`.
+- Events: 313.
+- Timeline head event: `EVT-ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02-COMMITTED`.
+- Timeline head SHA-256: `31711c3e95ddc2e5457835c52f6c78475c569e272ccb3dd2ea664b5fc53c173c`.
+- Latest recorded iteration: `ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02`.
 
 ## 2. Modern governed iterations
 
@@ -70,6 +70,7 @@
 | 2026-08-28T00:09:26.000Z | committed | Compact Investor Terminal network-summary presentation | ITR-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09 | DEC-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09 | CHG-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09 | bd5a37b5527696697d656eff2cafe275ee01a11b | iteration/ITR-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09 | — | — | — | Compact Investor Terminal network-summary presentation: content commit verified and linked to the governed lifecycle before sealing. |
 | 2026-08-28T01:07:06.000Z | committed | Final editorial cleanup of Investor Terminal scaling page | ITR-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10 | DEC-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10 | CHG-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10 | 228a6a23235c332bcc675e04b79b62121c7418df | iteration/ITR-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10 | — | — | — | Final editorial cleanup of Investor Terminal scaling page: content commit verified and linked to the governed lifecycle before sealing. |
 | 2026-08-28T14:28:32.000Z | deployed | Refresh local Financial Model dependency chain for Terminal release | ITR-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01 | DEC-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01 | CHG-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01 | f0e6f3cdbcdceec939a0667d0867589c3f321a01 | iteration/ITR-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01 | — | docs-platform/changelog/deployments/DEPLOY-FINANCIAL-CORE-INVESTOR-TERMINAL-2026-08-28-01.yaml | — | Sealed content state a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239 deployed to https://colob.spi.ski; smoke test failed. |
+| 2026-08-28T14:42:51.000Z | committed | Prerender public Investor Terminal route for production release | ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02 | DEC-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02 | CHG-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02 | 50a64fbb88a30a3554cea7437914ecc915e418c7 | iteration/ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02 | — | — | — | Prerender public Investor Terminal route for production release: content commit verified and linked to the governed lifecycle before sealing. |
 
 ## 3. Legacy imported history
 

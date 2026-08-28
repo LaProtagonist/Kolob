@@ -9,16 +9,16 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 ## 2. Текущая ветка и governed iteration
 
 - Branch: `master`.
-- Latest closed iteration: `ITR-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01`.
-- Latest iteration tag: `iteration/ITR-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01`.
-- Latest content commit: `f0e6f3cdbcdceec939a0667d0867589c3f321a01`.
+- Latest closed iteration: `ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02`.
+- Latest iteration tag: `iteration/ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02`.
+- Latest content commit: `50a64fbb88a30a3554cea7437914ecc915e418c7`.
 - Текущий Git HEAD намеренно не записывается: его вычисляет `npm run project:onboard`.
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01-DEPLOYED-DEPLOY-FINANCIAL-CORE-INVESTOR-TERMINAL-2026-08-28-01`.
-- Hash: `8d6895accf57b7829f586498633e863f34c896ce0f78878aa1deaa1c2d714aea`.
-- generated_from_event_hash: `8d6895accf57b7829f586498633e863f34c896ce0f78878aa1deaa1c2d714aea`.
+- Event: `EVT-ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02-COMMITTED`.
+- Hash: `31711c3e95ddc2e5457835c52f6c78475c569e272ccb3dd2ea664b5fc53c173c`.
+- generated_from_event_hash: `31711c3e95ddc2e5457835c52f6c78475c569e272ccb3dd2ea664b5fc53c173c`.
 
 ## 4. Канонические документы
 
@@ -46,7 +46,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 5. Текущая рабочая тема
 
-Refresh local Financial Model dependency chain for Terminal release
+Prerender public Investor Terminal route for production release
 
 ## 6. Decisions и change sets
 
