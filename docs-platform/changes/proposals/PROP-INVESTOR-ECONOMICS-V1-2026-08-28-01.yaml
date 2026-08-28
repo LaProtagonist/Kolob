@@ -1,0 +1,40 @@
+schema_version: 2
+proposal_id: PROP-INVESTOR-ECONOMICS-V1-2026-08-28-01
+iteration_id: ITR-INVESTOR-ECONOMICS-V1-2026-08-28-01
+decision_id: DEC-INVESTOR-ECONOMICS-V1-2026-08-28-01
+change_set_id: CHG-INVESTOR-ECONOMICS-V1-2026-08-28-01
+title: Add local Investor Economics v1 above the sealed Business Financial Core
+status: approved
+approved_by: project owner
+approved_at: 2026-08-28T15:02:31.000Z
+scope: >-
+  Build a deterministic, local scenario layer for investor contribution and
+  distribution economics. It consumes the B5 temporal network projection and
+  preserves Business Financial Core calculations. It is not a production,
+  Google publication, legal-instrument or financial-core correction iteration.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-V1-2026-08-28-01-approved.yaml
+approved_payload_sha256: 152f9742ebabb66a693ddfbfccdf560d32b2933ad43fb21ca66f2614afe877b8
+before_state_sha256: d0e7f77a9a4bb78d5573be714dea3afcc398c516f5c65371abe1e1c12c30b2de
+after_state_sha256: 3bbac14e38b03f48fb6e3aa5a63dcf28c51a2dd332be42f4ea327515162ac237
+affected_document_ids:
+  - DOC-FINANCIAL-MODEL
+  - DOC-INVESTOR-FINANCIAL-SUMMARY
+  - DOC-NETWORK-PLANNING-ASSUMPTIONS
+affected_section_ids:
+  - investor-economics.business-vs-investor-cash-flow
+  - investor-economics.full-programme-staged-funding
+  - investor-economics.principal-first-waterfall
+  - investor-economics.scenario-comparison
+  - investor-terminal.conditions-of-participation
+  - investor-economics.generated-artifact
+state_hash_paths:
+  - docs-platform/generated/investor-economics-projection.json
+  - package.json
+  - scripts/generate-investor-economics-projection.ts
+  - scripts/test-investor-economics.test.ts
+  - scripts/test-investor-terminal.cjs
+  - src/components/InvestorEconomicsPanel.tsx
+  - src/components/InvestorTerminal.css
+  - src/components/InvestorTerminal.tsx
+  - src/lib/investor-economics.ts
+  - verification/domains.json

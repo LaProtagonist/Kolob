@@ -1,4 +1,4 @@
-import { useMemo, useState, type ReactNode } from "react";
+import { useLayoutEffect, useMemo, useState, type ReactNode } from "react";
 import { calculateAverageCheck } from "../lib/revenue-model";
 import { economicsData, economicsScenarioIds } from "../lib/economics";
 import { configuredEconomicsScenario } from "../lib/configured-economics";
@@ -19,6 +19,7 @@ import {
 import { baseObjectFinancialProjection } from "../lib/network-scaling";
 import { useInvestorConfiguration } from "./InvestorConfigurationProvider";
 import { NetworkScalingPanel } from "./NetworkScalingPanel";
+import { InvestorEconomicsPanel } from "./InvestorEconomicsPanel";
 import { FormattedNumberInput, formatNumber } from "./FormattedNumberInput";
 import "./InvestorTerminal.css";
 
@@ -133,7 +134,7 @@ export function InvestorTerminalPage() {
     setLaunchBudget,
     setScenarioId,
   } = useInvestorConfiguration();
-  const [tab, setTab] = useState<"unit" | "scale">("unit");
+  const [tab, setTab] = useState<"unit" | "scale" | "participation">("unit");
   const [preparationOpen, setPreparationOpen] = useState(false);
   const [investmentDetailsOpen, setInvestmentDetailsOpen] = useState(false);
   const [pnlDetailsOpen, setPnlDetailsOpen] = useState(false);
@@ -156,6 +157,17 @@ export function InvestorTerminalPage() {
   const pointConfigurationText = primaryPointCohort?.format === "with_seating"
     ? "с посадочным залом"
     : "только на вынос";
+
+  // A tab replaces its entire workspace. Keeping a deep page position from
+  // the prior tab can mount the next tab below the viewport (notably in
+  // Safari/iPad). Reset before paint rather than waiting for user scroll.
+  useLayoutEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [tab]);
+
+  function selectTab(next: "unit" | "scale" | "participation") {
+    setTab(next);
+  }
 
   function updateBudget<K extends keyof LaunchBudgetState>(key: K, value: LaunchBudgetState[K]) {
     setLaunchBudget((current) => ({ ...current, [key]: value }));
@@ -209,18 +221,19 @@ export function InvestorTerminalPage() {
         </header>
 
         <nav className="terminal-tabs" aria-label="Режим терминала инвестора">
-          <ScenarioTab active={tab === "unit"} onClick={() => setTab("unit")}>Экономика точки</ScenarioTab>
-          <ScenarioTab active={tab === "scale"} onClick={() => setTab("scale")}>Масштабирование</ScenarioTab>
+          <ScenarioTab active={tab === "unit"} onClick={() => selectTab("unit")}>Экономика точки</ScenarioTab>
+          <ScenarioTab active={tab === "scale"} onClick={() => selectTab("scale")}>Масштабирование</ScenarioTab>
+          <ScenarioTab active={tab === "participation"} onClick={() => selectTab("participation")}>Условия участия</ScenarioTab>
         </nav>
 
-        {tab === "scale" ? <NetworkScalingPanel
+        {tab === "participation" ? <InvestorEconomicsPanel /> : tab === "scale" ? <NetworkScalingPanel
           baseObject={{
             ...baseObjectProjection,
             investmentBreakdown: scenario.investmentBreakdown,
             cashFlows: scenario.cashFlows,
             monthlyProjection: scenario.monthlyProjection,
           }}
-          onReturnToUnit={() => setTab("unit")}
+          onReturnToUnit={() => selectTab("unit")}
         /> : (
           <div className="terminal-workspace">
             <div className="terminal-inputs">

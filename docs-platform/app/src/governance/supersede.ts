@@ -17,7 +17,10 @@ import { relativeToProject } from "./util.js";
 
 // A superseded iteration keeps every historical event, receipt and external artifact exactly as recorded.
 // The event only states that its local development line continues in another governed iteration.
-export const SUPERSEDE_ALLOWED_FROM = ["approved", "previewed", "verified", "synced"] as const;
+// An unsealed applied iteration is still a local development line. It must be
+// possible to supersede it without manufacturing a verification event for a
+// state that has deliberately been replaced before any content commit.
+export const SUPERSEDE_ALLOWED_FROM = ["approved", "previewed", "applied", "verified", "synced"] as const;
 
 export type SupersedeInput = {
   iterationId: string;
@@ -77,6 +80,9 @@ export function buildSupersedeInput(input: SupersedeInput, events = readTimeline
   if (state === "superseded") throw new Error(`Iteration ${iterationId} is already superseded.`);
   if (!SUPERSEDE_ALLOWED_FROM.includes(state as typeof SUPERSEDE_ALLOWED_FROM[number])) {
     throw new Error(`Invalid v2 transition for ${iterationId}: ${state} -> superseded. Supersede is only allowed from ${SUPERSEDE_ALLOWED_FROM.join(", ")}.`);
+  }
+  if (state === "applied" && isV2(last) && last.git.content_commit_hash) {
+    throw new Error(`Applied iteration ${iterationId} already has a content commit and must be verified or compensated rather than superseded.`);
   }
   if (events.some(event => event.event_id === supersedeEventId(iterationId))) throw new Error(`Iteration ${iterationId} is already superseded.`);
 

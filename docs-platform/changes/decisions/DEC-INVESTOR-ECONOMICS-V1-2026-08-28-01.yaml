@@ -1,0 +1,14 @@
+schema_version: 2
+decision_id: DEC-INVESTOR-ECONOMICS-V1-2026-08-28-01
+iteration_id: ITR-INVESTOR-ECONOMICS-V1-2026-08-28-01
+title: Approve local Investor Economics scenarios without changing the Business Financial Core
+status: approved
+approved_by: project owner
+approved_at: 2026-08-28T15:02:31.000Z
+scope: >-
+  Investor Economics must reuse the governed Current Base / Expansion / Network
+  temporal outputs. It may model equity, priority return, capped cash flow and
+  staged full-programme funding, but cannot count reinvested Business FCF as an
+  investor distribution or treat a programme commitment as an M0 contribution.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-V1-2026-08-28-01-approved.yaml
+approved_payload_sha256: 152f9742ebabb66a693ddfbfccdf560d32b2933ad43fb21ca66f2614afe877b8

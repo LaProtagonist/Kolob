@@ -1,0 +1,43 @@
+schema_version: 2
+payload_id: PAYLOAD-INVESTOR-ECONOMICS-V1-2026-08-28-01
+iteration_id: ITR-INVESTOR-ECONOMICS-V1-2026-08-28-01
+proposal_id: PROP-INVESTOR-ECONOMICS-V1-2026-08-28-01
+decision_id: DEC-INVESTOR-ECONOMICS-V1-2026-08-28-01
+change_set_id: CHG-INVESTOR-ECONOMICS-V1-2026-08-28-01
+title: Implement local Investor Economics v1 on the sealed Business Financial Core
+status: approved
+approved_by: project owner
+approved_at: 2026-08-28T15:02:31.000Z
+scope:
+  - Add a typed Investor Economics projection that consumes existing Network Financial and temporal projections without calculating a second business financial engine.
+  - Separate Business FCF, dated rollout funding, distributable cash, investor contribution, principal repayment and investor return.
+  - Support comparison of equity, priority-plus-equity, capped cash-flow and full-programme principal-first scenarios.
+  - Make full-programme commitment distinct from staged cash drawdowns and current external funding distinct from total programme investment.
+  - Add a third local Investor Terminal section, a deterministic generated artifact and focused browser/unit coverage.
+constraints:
+  - no Google apply, Google redesign, OAuth operation or remote document mutation
+  - no production deploy, master merge, push or branch change
+  - no change to governed Business Financial Core revenue, OPEX, tax, maintenance, CAPEX, operating-reserve or rollout formulas
+  - no legal instrument, exit valuation, interest rate or final investor offer is asserted
+affected_document_ids:
+  - DOC-FINANCIAL-MODEL
+  - DOC-INVESTOR-FINANCIAL-SUMMARY
+  - DOC-NETWORK-PLANNING-ASSUMPTIONS
+affected_section_ids:
+  - investor-economics.business-vs-investor-cash-flow
+  - investor-economics.full-programme-staged-funding
+  - investor-economics.principal-first-waterfall
+  - investor-economics.scenario-comparison
+  - investor-terminal.conditions-of-participation
+  - investor-economics.generated-artifact
+state_hash_paths:
+  - docs-platform/generated/investor-economics-projection.json
+  - package.json
+  - scripts/generate-investor-economics-projection.ts
+  - scripts/test-investor-economics.test.ts
+  - scripts/test-investor-terminal.cjs
+  - src/components/InvestorEconomicsPanel.tsx
+  - src/components/InvestorTerminal.css
+  - src/components/InvestorTerminal.tsx
+  - src/lib/investor-economics.ts
+  - verification/domains.json

@@ -107,7 +107,7 @@ export function validateNetworkPlanningModel(model = readNetworkPlanningModel())
   }
   if (foodhallDefaults?.rent_entry?.prepayment_months !== null || foodhallDefaults?.rent_entry?.security_deposit_months !== null) errors.push("Foodhall planning contract must not inherit street rent entry terms.");
   const clusterDefaults = model.locations?.types?.creative_cluster?.defaults;
-  if (clusterDefaults?.rent_per_m2_month_rub !== 4000 || clusterDefaults?.monthly_rent_rub !== 160000 || clusterDefaults?.utilities_monthly_rub !== 30000 || clusterDefaults?.rent_entry?.prepayment_months !== 1 || clusterDefaults?.rent_entry?.security_deposit_months !== 1) {
+  if (clusterDefaults?.rent_per_m2_month_rub !== 4000 || clusterDefaults?.monthly_rent_rub !== 160000 || clusterDefaults?.utilities_monthly_rub !== 30000 || clusterDefaults?.rent_entry?.prepayment_months !== 12 || clusterDefaults?.rent_entry?.security_deposit_months !== 1) {
     errors.push("Creative Cluster planning contract must retain the approved rent, utility and entry defaults.");
   }
   if (clusterDefaults?.shared_seating !== true || clusterDefaults?.venue_security_included !== true || clusterDefaults?.common_cleaning_included !== true) errors.push("Creative Cluster planning defaults must retain venue-provided common services.");

@@ -1,0 +1,16 @@
+schema_version: 2
+decision_id: DEC-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01
+iteration_id: ITR-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01
+title: Approve corrected prepayment and tranche-based Investor Economics semantics
+status: approved
+approved_by: project owner
+approved_at: 2026-08-28T16:00:00.000Z
+scope: >-
+  Creative Cluster pays twelve months in advance and one month deposit; the
+  prepaid credit begins after two rent-free months. Launch contingency remains
+  distinct from operating reserve and initial inventory. Each investor capital
+  tranche is locked for six months before it can receive principal repayment.
+  Investor income begins only after all capital is repaid. All implementation
+  remains a local feature-line change pending owner review.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01-approved.yaml
+approved_payload_sha256: 06a279b1a831e3ac8de87160d867798d7793bc5e41bef79eee5aa17e2a5889fa

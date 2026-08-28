@@ -1,0 +1,45 @@
+receipt_version: 1
+iteration_id: ITR-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01
+decision_id: DEC-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01
+change_set_id: CHG-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01
+verified_at: 2026-08-28T19:15:00.000Z
+result: passed
+approved_payload_sha256: 06a279b1a831e3ac8de87160d867798d7793bc5e41bef79eee5aa17e2a5889fa
+before_state_sha256: 9e4e0e9707bd61b5a36126f96489915cdc050f92f679983cad77b43e749bf7b0
+after_state_sha256: 8d10dac4d48378d3740e2cb0abc1a94d38fe7ee3c0bbabe45ddbd4acb712547e
+checks:
+  - env PATH=/Users/trbrmrdr/.nvm/versions/node/v22.15.1/bin:$PATH npx tsc --noEmit (passed)
+  - npm run network:planning:check (passed)
+  - npm run financial:core:check (passed after deterministic regeneration)
+  - npm run investor:economics:check (passed)
+  - npm run investor:economics:test (18 passed)
+  - docs-platform/app/node_modules/.bin/tsx --test scripts/test-investor-journey.test.ts (26 passed)
+  - node scripts/test-investor-terminal.cjs (passed; desktop/mobile plus iPad-like Scaling initial-open scenario)
+  - npm --prefix docs-platform/app run artifact:validate (passed with nine temporary SHA-exact local links)
+  - npm --prefix docs-platform/app run governance:validate (passed)
+  - npm run verify:affected (passed; 106.7s)
+  - npm run verify:release (release ready; 159.5s; no deployment)
+invariants:
+  creative_cluster_prepayment_is_twelve_months: passed
+  creative_cluster_deposit_remains_one_month: passed
+  prepaid_credit_starts_after_rent_free_months: passed
+  prepaid_rent_not_cash_paid_twice: passed
+  operating_reserve_initial_inventory_and_contingency_are_distinct: passed
+  every_additional_cohort_has_explicit_contingency_provenance: passed
+  contingency_is_ten_percent_of_eligible_launch_categories_only: passed
+  M0_tranche_has_no_principal_repayment_before_M6: passed
+  M3_tranche_has_no_principal_repayment_before_M9: passed
+  principal_repayment_is_not_investor_income: passed
+  post_principal_income_starts_only_after_all_capital_is_repaid: passed
+  residual_rights_are_excluded_from_cash_irr: passed
+  monthly_waterfall_is_collapsed_by_default: passed
+  scaling_tab_is_visible_immediately_after_navigation: passed
+historical_artifact_repair:
+  hash_exact_temporarily_restored: 9
+  unrecoverable_marked_superseded: 5
+  temporary_artifacts_staged_or_committed: false
+  repair_validation: passed
+external_changes:
+  google_apply: not_run
+  production_deploy: not_run
+  master_merge: not_run

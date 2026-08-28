@@ -85,7 +85,7 @@ function investmentItemName(key: string, name: string) {
     uniform: "Форма для персонала при запуске",
     inventory: "Стартовый запас",
     launch_marketing: "Маркетинг запуска сети",
-    contingency: "Резерв на запуск",
+    contingency: "Непредвиденные расходы",
     operating_reserve: "Операционный запас",
   };
   return names[key] ?? name;

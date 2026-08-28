@@ -1,0 +1,110 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01
+proposal_id: PROP-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01
+decision_id: DEC-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01
+change_set_id: CHG-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01
+title: Correct local Investor Economics v1 and business baseline
+status: approved
+approved_by: project owner
+approved_at: 2026-08-28T16:00:00.000Z
+actor: Codex
+scope: >-
+  Correct the local Investor Economics draft and its governed Creative Cluster
+  prepayment baseline. This includes the six-month tranche lock, explicit
+  launch-contingency naming, concise participation UI and deterministic Scaling
+  tab scroll restoration. It includes only the narrow historical review-evidence
+  repair needed for release verification. Production, Google, master and
+  financial assumptions outside the owner-approved prepayment correction remain unchanged.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01-approved.yaml
+approved_payload_sha256: 06a279b1a831e3ac8de87160d867798d7793bc5e41bef79eee5aa17e2a5889fa
+before_state_sha256: 9e4e0e9707bd61b5a36126f96489915cdc050f92f679983cad77b43e749bf7b0
+after_state_sha256: 8d10dac4d48378d3740e2cb0abc1a94d38fe7ee3c0bbabe45ddbd4acb712547e
+affected_document_ids:
+  - DOC-FINANCIAL-MODEL
+  - DOC-INVESTOR-FINANCIAL-SUMMARY
+  - DOC-NETWORK-PLANNING-ASSUMPTIONS
+affected_section_ids:
+  - network-planning.creative-cluster-rent-entry
+  - financial-core.rent-prepayment-credit
+  - launch-budget.point-contingency-provenance
+  - investor-economics.tranche-capital-lock
+  - investor-economics.full-programme-waterfall
+  - investor-terminal.participation-presentation
+  - investor-terminal.scaling-tab-scroll-restoration
+  - governance.review-artifact-portability-repair
+state_hash_paths:
+  - docs-platform/app/src/governance/artifacts.ts
+  - docs-platform/app/src/governance/supersede.ts
+  - docs-platform/app/src/governance/timeline.ts
+  - docs-platform/app/src/investor/network-planning.ts
+  - docs-platform/changelog/artifacts/ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01.yaml
+  - docs-platform/generated/financial-core-projection.json
+  - docs-platform/generated/investor-economics-projection.json
+  - docs-platform/working/network-planning-assumptions.yaml
+  - package.json
+  - scripts/generate-investor-economics-projection.ts
+  - scripts/test-investor-economics.test.ts
+  - scripts/test-investor-journey.test.ts
+  - scripts/test-investor-terminal.cjs
+  - src/components/InvestorEconomicsPanel.tsx
+  - src/components/InvestorTerminal.css
+  - src/components/InvestorTerminal.tsx
+  - src/components/NetworkScalingPanel.tsx
+  - src/content/network-planning-data.json
+  - src/lib/configured-economics.ts
+  - src/lib/investor-economics.ts
+  - src/lib/network-scaling.ts
+  - verification/domains.json
+content_paths:
+  - docs-platform/app/src/governance/artifacts.ts
+  - docs-platform/app/src/governance/supersede.ts
+  - docs-platform/app/src/governance/timeline.ts
+  - docs-platform/app/src/investor/network-planning.ts
+  - docs-platform/changelog/artifacts/ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01.yaml
+  - docs-platform/generated/financial-core-projection.json
+  - docs-platform/generated/investor-economics-projection.json
+  - docs-platform/working/network-planning-assumptions.yaml
+  - package.json
+  - scripts/generate-investor-economics-projection.ts
+  - scripts/test-investor-economics.test.ts
+  - scripts/test-investor-journey.test.ts
+  - scripts/test-investor-terminal.cjs
+  - src/components/InvestorEconomicsPanel.tsx
+  - src/components/InvestorTerminal.css
+  - src/components/InvestorTerminal.tsx
+  - src/components/NetworkScalingPanel.tsx
+  - src/content/network-planning-data.json
+  - src/lib/configured-economics.ts
+  - src/lib/investor-economics.ts
+  - src/lib/network-scaling.ts
+  - verification/domains.json
+  - docs-platform/changes/proposals/PROP-INVESTOR-ECONOMICS-V1-2026-08-28-01.yaml
+  - docs-platform/changes/decisions/DEC-INVESTOR-ECONOMICS-V1-2026-08-28-01.yaml
+  - docs-platform/changes/CHG-INVESTOR-ECONOMICS-V1-2026-08-28-01.yaml
+  - docs-platform/changes/iterations/ITR-INVESTOR-ECONOMICS-V1-2026-08-28-01.yaml
+  - docs-platform/changelog/audit/ITR-INVESTOR-ECONOMICS-V1-2026-08-28-01.yaml
+  - docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-V1-2026-08-28-01-approved.yaml
+  - docs-platform/changelog/previews/ITR-INVESTOR-ECONOMICS-V1-2026-08-28-01.yaml
+  - docs-platform/changes/proposals/PROP-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01.yaml
+  - docs-platform/changes/decisions/DEC-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01.yaml
+  - docs-platform/changes/CHG-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01.yaml
+  - docs-platform/changes/iterations/ITR-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01.yaml
+  - docs-platform/changelog/audit/ITR-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01.yaml
+  - docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01-approved.yaml
+  - docs-platform/changelog/previews/ITR-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01.yaml
+  - docs-platform/changelog/verification/ITR-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01.yaml
+  - docs-platform/changelog/events.ndjson
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/SNAPSHOT-ITR-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01.yaml
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+allowed_dirty_paths:
+  - analysis/
+  - output/
+rollback_payload: null
+rollback_contract:
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true

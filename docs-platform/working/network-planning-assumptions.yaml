@@ -177,7 +177,7 @@ locations:
         monthly_rent_rub: 160000
         fitout_allowance_rub: null
         rent_entry:
-          prepayment_months: 1
+          prepayment_months: 12
           security_deposit_months: 1
         provenance: owner_approved_market_planning_assumption
       # Historical market context only. It is not an automatic point cost:

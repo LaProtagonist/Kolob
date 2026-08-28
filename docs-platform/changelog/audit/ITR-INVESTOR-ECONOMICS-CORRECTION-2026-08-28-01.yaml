@@ -1,0 +1,71 @@
+receipt_version: 1
+iteration_id: ITR-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01
+audited_at: 2026-08-28T16:00:00.000Z
+result: passed
+creative_cluster_contract:
+  rent_per_m2_month_rub: 4000
+  monthly_rent_rub: 160000
+  prepayment_months_before: 1
+  prepayment_months_after: 12
+  security_deposit_months: 1
+  rent_free_months: 2
+  prepayment_credit: rent-free months do not consume credit; each subsequent payable month consumes prepaid credit before cash rent is due
+launch_contingency:
+  display_label_before: Резерв на запуск
+  display_label_after: Непредвиденные расходы, 10%
+  meaning: Ten percent of known point preparation, retail equipment, POS/KDS, bar, local wash and furniture only.
+  excludes:
+    - rent prepayment
+    - security deposit
+    - initial inventory
+    - operating reserve
+  cohorts:
+    - cohort: rollout-nevsky-premium
+      format: Creative Cluster
+      contingency_rub: 295470.60
+      initial_inventory_rub: 205475.85
+      entry_before_rub: 320000
+      entry_after_rub: 2080000
+    - cohort: rollout-foodhall-core
+      format: Foodhall
+      contingency_rub: 252720.60
+      initial_inventory_rub: 252441.76
+      entry_rub: 0
+    - cohort: rollout-historic-center-core
+      format: Historic Center Seating
+      contingency_rub: 530193.30
+      initial_inventory_rub: 205475.85
+      entry_rub: 2940000
+    - cohort: rollout-historic-center-value
+      format: Historic Center Takeaway
+      contingency_rub: 385470.60
+      initial_inventory_rub: 176122.16
+      entry_rub: 1232000
+investor_economics:
+  model: existing typed Investor Economics layer over the temporal Network projection; no second business engine
+  principal_lock_months: 6
+  lock_rule: Each dated contribution becomes eligible for capital repayment after its own six-month age; M0 is eligible from M6 and M3 from M9.
+  investor_income_rule: Principal repayment is not income. Full-programme investor income starts only after the remaining capital is zero; same-month excess then follows the selected post-principal share.
+  post_principal_term: explicit model-horizon, additional-months, target-cash-MOIC or unlimited setting; baseline is model horizon M60
+scaling_tab:
+  cause: Retained document scroll position mounted a replacement tab below the viewport, most visibly in Safari/iPad-like navigation.
+  correction: useLayoutEffect resets selected-tab scroll to document top before paint; no timeout or user-scroll workaround.
+historical_review_artifact_repair:
+  recoverable_exact_artifacts: 9
+  unrecoverable_artifacts: 5
+  recoverable_sources:
+    - /Users/trbrmrdr/Documents/Project/Kolob/Kolob-review-backup-2026-08-22
+    - /Users/trbrmrdr/Documents/Project/Kolob/kolobochnaya-investor-terminal
+    - /Users/trbrmrdr/Documents/Project/Kolob/Kolob/analysis/screenshots
+  unrecoverable:
+    - ART-PREMISES-COLLAPSED
+    - ART-PREMISES-EXPANDED
+    - ART-PREMISES-NO-VENTILATION
+    - ART-PREMISES-MANUAL
+    - ART-PREMISES-MOBILE
+  search_result: Exact SHA-256 and size scans across available worktrees, review backup and reachable/unreachable Git objects found no source for the five historical launch-preparation screenshots.
+  repair: The five missing historical records are marked superseded without replacement or fabricated remote URL. The validator accepts a superseded artifact only as explicit nonportable historical evidence; pending-archive artifacts still require hash-exact local restoration or durable remote evidence.
+external_state:
+  google_apply: not_run
+  production_deploy: not_run
+  master_merge: not_run

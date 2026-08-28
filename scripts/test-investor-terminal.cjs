@@ -113,6 +113,21 @@ async function run() {
     await page.locator(".terminal-tabs").getByRole("button", { name: "Масштабирование" }).click();
     await page.getByRole("heading", { name: "Масштабирование" }).waitFor();
     await page.locator("#base-object-title").waitFor();
+    await page.setViewportSize({ width: 1024, height: 768 });
+    await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+    await page.getByRole("button", { name: "Экономика точки" }).click();
+    await checks.waitFor();
+    await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+    await page.getByRole("button", { name: "Масштабирование" }).click();
+    await page.getByRole("heading", { name: "Масштабирование" }).waitFor();
+    await page.waitForFunction(() => window.scrollY === 0);
+    const scalingInitialView = await page.locator("#base-object-title").evaluate((element) => {
+      const rect = element.getBoundingClientRect();
+      return { top: rect.top, bottom: rect.bottom, viewport: window.innerHeight };
+    });
+    assert.ok(scalingInitialView.top >= 0 && scalingInitialView.top < scalingInitialView.viewport && scalingInitialView.bottom > 0, "Scaling opens at meaningful visible content without a scroll-triggered paint");
+    await page.screenshot({ path: path.join(projectRoot, ".cache/verification/screenshots/investor-terminal-scaling-initial-tablet.png") });
+    await page.setViewportSize({ width: 1440, height: 900 });
     assert.match(await page.getByText("Базовый объект объединяет первую торговую точку с посадочным залом и заготовочное производство.").innerText(), /заготовочное производство/i, "the base object is presented as the first point plus production");
     assert.equal(await amount("scaling-base-object-total"), baseObjectInvestment, "Scaling reuses the complete Point Economics base-object result");
     assert.equal(await amount("scaling-base-object-summary"), baseObjectInvestment, "the sticky summary uses the same complete base-object result");
@@ -183,7 +198,7 @@ async function run() {
     await page.getByTestId(`scaling-cohort-row-${nevskyId}`).click();
     assert.equal(await page.getByTestId(`scaling-cohort-rent-rate-${nevskyId}`).inputValue(), "4 000", "Creative Cluster receives its rent-rate default from the planning model");
     assert.equal(await page.getByTestId(`scaling-cohort-rent-${nevskyId}`).inputValue(), "160 000", "Creative Cluster receives its monthly rent default from the planning model");
-    assert.equal(await page.getByLabel("Предоплата").inputValue(), "1", "Creative Cluster receives its one-month prepayment default");
+    assert.equal(await page.getByLabel("Предоплата").inputValue(), "12", "Creative Cluster receives its approved twelve-month prepayment default");
     assert.equal(await page.getByLabel("Обеспечительный платёж").inputValue(), "1", "Creative Cluster receives its one-month deposit default");
     assert.equal(await page.getByLabel("Коммунальные и эксплуатационные расходы").inputValue(), "30 000", "Creative Cluster receives its utility default from the planning model");
     assert.notEqual(await page.getByTestId("scaling-rollout-8").getAttribute("class"), "is-selected", "the default distribution remains four points before a preset change");
@@ -240,17 +255,17 @@ async function run() {
 
     // This UI-only iteration must preserve the sealed B5 baseline. The assertions
     // catch accidental remapping or arithmetic changes disguised as presentation.
-    await assertAmount("scaling-base-fcf", 2_045_009.8, "Base FCF remains the B5 value");
-    await assertAmount("scaling-network-direct-opex", 16_195_358.96466331, "Direct Point OPEX remains the B5 value");
-    await assertAmount("scaling-expansion-production-opex", 158_505.51000000004, "incremental Production payroll remains the B5 value");
-    await assertAmount("scaling-expansion-admin-reserve", 499_956.60000000003, "Expansion administrative reserve remains the B5 value");
-    await assertAmount("scaling-logistics-opex", 250_000, "Expansion logistics remains the B5 value");
-    await assertAmount("scaling-expansion-opex", 17_105_071.07, "Expansion OPEX total remains the B5 value");
-    await assertAmount("scaling-network-fcf", 9_412_362.58, "Network FCF remains the B5 value");
-    await assertAmount("scaling-expansion-reserve", 34_410_155.34, "Expansion reserve remains the B5 value");
-    await assertAmount("scaling-network-total", 101_422_001.73, "Total Program Investment remains the B5 value");
-    await assertAmount("scaling-upfront-funding", 62_088_281.86, "Upfront Investor Funding remains the B5 value");
-    assert.equal(await page.getByTestId("scaling-network-payback").getAttribute("data-payback-month"), "19", "Network temporal payback remains the B5 value");
+    await assertAmount("scaling-base-fcf", 2_045_009.8, "Base FCF remains unchanged by the Creative Cluster contract correction");
+    await assertAmount("scaling-network-direct-opex", 16_195_358.96466331, "Direct Point OPEX remains unchanged by the Creative Cluster contract correction");
+    await assertAmount("scaling-expansion-production-opex", 158_505.51000000004, "incremental Production payroll remains unchanged");
+    await assertAmount("scaling-expansion-admin-reserve", 499_956.60000000003, "Expansion administrative reserve remains unchanged");
+    await assertAmount("scaling-logistics-opex", 250_000, "Expansion logistics remains unchanged");
+    await assertAmount("scaling-expansion-opex", 17_105_071.07, "Expansion OPEX total remains unchanged");
+    await assertAmount("scaling-network-fcf", 9_412_362.58, "Network FCF remains unchanged");
+    await assertAmount("scaling-expansion-reserve", 33_930_155.34, "Expansion reserve uses the unified B5 reserve policy");
+    await assertAmount("scaling-network-total", 102_702_001.73, "Total Program Investment includes the additional Creative Cluster prepaid rent");
+    await assertAmount("scaling-upfront-funding", 62_888_281.86, "Upfront Investor Funding reflects the dated Creative Cluster prepayment");
+    assert.equal(await page.getByTestId("scaling-network-payback").getAttribute("data-payback-month"), "18", "Network temporal payback reflects the corrected prepayment ledger");
 
     async function assertSummaryLayout(width, height, name) {
       await page.setViewportSize({ width, height });
@@ -379,6 +394,38 @@ async function run() {
     );
     await page.getByRole("button", { name: "Закрыть меню", exact: true }).click();
     await page.setViewportSize({ width: 1440, height: 900 });
+
+    await page.getByRole("button", { name: "Условия участия" }).click();
+    const investorEconomics = page.getByTestId("investor-economics-panel");
+    await investorEconomics.waitFor();
+    assert.equal(await page.getByRole("heading", { name: "Условия участия" }).count(), 1, "Investor Economics is a distinct third Terminal section");
+    await assertAmount("economics-programme-investment", 102_702_001.73, "programme investment reuses the corrected Business Financial Core total");
+    await assertAmount("economics-current-external-funding", 62_888_281.86, "current external funding stays distinct from total programme investment");
+    const programmeInvestment = await amount("economics-programme-investment");
+    const externalFunding = await amount("economics-current-external-funding");
+    assert.ok(Math.abs((await amount("economics-business-self-financing")) - (programmeInvestment - externalFunding)) < 0.01, "self-financing explains the difference between total programme investment and external funding");
+    await page.getByTestId("economics-template-full_programme").click();
+    const commitment = await amount("economics-commitment");
+    const actualContributions = await amount("economics-actual-contributions");
+    assert.equal(commitment, programmeInvestment, "full-programme commitment equals the dated programme total");
+    assert.ok(Math.abs(actualContributions - commitment) < 0.02, "staged full-programme drawdowns total the commitment without being an M0 outflow");
+    const economicsWaterfall = investorEconomics.locator(".investor-economics-waterfall");
+    assert.equal(await economicsWaterfall.getAttribute("open"), null, "the 60-month waterfall is collapsed in the executive view");
+    await investorEconomics.screenshot({ path: path.join(projectRoot, ".cache/verification/screenshots/investor-economics-full-programme-executive-desktop.png") });
+    await investorEconomics.getByText("Показать помесячный расчёт", { exact: true }).click();
+    const waterfall = investorEconomics.locator(".investor-economics-waterfall");
+    assert.match(await waterfall.innerText(), /М0[\s\S]*40 019 925 ₽/, "monthly investor waterfall exposes dated drawdowns and business funding needs");
+    for (const [width, height, label] of [[1440, 900, "desktop"], [1024, 768, "tablet"], [390, 844, "mobile"]]) {
+      await page.setViewportSize({ width, height });
+      const layout = await investorEconomics.evaluate((element) => ({
+        overflow: document.documentElement.scrollWidth > window.innerWidth,
+        summaryVisible: Boolean(element.querySelector(".investor-economics-summary")),
+      }));
+      assert.equal(layout.overflow, false, `Investor Economics ${label} has no horizontal page overflow`);
+      assert.equal(layout.summaryVisible, true, `Investor Economics ${label} retains its scenario summary`);
+    }
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await investorEconomics.screenshot({ path: path.join(projectRoot, ".cache/verification/screenshots/investor-economics-full-programme-desktop.png") });
 
     await page.getByRole("button", { name: "Экономика точки" }).click();
     await checks.waitFor();

@@ -362,7 +362,7 @@ function configuredInvestmentBreakdown(configuration: InvestorConfiguration, cap
       launchItem.name,
       launchItem.amountRub,
     )),
-    item("contingency", "Резерв запуска", capital.contingencyRub),
+    item("contingency", `Непредвиденные расходы, ${launchBudget.contingencyPercent}%`, capital.contingencyRub),
     ...(launchBudget.premisesScenario === "purchase"
       ? [item("property", "Покупка помещения", launchBudget.purchasePriceRub ?? 0)]
       : [

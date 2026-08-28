@@ -1,0 +1,29 @@
+receipt_version: 1
+iteration_id: ITR-INVESTOR-ECONOMICS-V1-2026-08-28-01
+decision_id: DEC-INVESTOR-ECONOMICS-V1-2026-08-28-01
+change_set_id: CHG-INVESTOR-ECONOMICS-V1-2026-08-28-01
+previewed_at: 2026-08-28T15:02:31.000Z
+result: reviewed
+mutation_performed: false
+before_state_sha256: d0e7f77a9a4bb78d5573be714dea3afcc398c516f5c65371abe1e1c12c30b2de
+after_state_sha256: 84b27d77b8af385c29369b54bf05486345a1ff2600be5b3405d4beec878a08bc
+business_financial_core:
+  source: Current Base + Expansion + Consolidated Network temporal projection
+  unchanged_formulas:
+    - revenue
+    - OPEX
+    - tax
+    - maintenance CAPEX
+    - CAPEX
+    - operating reserve
+    - rollout
+investor_economics_preview:
+  total_program_investment_rub: 101422001.73
+  current_external_funding_requirement_rub: 62088281.86
+  business_generated_rollout_funding_rub: 39333719.87
+  full_programme_commitment_rub: 101422001.73
+  full_programme_drawdown_mode: staged by actual temporal funding dates
+  prepaid_rent_credit: included once in the temporal cash bridge; not netted out of gross programme funding
+  external_changes:
+    google_apply: not_run
+    production_deploy: not_run

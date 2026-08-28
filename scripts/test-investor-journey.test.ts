@@ -334,7 +334,7 @@ test("fresh and reset network defaults retain the base object and add the approv
     assert.ok(streetGroups.every((cohort) => cohort.utilitiesMonthlyRub !== null && cohort.videoAllowanceRub !== null && cohort.alarmAllowanceRub !== null));
     const creative = configuration.networkScaling.cohorts.find((cohort) => cohort.locationType === "creative_cluster")!;
     const foodhall = configuration.networkScaling.cohorts.find((cohort) => cohort.locationType === "foodhall")!;
-    assert.deepEqual([creative.rentPerM2Rub, creative.monthlyRentRub, creative.prepaymentMonths, creative.securityDepositMonths, creative.utilitiesMonthlyRub], [4_000, 160_000, 1, 1, 30_000], "Creative Cluster receives its editable contract defaults");
+    assert.deepEqual([creative.rentPerM2Rub, creative.monthlyRentRub, creative.prepaymentMonths, creative.securityDepositMonths, creative.utilitiesMonthlyRub], [4_000, 160_000, 12, 1, 30_000], "Creative Cluster receives its approved twelve-month prepayment and one-month deposit defaults");
     assert.deepEqual([foodhall.revenueSharePercent, foodhall.minimumGuaranteeMonthlyRub, foodhall.serviceChargeMonthlyRub, foodhall.storageRentMonthlyRub, foodhall.prepaymentMonths, foodhall.securityDepositMonths], [17, 250_000, 50_000, 20_000, null, null], "Foodhall receives its editable contract defaults without street entry terms");
     const byPreset = Object.fromEntries(projection.cohorts.slice(1).map((cohort) => [cohort.cohort.locationRentPresetId, cohort]));
     assert.equal(byPreset["historic-center-core"].pointItems.find((item) => item.id.endsWith(":point-preparation"))?.amountRub, 3_300_000, "60 m² seating retains all eight preparation categories");
@@ -744,7 +744,7 @@ test("network scaling aggregates independent point cohorts without inventing net
   assert.equal(mixedNetwork.unresolvedItems.find((item) => item.id === "POINT-WASH-TAKEAWAY"), undefined, "B3 wash kits are now priced point items, not generic unresolved rows");
   assert.equal(takeaway.pointItems.find((item) => item.id.endsWith(":point-wash"))?.multiplier, "per_point");
   assert.equal(seating.pointItems.find((item) => item.id.endsWith(":point-wash"))?.amountRub, 134_534);
-  assert.ok(takeaway.pointItems.some((item) => item.name === "Резерв на запуск"), "contingency is calculated from the applicable point base");
+  assert.ok(takeaway.pointItems.some((item) => item.name === "Непредвиденные расходы, 10%"), "contingency is calculated from the applicable point base");
   assert.equal(mixedNetwork.isPartial, true);
   assert.equal(mixedNetwork.sales.status, "complete");
   assert.equal(mixedNetwork.sales.checksPerDay, 250 * 5 + 175 * 10);

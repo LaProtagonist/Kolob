@@ -544,13 +544,13 @@ function pointContingencyItem(configuration: InvestorConfiguration, items: Netwo
   return {
     id: "point-contingency",
     canonicalItem: "contingency percentage of applicable base",
-    name: "Резерв на запуск",
+    name: `Непредвиденные расходы, ${configuration.launchBudget.contingencyPercent}%`,
     ownership: "point",
     multiplier: "per_point",
     amountRub,
     included: amountRub !== null,
     source: "Launch Budget contingency policy",
-    reason: "Рассчитывается только от оборудования, мебели и подготовки помещения.",
+    reason: `Составляет ${configuration.launchBudget.contingencyPercent}% от подготовки помещения, оборудования, POS/KDS, бара, локальной мойки и мебели; не включает предоплату, депозит или первоначальный запас.`,
   };
 }
 
@@ -980,7 +980,7 @@ export function networkScalingProjection(configuration: InvestorConfiguration): 
     isPartial: unresolvedItems.some((item) => item.amountRub === null || item.partial === true)
       || additionalCohorts.some((cohort) => cohort.isPartial || cohort.directOpex.isPartial),
     capacityNote: "Спрос в portions/day рассчитан, но производительность линии и второй shift требуют отдельного подтверждения оборудования и roster.",
-    contingencyNote: "Резерв запуска включает оборудование, мебель, подготовку помещения и локальный wash kit; не включает property, deposit или prepaid rent.",
+    contingencyNote: `Непредвиденные расходы: ${configuration.launchBudget.contingencyPercent}% от подготовки помещения, оборудования, мебели, POS/KDS, бара и локальной мойки. Предоплата, депозит и первоначальный запас не входят.`,
     reserveNote: "Операционный запас расширения — 6 месяцев постоянных и полу-постоянных расходов Point, Production и Shared, финансируемых по датам cohort/service triggers; variable P&L и launch CAPEX не входят.",
     sales,
     operating,

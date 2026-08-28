@@ -1,0 +1,11 @@
+schema_version: 2
+change_id: CHG-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01
+title: Correct Investor Economics baseline, tranche waterfall and terminal presentation
+status: approved
+created_at: 2026-08-28
+decision_id: DEC-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01
+iteration_id: ITR-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01
+proposal_id: PROP-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01-approved.yaml
+approved_payload_sha256: 06a279b1a831e3ac8de87160d867798d7793bc5e41bef79eee5aa17e2a5889fa
+operations: []

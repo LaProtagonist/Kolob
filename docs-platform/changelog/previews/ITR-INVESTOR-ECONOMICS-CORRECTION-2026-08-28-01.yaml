@@ -1,0 +1,39 @@
+receipt_version: 1
+iteration_id: ITR-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01
+decision_id: DEC-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01
+change_set_id: CHG-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01
+previewed_at: 2026-08-28T16:00:00.000Z
+result: reviewed
+mutation_performed: false
+business_preview:
+  five_point:
+    total_program_investment_before_rub: 101422001.73
+    total_program_investment_after_rub: 102702001.73
+    external_funding_before_rub: 62088281.86
+    external_funding_after_rub: 62888281.86
+    business_self_financing_before_rub: 39333719.87
+    business_self_financing_after_rub: 39813719.87
+    programme_payback_before: M19
+    programme_payback_after: M18
+  nine_point:
+    total_program_investment_before_rub: 154465545.74
+    total_program_investment_after_rub: 157025545.74
+  thirteen_point:
+    total_program_investment_before_rub: 207509089.75
+    total_program_investment_after_rub: 211349089.75
+investor_preview:
+  template: full_programme
+  terms: staged; 80% distributable FCF to capital repayment; 15% after capital return; six-month tranche lock; M60 horizon
+  commitment_rub: 102702001.73
+  actual_contributions_rub: 102702001.72
+  peak_capital_outstanding_rub: 76640871.80
+  first_capital_return: M6
+  full_capital_return: M23
+  income_through_M60_rub: 54279271.80
+  distributions_through_M60_rub: 156981273.52
+  cash_irr_through_M60: 33.10%
+  cash_moic_at_M60: 1.53x
+external_changes:
+  google_apply: not_run
+  production_deploy: not_run
+  master_merge: not_run

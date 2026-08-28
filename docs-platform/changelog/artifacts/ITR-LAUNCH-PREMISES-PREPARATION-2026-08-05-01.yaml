@@ -11,7 +11,7 @@ artifacts:
     purpose: Collapsed preparation UI visual verification evidence.
     storage: local_ignored
     remote_url: null
-    status: pending_archive
+    status: superseded
   - artifact_id: ART-PREMISES-EXPANDED
     iteration_id: ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01
     type: verification_screenshot
@@ -22,7 +22,7 @@ artifacts:
     purpose: Expanded preparation UI visual verification evidence.
     storage: local_ignored
     remote_url: null
-    status: pending_archive
+    status: superseded
   - artifact_id: ART-PREMISES-NO-VENTILATION
     iteration_id: ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01
     type: verification_screenshot
@@ -33,7 +33,7 @@ artifacts:
     purpose: Dependency calculation visual verification evidence.
     storage: local_ignored
     remote_url: null
-    status: pending_archive
+    status: superseded
   - artifact_id: ART-PREMISES-MANUAL
     iteration_id: ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01
     type: verification_screenshot
@@ -44,7 +44,7 @@ artifacts:
     purpose: Manual-mode visual verification evidence.
     storage: local_ignored
     remote_url: null
-    status: pending_archive
+    status: superseded
   - artifact_id: ART-PREMISES-MOBILE
     iteration_id: ITR-LAUNCH-PREMISES-PREPARATION-2026-08-05-01
     type: verification_screenshot
@@ -55,5 +55,4 @@ artifacts:
     purpose: Mobile layout visual verification evidence.
     storage: local_ignored
     remote_url: null
-    status: pending_archive
-
+    status: superseded

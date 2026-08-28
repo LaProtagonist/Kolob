@@ -47,17 +47,16 @@ export function validateArtifacts(): string[] {
       if (fs.existsSync(absolute)) {
         if (fs.statSync(absolute).size !== artifact.size) errors.push(`${artifact.artifact_id}: size mismatch.`);
         if (fileSha256(absolute) !== artifact.sha256) errors.push(`${artifact.artifact_id}: SHA-256 mismatch.`);
-      } else if (!artifact.remote_url) {
+      } else if (!artifact.remote_url && artifact.status !== "superseded") {
         errors.push(`${artifact.artifact_id}: neither local file nor durable remote URL is available.`);
       }
-      if (!artifact.remote_url && artifact.status !== "pending_archive" && artifact.status !== "temporary") {
-        errors.push(`${artifact.artifact_id}: artifact without durable storage must be pending_archive or temporary.`);
+      if (!artifact.remote_url && artifact.status !== "pending_archive" && artifact.status !== "temporary" && artifact.status !== "superseded") {
+        errors.push(`${artifact.artifact_id}: artifact without durable storage must be pending_archive, temporary or superseded.`);
       }
-      if (/verification|visual|review/i.test(artifact.purpose) && !artifact.remote_url && artifact.status !== "pending_archive") {
-        errors.push(`${artifact.artifact_id}: verified evidence without durable storage must be pending_archive.`);
+      if (/verification|visual|review/i.test(artifact.purpose) && !artifact.remote_url && artifact.status !== "pending_archive" && artifact.status !== "superseded") {
+        errors.push(`${artifact.artifact_id}: verified evidence without durable storage must be pending_archive or superseded.`);
       }
     }
   }
   return errors;
 }
-

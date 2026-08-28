@@ -1,0 +1,24 @@
+schema_version: 2
+proposal_id: PROP-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01
+iteration_id: ITR-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01
+decision_id: DEC-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01
+change_set_id: CHG-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01
+title: Correct local Investor Economics v1, Creative Cluster prepayment and historical evidence portability
+status: approved
+approved_by: project owner
+approved_at: 2026-08-28T16:00:00.000Z
+scope: >-
+  Preserve the unsealed local Investor Economics draft while correcting its
+  governed business baseline and presentation. The revised model uses Creative
+  Cluster twelve-month prepayment, explicit point contingency provenance and
+  six-month per-tranche capital maturity. It must not mutate production, Google
+  documents or master. The historical artifact repair is limited to exact
+  evidence provenance and does not replace or fabricate visual artifacts.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01-approved.yaml
+approved_payload_sha256: 06a279b1a831e3ac8de87160d867798d7793bc5e41bef79eee5aa17e2a5889fa
+before_state_sha256: 9e4e0e9707bd61b5a36126f96489915cdc050f92f679983cad77b43e749bf7b0
+after_state_sha256: 8d10dac4d48378d3740e2cb0abc1a94d38fe7ee3c0bbabe45ddbd4acb712547e
+affected_document_ids:
+  - DOC-FINANCIAL-MODEL
+  - DOC-INVESTOR-FINANCIAL-SUMMARY
+  - DOC-NETWORK-PLANNING-ASSUMPTIONS

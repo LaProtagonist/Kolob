@@ -1,0 +1,11 @@
+schema_version: 2
+change_id: CHG-INVESTOR-ECONOMICS-V1-2026-08-28-01
+title: Implement local Investor Economics v1 and participation interface
+status: approved
+created_at: 2026-08-28
+decision_id: DEC-INVESTOR-ECONOMICS-V1-2026-08-28-01
+iteration_id: ITR-INVESTOR-ECONOMICS-V1-2026-08-28-01
+proposal_id: PROP-INVESTOR-ECONOMICS-V1-2026-08-28-01
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-V1-2026-08-28-01-approved.yaml
+approved_payload_sha256: 152f9742ebabb66a693ddfbfccdf560d32b2933ad43fb21ca66f2614afe877b8
+operations: []
