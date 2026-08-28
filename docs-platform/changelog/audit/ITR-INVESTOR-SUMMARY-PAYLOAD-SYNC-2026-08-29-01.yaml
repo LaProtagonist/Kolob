@@ -1,0 +1,8 @@
+receipt_version: 1
+iteration_id: ITR-INVESTOR-SUMMARY-PAYLOAD-SYNC-2026-08-29-01
+audited_at: 2026-08-28T22:21:00.000Z
+result: passed
+summary_sha256: 52e2202026a636247980c845b61f9482580a0da80c4fa3a59444fcfbddfb5171
+sheet_payload_sha256: d5ad9cb3f33c7c1894da1656807ca7dfe9bcc403740b6289b004a504a8b34189
+remote_google_apply: not_run
+

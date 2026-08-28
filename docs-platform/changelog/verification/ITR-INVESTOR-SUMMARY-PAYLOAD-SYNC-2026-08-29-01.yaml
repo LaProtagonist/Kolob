@@ -1,0 +1,12 @@
+receipt_version: 1
+iteration_id: ITR-INVESTOR-SUMMARY-PAYLOAD-SYNC-2026-08-29-01
+decision_id: DEC-INVESTOR-SUMMARY-PAYLOAD-SYNC-2026-08-29-01
+change_set_id: CHG-INVESTOR-SUMMARY-PAYLOAD-SYNC-2026-08-29-01
+verified_at: 2026-08-28T22:21:00.000Z
+result: passed
+approved_payload_sha256: 4b8f2b3c6fdd81929fdce4576b4de6b8f307aac07a5f5c17c3b1a79e0c1b5037
+before_state_sha256: dc630271cb944be6f921108568eaa7bd60c15d67a7571e8f526caeee965c17a6
+after_state_sha256: 21b9187f12e050b8c27bc92904a556be41498ee69699da38f776f4f9d6bf5080
+checks: [investor:summary:sync passed, investor:summary:check passed, investor:summary:sheet:payload passed, investor:summary:sheet:check passed]
+external_changes: { google_apply: not_run, production_deploy: not_run, master_merge: not_run }
+

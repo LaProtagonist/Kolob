@@ -1,0 +1,9 @@
+receipt_version: 1
+iteration_id: ITR-INVESTOR-SUMMARY-PAYLOAD-SYNC-2026-08-29-01
+decision_id: DEC-INVESTOR-SUMMARY-PAYLOAD-SYNC-2026-08-29-01
+change_set_id: CHG-INVESTOR-SUMMARY-PAYLOAD-SYNC-2026-08-29-01
+previewed_at: 2026-08-28T22:21:00.000Z
+result: reviewed
+mutation_performed: false
+payload: { summary_local_only: true, sheet_count: 5, remote_apply: not_run }
+

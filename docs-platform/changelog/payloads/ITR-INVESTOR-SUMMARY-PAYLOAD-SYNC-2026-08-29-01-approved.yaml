@@ -1,0 +1,38 @@
+schema_version: 2
+payload_id: PAYLOAD-INVESTOR-SUMMARY-PAYLOAD-SYNC-2026-08-29-01
+iteration_id: ITR-INVESTOR-SUMMARY-PAYLOAD-SYNC-2026-08-29-01
+proposal_id: PROP-INVESTOR-SUMMARY-PAYLOAD-SYNC-2026-08-29-01
+decision_id: DEC-INVESTOR-SUMMARY-PAYLOAD-SYNC-2026-08-29-01
+change_set_id: CHG-INVESTOR-SUMMARY-PAYLOAD-SYNC-2026-08-29-01
+title: Synchronize local Investor Financial Summary payloads after approved temporal recalculation
+status: approved
+approved_by: project owner
+approved_at: 2026-08-29T00:00:00.000Z
+scope:
+  - Regenerate the local Investor Financial Summary and its 5-tab Google Sheets payload from sealed Financial Model content.
+  - Verify deterministic local artifacts only; do not preview, apply, update or read remote Google documents.
+constraints: [no Google apply, no deployment, no production mutation, no financial-policy change]
+affected_document_ids: [DOC-INVESTOR-FINANCIAL-SUMMARY]
+affected_section_ids: [investor-summary.local-payload-provenance]
+state_hash_paths: [docs-platform/generated/investor-financial-summary.json, docs-platform/generated/investor-financial-summary-google-sheets-payload.json]
+content_paths:
+  - docs-platform/generated/investor-financial-summary.json
+  - docs-platform/generated/investor-financial-summary-google-sheets-payload.json
+  - docs-platform/changes/proposals/PROP-INVESTOR-SUMMARY-PAYLOAD-SYNC-2026-08-29-01.yaml
+  - docs-platform/changes/decisions/DEC-INVESTOR-SUMMARY-PAYLOAD-SYNC-2026-08-29-01.yaml
+  - docs-platform/changes/CHG-INVESTOR-SUMMARY-PAYLOAD-SYNC-2026-08-29-01.yaml
+  - docs-platform/changes/iterations/ITR-INVESTOR-SUMMARY-PAYLOAD-SYNC-2026-08-29-01.yaml
+  - docs-platform/changelog/audit/ITR-INVESTOR-SUMMARY-PAYLOAD-SYNC-2026-08-29-01.yaml
+  - docs-platform/changelog/payloads/ITR-INVESTOR-SUMMARY-PAYLOAD-SYNC-2026-08-29-01-approved.yaml
+  - docs-platform/changelog/previews/ITR-INVESTOR-SUMMARY-PAYLOAD-SYNC-2026-08-29-01.yaml
+  - docs-platform/changelog/verification/ITR-INVESTOR-SUMMARY-PAYLOAD-SYNC-2026-08-29-01.yaml
+  - docs-platform/changelog/events.ndjson
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/SNAPSHOT-ITR-INVESTOR-SUMMARY-PAYLOAD-SYNC-2026-08-29-01.yaml
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+allowed_dirty_paths: [analysis/, output/]
+rollback_payload: null
+

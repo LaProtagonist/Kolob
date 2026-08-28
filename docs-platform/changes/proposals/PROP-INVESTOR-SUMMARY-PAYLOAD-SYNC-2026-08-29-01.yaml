@@ -1,0 +1,15 @@
+schema_version: 2
+proposal_id: PROP-INVESTOR-SUMMARY-PAYLOAD-SYNC-2026-08-29-01
+iteration_id: ITR-INVESTOR-SUMMARY-PAYLOAD-SYNC-2026-08-29-01
+decision_id: DEC-INVESTOR-SUMMARY-PAYLOAD-SYNC-2026-08-29-01
+change_set_id: CHG-INVESTOR-SUMMARY-PAYLOAD-SYNC-2026-08-29-01
+title: Synchronize local Investor Financial Summary payloads
+status: approved
+approved_by: project owner
+approved_at: 2026-08-29T00:00:00.000Z
+scope: Local deterministic summary and payload refresh only; remote Google remains untouched.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-SUMMARY-PAYLOAD-SYNC-2026-08-29-01-approved.yaml
+approved_payload_sha256: 4b8f2b3c6fdd81929fdce4576b4de6b8f307aac07a5f5c17c3b1a79e0c1b5037
+before_state_sha256: dc630271cb944be6f921108568eaa7bd60c15d67a7571e8f526caeee965c17a6
+after_state_sha256: 21b9187f12e050b8c27bc92904a556be41498ee69699da38f776f4f9d6bf5080
+
