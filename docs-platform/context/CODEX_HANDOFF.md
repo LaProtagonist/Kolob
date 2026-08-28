@@ -16,9 +16,9 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02-COMMITTED`.
-- Hash: `31711c3e95ddc2e5457835c52f6c78475c569e272ccb3dd2ea664b5fc53c173c`.
-- generated_from_event_hash: `31711c3e95ddc2e5457835c52f6c78475c569e272ccb3dd2ea664b5fc53c173c`.
+- Event: `EVT-ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02-DEPLOYED-DEPLOY-FINANCIAL-CORE-INVESTOR-TERMINAL-2026-08-28-02`.
+- Hash: `8a17f90a3f097c2c1e3e4afc33ee9dd60268e89228f0826d88e86db8d17571f4`.
+- generated_from_event_hash: `8a17f90a3f097c2c1e3e4afc33ee9dd60268e89228f0826d88e86db8d17571f4`.
 
 ## 4. Канонические документы
 
@@ -63,7 +63,7 @@ Prerender public Investor Terminal route for production release
 
 - Google: `{"configured":true,"historical_receipts":14,"receipts_with_machine_readback_hash":11,"live_drift_check":"not_run_by_context_build"}`.
 - MCP: `{"implementation_present":true,"canonical_access":"registry_document_ids_only","live_status":"not_probed_by_context_build"}`.
-- Deployment: `{"status":"receipts_present","receipts":7,"production_url":null}`.
+- Deployment: `{"status":"receipts_present","receipts":8,"production_url":null}`.
 
 ## 9. Команды проверки
 
