@@ -1,0 +1,59 @@
+schema_version: 2
+payload_id: PAYLOAD-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01
+iteration_id: ITR-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01
+proposal_id: PROP-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01
+decision_id: DEC-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01
+change_set_id: CHG-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01
+title: Refresh local Financial Model dependency chain for Terminal release
+status: approved
+approved_by: project owner
+approved_at: 2026-08-28T14:20:00.000Z
+scope:
+  - Point the local Investor Financial Summary at the sealed current Financial Model content state.
+  - Regenerate only deterministic local Financial Model, Investor Summary, Google payload and Financial Core provenance artifacts.
+  - Preserve every financial amount, formula, Google remote document and production state.
+constraints:
+  - no Google preview, apply or readback
+  - no Investor Terminal formula or UI change
+  - no production deployment in this correction iteration
+  - no financial fact or monetary output change
+affected_document_ids:
+  - DOC-FINANCIAL-MODEL
+  - DOC-INVESTOR-FINANCIAL-SUMMARY
+affected_section_ids:
+  - financial-model.provenance
+  - investor-summary.financial-model-dependency-hash
+  - generated-financial-projections.provenance
+state_hash_paths:
+  - docs-platform/working/investor-financial-summary.yaml
+  - docs-platform/generated/financial-model-projection.json
+  - docs-platform/generated/financial-google-sheets-payload.json
+  - docs-platform/generated/investor-financial-summary.json
+  - docs-platform/generated/investor-financial-summary-google-sheets-payload.json
+  - docs-platform/generated/financial-core-projection.json
+content_paths:
+  - docs-platform/working/investor-financial-summary.yaml
+  - docs-platform/generated/financial-model-projection.json
+  - docs-platform/generated/financial-google-sheets-payload.json
+  - docs-platform/generated/investor-financial-summary.json
+  - docs-platform/generated/investor-financial-summary-google-sheets-payload.json
+  - docs-platform/generated/financial-core-projection.json
+  - docs-platform/changes/proposals/PROP-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01.yaml
+  - docs-platform/changes/decisions/DEC-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01.yaml
+  - docs-platform/changes/CHG-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01.yaml
+  - docs-platform/changes/iterations/ITR-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01.yaml
+  - docs-platform/changelog/payloads/ITR-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01-approved.yaml
+  - docs-platform/changelog/audit/ITR-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01.yaml
+  - docs-platform/changelog/previews/ITR-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01.yaml
+  - docs-platform/changelog/verification/ITR-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01.yaml
+  - docs-platform/changelog/events.ndjson
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/SNAPSHOT-ITR-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01.yaml
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+allowed_dirty_paths:
+  - analysis/
+  - output/
+rollback_payload: null

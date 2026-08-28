@@ -1,0 +1,13 @@
+schema_version: 2
+change_id: CHG-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01
+title: Refresh local Financial Model dependency chain for Terminal release
+status: approved
+created_at: 2026-08-28
+decision_id: DEC-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01
+iteration_id: ITR-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01
+proposal_id: PROP-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01
+approved_payload_path: docs-platform/changelog/payloads/ITR-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01-approved.yaml
+approved_payload_sha256: 9ef41fd1aa71e668d75b94aaf9c1969de37f59b8337b0ea78743dc5cee111dfa
+operations:
+  - update the Investor Summary Financial Model dependency hash
+  - regenerate deterministic local dependent projections and payloads

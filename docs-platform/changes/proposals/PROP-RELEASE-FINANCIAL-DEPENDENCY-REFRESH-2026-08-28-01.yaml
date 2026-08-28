@@ -1,0 +1,13 @@
+schema_version: 2
+proposal_id: PROP-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01
+iteration_id: ITR-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01
+title: Refresh local Financial Model dependency chain for Terminal release
+status: approved
+proposed_by: project owner
+proposed_at: 2026-08-28T14:20:00.000Z
+summary: >-
+  Release the sealed current Investor Terminal only after its local financial
+  document projections point to the same Financial Model content state. This
+  is a provenance-only correction; no remote document or financial result changes.
+approved_payload_path: docs-platform/changelog/payloads/ITR-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01-approved.yaml
+approved_payload_sha256: 9ef41fd1aa71e668d75b94aaf9c1969de37f59b8337b0ea78743dc5cee111dfa

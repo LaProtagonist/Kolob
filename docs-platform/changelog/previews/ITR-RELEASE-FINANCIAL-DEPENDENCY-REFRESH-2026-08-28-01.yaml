@@ -1,0 +1,17 @@
+receipt_version: 1
+iteration_id: ITR-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01
+decision_id: DEC-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01
+change_set_id: CHG-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01
+previewed_at: 2026-08-28T14:20:17.000Z
+result: reviewed
+mutation_performed: false
+before_state_sha256: 0ade3a2dcbf289c9955b44ba6f93b0a211b6e9d842345df3f5f20f99b5c83a66
+after_state_sha256: 3570c446705fa88a1327836c61902dbeaaaf712d47c8c719ca367506f84e0ca0
+changes:
+  - Investor Summary source dependency hash aligns with the sealed Financial Model projection.
+  - Investor Summary, local Google payload and Financial Core projection refresh their source/provenance hashes.
+invariants:
+  monetary_outputs_unchanged: true
+  formula_outputs_unchanged: true
+  remote_google_mutation: false
+  production_mutation: false
