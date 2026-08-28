@@ -11,7 +11,7 @@ artifacts:
     purpose: Visual review evidence for the Investor Start Model at content commit 4e4e55b.
     storage: local_ignored; preferred Google Drive folder is Колобочная — Investment / Audit Artifacts / ITR-INVESTOR-START-MODEL-2026-08-04-01
     remote_url: null
-    status: pending_archive
+    status: superseded
   - artifact_id: ART-INVESTOR-START-FULL-PAGE-JPG
     iteration_id: ITR-INVESTOR-START-MODEL-2026-08-04-01
     type: review_image
@@ -22,7 +22,7 @@ artifacts:
     purpose: Full-page visual review evidence for the Investor Start Model at content commit 4e4e55b.
     storage: local_ignored; preferred Google Drive folder is Колобочная — Investment / Audit Artifacts / ITR-INVESTOR-START-MODEL-2026-08-04-01
     remote_url: null
-    status: pending_archive
+    status: superseded
   - artifact_id: ART-INVESTOR-START-DESKTOP-EMPTY
     iteration_id: ITR-INVESTOR-START-MODEL-2026-08-04-01
     type: verification_screenshot
@@ -33,7 +33,7 @@ artifacts:
     purpose: Desktop visual verification evidence.
     storage: local_ignored
     remote_url: null
-    status: pending_archive
+    status: superseded
   - artifact_id: ART-INVESTOR-START-DESKTOP-PURCHASE
     iteration_id: ITR-INVESTOR-START-MODEL-2026-08-04-01
     type: verification_screenshot
@@ -44,7 +44,7 @@ artifacts:
     purpose: Purchase scenario visual verification evidence.
     storage: local_ignored
     remote_url: null
-    status: pending_archive
+    status: superseded
   - artifact_id: ART-INVESTOR-START-DESKTOP-RENT
     iteration_id: ITR-INVESTOR-START-MODEL-2026-08-04-01
     type: verification_screenshot
@@ -55,7 +55,7 @@ artifacts:
     purpose: Rent scenario visual verification evidence.
     storage: local_ignored
     remote_url: null
-    status: pending_archive
+    status: superseded
   - artifact_id: ART-INVESTOR-START-MOBILE
     iteration_id: ITR-INVESTOR-START-MODEL-2026-08-04-01
     type: verification_screenshot
@@ -66,5 +66,4 @@ artifacts:
     purpose: Mobile visual verification evidence.
     storage: local_ignored
     remote_url: null
-    status: pending_archive
-
+    status: superseded

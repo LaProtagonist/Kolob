@@ -23,4 +23,12 @@ affected_section_ids:
   - investor-economics.public-discussion-presets
   - investor-economics.internal-participation-workbench
   - control.access-integration-contract
-
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/SNAPSHOT-ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02.yaml
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+  - docs-platform/changelog/artifacts/ITR-INVESTOR-START-MODEL-2026-08-04-01.yaml
+  - docs-platform/changelog/artifacts/ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01.yaml
+rollback_payload: null
