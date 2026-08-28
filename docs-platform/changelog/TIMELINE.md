@@ -4,10 +4,10 @@
 
 ## 1. Current state
 
-- Events: 338.
-- Timeline head event: `EVT-ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02-COMMITTED`.
-- Timeline head SHA-256: `5c9c4b4706b46e17da97688c18b4cd68bf6e27a22ad30b3a59b5eb0a5fc1e78a`.
-- Latest recorded iteration: `ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02`.
+- Events: 343.
+- Timeline head event: `EVT-ITR-FINANCIAL-SHEETS-PAYLOAD-SYNC-2026-08-29-01-COMMITTED`.
+- Timeline head SHA-256: `5203f761bd7b99b16bc5dfc795fe5cf6b157a31756143e67982f3c4140910bd5`.
+- Latest recorded iteration: `ITR-FINANCIAL-SHEETS-PAYLOAD-SYNC-2026-08-29-01`.
 
 ## 2. Modern governed iterations
 
@@ -76,6 +76,7 @@
 | 2026-08-28T20:35:09.000Z | committed | Apply cohort-maturity Investor Economics waterfall and final local presentation review | ITR-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01 | DEC-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01 | CHG-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01 | 5fff957e40ee6029d0baba8401318e7b6d472b8a | iteration/ITR-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01 | — | — | — | Apply cohort-maturity Investor Economics waterfall and final local presentation review: content commit verified and linked to the governed lifecycle before sealing. |
 | 2026-08-28T22:06:00.000Z | superseded | Separate public participation presets, internal control workbench and four-month development lead | ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-01 | DEC-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-01 | CHG-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-01 | — | — | — | — | — | Superseded unsealed provisional manifest; reopen the same owner-approved scope with the generated financial-model projection included. |
 | 2026-08-28T22:08:21.000Z | committed | Seal public participation presets, internal control workbench and four-month development lead | ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02 | DEC-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02 | CHG-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02 | 1a0a04a98e44ec82a61edc7fab8f1f42d02e00b0 | iteration/ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02 | — | — | — | Seal public participation presets, internal control workbench and four-month development lead: content commit verified and linked to the governed lifecycle before sealing. |
+| 2026-08-28T22:17:56.000Z | committed | Synchronize local Financial Google Sheets payload after approved temporal recalculation | ITR-FINANCIAL-SHEETS-PAYLOAD-SYNC-2026-08-29-01 | DEC-FINANCIAL-SHEETS-PAYLOAD-SYNC-2026-08-29-01 | CHG-FINANCIAL-SHEETS-PAYLOAD-SYNC-2026-08-29-01 | e0b68f56ed337001534dc82094e2bc5e71fba5ab | iteration/ITR-FINANCIAL-SHEETS-PAYLOAD-SYNC-2026-08-29-01 | — | — | — | Synchronize local Financial Google Sheets payload after approved temporal recalculation: content commit verified and linked to the governed lifecycle before sealing. |
 
 ## 3. Legacy imported history
 

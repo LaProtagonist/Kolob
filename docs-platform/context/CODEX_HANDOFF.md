@@ -9,16 +9,16 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 ## 2. Текущая ветка и governed iteration
 
 - Branch: `feat/investor-economics-v1`.
-- Latest closed iteration: `ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02`.
-- Latest iteration tag: `iteration/ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02`.
-- Latest content commit: `1a0a04a98e44ec82a61edc7fab8f1f42d02e00b0`.
+- Latest closed iteration: `ITR-FINANCIAL-SHEETS-PAYLOAD-SYNC-2026-08-29-01`.
+- Latest iteration tag: `iteration/ITR-FINANCIAL-SHEETS-PAYLOAD-SYNC-2026-08-29-01`.
+- Latest content commit: `e0b68f56ed337001534dc82094e2bc5e71fba5ab`.
 - Текущий Git HEAD намеренно не записывается: его вычисляет `npm run project:onboard`.
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02-COMMITTED`.
-- Hash: `5c9c4b4706b46e17da97688c18b4cd68bf6e27a22ad30b3a59b5eb0a5fc1e78a`.
-- generated_from_event_hash: `5c9c4b4706b46e17da97688c18b4cd68bf6e27a22ad30b3a59b5eb0a5fc1e78a`.
+- Event: `EVT-ITR-FINANCIAL-SHEETS-PAYLOAD-SYNC-2026-08-29-01-COMMITTED`.
+- Hash: `5203f761bd7b99b16bc5dfc795fe5cf6b157a31756143e67982f3c4140910bd5`.
+- generated_from_event_hash: `5203f761bd7b99b16bc5dfc795fe5cf6b157a31756143e67982f3c4140910bd5`.
 
 ## 4. Канонические документы
 
@@ -46,7 +46,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 5. Текущая рабочая тема
 
-Seal public participation presets, internal control workbench and four-month development lead
+Synchronize local Financial Google Sheets payload after approved temporal recalculation
 
 ## 6. Decisions и change sets
 
