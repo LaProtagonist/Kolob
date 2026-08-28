@@ -1,0 +1,8 @@
+receipt_version: 1
+iteration_id: ITR-FINANCIAL-CORE-ARTIFACT-REFRESH-2026-08-29-01
+audited_at: 2026-08-28T22:26:00.000Z
+result: passed
+financial_core_sha256: 102efbc378d8b79fd26fe8d77c10c638a471d60b20f727fcdb037808dd913102
+investor_economics_sha256: 003d5ae22a21bccbc1e7e33a34678ab009fcd9a5f097577d05eb39902471991e
+external_changes: { google_apply: not_run, production_deploy: not_run, master_merge: not_run }
+

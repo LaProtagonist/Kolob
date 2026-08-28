@@ -5,7 +5,7 @@
     "source_files": [
       {
         "path": "docs-platform/generated/financial-core-projection.json",
-        "sha256": "56b278fe95ece3693ce4507b0922891531d19b63f3de4cd0d03e432a133ea80c"
+        "sha256": "102efbc378d8b79fd26fe8d77c10c638a471d60b20f727fcdb037808dd913102"
       },
       {
         "path": "docs-platform/generated/financial-model-projection.json",

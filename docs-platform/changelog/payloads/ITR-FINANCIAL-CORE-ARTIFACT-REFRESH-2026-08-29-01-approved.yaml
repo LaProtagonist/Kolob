@@ -1,0 +1,30 @@
+schema_version: 2
+payload_id: PAYLOAD-FINANCIAL-CORE-ARTIFACT-REFRESH-2026-08-29-01
+iteration_id: ITR-FINANCIAL-CORE-ARTIFACT-REFRESH-2026-08-29-01
+proposal_id: PROP-FINANCIAL-CORE-ARTIFACT-REFRESH-2026-08-29-01
+decision_id: DEC-FINANCIAL-CORE-ARTIFACT-REFRESH-2026-08-29-01
+change_set_id: CHG-FINANCIAL-CORE-ARTIFACT-REFRESH-2026-08-29-01
+title: Refresh local Financial Core and Investor Economics deterministic artifacts
+status: approved
+approved_by: project owner
+approved_at: 2026-08-29T00:00:00.000Z
+scope: [Regenerate Financial Core and Investor Economics local provenance artifacts in the release Node runtime, verify determinism, do not change source policies or external state.]
+constraints: [no Google apply, no deployment, no production mutation, no formula change]
+affected_document_ids: [DOC-FINANCIAL-MODEL, DOC-INVESTOR-FINANCIAL-SUMMARY]
+affected_section_ids: [financial-core.generated-provenance, investor-economics.generated-provenance]
+state_hash_paths: [docs-platform/generated/financial-core-projection.json, docs-platform/generated/investor-economics-projection.json]
+content_paths:
+  - docs-platform/generated/financial-core-projection.json
+  - docs-platform/generated/investor-economics-projection.json
+  - docs-platform/changes/proposals/PROP-FINANCIAL-CORE-ARTIFACT-REFRESH-2026-08-29-01.yaml
+  - docs-platform/changes/decisions/DEC-FINANCIAL-CORE-ARTIFACT-REFRESH-2026-08-29-01.yaml
+  - docs-platform/changes/CHG-FINANCIAL-CORE-ARTIFACT-REFRESH-2026-08-29-01.yaml
+  - docs-platform/changes/iterations/ITR-FINANCIAL-CORE-ARTIFACT-REFRESH-2026-08-29-01.yaml
+  - docs-platform/changelog/audit/ITR-FINANCIAL-CORE-ARTIFACT-REFRESH-2026-08-29-01.yaml
+  - docs-platform/changelog/payloads/ITR-FINANCIAL-CORE-ARTIFACT-REFRESH-2026-08-29-01-approved.yaml
+  - docs-platform/changelog/previews/ITR-FINANCIAL-CORE-ARTIFACT-REFRESH-2026-08-29-01.yaml
+  - docs-platform/changelog/verification/ITR-FINANCIAL-CORE-ARTIFACT-REFRESH-2026-08-29-01.yaml
+  - docs-platform/changelog/events.ndjson
+seal_paths: [docs-platform/changelog/events.ndjson, docs-platform/changelog/TIMELINE.md, docs-platform/changelog/snapshots/SNAPSHOT-ITR-FINANCIAL-CORE-ARTIFACT-REFRESH-2026-08-29-01.yaml, docs-platform/context/PROJECT_STATE.yaml, docs-platform/context/CODEX_HANDOFF.md]
+allowed_dirty_paths: [analysis/, output/]
+rollback_payload: null

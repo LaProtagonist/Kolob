@@ -12,7 +12,7 @@
     "source_files": [
       {
         "path": "docs-platform/generated/financial-model-projection.json",
-        "sha256": "f65b092c0909ff8e45f3ee9e819b82d9bb559ecf64cf7194ce3e2f62f5986e42"
+        "sha256": "450246e15410bb92b75d2e36f30ef952919a6c8c385dca0329298105c5036ab4"
       },
       {
         "path": "docs-platform/registry/sources.yaml",

@@ -1,0 +1,9 @@
+receipt_version: 1
+iteration_id: ITR-FINANCIAL-CORE-ARTIFACT-REFRESH-2026-08-29-01
+decision_id: DEC-FINANCIAL-CORE-ARTIFACT-REFRESH-2026-08-29-01
+change_set_id: CHG-FINANCIAL-CORE-ARTIFACT-REFRESH-2026-08-29-01
+previewed_at: 2026-08-28T22:26:00.000Z
+result: reviewed
+mutation_performed: false
+generated_artifacts_only: true
+

@@ -1,0 +1,11 @@
+receipt_version: 1
+iteration_id: ITR-FINANCIAL-CORE-ARTIFACT-REFRESH-2026-08-29-01
+decision_id: DEC-FINANCIAL-CORE-ARTIFACT-REFRESH-2026-08-29-01
+change_set_id: CHG-FINANCIAL-CORE-ARTIFACT-REFRESH-2026-08-29-01
+verified_at: 2026-08-28T22:26:00.000Z
+result: passed
+approved_payload_sha256: 3d4593fa8da1ddf1e12cca0a2eda08fed91fd8a7c8e6ebeeb48a2b028b8ffcaa
+before_state_sha256: e1e2d3c19e2b325c5e6d22568a7a5c47d1b2948eece06bdff00368de4690e9a9
+after_state_sha256: 3b59fda5d6f98ac8e9303bf6aa78abd6fe16f3c9db94d23423527116619d7daf
+checks: [financial:core:sync passed, financial:core:check passed, investor:economics:sync passed, investor:economics:check passed]
+external_changes: { google_apply: not_run, production_deploy: not_run, master_merge: not_run }
