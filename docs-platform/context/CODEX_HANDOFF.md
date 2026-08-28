@@ -9,16 +9,16 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 ## 2. Текущая ветка и governed iteration
 
 - Branch: `feat/investor-economics-v1`.
-- Latest closed iteration: `ITR-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01`.
-- Latest iteration tag: `iteration/ITR-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01`.
-- Latest content commit: `5fff957e40ee6029d0baba8401318e7b6d472b8a`.
+- Latest closed iteration: `ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02`.
+- Latest iteration tag: `iteration/ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02`.
+- Latest content commit: `1a0a04a98e44ec82a61edc7fab8f1f42d02e00b0`.
 - Текущий Git HEAD намеренно не записывается: его вычисляет `npm run project:onboard`.
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01-COMMITTED`.
-- Hash: `f3764c1fedf56451567fc65ae8ba8bf02775bef4913568c577d9f095246b8541`.
-- generated_from_event_hash: `f3764c1fedf56451567fc65ae8ba8bf02775bef4913568c577d9f095246b8541`.
+- Event: `EVT-ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02-COMMITTED`.
+- Hash: `5c9c4b4706b46e17da97688c18b4cd68bf6e27a22ad30b3a59b5eb0a5fc1e78a`.
+- generated_from_event_hash: `5c9c4b4706b46e17da97688c18b4cd68bf6e27a22ad30b3a59b5eb0a5fc1e78a`.
 
 ## 4. Канонические документы
 
@@ -39,14 +39,14 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 | DOC-INVESTMENT-MEMO | proposed | `docs-platform/templates/investment-memorandum.md` | `464e46d307aaa98e57cab3a098cd639e212d32b51f82a06688de228f0e7fb4cd` |
 | DOC-INVESTOR-FINANCIAL-SUMMARY | research | `docs-platform/working/investor-financial-summary.yaml` | `790d4c84513d666157088c0afeb8ece09ed80080b33db54117ad1dde64a92a40` |
 | DOC-INVESTOR-START-MODEL | research | `docs-platform/working/investor-start-model.yaml` | `b81a6c4e8988a4532c9ba2749d492b3f96e37d83af822396afc82930244b2985` |
-| DOC-NETWORK-PLANNING-ASSUMPTIONS | approved | `docs-platform/working/network-planning-assumptions.yaml` | `5b212f63f45df8ed23d285f07793f0191797cbfb1b989f95a3973863ff10797a` |
+| DOC-NETWORK-PLANNING-ASSUMPTIONS | approved | `docs-platform/working/network-planning-assumptions.yaml` | `74a8420872b634c79de91593938f847cd499c62f351f12d63ab0d36e10e7970d` |
 | DOC-PILOT-CAPEX-ASSUMPTIONS | research | `docs-platform/working/pilot-capex-assumptions.yaml` | `25e11d4db20050b3a95cab40797ef0a29e56fad93c73d33d4a39415a8071d4ac` |
 | DOC-README | approved | `docs-platform/README.md` | `04e947f296a158a1c37ceb8d4c959d1f4e31cf609d16c99bee2d3c3b79b824ab` |
 | DOC-REVENUE-MODEL | research | `docs-platform/working/revenue-model.yaml` | `ab68399813d62d861522752c8e94df9cfc5d5a48e9b7723c60f2c968c4cba721` |
 
 ## 5. Текущая рабочая тема
 
-Apply cohort-maturity Investor Economics waterfall and final local presentation review
+Seal public participation presets, internal control workbench and four-month development lead
 
 ## 6. Decisions и change sets
 

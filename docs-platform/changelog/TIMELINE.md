@@ -4,10 +4,10 @@
 
 ## 1. Current state
 
-- Events: 328.
-- Timeline head event: `EVT-ITR-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01-COMMITTED`.
-- Timeline head SHA-256: `f3764c1fedf56451567fc65ae8ba8bf02775bef4913568c577d9f095246b8541`.
-- Latest recorded iteration: `ITR-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01`.
+- Events: 338.
+- Timeline head event: `EVT-ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02-COMMITTED`.
+- Timeline head SHA-256: `5c9c4b4706b46e17da97688c18b4cd68bf6e27a22ad30b3a59b5eb0a5fc1e78a`.
+- Latest recorded iteration: `ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02`.
 
 ## 2. Modern governed iterations
 
@@ -74,6 +74,8 @@
 | 2026-08-28T19:06:15.203Z | superseded | Implement local Investor Economics v1 on the sealed Business Financial Core | ITR-INVESTOR-ECONOMICS-V1-2026-08-28-01 | DEC-INVESTOR-ECONOMICS-V1-2026-08-28-01 | CHG-INVESTOR-ECONOMICS-V1-2026-08-28-01 | — | — | — | — | — | Implement local Investor Economics v1 on the sealed Business Financial Core superseded by Correct local Investor Economics v1 and business baseline (ITR-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01). Reason: Owner-approved business baseline correction expands the unsealed local draft to Creative Cluster prepayment, tranche maturity and historical evidence repair; preserve prior draft history without changing production or Google. |
 | 2026-08-28T19:16:18.000Z | committed | Correct local Investor Economics v1 and business baseline | ITR-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01 | DEC-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01 | CHG-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01 | c919102b87d83297a839f32762d7ca1a4f6cfcfe | iteration/ITR-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01 | — | — | — | Correct local Investor Economics v1 and business baseline: content commit verified and linked to the governed lifecycle before sealing. |
 | 2026-08-28T20:35:09.000Z | committed | Apply cohort-maturity Investor Economics waterfall and final local presentation review | ITR-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01 | DEC-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01 | CHG-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01 | 5fff957e40ee6029d0baba8401318e7b6d472b8a | iteration/ITR-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01 | — | — | — | Apply cohort-maturity Investor Economics waterfall and final local presentation review: content commit verified and linked to the governed lifecycle before sealing. |
+| 2026-08-28T22:06:00.000Z | superseded | Separate public participation presets, internal control workbench and four-month development lead | ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-01 | DEC-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-01 | CHG-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-01 | — | — | — | — | — | Superseded unsealed provisional manifest; reopen the same owner-approved scope with the generated financial-model projection included. |
+| 2026-08-28T22:08:21.000Z | committed | Seal public participation presets, internal control workbench and four-month development lead | ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02 | DEC-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02 | CHG-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02 | 1a0a04a98e44ec82a61edc7fab8f1f42d02e00b0 | iteration/ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02 | — | — | — | Seal public participation presets, internal control workbench and four-month development lead: content commit verified and linked to the governed lifecycle before sealing. |
 
 ## 3. Legacy imported history
 
