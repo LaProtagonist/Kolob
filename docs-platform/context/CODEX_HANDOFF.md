@@ -9,16 +9,16 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 ## 2. Текущая ветка и governed iteration
 
 - Branch: `master`.
-- Latest closed iteration: `ITR-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10`.
-- Latest iteration tag: `iteration/ITR-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10`.
-- Latest content commit: `228a6a23235c332bcc675e04b79b62121c7418df`.
+- Latest closed iteration: `ITR-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01`.
+- Latest iteration tag: `iteration/ITR-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01`.
+- Latest content commit: `f0e6f3cdbcdceec939a0667d0867589c3f321a01`.
 - Текущий Git HEAD намеренно не записывается: его вычисляет `npm run project:onboard`.
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10-COMMITTED`.
-- Hash: `fe373554ee2f1a7d078e8608690afbdc6bcfedd4cfe8f52e6cb824068504c997`.
-- generated_from_event_hash: `fe373554ee2f1a7d078e8608690afbdc6bcfedd4cfe8f52e6cb824068504c997`.
+- Event: `EVT-ITR-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01-COMMITTED`.
+- Hash: `5acb12fc101dd51e9e9fdb97658122f428f56542c1af76e5d379a248e61ee108`.
+- generated_from_event_hash: `5acb12fc101dd51e9e9fdb97658122f428f56542c1af76e5d379a248e61ee108`.
 
 ## 4. Канонические документы
 
@@ -37,7 +37,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 | DOC-FINANCIAL-MODEL | research | `docs-platform/working/financial-model.yaml` | `6a76990d3635e62ac633610754415d401edba989f1a49a463091e2cece1e329b` |
 | DOC-FOUNDATION | approved | `docs-platform/00-foundation.md` | `5b4d457184c055ba11f8c4d05cc263139d2eb4f623981bcdc198c0114a50c0bb` |
 | DOC-INVESTMENT-MEMO | proposed | `docs-platform/templates/investment-memorandum.md` | `464e46d307aaa98e57cab3a098cd639e212d32b51f82a06688de228f0e7fb4cd` |
-| DOC-INVESTOR-FINANCIAL-SUMMARY | research | `docs-platform/working/investor-financial-summary.yaml` | `429aca4726de5284a37d87ee9522959e7de787edb0bbbe4b03694f287bcb18fa` |
+| DOC-INVESTOR-FINANCIAL-SUMMARY | research | `docs-platform/working/investor-financial-summary.yaml` | `790d4c84513d666157088c0afeb8ece09ed80080b33db54117ad1dde64a92a40` |
 | DOC-INVESTOR-START-MODEL | research | `docs-platform/working/investor-start-model.yaml` | `b81a6c4e8988a4532c9ba2749d492b3f96e37d83af822396afc82930244b2985` |
 | DOC-NETWORK-PLANNING-ASSUMPTIONS | approved | `docs-platform/working/network-planning-assumptions.yaml` | `1136e30e205cf03abef7232fb1618b624f2f4d1744d14de966089908d4c2022b` |
 | DOC-PILOT-CAPEX-ASSUMPTIONS | research | `docs-platform/working/pilot-capex-assumptions.yaml` | `25e11d4db20050b3a95cab40797ef0a29e56fad93c73d33d4a39415a8071d4ac` |
@@ -46,7 +46,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 5. Текущая рабочая тема
 
-Final editorial cleanup of Investor Terminal scaling page
+Refresh local Financial Model dependency chain for Terminal release
 
 ## 6. Decisions и change sets
 

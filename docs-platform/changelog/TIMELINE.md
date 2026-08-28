@@ -4,10 +4,10 @@
 
 ## 1. Current state
 
-- Events: 300.
-- Timeline head event: `EVT-ITR-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10-COMMITTED`.
-- Timeline head SHA-256: `fe373554ee2f1a7d078e8608690afbdc6bcfedd4cfe8f52e6cb824068504c997`.
-- Latest recorded iteration: `ITR-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10`.
+- Events: 306.
+- Timeline head event: `EVT-ITR-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01-COMMITTED`.
+- Timeline head SHA-256: `5acb12fc101dd51e9e9fdb97658122f428f56542c1af76e5d379a248e61ee108`.
+- Latest recorded iteration: `ITR-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01`.
 
 ## 2. Modern governed iterations
 
@@ -69,6 +69,7 @@
 | 2026-08-27T23:22:40.000Z | committed | Finalize unified reserve and rollout funding after failed pre-commit continuations | ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-08 | DEC-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-08 | CHG-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-08 | ee577bcc24602e502003dc04c398ee4ef0803b59 | iteration/ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-08 | — | — | — | Finalize unified reserve and rollout funding after failed pre-commit continuations: content commit verified and linked to the governed lifecycle before sealing. |
 | 2026-08-28T00:09:26.000Z | committed | Compact Investor Terminal network-summary presentation | ITR-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09 | DEC-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09 | CHG-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09 | bd5a37b5527696697d656eff2cafe275ee01a11b | iteration/ITR-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09 | — | — | — | Compact Investor Terminal network-summary presentation: content commit verified and linked to the governed lifecycle before sealing. |
 | 2026-08-28T01:07:06.000Z | committed | Final editorial cleanup of Investor Terminal scaling page | ITR-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10 | DEC-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10 | CHG-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10 | 228a6a23235c332bcc675e04b79b62121c7418df | iteration/ITR-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10 | — | — | — | Final editorial cleanup of Investor Terminal scaling page: content commit verified and linked to the governed lifecycle before sealing. |
+| 2026-08-28T14:29:53.000Z | committed | Refresh local Financial Model dependency chain for Terminal release | ITR-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01 | DEC-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01 | CHG-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01 | f0e6f3cdbcdceec939a0667d0867589c3f321a01 | iteration/ITR-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01 | — | — | — | Refresh local Financial Model dependency chain for Terminal release: content commit verified and linked to the governed lifecycle before sealing. |
 
 ## 3. Legacy imported history
 
