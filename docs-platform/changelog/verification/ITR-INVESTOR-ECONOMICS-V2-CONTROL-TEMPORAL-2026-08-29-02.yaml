@@ -1,0 +1,30 @@
+receipt_version: 1
+iteration_id: ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02
+decision_id: DEC-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02
+change_set_id: CHG-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02
+verified_at: 2026-08-28T22:07:00.000Z
+result: passed
+approved_payload_sha256: b55688f6272e489300c0dae33b7784fbf1ed20620ef4e842bf64539aa17dca46
+before_state_sha256: 941f4e21718d0ce03c828ab26b7aadd6438c977c473985ea9e3a1a3adae27847
+after_state_sha256: 495e4a509ed125746e1e6d48e4cf1c41d6dc5e101f6f895eb1b931d8f64d362e
+checks:
+  - npm run build (passed)
+  - npm run financial:model:check (passed)
+  - npm run financial:core:check (passed)
+  - npm run investor:economics:check (passed)
+  - npm run investor:economics:test (22 passed)
+  - node scripts/test-investor-terminal.cjs (passed)
+  - node scripts/test-site.cjs (passed)
+  - npm run verify:affected (passed after seal)
+  - npm run verify:release (passed after seal)
+invariants:
+  public_presets_are_read_only_and_exactly_four: passed
+  control_workbench_does_not_mutate_public_preset: passed
+  governed_four_month_lead_drives_sales_and_maturity: passed
+  no_double_use_of_self_financing_or_investor_cash: passed
+  tablet_table_scroll_is_local: passed
+historical_artifact_repair:
+  method: existing project-approved hash-exact restoration mechanism
+  temporary_artifacts_staged_or_committed: false
+external_changes: { google_apply: not_run, production_deploy: not_run, master_merge: not_run }
+

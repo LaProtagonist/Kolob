@@ -142,7 +142,18 @@ export const notFoundPage: PageMeta = {
   noindex: true
 };
 
+export const controlPage: PageMeta = {
+  id: "control",
+  path: "/control",
+  label: "Управление проектом",
+  title: "Управление проектом — Колобочная",
+  description: "Внутренняя рабочая зона проекта.",
+  ogImage: "/media/hero-kolobok-1200.webp",
+  noindex: true,
+};
+
 export function pageByPath(pathname: string) {
   const normalized = pathname === "" ? "/" : pathname.replace(/\/+$/, "") || "/";
+  if (normalized === "/control" || normalized.startsWith("/control/")) return controlPage;
   return pages.find((page) => page.path === normalized) ?? notFoundPage;
 }

@@ -28,6 +28,7 @@ const sourcePaths = [
   "src/lib/configured-economics.ts",
   "src/lib/financial-core.ts",
   "src/lib/investor-configuration.ts",
+  "src/content/investor-participation-presets.ts",
   "src/lib/network-scaling.ts",
   "docs-platform/working/network-planning-assumptions.yaml",
 ] as const;

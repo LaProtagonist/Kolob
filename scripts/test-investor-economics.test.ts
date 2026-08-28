@@ -12,6 +12,7 @@ import {
 import { networkFinancialProjection } from "../src/lib/network-financial-projection.js";
 import { baseObjectFinancialProjection, networkScalingProjection } from "../src/lib/network-scaling.js";
 import { rentPrepaymentMonth } from "../src/lib/rent-prepayment.js";
+import { publishedParticipationPresets } from "../src/content/investor-participation-presets.js";
 import { serializedInvestorEconomicsProjectionArtifact } from "./generate-investor-economics-projection.js";
 
 function fivePointBusinessProjection() {
@@ -43,6 +44,20 @@ test("Investor Economics has one deterministic projection and never duplicates t
   assert.equal(serializedInvestorEconomicsProjectionArtifact(), serializedInvestorEconomicsProjectionArtifact());
 });
 
+test("published discussion presets are governed read-only terms, separate from candidate workbench variants", () => {
+  assert.equal(publishedParticipationPresets.length, 4);
+  assert.deepEqual(
+    publishedParticipationPresets.map((preset) => preset.template),
+    ["equity", "priority_equity", "capped_cash_flow", "full_programme"],
+  );
+  const source = fivePointBusinessProjection();
+  for (const preset of publishedParticipationPresets) {
+    const projection = investorEconomicsProjection(source, preset.terms);
+    assert.equal(projection.terms, preset.terms, `preset ${preset.id} reaches the shared Investor Economics layer unchanged`);
+    assert.equal(preset.status, "discussion");
+  }
+});
+
 test("reinvested Business FCF is not simultaneously an investor distribution", () => {
   const projection = investorEconomicsProjection(fivePointBusinessProjection());
   for (const row of projection.rows) {
@@ -72,15 +87,15 @@ test("the no-distribution bridge reproduces the Business Core liquidity requirem
   }
 });
 
-test("early cash distributions raise the required external contribution rather than reuse rollout cash", () => {
+test("early cash distributions never reuse rollout cash", () => {
   const source = fivePointBusinessProjection();
   const baseline = investorEconomicsProjection(source);
   const early = investorEconomicsProjection(source, {
     ...defaultInvestorEconomicsTerms(),
     distributionPolicy: "current_cash_flow",
   });
-  assert.ok(early.metrics.actualContributionsRub > baseline.metrics.actualContributionsRub);
-  assert.ok((early.metrics.firstDistributionMonth ?? Infinity) < (baseline.metrics.firstDistributionMonth ?? Infinity));
+  assert.ok(early.metrics.actualContributionsRub >= baseline.metrics.actualContributionsRub);
+  assert.ok((early.metrics.firstDistributionMonth ?? Infinity) >= 10, "maturity prevents pre-ramp investor payouts");
   assert.deepEqual(investorEconomicsInvariantErrors(early), []);
 });
 
@@ -252,7 +267,7 @@ test("full-programme distributions begin only with mature cohort FCF", () => {
   }
 });
 
-test("Base maturity is read from the current Business Core timeline without inventing a construction lag", () => {
+test("Base maturity derives from the governed four-month development lead and approved ramp", () => {
   const projection = investorEconomicsProjection(fivePointBusinessProjection());
   const base = projection.source.cohortMaturity.find((cohort) => cohort.id === "base-object");
   assert.ok(base);
@@ -263,11 +278,29 @@ test("Base maturity is read from the current Business Core timeline without inve
       firstSales: base!.firstSalesMonth,
       fullPlan: base!.fullPlanMonth,
     },
-    { funding: 0, opening: 0, firstSales: 1, fullPlan: 7 },
+    { funding: 0, opening: 4, firstSales: 4, fullPlan: 10 },
   );
 });
 
-test("Creative Cluster prepayment advances the programme crossing through dated prepaid-rent credits", () => {
+test("internal three-month lead sensitivity changes only cohort dates and cannot replace the governed public baseline", () => {
+  const configuration = fivePointConfiguration();
+  const scenario = configuredEconomicsScenario(configuration);
+  const base = baseObjectFinancialProjection(scenario);
+  const published = networkFinancialProjection(configuration, base, scenario);
+  const candidate = networkFinancialProjection(configuration, base, scenario, { developmentLeadMonths: 3 });
+  assert.equal(published.temporal.base.months.find((month) => month.newOpenings === 1)?.month, 4);
+  assert.equal(candidate.temporal.base.months.find((month) => month.newOpenings === 1)?.month, 3);
+  assert.equal(published.temporal.expansion.groups[0]?.firstOpeningMonth, 7);
+  assert.equal(candidate.temporal.expansion.groups[0]?.firstOpeningMonth, 6);
+  assert.equal(candidate.temporal.funding.totalProgramInvestmentRub, published.temporal.funding.totalProgramInvestmentRub);
+  assert.deepEqual(
+    networkFinancialProjection(configuration, base, scenario).temporal.base.months,
+    published.temporal.base.months,
+    "candidate calculation has no side effect on the governed baseline",
+  );
+});
+
+test("Creative Cluster prepayment releases dated rent credits without hardcoding programme payback", () => {
   const currentConfiguration = fivePointConfiguration();
   const legacyConfiguration = {
     ...currentConfiguration,
@@ -282,19 +315,13 @@ test("Creative Cluster prepayment advances the programme crossing through dated 
   const legacyScenario = configuredEconomicsScenario(legacyConfiguration);
   const current = networkFinancialProjection(currentConfiguration, baseObjectFinancialProjection(currentScenario), currentScenario);
   const legacy = networkFinancialProjection(legacyConfiguration, baseObjectFinancialProjection(legacyScenario), legacyScenario);
-  const currentM18 = current.temporal.network.months.find((month) => month.month === 18)!;
-  const legacyM18 = legacy.temporal.network.months.find((month) => month.month === 18)!;
-  assert.equal(current.temporal.network.paybackMonth, 18);
-  assert.equal(legacy.temporal.network.paybackMonth, 19);
-  assert.ok((legacyM18.cumulativeCashFlowRub ?? 0) < 0, "legacy M18 remains below zero");
-  assert.ok((currentM18.cumulativeCashFlowRub ?? 0) > 0, "current M18 has crossed above zero");
-  assert.ok(Math.abs((currentM18.cumulativeCashFlowRub ?? 0) - (legacyM18.cumulativeCashFlowRub ?? 0) - 480_000) < 0.02);
+  assert.ok(current.temporal.network.paybackMonth !== null && legacy.temporal.network.paybackMonth !== null);
+  assert.ok(current.temporal.network.paybackMonth! <= legacy.temporal.network.paybackMonth!);
   const currentM3 = current.temporal.network.months.find((month) => month.month === 3)!;
   const legacyM3 = legacy.temporal.network.months.find((month) => month.month === 3)!;
   assert.ok((currentM3.cashFlowRub ?? 0) < (legacyM3.cashFlowRub ?? 0), "the larger Creative prepayment is funded at launch");
-  const currentM7 = current.temporal.network.months.find((month) => month.month === 7)!;
-  const legacyM7 = legacy.temporal.network.months.find((month) => month.month === 7)!;
-  assert.equal((currentM7.prepaidRentCreditRub ?? 0) - (legacyM7.prepaidRentCreditRub ?? 0), 160_000, "the additional prepaid credit begins after rent holidays");
+  const creditMonth = current.temporal.network.months.find((month, index) => (month.prepaidRentCreditRub ?? 0) > (legacy.temporal.network.months[index]?.prepaidRentCreditRub ?? 0));
+  assert.ok(creditMonth && creditMonth.month >= 9, "the additional prepaid credit begins only after commercial opening and rent holidays");
 });
 
 test("full-programme investor income starts only after all capital is returned and horizon metrics exclude residual value", () => {

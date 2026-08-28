@@ -19,7 +19,6 @@ const routes = [
   { name: "materials", label: "Materials", path: "/materials" },
   { name: "investor-questions", label: "Investor questions", path: "/investor-questions" },
   { name: "privacy", label: "Privacy", path: "/privacy" },
-  { name: "capex-configurator", label: "CAPEX configurator", path: "/capex-configurator" },
   { name: "launch-budget", label: "Launch budget", path: "/launch-budget" },
   { name: "revenue-model", label: "Revenue model", path: "/revenue-model" },
   { name: "economics", label: "Economics", path: "/economics" },

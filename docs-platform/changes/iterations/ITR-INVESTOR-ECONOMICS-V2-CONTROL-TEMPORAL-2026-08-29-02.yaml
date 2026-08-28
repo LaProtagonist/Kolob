@@ -1,0 +1,26 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02
+proposal_id: PROP-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02
+decision_id: DEC-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02
+change_set_id: CHG-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02
+title: Seal public participation presets, internal control workbench and four-month development lead
+status: approved
+approved_by: project owner
+approved_at: 2026-08-29T00:00:00.000Z
+actor: Codex
+scope: >-
+  Exact successor to the unsealed provisional scope, including native regenerated
+  Financial Model, Financial Core and Investor Economics outputs. Production,
+  master, Google, CAPEX policy and capacity policy remain unchanged.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02-approved.yaml
+approved_payload_sha256: b55688f6272e489300c0dae33b7784fbf1ed20620ef4e842bf64539aa17dca46
+before_state_sha256: 941f4e21718d0ce03c828ab26b7aadd6438c977c473985ea9e3a1a3adae27847
+after_state_sha256: 495e4a509ed125746e1e6d48e4cf1c41d6dc5e101f6f895eb1b931d8f64d362e
+affected_document_ids: [DOC-FINANCIAL-MODEL, DOC-INVESTOR-FINANCIAL-SUMMARY, DOC-NETWORK-PLANNING-ASSUMPTIONS]
+affected_section_ids:
+  - network-temporal.development-opening-lead
+  - network-temporal.cohort-maturity-eligibility
+  - investor-economics.public-discussion-presets
+  - investor-economics.internal-participation-workbench
+  - control.access-integration-contract
+

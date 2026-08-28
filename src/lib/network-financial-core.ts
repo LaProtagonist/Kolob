@@ -23,6 +23,7 @@ import {
   historicalOpexTreatmentCatalog,
 } from "./physical-allocation";
 import {
+  canonicalTemporalAssumptions,
   canonicalNetworkOpexConstants,
   logisticsPlanning,
   productionCapacityProjection,
@@ -407,7 +408,7 @@ export function expansionReserveProjection(
   scaling: NetworkScalingProjection,
 ): ExpansionReserveProjection {
   const reserveMonths = configuration.launchBudget.operatingReserveMonths;
-  const temporalLead = 1;
+  const temporalLead = canonicalTemporalAssumptions().developmentLeadMonths;
   const cohortReserves = scaling.cohorts.slice(1).flatMap((cohort) => cohort.cohort.openingWaves.map((wave, index) => {
     const rent = reserveRentLine(cohort, wave.count, reserveMonths);
     const includedLines = cohortReserveLines(cohort, wave.count);

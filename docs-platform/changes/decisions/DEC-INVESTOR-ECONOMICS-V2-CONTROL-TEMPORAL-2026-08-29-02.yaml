@@ -1,0 +1,14 @@
+schema_version: 2
+decision_id: DEC-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02
+iteration_id: ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02
+title: Approve exact governed scope for Investor Economics v2 final verification
+status: approved
+approved_by: project owner
+approved_at: 2026-08-29T00:00:00.000Z
+scope: >-
+  The Financial Model projection produced by the native check is part of this
+  material temporal correction and must be governed alongside Financial Core and
+  Investor Economics artifacts. No decision changes public deal terms or production state.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02-approved.yaml
+approved_payload_sha256: b55688f6272e489300c0dae33b7784fbf1ed20620ef4e842bf64539aa17dca46
+

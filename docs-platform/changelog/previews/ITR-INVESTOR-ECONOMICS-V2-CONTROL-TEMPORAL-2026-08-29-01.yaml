@@ -1,0 +1,26 @@
+receipt_version: 1
+iteration_id: ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-01
+decision_id: DEC-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-01
+change_set_id: CHG-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-01
+previewed_at: 2026-08-28T22:03:27.000Z
+result: reviewed
+mutation_performed: false
+business_preview:
+  governed_development_lead_months: 4
+  five_total_points:
+    total_program_investment_rub: 102702001.73
+    external_funding_requirement_rub: 79218642.02
+    business_self_financing_rub: 23483359.71
+    programme_payback: M21
+public_preview:
+  discussion_presets: [Доля в компании, Приоритетный возврат + доля, Доля в денежном потоке, Финансирование всей программы]
+  editable_deal_inputs: absent
+  all_variants: absent
+control_preview:
+  routes: [/control, /control/capex, /control/participation, /control/requests]
+  production_behavior: deny routes until server-side access guard exists
+external_changes:
+  google_apply: not_run
+  production_deploy: not_run
+  master_merge: not_run
+

@@ -1,0 +1,121 @@
+receipt_version: 1
+iteration_id: ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-01
+audited_at: 2026-08-28T22:03:27.000Z
+result: passed
+public_internal_boundary:
+  public_route: /investor-terminal
+  public_discussion_presets: 4
+  public_editable_deal_inputs: 0
+  public_all_variants_control: absent
+  control_routes: [/control, /control/capex, /control/participation, /control/requests]
+  public_control_navigation_link: absent
+  production_control_route_behavior: not_found_until_reverse_proxy_authentication
+  security_verdict: Client-side hiding and noindex are not access control. The local Control Hub is deliberately excluded from production static output pending a server-side reverse-proxy guard.
+requests_integration:
+  form_path: POST /api/contact
+  persistence: contact-server JSONL log
+  protected_read_path: /leads and CSV export require server cookie authentication
+  control_behavior: truthful status/integration page; no fabricated CRM history or public personal data
+five_point_cohort_timeline:
+  - cohort: Базовый объект
+    funding_month: M0
+    development_lead_months: 4
+    first_sales_month: M4
+    full_plan_month: M10
+    first_eligible_fcf_month: M10
+  - cohort: Креативный кластер
+    funding_month: M3
+    development_lead_months: 4
+    first_sales_month: M7
+    full_plan_month: M13
+    first_eligible_fcf_month: M13
+  - cohort: Фудхолл
+    funding_month: M6
+    development_lead_months: 4
+    first_sales_month: M10
+    full_plan_month: M16
+    first_eligible_fcf_month: M16
+  - cohort: Исторический центр · с посадкой
+    funding_month: M9
+    development_lead_months: 4
+    first_sales_month: M13
+    full_plan_month: M19
+    first_eligible_fcf_month: M19
+  - cohort: Исторический центр · на вынос
+    funding_month: M12
+    development_lead_months: 4
+    first_sales_month: M16
+    full_plan_month: M22
+    first_eligible_fcf_month: M22
+business_before_after:
+  five_total_points:
+    before:
+      total_program_investment_rub: 102702001.73
+      external_funding_requirement_rub: 62888281.86
+      business_self_financing_rub: 39813719.87
+      programme_payback: M18
+    after:
+      total_program_investment_rub: 102702001.73
+      external_funding_requirement_rub: 79218642.02
+      business_self_financing_rub: 23483359.71
+      programme_payback: M21
+    explanation: CAPEX and mature P&L are unchanged. The four-month funding-to-sales lead delays operating cash that formerly self-financed later openings.
+  nine_total_points:
+    after:
+      total_program_investment_rub: 157025545.74
+      external_funding_requirement_rub: 79218642.02
+      business_self_financing_rub: 77806903.72
+      programme_payback: M25
+  thirteen_total_points:
+    after:
+      total_program_investment_rub: 211349089.75
+      external_funding_requirement_rub: 79218642.02
+      business_self_financing_rub: 132130447.73
+      programme_payback: M25
+investor_before_after:
+  equity_25:
+    before:
+      capital_rub: 62888281.85
+      first_payout: M19
+      cash_payback: M45
+      cash_irr_to_m60: 15.73%
+      cash_moic_to_m60: 1.6023
+    after:
+      capital_rub: 79218642.01
+      first_payout: M22
+      cash_payback: M55
+      cash_irr_to_m60: 4.87%
+      cash_moic_to_m60: 1.1757
+      residual_right: 25% company equity
+  full_programme_80_15:
+    before:
+      commitment_rub: 102702001.73
+      first_capital_return: M7
+      full_capital_return: M25
+      income_to_m60_rub: 50434066.42
+      payments_to_m60_rub: 153136068.14
+      cash_irr_to_m60: 26.84%
+      cash_moic_to_m60: 1.4911
+    after:
+      commitment_rub: 102702001.73
+      first_capital_return: M10
+      full_capital_return: M28
+      income_to_m60_rub: 46113305.41
+      payments_to_m60_rub: 148815307.13
+      cash_irr_to_m60: 21.74%
+      cash_moic_to_m60: 1.4490
+      residual_right: 15% FCF through M60
+  explanation: Terms are unchanged. The baseline business lead postpones maturity and therefore mature FCF eligibility.
+responsive_review:
+  desktop_1440: passed
+  tablet_1024: passed
+  mobile_390: passed
+  tablet_waterfall: document and body widths remain within viewport; horizontal scroll is local to the monthly table
+coverage:
+  production_capacity: review_required
+  investor_wording: Предварительный расчёт; требуется проверка мощности производства.
+external_state:
+  google_apply: not_run
+  production_deploy: not_run
+  master_merge: not_run
+

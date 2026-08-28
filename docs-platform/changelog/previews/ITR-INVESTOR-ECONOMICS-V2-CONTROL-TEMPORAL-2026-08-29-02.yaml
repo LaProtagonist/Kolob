@@ -1,0 +1,16 @@
+receipt_version: 1
+iteration_id: ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02
+decision_id: DEC-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02
+change_set_id: CHG-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02
+previewed_at: 2026-08-28T22:07:00.000Z
+result: reviewed
+mutation_performed: false
+scope_correction:
+  superseded_unsealed_iteration: ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-01
+  added_state_artifact: docs-platform/generated/financial-model-projection.json
+  numeric_change: combined_irr_annual precision only; material scenario outputs unchanged by this regeneration
+business_preview:
+  development_lead_months: 4
+  five_total_points: { total_program_investment_rub: 102702001.73, external_funding_requirement_rub: 79218642.02, programme_payback: M21 }
+external_changes: { google_apply: not_run, production_deploy: not_run, master_merge: not_run }
+

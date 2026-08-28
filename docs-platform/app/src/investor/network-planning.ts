@@ -60,8 +60,8 @@ export function validateNetworkPlanningModel(model = readNetworkPlanningModel())
     errors.push("Base Object must retain the reconciled 500000 ₽ Ligovsky reference, the two-month approved rent-free term, and the separate historical 350000 ₽ Financial Model rent.");
   }
   const temporal = model.temporal;
-  if (temporal?.financial_model_source !== "docs-platform/working/financial-model.yaml" || temporal?.launch_capex_lead_months !== 1) {
-    errors.push("Temporal network planning must use the canonical Financial Model and a one-month launch-CAPEX lead.");
+  if (temporal?.financial_model_source !== "docs-platform/working/financial-model.yaml" || temporal?.development_lead_months !== 4) {
+    errors.push("Temporal network planning must use the canonical Financial Model and the approved four-month development lead.");
   }
   if (temporal?.rent_free_defaults?.street !== 2 || temporal?.rent_free_defaults?.creative_cluster !== 2 || temporal?.rent_free_defaults?.foodhall !== 0) {
     errors.push("Temporal network planning must retain 2-month street/cluster rent-free defaults and no automatic Foodhall rent-free period.");
@@ -80,15 +80,15 @@ export function validateNetworkPlanningModel(model = readNetworkPlanningModel())
   if (JSON.stringify(rollout?.district_preset_ids) !== JSON.stringify(expectedDistricts)) errors.push("Network rollout must use the four approved district rent presets and exclude the flagship reference.");
   if (rollout?.default_additional_point_count !== 4 || rollout?.size_presets?.["4"]?.points_per_district !== 1 || rollout?.size_presets?.["8"]?.points_per_district !== 2 || rollout?.size_presets?.["12"]?.points_per_district !== 3) errors.push("Network rollout size presets must distribute 4/8/12 additional points evenly across the four districts.");
   const rolloutSchedule = rollout?.schedule;
-  if (rolloutSchedule?.base_object_opening_month !== 0 || rolloutSchedule?.first_additional_opening_month !== 4 || rolloutSchedule?.additional_opening_interval_months !== 3 || rolloutSchedule?.repeated_group_wave_interval_months !== 12) {
-    errors.push("Network rollout schedule must retain the approved Month 0 / 4 / 7 / 10 / 13 cadence and repeat interval.");
+  if (rolloutSchedule?.base_object_opening_month !== 4 || rolloutSchedule?.first_additional_opening_month !== 7 || rolloutSchedule?.additional_opening_interval_months !== 3 || rolloutSchedule?.repeated_group_wave_interval_months !== 12) {
+    errors.push("Network rollout schedule must retain the approved four-month lead and Month 4 / 7 / 10 / 13 / 16 commercial-opening cadence.");
   }
   if (rollout?.default_point?.bar_enabled !== true) errors.push("Default additional points must keep the optional bar enabled.");
   const expectedGroups: Record<string, { format: string; location: string; area: number; checks: number; openingMonth: number }> = {
-    "nevsky-premium": { format: "takeaway", location: "creative_cluster", area: 40, checks: 175, openingMonth: 4 },
-    "central-high-traffic": { format: "takeaway", location: "foodhall", area: 25, checks: 215, openingMonth: 7 },
-    "historic-center-core": { format: "with_seating", location: "street", area: 60, checks: 175, openingMonth: 10 },
-    "historic-center-value": { format: "takeaway", location: "street", area: 40, checks: 150, openingMonth: 13 },
+    "nevsky-premium": { format: "takeaway", location: "creative_cluster", area: 40, checks: 175, openingMonth: 7 },
+    "central-high-traffic": { format: "takeaway", location: "foodhall", area: 25, checks: 215, openingMonth: 10 },
+    "historic-center-core": { format: "with_seating", location: "street", area: 60, checks: 175, openingMonth: 13 },
+    "historic-center-value": { format: "takeaway", location: "street", area: 40, checks: 150, openingMonth: 16 },
   };
   for (const [id, expected] of Object.entries(expectedGroups)) {
     const group = rollout?.groups?.[id];

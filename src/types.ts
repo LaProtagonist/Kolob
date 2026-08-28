@@ -12,6 +12,7 @@ export type RouteId =
   | "launchBudget"
   | "revenueModel"
   | "economics"
+  | "control"
   | "notFound";
 
 export type PageMeta = {

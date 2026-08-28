@@ -1,0 +1,113 @@
+schema_version: 2
+payload_id: PAYLOAD-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-01
+iteration_id: ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-01
+proposal_id: PROP-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-01
+decision_id: DEC-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-01
+change_set_id: CHG-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-01
+title: Separate public participation presets, internal control workbench and four-month development lead
+status: approved
+approved_by: project owner
+approved_at: 2026-08-29T00:00:00.000Z
+scope:
+  - Keep Investor Economics on its existing Shared Financial Core and Temporal Network Projection; do not create a parallel financial or investor engine.
+  - Publish four governed discussion presets in the public participation view: equity, priority plus equity, capped cash flow and full-programme funding. Public visitors can select a preset but cannot edit deal terms or open sensitivity permutations.
+  - Create local-only internal routes /control, /control/capex, /control/participation and /control/requests. Reuse the existing CAPEX data flow and retain editable candidate workbench terms only inside /control/participation.
+  - Treat client-side route hiding and noindex as insufficient security. Production builds deny all /control routes and the legacy CAPEX alias until a reverse-proxy authentication integration contract is implemented.
+  - Use the owner-approved conservative development lead of four months from funding to first sales for Base and every additional cohort. Preserve the governed ramp, seasonality, revenue, OPEX, tax, maintenance, CAPEX, reserve and capacity-review semantics.
+  - Regenerate deterministic local Financial Core and Investor Economics artifacts, calculate before/after temporal results and keep investor distribution eligibility tied to cohort maturity rather than a global lock.
+  - Add public/internal, temporal, routing and responsive browser invariants. Create ignored local review PNGs only; do not publish them.
+constraints:
+  - no production deployment, production mutation, master merge, push, pull, branch switch or Google operation
+  - no new capacity throughput, legal instrument, valuation, interest rate, investor offer or financial-policy change
+  - no public link, sitemap inclusion or unauthenticated production exposure for /control or /capex-configurator
+  - contact requests remain a truthful integration-status view unless an existing protected persistent read path is available
+affected_document_ids:
+  - DOC-FINANCIAL-MODEL
+  - DOC-INVESTOR-FINANCIAL-SUMMARY
+  - DOC-NETWORK-PLANNING-ASSUMPTIONS
+affected_section_ids:
+  - network-temporal.development-opening-lead
+  - network-temporal.cohort-maturity-eligibility
+  - investor-economics.public-discussion-presets
+  - investor-economics.internal-participation-workbench
+  - investor-terminal.participation-public-ia
+  - investor-terminal.responsive-waterfall-scroll
+  - control.access-integration-contract
+  - control.capex-legacy-alias
+state_hash_paths:
+  - docs-platform/app/src/investor/network-planning.ts
+  - docs-platform/generated/financial-core-projection.json
+  - docs-platform/generated/investor-economics-projection.json
+  - docs-platform/schemas/network-planning-assumptions.schema.json
+  - docs-platform/working/network-planning-assumptions.yaml
+  - docs-platform/working/control-access-contract.md
+  - scripts/capture-investor-economics-v2-review.cjs
+  - scripts/generate-investor-economics-projection.ts
+  - scripts/prerender-dist.cjs
+  - scripts/test-investor-economics.test.ts
+  - scripts/test-investor-journey.test.ts
+  - scripts/test-investor-terminal.cjs
+  - scripts/test-site.cjs
+  - src/App.tsx
+  - src/components/ControlHub.tsx
+  - src/components/InvestorEconomicsPanel.tsx
+  - src/components/InvestorTerminal.tsx
+  - src/content/investor-participation-presets.ts
+  - src/content/network-planning-data.json
+  - src/content/site.ts
+  - src/lib/network-financial-core.ts
+  - src/lib/network-financial-projection.ts
+  - src/lib/network-planning.ts
+  - src/lib/network-temporal.ts
+  - src/styles.css
+  - src/types.ts
+content_paths:
+  - docs-platform/app/src/investor/network-planning.ts
+  - docs-platform/generated/financial-core-projection.json
+  - docs-platform/generated/investor-economics-projection.json
+  - docs-platform/schemas/network-planning-assumptions.schema.json
+  - docs-platform/working/network-planning-assumptions.yaml
+  - docs-platform/working/control-access-contract.md
+  - scripts/capture-investor-economics-v2-review.cjs
+  - scripts/generate-investor-economics-projection.ts
+  - scripts/prerender-dist.cjs
+  - scripts/test-investor-economics.test.ts
+  - scripts/test-investor-journey.test.ts
+  - scripts/test-investor-terminal.cjs
+  - scripts/test-site.cjs
+  - src/App.tsx
+  - src/components/ControlHub.tsx
+  - src/components/InvestorEconomicsPanel.tsx
+  - src/components/InvestorTerminal.tsx
+  - src/content/investor-participation-presets.ts
+  - src/content/network-planning-data.json
+  - src/content/site.ts
+  - src/lib/network-financial-core.ts
+  - src/lib/network-financial-projection.ts
+  - src/lib/network-planning.ts
+  - src/lib/network-temporal.ts
+  - src/styles.css
+  - src/types.ts
+  - docs-platform/changes/proposals/PROP-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-01.yaml
+  - docs-platform/changes/decisions/DEC-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-01.yaml
+  - docs-platform/changes/CHG-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-01.yaml
+  - docs-platform/changes/iterations/ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-01.yaml
+  - docs-platform/changelog/audit/ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-01.yaml
+  - docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-01-approved.yaml
+  - docs-platform/changelog/previews/ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-01.yaml
+  - docs-platform/changelog/verification/ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-01.yaml
+  - docs-platform/changelog/events.ndjson
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/SNAPSHOT-ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-01.yaml
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+allowed_dirty_paths:
+  - analysis/
+  - output/
+rollback_payload: null
+rollback_contract:
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true

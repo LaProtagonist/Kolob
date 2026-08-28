@@ -1,0 +1,20 @@
+schema_version: 2
+proposal_id: PROP-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-01
+iteration_id: ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-01
+decision_id: DEC-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-01
+change_set_id: CHG-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-01
+title: Separate public investor scenarios from internal workbench and apply a four-month development lead
+status: approved
+approved_by: project owner
+approved_at: 2026-08-29T00:00:00.000Z
+scope: >-
+  Implement the owner-approved public/internal participation separation and a
+  conservative four-month planning lead from dated funding to first sales. The
+  public Terminal receives four governed discussion presets; local /control
+  retains candidate controls. No production, master, Google or capacity policy changes.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-01-approved.yaml
+approved_payload_sha256: 3ae3b8c3baf0fea5e3f0878e8f2f61b44df42e432224c6171a9945cfcbc381fe
+before_state_sha256: 6c47fc39ffb0ee4507c1077537fc6ad6b8c0e4382e8da9516cfe06d51221e426
+after_state_sha256: 6a728ea89ea5f8bbc4f977ccc6248a0eb12e4b699f257c46aa7d0618efee7246
+affected_document_ids: [DOC-FINANCIAL-MODEL, DOC-INVESTOR-FINANCIAL-SUMMARY, DOC-NETWORK-PLANNING-ASSUMPTIONS]
+

@@ -1,0 +1,12 @@
+schema_version: 2
+change_id: CHG-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02
+title: Seal exact public/internal Investor Economics v2 and four-month temporal scope
+status: approved
+created_at: 2026-08-29
+decision_id: DEC-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02
+iteration_id: ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02
+proposal_id: PROP-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02-approved.yaml
+approved_payload_sha256: b55688f6272e489300c0dae33b7784fbf1ed20620ef4e842bf64539aa17dca46
+operations: []
+

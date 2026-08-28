@@ -240,7 +240,7 @@ test("v2.1 through v2.3 saved state migrates safely into v2.4 cohorts", () => {
 
   assert.equal(migrated.schemaVersion, 8);
   assert.equal(migrated.networkScaling.cohorts.length, 1);
-  assert.deepEqual(migrated.networkScaling.cohorts[0], {
+  const expectedCohort = {
     ...createTradingPointCohort(launchBudget, {
       id: "cohort-1",
       format: "takeaway",
@@ -258,7 +258,12 @@ test("v2.1 through v2.3 saved state migrates safely into v2.4 cohorts", () => {
     }),
     format: "takeaway",
     guestAreaM2: null,
-  });
+  };
+  expectedCohort.openingWaves = expectedCohort.openingWaves.map((wave) => ({
+    ...wave,
+    openingMonth: wave.openingMonth + canonicalTemporalAssumptions().developmentLeadMonths,
+  }));
+  assert.deepEqual(migrated.networkScaling.cohorts[0], expectedCohort);
   assert.equal(migrated.networkScaling.productionGrowEnabled, true);
   assert.equal(migrated.networkScaling.cohorts[0].locationType, "street");
   assert.equal(migrated.networkScaling.cohorts[0].extractionAvailable, null);
@@ -386,50 +391,53 @@ test("temporal rollout keeps canonical ramp and seasonality separate for every o
   assert.deepEqual(assumptions.seasonalityProfile.map((row) => row.factor), [0.93, 0.75, 0.88, 0.95, 1.02, 0.96, 0.96, 0.98, 1.12, 1.16, 1.1, 1.18]);
   assert.deepEqual(
     configuration.networkScaling.cohorts.slice(1).map((cohort) => cohort.openingWaves),
-    [[{ openingMonth: 4, count: 1 }], [{ openingMonth: 7, count: 1 }], [{ openingMonth: 10, count: 1 }], [{ openingMonth: 13, count: 1 }]],
+    [[{ openingMonth: 7, count: 1 }], [{ openingMonth: 10, count: 1 }], [{ openingMonth: 13, count: 1 }], [{ openingMonth: 16, count: 1 }]],
     "the four default points open sequentially, never together in month zero",
   );
   assert.equal(temporal.expansion.months[0].activePointCount, 0);
   assert.equal(temporal.expansion.months[3].capexRub! > 0, true, "launch CAPEX occurs before the first additional opening");
-  assert.equal(temporal.expansion.months[4].activePointCount, 1);
-  assert.equal(temporal.expansion.months[7].activePointCount, 2);
-  assert.equal(temporal.expansion.months[13].activePointCount, 4);
-  assert.equal(temporal.expansion.paybackMonth! >= 4, true, "payback starts with the expansion programme, not an empty month zero");
+  assert.equal(temporal.expansion.months[4].activePointCount, 0);
+  assert.equal(temporal.expansion.months[7].activePointCount, 1);
+  assert.equal(temporal.expansion.months[10].activePointCount, 2);
+  assert.equal(temporal.expansion.months[16].activePointCount, 4);
+  assert.equal(temporal.expansion.paybackMonth! >= 7, true, "payback starts with the expansion programme, not an empty month zero");
 
   const creative = scaling.cohorts.find((cohort) => cohort.cohort.locationType === "creative_cluster")!;
   const creativeTemporal = temporal.expansion.groups.find((group) => group.cohortId === creative.cohort.id)!;
+  const creativeOpeningMonth = creativeTemporal.firstOpeningMonth!;
   const directOpexOptions = (cohort: typeof creative) => ({
     baseEquipmentServiceAssetBasisRub: cohort.baseEquipmentServiceAssetBasisRub,
     equipmentServiceAssetBasisRub: cohort.equipmentServiceAssetBasisRub,
   });
-  const aprilSeasonality = assumptions.seasonalityProfile.find((row) => row.month === 4)!.factor;
-  const openingChecks = creative.operational.sales.checksPerDay! * assumptions.rampUpProfile[0].factor * aprilSeasonality;
+  const creativeOpeningSeasonality = assumptions.seasonalityProfile[(creativeOpeningMonth - 1) % assumptions.seasonalityProfile.length]!.factor;
+  const openingChecks = creative.operational.sales.checksPerDay! * assumptions.rampUpProfile[0].factor * creativeOpeningSeasonality;
   const creativeOpeningOperations = pointOperationalProjectionForMonthlyChecks(configuration, creative.cohort, openingChecks, creative.operational.sales.averageCheckRub!);
   const rentFreeDirectOpex = pointDirectOpexProjection(creative.cohort, creativeOpeningOperations, { ...directOpexOptions(creative), rentChargeRub: 0 });
-  assert.equal(creativeTemporal.months[4].opexRub, rentFreeDirectOpex.directOpexPerPointRub, "creative-cluster rent is zero during its two rent-free months");
-  const juneSeasonality = assumptions.seasonalityProfile.find((row) => row.month === 6)!.factor;
-  const postHolidayChecks = creative.operational.sales.checksPerDay! * assumptions.rampUpProfile[2].factor * juneSeasonality;
+  assert.equal(creativeTemporal.months[creativeOpeningMonth].opexRub, rentFreeDirectOpex.directOpexPerPointRub, "creative-cluster rent is zero during its two rent-free months");
+  const postHolidayMonth = creativeOpeningMonth + 2;
+  const postHolidaySeasonality = assumptions.seasonalityProfile[(postHolidayMonth - 1) % assumptions.seasonalityProfile.length]!.factor;
+  const postHolidayChecks = creative.operational.sales.checksPerDay! * assumptions.rampUpProfile[2].factor * postHolidaySeasonality;
   const postHolidayOperations = pointOperationalProjectionForMonthlyChecks(configuration, creative.cohort, postHolidayChecks, creative.operational.sales.averageCheckRub!);
   const postHolidayDirectOpex = pointDirectOpexProjection(creative.cohort, postHolidayOperations, directOpexOptions(creative));
-  assert.equal(creativeTemporal.months[6].opexRub, postHolidayDirectOpex.directOpexPerPointRub, "normal rent begins after the rent-free period");
+  assert.equal(creativeTemporal.months[postHolidayMonth].opexRub, postHolidayDirectOpex.directOpexPerPointRub, "normal rent begins after the rent-free period");
 
   const foodhall = scaling.cohorts.find((cohort) => cohort.cohort.locationType === "foodhall")!;
   const foodhallTemporal = temporal.expansion.groups.find((group) => group.cohortId === foodhall.cohort.id)!;
-  for (const month of [7, 13]) {
+  for (const month of [foodhallTemporal.firstOpeningMonth!, foodhallTemporal.firstOpeningMonth! + 6]) {
     const operatingAge = month - foodhallTemporal.firstOpeningMonth! + 1;
     const factor = assumptions.rampUpProfile[Math.min(operatingAge, assumptions.rampUpProfile.length) - 1]!.factor
       * assumptions.seasonalityProfile[(month - 1) % assumptions.seasonalityProfile.length]!.factor;
     const operational = pointOperationalProjectionForMonthlyChecks(configuration, foodhall.cohort, foodhall.operational.sales.checksPerDay! * factor, foodhall.operational.sales.averageCheckRub!);
     const direct = pointDirectOpexProjection(foodhall.cohort, operational, directOpexOptions(foodhall));
     const occupancy = direct.lines.find((line) => line.id === "foodhall-occupancy")!;
-    assert.equal(occupancy.amountRub, Math.max(operational.sales.revenuePerPointRub! * 0.17, 250_000), `Foodhall payment uses actual month-${month} sales`);
+    assert.ok(Math.abs(occupancy.amountRub - Math.max(operational.sales.revenuePerPointRub! * 0.17, 250_000)) < 0.01, `Foodhall payment uses actual month-${month} sales`);
     assert.equal(foodhallTemporal.months[month].opexRub, direct.directOpexPerPointRub, `Foodhall direct OPEX follows actual month-${month} sales`);
   }
 
   const staticEconomics = networkEconomicsProjection(configuration, base);
   assert.equal(staticEconomics.expansion.operatingReserve?.policy, "six_months_qualifying_fixed_and_semi_fixed_opex_by_cohort");
-  assert.equal(creativeTemporal.months[6].prepaidRentCreditRub, 160_000, "one prepaid Creative Cluster month is consumed only after two rent-free months");
-  assert.equal(creativeTemporal.months[6].cashFlowRub, (creativeTemporal.months[6].operatingFreeCashFlowRub ?? 0) + 160_000, "prepaid rent credit avoids a second cash rent outflow");
+  assert.equal(creativeTemporal.months[postHolidayMonth].prepaidRentCreditRub, 160_000, "one prepaid Creative Cluster month is consumed only after two rent-free months");
+  assert.ok(Math.abs(creativeTemporal.months[postHolidayMonth].cashFlowRub - ((creativeTemporal.months[postHolidayMonth].operatingFreeCashFlowRub ?? 0) + 160_000)) < 0.01, "prepaid rent credit avoids a second cash rent outflow");
   assert.ok(temporal.expansion.paybackMonth! >= staticEconomics.expansion.paybackMonths!, "staggered openings and ramp cannot use the immediate steady-state payback");
 });
 

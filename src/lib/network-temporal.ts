@@ -119,6 +119,15 @@ export type NetworkTemporalProjection = {
   };
 };
 
+/**
+ * The public projection always uses the governed planning lead.  The optional
+ * override is deliberately limited to the internal workbench: it changes
+ * dates, never revenue/OPEX/tax formulas or published assumptions.
+ */
+export type NetworkTemporalOptions = {
+  developmentLeadMonths?: number;
+};
+
 function sumKnown(values: readonly (number | null)[]) {
   return values.some((value) => value === null)
     ? null
@@ -147,26 +156,33 @@ function baseMonths(
   scenario: Pick<ConfiguredEconomicsScenario, "cashFlows" | "monthlyProjection">,
   horizon: number,
   calendarStartMonth: number,
+  developmentLeadMonths: number,
 ) {
   let cumulative = 0;
   return Array.from({ length: horizon + 1 }, (_, month) => {
-    const source = month === 0 ? null : scenario.monthlyProjection[month - 1];
-    const cashFlowRub = scenario.cashFlows[month] ?? null;
+    // Month M4 is the first commercial/operating month after a four-month
+    // M0→M4 development lead, so it consumes ramp month 1.
+    const operatingMonth = month - developmentLeadMonths + 1;
+    const source = operatingMonth <= 0 ? null : scenario.monthlyProjection[operatingMonth - 1];
+    const preOperating = month > 0 && month < developmentLeadMonths;
+    const cashFlowRub = month === 0
+      ? scenario.cashFlows[0] ?? null
+      : operatingMonth <= 0 ? 0 : scenario.cashFlows[operatingMonth] ?? null;
     if (cashFlowRub !== null) cumulative += cashFlowRub;
     return {
       month,
       calendarMonth: month === 0 ? calendarStartMonth : source?.calendarMonth ?? calendarMonthFor(calendarStartMonth, month),
-      activePointCount: 1,
-      newOpenings: month === 0 ? 1 : 0,
-      revenueRub: month === 0 ? 0 : source?.revenueRub ?? null,
-      netRevenueRub: month === 0 ? 0 : source?.netRevenueRub ?? null,
-      opexRub: month === 0 ? 0 : source?.opexRub ?? null,
-      ebitdaRub: month === 0 ? 0 : source?.ebitdaRub ?? null,
-      taxRub: month === 0 ? 0 : source?.taxRub ?? null,
-      depreciationRub: month === 0 ? 0 : source?.depreciationRub ?? null,
-      maintenanceCapexRub: month === 0 ? 0 : source?.maintenanceCapexRub ?? null,
-      operatingFreeCashFlowRub: month === 0 ? 0 : source?.operatingFreeCashFlowRub ?? null,
-      prepaidRentCreditRub: month === 0 ? 0 : source?.prepaidRentCreditRub ?? 0,
+      activePointCount: month >= developmentLeadMonths ? 1 : 0,
+      newOpenings: month === developmentLeadMonths ? 1 : 0,
+      revenueRub: month === 0 || preOperating ? 0 : source?.revenueRub ?? null,
+      netRevenueRub: month === 0 || preOperating ? 0 : source?.netRevenueRub ?? null,
+      opexRub: month === 0 || preOperating ? 0 : source?.opexRub ?? null,
+      ebitdaRub: month === 0 || preOperating ? 0 : source?.ebitdaRub ?? null,
+      taxRub: month === 0 || preOperating ? 0 : source?.taxRub ?? null,
+      depreciationRub: month === 0 || preOperating ? 0 : source?.depreciationRub ?? null,
+      maintenanceCapexRub: month === 0 || preOperating ? 0 : source?.maintenanceCapexRub ?? null,
+      operatingFreeCashFlowRub: month === 0 || preOperating ? 0 : source?.operatingFreeCashFlowRub ?? null,
+      prepaidRentCreditRub: month === 0 || preOperating ? 0 : source?.prepaidRentCreditRub ?? 0,
       capexRub: month === 0 ? baseObject.investmentRub : 0,
       operatingReserveRub: month === 0 ? baseObject.operatingReserveRub : 0,
       cashFlowRub,
@@ -194,14 +210,14 @@ function groupMonthProjection(
   configuration: InvestorConfiguration,
   cohort: NetworkPointCohortProjection,
   month: number,
+  temporal: ReturnType<typeof canonicalTemporalAssumptions>,
 ) : GroupMonth {
-  const temporal = canonicalTemporalAssumptions();
   const policy = configuredFinancialPolicy(configuration.scenarioId);
   const waves = cohort.cohort.openingWaves;
   const active = waves.filter((wave) => month >= wave.openingMonth);
   const newOpenings = waves.filter((wave) => month === wave.openingMonth);
   const activePointCount = active.reduce((sum, wave) => sum + wave.count, 0);
-  const capexMonth = waves.filter((wave) => month === Math.max(0, wave.openingMonth - temporal.launchCapexLeadMonths));
+  const capexMonth = waves.filter((wave) => month === Math.max(0, wave.openingMonth - temporal.developmentLeadMonths));
   const capexRub = capexMonth.reduce((sum, wave) => sum + cohort.confirmedPointInvestmentRub * wave.count, 0);
   const records = active.map((wave) => {
     const operatingMonth = month - wave.openingMonth + 1;
@@ -261,15 +277,18 @@ function groupMonthProjection(
   };
 }
 
-function groupTemporalProjection(configuration: InvestorConfiguration, cohort: NetworkPointCohortProjection): TemporalPointGroupProjection {
-  const temporal = canonicalTemporalAssumptions();
+function groupTemporalProjection(
+  configuration: InvestorConfiguration,
+  cohort: NetworkPointCohortProjection,
+  temporal: ReturnType<typeof canonicalTemporalAssumptions>,
+): TemporalPointGroupProjection {
   const firstOpeningMonth = cohort.cohort.openingWaves.at(0)?.openingMonth ?? null;
   const lastOpeningMonth = cohort.cohort.openingWaves.at(-1)?.openingMonth ?? null;
   const rampDurationMonths = temporal.rampUpProfile.at(-1)?.month ?? 0;
   let cumulative: number | null = 0;
   const missing = new Set<string>();
   const months = Array.from({ length: temporal.horizonMonths + 1 }, (_, month) => {
-    const result = groupMonthProjection(configuration, cohort, month);
+    const result = groupMonthProjection(configuration, cohort, month, temporal);
     result.missing.forEach((item) => missing.add(item));
     if (result.cashFlowRub === null || cumulative === null) cumulative = null;
     else cumulative += result.cashFlowRub;
@@ -353,18 +372,37 @@ export function networkTemporalProjection(
   baseObject: BaseObjectFinancialProjection,
   scenario: Pick<ConfiguredEconomicsScenario, "cashFlows" | "monthlyProjection">,
   suppliedScaling = networkScalingProjection(configuration),
+  options: NetworkTemporalOptions = {},
 ): NetworkTemporalProjection {
-  const temporal = canonicalTemporalAssumptions();
+  const governedTemporal = canonicalTemporalAssumptions();
+  const developmentLeadMonths = options.developmentLeadMonths ?? governedTemporal.developmentLeadMonths;
+  if (!Number.isInteger(developmentLeadMonths) || developmentLeadMonths < 0) {
+    throw new Error("Development lead must be a non-negative whole number of months.");
+  }
+  const temporal = { ...governedTemporal, developmentLeadMonths };
+  const openingShift = developmentLeadMonths - governedTemporal.developmentLeadMonths;
   const policy = configuredFinancialPolicy(configuration.scenarioId);
   const scaling = suppliedScaling;
   const steady = buildNetworkSteadyState(configuration, scaling, policy);
-  const base = { ...baseObject, months: baseMonths(baseObject, scenario, temporal.horizonMonths, configuration.networkScaling.calendarStartMonth) };
-  const groups = scaling.cohorts.slice(1).map((cohort) => groupTemporalProjection(configuration, cohort));
+  const base = { ...baseObject, months: baseMonths(baseObject, scenario, temporal.horizonMonths, configuration.networkScaling.calendarStartMonth, temporal.developmentLeadMonths) };
+  const groups = scaling.cohorts.slice(1).map((cohort) => groupTemporalProjection(configuration, {
+    ...cohort,
+    cohort: {
+      ...cohort.cohort,
+      openingWaves: cohort.cohort.openingWaves.map((wave) => ({
+        ...wave,
+        openingMonth: Math.max(0, wave.openingMonth + openingShift),
+      })),
+    },
+  }, temporal));
   const additionalPointCount = groups.reduce((sum, group) => sum + group.openingWaves.reduce((count, wave) => count + wave.count, 0), 0);
   const plannedNetworkPointCount = additionalPointCount + 1;
   const vehicleFundingMonth = steady.sharedInfrastructureRub <= 0
     ? null
-    : steady.operatingReserve?.sharedReserves.find((item) => item.id.startsWith("logistics-own"))?.fundingMonth ?? null;
+    : (() => {
+      const fundingMonth = steady.operatingReserve?.sharedReserves.find((item) => item.id.startsWith("logistics-own"))?.fundingMonth ?? null;
+      return fundingMonth === null ? null : Math.max(0, fundingMonth + openingShift);
+    })();
   let expansionCumulative: number | null = 0;
   let networkCumulative: number | null = 0;
   const groupMissing = new Set(groups.flatMap((group) => group.missing));
@@ -410,7 +448,8 @@ export function networkTemporalProjection(
     const assets = activeExpansionAssets(groups, scaling, month, configuration);
     const pnl = calculateFinancialPnl(revenueRub, opexRub, assets.depreciationRub, assets.maintenanceCapexRub, policy);
     const sharedCapexRub = vehicleFundingMonth === month ? steady.sharedInfrastructureRub : 0;
-    const reserveEvents = steady.operatingReserve?.fundingEvents.filter((event) => event.month === month) ?? [];
+    const reserveEvents = (steady.operatingReserve?.fundingEvents ?? [])
+      .filter((event) => Math.max(0, event.month + openingShift) === month);
     const reserveRub = reserveEvents.some((event) => event.amountRub === null)
       ? null
       : roundFinancial(reserveEvents.reduce((sum, event) => sum + (event.amountRub ?? 0), 0));

@@ -12,16 +12,17 @@ import {
   networkScalingProjection,
   type BaseObjectFinancialProjection,
 } from "./network-scaling";
-import { networkTemporalProjection } from "./network-temporal";
+import { networkTemporalProjection, type NetworkTemporalOptions } from "./network-temporal";
 
 export function networkFinancialProjection(
   configuration: InvestorConfiguration,
   baseObject: BaseObjectFinancialProjection,
   scenario: Pick<ConfiguredEconomicsScenario, "cashFlows" | "monthlyProjection">,
+  temporalOptions: NetworkTemporalOptions = {},
 ) {
   const scaling = networkScalingProjection(configuration);
   const economics = networkEconomicsProjection(configuration, baseObject, scaling);
-  const temporal = networkTemporalProjection(configuration, baseObject, scenario, scaling);
+  const temporal = networkTemporalProjection(configuration, baseObject, scenario, scaling, temporalOptions);
   return {
     provenance: temporal.provenance,
     scaling,

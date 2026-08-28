@@ -29,7 +29,6 @@ const routes = [
   { path: "/materials", must: ["Материалы проекта"] },
   { path: "/investor-questions", must: ["Обсудить участие"] },
   { path: "/privacy", must: ["Политика обработки персональных данных"] },
-  { path: "/capex-configurator", must: ["CAPEX-конфигуратор", "Стоимость текущей комплектации оборудования"], internal: true },
   { path: "/launch-budget", must: ["Расчёт стоимости запуска", "Стоимость запуска"], internal: true },
   { path: "/revenue-model", must: ["Расчёт объёма продаж", "Производственная нагрузка"], internal: true },
   { path: "/economics", must: ["Экономика объекта"], internal: true },
@@ -864,7 +863,6 @@ async function inspectCapex(browser, baseUrl) {
     const results = [];
     for (const route of routes) results.push(await inspectRoute(browser, baseUrl, route));
 
-    const capex = await inspectCapex(browser, baseUrl);
     const launchBudget = await inspectLaunchBudget(browser, baseUrl);
     const revenueModel = await inspectRevenueModel(browser, baseUrl);
     const mobile = await browser.newPage({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 1 });
@@ -903,46 +901,15 @@ async function inspectCapex(browser, baseUrl) {
     if (sitemap.includes("capex-configurator")) failures.push("sitemap exposes hidden CAPEX route");
     if (sitemap.includes("launch-budget")) failures.push("sitemap exposes hidden launch-budget route");
     if (sitemap.includes("revenue-model")) failures.push("sitemap exposes hidden revenue-model route");
-    if (!String(capex.robots).includes("noindex") || !String(capex.robots).includes("nofollow")) failures.push(`CAPEX robots: ${capex.robots}`);
-    if (capex.formatIds.length !== 7 || capex.formatIds.join("|") !== capexSnapshot.formats.map(item => item.id).join("|")) failures.push("CAPEX formats do not match snapshot");
-    const selectableScenarioIds = capexSnapshot.scenarios.filter(item => item.availableInSelector !== false).map(item => item.id);
-    if (capex.scenarioIds.join("|") !== selectableScenarioIds.join("|")) failures.push("CAPEX selectable scenarios do not match snapshot");
-    if (capex.minimumScenarioButtonCount !== 0) failures.push("minimum scenario is still available in selector");
-    if (capex.switchedFormats.some(item => item.selected !== "true")) failures.push("one or more CAPEX formats did not switch");
-    if (!capex.incompleteWarning) failures.push("required incomplete modules are not surfaced");
-    if (!(capex.scenarioTotals.base < capex.scenarioTotals.scale_ready)) failures.push(`CAPEX selectable scenario totals do not change monotonically: ${JSON.stringify(capex.scenarioTotals)}`);
-    if (!/^1(?:[,.]0+)?\s*шт\./.test(capex.ovenQuantity)) failures.push(`oven quantity is not one: ${capex.ovenQuantity}`);
-    if (!capex.ovenSourceAttrs.href || capex.ovenSourceAttrs.target !== "_blank" || !String(capex.ovenSourceAttrs.rel).includes("noopener") || !String(capex.ovenSourceAttrs.rel).includes("noreferrer")) failures.push("oven product link attributes are unsafe or missing");
-    if (capex.remainingPriceRows.unpricedCount !== 0) failures.push(`CAPEX still reports unpriced rows: ${capex.remainingPriceRows.unpricedCount}`);
-    if (capex.remainingPriceRows.gasGrillName !== "Газовый гриль для колобков"
-      || /такояки/i.test(capex.remainingPriceRows.gasGrillName)
-      || !/^2(?:[,.]0+)?\s*шт\./.test(capex.remainingPriceRows.gasGrillQuantity)
-      || capex.remainingPriceRows.gasGrillTotal !== 90000
-      || capex.remainingPriceRows.gasGrillQuoteWithoutUrl !== 1
-      || capex.remainingPriceRows.gasGrillProductLinkCount !== 0) failures.push(`gas grill UI is invalid: ${JSON.stringify(capex.remainingPriceRows)}`);
-    if (capex.remainingPriceRows.dosingName !== "Профессиональные ручные шприцы или пистолеты-дозаторы"
-      || !/^24(?:[,.]0+)?\s*шт\./.test(capex.remainingPriceRows.dosingQuantity)
-      || capex.remainingPriceRows.dosingUnitPrice !== 10000
-      || capex.remainingPriceRows.dosingTotal !== 240000
-      || capex.remainingPriceRows.dosingProductLinkCount !== 1) failures.push(`dosing equipment UI is invalid: ${JSON.stringify(capex.remainingPriceRows)}`);
-    if (capex.remainingPriceRows.hoodVisible !== 1) failures.push("priced extraction hood is missing from the working CAPEX register");
-    if (capex.alcoholRowsBefore !== 0
-      || capex.alcoholRowsAfter !== 2
-      || capex.alcoholRowsRestored !== 0
-      || capex.alcoholItemIds.join("|") !== "CAPEX-02-054|CAPEX-02-055") failures.push(`alcohol equipment condition is invalid: ${JSON.stringify({ before: capex.alcoholRowsBefore, after: capex.alcoholRowsAfter, restored: capex.alcoholRowsRestored, ids: capex.alcoholItemIds })}`);
-    if (capex.ovenSearchCount !== 1 || capex.otherSearchRows !== 1) failures.push("CAPEX search does not isolate the oven row");
-    if (capex.ovenInFoodCourt !== 0) failures.push("food-court format includes the oven without MOD-PREP");
-    if (!capex.barModuleVisible) failures.push("optional bar module did not activate");
-    if (!(capex.foodCourtWithBarTotal > capex.foodCourtTotal)) failures.push("optional bar module did not change evaluated cost");
-    if (capex.customModuleChoices !== capexSnapshot.modules.length) failures.push(`custom format exposes ${capex.customModuleChoices} module choices, expected ${capexSnapshot.modules.length}`);
-    if (capex.documentLinks.some(link => !link.href || link.target !== "_blank" || !String(link.rel).includes("noopener") || !String(link.rel).includes("noreferrer"))) failures.push("project document links are missing or unsafe");
-    if (capex.documentLinks.some(link => !link.href.endsWith("/preview"))) failures.push("project document links do not use read-only preview mode");
-    if (capex.tableHeaders.join("|") !== "ID|Оборудование|Модуль|Обязательность|Количество|Цена за единицу|Сумма|Поставщик|Дата проверки|Статус цены") failures.push("equipment table headers changed");
-    if (capex.russianTerms.length) failures.push(`missing Russian UI terms: ${capex.russianTerms.join(", ")}`);
-    if (capex.desktopOverflow || capex.tabletOverflow || capex.mobileOverflow) failures.push(`CAPEX overflow desktop=${capex.desktopOverflow} tablet=${capex.tabletOverflow} mobile=${capex.mobileOverflow}`);
-    if (!capex.mobileProductLinkVisible) failures.push("product link is not reachable on mobile");
-    if (capex.consoleMessages.length) failures.push(`CAPEX console: ${capex.consoleMessages.join(" | ")}`);
-    if (capex.pageErrors.length) failures.push(`CAPEX page errors: ${capex.pageErrors.join(" | ")}`);
+    const restrictedControl = await browser.newPage({ viewport: { width: 1024, height: 768 } });
+    for (const restrictedPath of ["/control", "/control/capex", "/control/participation", "/control/requests", "/capex-configurator"]) {
+      await restrictedControl.goto(`${baseUrl}${restrictedPath}`, { waitUntil: "networkidle" });
+      const restrictedText = await restrictedControl.locator("body").innerText();
+      const restrictedRobots = await restrictedControl.locator('meta[name="robots"]').getAttribute("content");
+      if (!/Страница не найдена/i.test(restrictedText)) failures.push(`${restrictedPath} bypasses the production control boundary`);
+      if (!String(restrictedRobots).includes("noindex") || !String(restrictedRobots).includes("nofollow")) failures.push(`${restrictedPath} robots: ${restrictedRobots}`);
+    }
+    await restrictedControl.close();
     if (!String(launchBudget.robots).includes("noindex") || !String(launchBudget.robots).includes("nofollow")) failures.push(`launch-budget robots: ${launchBudget.robots}`);
     if (launchBudget.defaults.rentSelected !== "true"
       || launchBudget.defaults.monthlyRent !== "350000"

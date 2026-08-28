@@ -1,0 +1,20 @@
+receipt_version: 1
+iteration_id: ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02
+audited_at: 2026-08-28T22:07:00.000Z
+result: passed
+supersession: Exact successor to the unsealed -01 manifest; adds the Financial Model generated artifact to provenance scope.
+review_artifacts:
+  cohort_timeline: docs-platform/changelog/audit/ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-01.yaml
+  public_internal_boundary: docs-platform/working/control-access-contract.md
+five_point:
+  total_program_investment_rub: 102702001.73
+  external_funding_requirement_rub: 79218642.02
+  business_self_financing_rub: 23483359.71
+  programme_payback: M21
+full_programme_80_15:
+  first_capital_return: M10
+  full_capital_return: M28
+  cash_irr_to_m60: 21.74%
+  cash_moic_to_m60: 1.4490
+external_state: { google_apply: not_run, production_deploy: not_run, master_merge: not_run }
+

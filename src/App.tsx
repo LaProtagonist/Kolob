@@ -74,6 +74,13 @@ const InvestorTerminalPage = lazy(() =>
   import("./components/InvestorTerminal").then((module) => ({ default: module.InvestorTerminalPage }))
 );
 
+const ControlHomePage = lazy(() => import("./components/ControlHub").then((module) => ({ default: module.ControlHomePage })));
+const ControlCapexPage = lazy(() => import("./components/ControlHub").then((module) => ({ default: module.ControlCapexPage })));
+const ControlParticipationPage = lazy(() => import("./components/ControlHub").then((module) => ({ default: module.ControlParticipationPage })));
+const ControlRequestsPage = lazy(() => import("./components/ControlHub").then((module) => ({ default: module.ControlRequestsPage })));
+
+const controlRoutesEnabled = import.meta.env.DEV;
+
 function normalizePath(pathname: string) {
   return pathname === "" ? "/" : pathname.replace(/\/+$/, "") || "/";
 }
@@ -790,12 +797,20 @@ function renderPage(path: string) {
       return <InvestorQuestionsPage />;
     case "/privacy":
       return <PrivacyPage />;
+    case "/control":
+      return controlRoutesEnabled ? <Suspense fallback={null}><ControlHomePage /></Suspense> : <NotFoundPage />;
+    case "/control/capex":
     case "/capex-configurator":
+      if (!controlRoutesEnabled) return <NotFoundPage />;
       return (
         <Suspense fallback={<main className="plain-page"><div className="section-inner"><p>Загружается CAPEX-конфигуратор…</p></div></main>}>
-          <CapexConfiguratorPage />
+          <ControlCapexPage />
         </Suspense>
       );
+    case "/control/participation":
+      return controlRoutesEnabled ? <Suspense fallback={null}><ControlParticipationPage /></Suspense> : <NotFoundPage />;
+    case "/control/requests":
+      return controlRoutesEnabled ? <Suspense fallback={null}><ControlRequestsPage /></Suspense> : <NotFoundPage />;
     case "/launch-budget":
       return (
         <Suspense fallback={<main className="plain-page"><div className="section-inner"><p>Загружается расчёт стоимости запуска…</p></div></main>}>
@@ -889,12 +904,11 @@ export default function App() {
     navigate(`${url.pathname}${url.hash}`);
   }
 
+  const isControlRoute = path === "/capex-configurator" || path === "/control" || path.startsWith("/control/");
   return (
     <InvestorConfigurationProvider>
       <div className="app-shell" onClick={handleInternalNavigation}>
-        <SiteHeader activePath={activePage.path} />
-        <main>{renderPage(activePage.path)}</main>
-        <SiteFooter />
+        {isControlRoute ? renderPage(path) : <><SiteHeader activePath={activePage.path} /><main>{renderPage(activePage.path)}</main><SiteFooter /></>}
       </div>
     </InvestorConfigurationProvider>
   );

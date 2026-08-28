@@ -147,7 +147,7 @@ async function run() {
     assert.equal(await page.getByTestId(`scaling-cohort-checks-${nevskyId}`).inputValue(), "175");
     assert.equal(await page.getByTestId(`scaling-cohort-minimum-staff-${nevskyId}`).innerText(), "3", "the compact-point rounding band keeps 175 checks at three people on shift");
     assert.equal(await page.getByTestId(`scaling-cohort-bar-${nevskyId}`).getAttribute("aria-checked"), "true", "the optional bar is on for rollout points by default");
-    assert.equal(await page.getByTestId(`scaling-cohort-opening-${nevskyId}`).inputValue(), "4", "the first additional point has its own opening month");
+    assert.equal(await page.getByTestId(`scaling-cohort-opening-${nevskyId}`).inputValue(), "7", "the first additional point opens after the governed four-month lead");
     assert.equal(await page.getByTestId(`scaling-cohort-rent-free-${nevskyId}`).inputValue(), "2", "Creative Cluster has the approved two-month rent-free period");
     assert.match(await page.getByTestId(`scaling-cohort-editor-${nevskyId}`).innerText(), /Разгон[\s\S]*Сезонность/i, "the selected group makes the time model visible without a 60-month form");
 
@@ -253,8 +253,8 @@ async function run() {
     assert.ok(Math.abs(directPointOpex + expansionProduction + expansionAdminReserve + expansionUniforms + expansionMedical + expansionLogistics - expansionOpex) < 0.01, "Direct Point OPEX plus incremental Production and Shared OPEX equals Expansion OPEX");
     assert.ok(Math.abs(Number(await summary.getAttribute("data-base-opex-rub")) + expansionOpex - (await amount("scaling-network-opex"))) < 0.01, "Base OPEX plus Expansion OPEX equals consolidated Network OPEX");
 
-    // This UI-only iteration must preserve the sealed B5 baseline. The assertions
-    // catch accidental remapping or arithmetic changes disguised as presentation.
+    // The operating model remains unchanged by the lead-time correction; only
+    // dated cash and resulting temporal funding/payback are expected to move.
     await assertAmount("scaling-base-fcf", 2_045_009.8, "Base FCF remains unchanged by the Creative Cluster contract correction");
     await assertAmount("scaling-network-direct-opex", 16_195_358.96466331, "Direct Point OPEX remains unchanged by the Creative Cluster contract correction");
     await assertAmount("scaling-expansion-production-opex", 158_505.51000000004, "incremental Production payroll remains unchanged");
@@ -264,8 +264,8 @@ async function run() {
     await assertAmount("scaling-network-fcf", 9_412_362.58, "Network FCF remains unchanged");
     await assertAmount("scaling-expansion-reserve", 33_930_155.34, "Expansion reserve uses the unified B5 reserve policy");
     await assertAmount("scaling-network-total", 102_702_001.73, "Total Program Investment includes the additional Creative Cluster prepaid rent");
-    await assertAmount("scaling-upfront-funding", 62_888_281.86, "Upfront Investor Funding reflects the dated Creative Cluster prepayment");
-    assert.equal(await page.getByTestId("scaling-network-payback").getAttribute("data-payback-month"), "18", "Network temporal payback reflects the corrected prepayment ledger");
+    await assertAmount("scaling-upfront-funding", 79_218_642.02, "Upfront Investor Funding reflects the governed four-month development lead");
+    assert.equal(await page.getByTestId("scaling-network-payback").getAttribute("data-payback-month"), "21", "Network temporal payback is recalculated from the development lead");
 
     async function assertSummaryLayout(width, height, name) {
       await page.setViewportSize({ width, height });
@@ -396,15 +396,16 @@ async function run() {
     await page.setViewportSize({ width: 1440, height: 900 });
 
     await page.getByRole("button", { name: "Условия участия" }).click();
-    const investorEconomics = page.getByTestId("investor-economics-panel");
+    const investorEconomics = page.getByTestId("investor-economics-public");
     await investorEconomics.waitFor();
     assert.equal(await page.getByRole("heading", { name: "Сценарии для обсуждения" }).count(), 1, "Investor Economics is a distinct third Terminal section");
-    await assertAmount("economics-programme-investment", 102_702_001.73, "programme investment reuses the corrected Business Financial Core total");
-    await assertAmount("economics-current-external-funding", 62_888_281.86, "current external funding stays distinct from total programme investment");
+    assert.equal(await investorEconomics.locator("input, select").count(), 0, "public participation has no editable deal controls");
+    assert.equal(await investorEconomics.locator('[data-testid^="public-preset-"]').count(), 4, "public participation has exactly four discussion presets");
+    assert.equal(await investorEconomics.getByText("Все варианты", { exact: true }).count(), 0, "public participation omits workbench permutations");
     const programmeInvestment = await amount("economics-programme-investment");
     const externalFunding = await amount("economics-current-external-funding");
     assert.ok(Math.abs((await amount("economics-business-self-financing")) - (programmeInvestment - externalFunding)) < 0.01, "self-financing explains the difference between total programme investment and external funding");
-    await page.getByTestId("economics-template-full_programme").click();
+    await page.getByTestId("public-preset-INV-FULL-PROGRAMME-DISCUSSION").click();
     const commitment = await amount("economics-commitment");
     const actualContributions = await amount("economics-actual-contributions");
     assert.equal(commitment, programmeInvestment, "full-programme commitment equals the dated programme total");
@@ -414,7 +415,7 @@ async function run() {
     await investorEconomics.screenshot({ path: path.join(projectRoot, ".cache/verification/screenshots/investor-economics-full-programme-executive-desktop.png") });
     await investorEconomics.getByText("Показать помесячный расчёт", { exact: true }).click();
     const waterfall = investorEconomics.locator(".investor-economics-waterfall");
-    assert.match(await waterfall.innerText(), /М0[\s\S]*40 019 925 ₽/, "monthly investor waterfall exposes dated drawdowns and business funding needs");
+    assert.match(await waterfall.innerText(), /Потребность программы[\s\S]*М0/, "monthly investor waterfall exposes dated drawdowns and business funding needs");
     for (const [width, height, label] of [[1440, 900, "desktop"], [1024, 768, "tablet"], [390, 844, "mobile"]]) {
       await page.setViewportSize({ width, height });
       const layout = await investorEconomics.evaluate((element) => ({
@@ -431,6 +432,17 @@ async function run() {
     }
     await page.setViewportSize({ width: 1440, height: 900 });
     await investorEconomics.screenshot({ path: path.join(projectRoot, ".cache/verification/screenshots/investor-economics-full-programme-desktop.png") });
+
+    await page.goto(`${baseUrl}/control/participation`, { waitUntil: "domcontentloaded" });
+    await page.getByRole("heading", { name: "Конструктор условий участия" }).waitFor();
+    assert.ok(await page.locator(".investor-economics input, .investor-economics select").count() > 0, "internal workbench retains editable candidate controls");
+    const publicPresetBeforeCandidateEdit = await page.getByTestId("economics-actual-contributions").getAttribute("data-amount-rub");
+    const equityInput = page.getByLabel("Доля в компании");
+    await equityInput.fill("40");
+    await equityInput.press("Tab");
+    await page.goto(`${baseUrl}/investor-terminal`, { waitUntil: "domcontentloaded" });
+    await page.getByRole("button", { name: "Условия участия" }).click();
+    assert.equal(await page.getByTestId("economics-actual-contributions").getAttribute("data-amount-rub"), publicPresetBeforeCandidateEdit, "candidate workbench state cannot mutate a published preset");
 
     await page.getByRole("button", { name: "Экономика точки" }).click();
     await checks.waitFor();

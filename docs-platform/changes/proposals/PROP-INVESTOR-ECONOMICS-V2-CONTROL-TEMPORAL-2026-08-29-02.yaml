@@ -1,0 +1,18 @@
+schema_version: 2
+proposal_id: PROP-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02
+iteration_id: ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02
+decision_id: DEC-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02
+change_set_id: CHG-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02
+title: Reopen exact Investor Economics v2 scope with regenerated Financial Model projection
+status: approved
+approved_by: project owner
+approved_at: 2026-08-29T00:00:00.000Z
+scope: >-
+  Seal the same approved Investor Economics v2 public/internal and four-month
+  temporal correction after including the Financial Model projection emitted by
+  the native deterministic verifier. The preceding unsealed manifest is superseded.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02-approved.yaml
+approved_payload_sha256: b55688f6272e489300c0dae33b7784fbf1ed20620ef4e842bf64539aa17dca46
+before_state_sha256: 941f4e21718d0ce03c828ab26b7aadd6438c977c473985ea9e3a1a3adae27847
+after_state_sha256: 495e4a509ed125746e1e6d48e4cf1c41d6dc5e101f6f895eb1b931d8f64d362e
+

@@ -125,7 +125,8 @@ export type NetworkTemporalAssumptions = {
   openingCalendarMonth: number;
   rampUpProfile: Array<{ month: number; factor: number }>;
   seasonalityProfile: Array<{ month: number; factor: number }>;
-  launchCapexLeadMonths: number;
+  /** Owner-approved planning period from funding to commercial opening. */
+  developmentLeadMonths: number;
   rentFreeMonths: Record<Exclude<LocationType, "foodtruck">, number>;
 };
 
@@ -209,7 +210,7 @@ export function canonicalTemporalAssumptions(): NetworkTemporalAssumptions {
     seasonalityProfile: Array.isArray(temporal.seasonalityProfile)
       ? temporal.seasonalityProfile.map((item: any) => ({ month: numericPreset(item.month), factor: numericPreset(item.factor) }))
       : [],
-    launchCapexLeadMonths: numericPreset(defaults.launch_capex_lead_months),
+    developmentLeadMonths: numericPreset(defaults.development_lead_months),
     rentFreeMonths: {
       street: numericPreset(rentFree.street),
       foodhall: numericPreset(rentFree.foodhall),

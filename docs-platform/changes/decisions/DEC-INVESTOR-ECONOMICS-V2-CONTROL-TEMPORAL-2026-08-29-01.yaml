@@ -1,0 +1,16 @@
+schema_version: 2
+decision_id: DEC-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-01
+iteration_id: ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-01
+title: Approve public discussion presets, private workbench and four-month development lead
+status: approved
+approved_by: project owner
+approved_at: 2026-08-29T00:00:00.000Z
+scope: >-
+  Public investors review four fixed discussion scenarios and cannot edit terms.
+  Owner candidate inputs remain internal-only. The planning baseline is four
+  months from funding to first sales for Base and additional cohorts; existing
+  ramp starts after first sales. Control routes remain local-only until an
+  infrastructure access guard is implemented.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-01-approved.yaml
+approved_payload_sha256: 3ae3b8c3baf0fea5e3f0878e8f2f61b44df42e432224c6171a9945cfcbc381fe
+

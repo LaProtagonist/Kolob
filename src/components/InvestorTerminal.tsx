@@ -160,9 +160,15 @@ export function InvestorTerminalPage() {
 
   // A tab replaces its entire workspace. Keeping a deep page position from
   // the prior tab can mount the next tab below the viewport (notably in
-  // Safari/iPad). Reset before paint rather than waiting for user scroll.
+  // Safari/iPad). Reset before paint and once after the browser has completed
+  // the click's own scroll-into-view work; the latter otherwise may restore a
+  // stale deep position after React has committed the new workspace.
   useLayoutEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    const frame = window.requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    });
+    return () => window.cancelAnimationFrame(frame);
   }, [tab]);
 
   function selectTab(next: "unit" | "scale" | "participation") {
