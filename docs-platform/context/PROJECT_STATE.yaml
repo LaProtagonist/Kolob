@@ -1,7 +1,7 @@
 schema_version: 2
 generated_at: 2026-08-28T01:07:29.032Z
 project: Колобочная
-branch: feat/financial-core-consolidation-v2
+branch: master
 latest_timeline_event_id: EVT-ITR-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10-COMMITTED
 latest_timeline_event_hash: fe373554ee2f1a7d078e8608690afbdc6bcfedd4cfe8f52e6cb824068504c997
 latest_closed_iteration_id: ITR-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10
@@ -95,7 +95,7 @@ open_questions:
 current_workstream: Final editorial cleanup of Investor Terminal scaling page
 next_task: Select the next task through a new governed proposal; no business task is pre-authorized.
 google_integration_status:
-  configured: false
+  configured: true
   historical_receipts: 14
   receipts_with_machine_readback_hash: 11
   live_drift_check: not_run_by_context_build

@@ -8,7 +8,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 2. Текущая ветка и governed iteration
 
-- Branch: `feat/financial-core-consolidation-v2`.
+- Branch: `master`.
 - Latest closed iteration: `ITR-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10`.
 - Latest iteration tag: `iteration/ITR-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10`.
 - Latest content commit: `228a6a23235c332bcc675e04b79b62121c7418df`.
@@ -61,7 +61,7 @@ Final editorial cleanup of Investor Terminal scaling page
 
 ## 8. Google / MCP / deployment
 
-- Google: `{"configured":false,"historical_receipts":14,"receipts_with_machine_readback_hash":11,"live_drift_check":"not_run_by_context_build"}`.
+- Google: `{"configured":true,"historical_receipts":14,"receipts_with_machine_readback_hash":11,"live_drift_check":"not_run_by_context_build"}`.
 - MCP: `{"implementation_present":true,"canonical_access":"registry_document_ids_only","live_status":"not_probed_by_context_build"}`.
 - Deployment: `{"status":"receipts_present","receipts":6,"production_url":null}`.
 
