@@ -1,12 +1,12 @@
 schema_version: 2
-generated_at: 2026-08-28T14:46:00.995Z
+generated_at: 2026-08-28T19:16:46.711Z
 project: Колобочная
-branch: master
-latest_timeline_event_id: EVT-ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02-DEPLOYED-DEPLOY-FINANCIAL-CORE-INVESTOR-TERMINAL-2026-08-28-02
-latest_timeline_event_hash: 8a17f90a3f097c2c1e3e4afc33ee9dd60268e89228f0826d88e86db8d17571f4
-latest_closed_iteration_id: ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02
-latest_iteration_tag: iteration/ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02
-latest_content_commit_hash: 50a64fbb88a30a3554cea7437914ecc915e418c7
+branch: feat/investor-economics-v1
+latest_timeline_event_id: EVT-ITR-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01-COMMITTED
+latest_timeline_event_hash: ee0dea2bdddc1165c6214738edb168a9b7f7d934f33a8dca2f29ca68785f60ce
+latest_closed_iteration_id: ITR-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01
+latest_iteration_tag: iteration/ITR-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01
+latest_content_commit_hash: c919102b87d83297a839f32762d7ca1a4f6cfcfe
 registry_hash: b59c96c1b256174cd21131cf955813e2d68fe507a4d4a85b9e581094a74264cc
 canonical_document_hashes:
   - document_id: DOC-AGENTS
@@ -71,7 +71,7 @@ canonical_document_hashes:
     status: research
   - document_id: DOC-NETWORK-PLANNING-ASSUMPTIONS
     local_path: docs-platform/working/network-planning-assumptions.yaml
-    sha256: 1136e30e205cf03abef7232fb1618b624f2f4d1744d14de966089908d4c2022b
+    sha256: 5b212f63f45df8ed23d285f07793f0191797cbfb1b989f95a3973863ff10797a
     status: approved
   - document_id: DOC-PILOT-CAPEX-ASSUMPTIONS
     local_path: docs-platform/working/pilot-capex-assumptions.yaml
@@ -92,10 +92,10 @@ open_questions:
   - Archive pending review artifacts in durable storage before treating visual verification as portable.
   - Create deployment receipts when the next governed deployment is performed.
   - Decide whether malformed superseded legacy YAML evidence should receive a separate correction event.
-current_workstream: Prerender public Investor Terminal route for production release
+current_workstream: Correct local Investor Economics v1 and business baseline
 next_task: Select the next task through a new governed proposal; no business task is pre-authorized.
 google_integration_status:
-  configured: true
+  configured: false
   historical_receipts: 14
   receipts_with_machine_readback_hash: 11
   live_drift_check: not_run_by_context_build
@@ -114,5 +114,5 @@ known_drift:
 artifact_status:
   manifests: 3
   artifacts: 14
-  pending_archive: 14
+  pending_archive: 9
   durable: 0

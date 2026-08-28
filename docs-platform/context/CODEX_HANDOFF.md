@@ -8,17 +8,17 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 2. Текущая ветка и governed iteration
 
-- Branch: `master`.
-- Latest closed iteration: `ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02`.
-- Latest iteration tag: `iteration/ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02`.
-- Latest content commit: `50a64fbb88a30a3554cea7437914ecc915e418c7`.
+- Branch: `feat/investor-economics-v1`.
+- Latest closed iteration: `ITR-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01`.
+- Latest iteration tag: `iteration/ITR-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01`.
+- Latest content commit: `c919102b87d83297a839f32762d7ca1a4f6cfcfe`.
 - Текущий Git HEAD намеренно не записывается: его вычисляет `npm run project:onboard`.
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02-DEPLOYED-DEPLOY-FINANCIAL-CORE-INVESTOR-TERMINAL-2026-08-28-02`.
-- Hash: `8a17f90a3f097c2c1e3e4afc33ee9dd60268e89228f0826d88e86db8d17571f4`.
-- generated_from_event_hash: `8a17f90a3f097c2c1e3e4afc33ee9dd60268e89228f0826d88e86db8d17571f4`.
+- Event: `EVT-ITR-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01-COMMITTED`.
+- Hash: `ee0dea2bdddc1165c6214738edb168a9b7f7d934f33a8dca2f29ca68785f60ce`.
+- generated_from_event_hash: `ee0dea2bdddc1165c6214738edb168a9b7f7d934f33a8dca2f29ca68785f60ce`.
 
 ## 4. Канонические документы
 
@@ -39,14 +39,14 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 | DOC-INVESTMENT-MEMO | proposed | `docs-platform/templates/investment-memorandum.md` | `464e46d307aaa98e57cab3a098cd639e212d32b51f82a06688de228f0e7fb4cd` |
 | DOC-INVESTOR-FINANCIAL-SUMMARY | research | `docs-platform/working/investor-financial-summary.yaml` | `790d4c84513d666157088c0afeb8ece09ed80080b33db54117ad1dde64a92a40` |
 | DOC-INVESTOR-START-MODEL | research | `docs-platform/working/investor-start-model.yaml` | `b81a6c4e8988a4532c9ba2749d492b3f96e37d83af822396afc82930244b2985` |
-| DOC-NETWORK-PLANNING-ASSUMPTIONS | approved | `docs-platform/working/network-planning-assumptions.yaml` | `1136e30e205cf03abef7232fb1618b624f2f4d1744d14de966089908d4c2022b` |
+| DOC-NETWORK-PLANNING-ASSUMPTIONS | approved | `docs-platform/working/network-planning-assumptions.yaml` | `5b212f63f45df8ed23d285f07793f0191797cbfb1b989f95a3973863ff10797a` |
 | DOC-PILOT-CAPEX-ASSUMPTIONS | research | `docs-platform/working/pilot-capex-assumptions.yaml` | `25e11d4db20050b3a95cab40797ef0a29e56fad93c73d33d4a39415a8071d4ac` |
 | DOC-README | approved | `docs-platform/README.md` | `04e947f296a158a1c37ceb8d4c959d1f4e31cf609d16c99bee2d3c3b79b824ab` |
 | DOC-REVENUE-MODEL | research | `docs-platform/working/revenue-model.yaml` | `ab68399813d62d861522752c8e94df9cfc5d5a48e9b7723c60f2c968c4cba721` |
 
 ## 5. Текущая рабочая тема
 
-Prerender public Investor Terminal route for production release
+Correct local Investor Economics v1 and business baseline
 
 ## 6. Decisions и change sets
 
@@ -61,7 +61,7 @@ Prerender public Investor Terminal route for production release
 
 ## 8. Google / MCP / deployment
 
-- Google: `{"configured":true,"historical_receipts":14,"receipts_with_machine_readback_hash":11,"live_drift_check":"not_run_by_context_build"}`.
+- Google: `{"configured":false,"historical_receipts":14,"receipts_with_machine_readback_hash":11,"live_drift_check":"not_run_by_context_build"}`.
 - MCP: `{"implementation_present":true,"canonical_access":"registry_document_ids_only","live_status":"not_probed_by_context_build"}`.
 - Deployment: `{"status":"receipts_present","receipts":8,"production_url":null}`.
 
