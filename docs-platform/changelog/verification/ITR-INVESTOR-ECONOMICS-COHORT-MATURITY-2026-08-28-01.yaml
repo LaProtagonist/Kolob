@@ -1,0 +1,37 @@
+receipt_version: 1
+iteration_id: ITR-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01
+decision_id: DEC-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01
+change_set_id: CHG-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01
+verified_at: 2026-08-28T20:35:00.000Z
+result: passed
+approved_payload_sha256: d1180d7ac4dc4ee7a4188e3a9ee1cd125f81cfeb219365f4f791567f18265b92
+before_state_sha256: 675dd473655a614d204609bbfbe659ed13aa0deeddbed2c8bc2ecd0ddad2a874
+after_state_sha256: eda5c81c9268ed7404a02b863e45e2d4427e53a4695d7cd2ea161e1e4213f202
+checks:
+  - PATH=/Users/trbrmrdr/.nvm/versions/node/v22.15.1/bin:$PATH npx tsc --noEmit (passed)
+  - npm run financial:core:check (passed after deterministic regeneration)
+  - npm run investor:economics:check (passed)
+  - npm run investor:economics:test (20 passed)
+  - node scripts/test-investor-terminal.cjs (passed; desktop, tablet and mobile local-scroll coverage)
+  - node scripts/capture-investor-economics-review.cjs (passed; seven deterministic PNGs)
+  - npm run verify:affected (passed)
+  - npm run verify:release (passed; 194.6s; verification only)
+invariants:
+  immature_cohort_fcf_cannot_fund_investor_distribution: passed
+  mature_cohort_fcf_becomes_eligible_at_full_plan_month: passed
+  self_financing_cash_is_not_distributed_twice: passed
+  full_programme_funding_releases_mature_cash_after_liquidity_and_obligations: passed
+  investor_distribution_never_exceeds_distributable_cash: passed
+  base_timeline_is_audited_as_M0_opening_M1_first_sales_M7_full_plan: passed
+  creative_cluster_prepayment_payback_crossing_is_proven_by_monthly_fixture: passed
+  local_waterfall_owns_tablet_horizontal_scroll: passed
+  body_and_document_have_no_horizontal_overflow: passed
+historical_artifact_repair:
+  hash_exact_temporarily_restored: 9
+  unrecoverable_marked_superseded: 5
+  temporary_artifacts_staged_or_committed: false
+  repair_validation: passed
+external_changes:
+  google_apply: not_run
+  production_deploy: not_run
+  master_merge: not_run

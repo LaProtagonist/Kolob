@@ -1,0 +1,16 @@
+schema_version: 2
+decision_id: DEC-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01
+iteration_id: ITR-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01
+title: Approve cohort-maturity gate and local participation cleanup
+status: approved
+approved_by: project owner
+approved_at: 2026-08-28T20:00:00.000Z
+scope: >-
+  Investor FCF eligibility follows the existing point/cohort full-plan ramp
+  month, not an arbitrary age of investor drawdown. Mature FCF remains subject
+  to the selected deal's programme-funding and liquidity obligations. The
+  Investor Terminal copy distinguishes programme payback from investor capital
+  payback and keeps cash metrics explicitly horizon-based. No production or
+  Google state is changed.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01-approved.yaml
+approved_payload_sha256: d1180d7ac4dc4ee7a4188e3a9ee1cd125f81cfeb219365f4f791567f18265b92

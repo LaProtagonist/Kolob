@@ -1,0 +1,23 @@
+schema_version: 2
+proposal_id: PROP-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01
+iteration_id: ITR-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01
+decision_id: DEC-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01
+change_set_id: CHG-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01
+title: Replace investor tranche-age lock with cohort-maturity eligibility
+status: approved
+approved_by: project owner
+approved_at: 2026-08-28T20:00:00.000Z
+scope: >-
+  Local Investor Economics v1 correction: investor distributions become eligible
+  from the governed full-plan ramp month of each funded cohort rather than from
+  a global six-month drawdown lock. The iteration also makes the presentation
+  scenario-aware and keeps horizontal waterfall scroll inside its local table.
+  Business formulas, Google, production, master and deployment remain unchanged.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01-approved.yaml
+approved_payload_sha256: d1180d7ac4dc4ee7a4188e3a9ee1cd125f81cfeb219365f4f791567f18265b92
+before_state_sha256: 675dd473655a614d204609bbfbe659ed13aa0deeddbed2c8bc2ecd0ddad2a874
+after_state_sha256: eda5c81c9268ed7404a02b863e45e2d4427e53a4695d7cd2ea161e1e4213f202
+affected_document_ids:
+  - DOC-FINANCIAL-MODEL
+  - DOC-INVESTOR-FINANCIAL-SUMMARY
+  - DOC-NETWORK-PLANNING-ASSUMPTIONS

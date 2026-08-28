@@ -1,0 +1,35 @@
+receipt_version: 1
+iteration_id: ITR-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01
+decision_id: DEC-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01
+change_set_id: CHG-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01
+previewed_at: 2026-08-28T20:00:00.000Z
+result: reviewed
+mutation_performed: false
+business_preview:
+  financial_formula_change: none
+  generated_provenance_refresh: network-temporal ramp duration is now supplied as typed metadata to Investor Economics
+  current_programme:
+    total_program_investment_rub: 102702001.73
+    external_funding_requirement_rub: 62888281.86
+    business_self_financing_rub: 39813719.87
+    programme_payback: M18
+investor_preview:
+  full_programme_80_15:
+    maturity_rule: FCF eligible from each cohort's full-plan month
+    first_capital_return: M7
+    full_capital_return: M25
+    cash_irr_to_m60: 26.84%
+    cash_moic_to_m60: 1.4911
+  equity_25:
+    first_distribution: M19
+    cash_payback: M45
+    residual_right: 25% company equity
+presentation_preview:
+  title: Финансовая модель
+  selected_template_state: warm light accent instead of black panel
+  waterfall: collapsed by default; local horizontal scroll only on its table wrapper
+  comparison: four representative structures; additional presets collapsed
+external_changes:
+  google_apply: not_run
+  production_deploy: not_run
+  master_merge: not_run

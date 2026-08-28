@@ -1,0 +1,11 @@
+schema_version: 2
+change_id: CHG-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01
+title: Apply cohort-maturity waterfall and responsive participation presentation
+status: approved
+created_at: 2026-08-28
+decision_id: DEC-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01
+iteration_id: ITR-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01
+proposal_id: PROP-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01-approved.yaml
+approved_payload_sha256: d1180d7ac4dc4ee7a4188e3a9ee1cd125f81cfeb219365f4f791567f18265b92
+operations: []

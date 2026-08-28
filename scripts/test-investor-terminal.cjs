@@ -398,7 +398,7 @@ async function run() {
     await page.getByRole("button", { name: "Условия участия" }).click();
     const investorEconomics = page.getByTestId("investor-economics-panel");
     await investorEconomics.waitFor();
-    assert.equal(await page.getByRole("heading", { name: "Условия участия" }).count(), 1, "Investor Economics is a distinct third Terminal section");
+    assert.equal(await page.getByRole("heading", { name: "Сценарии для обсуждения" }).count(), 1, "Investor Economics is a distinct third Terminal section");
     await assertAmount("economics-programme-investment", 102_702_001.73, "programme investment reuses the corrected Business Financial Core total");
     await assertAmount("economics-current-external-funding", 62_888_281.86, "current external funding stays distinct from total programme investment");
     const programmeInvestment = await amount("economics-programme-investment");
@@ -420,9 +420,14 @@ async function run() {
       const layout = await investorEconomics.evaluate((element) => ({
         overflow: document.documentElement.scrollWidth > window.innerWidth,
         summaryVisible: Boolean(element.querySelector(".investor-economics-summary")),
+        waterfallHasLocalOverflow: (() => {
+          const wrapper = element.querySelector("[data-testid=\"economics-waterfall-scroll\"]");
+          return wrapper instanceof HTMLElement && wrapper.scrollWidth > wrapper.clientWidth;
+        })(),
       }));
       assert.equal(layout.overflow, false, `Investor Economics ${label} has no horizontal page overflow`);
       assert.equal(layout.summaryVisible, true, `Investor Economics ${label} retains its scenario summary`);
+      if (label !== "desktop") assert.equal(layout.waterfallHasLocalOverflow, true, `Investor Economics ${label} keeps wide waterfall columns inside its local scroller`);
     }
     await page.setViewportSize({ width: 1440, height: 900 });
     await investorEconomics.screenshot({ path: path.join(projectRoot, ".cache/verification/screenshots/investor-economics-full-programme-desktop.png") });

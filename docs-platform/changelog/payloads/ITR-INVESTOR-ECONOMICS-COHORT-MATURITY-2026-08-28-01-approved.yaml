@@ -1,0 +1,80 @@
+schema_version: 2
+payload_id: PAYLOAD-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01
+iteration_id: ITR-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01
+proposal_id: PROP-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01
+decision_id: DEC-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01
+change_set_id: CHG-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01
+title: Apply cohort-maturity Investor Economics waterfall and final local presentation review
+status: approved
+approved_by: project owner
+approved_at: 2026-08-28T20:00:00.000Z
+scope:
+  - Replace the prior investor-drawdown age lock with a cohort-maturity eligibility gate driven by the approved M1–M7 revenue ramp and the dated Business Financial Core cohort projections.
+  - Keep immature cohort FCF inside the business; permit mature FCF to enter the investor waterfall only after programme obligations and selected-deal liquidity rules.
+  - Preserve Business Financial Core formulas, rollout dates, revenue, OPEX, tax, maintenance, CAPEX and reserve policies; no second financial engine is created.
+  - State the Current Base temporal limitation exactly: the existing core opens Base in M0 and recognizes first sales in M1; no construction lag is invented without a separate owner decision.
+  - Explain Creative Cluster prepayment's M19-to-M18 programme-payback crossing with a deterministic monthly test.
+  - Simplify the local participation IA, use scenario-aware terminology, keep the monthly waterfall collapsed by default and localize its horizontal scroll on tablet/mobile.
+  - Generate deterministic local full-page and executive PNG review artifacts; they are ignored review output, not governed content or production assets.
+constraints:
+  - no production deployment, master merge, push or branch change
+  - no Google apply, Google redesign, OAuth operation or remote document mutation
+  - no new capacity assumption, legal instrument, investor offer, exit valuation or interest rate
+  - no alteration to the approved Creative Cluster prepayment, base/expansion reserve, tax or rollout business semantics
+affected_document_ids:
+  - DOC-FINANCIAL-MODEL
+  - DOC-INVESTOR-FINANCIAL-SUMMARY
+  - DOC-NETWORK-PLANNING-ASSUMPTIONS
+affected_section_ids:
+  - investor-economics.cohort-maturity-eligibility
+  - investor-economics.full-programme-principal-waterfall
+  - investor-economics.cash-metrics-horizon
+  - investor-terminal.conditions-participation-ia
+  - investor-terminal.waterfall-responsive-scroll
+  - network-temporal.ramp-duration-provenance
+  - financial-core.creative-prepayment-payback-proof
+state_hash_paths:
+  - docs-platform/generated/financial-core-projection.json
+  - docs-platform/generated/investor-economics-projection.json
+  - scripts/capture-investor-economics-review.cjs
+  - scripts/test-investor-economics.test.ts
+  - scripts/test-investor-terminal.cjs
+  - src/components/InvestorEconomicsPanel.tsx
+  - src/components/InvestorTerminal.css
+  - src/components/InvestorTerminal.tsx
+  - src/lib/investor-economics.ts
+  - src/lib/network-temporal.ts
+content_paths:
+  - docs-platform/generated/financial-core-projection.json
+  - docs-platform/generated/investor-economics-projection.json
+  - scripts/capture-investor-economics-review.cjs
+  - scripts/test-investor-economics.test.ts
+  - scripts/test-investor-terminal.cjs
+  - src/components/InvestorEconomicsPanel.tsx
+  - src/components/InvestorTerminal.css
+  - src/components/InvestorTerminal.tsx
+  - src/lib/investor-economics.ts
+  - src/lib/network-temporal.ts
+  - docs-platform/changes/proposals/PROP-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01.yaml
+  - docs-platform/changes/decisions/DEC-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01.yaml
+  - docs-platform/changes/CHG-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01.yaml
+  - docs-platform/changes/iterations/ITR-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01.yaml
+  - docs-platform/changelog/audit/ITR-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01.yaml
+  - docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01-approved.yaml
+  - docs-platform/changelog/previews/ITR-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01.yaml
+  - docs-platform/changelog/verification/ITR-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01.yaml
+  - docs-platform/changelog/events.ndjson
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/SNAPSHOT-ITR-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01.yaml
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+allowed_dirty_paths:
+  - analysis/
+  - output/
+rollback_payload: null
+rollback_contract:
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true

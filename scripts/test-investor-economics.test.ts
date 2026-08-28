@@ -229,23 +229,72 @@ test("each additional cohort has a distinct contingency, initial inventory and o
   }
 });
 
-test("full-programme capital is locked per dated tranche for six months", () => {
+test("full-programme distributions begin only with mature cohort FCF", () => {
   const projection = investorEconomicsProjection(fivePointBusinessProjection(), {
     ...defaultInvestorEconomicsTerms(),
     template: "full_programme",
     fundingMode: "staged",
-    principalLockMonths: 6,
   });
-  for (const row of projection.rows.filter((row) => row.month < 6)) {
-    assert.equal(row.principalRepaymentRub, 0, `M${row.month} cannot repay the M0 tranche before M6`);
+  const base = projection.source.cohortMaturity.find((cohort) => cohort.id === "base-object");
+  const creative = projection.source.cohortMaturity.find((cohort) => cohort.label === "Креативный кластер");
+  assert.ok(base && creative, "the projection exposes the funded base and Creative Cluster cohorts");
+  assert.equal(base!.firstFcfEligibleMonth, base!.fullPlanMonth);
+  for (const row of projection.rows.filter((row) => row.month < base!.firstFcfEligibleMonth)) {
+    assert.equal(row.totalInvestorDistributionRub, 0, `M${row.month} cannot use immature Base FCF for investor payments`);
   }
-  const m0 = projection.rows.find((row) => row.month === 0)!;
-  const m3 = projection.rows.find((row) => row.month === 3)!;
-  assert.ok(m0.investorDrawdownRub > 0 && m3.investorDrawdownRub > 0, "fixture includes M0 and M3 drawdowns");
-  const throughM8 = projection.rows.filter((row) => row.month <= 8).reduce((sum, row) => sum + row.principalRepaymentRub, 0);
-  assert.ok(throughM8 <= m0.investorDrawdownRub + 0.02, "the M3 tranche remains locked through M8 and cannot be repaid early");
-  assert.ok((projection.rows.find((row) => row.month === 9)?.eligiblePrincipalBeforeRub ?? 0) > 0, "the M3 tranche becomes eligible from M9");
-  for (const row of projection.rows) assert.ok(row.principalRepaymentRub <= row.eligiblePrincipalBeforeRub + 0.02);
+  const firstPayment = projection.rows.find((row) => row.totalInvestorDistributionRub > 0);
+  assert.ok(firstPayment);
+  assert.equal(firstPayment!.month, base!.firstFcfEligibleMonth);
+  assert.ok(firstPayment!.matureCohortIds.includes("base-object"));
+  assert.ok(!firstPayment!.matureCohortIds.includes(creative!.id), "the later Creative Cluster is not used before its own ramp completes");
+  for (const row of projection.rows) {
+    assert.ok(row.totalInvestorDistributionRub <= row.matureCohortFreeCashFlowRub + 0.02);
+  }
+});
+
+test("Base maturity is read from the current Business Core timeline without inventing a construction lag", () => {
+  const projection = investorEconomicsProjection(fivePointBusinessProjection());
+  const base = projection.source.cohortMaturity.find((cohort) => cohort.id === "base-object");
+  assert.ok(base);
+  assert.deepEqual(
+    {
+      funding: base!.fundingMonth,
+      opening: base!.openingMonth,
+      firstSales: base!.firstSalesMonth,
+      fullPlan: base!.fullPlanMonth,
+    },
+    { funding: 0, opening: 0, firstSales: 1, fullPlan: 7 },
+  );
+});
+
+test("Creative Cluster prepayment advances the programme crossing through dated prepaid-rent credits", () => {
+  const currentConfiguration = fivePointConfiguration();
+  const legacyConfiguration = {
+    ...currentConfiguration,
+    networkScaling: {
+      ...currentConfiguration.networkScaling,
+      cohorts: currentConfiguration.networkScaling.cohorts.map((cohort) => cohort.locationType === "creative_cluster"
+        ? { ...cohort, prepaymentMonths: 1 }
+        : cohort),
+    },
+  };
+  const currentScenario = configuredEconomicsScenario(currentConfiguration);
+  const legacyScenario = configuredEconomicsScenario(legacyConfiguration);
+  const current = networkFinancialProjection(currentConfiguration, baseObjectFinancialProjection(currentScenario), currentScenario);
+  const legacy = networkFinancialProjection(legacyConfiguration, baseObjectFinancialProjection(legacyScenario), legacyScenario);
+  const currentM18 = current.temporal.network.months.find((month) => month.month === 18)!;
+  const legacyM18 = legacy.temporal.network.months.find((month) => month.month === 18)!;
+  assert.equal(current.temporal.network.paybackMonth, 18);
+  assert.equal(legacy.temporal.network.paybackMonth, 19);
+  assert.ok((legacyM18.cumulativeCashFlowRub ?? 0) < 0, "legacy M18 remains below zero");
+  assert.ok((currentM18.cumulativeCashFlowRub ?? 0) > 0, "current M18 has crossed above zero");
+  assert.ok(Math.abs((currentM18.cumulativeCashFlowRub ?? 0) - (legacyM18.cumulativeCashFlowRub ?? 0) - 480_000) < 0.02);
+  const currentM3 = current.temporal.network.months.find((month) => month.month === 3)!;
+  const legacyM3 = legacy.temporal.network.months.find((month) => month.month === 3)!;
+  assert.ok((currentM3.cashFlowRub ?? 0) < (legacyM3.cashFlowRub ?? 0), "the larger Creative prepayment is funded at launch");
+  const currentM7 = current.temporal.network.months.find((month) => month.month === 7)!;
+  const legacyM7 = legacy.temporal.network.months.find((month) => month.month === 7)!;
+  assert.equal((currentM7.prepaidRentCreditRub ?? 0) - (legacyM7.prepaidRentCreditRub ?? 0), 160_000, "the additional prepaid credit begins after rent holidays");
 });
 
 test("full-programme investor income starts only after all capital is returned and horizon metrics exclude residual value", () => {

@@ -1,0 +1,84 @@
+receipt_version: 1
+iteration_id: ITR-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01
+audited_at: 2026-08-28T20:00:00.000Z
+result: passed
+cohort_maturity:
+  approved_ramp: [60%, 70%, 80%, 85%, 90%, 95%, 100%]
+  rule: Each cohort's FCF is investor-eligible from its full-plan month. Before that month it remains business cash and cannot be routed to investor distributions.
+  five_point_timeline:
+    - cohort: Базовый объект
+      funding_month: M0
+      opening_month: M0
+      first_sales_month: M1
+      full_plan_month: M7
+      first_fcf_eligible_month: M7
+    - cohort: Креативный кластер
+      funding_month: M3
+      opening_month: M4
+      first_sales_month: M4
+      full_plan_month: M10
+      first_fcf_eligible_month: M10
+    - cohort: Фудхолл
+      funding_month: M6
+      opening_month: M7
+      first_sales_month: M7
+      full_plan_month: M13
+      first_fcf_eligible_month: M13
+    - cohort: Исторический центр · с посадкой
+      funding_month: M9
+      opening_month: M10
+      first_sales_month: M10
+      full_plan_month: M16
+      first_fcf_eligible_month: M16
+    - cohort: Исторический центр · на вынос
+      funding_month: M12
+      opening_month: M13
+      first_sales_month: M13
+      full_plan_month: M19
+      first_fcf_eligible_month: M19
+base_timeline_audit:
+  current_business_core: Base capital and opening are modelled in M0; first sales are modelled in M1; full plan is M7.
+  verdict: No physical construction/opening lag is represented in the current business core. This is a material temporal-model gap for a future owner decision, not an assumption introduced by this iteration.
+programme_payback_proof:
+  legacy_creative_one_month_prepayment:
+    programme_payback_month: M19
+    cumulative_cash_flow_m18_rub: -248249.87
+  approved_creative_twelve_month_prepayment:
+    programme_payback_month: M18
+    cumulative_cash_flow_m18_rub: 231750.13
+  m18_delta_rub: 480000
+  explanation: The M3 net funding burden rises by 1280000 ₽ after reserve offset, then eleven payable Creative rent months receive an additional 160000 ₽ prepaid-rent credit. By M18 the cumulative delta is +480000 ₽, so the crossing moves from M19 to M18 without changing operating economics.
+full_programme_80_15_before_after:
+  before_tranche_age_lock:
+    commitment_rub: 102702001.73
+    actual_contributions_rub: 102702001.72
+    peak_capital_in_work_rub: 76640871.80
+    first_capital_return: M6
+    full_capital_return: M23
+    income_to_m60_rub: 54279271.80
+    payments_to_m60_rub: 156981273.52
+    cash_irr_to_m60: 33.10%
+    cash_moic_to_m60: 1.5285
+  after_cohort_maturity:
+    commitment_rub: 102702001.73
+    actual_contributions_rub: 102702001.72
+    peak_capital_in_work_rub: 85784938.25
+    first_capital_return: M7
+    full_capital_return: M25
+    income_to_m60_rub: 50434066.42
+    payments_to_m60_rub: 153136068.14
+    cash_irr_to_m60: 26.84%
+    cash_moic_to_m60: 1.4911
+  explanation: Maturity removes pre-ramp Base FCF from repayment, moving the first capital return one month and the complete return two months later; it does not alter Business FCF or programme funding.
+pure_equity_25_before_after:
+  investment_rub: 62888281.85
+  first_distribution: M19
+  cash_payback: M45
+  cash_irr_to_m60: 15.73%
+  cash_moic_to_m60: 1.6023
+  residual_right: 25% company equity
+  change: none; the self-financing rollout gate already delayed distributions beyond cohort maturity.
+external_state:
+  google_apply: not_run
+  production_deploy: not_run
+  master_merge: not_run

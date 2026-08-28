@@ -77,6 +77,8 @@ export type NetworkTemporalProjection = {
   };
   startCalendarMonth: number;
   horizonMonths: number;
+  /** Last approved ramp-profile month; consumers must not duplicate the curve. */
+  rampDurationMonths: number;
   lastOpeningMonth: number | null;
   fullScaleMonth: number | null;
   base: {
@@ -499,6 +501,7 @@ export function networkTemporalProjection(
     provenance: { base: baseObject.context, expansion: "network_expansion", network: "consolidated_network" },
     startCalendarMonth: configuration.networkScaling.calendarStartMonth,
     horizonMonths: temporal.horizonMonths,
+    rampDurationMonths: temporal.rampUpProfile.at(-1)?.month ?? 0,
     lastOpeningMonth,
     fullScaleMonth,
     base: { context: baseObject.context, investmentRub: baseObject.investmentRub, paybackMonth: baseObject.paybackMonth, months: base.months },

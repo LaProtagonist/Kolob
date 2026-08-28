@@ -18,7 +18,7 @@ export const investorEconomicsTemplateIds = [
 export type InvestorEconomicsTemplate = (typeof investorEconomicsTemplateIds)[number];
 export type InvestorFundingMode = "upfront" | "staged";
 export type InvestorDistributionPolicy = "reinvest_first" | "current_cash_flow";
-export type PrincipalRepaymentMode = "tranche_maturity" | "after_programme_funding";
+export type PrincipalRepaymentMode = "cohort_maturity" | "after_programme_funding";
 export type PostPrincipalParticipationTerm = "model_horizon" | "additional_months" | "target_cash_moic" | "unlimited";
 
 export type InvestorEconomicsTerms = {
@@ -44,9 +44,7 @@ export type InvestorEconomicsTerms = {
   principalPhaseDistributionShare: number;
   /** Share of distributable cash paid after principal is returned. */
   postPrincipalCashFlowShare: number;
-  /** Capital from each dated contribution is ineligible for repayment until this age. */
-  principalLockMonths: number;
-  /** Whether matured capital can be repaid during rollout or only after its final drawdown. */
+  /** Whether capital may return as cohorts mature, or only after programme funding completes. */
   principalRepaymentMode: PrincipalRepaymentMode;
   /** Duration of post-principal cash-flow participation. */
   postPrincipalParticipationTerm: PostPrincipalParticipationTerm;
@@ -66,8 +64,10 @@ export type InvestorMonthlyWaterfall = {
   businessCashAppliedToRolloutRub: number;
   investorDrawdownRub: number;
   outstandingPrincipalBeforeRub: number;
-  /** Capital which has completed its tranche lock and can be returned this month. */
-  eligiblePrincipalBeforeRub: number;
+  /** FCF of cohorts which have reached the approved full-plan ramp month. */
+  matureCohortFreeCashFlowRub: number;
+  /** Cohorts whose monthly FCF is eligible under the maturity rule. */
+  matureCohortIds: string[];
   distributableBusinessCashRub: number;
   principalRepaymentRub: number;
   investorReturnRub: number;
@@ -78,6 +78,16 @@ export type InvestorMonthlyWaterfall = {
   cashBalanceAfterFundingRub: number;
 };
 
+export type InvestorCohortMaturity = {
+  id: string;
+  label: string;
+  fundingMonth: number;
+  openingMonth: number;
+  firstSalesMonth: number;
+  fullPlanMonth: number;
+  firstFcfEligibleMonth: number;
+};
+
 export type InvestorEconomicsMetrics = {
   commitmentRub: number | null;
   actualContributionsRub: number;
@@ -86,6 +96,8 @@ export type InvestorEconomicsMetrics = {
   investorReturnRub: number;
   totalDistributionsRub: number;
   firstDistributionMonth: number | null;
+  /** First month in which cumulative cash distributions cover actual contributions. */
+  cashPaybackMonth: number | null;
   firstPrincipalRepaymentMonth: number | null;
   principalPaybackMonth: number | null;
   peakOutstandingCapitalRub: number;
@@ -107,6 +119,7 @@ export type InvestorEconomicsProjection = {
     currentExternalFundingRequirementRub: number | null;
     programmePaybackMonth: number | null;
     coverage: NetworkFinancialProjection["coverage"];
+    cohortMaturity: InvestorCohortMaturity[];
   };
   terms: InvestorEconomicsTerms;
   policy: "reinvest_first" | "current_cash_flow" | "full_programme_principal_first";
@@ -140,8 +153,7 @@ export function defaultInvestorEconomicsTerms(): InvestorEconomicsTerms {
     programmeFundingShare: 1,
     principalPhaseDistributionShare: 0.8,
     postPrincipalCashFlowShare: 0.15,
-    principalLockMonths: 6,
-    principalRepaymentMode: "tranche_maturity",
+    principalRepaymentMode: "cohort_maturity",
     postPrincipalParticipationTerm: "model_horizon",
     postPrincipalAdditionalMonths: 12,
     postPrincipalTargetCashMoic: 1.5,
@@ -158,6 +170,84 @@ function requiredProgrammeFunding(month: TemporalMonth) {
   return roundFinancial(Math.max(0, month.operatingFreeCashFlowRub + (month.prepaidRentCreditRub ?? 0) - month.cashFlowRub));
 }
 
+function firstPositiveMonth(months: readonly TemporalMonth[]) {
+  return months.find((month) => (month.revenueRub ?? 0) > 0)?.month ?? null;
+}
+
+function cohortLabel(cohort: NetworkFinancialProjection["scaling"]["cohorts"][number]) {
+  if (cohort.cohort.id === "cohort-1") return "Базовый объект";
+  if (cohort.cohort.locationType === "creative_cluster") return "Креативный кластер";
+  if (cohort.cohort.locationType === "foodhall") return "Фудхолл";
+  return cohort.cohort.format === "with_seating" ? "Исторический центр · с посадкой" : "Исторический центр · на вынос";
+}
+
+type MaturityProfile = {
+  cohorts: InvestorCohortMaturity[];
+  matureFreeCashFlowByMonth: number[];
+  matureCohortIdsByMonth: string[][];
+};
+
+/**
+ * The Business Core already provides dated FCF for the Base Object and each
+ * expansion cohort.  This adapter adds an eligibility layer only: before a
+ * cohort reaches the last approved ramp month, its FCF remains in business
+ * and cannot be redirected into an investor distribution.
+ */
+function cohortMaturityProfile(source: NetworkFinancialProjection): MaturityProfile {
+  const rampDurationMonths = Math.max(1, source.temporal.rampDurationMonths);
+  const baseFirstSalesMonth = firstPositiveMonth(source.temporal.base.months);
+  const baseOpeningMonth = source.temporal.base.months.find((month) => month.newOpenings > 0)?.month ?? 0;
+  const baseFullPlanMonth = baseFirstSalesMonth === null ? null : baseFirstSalesMonth + rampDurationMonths - 1;
+  const baseMaturity = baseFirstSalesMonth === null || baseFullPlanMonth === null ? [] : [{
+    id: "base-object",
+    label: "Базовый объект",
+    fundingMonth: 0,
+    openingMonth: baseOpeningMonth,
+    firstSalesMonth: baseFirstSalesMonth,
+    fullPlanMonth: baseFullPlanMonth,
+    firstFcfEligibleMonth: baseFullPlanMonth,
+  } satisfies InvestorCohortMaturity];
+  const expansionMaturity = source.temporal.expansion.groups.flatMap((group) => {
+    const cohort = source.scaling.cohorts.find((candidate) => candidate.cohort.id === group.cohortId);
+    const openingMonth = group.firstOpeningMonth;
+    const firstSalesMonth = firstPositiveMonth(group.months);
+    const fullPlanMonth = group.planLevelMonth;
+    const fundingMonth = group.months.find((month) => (month.capexRub ?? 0) > 0)?.month
+      ?? (openingMonth === null ? null : Math.max(0, openingMonth - 1));
+    if (!cohort || openingMonth === null || firstSalesMonth === null || fullPlanMonth === null || fundingMonth === null) return [];
+    return [{
+      id: group.cohortId,
+      label: cohortLabel(cohort),
+      fundingMonth,
+      openingMonth,
+      firstSalesMonth,
+      fullPlanMonth,
+      firstFcfEligibleMonth: fullPlanMonth,
+    } satisfies InvestorCohortMaturity];
+  });
+  const cohorts = [...baseMaturity, ...expansionMaturity];
+  const matureFreeCashFlowByMonth = source.temporal.network.months.map((networkMonth) => {
+    const month = networkMonth.month;
+    const baseFcf = baseMaturity[0] && month >= baseMaturity[0].firstFcfEligibleMonth
+      ? source.temporal.base.months[month]?.operatingFreeCashFlowRub ?? 0
+      : 0;
+    const groupFcf = source.temporal.expansion.groups.reduce((total, group) => {
+      const maturity = expansionMaturity.find((candidate) => candidate.id === group.cohortId);
+      return total + (maturity && month >= maturity.firstFcfEligibleMonth
+        ? group.months[month]?.operatingFreeCashFlowRub ?? 0
+        : 0);
+    }, 0);
+    // Shared costs are owned by the consolidated Business Core. The cap keeps
+    // investor eligibility below actual consolidated FCF without recreating a
+    // second P&L allocation formula.
+    return roundFinancial(Math.max(0, Math.min(networkMonth.operatingFreeCashFlowRub ?? 0, baseFcf + groupFcf)));
+  });
+  const matureCohortIdsByMonth = source.temporal.network.months.map((networkMonth) => cohorts
+    .filter((cohort) => networkMonth.month >= cohort.firstFcfEligibleMonth)
+    .map((cohort) => cohort.id));
+  return { cohorts, matureFreeCashFlowByMonth, matureCohortIdsByMonth };
+}
+
 type SimulationInput = {
   months: readonly TemporalMonth[];
   terms: InvestorEconomicsTerms;
@@ -167,6 +257,7 @@ type SimulationInput = {
   lastRolloutFundingMonth: number;
   reinvestReleaseMonth: number;
   futureLiquidityBufferByMonth: readonly number[];
+  maturity: MaturityProfile;
 };
 
 type SimulationResult = {
@@ -182,9 +273,9 @@ function requestedDistribution(
   cumulativeContributionsRub: number,
 ) {
   if (terms.template === "equity") return roundFinancial(distributableBusinessCashRub * percent(terms.equityShare));
-  // Full-programme funding uses the tranche-aware principal waterfall in
-  // simulate(). Keeping it out of this generic helper prevents a locked
-  // contribution from being treated like immediately repayable capital.
+  // Full-programme funding uses the cohort-maturity principal waterfall in
+  // simulate(). Keeping it out of this generic helper prevents immature
+  // operating cash from being treated like investor-distributable cash.
   if (terms.template === "full_programme") return 0;
   if (terms.template === "priority_equity") {
     const threshold = cumulativeContributionsRub * Math.max(0, terms.targetMultiple);
@@ -206,49 +297,6 @@ function requestedDistribution(
     cashFlowBase * cashFlowShare
     + (distributableBusinessCashRub - cashFlowBase) * percent(terms.residualEquityShare),
   );
-}
-
-type PrincipalTranche = {
-  contributionMonth: number;
-  outstandingRub: number;
-};
-
-function trancheIsEligible(
-  tranche: PrincipalTranche,
-  month: number,
-  terms: InvestorEconomicsTerms,
-  lastRolloutFundingMonth: number,
-) {
-  if (month - tranche.contributionMonth < Math.max(0, Math.floor(terms.principalLockMonths))) return false;
-  return terms.principalRepaymentMode !== "after_programme_funding" || month > lastRolloutFundingMonth;
-}
-
-function eligiblePrincipal(
-  tranches: readonly PrincipalTranche[],
-  month: number,
-  terms: InvestorEconomicsTerms,
-  lastRolloutFundingMonth: number,
-) {
-  return roundFinancial(tranches.reduce((total, tranche) => total + (
-    trancheIsEligible(tranche, month, terms, lastRolloutFundingMonth) ? tranche.outstandingRub : 0
-  ), 0));
-}
-
-function repayEligibleTranches(
-  tranches: PrincipalTranche[],
-  amountRub: number,
-  month: number,
-  terms: InvestorEconomicsTerms,
-  lastRolloutFundingMonth: number,
-) {
-  let remainingRub = amountRub;
-  for (const tranche of tranches) {
-    if (remainingRub <= 0 || !trancheIsEligible(tranche, month, terms, lastRolloutFundingMonth)) continue;
-    const repaidRub = Math.min(tranche.outstandingRub, remainingRub);
-    tranche.outstandingRub = roundFinancial(tranche.outstandingRub - repaidRub);
-    remainingRub = roundFinancial(remainingRub - repaidRub);
-  }
-  return roundFinancial(amountRub - remainingRub);
 }
 
 function postPrincipalTermAllowsDistribution(
@@ -273,7 +321,6 @@ function simulate(input: SimulationInput): SimulationResult {
   let cumulativeDistributionsRub = 0;
   let contributionTotalRub = 0;
   let principalPaybackMonth: number | null = null;
-  const tranches: PrincipalTranche[] = [];
   const rows: InvestorMonthlyWaterfall[] = [];
 
   for (const [index, source] of input.months.entries()) {
@@ -308,7 +355,6 @@ function simulate(input: SimulationInput): SimulationResult {
       outstandingPrincipalRub = roundFinancial(outstandingPrincipalRub + investorDrawdownRub);
       cumulativeContributionsRub = roundFinancial(cumulativeContributionsRub + investorDrawdownRub);
       contributionTotalRub = roundFinancial(contributionTotalRub + investorDrawdownRub);
-      if (input.fullProgrammeFunding) tranches.push({ contributionMonth: source.month, outstandingRub: investorDrawdownRub });
     }
     // Funding is settled before distributions. Only this month's Business FCF
     // that was not needed for the current rollout requirement can become
@@ -328,29 +374,26 @@ function simulate(input: SimulationInput): SimulationResult {
     const futureLiquidityBufferRub = !input.fullProgrammeFunding && input.terms.distributionPolicy === "reinvest_first"
       ? (input.futureLiquidityBufferByMonth[index] ?? 0)
       : 0;
+    const matureCohortFreeCashFlowRub = input.maturity.matureFreeCashFlowByMonth[index] ?? 0;
+    const matureCashAfterRolloutRub = roundFinancial(Math.max(0, matureCohortFreeCashFlowRub - businessCashAppliedToRolloutRub));
     const distributableBusinessCashRub = distributionEnabled
       ? roundFinancial(Math.max(
         0,
         Math.min(
-          businessFreeCashFlowRub - businessCashAppliedToRolloutRub,
+          matureCashAfterRolloutRub,
           cashAfterFundingRub - futureLiquidityBufferRub,
         ),
       ))
       : 0;
-    const eligiblePrincipalBeforeRub = input.fullProgrammeFunding
-      ? eligiblePrincipal(tranches, source.month, input.terms, input.lastRolloutFundingMonth)
-      : outstandingPrincipalRub;
     let principalRepaymentRub = 0;
     let investorReturnRub = 0;
     if (input.fullProgrammeFunding) {
-      const principalRequestRub = roundFinancial(distributableBusinessCashRub * percent(input.terms.principalPhaseDistributionShare));
-      principalRepaymentRub = repayEligibleTranches(
-        tranches,
-        Math.min(eligiblePrincipalBeforeRub, principalRequestRub),
-        source.month,
-        input.terms,
-        input.lastRolloutFundingMonth,
-      );
+      const repaymentEnabled = input.terms.principalRepaymentMode !== "after_programme_funding"
+        || source.month > input.lastRolloutFundingMonth;
+      const principalRequestRub = repaymentEnabled
+        ? roundFinancial(distributableBusinessCashRub * percent(input.terms.principalPhaseDistributionShare))
+        : 0;
+      principalRepaymentRub = roundFinancial(Math.min(outstandingPrincipalRub, principalRequestRub));
       outstandingPrincipalRub = roundFinancial(outstandingPrincipalRub - principalRepaymentRub);
       if (outstandingPrincipalBeforeRub + investorDrawdownRub > 0 && outstandingPrincipalRub <= 0.01 && principalPaybackMonth === null) {
         principalPaybackMonth = source.month;
@@ -396,7 +439,8 @@ function simulate(input: SimulationInput): SimulationResult {
       businessCashAppliedToRolloutRub,
       investorDrawdownRub,
       outstandingPrincipalBeforeRub,
-      eligiblePrincipalBeforeRub,
+      matureCohortFreeCashFlowRub,
+      matureCohortIds: input.maturity.matureCohortIdsByMonth[index] ?? [],
       distributableBusinessCashRub,
       principalRepaymentRub,
       investorReturnRub,
@@ -433,6 +477,7 @@ function minimumUpfrontContribution(
   lastRolloutFundingMonth: number,
   reinvestReleaseMonth: number,
   futureLiquidityBufferByMonth: readonly number[],
+  maturity: MaturityProfile,
 ) {
   // The payout rule depends on the cash held at M0. Binary search finds the
   // smallest opening amount that keeps the monthly liquidity balance positive
@@ -441,7 +486,7 @@ function minimumUpfrontContribution(
   let high = months.reduce((sum, month) => sum + (requiredProgrammeFunding(month) ?? 0), 0) * 2 + 1;
   for (let iteration = 0; iteration < 90; iteration += 1) {
     const mid = (low + high) / 2;
-    const result = simulate({ months, terms, initialContributionRub: mid, allowStagedTopUps: false, fullProgrammeFunding, lastRolloutFundingMonth, reinvestReleaseMonth, futureLiquidityBufferByMonth });
+    const result = simulate({ months, terms, initialContributionRub: mid, allowStagedTopUps: false, fullProgrammeFunding, lastRolloutFundingMonth, reinvestReleaseMonth, futureLiquidityBufferByMonth, maturity });
     const lowestBalance = Math.min(...result.rows.map((row) => row.businessCashRetainedRub));
     if (lowestBalance < -0.01) low = mid;
     else high = mid;
@@ -471,12 +516,14 @@ export function investorEconomicsProjection(
   terms: InvestorEconomicsTerms = defaultInvestorEconomicsTerms(),
 ): InvestorEconomicsProjection {
   const temporal = sourceProjection.temporal;
+  const maturity = cohortMaturityProfile(sourceProjection);
   const source = {
     pointCount: temporal.network.pointCount,
     totalProgramInvestmentRub: temporal.funding.totalProgramInvestmentRub,
     currentExternalFundingRequirementRub: temporal.funding.upfrontInvestorFundingRub,
     programmePaybackMonth: temporal.network.paybackMonth,
     coverage: sourceProjection.coverage,
+    cohortMaturity: maturity.cohorts,
   };
   const fullProgrammeFunding = terms.template === "full_programme";
   const futureLiquidityBufferByMonth = futureLiquidityBuffers(temporal.network.months);
@@ -486,7 +533,7 @@ export function investorEconomicsProjection(
   }, 0);
   const reinvestReleaseMonth = Math.max(lastRolloutFundingMonth, temporal.network.paybackMonth ?? lastRolloutFundingMonth);
   const initialContributionRub = terms.fundingMode === "upfront"
-    ? minimumUpfrontContribution(temporal.network.months, terms, fullProgrammeFunding, lastRolloutFundingMonth, reinvestReleaseMonth, futureLiquidityBufferByMonth)
+    ? minimumUpfrontContribution(temporal.network.months, terms, fullProgrammeFunding, lastRolloutFundingMonth, reinvestReleaseMonth, futureLiquidityBufferByMonth, maturity)
     : 0;
   const result = simulate({
     months: temporal.network.months,
@@ -497,6 +544,7 @@ export function investorEconomicsProjection(
     lastRolloutFundingMonth,
     reinvestReleaseMonth,
     futureLiquidityBufferByMonth,
+    maturity,
   });
   const rows = result.rows;
   const totalDistributionsRub = rows.at(-1)?.cumulativeInvestorDistributionsRub ?? 0;
@@ -505,6 +553,9 @@ export function investorEconomicsProjection(
   const actualContributionsRub = result.contributionsRub;
   const cashIrr = annualIrr(rows.map((row) => roundFinancial(-row.investorDrawdownRub + row.totalInvestorDistributionRub)));
   const firstDistributionMonth = rows.find((row) => row.totalInvestorDistributionRub > 0)?.month ?? null;
+  const cashPaybackMonth = actualContributionsRub <= 0
+    ? null
+    : rows.find((row) => row.cumulativeInvestorDistributionsRub + 0.01 >= actualContributionsRub)?.month ?? null;
   const firstPrincipalRepaymentMonth = rows.find((row) => row.principalRepaymentRub > 0)?.month ?? null;
   const principalPaybackMonth = rows.find((row) => row.outstandingPrincipalBeforeRub > 0 && row.outstandingPrincipalAfterRub === 0)?.month ?? null;
   const postPrincipalParticipationEndMonth = principalPaybackMonth === null
@@ -541,6 +592,7 @@ export function investorEconomicsProjection(
       investorReturnRub,
       totalDistributionsRub,
       firstDistributionMonth,
+      cashPaybackMonth,
       firstPrincipalRepaymentMonth,
       principalPaybackMonth,
       peakOutstandingCapitalRub: roundFinancial(Math.max(0, ...rows.map((row) => row.outstandingPrincipalAfterRub))),
@@ -613,7 +665,7 @@ export function investorEconomicsInvariantErrors(projection: InvestorEconomicsPr
     if (row.totalInvestorDistributionRub - row.distributableBusinessCashRub > 0.02) errors.push(`Month ${row.month}: investor distribution exceeds distributable cash.`);
     if (row.businessCashAppliedToRolloutRub - row.businessFreeCashFlowRub > 0.02) errors.push(`Month ${row.month}: Business FCF is used twice for rollout and distribution.`);
     if (row.principalRepaymentRub - row.outstandingPrincipalBeforeRub - row.investorDrawdownRub > 0.02) errors.push(`Month ${row.month}: principal repayment exceeds outstanding capital.`);
-    if (row.principalRepaymentRub - row.eligiblePrincipalBeforeRub > 0.02) errors.push(`Month ${row.month}: principal repayment exceeds capital eligible under the tranche lock.`);
+    if (row.totalInvestorDistributionRub - row.matureCohortFreeCashFlowRub > 0.02) errors.push(`Month ${row.month}: immature cohort FCF reached an investor distribution.`);
     if (row.investorReturnRub < -0.02 || row.principalRepaymentRub < -0.02) errors.push(`Month ${row.month}: investor waterfall cannot be negative.`);
     if (row.businessCashRetainedRub < -0.02) errors.push(`Month ${row.month}: liquidity is negative after required drawdown.`);
   }

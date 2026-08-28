@@ -212,7 +212,7 @@ export function InvestorTerminalPage() {
         <header className="terminal-header">
           <div>
             <p>Терминал инвестора</p>
-            <h1 id="investor-terminal-title">Финансовая модель объекта</h1>
+            <h1 id="investor-terminal-title">Финансовая модель</h1>
           </div>
           <div className="terminal-header-actions">
             <span className={`terminal-status${isCustom ? " is-custom" : ""}`} data-testid="terminal-scenario-status">{scenarioStatus}</span>

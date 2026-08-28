@@ -1,0 +1,76 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01
+proposal_id: PROP-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01
+decision_id: DEC-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01
+change_set_id: CHG-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01
+title: Apply cohort-maturity Investor Economics waterfall and final local presentation review
+status: approved
+approved_by: project owner
+approved_at: 2026-08-28T20:00:00.000Z
+actor: Codex
+scope: >-
+  Apply the owner-approved cohort-maturity Investor Economics eligibility gate,
+  horizon-aware investor presentation and responsive local waterfall scroll.
+  Regenerate only local Financial Core/Investor Economics provenance artifacts.
+  Production, master, deployment, Google and business-input semantics remain unchanged.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01-approved.yaml
+approved_payload_sha256: d1180d7ac4dc4ee7a4188e3a9ee1cd125f81cfeb219365f4f791567f18265b92
+before_state_sha256: 675dd473655a614d204609bbfbe659ed13aa0deeddbed2c8bc2ecd0ddad2a874
+after_state_sha256: eda5c81c9268ed7404a02b863e45e2d4427e53a4695d7cd2ea161e1e4213f202
+affected_document_ids:
+  - DOC-FINANCIAL-MODEL
+  - DOC-INVESTOR-FINANCIAL-SUMMARY
+  - DOC-NETWORK-PLANNING-ASSUMPTIONS
+affected_section_ids:
+  - investor-economics.cohort-maturity-eligibility
+  - investor-economics.full-programme-principal-waterfall
+  - investor-economics.cash-metrics-horizon
+  - investor-terminal.conditions-participation-ia
+  - investor-terminal.waterfall-responsive-scroll
+  - network-temporal.ramp-duration-provenance
+  - financial-core.creative-prepayment-payback-proof
+state_hash_paths:
+  - docs-platform/generated/financial-core-projection.json
+  - docs-platform/generated/investor-economics-projection.json
+  - scripts/capture-investor-economics-review.cjs
+  - scripts/test-investor-economics.test.ts
+  - scripts/test-investor-terminal.cjs
+  - src/components/InvestorEconomicsPanel.tsx
+  - src/components/InvestorTerminal.css
+  - src/components/InvestorTerminal.tsx
+  - src/lib/investor-economics.ts
+  - src/lib/network-temporal.ts
+content_paths:
+  - docs-platform/generated/financial-core-projection.json
+  - docs-platform/generated/investor-economics-projection.json
+  - scripts/capture-investor-economics-review.cjs
+  - scripts/test-investor-economics.test.ts
+  - scripts/test-investor-terminal.cjs
+  - src/components/InvestorEconomicsPanel.tsx
+  - src/components/InvestorTerminal.css
+  - src/components/InvestorTerminal.tsx
+  - src/lib/investor-economics.ts
+  - src/lib/network-temporal.ts
+  - docs-platform/changes/proposals/PROP-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01.yaml
+  - docs-platform/changes/decisions/DEC-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01.yaml
+  - docs-platform/changes/CHG-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01.yaml
+  - docs-platform/changes/iterations/ITR-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01.yaml
+  - docs-platform/changelog/audit/ITR-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01.yaml
+  - docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01-approved.yaml
+  - docs-platform/changelog/previews/ITR-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01.yaml
+  - docs-platform/changelog/verification/ITR-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01.yaml
+  - docs-platform/changelog/events.ndjson
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/SNAPSHOT-ITR-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01.yaml
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+allowed_dirty_paths:
+  - analysis/
+  - output/
+rollback_payload: null
+rollback_contract:
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true

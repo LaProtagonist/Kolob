@@ -154,6 +154,8 @@
 .investor-economics {
   display: grid;
   gap: 16px;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .investor-economics-header,
@@ -284,9 +286,10 @@
 }
 
 .investor-economics-template-buttons button.is-selected {
-  background: #27251f;
-  border-color: #27251f;
-  color: #fff9e7;
+  background: #f7e8ae;
+  border-color: #b38723;
+  box-shadow: inset 3px 0 #b38723;
+  color: #342f24;
 }
 
 .investor-economics-template-buttons strong {
@@ -305,6 +308,8 @@
   display: grid;
   gap: 20px;
   grid-template-columns: minmax(0, 1.55fr) minmax(300px, 0.75fr);
+  max-width: 100%;
+  min-width: 0;
 }
 
 .investor-economics-controls {
@@ -421,6 +426,9 @@
 }
 
 .investor-economics-waterfall {
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
   padding: 0 14px 14px;
 }
 
@@ -433,7 +441,11 @@
 }
 
 .investor-economics-table-wrap {
+  max-width: 100%;
+  min-width: 0;
+  overscroll-behavior-x: contain;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .investor-economics-table-wrap table {
@@ -441,6 +453,56 @@
   font-size: 0.74rem;
   min-width: 760px;
   width: 100%;
+}
+
+.investor-economics-waterfall .investor-economics-table-wrap table {
+  min-width: 1050px;
+}
+
+.investor-economics-maturity,
+.investor-economics-first-payment {
+  background: #fffdf7;
+  border: 1px solid #d9d2c4;
+  border-radius: 5px;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.investor-economics-maturity {
+  padding: 0 14px 14px;
+}
+
+.investor-economics-maturity summary {
+  color: #433e34;
+  cursor: pointer;
+  font-size: 0.92rem;
+  font-weight: 700;
+  padding: 14px 0;
+}
+
+.investor-economics-maturity > p,
+.investor-economics-first-payment {
+  color: #6d6659;
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.investor-economics-maturity > p {
+  margin: 0 0 10px;
+}
+
+.investor-economics-first-payment {
+  margin: 0;
+  padding: 12px 14px;
+}
+
+.investor-economics-comparison-table th small {
+  color: #756f62;
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 400;
+  line-height: 1.35;
+  margin-top: 3px;
 }
 
 .investor-economics-table-wrap th,
