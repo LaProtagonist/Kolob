@@ -14,6 +14,7 @@ import {
   defaultRentFreeMonths,
   canonicalTemporalAssumptions,
   baseObjectPlanningReference,
+  developmentLeadMonthsFor,
   isLocationRentPresetId,
   locationPlanningDefaults,
   locationRentPreset,
@@ -23,6 +24,7 @@ import {
   networkRolloutGroups,
   networkRolloutSchedule,
   rolloutOpeningWaves,
+  sequentialRolloutOpeningWaves,
   networkRolloutPointsPerDistrict,
   networkRolloutSizeIds,
   standardStreetRentEntryDefaults,
@@ -364,6 +366,32 @@ function rolloutCohortId(presetId: Exclude<LocationRentPresetId, "custom">) {
   return `rollout-${presetId}`;
 }
 
+function baseOpeningMonth() {
+  return networkRolloutSchedule().baseObjectFundingMonth
+    + developmentLeadMonthsFor("with_seating", "street", true);
+}
+
+/**
+ * Applies the governed serial physical rollout to the complete current
+ * cohort list. The order repeats across approved formats for 9/13-point
+ * waves; it never waits for the previous cohort's full-ramp month.
+ */
+function applySequentialRolloutSchedule(cohorts: TradingPointCohort[]): TradingPointCohort[] {
+  const base = cohorts[0];
+  if (!base) return cohorts;
+  const additions = cohorts.slice(1);
+  const waves = sequentialRolloutOpeningWaves(additions.map((cohort) => ({
+    id: cohort.id,
+    count: cohort.count,
+    format: cohort.format,
+    locationType: cohort.locationType,
+  })));
+  return [
+    { ...base, openingWaves: [{ openingMonth: baseOpeningMonth(), count: 1 }] },
+    ...additions.map((cohort) => ({ ...cohort, openingWaves: waves.get(cohort.id) ?? [] })),
+  ];
+}
+
 function createRolloutCohort(
   launchBudget: LaunchBudgetState,
   presetId: Exclude<LocationRentPresetId, "custom">,
@@ -380,6 +408,8 @@ function createRolloutCohort(
     id,
     locationRentPresetId: presetId,
     count,
+    // The serial schedule is applied after every cohort is assembled, so a
+    // format's date cannot be calculated in isolation from the prior opening.
     openingWaves: rolloutOpeningWaves(group.firstOpeningMonth, count),
     format: group.format,
     locationType: group.locationType,
@@ -424,7 +454,7 @@ export function applyNetworkRolloutPreset(
     return {
       ...cohort,
       count: perDistrict,
-      openingWaves: rolloutOpeningWaves(group?.firstOpeningMonth ?? networkRolloutSchedule().firstAdditionalOpeningMonth, perDistrict),
+      openingWaves: rolloutOpeningWaves(group?.firstOpeningMonth ?? 0, perDistrict),
     };
   });
   for (const district of districts) {
@@ -436,7 +466,7 @@ export function applyNetworkRolloutPreset(
     usedIds.add(id);
     additions.push(createRolloutCohort(launchBudget, district, perDistrict, id));
   }
-  return { ...configuration, cohorts: [...cohorts, ...additions] };
+  return { ...configuration, cohorts: applySequentialRolloutSchedule([...cohorts, ...additions]) };
 }
 
 export function currentNetworkRolloutSize(configuration: NetworkScalingConfiguration): NetworkRolloutSize | "custom" {
@@ -502,8 +532,8 @@ export function updateCohortCount(cohort: TradingPointCohort, nextCount: number)
     });
     return { ...cohort, count, openingWaves: trimmed };
   }
-  const cadence = networkRolloutSchedule().repeatedGroupWaveIntervalMonths;
-  let nextMonth = waves.at(-1)?.openingMonth ?? networkRolloutSchedule().firstAdditionalOpeningMonth;
+  const cadence = 1;
+  let nextMonth = waves.at(-1)?.openingMonth ?? 0;
   while (represented < count) {
     nextMonth = represented === 0 ? nextMonth : nextMonth + cadence;
     waves.push({ openingMonth: nextMonth, count: 1 });
@@ -514,7 +544,7 @@ export function updateCohortCount(cohort: TradingPointCohort, nextCount: number)
 
 /** Moves a group’s representative first opening while preserving wave spacing. */
 export function updateCohortFirstOpeningMonth(cohort: TradingPointCohort, nextMonth: number): TradingPointCohort {
-  const first = cohort.openingWaves.at(0)?.openingMonth ?? networkRolloutSchedule().firstAdditionalOpeningMonth;
+  const first = cohort.openingWaves.at(0)?.openingMonth ?? 0;
   const normalized = openingMonth(nextMonth, first);
   const delta = normalized - first;
   return {
@@ -553,10 +583,10 @@ export function defaultNetworkScalingConfiguration(launchBudget = baseObjectLaun
   const defaultSize: NetworkRolloutSize = 4;
   const perDistrict = networkRolloutPointsPerDistrict(defaultSize);
   return {
-    cohorts: [
-      createTradingPointCohort(launchBudget, { format: "with_seating", realEstateMode: "rent", count: 1, openingWaves: [{ openingMonth: networkRolloutSchedule().baseObjectOpeningMonth, count: 1 }] }),
+    cohorts: applySequentialRolloutSchedule([
+      createTradingPointCohort(launchBudget, { format: "with_seating", realEstateMode: "rent", count: 1, openingWaves: [{ openingMonth: baseOpeningMonth(), count: 1 }] }),
       ...networkRolloutGroups().map((group) => createRolloutCohort(launchBudget, group.presetId, perDistrict)),
-    ],
+    ]),
     productionGrowEnabled: launchBudget.growEnabled,
     productionSchedule: "one_main_shift",
     calendarStartMonth: canonicalTemporalAssumptions().openingCalendarMonth,
@@ -591,8 +621,8 @@ export function restoreNetworkScalingConfiguration(value: unknown, launchBudget:
     const rollout = networkRolloutGroups().find((group) => cohort.id === rolloutCohortId(group.presetId) || cohort.locationRentPresetId === group.presetId);
     const isDefaultRolloutCohort = rollout !== undefined && cohort.id === rolloutCohortId(rollout.presetId);
     const fallbackOpeningMonth = index === 0
-      ? networkRolloutSchedule().baseObjectOpeningMonth
-      : rollout?.firstOpeningMonth ?? networkRolloutSchedule().firstAdditionalOpeningMonth + (index - 1) * networkRolloutSchedule().additionalOpeningIntervalMonths;
+      ? baseOpeningMonth()
+      : rollout?.firstOpeningMonth ?? 0;
     return {
       ...cohort,
       guestAreaM2: isDefaultRolloutCohort && cohort.guestAreaM2 === null ? rollout.guestAreaM2 : cohort.guestAreaM2,

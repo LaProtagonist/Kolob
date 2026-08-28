@@ -24,7 +24,7 @@ export const publishedParticipationPresets: readonly PublishedParticipationPrese
     note: "Постоянная доля в компании и распределяемом денежном потоке.",
     status: "discussion",
     calculationHorizonMonths: 60,
-    terms: { ...base, template: "equity", equityShare: 0.25, fundingMode: "upfront", distributionPolicy: "reinvest_first" },
+    terms: { ...base, template: "equity", equityShare: 0.25, fundingMode: "staged", distributionPolicy: "reinvest_first" },
   },
   {
     id: "INV-PRIORITY-DISCUSSION",

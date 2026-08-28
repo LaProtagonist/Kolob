@@ -3,7 +3,7 @@
   "type": "object",
   "required": ["document", "references", "base_object", "temporal", "point_schedule", "staffing", "locations", "rental_presets", "network_rollout", "preparation", "traffic_presets", "opex", "launch", "logistics", "equipment"],
   "properties": {
-    "document": { "type": "object", "required": ["id", "version", "status", "provenance", "boundary"], "properties": { "id": {"const": "DOC-NETWORK-PLANNING-ASSUMPTIONS"}, "version": {"const": "1.7"}, "status": {"const": "owner_approved_planning"}, "provenance": {"type": "string"}, "boundary": {"type": "string"} }, "additionalProperties": true },
+    "document": { "type": "object", "required": ["id", "version", "status", "provenance", "boundary"], "properties": { "id": {"const": "DOC-NETWORK-PLANNING-ASSUMPTIONS"}, "version": {"const": "1.8"}, "status": {"const": "owner_approved_planning"}, "provenance": {"type": "string"}, "boundary": {"type": "string"} }, "additionalProperties": true },
     "references": { "type": "object", "required": ["financial_model", "revenue_model", "physical_allocation"], "properties": { "financial_model": {"type": "string"}, "revenue_model": {"type": "string"}, "physical_allocation": {"type": "string"} }, "additionalProperties": false },
     "base_object": { "type": "object", "required": ["flagship_reference"], "additionalProperties": true },
     "temporal": { "type": "object", "required": ["financial_model_source", "calendar_start_month_source", "horizon_months_source", "ramp_up_profile_source", "seasonality_profile_source", "development_lead_months", "rent_free_defaults", "provenance"], "additionalProperties": true },

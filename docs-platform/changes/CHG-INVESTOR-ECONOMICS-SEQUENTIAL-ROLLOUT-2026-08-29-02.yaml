@@ -1,0 +1,11 @@
+schema_version: 2
+change_id: CHG-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-02
+title: Seal exact sequential rollout correction including Finance Core test coverage
+status: approved
+created_at: 2026-08-29
+decision_id: DEC-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-02
+iteration_id: ITR-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-02
+proposal_id: PROP-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-02
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-02-approved.yaml
+approved_payload_sha256: 49db64f4c3a4bd8c6361cdef58fe611a82b5f51af7541b0471a7f99b9c98d67c
+operations: []

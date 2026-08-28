@@ -125,8 +125,14 @@ export type NetworkTemporalAssumptions = {
   openingCalendarMonth: number;
   rampUpProfile: Array<{ month: number; factor: number }>;
   seasonalityProfile: Array<{ month: number; factor: number }>;
-  /** Owner-approved planning period from funding to commercial opening. */
-  developmentLeadMonths: number;
+  /** Owner-approved, format-specific planning periods from funding to first sales. */
+  developmentLeadMonths: {
+    baseObject: number;
+    creativeCluster: number;
+    foodhall: number;
+    streetTakeaway: number;
+    streetWithSeating: number;
+  };
   rentFreeMonths: Record<Exclude<LocationType, "foodtruck">, number>;
 };
 
@@ -210,7 +216,13 @@ export function canonicalTemporalAssumptions(): NetworkTemporalAssumptions {
     seasonalityProfile: Array.isArray(temporal.seasonalityProfile)
       ? temporal.seasonalityProfile.map((item: any) => ({ month: numericPreset(item.month), factor: numericPreset(item.factor) }))
       : [],
-    developmentLeadMonths: numericPreset(defaults.development_lead_months),
+    developmentLeadMonths: {
+      baseObject: numericPreset(defaults.development_lead_months?.base_object),
+      creativeCluster: numericPreset(defaults.development_lead_months?.creative_cluster),
+      foodhall: numericPreset(defaults.development_lead_months?.foodhall),
+      streetTakeaway: numericPreset(defaults.development_lead_months?.street_takeaway),
+      streetWithSeating: numericPreset(defaults.development_lead_months?.street_with_seating),
+    },
     rentFreeMonths: {
       street: numericPreset(rentFree.street),
       foodhall: numericPreset(rentFree.foodhall),
@@ -232,11 +244,54 @@ export function baseObjectPlanningReference() {
 export function networkRolloutSchedule() {
   const schedule = planning.network_rollout.schedule;
   return {
-    baseObjectOpeningMonth: numericPreset(schedule.base_object_opening_month),
-    firstAdditionalOpeningMonth: numericPreset(schedule.first_additional_opening_month),
-    additionalOpeningIntervalMonths: numericPreset(schedule.additional_opening_interval_months),
-    repeatedGroupWaveIntervalMonths: numericPreset(schedule.repeated_group_wave_interval_months),
+    baseObjectFundingMonth: numericPreset(schedule.base_object_funding_month),
+    nextCohortFundingAfterPreviousOpeningMonths: numericPreset(schedule.next_cohort_funding_after_previous_opening_months),
   };
+}
+
+/** The planning lead is selected by actual physical format, never by a global opening shift. */
+export function developmentLeadMonthsFor(
+  format: "with_seating" | "takeaway",
+  locationType: LocationType,
+  baseObject = false,
+) {
+  const leads = canonicalTemporalAssumptions().developmentLeadMonths;
+  if (baseObject) return leads.baseObject;
+  if (locationType === "creative_cluster") return leads.creativeCluster;
+  if (locationType === "foodhall") return leads.foodhall;
+  return format === "with_seating" ? leads.streetWithSeating : leads.streetTakeaway;
+}
+
+export type SequentialRolloutCohort = {
+  id: string;
+  count: number;
+  format: "with_seating" | "takeaway";
+  locationType: LocationType;
+};
+
+/**
+ * The physical rollout is one serial preparation stream. A subsequent cohort
+ * receives funding only in the month after the previous cohort first sells;
+ * a cohort's own full-ramp maturity is intentionally not part of this gate.
+ * For 9/13-point programmes the order repeats by wave across approved formats.
+ */
+export function sequentialRolloutOpeningWaves(cohorts: readonly SequentialRolloutCohort[]) {
+  const schedule = networkRolloutSchedule();
+  const baseOpeningMonth = schedule.baseObjectFundingMonth + developmentLeadMonthsFor("with_seating", "street", true);
+  const waves = new Map<string, NetworkOpeningWave[]>();
+  cohorts.forEach((cohort) => waves.set(cohort.id, []));
+  let previousOpeningMonth = baseOpeningMonth;
+  const waveCount = Math.max(0, ...cohorts.map((cohort) => Math.max(0, Math.floor(cohort.count))));
+  for (let waveIndex = 0; waveIndex < waveCount; waveIndex += 1) {
+    for (const cohort of cohorts) {
+      if (waveIndex >= Math.max(0, Math.floor(cohort.count))) continue;
+      const fundingMonth = previousOpeningMonth + schedule.nextCohortFundingAfterPreviousOpeningMonths;
+      const openingMonth = fundingMonth + developmentLeadMonthsFor(cohort.format, cohort.locationType);
+      waves.get(cohort.id)!.push({ openingMonth, count: 1 });
+      previousOpeningMonth = openingMonth;
+    }
+  }
+  return waves;
 }
 
 export function defaultRentFreeMonths(locationType: LocationType) {
@@ -245,7 +300,9 @@ export function defaultRentFreeMonths(locationType: LocationType) {
 }
 
 export function rolloutOpeningWaves(firstOpeningMonth: number, count: number): NetworkOpeningWave[] {
-  const cycle = networkRolloutSchedule().repeatedGroupWaveIntervalMonths;
+  // This is only a backward-compatible fallback for independently restored
+  // cohorts. Governed network presets use sequentialRolloutOpeningWaves().
+  const cycle = 1;
   return Array.from({ length: Math.max(0, Math.floor(count)) }, (_, index) => ({
     openingMonth: firstOpeningMonth + index * cycle,
     count: 1,

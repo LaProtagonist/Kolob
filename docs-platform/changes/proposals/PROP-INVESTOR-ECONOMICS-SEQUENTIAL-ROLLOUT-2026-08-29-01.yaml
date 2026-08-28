@@ -1,0 +1,20 @@
+schema_version: 2
+proposal_id: PROP-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-01
+iteration_id: ITR-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-01
+decision_id: DEC-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-01
+change_set_id: CHG-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-01
+title: Sequential format-specific rollout and staged public investor scenarios
+status: approved
+approved_by: project owner
+approved_at: 2026-08-28T23:42:00.000Z
+scope: >-
+  Apply the owner-approved sequential physical rollout: every following cohort
+  is funded in the month after the preceding cohort opens, while maturity for
+  investor distributions remains a separate full-plan gate. Use governed leads
+  of 4/2/2/3/4 months for Base/Creative/Foodhall/Takeaway/Seating respectively,
+  regenerate financial and investor projections, preserve public/internal
+  participation separation and keep all public discussion scenarios staged.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-01-approved.yaml
+approved_payload_sha256: f1e0db43678e7766a3e7ff727ffef46de16c0ae96201095bd0b41a4e8756b310
+before_state_sha256: 8a2632983ae37ee9684bc0bbe95cba3e79c581c4c18beffcb4c65a01a9f307f8
+after_state_sha256: e65f4af61f4254d11d77c4df7595b25ac360ee6628f87b0f597d811305f5e059

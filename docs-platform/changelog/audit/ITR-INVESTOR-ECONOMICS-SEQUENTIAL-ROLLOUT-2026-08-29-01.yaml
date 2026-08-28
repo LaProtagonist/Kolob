@@ -1,0 +1,46 @@
+receipt_version: 1
+iteration_id: ITR-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-01
+audited_at: 2026-08-28T23:42:00.000Z
+result: passed
+contract:
+  physical_rollout_gate: next funding month equals preceding cohort opening month plus one
+  investor_eligibility_gate: each cohort's FCF is eligible only from its full-plan month
+  ramp: [60%, 70%, 80%, 85%, 90%, 95%, 100%]
+format_specific_leads_months: { base_object: 4, creative_cluster: 2, foodhall: 2, street_takeaway: 3, street_with_seating: 4 }
+five_point_cohorts:
+  - { cohort: Base Object, funding: M0, lead_months: 4, opening_first_sales: M4, full_plan: M10, first_mature_fcf: M10 }
+  - { cohort: Creative Cluster, funding: M5, lead_months: 2, opening_first_sales: M7, full_plan: M13, first_mature_fcf: M13 }
+  - { cohort: Foodhall, funding: M8, lead_months: 2, opening_first_sales: M10, full_plan: M16, first_mature_fcf: M16 }
+  - { cohort: Historic Center Seating, funding: M11, lead_months: 4, opening_first_sales: M15, full_plan: M21, first_mature_fcf: M21 }
+  - { cohort: Historic Center Takeaway, funding: M16, lead_months: 3, opening_first_sales: M19, full_plan: M25, first_mature_fcf: M25 }
+business_before_after_five_points:
+  before: { programme_cost_rub: 102702001.73, external_funding_rub: 79218642.02, business_self_financing_rub: 23483359.71, programme_payback: M21 }
+  after: { programme_cost_rub: 102702001.73, external_funding_rub: 67491710.57, business_self_financing_rub: 35210291.16, programme_payback: M22 }
+  explanation: Delaying each later dated requirement lets existing cohorts generate more rollout cash; the final cohort opens later, moving programme payback by one month.
+nine_point_after: { programme_cost_rub: 157025545.74, external_funding_rub: 67491710.57, business_self_financing_rub: 89533835.17, programme_payback: M24 }
+thirteen_point_after: { programme_cost_rub: 211349089.75, external_funding_rub: 67491710.57, business_self_financing_rub: 143857379.18, programme_payback: M24 }
+equity_25_before_after:
+  before: { funding_mode: upfront, capital_rub: 79218642.01, first_payout: M22, cash_payback: M55, cash_irr_m60: 4.87%, cash_moic_m60: 1.1757, investor_rights: 25% company }
+  after: { funding_mode: staged, capital_rub: 67491710.57, first_payout: M23, cash_payback: M51, cash_irr_m60: 9.25%, cash_moic_m60: 1.3277, investor_rights: 25% company }
+full_programme_80_15_before_after:
+  before: { commitment_rub: 102702001.73, peak_capital_rub: 97651138.71, first_capital_return: M10, full_capital_return: M28, income_to_m60_rub: 46113305.41, distributions_to_m60_rub: 148815307.13, cash_irr_m60: 21.74%, cash_moic_m60: 1.4490, investor_rights: 15% FCF to M60 }
+  after: { commitment_rub: 102702001.73, peak_capital_rub: 87706625.04, first_capital_return: M10, full_capital_return: M30, income_to_m60_rub: 44554079.38, distributions_to_m60_rub: 147256081.10, cash_irr_m60: 22.15%, cash_moic_m60: 1.4338, investor_rights: 15% FCF to M60 }
+priority_13x_20pct_after:
+  actual_contributed_capital_rub: 69032492.10
+  contribution_months: [M0, M5, M8, M11]
+  threshold_month: M28
+  cash_before_threshold_rub: 90858586.19
+  cash_after_threshold_to_m60_rub: 61131356.67
+  total_distributions_to_m60_rub: 151989942.86
+  cash_irr_m60: 46.13%
+  cash_moic_m60: 2.2017
+  residual_rights: 20% company
+  residual_equity_in_cash_metrics: excluded_without_exit_valuation
+invariants:
+  physical_rollout_does_not_wait_for_full_plan: passed
+  immature_cohort_fcf_is_not_distributable: passed
+  one_business_ruble_has_one_destination: passed
+  public_equity_uses_dated_staged_contributions: passed
+  control_candidate_state_does_not_mutate_public_presets: passed
+  public_page_has_exactly_four_read_only_scenarios: passed
+external_state: { google_apply: not_run, production_deploy: not_run, master_merge: not_run }

@@ -1,0 +1,15 @@
+schema_version: 2
+decision_id: DEC-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-01
+iteration_id: ITR-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-01
+title: Approve sequential rollout correction and staged funding parity
+status: approved
+approved_by: project owner
+approved_at: 2026-08-28T23:42:00.000Z
+scope: >-
+  The physical opening gate is previous opening plus one month, not prior
+  full-plan maturity. Investor cash eligibility remains cohort-specific and
+  begins only at full plan. Public scenarios are discussion presets on the
+  common programme with staged contributions; the Control workbench remains
+  internal and does not mutate published presets.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-01-approved.yaml
+approved_payload_sha256: f1e0db43678e7766a3e7ff727ffef46de16c0ae96201095bd0b41a4e8756b310

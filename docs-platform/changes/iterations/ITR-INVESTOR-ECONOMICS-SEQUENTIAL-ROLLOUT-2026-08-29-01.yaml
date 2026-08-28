@@ -1,0 +1,34 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-01
+proposal_id: PROP-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-01
+decision_id: DEC-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-01
+change_set_id: CHG-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-01
+title: Seal sequential format-specific rollout and staged public investor scenarios
+status: approved
+approved_by: project owner
+approved_at: 2026-08-28T23:42:00.000Z
+actor: Codex
+scope: >-
+  Correct dated physical rollout, regenerate Business and Investor Economics
+  from the Shared Financial Core, and present only the four staged discussion
+  presets publicly. Production, master, Google, capacity policy, reserve policy,
+  legal form and /control production exposure remain unchanged.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-01-approved.yaml
+approved_payload_sha256: f1e0db43678e7766a3e7ff727ffef46de16c0ae96201095bd0b41a4e8756b310
+before_state_sha256: 8a2632983ae37ee9684bc0bbe95cba3e79c581c4c18beffcb4c65a01a9f307f8
+after_state_sha256: e65f4af61f4254d11d77c4df7595b25ac360ee6628f87b0f597d811305f5e059
+affected_document_ids: [DOC-FINANCIAL-MODEL, DOC-INVESTOR-FINANCIAL-SUMMARY, DOC-NETWORK-PLANNING-ASSUMPTIONS]
+affected_section_ids:
+  - network-temporal.sequential-format-rollout
+  - network-temporal.format-specific-development-leads
+  - network-funding.staged-dated-requirement
+  - investor-economics.cohort-maturity-disclosure
+  - investor-economics.public-staged-scenarios
+  - control.participation-workbench-preservation
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/SNAPSHOT-ITR-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-01.yaml
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+rollback_payload: null

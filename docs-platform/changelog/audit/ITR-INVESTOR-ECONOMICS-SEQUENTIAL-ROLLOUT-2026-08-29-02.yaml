@@ -1,0 +1,18 @@
+receipt_version: 1
+iteration_id: ITR-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-02
+audited_at: 2026-08-28T23:46:00.000Z
+result: passed
+supersedes_unsealed_iteration: ITR-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-01
+five_point_cohorts:
+  - { cohort: Base Object, funding: M0, lead_months: 4, opening_first_sales: M4, full_plan: M10, first_mature_fcf: M10 }
+  - { cohort: Creative Cluster, funding: M5, lead_months: 2, opening_first_sales: M7, full_plan: M13, first_mature_fcf: M13 }
+  - { cohort: Foodhall, funding: M8, lead_months: 2, opening_first_sales: M10, full_plan: M16, first_mature_fcf: M16 }
+  - { cohort: Historic Center Seating, funding: M11, lead_months: 4, opening_first_sales: M15, full_plan: M21, first_mature_fcf: M21 }
+  - { cohort: Historic Center Takeaway, funding: M16, lead_months: 3, opening_first_sales: M19, full_plan: M25, first_mature_fcf: M25 }
+business_before_after_five_points:
+  before: { programme_cost_rub: 102702001.73, external_funding_rub: 79218642.02, business_self_financing_rub: 23483359.71, programme_payback: M21 }
+  after: { programme_cost_rub: 102702001.73, external_funding_rub: 67491710.57, business_self_financing_rub: 35210291.16, programme_payback: M22 }
+nine_point_after: { programme_cost_rub: 157025545.74, external_funding_rub: 67491710.57, business_self_financing_rub: 89533835.17, programme_payback: M24 }
+thirteen_point_after: { programme_cost_rub: 211349089.75, external_funding_rub: 67491710.57, business_self_financing_rub: 143857379.18, programme_payback: M24 }
+regression_proof: Expansion reserve funding events are [M5, M8, M11, M16], derived from the same sequential cohort funding schedule.
+external_state: { google_apply: not_run, production_deploy: not_run, master_merge: not_run }

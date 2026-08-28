@@ -27,7 +27,7 @@ import { baseObjectFinancialProjection, networkEconomicsProjection, networkScali
 import { networkTemporalProjection } from "../src/lib/network-temporal.js";
 import { pointPreparationProjection } from "../src/lib/point-preparation.js";
 import { pointOperationalProjection, pointOperationalProjectionForMonthlyChecks } from "../src/lib/point-operations.js";
-import { canonicalTemporalAssumptions, locationRentPreset, networkLocationRentPresets, pointStaffingProjection, productionStaffingProjection, sharedManagerPayrollProjection } from "../src/lib/network-planning.js";
+import { canonicalTemporalAssumptions, developmentLeadMonthsFor, locationRentPreset, networkLocationRentPresets, pointStaffingProjection, productionStaffingProjection, sharedManagerPayrollProjection } from "../src/lib/network-planning.js";
 import { calculateRevenueModel } from "../src/lib/revenue-model.js";
 import { capexData } from "../src/lib/capex-runtime.js";
 import { financialModelAllocationItemIds, investorStartAllocationFieldIds, networkPlanningAllocationItemIds, physicalAllocationIntegrityErrors, physicalAllocationMap } from "../src/lib/physical-allocation.js";
@@ -261,7 +261,7 @@ test("v2.1 through v2.3 saved state migrates safely into v2.4 cohorts", () => {
   };
   expectedCohort.openingWaves = expectedCohort.openingWaves.map((wave) => ({
     ...wave,
-    openingMonth: wave.openingMonth + canonicalTemporalAssumptions().developmentLeadMonths,
+    openingMonth: wave.openingMonth + canonicalTemporalAssumptions().developmentLeadMonths.baseObject,
   }));
   assert.deepEqual(migrated.networkScaling.cohorts[0], expectedCohort);
   assert.equal(migrated.networkScaling.productionGrowEnabled, true);
@@ -391,15 +391,15 @@ test("temporal rollout keeps canonical ramp and seasonality separate for every o
   assert.deepEqual(assumptions.seasonalityProfile.map((row) => row.factor), [0.93, 0.75, 0.88, 0.95, 1.02, 0.96, 0.96, 0.98, 1.12, 1.16, 1.1, 1.18]);
   assert.deepEqual(
     configuration.networkScaling.cohorts.slice(1).map((cohort) => cohort.openingWaves),
-    [[{ openingMonth: 7, count: 1 }], [{ openingMonth: 10, count: 1 }], [{ openingMonth: 13, count: 1 }], [{ openingMonth: 16, count: 1 }]],
+    [[{ openingMonth: 7, count: 1 }], [{ openingMonth: 10, count: 1 }], [{ openingMonth: 15, count: 1 }], [{ openingMonth: 19, count: 1 }]],
     "the four default points open sequentially, never together in month zero",
   );
   assert.equal(temporal.expansion.months[0].activePointCount, 0);
-  assert.equal(temporal.expansion.months[3].capexRub! > 0, true, "launch CAPEX occurs before the first additional opening");
+  assert.equal(temporal.expansion.months[5].capexRub! > 0, true, "launch CAPEX is funded at the Creative cohort's M5 start");
   assert.equal(temporal.expansion.months[4].activePointCount, 0);
   assert.equal(temporal.expansion.months[7].activePointCount, 1);
   assert.equal(temporal.expansion.months[10].activePointCount, 2);
-  assert.equal(temporal.expansion.months[16].activePointCount, 4);
+  assert.equal(temporal.expansion.months[19].activePointCount, 4);
   assert.equal(temporal.expansion.paybackMonth! >= 7, true, "payback starts with the expansion programme, not an empty month zero");
 
   const creative = scaling.cohorts.find((cohort) => cohort.cohort.locationType === "creative_cluster")!;
@@ -447,9 +447,16 @@ test("network size presets create sequential repeated waves and bar equipment in
   for (const cohort of twelve.cohorts.slice(1)) {
     assert.equal(cohort.openingWaves.length, 3);
     assert.deepEqual(cohort.openingWaves.map((wave) => wave.count), [1, 1, 1]);
-    assert.equal(cohort.openingWaves[1]!.openingMonth - cohort.openingWaves[0]!.openingMonth, 12);
-    assert.equal(cohort.openingWaves[2]!.openingMonth - cohort.openingWaves[1]!.openingMonth, 12);
+    assert.equal(cohort.openingWaves[1]!.openingMonth - cohort.openingWaves[0]!.openingMonth, 15);
+    assert.equal(cohort.openingWaves[2]!.openingMonth - cohort.openingWaves[1]!.openingMonth, 15);
   }
+  const serialWaves = twelve.cohorts.slice(1).flatMap((cohort) => cohort.openingWaves.map((wave) => ({
+    funding: wave.openingMonth - developmentLeadMonthsFor(cohort.format, cohort.locationType),
+    opening: wave.openingMonth,
+  }))).sort((left, right) => left.funding - right.funding);
+  serialWaves.forEach((wave, index) => {
+    assert.equal(wave.funding, (index === 0 ? 4 : serialWaves[index - 1]!.opening) + 1, "later 13-point waves retain the one-month-after-opening funding gate");
+  });
   const barOn = networkScalingProjection(fresh).cohorts[1]!;
   const iceMaker = barOn.pointItems.find((item) => item.id === "point-bar")?.detail?.find((item) => item.id === "CAPEX-02-013");
   assert.deepEqual([iceMaker?.quantity, iceMaker?.amountRub], [1, 36_050], "a bar-enabled point receives one compact point ice maker from the canonical register");
@@ -792,7 +799,7 @@ test("expansion reserve is dated, qualifying-only and does not count the base-ob
   assert.equal(economics.network.pointCount, 5);
   assert.equal(economics.expansion.operatingReserve?.excludedLineIds.includes("variable-marketing"), true, "variable marketing remains in P&L but out of reserve");
   assert.equal(economics.expansion.operatingReserve?.excludedLineIds.includes("administrative-reserve"), true, "revenue-based administrative reserve remains outside liquidity reserve");
-  assert.equal(economics.expansion.operatingReserve?.fundingEvents.some((event) => event.month === 12), true, "future cohort reserve is not pulled into M3");
+  assert.equal(economics.expansion.operatingReserve?.fundingEvents.some((event) => event.month === 16), true, "future cohort reserve is dated to the Takeaway cohort rather than pulled into the Creative launch");
   assert.notEqual(economics.expansion.operatingReserveRub, base.operatingReserveRub, "the historical Integrated Pilot reserve is never reused for expansion");
   assert.equal(
     Math.abs((economics.network.investmentRub ?? 0) - (base.startInvestmentRub + economics.expansion.pointInvestmentRub + economics.expansion.sharedInfrastructureRub + economics.expansion.operatingReserveRub!)) < 0.01,

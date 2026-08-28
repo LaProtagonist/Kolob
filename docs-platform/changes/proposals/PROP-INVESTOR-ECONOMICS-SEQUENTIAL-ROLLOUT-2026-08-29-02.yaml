@@ -1,0 +1,18 @@
+schema_version: 2
+proposal_id: PROP-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-02
+iteration_id: ITR-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-02
+decision_id: DEC-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-02
+change_set_id: CHG-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-02
+title: Seal exact sequential rollout scope including its Financial Core regression assertion
+status: approved
+approved_by: project owner
+approved_at: 2026-08-28T23:46:00.000Z
+scope: >-
+  Exact successor to the uncommitted -01 manifest. It carries the same approved
+  sequential format-specific rollout, staged public investor scenarios and
+  public/control boundary, and additionally governs the Financial Core assertion
+  that proves dated reserve events follow the new M5/M8/M11/M16 sequence.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-02-approved.yaml
+approved_payload_sha256: 49db64f4c3a4bd8c6361cdef58fe611a82b5f51af7541b0471a7f99b9c98d67c
+before_state_sha256: 924a8f458a433edd7d254e4eb5ed7164be1ab75a261c47c0d845792aa7e6f3db
+after_state_sha256: 480eaced302572a3dc4707a35b150e09bf9878b97f04f81250e654785ca48e83

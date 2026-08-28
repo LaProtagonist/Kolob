@@ -282,21 +282,24 @@ test("Base maturity derives from the governed four-month development lead and ap
   );
 });
 
-test("internal three-month lead sensitivity changes only cohort dates and cannot replace the governed public baseline", () => {
-  const configuration = fivePointConfiguration();
-  const scenario = configuredEconomicsScenario(configuration);
-  const base = baseObjectFinancialProjection(scenario);
-  const published = networkFinancialProjection(configuration, base, scenario);
-  const candidate = networkFinancialProjection(configuration, base, scenario, { developmentLeadMonths: 3 });
-  assert.equal(published.temporal.base.months.find((month) => month.newOpenings === 1)?.month, 4);
-  assert.equal(candidate.temporal.base.months.find((month) => month.newOpenings === 1)?.month, 3);
-  assert.equal(published.temporal.expansion.groups[0]?.firstOpeningMonth, 7);
-  assert.equal(candidate.temporal.expansion.groups[0]?.firstOpeningMonth, 6);
-  assert.equal(candidate.temporal.funding.totalProgramInvestmentRub, published.temporal.funding.totalProgramInvestmentRub);
+test("format-specific sequential contract derives the approved 5-point funding, opening and maturity dates", () => {
+  const projection = investorEconomicsProjection(fivePointBusinessProjection());
   assert.deepEqual(
-    networkFinancialProjection(configuration, base, scenario).temporal.base.months,
-    published.temporal.base.months,
-    "candidate calculation has no side effect on the governed baseline",
+    projection.source.cohortMaturity.map((cohort) => ({
+      label: cohort.label,
+      funding: cohort.fundingMonth,
+      lead: cohort.developmentLeadMonths,
+      opening: cohort.openingMonth,
+      fullPlan: cohort.fullPlanMonth,
+      eligible: cohort.firstFcfEligibleMonth,
+    })),
+    [
+      { label: "Базовый объект", funding: 0, lead: 4, opening: 4, fullPlan: 10, eligible: 10 },
+      { label: "Креативный кластер", funding: 5, lead: 2, opening: 7, fullPlan: 13, eligible: 13 },
+      { label: "Фудхолл", funding: 8, lead: 2, opening: 10, fullPlan: 16, eligible: 16 },
+      { label: "Исторический центр · с посадкой", funding: 11, lead: 4, opening: 15, fullPlan: 21, eligible: 21 },
+      { label: "Исторический центр · на вынос", funding: 16, lead: 3, opening: 19, fullPlan: 25, eligible: 25 },
+    ],
   );
 });
 
@@ -317,11 +320,52 @@ test("Creative Cluster prepayment releases dated rent credits without hardcoding
   const legacy = networkFinancialProjection(legacyConfiguration, baseObjectFinancialProjection(legacyScenario), legacyScenario);
   assert.ok(current.temporal.network.paybackMonth !== null && legacy.temporal.network.paybackMonth !== null);
   assert.ok(current.temporal.network.paybackMonth! <= legacy.temporal.network.paybackMonth!);
-  const currentM3 = current.temporal.network.months.find((month) => month.month === 3)!;
-  const legacyM3 = legacy.temporal.network.months.find((month) => month.month === 3)!;
-  assert.ok((currentM3.cashFlowRub ?? 0) < (legacyM3.cashFlowRub ?? 0), "the larger Creative prepayment is funded at launch");
+  const creativeFundingMonth = current.temporal.expansion.groups.find((group) => group.cohortId.includes("nevsky-premium"))?.firstFundingMonth;
+  assert.equal(creativeFundingMonth, 5);
+  const currentFundingMonth = current.temporal.network.months.find((month) => month.month === creativeFundingMonth)!;
+  const legacyFundingMonth = legacy.temporal.network.months.find((month) => month.month === creativeFundingMonth)!;
+  assert.ok((currentFundingMonth.cashFlowRub ?? 0) < (legacyFundingMonth.cashFlowRub ?? 0), "the larger Creative prepayment is funded with its own M5 cohort launch");
   const creditMonth = current.temporal.network.months.find((month, index) => (month.prepaidRentCreditRub ?? 0) > (legacy.temporal.network.months[index]?.prepaidRentCreditRub ?? 0));
   assert.ok(creditMonth && creditMonth.month >= 9, "the additional prepaid credit begins only after commercial opening and rent holidays");
+});
+
+test("sequential rollout remains non-overlapping for 5, 9 and 13 total points", () => {
+  for (const size of [4, 8, 12] as const) {
+    const initial = defaultInvestorConfiguration();
+    const configuration = { ...initial, networkScaling: applyNetworkRolloutPreset(initial.networkScaling, initial.launchBudget, size) };
+    const scenario = configuredEconomicsScenario(configuration);
+    const temporal = networkFinancialProjection(configuration, baseObjectFinancialProjection(scenario), scenario).temporal;
+    const waves = temporal.expansion.groups.flatMap((group) => group.openingWaves.map((wave) => ({
+      group: group.cohortId,
+      funding: wave.fundingMonth,
+      opening: wave.openingMonth,
+      lead: wave.developmentLeadMonths,
+    }))).sort((left, right) => left.funding - right.funding);
+    assert.equal(waves.length, size);
+    for (const [index, wave] of waves.entries()) {
+      assert.equal(wave.opening, wave.funding + wave.lead, `${size + 1}-point programme derives opening from the physical-format lead`);
+      const previousOpening = index === 0 ? 4 : waves[index - 1]!.opening;
+      assert.equal(wave.funding, previousOpening + 1, `${size + 1}-point programme starts next preparation only after the prior opening`);
+      assert.ok(wave.funding > previousOpening, "preparation stages cannot overlap");
+    }
+  }
+});
+
+test("all published discussion scenarios use staged funding on one physical rollout", () => {
+  const source = fivePointBusinessProjection();
+  const maturity = source.temporal.expansion.groups.map((group) => [group.cohortId, group.firstFundingMonth, group.firstOpeningMonth, group.planLevelMonth]);
+  for (const preset of publishedParticipationPresets) {
+    assert.equal(preset.terms.fundingMode, "staged", `${preset.id} is not an M0-only public funding scenario`);
+    const projection = investorEconomicsProjection(source, preset.terms);
+    assert.deepEqual(
+      projection.source.cohortMaturity.slice(1).map((cohort) => [cohort.id, cohort.fundingMonth, cohort.openingMonth, cohort.fullPlanMonth]),
+      maturity,
+      `${preset.id} shares the same physical programme`,
+    );
+    assert.ok(projection.rows.some((row) => row.month > 0 && row.investorDrawdownRub > 0), `${preset.id} has dated staged contributions`);
+  }
+  const equity = investorEconomicsProjection(source, publishedParticipationPresets[0]!.terms);
+  assert.ok((equity.rows[0]?.investorDrawdownRub ?? 0) < equity.metrics.actualContributionsRub, "public Equity does not contribute all external capital at M0");
 });
 
 test("full-programme investor income starts only after all capital is returned and horizon metrics exclude residual value", () => {

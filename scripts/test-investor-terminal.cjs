@@ -264,8 +264,8 @@ async function run() {
     await assertAmount("scaling-network-fcf", 9_412_362.58, "Network FCF remains unchanged");
     await assertAmount("scaling-expansion-reserve", 33_930_155.34, "Expansion reserve uses the unified B5 reserve policy");
     await assertAmount("scaling-network-total", 102_702_001.73, "Total Program Investment includes the additional Creative Cluster prepaid rent");
-    await assertAmount("scaling-upfront-funding", 79_218_642.02, "Upfront Investor Funding reflects the governed four-month development lead");
-    assert.equal(await page.getByTestId("scaling-network-payback").getAttribute("data-payback-month"), "21", "Network temporal payback is recalculated from the development lead");
+    await assertAmount("scaling-upfront-funding", 67_491_710.57, "Upfront Investor Funding reflects serial, format-specific funding dates");
+    assert.equal(await page.getByTestId("scaling-network-payback").getAttribute("data-payback-month"), "22", "Network temporal payback is recalculated from sequential format-specific openings");
 
     async function assertSummaryLayout(width, height, name) {
       await page.setViewportSize({ width, height });
@@ -402,9 +402,16 @@ async function run() {
     assert.equal(await investorEconomics.locator("input, select").count(), 0, "public participation has no editable deal controls");
     assert.equal(await investorEconomics.locator('[data-testid^="public-preset-"]').count(), 4, "public participation has exactly four discussion presets");
     assert.equal(await investorEconomics.getByText("Все варианты", { exact: true }).count(), 0, "public participation omits workbench permutations");
+    assert.match(await investorEconomics.locator(".investor-economics-comparison-table thead").innerText(), /Возврат вложений[\s\S]*Права инвестора/, "public comparison uses scenario-neutral return and rights language");
+    assert.equal(await investorEconomics.getByText("Предварительный расчёт: требуется проверка мощности производства.", { exact: true }).count(), 1, "capacity caveat appears once in the public participation view");
     const programmeInvestment = await amount("economics-programme-investment");
     const externalFunding = await amount("economics-current-external-funding");
     assert.ok(Math.abs((await amount("economics-business-self-financing")) - (programmeInvestment - externalFunding)) < 0.01, "self-financing explains the difference between total programme investment and external funding");
+    await page.getByTestId("public-preset-INV-EQUITY-DISCUSSION").click();
+    const equityWaterfall = investorEconomics.locator(".investor-economics-waterfall");
+    await equityWaterfall.getByText("Показать помесячный расчёт", { exact: true }).click();
+    assert.ok(await equityWaterfall.locator("tbody tr").filter({ hasText: /М[1-9]|М1\d/ }).count() > 0, "public Equity exposes dated staged funding in its audit layer");
+    await equityWaterfall.getByText("Показать помесячный расчёт", { exact: true }).click();
     await page.getByTestId("public-preset-INV-FULL-PROGRAMME-DISCUSSION").click();
     const commitment = await amount("economics-commitment");
     const actualContributions = await amount("economics-actual-contributions");

@@ -8,7 +8,7 @@ import {
   type FinancialCoverageStatus,
 } from "./financial-core";
 import type { InvestorConfiguration } from "./investor-configuration";
-import { canonicalTemporalAssumptions } from "./network-planning";
+import { canonicalTemporalAssumptions, developmentLeadMonthsFor } from "./network-planning";
 import { rentPrepaymentMonth } from "./rent-prepayment";
 import {
   buildNetworkSteadyState,
@@ -49,9 +49,10 @@ export type TemporalMonth = {
 
 export type TemporalPointGroupProjection = {
   cohortId: string;
+  firstFundingMonth: number | null;
   firstOpeningMonth: number | null;
   lastOpeningMonth: number | null;
-  openingWaves: Array<{ openingMonth: number; count: number }>;
+  openingWaves: Array<{ openingMonth: number; count: number; fundingMonth: number; developmentLeadMonths: number }>;
   rentFreeMonths: number;
   rampDurationMonths: number;
   /** First calendar month in which the group's first point reaches its plan level. */
@@ -119,14 +120,9 @@ export type NetworkTemporalProjection = {
   };
 };
 
-/**
- * The public projection always uses the governed planning lead.  The optional
- * override is deliberately limited to the internal workbench: it changes
- * dates, never revenue/OPEX/tax formulas or published assumptions.
- */
-export type NetworkTemporalOptions = {
-  developmentLeadMonths?: number;
-};
+/** Reserved for non-financial temporal presentation options. Governed format
+ * leads are intentionally not overridden by a global opening shift. */
+export type NetworkTemporalOptions = Record<string, never>;
 
 function sumKnown(values: readonly (number | null)[]) {
   return values.some((value) => value === null)
@@ -191,6 +187,13 @@ function baseMonths(
   });
 }
 
+type TimedOpeningWave = {
+  openingMonth: number;
+  count: number;
+  fundingMonth: number;
+  developmentLeadMonths: number;
+};
+
 type GroupMonth = {
   activePointCount: number;
   newOpenings: number;
@@ -211,13 +214,14 @@ function groupMonthProjection(
   cohort: NetworkPointCohortProjection,
   month: number,
   temporal: ReturnType<typeof canonicalTemporalAssumptions>,
+  timedWaves: readonly TimedOpeningWave[],
 ) : GroupMonth {
   const policy = configuredFinancialPolicy(configuration.scenarioId);
-  const waves = cohort.cohort.openingWaves;
+  const waves = timedWaves;
   const active = waves.filter((wave) => month >= wave.openingMonth);
   const newOpenings = waves.filter((wave) => month === wave.openingMonth);
   const activePointCount = active.reduce((sum, wave) => sum + wave.count, 0);
-  const capexMonth = waves.filter((wave) => month === Math.max(0, wave.openingMonth - temporal.developmentLeadMonths));
+  const capexMonth = waves.filter((wave) => month === wave.fundingMonth);
   const capexRub = capexMonth.reduce((sum, wave) => sum + cohort.confirmedPointInvestmentRub * wave.count, 0);
   const records = active.map((wave) => {
     const operatingMonth = month - wave.openingMonth + 1;
@@ -282,13 +286,20 @@ function groupTemporalProjection(
   cohort: NetworkPointCohortProjection,
   temporal: ReturnType<typeof canonicalTemporalAssumptions>,
 ): TemporalPointGroupProjection {
-  const firstOpeningMonth = cohort.cohort.openingWaves.at(0)?.openingMonth ?? null;
-  const lastOpeningMonth = cohort.cohort.openingWaves.at(-1)?.openingMonth ?? null;
+  const developmentLeadMonths = developmentLeadMonthsFor(cohort.cohort.format, cohort.cohort.locationType);
+  const openingWaves = cohort.cohort.openingWaves.map((wave) => ({
+    ...wave,
+    fundingMonth: Math.max(0, wave.openingMonth - developmentLeadMonths),
+    developmentLeadMonths,
+  }));
+  const firstFundingMonth = openingWaves.at(0)?.fundingMonth ?? null;
+  const firstOpeningMonth = openingWaves.at(0)?.openingMonth ?? null;
+  const lastOpeningMonth = openingWaves.at(-1)?.openingMonth ?? null;
   const rampDurationMonths = temporal.rampUpProfile.at(-1)?.month ?? 0;
   let cumulative: number | null = 0;
   const missing = new Set<string>();
   const months = Array.from({ length: temporal.horizonMonths + 1 }, (_, month) => {
-    const result = groupMonthProjection(configuration, cohort, month, temporal);
+    const result = groupMonthProjection(configuration, cohort, month, temporal, openingWaves);
     result.missing.forEach((item) => missing.add(item));
     if (result.cashFlowRub === null || cumulative === null) cumulative = null;
     else cumulative += result.cashFlowRub;
@@ -314,9 +325,10 @@ function groupTemporalProjection(
   });
   return {
     cohortId: cohort.cohort.id,
+    firstFundingMonth,
     firstOpeningMonth,
     lastOpeningMonth,
-    openingWaves: cohort.cohort.openingWaves,
+    openingWaves,
     rentFreeMonths: cohort.cohort.rentFreeMonths,
     rampDurationMonths,
     planLevelMonth: firstOpeningMonth === null ? null : firstOpeningMonth + Math.max(0, rampDurationMonths - 1),
@@ -375,33 +387,21 @@ export function networkTemporalProjection(
   options: NetworkTemporalOptions = {},
 ): NetworkTemporalProjection {
   const governedTemporal = canonicalTemporalAssumptions();
-  const developmentLeadMonths = options.developmentLeadMonths ?? governedTemporal.developmentLeadMonths;
-  if (!Number.isInteger(developmentLeadMonths) || developmentLeadMonths < 0) {
-    throw new Error("Development lead must be a non-negative whole number of months.");
-  }
-  const temporal = { ...governedTemporal, developmentLeadMonths };
-  const openingShift = developmentLeadMonths - governedTemporal.developmentLeadMonths;
+  void options;
+  const temporal = governedTemporal;
   const policy = configuredFinancialPolicy(configuration.scenarioId);
   const scaling = suppliedScaling;
   const steady = buildNetworkSteadyState(configuration, scaling, policy);
-  const base = { ...baseObject, months: baseMonths(baseObject, scenario, temporal.horizonMonths, configuration.networkScaling.calendarStartMonth, temporal.developmentLeadMonths) };
-  const groups = scaling.cohorts.slice(1).map((cohort) => groupTemporalProjection(configuration, {
-    ...cohort,
-    cohort: {
-      ...cohort.cohort,
-      openingWaves: cohort.cohort.openingWaves.map((wave) => ({
-        ...wave,
-        openingMonth: Math.max(0, wave.openingMonth + openingShift),
-      })),
-    },
-  }, temporal));
+  const baseLeadMonths = temporal.developmentLeadMonths.baseObject;
+  const base = { ...baseObject, months: baseMonths(baseObject, scenario, temporal.horizonMonths, configuration.networkScaling.calendarStartMonth, baseLeadMonths) };
+  const groups = scaling.cohorts.slice(1).map((cohort) => groupTemporalProjection(configuration, cohort, temporal));
   const additionalPointCount = groups.reduce((sum, group) => sum + group.openingWaves.reduce((count, wave) => count + wave.count, 0), 0);
   const plannedNetworkPointCount = additionalPointCount + 1;
   const vehicleFundingMonth = steady.sharedInfrastructureRub <= 0
     ? null
     : (() => {
       const fundingMonth = steady.operatingReserve?.sharedReserves.find((item) => item.id.startsWith("logistics-own"))?.fundingMonth ?? null;
-      return fundingMonth === null ? null : Math.max(0, fundingMonth + openingShift);
+      return fundingMonth;
     })();
   let expansionCumulative: number | null = 0;
   let networkCumulative: number | null = 0;
@@ -449,7 +449,7 @@ export function networkTemporalProjection(
     const pnl = calculateFinancialPnl(revenueRub, opexRub, assets.depreciationRub, assets.maintenanceCapexRub, policy);
     const sharedCapexRub = vehicleFundingMonth === month ? steady.sharedInfrastructureRub : 0;
     const reserveEvents = (steady.operatingReserve?.fundingEvents ?? [])
-      .filter((event) => Math.max(0, event.month + openingShift) === month);
+      .filter((event) => event.month === month);
     const reserveRub = reserveEvents.some((event) => event.amountRub === null)
       ? null
       : roundFinancial(reserveEvents.reduce((sum, event) => sum + (event.amountRub ?? 0), 0));

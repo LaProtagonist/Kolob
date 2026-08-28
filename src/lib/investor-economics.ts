@@ -81,7 +81,9 @@ export type InvestorMonthlyWaterfall = {
 export type InvestorCohortMaturity = {
   id: string;
   label: string;
+  formatLabel: string;
   fundingMonth: number;
+  developmentLeadMonths: number;
   openingMonth: number;
   firstSalesMonth: number;
   fullPlanMonth: number;
@@ -140,7 +142,7 @@ const percent = (value: number) => Math.max(0, Math.min(1, value));
 export function defaultInvestorEconomicsTerms(): InvestorEconomicsTerms {
   return {
     template: "equity",
-    fundingMode: "upfront",
+    fundingMode: "staged",
     distributionPolicy: "reinvest_first",
     equityShare: 0.25,
     targetMultiple: 1.3,
@@ -181,6 +183,13 @@ function cohortLabel(cohort: NetworkFinancialProjection["scaling"]["cohorts"][nu
   return cohort.cohort.format === "with_seating" ? "Исторический центр · с посадкой" : "Исторический центр · на вынос";
 }
 
+function cohortFormatLabel(cohort: NetworkFinancialProjection["scaling"]["cohorts"][number] | null) {
+  if (cohort === null) return "Базовый объект";
+  if (cohort.cohort.locationType === "creative_cluster") return "Креативный кластер";
+  if (cohort.cohort.locationType === "foodhall") return "Фудхолл";
+  return cohort.cohort.format === "with_seating" ? "Отдельное помещение · с посадкой" : "Отдельное помещение · на вынос";
+}
+
 type MaturityProfile = {
   cohorts: InvestorCohortMaturity[];
   matureFreeCashFlowByMonth: number[];
@@ -201,7 +210,9 @@ function cohortMaturityProfile(source: NetworkFinancialProjection): MaturityProf
   const baseMaturity = baseFirstSalesMonth === null || baseFullPlanMonth === null ? [] : [{
     id: "base-object",
     label: "Базовый объект",
+    formatLabel: cohortFormatLabel(null),
     fundingMonth: 0,
+    developmentLeadMonths: source.temporal.base.months.find((month) => month.newOpenings > 0)?.month ?? 0,
     openingMonth: baseOpeningMonth,
     firstSalesMonth: baseFirstSalesMonth,
     fullPlanMonth: baseFullPlanMonth,
@@ -218,7 +229,9 @@ function cohortMaturityProfile(source: NetworkFinancialProjection): MaturityProf
     return [{
       id: group.cohortId,
       label: cohortLabel(cohort),
-      fundingMonth,
+      formatLabel: cohortFormatLabel(cohort),
+      fundingMonth: group.firstFundingMonth ?? fundingMonth,
+      developmentLeadMonths: group.openingWaves.at(0)?.developmentLeadMonths ?? 0,
       openingMonth,
       firstSalesMonth,
       fullPlanMonth,

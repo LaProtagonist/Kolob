@@ -1,0 +1,35 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-02
+proposal_id: PROP-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-02
+decision_id: DEC-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-02
+change_set_id: CHG-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-02
+title: Seal sequential rollout, staged public investor scenarios and reserve-date regression proof
+status: approved
+approved_by: project owner
+approved_at: 2026-08-28T23:46:00.000Z
+actor: Codex
+scope: >-
+  Correct dated physical rollout and regenerate Business and Investor Economics
+  from the Shared Financial Core. Preserve public/internal participation separation
+  and prove that cohort reserves fund on the derived sequential dates. Production,
+  master, Google, capacity, reserve policy, legal form and /control exposure stay unchanged.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-02-approved.yaml
+approved_payload_sha256: 49db64f4c3a4bd8c6361cdef58fe611a82b5f51af7541b0471a7f99b9c98d67c
+before_state_sha256: 924a8f458a433edd7d254e4eb5ed7164be1ab75a261c47c0d845792aa7e6f3db
+after_state_sha256: 480eaced302572a3dc4707a35b150e09bf9878b97f04f81250e654785ca48e83
+affected_document_ids: [DOC-FINANCIAL-MODEL, DOC-INVESTOR-FINANCIAL-SUMMARY, DOC-NETWORK-PLANNING-ASSUMPTIONS]
+affected_section_ids:
+  - network-temporal.sequential-format-rollout
+  - network-temporal.format-specific-development-leads
+  - network-funding.staged-dated-requirement
+  - financial-core.expansion-reserve-dated-funding
+  - investor-economics.cohort-maturity-disclosure
+  - investor-economics.public-staged-scenarios
+  - control.participation-workbench-preservation
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/SNAPSHOT-ITR-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-02.yaml
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+rollback_payload: null

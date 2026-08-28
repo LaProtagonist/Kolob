@@ -202,10 +202,13 @@ test("Network Expansion and Consolidated Network use the shared tax-maintenance-
   assert.equal(reserve.totalReserveRub, economics.expansion.operatingReserveRub);
   assert.ok(reserve.excludedLineIds.includes("variable-marketing"));
   assert.ok(reserve.excludedLineIds.includes("administrative-reserve"));
-  assert.ok(reserve.fundingEvents.some((event) => event.month === 3));
-  assert.ok(reserve.fundingEvents.some((event) => event.month === 6));
-  assert.ok(reserve.fundingEvents.some((event) => event.month === 9));
-  assert.ok(reserve.fundingEvents.some((event) => event.month === 12), "future cohort reserve must not be funded at M3");
+  const reserveFundingMonths = [...new Set(reserve.fundingEvents.map((event) => event.month))].sort((left, right) => left - right);
+  assert.deepEqual(
+    reserveFundingMonths,
+    [5, 8, 11, 16],
+    "cohort and triggered shared reserves must follow the sequential funding dates, rather than the superseded M3/M6/M9/M12 cadence",
+  );
+  assert.equal(reserveFundingMonths.includes(3), false, "future cohort reserve must not be funded at the old M3 date");
   const foodhall = reserve.cohortReserves.find((item) => item.cohortId === "rollout-central-high-traffic")!;
   assert.equal(foodhall.includedLines.find((line) => line.id === "foodhall-minimum-guarantee")?.monthlyAmountRub, 250_000, "Foodhall reserve uses minimum guarantee, not revenue share above it");
   assert.equal(scaling.operating.expansionManagerPayrollRub, 0, "the Base manager is not charged a second time to expansion");

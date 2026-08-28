@@ -1,16 +1,16 @@
 {
   "meta": {
     "schemaVersion": 1,
-    "dataVersion": "1.7",
-    "contentStateSha256": "611cee021668ba8627e58a53e16d40ec9d53d72d3db57380d74530aa20d35de7",
+    "dataVersion": "1.8",
+    "contentStateSha256": "60de032f373d4b007fdd605fab0b5fb035fc9ad191c2cb4dc4fff8ee83a50027",
     "sourceFiles": [
       {
         "path": "docs-platform/working/network-planning-assumptions.yaml",
-        "sha256": "e020dbc00d30df9420cde77da4b05d46ca0bdef0719b594a79dd9e3250318ff7"
+        "sha256": "ba05720561d3bd27cd779f95865f06d0fceecb2f3c85b97a9b23eaca33543dc9"
       },
       {
         "path": "docs-platform/schemas/network-planning-assumptions.schema.json",
-        "sha256": "05aa50eb6f62c9f43bc882920ac80a4f75dd1c7d8fc603286dbded079db5e6cf"
+        "sha256": "cf8507612e0023d2d4e8eb611255c200f0e094c4eec326f6bda3323b1ad59cc1"
       },
       {
         "path": "docs-platform/working/financial-model.yaml",
@@ -42,7 +42,7 @@
       },
       {
         "path": "docs-platform/app/src/investor/network-planning.ts",
-        "sha256": "892ebac03bf493a9a9152ed18399843e81b8d60978971111631502e96bdcfb27"
+        "sha256": "bba8d76aecc7ea088a9cfde91a7e68d10d2b0b7abdac3a1320cc0081eeffbabf"
       }
     ],
     "provenance": "owner-approved Investor Terminal temporal-network brief, 2026-08-26",
@@ -51,7 +51,7 @@
   "planning": {
     "document": {
       "id": "DOC-NETWORK-PLANNING-ASSUMPTIONS",
-      "version": "1.7",
+      "version": "1.8",
       "status": "owner_approved_planning",
       "title": "Network Planning Model — Investor Terminal v2.4",
       "provenance": "owner-approved Investor Terminal temporal-network brief, 2026-08-26",
@@ -78,7 +78,13 @@
       "horizon_months_source": "financial_model.model.horizon_months",
       "ramp_up_profile_source": "financial_model.model.ramp_up_profile",
       "seasonality_profile_source": "financial_model.model.seasonality_profile",
-      "development_lead_months": 4,
+      "development_lead_months": {
+        "base_object": 4,
+        "creative_cluster": 2,
+        "foodhall": 2,
+        "street_takeaway": 3,
+        "street_with_seating": 4
+      },
       "rent_free_defaults": {
         "street": 2,
         "creative_cluster": 2,
@@ -455,10 +461,9 @@
         "bar_enabled": true
       },
       "schedule": {
-        "base_object_opening_month": 4,
-        "first_additional_opening_month": 7,
-        "additional_opening_interval_months": 3,
-        "repeated_group_wave_interval_months": 12
+        "base_object_funding_month": 0,
+        "next_cohort_funding_after_previous_opening_months": 1,
+        "provenance": "owner_approved_sequential_rollout_planning_baseline"
       },
       "groups": {
         "nevsky-premium": {
@@ -502,7 +507,7 @@
           "approved_seat_count": 19,
           "furniture_provenance": "owner_approved_phase_b4_2026-08-27",
           "checks_per_day": 175,
-          "first_opening_month": 13,
+          "first_opening_month": 15,
           "bar_enabled": true,
           "preparation_enabled_category_ids": [
             "PREP-BUILDING",
@@ -521,7 +526,7 @@
           "real_estate_mode": "rent",
           "baseline_area_m2": 40,
           "checks_per_day": 150,
-          "first_opening_month": 16,
+          "first_opening_month": 19,
           "bar_enabled": true,
           "preparation_enabled_category_ids": [
             "PREP-BUILDING",

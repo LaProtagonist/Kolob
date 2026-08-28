@@ -210,6 +210,7 @@
 
 .investor-economics-programme {
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .investor-economics-programme small,
@@ -258,6 +259,15 @@
 .investor-economics-summary dl small {
   color: #756f62;
   font-size: 0.68rem;
+}
+
+.investor-economics-funding-identity {
+  color: #6d6659 !important;
+  flex-basis: 100%;
+  font-size: 0.74rem !important;
+  letter-spacing: normal !important;
+  margin: 0 !important;
+  text-transform: none !important;
 }
 
 .investor-economics-templates {

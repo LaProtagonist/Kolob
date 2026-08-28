@@ -1,0 +1,30 @@
+receipt_version: 1
+iteration_id: ITR-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-01
+decision_id: DEC-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-01
+change_set_id: CHG-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-01
+verified_at: 2026-08-28T23:42:00.000Z
+result: passed
+approved_payload_sha256: f1e0db43678e7766a3e7ff727ffef46de16c0ae96201095bd0b41a4e8756b310
+before_state_sha256: 8a2632983ae37ee9684bc0bbe95cba3e79c581c4c18beffcb4c65a01a9f307f8
+after_state_sha256: e65f4af61f4254d11d77c4df7595b25ac360ee6628f87b0f597d811305f5e059
+checks:
+  - TypeScript noEmit (passed)
+  - SPA build with Node 25 (passed)
+  - Investor Start, Revenue, CAPEX, Network Planning and Financial Model validators/checks (passed)
+  - Financial Core and Investor Economics deterministic artifact checks (passed)
+  - Investor Economics tests (24 passed)
+  - Investor journey tests (26 passed)
+  - Investor Terminal and site browser scenarios (passed)
+  - Local review capture including tablet overflow assertion (passed)
+  - verify:affected and verify:release (pending final lifecycle execution)
+invariants:
+  sequential_opening_and_format_leads_are_derived: passed
+  public_equity_is_staged_and_uses_actual_drawdown_dates: passed
+  full_programme_is_staged_and_principal_is_not_income: passed
+  residual_equity_is_excluded_from_cash_irr_and_cash_moic: passed
+  public_and_control_states_are_isolated: passed
+  monthly_table_overflow_is_local: passed
+historical_artifact_repair:
+  method: prior sealed ITR-FINANCIAL-CORE-ARTIFACT-REFRESH-2026-08-29-01 used the approved hash-exact evidence mechanism
+  temporary_artifacts_retained: false
+external_changes: { google_apply: not_run, production_deploy: not_run, master_merge: not_run }

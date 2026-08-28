@@ -1,0 +1,13 @@
+schema_version: 2
+decision_id: DEC-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-02
+iteration_id: ITR-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-02
+title: Approve exact successor scope for sequential rollout correction
+status: approved
+approved_by: project owner
+approved_at: 2026-08-28T23:46:00.000Z
+scope: >-
+  The exact successor includes the integration regression check required by the
+  corrected Finance Core reserve funding dates. Owner economics, public presets,
+  temporal policy and external state are otherwise unchanged from -01.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-02-approved.yaml
+approved_payload_sha256: 49db64f4c3a4bd8c6361cdef58fe611a82b5f51af7541b0471a7f99b9c98d67c

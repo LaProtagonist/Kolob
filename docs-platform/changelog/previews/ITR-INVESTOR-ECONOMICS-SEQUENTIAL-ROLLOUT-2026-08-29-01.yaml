@@ -1,0 +1,18 @@
+receipt_version: 1
+iteration_id: ITR-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-01
+decision_id: DEC-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-01
+change_set_id: CHG-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-01
+previewed_at: 2026-08-28T23:42:00.000Z
+result: reviewed
+mutation_performed: false
+before_after:
+  prior_schedule: additional_cohorts_can_begin_preparation_before_previous_opening
+  corrected_schedule: next_cohort_funding_is_previous_opening_plus_one_month
+  five_point_external_funding_delta_rub: -11726931.45
+  five_point_self_financing_delta_rub: 11726931.45
+  five_point_programme_payback_delta_months: 1
+ui_review:
+  public: four staged read-only discussion presets, comparison and collapsed maturity/waterfall disclosures
+  control: candidate controls, variants and cohort timing table retained internally
+  responsive: tablet body and document have no horizontal overflow; only the monthly table wrapper scrolls horizontally
+external_changes: { google_apply: not_run, production_deploy: not_run, master_merge: not_run }

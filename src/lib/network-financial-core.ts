@@ -24,6 +24,7 @@ import {
 } from "./physical-allocation";
 import {
   canonicalTemporalAssumptions,
+  developmentLeadMonthsFor,
   canonicalNetworkOpexConstants,
   logisticsPlanning,
   productionCapacityProjection,
@@ -408,7 +409,6 @@ export function expansionReserveProjection(
   scaling: NetworkScalingProjection,
 ): ExpansionReserveProjection {
   const reserveMonths = configuration.launchBudget.operatingReserveMonths;
-  const temporalLead = canonicalTemporalAssumptions().developmentLeadMonths;
   const cohortReserves = scaling.cohorts.slice(1).flatMap((cohort) => cohort.cohort.openingWaves.map((wave, index) => {
     const rent = reserveRentLine(cohort, wave.count, reserveMonths);
     const includedLines = cohortReserveLines(cohort, wave.count);
@@ -423,7 +423,7 @@ export function expansionReserveProjection(
       id: `${cohort.cohort.id}:wave-${index + 1}`,
       cohortId: cohort.cohort.id,
       openingMonth: wave.openingMonth,
-      fundingMonth: Math.max(0, wave.openingMonth - temporalLead),
+      fundingMonth: Math.max(0, wave.openingMonth - developmentLeadMonthsFor(cohort.cohort.format, cohort.cohort.locationType)),
       pointCount: wave.count,
       months: reserveMonths,
       qualifyingMonthlyBasisRub,
@@ -449,7 +449,13 @@ export function expansionReserveProjection(
         id: `${line.id}:m${activationMonth}`,
         name: line.name,
         activationMonth,
-        fundingMonth: Math.max(0, activationMonth - temporalLead),
+        // The shared reserve is funded alongside the cohort that activates
+        // the underlying function, not by a universal lead applied to every
+        // format. This preserves staged funding parity with point CAPEX.
+        fundingMonth: cohortReserves
+          .filter((item) => item.openingMonth === activationMonth)
+          .reduce<number | null>((earliest, item) => earliest === null ? item.fundingMonth : Math.min(earliest, item.fundingMonth), null)
+          ?? activationMonth,
         months: reserveMonths,
         qualifyingMonthlyBasisRub: delta,
         includedLines: [{ ...line, monthlyAmountRub: delta }],
