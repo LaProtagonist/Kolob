@@ -9,16 +9,16 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 ## 2. Текущая ветка и governed iteration
 
 - Branch: `feat/financial-core-consolidation-v2`.
-- Latest closed iteration: `ITR-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09`.
-- Latest iteration tag: `iteration/ITR-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09`.
-- Latest content commit: `bd5a37b5527696697d656eff2cafe275ee01a11b`.
+- Latest closed iteration: `ITR-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10`.
+- Latest iteration tag: `iteration/ITR-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10`.
+- Latest content commit: `228a6a23235c332bcc675e04b79b62121c7418df`.
 - Текущий Git HEAD намеренно не записывается: его вычисляет `npm run project:onboard`.
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09-COMMITTED`.
-- Hash: `323442dcac66a784eedddfa27c20d2280368e44a4bd68c036abc859eead58988`.
-- generated_from_event_hash: `323442dcac66a784eedddfa27c20d2280368e44a4bd68c036abc859eead58988`.
+- Event: `EVT-ITR-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10-COMMITTED`.
+- Hash: `fe373554ee2f1a7d078e8608690afbdc6bcfedd4cfe8f52e6cb824068504c997`.
+- generated_from_event_hash: `fe373554ee2f1a7d078e8608690afbdc6bcfedd4cfe8f52e6cb824068504c997`.
 
 ## 4. Канонические документы
 
@@ -46,7 +46,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 5. Текущая рабочая тема
 
-Compact Investor Terminal network-summary presentation
+Final editorial cleanup of Investor Terminal scaling page
 
 ## 6. Decisions и change sets
 

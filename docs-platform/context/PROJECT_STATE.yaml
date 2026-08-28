@@ -1,12 +1,12 @@
 schema_version: 2
-generated_at: 2026-08-28T00:10:05.001Z
+generated_at: 2026-08-28T01:07:29.032Z
 project: Колобочная
 branch: feat/financial-core-consolidation-v2
-latest_timeline_event_id: EVT-ITR-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09-COMMITTED
-latest_timeline_event_hash: 323442dcac66a784eedddfa27c20d2280368e44a4bd68c036abc859eead58988
-latest_closed_iteration_id: ITR-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09
-latest_iteration_tag: iteration/ITR-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09
-latest_content_commit_hash: bd5a37b5527696697d656eff2cafe275ee01a11b
+latest_timeline_event_id: EVT-ITR-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10-COMMITTED
+latest_timeline_event_hash: fe373554ee2f1a7d078e8608690afbdc6bcfedd4cfe8f52e6cb824068504c997
+latest_closed_iteration_id: ITR-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10
+latest_iteration_tag: iteration/ITR-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10
+latest_content_commit_hash: 228a6a23235c332bcc675e04b79b62121c7418df
 registry_hash: b59c96c1b256174cd21131cf955813e2d68fe507a4d4a85b9e581094a74264cc
 canonical_document_hashes:
   - document_id: DOC-AGENTS
@@ -92,7 +92,7 @@ open_questions:
   - Archive pending review artifacts in durable storage before treating visual verification as portable.
   - Create deployment receipts when the next governed deployment is performed.
   - Decide whether malformed superseded legacy YAML evidence should receive a separate correction event.
-current_workstream: Compact Investor Terminal network-summary presentation
+current_workstream: Final editorial cleanup of Investor Terminal scaling page
 next_task: Select the next task through a new governed proposal; no business task is pre-authorized.
 google_integration_status:
   configured: false
