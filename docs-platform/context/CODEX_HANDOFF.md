@@ -9,16 +9,16 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 ## 2. Текущая ветка и governed iteration
 
 - Branch: `feat/financial-core-consolidation-v2`.
-- Latest closed iteration: `ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-08`.
-- Latest iteration tag: `iteration/ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-08`.
-- Latest content commit: `ee577bcc24602e502003dc04c398ee4ef0803b59`.
+- Latest closed iteration: `ITR-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09`.
+- Latest iteration tag: `iteration/ITR-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09`.
+- Latest content commit: `bd5a37b5527696697d656eff2cafe275ee01a11b`.
 - Текущий Git HEAD намеренно не записывается: его вычисляет `npm run project:onboard`.
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-08-COMMITTED`.
-- Hash: `3479db32b318d54add20b8d25a0d84e450f75e9ba0983826ac12956dc63d35e5`.
-- generated_from_event_hash: `3479db32b318d54add20b8d25a0d84e450f75e9ba0983826ac12956dc63d35e5`.
+- Event: `EVT-ITR-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09-COMMITTED`.
+- Hash: `323442dcac66a784eedddfa27c20d2280368e44a4bd68c036abc859eead58988`.
+- generated_from_event_hash: `323442dcac66a784eedddfa27c20d2280368e44a4bd68c036abc859eead58988`.
 
 ## 4. Канонические документы
 
@@ -46,7 +46,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 5. Текущая рабочая тема
 
-Finalize unified reserve and rollout funding after failed pre-commit continuations
+Compact Investor Terminal network-summary presentation
 
 ## 6. Decisions и change sets
 

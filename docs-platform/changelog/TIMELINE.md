@@ -4,10 +4,10 @@
 
 ## 1. Current state
 
-- Events: 289.
-- Timeline head event: `EVT-ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-08-COMMITTED`.
-- Timeline head SHA-256: `3479db32b318d54add20b8d25a0d84e450f75e9ba0983826ac12956dc63d35e5`.
-- Latest recorded iteration: `ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-08`.
+- Events: 294.
+- Timeline head event: `EVT-ITR-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09-COMMITTED`.
+- Timeline head SHA-256: `323442dcac66a784eedddfa27c20d2280368e44a4bd68c036abc859eead58988`.
+- Latest recorded iteration: `ITR-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09`.
 
 ## 2. Modern governed iterations
 
@@ -67,6 +67,7 @@
 | 2026-08-27T23:02:55.823Z | failed | Unify Operating Reserve and dated rollout funding semantics | ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-06 | DEC-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-06 | CHG-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-06 | — | — | — | — | — | Failed before content commit: affected TypeScript gate found an undeclared operatingReserve property in NetworkEconomicsProjection. A corrective continuation is required; no Google, production or Git content commit occurred. |
 | 2026-08-27T23:05:42.242Z | failed | Complete unified reserve and rollout funding implementation after TypeScript gate correction | ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-07 | DEC-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-07 | CHG-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-07 | — | — | — | — | — | Failed before content commit: strict TypeScript gate found nullable accumulator handling in ExpansionReserveProjection total. No Google, production or Git content commit occurred. |
 | 2026-08-27T23:22:40.000Z | committed | Finalize unified reserve and rollout funding after failed pre-commit continuations | ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-08 | DEC-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-08 | CHG-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-08 | ee577bcc24602e502003dc04c398ee4ef0803b59 | iteration/ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-08 | — | — | — | Finalize unified reserve and rollout funding after failed pre-commit continuations: content commit verified and linked to the governed lifecycle before sealing. |
+| 2026-08-28T00:09:26.000Z | committed | Compact Investor Terminal network-summary presentation | ITR-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09 | DEC-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09 | CHG-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09 | bd5a37b5527696697d656eff2cafe275ee01a11b | iteration/ITR-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09 | — | — | — | Compact Investor Terminal network-summary presentation: content commit verified and linked to the governed lifecycle before sealing. |
 
 ## 3. Legacy imported history
 

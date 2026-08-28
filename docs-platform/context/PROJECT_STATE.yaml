@@ -1,12 +1,12 @@
 schema_version: 2
-generated_at: 2026-08-27T23:22:54.972Z
+generated_at: 2026-08-28T00:10:05.001Z
 project: Колобочная
 branch: feat/financial-core-consolidation-v2
-latest_timeline_event_id: EVT-ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-08-COMMITTED
-latest_timeline_event_hash: 3479db32b318d54add20b8d25a0d84e450f75e9ba0983826ac12956dc63d35e5
-latest_closed_iteration_id: ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-08
-latest_iteration_tag: iteration/ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-08
-latest_content_commit_hash: ee577bcc24602e502003dc04c398ee4ef0803b59
+latest_timeline_event_id: EVT-ITR-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09-COMMITTED
+latest_timeline_event_hash: 323442dcac66a784eedddfa27c20d2280368e44a4bd68c036abc859eead58988
+latest_closed_iteration_id: ITR-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09
+latest_iteration_tag: iteration/ITR-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09
+latest_content_commit_hash: bd5a37b5527696697d656eff2cafe275ee01a11b
 registry_hash: b59c96c1b256174cd21131cf955813e2d68fe507a4d4a85b9e581094a74264cc
 canonical_document_hashes:
   - document_id: DOC-AGENTS
@@ -92,7 +92,7 @@ open_questions:
   - Archive pending review artifacts in durable storage before treating visual verification as portable.
   - Create deployment receipts when the next governed deployment is performed.
   - Decide whether malformed superseded legacy YAML evidence should receive a separate correction event.
-current_workstream: Finalize unified reserve and rollout funding after failed pre-commit continuations
+current_workstream: Compact Investor Terminal network-summary presentation
 next_task: Select the next task through a new governed proposal; no business task is pre-authorized.
 google_integration_status:
   configured: false
