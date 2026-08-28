@@ -1,0 +1,48 @@
+schema_version: 2
+payload_id: PAYLOAD-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02
+iteration_id: ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02
+proposal_id: PROP-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02
+decision_id: DEC-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02
+change_set_id: CHG-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02
+title: Prerender public Investor Terminal route for production release
+status: approved
+approved_by: project owner
+approved_at: 2026-08-28T14:35:00.000Z
+scope:
+  - Add the existing public Investor Terminal route to the static prerender list.
+  - Add a deterministic route-registration regression test.
+  - Preserve all Investor Terminal financial calculations, UI content and external state until the corrected deploy.
+constraints:
+  - no financial-core or Investor Economics change
+  - no Google mutation
+  - no production deploy before release verification
+affected_document_ids:
+  - DOC-INVESTOR-FINANCIAL-SUMMARY
+affected_section_ids:
+  - investor-terminal.production-route
+  - deployment.prerender-route-contract
+state_hash_paths:
+  - scripts/prerender-dist.cjs
+  - scripts/test-economics-data.test.ts
+content_paths:
+  - scripts/prerender-dist.cjs
+  - scripts/test-economics-data.test.ts
+  - docs-platform/changes/proposals/PROP-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02.yaml
+  - docs-platform/changes/decisions/DEC-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02.yaml
+  - docs-platform/changes/CHG-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02.yaml
+  - docs-platform/changes/iterations/ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02.yaml
+  - docs-platform/changelog/payloads/ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02-approved.yaml
+  - docs-platform/changelog/audit/ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02.yaml
+  - docs-platform/changelog/previews/ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02.yaml
+  - docs-platform/changelog/verification/ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02.yaml
+  - docs-platform/changelog/events.ndjson
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/SNAPSHOT-ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02.yaml
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+allowed_dirty_paths:
+  - analysis/
+  - output/
+rollback_payload: null

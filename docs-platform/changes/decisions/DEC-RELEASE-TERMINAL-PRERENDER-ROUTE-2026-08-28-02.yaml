@@ -1,0 +1,12 @@
+schema_version: 2
+decision_id: DEC-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02
+iteration_id: ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02
+title: Approve Investor Terminal production-route correction
+status: approved
+approved_by: project owner
+approved_at: 2026-08-28T14:35:00.000Z
+scope: >-
+  Correct only the static prerender contract for the existing public
+  /investor-terminal route and add its regression check; no financial or UI semantics change.
+approved_payload_path: docs-platform/changelog/payloads/ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02-approved.yaml
+approved_payload_sha256: 5f25eb69ef603afb985cb1eafc8ba5851e15319a5a5cf4c71e96e3ab6e5b75d4

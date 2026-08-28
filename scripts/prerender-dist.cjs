@@ -23,6 +23,7 @@ const routes = [
   { name: "launch-budget", label: "Launch budget", path: "/launch-budget" },
   { name: "revenue-model", label: "Revenue model", path: "/revenue-model" },
   { name: "economics", label: "Economics", path: "/economics" },
+  { name: "investor-terminal", label: "Investor Terminal", path: "/investor-terminal" },
   { name: "not-found", label: "Not found", path: "/404" }
 ];
 

@@ -1,0 +1,16 @@
+receipt_version: 1
+iteration_id: ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02
+decision_id: DEC-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02
+change_set_id: CHG-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02
+previewed_at: 2026-08-28T14:35:00.000Z
+result: reviewed
+mutation_performed: false
+before_state_sha256: 5c0b09db17dd4695b55855dddc5840bf7c206a9474fda4a86cd042cf28bb133d
+after_state_sha256: 91c216b69c041302a4622a463dd7afe9429c255fa2a91d1230a2f5a8fff13c54
+changes:
+  - static output gains dist/investor-terminal/index.html
+  - public route cannot regress out of the prerender list without failing the targeted test
+invariants:
+  monetary_outputs_unchanged: true
+  Investor_Terminal_UI_copy_unchanged: true
+  remote_google_mutation: false

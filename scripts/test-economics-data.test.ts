@@ -126,3 +126,12 @@ test("economics route is private working metadata, prerendered, and not a public
   assert.doesNotMatch(navigation, /\/economics/);
   assert.match(prerender, /path:\s*["']\/economics["']/);
 });
+
+test("Investor Terminal has registered page metadata and a static prerender route", () => {
+  const page = pageByPath("/investor-terminal");
+  const prerender = fs.readFileSync(path.join(projectRoot, "scripts/prerender-dist.cjs"), "utf8");
+  assert.equal(page.path, "/investor-terminal");
+  assert.equal(page.title, "Терминал инвестора — Колобочная");
+  assert.equal(page.noindex, true);
+  assert.match(prerender, /path:\s*["']\/investor-terminal["']/);
+});

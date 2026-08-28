@@ -1,0 +1,12 @@
+schema_version: 2
+proposal_id: PROP-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02
+iteration_id: ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02
+title: Prerender public Investor Terminal route for production release
+status: approved
+proposed_by: project owner
+proposed_at: 2026-08-28T14:35:00.000Z
+summary: >-
+  Correct the production static-route omission discovered by failed smoke:
+  the existing public Investor Terminal page must have its own prerendered HTML.
+approved_payload_path: docs-platform/changelog/payloads/ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02-approved.yaml
+approved_payload_sha256: 5f25eb69ef603afb985cb1eafc8ba5851e15319a5a5cf4c71e96e3ab6e5b75d4

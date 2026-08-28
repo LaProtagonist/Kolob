@@ -1,0 +1,16 @@
+receipt_version: 1
+iteration_id: ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02
+decision_id: DEC-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02
+change_set_id: CHG-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02
+verified_at: 2026-08-28T14:42:55.000Z
+result: passed
+approved_payload_sha256: 5f25eb69ef603afb985cb1eafc8ba5851e15319a5a5cf4c71e96e3ab6e5b75d4
+before_state_sha256: 5c0b09db17dd4695b55855dddc5840bf7c206a9474fda4a86cd042cf28bb133d
+after_state_sha256: 91c216b69c041302a4622a463dd7afe9429c255fa2a91d1230a2f5a8fff13c54
+checks:
+  - node docs-platform/app/node_modules/tsx/dist/cli.mjs --test scripts/test-economics-data.test.ts (passed; 8 tests)
+  - PATH=/Users/trbrmrdr/.nvm/versions/node/v22.15.1/bin:$PATH npm run build (passed; 14 prerendered routes)
+  - PATH=/Users/trbrmrdr/.nvm/versions/node/v22.15.1/bin:$PATH npm run verify:release (passed; 277.1s)
+invariants:
+  public_investor_terminal_route: passed
+  monetary_outputs_unchanged: passed

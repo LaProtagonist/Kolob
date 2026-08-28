@@ -1,0 +1,15 @@
+receipt_version: 1
+iteration_id: ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02
+audited_at: 2026-08-28T14:35:00.000Z
+result: passed
+finding:
+  route: /investor-terminal
+  production_response_before: static_404
+  root_cause: public route missing from scripts/prerender-dist.cjs
+resolution: existing route added to static prerender list with a deterministic regression assertion
+financial_output_diff:
+  monetary_values_changed: false
+  formula_changes: false
+external_state:
+  google_apply: not_run
+  production_deploy: pending
