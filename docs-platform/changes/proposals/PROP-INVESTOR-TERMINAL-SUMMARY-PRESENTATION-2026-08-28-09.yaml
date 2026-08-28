@@ -1,0 +1,14 @@
+schema_version: 2
+proposal_id: PROP-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09
+iteration_id: ITR-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09
+title: Compact and clarify the Investor Terminal network summary
+status: approved
+proposed_by: project owner
+proposed_at: 2026-08-28T00:10:00.000Z
+summary: >-
+  Make the right-side network summary compact, value-first and unambiguous about
+  direct point versus incremental Production and Shared Expansion OPEX. Preserve
+  every B5 financial value and restrict the work to presentation, mapping audit
+  and targeted browser checks.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09-approved.yaml
+approved_payload_sha256: 8c0ef8ab155d4d4394d026b3375683797b579f4ea7e31896b0724cf70d5da240

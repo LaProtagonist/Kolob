@@ -954,6 +954,7 @@
 
 .scaling-results dl > div {
   border-bottom: 1px solid #ece7dc;
+  column-gap: 12px;
   display: grid;
   grid-template-columns: minmax(0, 1fr) max-content;
   min-height: 42px;
@@ -963,12 +964,16 @@
   color: #615b4f;
   font-size: .77rem;
   min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .scaling-results dd {
+  align-self: center;
+  flex-shrink: 0;
   font-weight: 500;
   margin: 0;
   min-width: max-content;
+  overflow: visible;
   text-align: right;
   white-space: nowrap;
 }

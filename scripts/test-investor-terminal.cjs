@@ -67,6 +67,10 @@ async function run() {
     return Number(value);
   }
 
+  async function assertAmount(testId, expected, message) {
+    assert.ok(Math.abs((await amount(testId)) - expected) < 0.01, message);
+  }
+
   async function setSwitch(testId, checked) {
     const toggle = page.getByTestId(testId);
     if ((await toggle.getAttribute("aria-checked")) !== String(checked)) await toggle.click();
@@ -190,6 +194,68 @@ async function run() {
     assert.ok(Math.abs((await amount("scaling-network-total")) - (baseObjectInvestment + additionalInvestment + sharedInvestment + expansionReserve)) < 0.01, "network investment includes base, additional point launch, shared infrastructure and the separate expansion reserve exactly once");
     assert.ok((await amount("scaling-upfront-funding")) < (await amount("scaling-network-total")), "dated rollout funding and generated FCF make upfront external funding distinct from total programme investment");
 
+    const summary = page.locator(".scaling-results");
+    const operatingSummary = page.getByTestId("scaling-network-operating");
+    assert.equal((await operatingSummary.locator("p").first().textContent())?.trim(), "Расходы расширения", "the summary names its incremental scope rather than all network costs");
+    assert.equal(await operatingSummary.getByText("Управляющий сети", { exact: true }).count(), 0, "base manager is not rendered as a misleading zero expansion row");
+    assert.equal(await operatingSummary.getByText("Общий маркетинг", { exact: true }).count(), 0, "base fixed marketing is not rendered as a misleading zero expansion row");
+    assert.equal(await operatingSummary.getByTestId("scaling-network-operating-status").innerText(), "База не дублируется.", "a compact scope note explains omitted Base functions");
+    assert.match(await operatingSummary.innerText(), /Спецодежда производства[\s\S]*Медосмотры производства/, "incremental Production uniforms and medical are labelled by their actual scope");
+
+    const directPointOpex = await amount("scaling-network-direct-opex");
+    const expansionProduction = await amount("scaling-expansion-production-opex");
+    const expansionAdminReserve = await amount("scaling-expansion-admin-reserve");
+    const expansionUniforms = await amount("scaling-expansion-uniforms");
+    const expansionMedical = await amount("scaling-expansion-medical");
+    const expansionLogistics = await amount("scaling-logistics-opex");
+    const expansionOpex = await amount("scaling-expansion-opex");
+    assert.ok(Math.abs(directPointOpex + expansionProduction + expansionAdminReserve + expansionUniforms + expansionMedical + expansionLogistics - expansionOpex) < 0.01, "Direct Point OPEX plus incremental Production and Shared OPEX equals Expansion OPEX");
+    assert.ok(Math.abs(Number(await summary.getAttribute("data-base-opex-rub")) + expansionOpex - (await amount("scaling-network-opex"))) < 0.01, "Base OPEX plus Expansion OPEX equals consolidated Network OPEX");
+
+    // This UI-only iteration must preserve the sealed B5 baseline. The assertions
+    // catch accidental remapping or arithmetic changes disguised as presentation.
+    await assertAmount("scaling-base-fcf", 2_045_009.8, "Base FCF remains the B5 value");
+    await assertAmount("scaling-network-direct-opex", 16_195_358.96466331, "Direct Point OPEX remains the B5 value");
+    await assertAmount("scaling-expansion-production-opex", 158_505.51000000004, "incremental Production payroll remains the B5 value");
+    await assertAmount("scaling-expansion-admin-reserve", 499_956.60000000003, "Expansion administrative reserve remains the B5 value");
+    await assertAmount("scaling-logistics-opex", 250_000, "Expansion logistics remains the B5 value");
+    await assertAmount("scaling-expansion-opex", 17_105_071.07, "Expansion OPEX total remains the B5 value");
+    await assertAmount("scaling-network-fcf", 9_412_362.58, "Network FCF remains the B5 value");
+    await assertAmount("scaling-expansion-reserve", 34_410_155.34, "Expansion reserve remains the B5 value");
+    await assertAmount("scaling-network-total", 101_422_001.73, "Total Program Investment remains the B5 value");
+    await assertAmount("scaling-upfront-funding", 62_088_281.86, "Upfront Investor Funding remains the B5 value");
+    assert.equal(await page.getByTestId("scaling-network-payback").getAttribute("data-payback-month"), "19", "Network temporal payback remains the B5 value");
+
+    async function assertSummaryLayout(width, height, name) {
+      await page.setViewportSize({ width, height });
+      const layout = await summary.evaluate((element) => {
+        const summaryRect = element.getBoundingClientRect();
+        const rows = [...element.querySelectorAll("dl > div")].map((row) => {
+          const label = row.querySelector("dt");
+          const value = row.querySelector("dd");
+          const rowRect = row.getBoundingClientRect();
+          const valueRect = value?.getBoundingClientRect();
+          return {
+            label: label?.textContent?.trim(),
+            valueVisible: Boolean(valueRect && valueRect.width > 0 && valueRect.left >= rowRect.left - 1 && valueRect.right <= summaryRect.right + 1),
+            valueNoWrap: value ? getComputedStyle(value).whiteSpace === "nowrap" : false,
+          };
+        });
+        return {
+          pageOverflow: document.documentElement.scrollWidth > window.innerWidth,
+          summaryOverflow: element.scrollWidth > element.clientWidth,
+          rows,
+        };
+      });
+      assert.equal(layout.pageOverflow, false, `${name}: page has no horizontal overflow`);
+      assert.equal(layout.summaryOverflow, false, `${name}: summary has no horizontal overflow`);
+      assert.ok(layout.rows.length > 0 && layout.rows.every((row) => row.valueVisible && row.valueNoWrap), `${name}: every summary value stays visible and non-wrapping`);
+    }
+
+    await assertSummaryLayout(1440, 900, "desktop");
+    await assertSummaryLayout(1024, 768, "tablet landscape");
+    await assertSummaryLayout(390, 844, "mobile");
+
     await page.setViewportSize({ width: 1440, height: 650 });
     const stickySummary = await page.locator(".scaling-results").evaluate((element) => ({
       position: getComputedStyle(element).position,
@@ -202,7 +268,6 @@ async function run() {
     assert.equal(stickySummary.position, "sticky", "desktop summary remains pinned below the site header");
     assert.equal(stickySummary.overflowY, "auto", "desktop summary has independent overflow when the viewport is short");
     assert.ok(stickySummary.maxHeight !== "none" && stickySummary.scrollHeight >= stickySummary.clientHeight && stickySummary.scrollTop > 0, "lower summary rows remain reachable inside the sticky summary");
-    const summary = page.locator(".scaling-results");
     async function moveToSummary() {
       const box = await summary.boundingBox();
       assert.ok(box, "sticky summary remains visible for pointer interaction");
@@ -268,6 +333,7 @@ async function run() {
     await page.getByRole("button", { name: /Показать статьи/ }).click();
     await page.locator("details.base-object-details, details.cohort-rent-preset-reference, details.cohort-preparation-details, details.cohort-items, details.cohort-temporal-details, details.scaling-item").evaluateAll((elements) => elements.forEach((element) => { element.open = true; }));
     await page.addStyleTag({ content: ".site-header, .scaling-results { position: static !important; max-height: none !important; overflow: visible !important; }" });
+    await page.locator(".scaling-results").screenshot({ path: path.join(projectRoot, ".cache/verification/screenshots/investor-terminal-summary-desktop.png") });
     await page.screenshot({ path: path.join(projectRoot, ".cache/verification/screenshots/investor-terminal-ui-review-full-desktop.png"), fullPage: true });
     await page.screenshot({ path: path.join(projectRoot, ".cache/verification/screenshots/investor-terminal-ui-review-audit-desktop.png"), fullPage: true });
     await page.setViewportSize({ width: 390, height: 844 });

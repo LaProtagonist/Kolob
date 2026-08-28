@@ -527,15 +527,15 @@ export function NetworkScalingPanel({ baseObject, onReturnToUnit }: { baseObject
           </section>
         </div>
 
-        <aside className="scaling-results" aria-label="Сводка масштабирования" tabIndex={0} onWheel={continueSummaryScroll}>
+        <aside className="scaling-results" aria-label="Сводка масштабирования" data-base-opex-rub={baseObject.opexRub} tabIndex={0} onWheel={continueSummaryScroll}>
           <p>Сводка сети</p>
           <h3>Базовый объект</h3>
           <dl>
             <div><dt>Инвестиции</dt><dd data-testid="scaling-base-object-summary" data-amount-rub={baseObject.investmentRub}>{formatRub(baseObject.investmentRub)}</dd></div>
             <div><dt>Выручка / месяц</dt><dd>{formatRub(baseObject.revenueRub)}</dd></div>
             <div><dt>EBITDA</dt><dd>{formatRub(baseObject.operatingResultRub)}</dd></div>
-            <div><dt>Свободный денежный поток</dt><dd>{formatRub(baseObject.cashFlowRub)}</dd></div>
-            <div className="is-total"><dt>Окупаемость базового объекта</dt><dd>{paybackText(baseObject.paybackMonth)}</dd></div>
+            <div><dt>Свободный денежный поток</dt><dd data-testid="scaling-base-fcf" data-amount-rub={baseObject.cashFlowRub}>{formatRub(baseObject.cashFlowRub)}</dd></div>
+            <div className="is-total"><dt>Окупаемость</dt><dd>{paybackText(baseObject.paybackMonth)}</dd></div>
           </dl>
           <section className="scaling-network-sales" aria-label="Расширение сети">
             <p>Расширение сети</p>
@@ -544,46 +544,45 @@ export function NetworkScalingPanel({ baseObject, onReturnToUnit }: { baseObject
               <div><dt>Период открытий</dt><dd>{firstAdditionalOpening === null ? "Требует уточнения" : `${monthText(firstAdditionalOpening)} → ${monthText(temporal.lastOpeningMonth)}`}</dd></div>
               <div><dt>Инвестиции точек</dt><dd data-testid="scaling-additional-investment" data-amount-rub={temporal.expansion.pointInvestmentRub}>{formatRub(temporal.expansion.pointInvestmentRub)}</dd></div>
               {projection.sharedItems.map((item) => <div key={item.id}><dt>{item.name}</dt><dd data-testid="scaling-shared-investment" data-amount-rub={item.amountRub ?? undefined}>{formatRub(item.amountRub)}</dd></div>)}
-              <div><dt>Операционный запас расширения</dt><dd data-testid="scaling-expansion-reserve" data-amount-rub={temporal.expansion.operatingReserveRub ?? undefined}>{formatRub(temporal.expansion.operatingReserveRub)}<small>{configuration.launchBudget.operatingReserveMonths} мес. постоянных и полу-постоянных расходов; резерв финансируется перед открытием каждой группы, запас Base уже находится в инвестициях Base.</small></dd></div>
-              <div><dt>Выручка после выхода на режим</dt><dd>{formatRub(economics.expansion.revenueRub)}</dd></div>
-              <div><dt>Прямые расходы точек{temporal.expansion.isPartial ? " (предварительно)" : ""}</dt><dd>{formatRub(economics.expansion.directOpexRub)}</dd></div>
-              <div><dt>Дополнительные общие расходы</dt><dd>{formatRub(economics.expansion.sharedOpexRub)}</dd></div>
-              <div><dt>FCF после выхода на режим</dt><dd>{formatRub(economics.expansion.cashFlowRub)}</dd></div>
-              <div className="is-total"><dt>Окупаемость программы расширения</dt><dd>{paybackText(temporal.expansion.paybackMonth)}</dd></div>
+              <div><dt>Запас расширения</dt><dd data-testid="scaling-expansion-reserve" data-amount-rub={temporal.expansion.operatingReserveRub ?? undefined}>{formatRub(temporal.expansion.operatingReserveRub)}</dd></div>
+              <div><dt>Выручка / мес.</dt><dd>{formatRub(economics.expansion.revenueRub)}</dd></div>
+              <div><dt>Прямые расходы точек</dt><dd>{formatRub(economics.expansion.directOpexRub)}</dd></div>
+              <div><dt>Доп. общие расходы</dt><dd>{formatRub(economics.expansion.sharedOpexRub)}</dd></div>
+              <div><dt>FCF / мес.</dt><dd data-testid="scaling-expansion-fcf" data-amount-rub={economics.expansion.cashFlowRub ?? undefined}>{formatRub(economics.expansion.cashFlowRub)}</dd></div>
+              <div className="is-total"><dt>Окупаемость</dt><dd>{paybackText(temporal.expansion.paybackMonth)}</dd></div>
             </dl>
-            <small>{temporal.expansion.isPartial ? `Не включено в расчёт: ${financial.exclusions.length} условий раскрыты отдельно.` : financial.coverage.hasCaveats ? `${coverageSummary}. Разгон и сезонность учтены до ${monthText(temporal.fullScaleMonth)}.` : `Разгон и сезонность учтены до ${monthText(temporal.fullScaleMonth)}.`}</small>
+            <small>{temporal.expansion.isPartial ? "Расчёт с оговорками." : `Разгон и сезонность: ${monthText(temporal.fullScaleMonth)}.`}</small>
           </section>
           <section className="scaling-network-sales" aria-label="Сеть целиком" data-testid="scaling-network-sales">
             <p>Сеть целиком</p>
             <dl>
               <div><dt>Всего точек</dt><dd data-testid="scaling-network-points">{formatCount(temporal.network.pointCount)}</dd></div>
-              <div><dt>Общая потребность программы</dt><dd data-testid="scaling-network-total" data-amount-rub={networkInvestmentRub ?? undefined}>{formatRub(networkInvestmentRub)}</dd></div>
-              <div><dt>Требуемое внешнее финансирование</dt><dd data-testid="scaling-upfront-funding" data-amount-rub={temporal.funding.upfrontInvestorFundingRub ?? undefined}>{formatRub(temporal.funding.upfrontInvestorFundingRub)}<small>Минимум внешнего капитала по помесячному rollout cash flow; не равен автоматически общей потребности программы.</small></dd></div>
+              <div><dt>Вся программа</dt><dd data-testid="scaling-network-total" data-amount-rub={networkInvestmentRub ?? undefined}>{formatRub(networkInvestmentRub)}</dd></div>
+              <div><dt>Нужно привлечь</dt><dd data-testid="scaling-upfront-funding" data-amount-rub={temporal.funding.upfrontInvestorFundingRub ?? undefined}>{formatRub(temporal.funding.upfrontInvestorFundingRub)}</dd></div>
               <div><dt>Чеков / день</dt><dd data-testid="scaling-network-checks" data-checks-per-day={projection.sales.checksPerDay ?? undefined}>{formatCount(projection.sales.checksPerDay)}</dd></div>
-              <div><dt>Выручка после выхода на режим</dt><dd data-testid="scaling-network-revenue" data-amount-rub={economics.network.revenueRub ?? undefined}>{formatRub(economics.network.revenueRub)}</dd></div>
-              <div><dt>Расходы после выхода на режим</dt><dd>{formatRub(economics.network.opexRub)}</dd></div>
+              <div><dt>Выручка / мес.</dt><dd data-testid="scaling-network-revenue" data-amount-rub={economics.network.revenueRub ?? undefined}>{formatRub(economics.network.revenueRub)}</dd></div>
+              <div><dt>OPEX / мес.</dt><dd data-testid="scaling-network-opex" data-amount-rub={economics.network.opexRub ?? undefined}>{formatRub(economics.network.opexRub)}</dd></div>
               <div><dt>EBITDA</dt><dd>{formatRub(economics.network.operatingResultRub)}</dd></div>
-              <div><dt>FCF после выхода на режим</dt><dd>{formatRub(economics.network.cashFlowRub)}</dd></div>
-              <div className="is-total"><dt>Совокупный денежный поток выходит в плюс</dt><dd>{paybackText(temporal.network.paybackMonth)}</dd></div>
+              <div><dt>FCF / мес.</dt><dd data-testid="scaling-network-fcf" data-amount-rub={economics.network.cashFlowRub ?? undefined}>{formatRub(economics.network.cashFlowRub)}</dd></div>
+              <div className="is-total"><dt>Окупаемость сети</dt><dd data-testid="scaling-network-payback" data-payback-month={temporal.network.paybackMonth ?? undefined}>{paybackText(temporal.network.paybackMonth)}</dd></div>
             </dl>
-            <small data-testid="scaling-network-sales-status">{temporal.network.isPartial ? "Не включено в расчёт: часть входных данных требует уточнения." : financial.coverage.hasCaveats ? `${coverageSummary}. Все точки вышли на плановый режим: ${monthText(temporal.fullScaleMonth)}.` : `Все точки вышли на плановый режим: ${monthText(temporal.fullScaleMonth)}.`}</small>
+            <small data-testid="scaling-network-sales-status">{temporal.network.isPartial ? "Расчёт с оговорками." : financial.coverage.hasCaveats ? "Расчёт с оговорками. Мощность не проверена." : `Плановый режим: ${monthText(temporal.fullScaleMonth)}.`}</small>
           </section>
-          <section className="scaling-network-sales scaling-network-operating" aria-label="Общие расходы сети" data-testid="scaling-network-operating">
-            <p>Общие расходы сети</p>
+          <section className="scaling-network-sales scaling-network-operating" aria-label="Расходы расширения" data-testid="scaling-network-operating">
+            <p>Расходы расширения</p>
             <dl>
-              <div><dt>Прямые расходы точек{projection.operating.incompletePointCohortCount > 0 ? " (предварительно)" : ""}</dt><dd data-testid="scaling-network-direct-opex">{formatRub(projection.operating.pointDirectOpexRub)}{projection.operating.incompletePointCohortCount > 0 ? <small>Требует уточнения: {projection.operating.incompletePointCohortCount} {projection.operating.incompletePointCohortCount === 1 ? "группа" : "группы"}</small> : null}</dd></div>
-              <div><dt>Заготовочное производство</dt><dd>{formatRub(projection.operating.expansionProductionPayrollRub)}</dd></div>
-              <div><dt>Управляющий сети</dt><dd data-testid="scaling-manager-payroll">{formatRub(projection.operating.expansionManagerPayrollRub)}</dd></div>
-              <div><dt>Административный резерв</dt><dd>{formatRub(projection.operating.administrativeReserveRub)}</dd></div>
-              <div><dt>Обновление спецодежды</dt><dd>{formatRub(projection.operating.incrementalUniformRenewalRub)}</dd></div>
-              <div><dt>Медосмотры и документы</dt><dd>{formatRub(projection.operating.incrementalMedicalRub)}</dd></div>
-              <div><dt>Логистика</dt><dd data-testid="scaling-logistics-opex">{formatRub(projection.operating.logisticsRub)}</dd></div>
-              <div><dt>Общий маркетинг</dt><dd>{formatRub(projection.operating.expansionFixedMarketingRub)}</dd></div>
-              <div className="is-total"><dt>Расходы расширения</dt><dd data-testid="scaling-base-network-opex">{formatRub(economics.expansion.sharedOpexRub)}</dd></div>
+              <div><dt>Прямые расходы точек</dt><dd data-testid="scaling-network-direct-opex" data-amount-rub={projection.operating.pointDirectOpexRub ?? undefined}>{formatRub(projection.operating.pointDirectOpexRub)}</dd></div>
+              <div><dt>Производство</dt><dd data-testid="scaling-expansion-production-opex" data-amount-rub={projection.operating.expansionProductionPayrollRub ?? undefined}>{formatRub(projection.operating.expansionProductionPayrollRub)}</dd></div>
+              {projection.operating.expansionManagerPayrollRub !== null && projection.operating.expansionManagerPayrollRub !== 0 ? <div><dt>Управляющий</dt><dd data-testid="scaling-manager-payroll" data-amount-rub={projection.operating.expansionManagerPayrollRub}>{formatRub(projection.operating.expansionManagerPayrollRub)}</dd></div> : null}
+              <div><dt>Адм. резерв</dt><dd data-testid="scaling-expansion-admin-reserve" data-amount-rub={projection.operating.administrativeReserveRub ?? undefined}>{formatRub(projection.operating.administrativeReserveRub)}</dd></div>
+              <div><dt>Спецодежда производства</dt><dd data-testid="scaling-expansion-uniforms" data-amount-rub={projection.operating.incrementalUniformRenewalRub ?? undefined}>{formatRub(projection.operating.incrementalUniformRenewalRub)}</dd></div>
+              <div><dt>Медосмотры производства</dt><dd data-testid="scaling-expansion-medical" data-amount-rub={projection.operating.incrementalMedicalRub ?? undefined}>{formatRub(projection.operating.incrementalMedicalRub)}</dd></div>
+              <div><dt>Логистика</dt><dd data-testid="scaling-logistics-opex" data-amount-rub={projection.operating.logisticsRub ?? undefined}>{formatRub(projection.operating.logisticsRub)}</dd></div>
+              {projection.operating.expansionFixedMarketingRub !== null && projection.operating.expansionFixedMarketingRub !== 0 ? <div><dt>Доп. маркетинг</dt><dd data-testid="scaling-expansion-marketing" data-amount-rub={projection.operating.expansionFixedMarketingRub}>{formatRub(projection.operating.expansionFixedMarketingRub)}</dd></div> : null}
+              <div className="is-total"><dt>Расходы расширения</dt><dd data-testid="scaling-expansion-opex" data-amount-rub={economics.expansion.opexRub ?? undefined}>{formatRub(economics.expansion.opexRub)}</dd></div>
             </dl>
-            <small data-testid="scaling-network-operating-status">Один управляющий и общий маркетинг уже относятся к базовому объекту; в расширении показано только дополнительное влияние.</small>
+            <small data-testid="scaling-network-operating-status">База не дублируется.</small>
           </section>
-          <p className="scaling-partial-note">Статус модели: {coverageSummary.toLocaleLowerCase()}{financial.coverage.capacity === "review_required" ? " · Требуется проверка мощности производства" : ""}{financial.coverage.pricing === "partial" ? " · Не включено в расчёт: отдельные цены" : ""}.</p>
           <button type="button" className="terminal-secondary-action" onClick={onReturnToUnit}>Изменить базовый объект</button>
         </aside>
       </div>
