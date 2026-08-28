@@ -788,6 +788,22 @@
   text-align: right;
 }
 
+.network-parameter-group {
+  border-top: 1px solid #e7e0d5;
+  margin-top: 7px;
+  padding-top: 7px;
+}
+
+.network-parameter-group > p {
+  color: #766f61;
+  font-size: .66rem;
+  font-weight: 700;
+  letter-spacing: .07em;
+  margin: 0;
+  padding: 0 13px 4px;
+  text-transform: uppercase;
+}
+
 .scaling-choice-row {
   align-items: flex-start;
 }
@@ -954,6 +970,7 @@
 
 .scaling-results dl > div {
   border-bottom: 1px solid #ece7dc;
+  column-gap: 12px;
   display: grid;
   grid-template-columns: minmax(0, 1fr) max-content;
   min-height: 42px;
@@ -963,12 +980,16 @@
   color: #615b4f;
   font-size: .77rem;
   min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .scaling-results dd {
+  align-self: center;
+  flex-shrink: 0;
   font-weight: 500;
   margin: 0;
   min-width: max-content;
+  overflow: visible;
   text-align: right;
   white-space: nowrap;
 }
@@ -1724,6 +1745,16 @@
 
 .cohort-opex-lines strong {
   font-variant-numeric: tabular-nums;
+}
+
+.cohort-opex-lines > div.is-state {
+  color: #746c60;
+}
+
+.cohort-opex-lines > div.is-state small {
+  color: #746c60;
+  font-size: .67rem;
+  text-align: right;
 }
 
 .cohort-opex-lines > div.is-total {

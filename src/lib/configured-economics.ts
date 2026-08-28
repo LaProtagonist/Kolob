@@ -1,16 +1,44 @@
 import financialProjectionJson from "../../docs-platform/generated/financial-model-projection.json";
 import investorSummaryJson from "../../docs-platform/generated/investor-financial-summary.json";
 import { economicsData, type EconomicsScenario } from "./economics";
-import { calculateLaunchBudget, defaultLaunchBudgetState, launchModel } from "./launch-budget";
+import {
+  annualIrr,
+  calculateFinancialMonthlyResult,
+  firstPaybackMonth,
+  presentValue,
+  roundFinancial as round,
+  sumFinancial as sum,
+  type FinancialProjectionContext,
+} from "./financial-core";
+import { calculateLaunchBudget, defaultLaunchBudgetState } from "./launch-budget";
 import { launchFinancials } from "./launch-financials";
-import { baseObjectLaunchBudgetState, type InvestorConfiguration, type InvestorScenarioId } from "./investor-configuration";
+import { rentPrepaymentCoverage, rentPrepaymentMonth } from "./rent-prepayment";
+import {
+  baseObjectLaunchBudgetState,
+  financialProjectionContextForConfiguration,
+  historicalIntegratedPilotConfiguration,
+  type InvestorConfiguration,
+  type InvestorScenarioId,
+} from "./investor-configuration";
 
 const financialProjection = financialProjectionJson;
 const investorSummary = investorSummaryJson;
 
 type FinancialScenario = (typeof financialProjection.scenarios.rent)[InvestorScenarioId]
   | (typeof financialProjection.scenarios.purchase)[InvestorScenarioId];
-type MonthlyRow = FinancialScenario["monthly"][number];
+type MonthlyCalculationRow = {
+  month: number;
+  gross_revenue_rub: number;
+  net_revenue_rub: number;
+  raw_materials_rub: number;
+  labor_rub: number;
+  administrative_reserve_rub: number;
+  marketing_rub: number;
+  household_rub: number;
+  ebitda_rub: number;
+  tax_due_rub: number;
+  operating_free_cash_flow_rub: number;
+};
 
 type InvestmentItem = EconomicsScenario["investmentBreakdown"][number];
 type InvestmentGroup = EconomicsScenario["investmentGroups"][number];
@@ -19,13 +47,55 @@ export type ConfiguredMonthlyProjection = {
   month: number;
   calendarMonth: number;
   revenueRub: number;
+  netRevenueRub: number;
   opexRub: number;
+  ebitdaRub: number;
+  taxRub: number;
+  depreciationRub: number;
+  maintenanceCapexRub: number;
+  operatingFreeCashFlowRub: number;
+  /** Prepaid contractual rent consumed this month; it is not a second cash payment. */
+  prepaidRentCreditRub: number;
   cashFlowRub: number;
+};
+
+export type CurrentBaseReserveLine = {
+  id: string;
+  name: string;
+  monthlyAmountRub: number;
+};
+
+/**
+ * The Current Base Object has a distinct liquidity policy from the immutable
+ * Historical Integrated Pilot.  It reserves six months of the governed
+ * fixed/semi-fixed Current Base costs, excluding costs that are either
+ * revenue-variable or financed by another launch line.
+ */
+export type CurrentBaseReserveProjection = {
+  context: "current_base_object";
+  policy: "six_months_current_base_fixed_and_semi_fixed_opex";
+  scenarioId: InvestorScenarioId;
+  months: number;
+  monthlyBasisRub: number;
+  includedLines: CurrentBaseReserveLine[];
+  excludedLineIds: string[];
+  prepaidCoverage: {
+    monthlyRentRub: number;
+    prepaidMonths: number;
+    prepaidRentRub: number;
+    reserveMonths: number;
+    coveredRentMonths: number;
+    uncoveredRentMonths: number;
+    rentFreeMonths: number;
+  };
+  uncoveredRentRub: number;
+  totalReserveRub: number;
 };
 
 export type ConfiguredEconomicsScenario = Omit<EconomicsScenario, "paybackMonth" | "irr"> & {
   paybackMonth: number | null;
   irr: number | null;
+  context: FinancialProjectionContext;
   isConfigured: boolean;
   configurationComplete: boolean;
   premisesScenario: "rent" | "purchase";
@@ -38,58 +108,26 @@ export type ConfiguredEconomicsScenario = Omit<EconomicsScenario, "paybackMonth"
    * base-object revenue, OPEX or tax calculations.
    */
   monthlyProjection: ConfiguredMonthlyProjection[];
+  /**
+   * Present only for the Current Base context. The Historical Pilot keeps its
+   * own immutable reserve in the generated historical projection.
+   */
+  currentBaseReserveProjection: CurrentBaseReserveProjection | null;
 };
 
-function round(value: number, digits = 2) {
-  const factor = 10 ** digits;
-  return Math.round((value + Number.EPSILON) * factor) / factor;
-}
-
-function sum(values: number[]) {
-  return values.reduce((total, value) => total + value, 0);
-}
-
-function firstPaybackMonth(cashFlows: number[]) {
-  let cumulative = 0;
-  for (let month = 0; month < cashFlows.length; month += 1) {
-    cumulative += cashFlows[month];
-    if (cumulative >= 0) return month;
-  }
-  return null;
-}
-
-function presentValue(cashFlows: number[], annualDiscountRate: number) {
-  const monthlyRate = (1 + annualDiscountRate) ** (1 / 12) - 1;
-  return cashFlows.reduce((value, cash, month) => value + cash / ((1 + monthlyRate) ** month), 0);
-}
-
-function monthlyIrr(cashFlows: number[]) {
-  const npv = (rate: number) => cashFlows.reduce((value, cash, index) => value + cash / ((1 + rate) ** index), 0);
-  let low = -0.9999;
-  let high = 10;
-  let lowValue = npv(low);
-  const highValue = npv(high);
-  if (lowValue === 0) return low;
-  if (highValue === 0) return high;
-  if (lowValue * highValue > 0) return null;
-  for (let iteration = 0; iteration < 300; iteration += 1) {
-    const mid = (low + high) / 2;
-    const value = npv(mid);
-    if (Math.abs(value) < 1e-7) return mid;
-    if (lowValue * value <= 0) {
-      high = mid;
-    } else {
-      low = mid;
-      lowValue = value;
-    }
-  }
-  return (low + high) / 2;
-}
-
-function annualIrr(cashFlows: number[]) {
-  const monthly = monthlyIrr(cashFlows);
-  return monthly === null ? null : (1 + monthly) ** 12 - 1;
-}
+/**
+ * Financial policy is derived from the governed generated Financial Model,
+ * rather than copied into Network Planning or a browser component.
+ */
+export type ConfiguredFinancialPolicy = {
+  taxRules: {
+    regularUsnRate: number;
+    minimumUsnRate: number;
+  };
+  maintenanceAnnualRate: number;
+  discountRateAnnual: number;
+  vatStatus: "current_baseline_requires_confirmation";
+};
 
 function calculationInputsEqual(left: InvestorConfiguration["launchBudget"], right: InvestorConfiguration["launchBudget"]) {
   return left.premisesScenario === right.premisesScenario
@@ -115,16 +153,8 @@ function calculationInputsEqual(left: InvestorConfiguration["launchBudget"], rig
     && left.contingencyPercent === right.contingencyPercent;
 }
 
-function canonicalLaunchBudgetState() {
-  const defaults = baseObjectLaunchBudgetState();
-  return {
-    ...defaults,
-    // The master Financial Model continues to represent the fully prepared
-    // premises. The investor runtime default may exclude already-existing work.
-    preparationEnabledCategoryIds: launchModel.preparation.categories
-      .filter((category) => category.enabled_by_default)
-      .map((category) => category.id),
-  };
+function historicalIntegratedPilotLaunchBudgetState() {
+  return historicalIntegratedPilotConfiguration().launchBudget;
 }
 
 function keepsGeneratedFinancialRentCashRules(configuration: InvestorConfiguration, master: FinancialScenario) {
@@ -153,8 +183,24 @@ function referenceRates(master: FinancialScenario) {
   };
 }
 
+export function configuredFinancialPolicy(id: InvestorScenarioId): ConfiguredFinancialPolicy {
+  const master = financialProjection.scenarios.rent[id];
+  const rates = referenceRates(master);
+  const maintenanceBasisRub = master.capex.equipment_rub + master.capex.furniture_rub;
+  if (maintenanceBasisRub <= 0) throw new Error("Configured economics cannot derive the canonical maintenance basis.");
+  return {
+    taxRules: {
+      regularUsnRate: rates.regularUsnRate,
+      minimumUsnRate: rates.minimumUsnRate,
+    },
+    maintenanceAnnualRate: master.maintenance_capex_rub * 12 / maintenanceBasisRub,
+    discountRateAnnual: investorSummary.assumptions.discount_rate,
+    vatStatus: "current_baseline_requires_confirmation",
+  };
+}
+
 function calculateConfiguredRentMonth(
-  row: MonthlyRow,
+  row: MonthlyCalculationRow,
   master: FinancialScenario,
   configuredRentRub: number,
   prepaidMonths: number,
@@ -162,35 +208,39 @@ function calculateConfiguredRentMonth(
 ) {
   const rates = referenceRates(master);
   const baseRentRub = master.rent_rub;
-  const monthlyRentRub = row.month <= rentFreeMonths ? 0 : configuredRentRub;
+  const rentSettlement = rentPrepaymentMonth({
+    operatingMonth: row.month,
+    monthlyRentRub: configuredRentRub,
+    prepaidMonths,
+    rentFreeMonths,
+  });
+  const monthlyRentRub = rentSettlement.contractualRentRub;
   const rentDeltaRub = monthlyRentRub - baseRentRub;
   const wasteRub = row.raw_materials_rub * rates.rawWasteRate;
   const packagingRub = row.gross_revenue_rub * rates.packagingRate;
   const acquiringRub = row.gross_revenue_rub * rates.acquiringRate;
   const aggregatorRub = row.gross_revenue_rub * rates.aggregatorRate;
-  const taxableBaseRub = Math.max(
-    row.net_revenue_rub - (
-      row.raw_materials_rub + wasteRub + packagingRub + rates.cashPayrollRub + monthlyRentRub
-      + acquiringRub + aggregatorRub + row.administrative_reserve_rub + row.marketing_rub
-      + row.household_rub + master.fixed_opex_without_labor_rent_rub
-    ),
-    0,
-  );
-  const taxRub = Math.max(taxableBaseRub * rates.regularUsnRate, row.net_revenue_rub * rates.minimumUsnRate);
   const maintenanceCapexRub = row.ebitda_rub - row.tax_due_rub - row.operating_free_cash_flow_rub;
   const ebitdaRub = row.ebitda_rub - rentDeltaRub;
-  const operatingFreeCashFlowRub = ebitdaRub - taxRub - maintenanceCapexRub;
-  // Prepayment remains a Month 0 financing item. When a rent-free period
-  // precedes occupancy, the already-paid months start only after that period;
-  // this avoids booking the benefit both as zero rent and as a cash release.
-  const prepaidRentReleaseRub = row.month > rentFreeMonths && row.month <= rentFreeMonths + prepaidMonths
-    ? configuredRentRub
-    : 0;
+  const financial = calculateFinancialMonthlyResult(
+    ebitdaRub,
+    row.net_revenue_rub,
+    row.raw_materials_rub + wasteRub + packagingRub + rates.cashPayrollRub + monthlyRentRub
+      + acquiringRub + aggregatorRub + row.administrative_reserve_rub + row.marketing_rub
+      + row.household_rub + master.fixed_opex_without_labor_rent_rub,
+    maintenanceCapexRub,
+    rates,
+  );
   return {
+    grossRevenueRub: round(row.gross_revenue_rub),
+    netRevenueRub: round(row.net_revenue_rub),
     ebitdaRub: round(ebitdaRub),
-    taxRub: round(taxRub),
-    operatingFreeCashFlowRub: round(operatingFreeCashFlowRub),
-    netCashFlowRub: round(operatingFreeCashFlowRub + prepaidRentReleaseRub),
+    taxRub: round(financial.taxRub),
+    depreciationRub: round(master.depreciation_rub),
+    maintenanceCapexRub: round(maintenanceCapexRub),
+    operatingFreeCashFlowRub: round(financial.freeCashFlowRub),
+    prepaidRentCreditRub: round(rentSettlement.prepaidRentCreditRub),
+    netCashFlowRub: round(financial.freeCashFlowRub + rentSettlement.prepaidRentCreditRub),
   };
 }
 
@@ -202,7 +252,7 @@ function calculateConfiguredRentMonth(
  * design is deliberately outside this UI control.
  */
 function calculateCustomTrafficMonth(
-  row: MonthlyRow,
+  row: MonthlyCalculationRow,
   master: FinancialScenario,
   configuredRentRub: number,
   prepaidMonths: number,
@@ -227,24 +277,26 @@ function calculateCustomTrafficMonth(
   const householdRub = householdFormula.fixed_amount_rub
     + householdFormula.variable_amount_rub * (grossRevenueRub / master.gross_revenue_rub);
   const laborRub = row.labor_rub;
-  const monthlyRentRub = row.month <= rentFreeMonths ? 0 : configuredRentRub;
+  const rentSettlement = rentPrepaymentMonth({
+    operatingMonth: row.month,
+    monthlyRentRub: configuredRentRub,
+    prepaidMonths,
+    rentFreeMonths,
+  });
+  const monthlyRentRub = rentSettlement.contractualRentRub;
   const ebitdaRub = netRevenueRub - rawMaterialsRub - wasteRub - packagingRub - laborRub - monthlyRentRub
     - acquiringRub - aggregatorRub - administrativeReserveRub - marketingRub - householdRub
     - master.fixed_opex_without_labor_rent_rub;
-  const taxableBaseRub = Math.max(
-    netRevenueRub - (
-      rawMaterialsRub + wasteRub + packagingRub + rates.cashPayrollRub + monthlyRentRub
-      + acquiringRub + aggregatorRub + administrativeReserveRub + marketingRub + householdRub
-      + master.fixed_opex_without_labor_rent_rub
-    ),
-    0,
-  );
-  const taxRub = Math.max(taxableBaseRub * rates.regularUsnRate, netRevenueRub * rates.minimumUsnRate);
   const maintenanceCapexRub = row.ebitda_rub - row.tax_due_rub - row.operating_free_cash_flow_rub;
-  const operatingFreeCashFlowRub = ebitdaRub - taxRub - maintenanceCapexRub;
-  const prepaidRentReleaseRub = row.month > rentFreeMonths && row.month <= rentFreeMonths + prepaidMonths
-    ? configuredRentRub
-    : 0;
+  const financial = calculateFinancialMonthlyResult(
+    ebitdaRub,
+    netRevenueRub,
+    rawMaterialsRub + wasteRub + packagingRub + rates.cashPayrollRub + monthlyRentRub
+      + acquiringRub + aggregatorRub + administrativeReserveRub + marketingRub + householdRub
+      + master.fixed_opex_without_labor_rent_rub,
+    maintenanceCapexRub,
+    rates,
+  );
   return {
     grossRevenueRub: round(grossRevenueRub),
     netRevenueRub: round(netRevenueRub),
@@ -258,9 +310,12 @@ function calculateCustomTrafficMonth(
     marketingRub: round(marketingRub),
     householdRub: round(householdRub),
     ebitdaRub: round(ebitdaRub),
-    taxRub: round(taxRub),
-    operatingFreeCashFlowRub: round(operatingFreeCashFlowRub),
-    netCashFlowRub: round(operatingFreeCashFlowRub + prepaidRentReleaseRub),
+    taxRub: round(financial.taxRub),
+    depreciationRub: round(master.depreciation_rub),
+    maintenanceCapexRub: round(maintenanceCapexRub),
+    operatingFreeCashFlowRub: round(financial.freeCashFlowRub),
+    prepaidRentCreditRub: round(rentSettlement.prepaidRentCreditRub),
+    netCashFlowRub: round(financial.freeCashFlowRub + rentSettlement.prepaidRentCreditRub),
   };
 }
 
@@ -343,7 +398,7 @@ function canonicalScenario(id: InvestorScenarioId) {
   return economicsData.scenariosById[id];
 }
 
-function scenarioLaunchFinancials(id: InvestorScenarioId) {
+function historicalScenarioLaunchFinancials(id: InvestorScenarioId) {
   const master = financialProjection.scenarios.rent[id];
   const monthlyScenarioOpexRub = master.marketing_rub + master.household_rub;
   return {
@@ -358,46 +413,198 @@ function scenarioLaunchFinancials(id: InvestorScenarioId) {
   };
 }
 
+const currentBaseReserveFixedOpexLines = [
+  ["UTILITIES", "Коммунальные услуги"],
+  ["EQUIPMENT_SERVICE", "Обслуживание оборудования"],
+  ["ACCOUNTING", "Бухгалтерия"],
+  ["VENT_GREASE", "Вентиляция и жироуловитель"],
+  ["UNIFORM_RENEWAL", "Обновление формы"],
+  ["MUSIC_RIGHTS", "Музыкальное сопровождение"],
+  ["PEST", "Дератизация и дезинсекция"],
+  ["YUMA", "YUMA / ПО"],
+  ["MEDICAL", "Медицинские расходы"],
+  ["SECURITY_MONITORING", "Охранный мониторинг"],
+  ["BANKING", "Банковское обслуживание (TBD)"],
+  ["OTHER", "Прочие операционные расходы"],
+] as const;
+
+const currentBaseReserveExcludedLineIds = [
+  "raw_materials",
+  "waste",
+  "consumer_packaging",
+  "acquiring",
+  "aggregator_commission",
+  "administrative_reserve",
+  "variable_marketing",
+  "traffic_household",
+  "foodhall_revenue_share",
+  "depreciation",
+  "maintenance_capex",
+  "income_tax",
+  "equipment_purchase",
+  "preparation",
+  "security_deposit",
+  "prepaid_rent",
+  "initial_inventory",
+];
+
+/**
+ * Builds the Current Base reserve directly from the Current Base P&L inputs.
+ * In particular it uses the protected labour basis (`labor_rub`), not the
+ * Historical Pilot's calculated staffing labour used by its legacy reserve.
+ */
+export function currentBaseReserveProjection(
+  configuration: InvestorConfiguration,
+  id: InvestorScenarioId = configuration.scenarioId,
+): CurrentBaseReserveProjection | null {
+  if (financialProjectionContextForConfiguration(configuration) !== "current_base_object") return null;
+  if (configuration.launchBudget.operatingExpenseMode !== "baseline") return null;
+
+  const master = financialProjection.scenarios.rent[id];
+  const opexEntries = master.opex_entries_rub as Record<string, number>;
+  const reserveMonths = configuration.launchBudget.operatingReserveMonths;
+  const monthlyRentRub = configuration.launchBudget.premisesScenario === "rent"
+    ? configuration.launchBudget.monthlyRentRub ?? master.rent_rub
+    : 0;
+  const prepaidMonths = configuration.launchBudget.premisesScenario === "rent"
+    ? configuration.launchBudget.prepaymentMonths
+    : 0;
+  const prepaidCoverage = rentPrepaymentCoverage({
+    monthlyRentRub,
+    prepaidMonths,
+    rentFreeMonths: configuration.launchBudget.rentFreeMonths,
+    reserveMonths,
+  });
+  const uncoveredRentRub = round(prepaidCoverage.uncoveredRentRub);
+  const includedLines: CurrentBaseReserveLine[] = [
+    { id: "labor", name: "Персонал Current Base", monthlyAmountRub: master.labor_rub },
+    ...currentBaseReserveFixedOpexLines.map(([lineId, name]) => ({
+      id: lineId.toLowerCase(),
+      name,
+      monthlyAmountRub: opexEntries[lineId] ?? 0,
+    })),
+    { id: "fixed_marketing", name: "Маркетинг · фиксированная часть", monthlyAmountRub: master.marketing_formula.fixed_amount_rub },
+    { id: "fixed_household", name: "Хозяйственные расходы · фиксированная часть", monthlyAmountRub: master.household_formula.fixed_amount_rub },
+    {
+      id: "uncovered_rent",
+      name: "Непокрытая арендная плата",
+      monthlyAmountRub: reserveMonths === 0 ? 0 : round(uncoveredRentRub / reserveMonths),
+    },
+  ];
+  const fixedAndSemiFixedMonthlyRub = sum(includedLines
+    .filter((line) => line.id !== "uncovered_rent")
+    .map((line) => line.monthlyAmountRub));
+  const totalReserveRub = round(fixedAndSemiFixedMonthlyRub * reserveMonths + uncoveredRentRub);
+
+  return {
+    context: "current_base_object",
+    policy: "six_months_current_base_fixed_and_semi_fixed_opex",
+    scenarioId: id,
+    months: reserveMonths,
+    monthlyBasisRub: reserveMonths === 0 ? 0 : round(totalReserveRub / reserveMonths),
+    includedLines,
+    excludedLineIds: currentBaseReserveExcludedLineIds,
+    prepaidCoverage,
+    uncoveredRentRub,
+    totalReserveRub,
+  };
+}
+
+function launchFinancialsForConfiguration(
+  id: InvestorScenarioId,
+  reserve: CurrentBaseReserveProjection | null,
+) {
+  const historical = historicalScenarioLaunchFinancials(id);
+  if (!reserve) return historical;
+  return {
+    ...historical,
+    reserveMonths: reserve.months,
+    operatingReserveRub: reserve.totalReserveRub,
+    monthlyReserveBaseRub: reserve.monthlyBasisRub,
+    monthlyFixedOpexRub: sum(reserve.includedLines
+      .filter((line) => line.id !== "labor" && line.id !== "fixed_marketing" && line.id !== "fixed_household" && line.id !== "uncovered_rent")
+      .map((line) => line.monthlyAmountRub)),
+    monthlyScenarioOpexRub: sum(reserve.includedLines
+      .filter((line) => line.id === "fixed_marketing" || line.id === "fixed_household")
+      .map((line) => line.monthlyAmountRub)),
+    monthlyLaborRub: reserve.includedLines.find((line) => line.id === "labor")?.monthlyAmountRub ?? 0,
+  };
+}
+
 function generatedMonthlyProjection(master: FinancialScenario): ConfiguredMonthlyProjection[] {
-  return master.monthly.map((row) => ({
-    month: row.month,
-    calendarMonth: row.calendar_month,
-    revenueRub: row.gross_revenue_rub,
-    opexRub: round(row.gross_revenue_rub - row.ebitda_rub),
-    cashFlowRub: row.net_cash_flow_rub,
-  }));
+  return master.monthly.map((row, index) => {
+    const detail = master.monthly_detailed[index];
+    return {
+      month: row.month,
+      calendarMonth: row.calendar_month,
+      revenueRub: row.gross_revenue_rub,
+      netRevenueRub: detail?.net_revenue_rub ?? row.net_revenue_rub,
+      opexRub: round(row.gross_revenue_rub - row.ebitda_rub),
+      ebitdaRub: row.ebitda_rub,
+      taxRub: row.tax_due_rub,
+      depreciationRub: detail?.depreciation_rub ?? 0,
+      maintenanceCapexRub: detail?.maintenance_capex_rub ?? round(row.ebitda_rub - row.tax_due_rub - row.operating_free_cash_flow_rub),
+      operatingFreeCashFlowRub: row.operating_free_cash_flow_rub,
+      prepaidRentCreditRub: 0,
+      cashFlowRub: row.net_cash_flow_rub,
+    };
+  });
 }
 
 function calculatedMonthlyProjection(rows: Array<{
   grossRevenueRub?: number;
+  netRevenueRub?: number;
   ebitdaRub: number;
+  taxRub?: number;
+  depreciationRub?: number;
+  maintenanceCapexRub?: number;
+  operatingFreeCashFlowRub?: number;
+  prepaidRentCreditRub?: number;
   netCashFlowRub: number;
 }>, source: FinancialScenario): ConfiguredMonthlyProjection[] {
-  return rows.map((row, index) => ({
-    month: source.monthly[index]?.month ?? index + 1,
-    calendarMonth: source.monthly[index]?.calendar_month ?? index % 12 + 1,
-    revenueRub: row.grossRevenueRub ?? source.monthly[index]?.gross_revenue_rub ?? 0,
-    opexRub: round((row.grossRevenueRub ?? source.monthly[index]?.gross_revenue_rub ?? 0) - row.ebitdaRub),
-    cashFlowRub: row.netCashFlowRub,
-  }));
+  return rows.map((row, index) => {
+    const detailed = source.monthly_detailed[index];
+    const revenueRub = row.grossRevenueRub ?? source.monthly[index]?.gross_revenue_rub ?? 0;
+    const taxRub = row.taxRub ?? source.monthly[index]?.tax_due_rub ?? 0;
+    const maintenanceCapexRub = row.maintenanceCapexRub
+      ?? detailed?.maintenance_capex_rub
+      ?? round(row.ebitdaRub - taxRub - (row.operatingFreeCashFlowRub ?? source.monthly[index]?.operating_free_cash_flow_rub ?? 0));
+    return {
+      month: source.monthly[index]?.month ?? index + 1,
+      calendarMonth: source.monthly[index]?.calendar_month ?? index % 12 + 1,
+      revenueRub,
+      netRevenueRub: row.netRevenueRub ?? detailed?.net_revenue_rub ?? source.monthly[index]?.net_revenue_rub ?? revenueRub,
+      opexRub: round(revenueRub - row.ebitdaRub),
+      ebitdaRub: row.ebitdaRub,
+      taxRub,
+      depreciationRub: row.depreciationRub ?? detailed?.depreciation_rub ?? 0,
+      maintenanceCapexRub,
+      operatingFreeCashFlowRub: row.operatingFreeCashFlowRub ?? source.monthly[index]?.operating_free_cash_flow_rub ?? row.ebitdaRub - taxRub - maintenanceCapexRub,
+      prepaidRentCreditRub: row.prepaidRentCreditRub ?? 0,
+      cashFlowRub: row.netCashFlowRub,
+    };
+  });
 }
 
 export function configuredEconomicsScenario(configuration: InvestorConfiguration, id: InvestorScenarioId = configuration.scenarioId): ConfiguredEconomicsScenario {
   const canonical = canonicalScenario(id);
-  const capital = calculateLaunchBudget(configuration.launchBudget, undefined, scenarioLaunchFinancials(id));
+  const context = financialProjectionContextForConfiguration(configuration);
+  const reserveProjection = currentBaseReserveProjection(configuration, id);
+  const capital = calculateLaunchBudget(configuration.launchBudget, undefined, launchFinancialsForConfiguration(id, reserveProjection));
   const hasCustomTraffic = configuration.customChecksPerDay !== null;
   const masterRentScenario = financialProjection.scenarios.rent[id];
   const isConfigured = hasCustomTraffic || !calculationInputsEqual(configuration.launchBudget, baseObjectLaunchBudgetState());
-  const usesCanonicalProjection = !hasCustomTraffic
-    && calculationInputsEqual(configuration.launchBudget, canonicalLaunchBudgetState())
+  const usesHistoricalGeneratedProjection = !hasCustomTraffic
+    && calculationInputsEqual(configuration.launchBudget, historicalIntegratedPilotLaunchBudgetState())
     && configuration.launchBudget.monthlyRentRub === masterRentScenario.rent_rub
     && configuration.launchBudget.rentFreeMonths === 0;
   const complete = capital.financingRequirementRub !== null && !capital.areaInvalid;
 
-  if (usesCanonicalProjection) {
+  if (usesHistoricalGeneratedProjection) {
     const master = financialProjection.scenarios.rent[id];
     return {
       ...canonical,
+      context,
       isConfigured: false,
       configurationComplete: true,
       premisesScenario: "rent",
@@ -405,12 +612,14 @@ export function configuredEconomicsScenario(configuration: InvestorConfiguration
       investmentGroups: canonical.investmentGroups,
       cashFlows: master.restaurant_cash_flows,
       monthlyProjection: generatedMonthlyProjection(master),
+      currentBaseReserveProjection: null,
     };
   }
 
   if (!complete || capital.financingRequirementRub === null) {
     return {
       ...canonical,
+      context,
       isConfigured,
       configurationComplete: false,
       premisesScenario: configuration.launchBudget.premisesScenario,
@@ -418,6 +627,7 @@ export function configuredEconomicsScenario(configuration: InvestorConfiguration
       investmentGroups: configuredInvestmentGroups(configuredInvestmentBreakdown(configuration, capital)),
       cashFlows: [],
       monthlyProjection: [],
+      currentBaseReserveProjection: reserveProjection,
     };
   }
 
@@ -441,17 +651,19 @@ export function configuredEconomicsScenario(configuration: InvestorConfiguration
       configuration.launchBudget.rentFreeMonths,
       customChecksPerDay,
     ));
-    const matureRow = {
+    const matureRow: MonthlyCalculationRow = {
       month: Number.MAX_SAFE_INTEGER,
       gross_revenue_rub: master.gross_revenue_rub,
       net_revenue_rub: master.net_revenue_rub,
       raw_materials_rub: master.raw_materials_rub,
       labor_rub: master.labor_rub,
       administrative_reserve_rub: master.administrative_reserve_rub,
+      marketing_rub: master.marketing_rub,
+      household_rub: master.household_rub,
       ebitda_rub: master.ebitda_rub,
       tax_due_rub: master.tax_due_rub,
       operating_free_cash_flow_rub: master.operating_free_cash_flow_rub,
-    } as MonthlyRow;
+    };
     const mature = calculateCustomTrafficMonth(matureRow, master, rentRub, 0, 0, customChecksPerDay);
     const restaurantCashFlows = monthlyRows.map((row) => row.netCashFlowRub);
     const propertyExitRub = isPurchase
@@ -472,6 +684,7 @@ export function configuredEconomicsScenario(configuration: InvestorConfiguration
 
     return {
       ...canonical,
+      context,
       checksPerDay: customChecksPerDay,
       startInvestmentRub: configuredCapitalRub,
       salesPerMonthRub: mature.grossRevenueRub,
@@ -523,6 +736,7 @@ export function configuredEconomicsScenario(configuration: InvestorConfiguration
       premisesScenario: configuration.launchBudget.premisesScenario,
       cashFlows,
       monthlyProjection: calculatedMonthlyProjection(monthlyRows, master),
+      currentBaseReserveProjection: reserveProjection,
     };
   }
 
@@ -532,6 +746,7 @@ export function configuredEconomicsScenario(configuration: InvestorConfiguration
     const cashFlows = [-configuredCapitalRub, ...master.restaurant_cash_flows.slice(1)];
     return {
       ...canonical,
+      context,
       startInvestmentRub: configuredCapitalRub,
       paybackMonth: firstPaybackMonth(cashFlows),
       roi: master.mature_year.free_cash_flow_rub / configuredCapitalRub,
@@ -545,6 +760,7 @@ export function configuredEconomicsScenario(configuration: InvestorConfiguration
       premisesScenario: "rent",
       cashFlows,
       monthlyProjection: generatedMonthlyProjection(master),
+      currentBaseReserveProjection: reserveProjection,
     };
   }
 
@@ -558,6 +774,7 @@ export function configuredEconomicsScenario(configuration: InvestorConfiguration
     const annualFcfRub = master.mature_year.free_cash_flow_rub;
     return {
       ...canonical,
+      context,
       startInvestmentRub: configuredCapitalRub,
       salesPerMonthRub: master.gross_revenue_rub,
       ebitdaRub: master.ebitda_rub,
@@ -585,6 +802,7 @@ export function configuredEconomicsScenario(configuration: InvestorConfiguration
       premisesScenario: "purchase",
       cashFlows,
       monthlyProjection: generatedMonthlyProjection(master),
+      currentBaseReserveProjection: reserveProjection,
     };
   }
 
@@ -598,18 +816,19 @@ export function configuredEconomicsScenario(configuration: InvestorConfiguration
     configuration.launchBudget.rentFreeMonths,
   ));
   const cashFlows = [-configuredCapitalRub, ...monthlyRows.map((row) => row.netCashFlowRub)];
-  const matureRow = {
+  const matureRow: MonthlyCalculationRow = {
     month: Number.MAX_SAFE_INTEGER,
     gross_revenue_rub: master.gross_revenue_rub,
     net_revenue_rub: master.net_revenue_rub,
     raw_materials_rub: master.raw_materials_rub,
+    labor_rub: master.labor_rub,
     administrative_reserve_rub: master.administrative_reserve_rub,
     marketing_rub: master.marketing_rub,
     household_rub: master.household_rub,
     ebitda_rub: master.ebitda_rub,
     tax_due_rub: master.tax_due_rub,
     operating_free_cash_flow_rub: master.operating_free_cash_flow_rub,
-  } as MonthlyRow;
+  };
   const mature = calculateConfiguredRentMonth(matureRow, master, rentRub, 0, 0);
   const year1 = monthlyRows.slice(0, 12);
   const matureYear = monthlyRows.slice(12, 24);
@@ -624,6 +843,7 @@ export function configuredEconomicsScenario(configuration: InvestorConfiguration
 
   return {
     ...canonical,
+    context,
     startInvestmentRub: configuredCapitalRub,
     ebitdaRub: mature.ebitdaRub,
     ebitdaMargin: mature.ebitdaRub / master.net_revenue_rub,
@@ -661,6 +881,7 @@ export function configuredEconomicsScenario(configuration: InvestorConfiguration
     premisesScenario: "rent",
     cashFlows,
     monthlyProjection: calculatedMonthlyProjection(monthlyRows, master),
+    currentBaseReserveProjection: reserveProjection,
   };
 }
 

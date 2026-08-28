@@ -1,0 +1,47 @@
+receipt_version: 1
+iteration_id: ITR-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-02
+decision_id: DEC-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-02
+change_set_id: CHG-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-02
+verified_at: 2026-08-27T00:32:03.000Z
+result: passed
+checks:
+  - env PATH=/opt/homebrew/opt/node@25/bin:$PATH npm run financial:model:check --silent
+  - env PATH=/opt/homebrew/opt/node@25/bin:$PATH npm run investor:summary:check --silent
+  - env PATH=/opt/homebrew/opt/node@25/bin:$PATH npm run financial:sheet:check --silent
+  - env PATH=/opt/homebrew/opt/node@25/bin:$PATH npm run investor:summary:sheet:check --silent
+  - env PATH=/opt/homebrew/opt/node@25/bin:$PATH npm run network:planning:check --silent
+  - env PATH=/opt/homebrew/opt/node@25/bin:$PATH npm run financial:core:check --silent
+  - env PATH=/opt/homebrew/opt/node@25/bin:$PATH npx tsc -b --pretty false
+  - env PATH=/opt/homebrew/opt/node@25/bin:$PATH npx tsx --test scripts/test-financial-core.test.ts scripts/test-physical-allocation-map.test.ts scripts/test-investor-journey.test.ts (43 passed)
+  - env PATH=/opt/homebrew/opt/node@25/bin:$PATH node scripts/test-investor-terminal.cjs (passed)
+  - env PATH=/opt/homebrew/opt/node@25/bin:$PATH GIT_CONFIG_COUNT=1 GIT_CONFIG_KEY_0=core.excludesfile GIT_CONFIG_VALUE_0=/tmp/kolob-financial-core-v2-git-exclude.rZL8yZ npm run verify:release (passed; local-only)
+release_note: The first release attempt passed all domains and gates except a transient headless prerender header-normalization check. A direct rerun of the standard prerender completed all 13 routes; the subsequent full release verification passed all gates. Temporary ignored symlinks only supplied pre-existing historical visual evidence required by the governance validator and were not staged or published.
+current_base_parity:
+  context: current_base_object
+  start_investment_rub: 39220380.74
+  revenue_rub: 10488600
+  opex_rub: 8225135.6
+  ebitda_rub: 2263464.4
+  tax_rub: 204144.61
+  depreciation_rub: 208616.15
+  maintenance_capex_rub: 14309.99
+  free_cash_flow_rub: 2045009.8
+  payback_month: 20
+  irr: 0.7335561455483743
+  npv_rub: 39824232.74
+network_basis:
+  definition: EBITDA minus tax minus maintenance CAPEX; reserve is a one-time financing requirement, not monthly OPEX or terminal recovery.
+  scenarios:
+    - total_points: 5
+      expansion_free_cash_flow_rub: 8275046.58
+      network_free_cash_flow_rub: 10365758.48
+      coverage: partial
+    - total_points: 9
+      expansion_free_cash_flow_rub: 16930003.29
+      network_free_cash_flow_rub: 19020715.19
+      coverage: partial
+    - total_points: 13
+      expansion_free_cash_flow_rub: 25584960
+      network_free_cash_flow_rub: 27675671.89
+      coverage: partial
+external_changes: []

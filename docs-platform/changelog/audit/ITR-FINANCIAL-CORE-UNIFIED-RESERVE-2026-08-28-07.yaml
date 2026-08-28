@@ -1,0 +1,73 @@
+receipt_version: 1
+iteration_id: ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-07
+audited_at: 2026-08-28T12:10:02.000Z
+result: passed
+predecessor: ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-06
+predecessor_status: failed_before_content_commit
+finding: >-
+  The predecessor was blocked only by an undeclared TypeScript projection property.
+  The corrected continuation preserves the owner-approved B5 economic policy and adds
+  the declared typed contract required for the new ExpansionReserveProjection.
+unified_reserve_contract:
+  months: 6
+  includes:
+    - protected_or_actual_payroll
+    - fixed_utilities_and_service_charges
+    - equipment_service
+    - fixed_marketing
+    - fixed_household
+    - mandatory_foodhall_minimum_service_and_storage
+    - dated_logistics_when_mode_active
+    - uncovered_contractual_rent_after_rent_free_and_prepayment
+  excludes:
+    - raw_materials
+    - waste
+    - consumer_packaging
+    - acquiring
+    - aggregator_commission
+    - administrative_reserve
+    - variable_marketing
+    - traffic_household
+    - foodhall_revenue_share_above_minimum
+    - depreciation
+    - maintenance_capex
+    - income_tax
+    - initial_inventory
+    - launch_capex
+current_base:
+  monthly_qualifying_basis_rub: 3481422
+  operating_reserve_rub: 20888532
+  start_investment_rub: 40019924.66
+  historical_integrated_pilot_reserve_rub: 20088988.08
+  historical_integrated_pilot_status: unchanged
+network_5_funding:
+  expansion_operating_reserve_rub: 34410155.34
+  rollout_funding_requirement_rub: 61402077.07
+  total_program_investment_rub: 101422001.73
+  upfront_investor_funding_rub: 62088281.86
+  temporal_payback_month: 19
+  dated_reserve_funding_months: [3, 6, 9, 12]
+network_9_funding:
+  expansion_operating_reserve_rub: 65461777.62
+  total_program_investment_rub: 154465545.74
+  upfront_investor_funding_rub: 62088281.86
+  temporal_payback_month: 20
+network_13_funding:
+  expansion_operating_reserve_rub: 96513399.9
+  total_program_investment_rub: 207509089.75
+  upfront_investor_funding_rub: 62088281.86
+  temporal_payback_month: 20
+invariants:
+  historical_reserve_unchanged: true
+  current_base_variable_marketing_excluded: true
+  current_base_traffic_household_excluded: true
+  foodhall_revenue_share_above_minimum_excluded: true
+  prepaid_rent_consumed_after_rent_free: true
+  prepaid_rent_not_cash_paid_twice: true
+  future_cohort_reserve_not_funded_at_m3: true
+  base_reserve_counted_once: true
+  reserve_not_in_monthly_opex: true
+  total_program_investment_distinct_from_upfront_funding: true
+external_state:
+  google_apply: not_run
+  production_deploy: not_run

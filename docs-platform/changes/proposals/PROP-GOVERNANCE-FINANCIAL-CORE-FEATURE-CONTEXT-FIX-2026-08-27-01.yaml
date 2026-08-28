@@ -1,0 +1,9 @@
+schema_version: 2
+proposal_id: PROP-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01
+iteration_id: ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01
+title: Correct Financial Core v2 feature-context scope evidence
+status: proposed
+proposed_at: 2026-08-27T00:00:00.000Z
+scope: Append-only successor that preserves the failed context-repair attempt and includes its verification receipt in the exact committed scope. No financial or external state changes.
+approved_payload_path: docs-platform/changelog/payloads/ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01-approved.yaml
+approved_payload_sha256: e9803cfbaa3e23a1eaf369462e4cc1c8eefb63f947176fe467137137fac5db5f

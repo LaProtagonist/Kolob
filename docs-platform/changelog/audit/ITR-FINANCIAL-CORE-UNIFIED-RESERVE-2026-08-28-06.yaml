@@ -1,0 +1,52 @@
+receipt_version: 1
+iteration_id: ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-06
+audited_at: 2026-08-28T12:00:02.000Z
+result: passed
+finding: >-
+  Current Base and Expansion previously used divergent reserve bases. Current Base
+  included variable marketing and traffic household; Expansion funded six months of
+  final steady-state P&L in M3. B5 replaces both with a shared qualifying-cost policy
+  and a dated rollout funding ledger.
+current_base_after:
+  fixed_marketing_rub: 150000
+  fixed_household_rub: 50000
+  monthly_qualifying_basis_rub: 3481422
+  months: 6
+  operating_reserve_rub: 20888532
+  prepaid_rent_coverage: full_within_reserve_horizon
+expansion_contract:
+  excluded:
+    - raw_materials
+    - waste
+    - consumer_packaging
+    - acquiring
+    - administrative_reserve
+    - variable_marketing
+    - traffic_household
+    - foodhall_revenue_share_above_minimum
+    - depreciation
+    - maintenance_capex
+    - income_tax
+    - initial_inventory
+  dated_funding: cohort_opening_minus_one_month_and_shared_service_trigger
+  initial_inventory: separate_three_working_days_launch_requirement
+  terminal_reserve_recovery_rub: 0
+rent_credit_examples:
+  separate_premises: 12_months_prepayment_and_2_months_rent_free_cover_full_6_month_reserve_horizon
+  creative_cluster: 1_prepaid_payable_month_is_applied_after_2_rent_free_months
+  foodhall: own_contract_terms_without_street_12_month_prepayment_assumption
+external_logistics:
+  mode: research_backed_planning_baseline
+  monthly_rub: 150000
+  confidence: planning_requires_carrier_contract_confirmation
+  sources:
+    - SRC-LOGISTICS-20260828-FIRSTEXPRESS-REFRIGERATED
+    - SRC-LOGISTICS-20260828-GETTRUCK-REFRIGERATED
+    - SRC-LOGISTICS-20260828-GRUZOVOZKIN-REFRIGERATED
+vehicle:
+  maintenance: included_in_logistics_opex
+  generic_equipment_maintenance_capex: excluded
+  useful_life: requires_confirmation
+external_state:
+  google_apply: not_run
+  production_deploy: not_run

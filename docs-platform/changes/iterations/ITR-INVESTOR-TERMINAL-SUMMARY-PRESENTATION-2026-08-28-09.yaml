@@ -1,0 +1,56 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09
+proposal_id: PROP-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09
+decision_id: DEC-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09
+change_set_id: CHG-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09
+title: Compact Investor Terminal network-summary presentation
+status: approved
+approved_by: project owner
+approved_at: 2026-08-28T00:10:00.000Z
+actor: Codex
+scope: >-
+  Audit and compact the Investor Terminal network summary so the right-column
+  values stay visible and direct point costs are unambiguously separated from
+  incremental Production and Shared Expansion costs. Preserve all B5 financial
+  formulas, generated projections and external state.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09-approved.yaml
+approved_payload_sha256: 8c0ef8ab155d4d4394d026b3375683797b579f4ea7e31896b0724cf70d5da240
+before_state_sha256: c47487ab965356cfbdf9e63da964159a0014b576aaaa9d37a6eabf1d3785a55e
+after_state_sha256: fc1105fc16bc49b96d10c17c4dccdb31c60f3962771723fa7b0af295758c1674
+affected_document_ids:
+  - DOC-INVESTOR-FINANCIAL-SUMMARY
+affected_section_ids:
+  - investor-terminal.network-summary
+  - investor-terminal.expansion-opex-summary
+  - investor-terminal.responsive-layout
+state_hash_paths:
+  - scripts/test-investor-terminal.cjs
+  - src/components/InvestorTerminal.css
+  - src/components/NetworkScalingPanel.tsx
+content_paths:
+  - scripts/test-investor-terminal.cjs
+  - src/components/InvestorTerminal.css
+  - src/components/NetworkScalingPanel.tsx
+  - docs-platform/changes/proposals/PROP-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09.yaml
+  - docs-platform/changes/decisions/DEC-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09.yaml
+  - docs-platform/changes/CHG-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09.yaml
+  - docs-platform/changes/iterations/ITR-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09.yaml
+  - docs-platform/changelog/payloads/ITR-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09-approved.yaml
+  - docs-platform/changelog/audit/ITR-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09.yaml
+  - docs-platform/changelog/previews/ITR-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09.yaml
+  - docs-platform/changelog/verification/ITR-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09.yaml
+  - docs-platform/changelog/events.ndjson
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/SNAPSHOT-ITR-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09.yaml
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+allowed_dirty_paths:
+  - analysis/
+  - output/
+rollback_payload: null
+rollback_contract:
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true

@@ -1,0 +1,16 @@
+receipt_version: 1
+iteration_id: ITR-FINANCIAL-CORE-PREPUBLICATION-2026-08-27-04
+audited_at: 2026-08-27T16:45:02.000Z
+result: passed_with_disclosures
+findings:
+  - rollout-historic-center-core now uses the explicitly approved 60 m² premises, 30 m² guest area and 19 seats. Existing 8,500 ₽ per-seat furniture gives 161,500 ₽; it restores the existing full point contingency rather than creating a new lump sum.
+  - B4 closes the furniture pricing exclusion. Calculation and pricing are complete for the standard known basis; capacity remains review_required and assumptions remain requires_confirmation.
+  - Manufacturer/vendor records document only machine envelopes for the Production BOM: 10-l / 5-kg dough mixing, 5.9-l mechanical preparation, 7 GN 1/1 combi capacity, 50-l recommended sous-vide bath, 440×420×75-mm vacuum chamber, 8.81-m³ linked cold-room source and 80-kg/day ice reference. They do not prove process throughput.
+  - Production demand is calculated from approved Revenue/Network inputs at 420, 1421, 2422 and 3423 food portions per day for Base, 5-, 9- and 13-point scenarios. Batch count, machine-hours, labor-hours, cooling/storage utilization and a second-shift effect remain intentionally uncalculated pending three process parameters.
+  - The cold-room source URL/model index 8.81 conflicts with a historical base-description of 15.9 m³. This is recorded as source reconciliation required; neither CAPEX price nor model label was silently changed.
+  - Base operating reserve is 20,088,988.08 ₽ under the historical Financial Model fixed-OPEX policy (6 × 3,348,164.68 ₽). Expansion reserve at five total points is 102,630,426.42 ₽ under six months of known recurring Expansion OPEX. The 122,719,414.50 ₽ consolidated financing reserve adds those components once each and is not represented as Network P&L × 6.
+  - Vehicle maintenance/repair remains inside Logistics OPEX and the vehicle remains excluded from generic 3 percent equipment maintenance CAPEX. Vehicle useful life stays confirmation-required and does not alter current cash-tax FCF.
+  - Current Base regression controls remain exact. B4 only increases Network investment/depreciation-maintenance through approved furniture and its existing contingency semantics; revenue, OPEX, EBITDA and tax do not change.
+external_state:
+  google_apply: not_run
+  production_deploy: not_run

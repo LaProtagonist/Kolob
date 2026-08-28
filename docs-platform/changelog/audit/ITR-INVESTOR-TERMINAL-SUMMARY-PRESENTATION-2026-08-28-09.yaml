@@ -1,0 +1,64 @@
+receipt_version: 1
+iteration_id: ITR-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09
+audited_at: 2026-08-28T00:10:01.000Z
+result: passed
+scenario: total_5_points_default
+right_summary_provenance:
+  direct_point_opex:
+    display_value_rub: 16195358.96466331
+    source: src/lib/network-scaling.ts pointDirectOpexProjection and networkOperatingSummary
+    scope: additional_point_cohorts
+    includes: [raw_materials, waste, packaging, acquiring, point_payroll, household, equipment_service, ventilation, uniform, music, pest, medical, security, occupancy, utilities, variable_marketing]
+  expansion_production:
+    display_value_rub: 158505.51000000004
+    source: src/lib/network-financial-core.ts sharedNetworkOpexForActivePoints expansionProductionPayrollRub
+    scope: incremental_production
+  shared_manager:
+    display_value_rub: 0
+    source: src/lib/network-financial-core.ts sharedNetworkOpexForActivePoints expansionManagerPayrollRub
+    scope: base_already_contains_one_manager
+  administrative_reserve:
+    display_value_rub: 499956.60000000003
+    source: src/lib/network-financial-core.ts sharedNetworkOpexForActivePoints administrativeReserveRub
+    scope: incremental_shared_network
+  production_uniform:
+    display_value_rub: 937.5
+    source: src/lib/network-financial-core.ts sharedNetworkOpexForActivePoints incremental production roster calibration
+    scope: incremental_production
+  production_medical:
+    display_value_rub: 312.5
+    source: src/lib/network-financial-core.ts sharedNetworkOpexForActivePoints incremental production roster calibration
+    scope: incremental_production
+  logistics:
+    display_value_rub: 250000
+    source: src/lib/network-financial-core.ts sharedNetworkOpexForActivePoints logisticsOpexRub
+    scope: shared_expansion
+  fixed_marketing:
+    display_value_rub: 0
+    source: src/lib/network-financial-core.ts sharedNetworkOpexForActivePoints expansionFixedMarketingRub
+    scope: base_already_contains_fixed_marketing
+financial_invariants:
+  expansion_opex_identity:
+    direct_point_opex_rub: 16195358.96466331
+    incremental_production_rub: 158505.51000000004
+    incremental_shared_rub: 909712.1100000001
+    expansion_opex_rub: 17105071.07
+    result: pass
+  consolidated_opex_identity:
+    base_opex_rub: 8225135.6
+    expansion_opex_rub: 17105071.07
+    network_opex_rub: 25330206.67
+    result: pass
+representative_point_cohort:
+  id: rollout-nevsky-creative-cluster
+  variable_marketing_rub: 146840.4
+  uniform_rub: 5625
+  medical_rub: 1875
+  treatment: included_once_in_direct_point_opex
+verdict:
+  financial_mapping_bug: false
+  presentation_mapping_bug: true
+  resolution: The summary total now uses the complete Expansion OPEX, and its heading and scoped labels make direct, Production and Shared costs explicit.
+external_state:
+  google_apply: not_run
+  production_deploy: not_run

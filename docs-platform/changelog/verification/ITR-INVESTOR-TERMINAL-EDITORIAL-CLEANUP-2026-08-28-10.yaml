@@ -1,0 +1,29 @@
+receipt_version: 1
+iteration_id: ITR-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10
+decision_id: DEC-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10
+change_set_id: CHG-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10
+verified_at: 2026-08-28T00:53:04.000Z
+result: passed
+approved_payload_sha256: 6f5f47e1e5ca345f065b63aa60f79336f8b1d3cdc56047a563f52ea1c49e03c4
+before_state_sha256: fc1105fc16bc49b96d10c17c4dccdb31c60f3962771723fa7b0af295758c1674
+after_state_sha256: ab5e870ba6677efde20d4cb767f6957e25f5b17186b16d1787d486fef63a72eb
+checks:
+  - PATH=/Users/trbrmrdr/.nvm/versions/node/v22.15.1/bin:$PATH npx tsc --noEmit (passed)
+  - PATH=/Users/trbrmrdr/.nvm/versions/node/v22.15.1/bin:$PATH node scripts/test-investor-terminal.cjs (passed; desktop 1440px, tablet 1024px, mobile 390px)
+  - PATH=/Users/trbrmrdr/.nvm/versions/node/v22.15.1/bin:$PATH npm run verify:affected (passed; TypeScript, financial projection, unit, browser and visual checks)
+  - PATH=/Users/trbrmrdr/.nvm/versions/node/v22.15.1/bin:$PATH npm run verify:release (passed; 510.6s; no deployment)
+invariants:
+  financial_values_unchanged_by_presentation: passed
+  foodhall_venue_provided_zero_rows_are_not_currency_rows: passed
+  investor_text_does_not_leak_audited_english_or_coverage_jargon: passed
+  base_reference_functions_are_not_presented_as_expansion_expense: passed
+  assumptions_render_once_from_structured_coverage: passed
+  summary_values_visible_and_nonwrapping_desktop_tablet_mobile: passed
+  no_horizontal_overflow_desktop_tablet_mobile: passed
+screenshots:
+  - .cache/verification/screenshots/investor-terminal-ui-review-full-desktop.png
+  - .cache/verification/screenshots/investor-terminal-foodhall-opex-desktop.png
+  - .cache/verification/screenshots/investor-terminal-network-parameters-desktop.png
+  - .cache/verification/screenshots/investor-terminal-summary-desktop.png
+  - .cache/verification/screenshots/investor-terminal-assumptions-desktop.png
+external_changes: []

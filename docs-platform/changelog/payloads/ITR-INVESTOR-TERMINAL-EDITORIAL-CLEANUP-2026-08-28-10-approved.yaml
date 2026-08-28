@@ -1,0 +1,32 @@
+schema_version: 2
+payload_id: PAYLOAD-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10
+iteration_id: ITR-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10
+proposal_id: PROP-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10
+decision_id: DEC-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10
+change_set_id: CHG-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10
+title: Final editorial cleanup of Investor Terminal scaling page
+status: approved
+approved_by: project owner
+approved_at: 2026-08-28T00:53:04.000Z
+scope:
+  - Audit and simplify investor-facing copy, conditional rows and information architecture on the Scaling page.
+  - Hide inapplicable zero-value Point OPEX rows or present venue-provided services as a short textual state.
+  - Localize internal terminology and replace duplicate coverage diagnostics with one collapsed investor-facing assumptions list.
+  - Clarify Base reference functions versus incremental Expansion OPEX without changing financial values.
+  - Add deterministic browser assertions and screenshot evidence at desktop, tablet and mobile widths.
+constraints:
+  - no financial-core formula, B5 projection, CAPEX, OPEX, reserve-policy or temporal-economics change
+  - no Google apply, Google redesign, production deployment, master merge or Investor Sheet redesign
+  - no financial defect correction without a separate owner decision
+affected_document_ids:
+  - DOC-INVESTOR-FINANCIAL-SUMMARY
+affected_section_ids:
+  - investor-terminal.scaling-editorial-copy
+  - investor-terminal.point-opex-conditional-rows
+  - investor-terminal.network-parameters
+  - investor-terminal.assumptions-and-limitations
+  - investor-terminal.responsive-layout
+state_hash_paths:
+  - scripts/test-investor-terminal.cjs
+  - src/components/InvestorTerminal.css
+  - src/components/NetworkScalingPanel.tsx

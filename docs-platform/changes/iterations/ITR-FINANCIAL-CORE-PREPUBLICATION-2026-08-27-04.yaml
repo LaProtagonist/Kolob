@@ -1,0 +1,79 @@
+schema_version: 2
+iteration_id: ITR-FINANCIAL-CORE-PREPUBLICATION-2026-08-27-04
+proposal_id: PROP-FINANCIAL-CORE-PREPUBLICATION-2026-08-27-04
+decision_id: DEC-FINANCIAL-CORE-PREPUBLICATION-2026-08-27-04
+change_set_id: CHG-FINANCIAL-CORE-PREPUBLICATION-2026-08-27-04
+title: Close Historic Centre furniture and document pre-publication capacity and reserve evidence
+status: approved
+approved_by: project owner
+approved_at: 2026-08-27T16:45:01.000Z
+actor: Codex
+scope: >-
+  Apply the approved Historic Centre furniture baseline, document Production capacity
+  evidence without inventing throughput, expose reserve decomposition and preserve B3
+  vehicle treatment. Work remains local to the Phase B feature branch: no Google apply,
+  production deploy, master merge or Investor Sheet/Terminal redesign.
+approved_payload_path: docs-platform/changelog/payloads/ITR-FINANCIAL-CORE-PREPUBLICATION-2026-08-27-04-approved.yaml
+approved_payload_sha256: ee2a13db4aa97833c0ddee7c6e343887427fee1fa49a5bc08266d87f01fafcdb
+before_state_sha256: ddd3c70269d60cb8410b89305a29d5c47f7986f2a12f9946bae81149305d681c
+after_state_sha256: 581ebd6d53e4398216bcc11b5f30b1f940acf7986465e7008b556126a62dd905
+affected_document_ids:
+  - DOC-CAPEX-EQUIPMENT-REGISTER
+  - DOC-FINANCIAL-MODEL
+  - DOC-INVESTOR-FINANCIAL-SUMMARY
+  - DOC-NETWORK-PLANNING-ASSUMPTIONS
+affected_section_ids:
+  - financial-core.prepublication-furniture
+  - financial-core.capacity-evidence
+  - financial-core.reserve-decomposition
+  - financial-core.vehicle-policy
+  - network-planning.rollout-historic-center-core
+  - network-planning.production-capacity
+  - investor-terminal.network-reserve-label
+  - financial-generated-artifacts
+state_hash_paths:
+  - docs-platform/app/src/investor/network-planning.ts
+  - docs-platform/generated/financial-core-projection.json
+  - docs-platform/generated/financial-model-projection.json
+  - docs-platform/registry/sources.yaml
+  - docs-platform/working/capex-equipment-register.yaml
+  - docs-platform/working/network-planning-assumptions.yaml
+  - scripts/generate-financial-core-projection.ts
+  - scripts/test-financial-core.test.ts
+  - src/components/NetworkScalingPanel.tsx
+  - src/content/network-planning-data.json
+  - src/lib/financial-core.ts
+  - src/lib/investor-configuration.ts
+  - src/lib/network-financial-core.ts
+  - src/lib/network-planning.ts
+  - src/lib/network-scaling.ts
+  - src/lib/network-temporal.ts
+  - src/lib/physical-allocation.ts
+content_paths:
+  - docs-platform/app/src/investor/network-planning.ts
+  - docs-platform/generated/financial-core-projection.json
+  - docs-platform/registry/sources.yaml
+  - docs-platform/working/network-planning-assumptions.yaml
+  - scripts/generate-financial-core-projection.ts
+  - scripts/test-financial-core.test.ts
+  - src/components/NetworkScalingPanel.tsx
+  - src/content/network-planning-data.json
+  - src/lib/investor-configuration.ts
+  - src/lib/network-planning.ts
+  - src/lib/network-scaling.ts
+  - docs-platform/changes/
+  - docs-platform/changelog/audit/
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/payloads/
+  - docs-platform/changelog/previews/
+  - docs-platform/changelog/verification/
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+allowed_dirty_paths:
+  - analysis/
+  - output/
+rollback_payload: null

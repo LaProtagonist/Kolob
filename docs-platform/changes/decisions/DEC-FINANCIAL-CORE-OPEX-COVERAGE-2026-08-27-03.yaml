@@ -1,0 +1,15 @@
+schema_version: 2
+decision_id: DEC-FINANCIAL-CORE-OPEX-COVERAGE-2026-08-27-03
+iteration_id: ITR-FINANCIAL-CORE-OPEX-COVERAGE-2026-08-27-03
+title: Approve Phase B3 Network OPEX, wash BOM and coverage completion
+status: approved
+approved_by: project owner
+approved_at: 2026-08-27T13:15:01.000Z
+scope: >-
+  Complete the owner-approved B3 local financial-core work: explicit OPEX ownership,
+  existing-CAPEX wash packages, capacity-demand evidence, vehicle policy and structured
+  coverage. This authorizes explained Network economic changes from previously missing
+  costs, but no new business facts, remote publication, production deployment or redesign.
+approved_payload_path: docs-platform/changelog/payloads/ITR-FINANCIAL-CORE-OPEX-COVERAGE-2026-08-27-03-approved.yaml
+approved_payload_sha256: 4ae28e21224951ba0266a9a9ab84354d3aa24f3eba6bbae9d7de51adf97256ec
+change_id: CHG-FINANCIAL-CORE-OPEX-COVERAGE-2026-08-27-03

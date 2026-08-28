@@ -1,0 +1,10 @@
+schema_version: 2
+proposal_id: PROP-FINANCIAL-CORE-OPEX-COVERAGE-2026-08-27-03
+iteration_id: ITR-FINANCIAL-CORE-OPEX-COVERAGE-2026-08-27-03
+title: Complete Network OPEX mapping, wash BOM and investor-grade coverage
+status: approved
+proposed_by: project owner
+proposed_at: 2026-08-27T13:15:00.000Z
+summary: Owner-approved Phase B3 successor to the sealed shared Financial Core. It completes evidence-backed Network OPEX mapping and coverage disclosures locally, while preserving Current Base and keeping Google, production and visual redesign out of scope.
+approved_payload_path: docs-platform/changelog/payloads/ITR-FINANCIAL-CORE-OPEX-COVERAGE-2026-08-27-03-approved.yaml
+approved_payload_sha256: 4ae28e21224951ba0266a9a9ab84354d3aa24f3eba6bbae9d7de51adf97256ec

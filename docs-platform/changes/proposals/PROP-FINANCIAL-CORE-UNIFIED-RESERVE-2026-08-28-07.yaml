@@ -1,0 +1,10 @@
+schema_version: 2
+proposal_id: PROP-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-07
+iteration_id: ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-07
+title: Complete unified reserve implementation after an unsealed TypeScript gate failure
+status: approved
+proposed_by: project owner
+proposed_at: 2026-08-28T12:10:00.000Z
+summary: Continue the same owner-approved B5 policy under a corrected typed projection contract; retain the failed pre-commit attempt as append-only evidence and make no external change.
+approved_payload_path: docs-platform/changelog/payloads/ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-07-approved.yaml
+approved_payload_sha256: 7ea67e2e5ff97ef7ed6f6c9ef19e6f161e19477863f90c17b60a3cd39ad70fc7

@@ -1,0 +1,76 @@
+schema_version: 2
+payload_id: PAYLOAD-FINANCIAL-CORE-PREPUBLICATION-2026-08-27-04
+iteration_id: ITR-FINANCIAL-CORE-PREPUBLICATION-2026-08-27-04
+proposal_id: PROP-FINANCIAL-CORE-PREPUBLICATION-2026-08-27-04
+decision_id: DEC-FINANCIAL-CORE-PREPUBLICATION-2026-08-27-04
+change_set_id: CHG-FINANCIAL-CORE-PREPUBLICATION-2026-08-27-04
+title: Close Historic Centre furniture and document pre-publication capacity and reserve evidence
+status: approved
+approved_by: project owner
+approved_at: 2026-08-27T16:45:01.000Z
+scope:
+  - Apply the owner-approved Historic Centre rollout baseline of 60 m² premises, 30 m² guest area and 19 seats through the existing 8,500 ₽ per-seat furniture calculation and existing contingency semantics.
+  - Record source-backed machine envelopes for the central Production BOM and preserve the actual operating boundary: Production prepares dough, fillings, components and semifinished goods; final assembly and cooking stay at retail points.
+  - Calculate production demand for Base, 5-, 9- and 13-point scenarios, but leave batch count, machine-hours, utilization and second-shift economics uncalculated where governed technical-card/process data is absent.
+  - Make the Base fixed-OPEX reserve, Expansion recurring-OPEX reserve and consolidated financing reserve explicit, including their distinct bases and no-double-count composition.
+  - Preserve the B3 vehicle policy: vehicle maintenance/repair remains in Logistics OPEX, vehicle is excluded from generic equipment maintenance CAPEX, and useful life remains confirmation-required without making current cash FCF unavailable.
+  - Regenerate local Network Planning and Financial Core projections and make only a minimal existing Terminal reserve label clarification.
+constraints:
+  - no changes to Current Base rent, Ready Premises, revenue percentages, ramp, seasonality, rollout, location presets, staffing ladder, salary values, Foodhall or Creative Cluster contracts, bar default, logistics trigger, reserve horizon, tax algorithm, VAT baseline or established CAPEX prices
+  - no invented production throughput, batch yield, cycle time, usable shift hours, second-shift premium/payroll, production expansion CAPEX, vehicle useful life, banking tariff or external-logistics contract
+  - no silent correction of the cold-room source-label discrepancy; disclose it as a required source reconciliation
+  - no Google apply, Google schema redesign, Google document mutation, OAuth action or Investor Sheet redesign
+  - no production deployment, master merge or visual Terminal redesign
+  - no rewrite of Historical Integrated Pilot or accepted Current Base regression outputs
+  - temporary local links to already hash-verified historical review artifacts may exist only during release/seal validation; they must not be staged or committed and must be removed immediately after the seal
+affected_document_ids:
+  - DOC-CAPEX-EQUIPMENT-REGISTER
+  - DOC-FINANCIAL-MODEL
+  - DOC-INVESTOR-FINANCIAL-SUMMARY
+  - DOC-NETWORK-PLANNING-ASSUMPTIONS
+state_hash_paths:
+  - docs-platform/app/src/investor/network-planning.ts
+  - docs-platform/generated/financial-core-projection.json
+  - docs-platform/generated/financial-model-projection.json
+  - docs-platform/registry/sources.yaml
+  - docs-platform/working/capex-equipment-register.yaml
+  - docs-platform/working/network-planning-assumptions.yaml
+  - scripts/generate-financial-core-projection.ts
+  - scripts/test-financial-core.test.ts
+  - src/components/NetworkScalingPanel.tsx
+  - src/content/network-planning-data.json
+  - src/lib/financial-core.ts
+  - src/lib/investor-configuration.ts
+  - src/lib/network-financial-core.ts
+  - src/lib/network-planning.ts
+  - src/lib/network-scaling.ts
+  - src/lib/network-temporal.ts
+  - src/lib/physical-allocation.ts
+content_paths:
+  - docs-platform/app/src/investor/network-planning.ts
+  - docs-platform/generated/financial-core-projection.json
+  - docs-platform/registry/sources.yaml
+  - docs-platform/working/network-planning-assumptions.yaml
+  - scripts/generate-financial-core-projection.ts
+  - scripts/test-financial-core.test.ts
+  - src/components/NetworkScalingPanel.tsx
+  - src/content/network-planning-data.json
+  - src/lib/investor-configuration.ts
+  - src/lib/network-planning.ts
+  - src/lib/network-scaling.ts
+  - docs-platform/changes/
+  - docs-platform/changelog/audit/
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/payloads/
+  - docs-platform/changelog/previews/
+  - docs-platform/changelog/verification/
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+allowed_dirty_paths:
+  - analysis/
+  - output/
+rollback_payload: null

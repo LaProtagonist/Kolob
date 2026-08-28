@@ -1,0 +1,10 @@
+schema_version: 2
+proposal_id: PROP-FINANCIAL-CORE-PREPUBLICATION-2026-08-27-04
+iteration_id: ITR-FINANCIAL-CORE-PREPUBLICATION-2026-08-27-04
+title: Close Historic Centre furniture and document pre-publication capacity and reserve evidence
+status: approved
+proposed_by: project owner
+proposed_at: 2026-08-27T16:45:00.000Z
+summary: Owner-approved Phase B4 successor to sealed B3. It closes the explicitly approved Historic Centre furniture baseline, records vendor-supported Production machine envelopes, exposes reserve provenance and stops before Google, production or redesign work.
+approved_payload_path: docs-platform/changelog/payloads/ITR-FINANCIAL-CORE-PREPUBLICATION-2026-08-27-04-approved.yaml
+approved_payload_sha256: ee2a13db4aa97833c0ddee7c6e343887427fee1fa49a5bc08266d87f01fafcdb

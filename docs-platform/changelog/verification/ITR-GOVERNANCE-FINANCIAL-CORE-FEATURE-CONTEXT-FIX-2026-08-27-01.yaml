@@ -1,0 +1,28 @@
+schema_version: 2
+iteration_id: ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01
+proposal_id: PROP-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01
+decision_id: DEC-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01
+change_set_id: CHG-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01
+verified_at: 2026-08-27T00:00:03.000Z
+actor: Codex
+validation_status: passed
+approved_payload_sha256: e9803cfbaa3e23a1eaf369462e4cc1c8eefb63f947176fe467137137fac5db5f
+before_state_sha256: 491a9bb7df0f0179360fc7803acfcdfcd0c648cf89c3269dd305fa45262f23eb
+after_state_sha256: 491a9bb7df0f0179360fc7803acfcdfcd0c648cf89c3269dd305fa45262f23eb
+checks:
+  predecessor_scope_guard:
+    status: passed
+    command: npm run iteration:commit
+    scope: correctly refused missing verification receipt before staging
+  governance_lifecycle:
+    status: passed
+    command: npm run project:onboard
+    scope: derived feature-worktree context only; stale-state cleared after seal
+canonical_invariants:
+  financial_model: unchanged
+  network_planning: unchanged
+  terminal: unchanged
+  google: unused
+  deployment: unused
+rollback_payload: docs-platform/changelog/rollback-payloads/ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01/manifest.yaml
+summary: The corrected content scope preserves the failed predecessor and allows a clean post-seal onboarding without an unaudited payload rewrite.

@@ -1,0 +1,10 @@
+change_id: CHG-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-01
+title: Register B2 Network P&L and FCF consolidation
+status: approved
+created_at: 2026-08-27
+decision_id: DEC-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-01
+iteration_id: ITR-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-01
+proposal_id: PROP-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-01
+approved_payload_path: docs-platform/changelog/payloads/ITR-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-01-approved.yaml
+approved_payload_sha256: 097c8fd2eb32ca451e8f3b27f05e81429adc99b2d730d2053695baca8230efc6
+operations: []

@@ -1,0 +1,19 @@
+receipt_version: 1
+iteration_id: ITR-FINANCIAL-CORE-OPEX-COVERAGE-2026-08-27-03
+audited_at: 2026-08-27T13:15:02.000Z
+result: passed_with_disclosures
+findings:
+  - All 22 historical recurring OPEX lines have explicit treatment: Point, Production, Shared Network, Current Base only, not applicable or confirmation-required. No line silently disappears.
+  - Food cost is Point OPEX at 30 percent of net revenue and waste is 4 percent of food cost; neither is duplicated in Production OPEX.
+  - Administrative reserve is a single Shared Network 2 percent charge on incremental consolidated revenue. Fixed 150k marketing and the Base manager are not multiplied by points.
+  - Household uses the governed 50k plus 50k times checks divided by 300 Point formula. Equipment service remains recurring OPEX, calibrated to actual equipment footprint, while 3 percent maintenance CAPEX remains an asset-replacement reserve.
+  - Accounting 25k and historical Other OPEX 66.5k remain once in Current Base / Shared context and are not copied into Expansion. YUMA license topology and banking tariff remain explicit confirmation-required disclosures.
+  - Ventilation/grease and pest control use the historical integrated-premises area calibration. Uniform renewal and medical documentation use the historical roster calibration and actual relevant roster growth.
+  - Street seating retains music and recurring security; Takeaway defaults to no separate music; Foodhall and Creative Cluster venue flags suppress duplicate music/security charges.
+  - Seating wash kit is 134534 rub from CAPEX-01-019, CAPEX-01-020, CAPEX-01-021, CAPEX-01-006 and CAPEX-01-007. Takeaway wash kit is 108807 rub from the first four items. Neither activates the integrated MOD-WASH dome-dishwasher bundle.
+  - The current 5/9/13-point scenarios calculate daily production demand of 1421, 2422 and 3423 portions. Equipment throughput and second-shift roster/cost are not present in governed data, so capacity remains review_required instead of inventing a threshold.
+  - Owned vehicle maintenance/repair remains inside approved Logistics OPEX; vehicle is excluded from generic 3 percent maintenance CAPEX. Vehicle useful life remains a disclosed accounting-policy gap and does not alter the current cash-tax basis.
+  - The 5/9/13-point known-basis calculations now disclose a material pricing exclusion: rollout-historic-center-core needs approved guest-area or seat count for seating furniture. Its furniture and dependent contingency are not silently treated as zero.
+external_state:
+  google_apply: not_run
+  production_deploy: not_run

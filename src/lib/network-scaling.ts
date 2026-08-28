@@ -1,17 +1,28 @@
 import { buildCapexRows, capexData, emptyCapexParameters, type ComputedCapexRow } from "./capex-runtime";
-import type { ConfiguredEconomicsScenario } from "./configured-economics";
+import { configuredFinancialPolicy, type ConfiguredEconomicsScenario } from "./configured-economics";
+import {
+  buildNetworkSteadyState,
+  combineBaseAndExpansionPnl,
+  sharedNetworkOpexForActivePoints,
+  type BaseFinancialLayerInput,
+  type ExpansionReserveProjection,
+  type NetworkFinancialExclusion,
+} from "./network-financial-core";
+import type { FinancialCoverage } from "./financial-core";
 import type { InvestorConfiguration, TradingPointCohort, TradingPointFormat } from "./investor-configuration";
 import { calculateLaunchBudget, calculateSeatCount, launchModel, type LaunchBudgetState } from "./launch-budget";
 import { pointOperationalProjection, type PointOperationalProjection } from "./point-operations";
 import { pointPreparationProjection } from "./point-preparation";
 import { findPhysicalAllocation, type PhysicalScope } from "./physical-allocation";
 import {
-  canonicalPointOpexConstants,
-  logisticsPlanning,
+  canonicalNetworkOpexConstants,
+  historicalIntegratedPremisesAreaM2,
+  locationOpexDefaults,
   networkPlanningLaunchConstants,
   networkBarEquipmentRules,
-  productionStaffingProjection,
-  sharedManagerPayrollProjection,
+  pointWashPackage,
+  type PointWashAssetClass,
+  type ProductionCapacityProjection,
   type PayrollProjection,
 } from "./network-planning";
 
@@ -29,7 +40,14 @@ export type NetworkScalingItem = {
   source: string;
   reason: string;
   partial?: boolean;
-  detail?: Array<{ id: string; name: string; amountRub: number | null; quantity: number | null }>;
+  detail?: Array<{
+    id: string;
+    name: string;
+    amountRub: number | null;
+    quantity: number | null;
+    moduleIds?: string[];
+    assetClass?: PointWashAssetClass;
+  }>;
 };
 
 export type NetworkPointCohortProjection = {
@@ -43,6 +61,9 @@ export type NetworkPointCohortProjection = {
   isPartial: boolean;
   operational: PointOperationalProjection;
   directOpex: PointDirectOpexProjection;
+  /** Actual asset bases used only for the recurring equipment-service calibration. */
+  equipmentServiceAssetBasisRub: number | null;
+  baseEquipmentServiceAssetBasisRub: number | null;
 };
 
 export type DirectOpexLine = { id: string; name: string; amountRub: number | null; included: boolean; reason?: string };
@@ -64,6 +85,10 @@ export type PointDirectOpexProjection = {
 export type PointDirectOpexOptions = {
   /** Overrides only a rent charge for a month with rent-free terms. */
   rentChargeRub?: number | null;
+  /** Historical 100k service line is calibrated against the current Base equipment footprint. */
+  baseEquipmentServiceAssetBasisRub?: number | null;
+  /** Repeatable point equipment asset footprint (including its local wash package). */
+  equipmentServiceAssetBasisRub?: number | null;
 };
 
 export type NetworkOperatingSummary = {
@@ -75,6 +100,9 @@ export type NetworkOperatingSummary = {
   expansionProductionPayrollRub: number | null;
   managerPayroll: PayrollProjection | null;
   expansionManagerPayrollRub: number | null;
+  administrativeReserveRub: number | null;
+  incrementalUniformRenewalRub: number | null;
+  incrementalMedicalRub: number | null;
   fixedMarketingRub: number | null;
   expansionFixedMarketingRub: number | null;
   logisticsRub: number | null;
@@ -83,6 +111,7 @@ export type NetworkOperatingSummary = {
   totalRosterHeadcount: number | null;
   logisticsMode: "external" | "own" | "unknown";
   logisticsVehicleCapexRub: number | null;
+  productionCapacity: ProductionCapacityProjection | null;
   incompletePointCohortCount: number;
   note: string;
 };
@@ -128,14 +157,9 @@ export type NetworkScalingProjection = {
   planningLaunch: NetworkPlanningLaunchSummary;
 };
 
-export type BaseObjectFinancialProjection = {
-  investmentRub: number;
-  revenueRub: number;
-  opexRub: number;
+export type BaseObjectFinancialProjection = BaseFinancialLayerInput & {
+  /** Backward-compatible investor-facing alias for EBITDA. */
   operatingResultRub: number;
-  cashFlowRub: number;
-  paybackMonth: number | null;
-  operatingReserveRub: number | null;
 };
 
 /**
@@ -145,14 +169,22 @@ export type BaseObjectFinancialProjection = {
  */
 export function baseObjectFinancialProjection(
   scenario: Pick<ConfiguredEconomicsScenario,
-    "startInvestmentRub" | "salesPerMonthRub" | "ebitdaRub" | "freeCashFlowRub" | "paybackMonth" | "operatingReserveRub"
+    "context" | "startInvestmentRub" | "salesPerMonthRub" | "ebitdaRub" | "freeCashFlowRub" | "paybackMonth" | "operatingReserveRub" | "pnl"
   >,
 ): BaseObjectFinancialProjection {
+  const maintenanceCapexRub = scenario.ebitdaRub - scenario.pnl.taxRub - scenario.freeCashFlowRub;
   return {
+    context: scenario.context,
     investmentRub: scenario.startInvestmentRub,
     revenueRub: scenario.salesPerMonthRub,
+    netRevenueRub: scenario.pnl.salesRub,
     opexRub: scenario.salesPerMonthRub - scenario.ebitdaRub,
+    ebitdaRub: scenario.ebitdaRub,
     operatingResultRub: scenario.ebitdaRub,
+    taxRub: scenario.pnl.taxRub,
+    depreciationRub: scenario.pnl.depreciationRub,
+    maintenanceCapexRub,
+    operatingFreeCashFlowRub: scenario.freeCashFlowRub,
     cashFlowRub: scenario.freeCashFlowRub,
     paybackMonth: scenario.paybackMonth,
     operatingReserveRub: scenario.operatingReserveRub,
@@ -160,11 +192,15 @@ export function baseObjectFinancialProjection(
 }
 
 export type NetworkEconomicsProjection = {
-  status: "complete" | "partial" | "unset";
+  status: "complete" | "partial" | "invalid";
+  coverage: FinancialCoverage;
+  warnings: string[];
+  exclusions: NetworkFinancialExclusion[];
   expansion: {
     additionalPointCount: number;
     pointInvestmentRub: number;
     sharedInfrastructureRub: number;
+    operatingReserve: ExpansionReserveProjection | null;
     operatingReserveRub: number | null;
     reserveMonths: number;
     investmentRub: number | null;
@@ -173,6 +209,10 @@ export type NetworkEconomicsProjection = {
     sharedOpexRub: number | null;
     opexRub: number | null;
     operatingResultRub: number | null;
+    taxRub: number | null;
+    depreciationRub: number | null;
+    maintenanceCapexRub: number | null;
+    operatingFreeCashFlowRub: number | null;
     cashFlowRub: number | null;
     paybackMonths: number | null;
     incompletePointCohortCount: number;
@@ -183,6 +223,10 @@ export type NetworkEconomicsProjection = {
     revenueRub: number | null;
     opexRub: number | null;
     operatingResultRub: number | null;
+    taxRub: number | null;
+    depreciationRub: number | null;
+    maintenanceCapexRub: number | null;
+    operatingFreeCashFlowRub: number | null;
     cashFlowRub: number | null;
     paybackMonths: number | null;
   };
@@ -231,9 +275,15 @@ function cohortLaunchState(configuration: InvestorConfiguration, cohort: Trading
 function equipmentParameters(configuration: InvestorConfiguration, cohort: TradingPointCohort) {
   const launch = cohortLaunchState(configuration, cohort);
   const seating = launchModel.seating.profiles.find((item) => item.id === launch.seatingProfileId)!;
-  const seatCount = cohort.format === "with_seating"
+  const calculatedSeatCount = cohort.format === "with_seating"
     ? calculateSeatCount(cohort.guestAreaM2, seating.square_metres_per_seat)
     : 0;
+  // Use the generic density path for every cohort unless the governed physical
+  // layout explicitly supplies a seat count. This is not a new furniture
+  // allowance: the existing per-seat formula and contingency still apply.
+  const seatCount = cohort.format === "with_seating" && cohort.approvedSeatCount !== null
+    ? cohort.approvedSeatCount
+    : calculatedSeatCount;
   return {
     seatCount,
     parameters: emptyCapexParameters({
@@ -337,8 +387,58 @@ function groupEquipment(id: string, name: string, ownership: NetworkOwnership, r
       name: investorEquipmentName(row.item.id, row.item.name),
       amountRub: row.lineTotal,
       quantity: row.quantity,
+      moduleIds: [...row.moduleIds],
     })),
   };
+}
+
+function pointWashPackageItem(configuration: InvestorConfiguration, cohort: TradingPointCohort): NetworkScalingItem {
+  const washPackage = pointWashPackage(cohort.format);
+  const scenario = configuration.launchBudget.equipmentScenarioId.toLowerCase() as "minimum" | "base" | "scale_ready";
+  const detail = washPackage.components.map((component) => {
+    const item = capexData.items.find((candidate) => candidate.id === component.itemId);
+    const unitPriceRub = item?.scenarios[scenario]?.unitPriceRub ?? null;
+    return {
+      id: component.itemId,
+      name: item ? investorEquipmentName(item.id, item.name) : component.itemId,
+      amountRub: unitPriceRub === null ? null : Math.round(unitPriceRub * component.quantity * 100) / 100,
+      quantity: component.quantity,
+      // The package reuses researched individual rows; it never activates the
+      // integrated-pilot MOD-WASH purchase bundle.
+      moduleIds: component.assetClass === "equipment" ? ["MOD-WASH"] : [],
+      assetClass: component.assetClass,
+    };
+  });
+  const amountRub = detail.some((item) => item.amountRub === null)
+    ? null
+    : detail.reduce((total, item) => total + (item.amountRub ?? 0), 0);
+  return {
+    id: `${cohort.id}:point-wash`,
+    canonicalItem: washPackage.allocationId,
+    name: washPackage.name,
+    ownership: "point",
+    multiplier: "per_point",
+    amountRub,
+    included: amountRub !== null,
+    source: "CAPEX register · researched wash-kit component prices",
+    reason: washPackage.noDomeDishwasher
+      ? "Локальная мойка, sanitation и хранение; без купольной посудомойки и без включения полного integrated MOD-WASH."
+      : "Локальный комплект мойки точки.",
+    partial: amountRub === null,
+    detail,
+  };
+}
+
+function pointEquipmentServiceAssetBasis(items: readonly NetworkScalingItem[]) {
+  const groupedEquipment = items
+    .filter((item) => ["point-retail-equipment", "point-pos-kds", "point-bar"].includes(item.id))
+    .reduce<number | null>((total, item) => total === null || item.amountRub === null ? null : total + item.amountRub, 0);
+  const wash = items.find((item) => item.id.endsWith(":point-wash"));
+  const washEquipment = wash?.detail?.reduce<number | null>((total, item) => {
+    if (item.assetClass === "furniture") return total;
+    return total === null || item.amountRub === null ? null : total + item.amountRub;
+  }, 0) ?? 0;
+  return groupedEquipment === null || washEquipment === null ? null : groupedEquipment + washEquipment;
 }
 
 function pointPreparationItem(cohort: TradingPointCohort): NetworkScalingItem {
@@ -438,7 +538,7 @@ function pointFitoutItem(cohort: TradingPointCohort): NetworkScalingItem | null 
 }
 
 function pointContingencyItem(configuration: InvestorConfiguration, items: NetworkScalingItem[]): NetworkScalingItem {
-  const applicable = items.filter((item) => ["point-preparation", "point-retail-equipment", "point-pos-kds", "point-bar", "furniture"].some((id) => item.id.endsWith(id)));
+  const applicable = items.filter((item) => ["point-preparation", "point-retail-equipment", "point-pos-kds", "point-bar", "point-wash", "furniture"].some((id) => item.id.endsWith(id)));
   const baseRub = applicable.some((item) => item.amountRub === null) ? null : applicable.reduce((total, item) => total + (item.amountRub ?? 0), 0);
   const amountRub = baseRub === null ? null : Math.round(baseRub * configuration.launchBudget.contingencyPercent) / 100;
   return {
@@ -495,7 +595,9 @@ function furnitureItem(configuration: InvestorConfiguration, cohort: TradingPoin
     reason: hasSeating
       ? seatCount === null
         ? "Для расчёта мебели нужна площадь посадочного зала."
-        : "Существующая формула мебели зависит от числа мест этой точки."
+        : cohort.approvedSeatCount !== null
+          ? "Существующая формула мебели применена к утверждённому числу мест этой точки."
+          : "Существующая формула мебели зависит от числа мест этой точки."
       : cohort.locationType === "foodhall" && cohort.sharedSeating === true
         ? "Для Foodhall с общей посадкой площадки собственная мебель гостевого зала не применяется."
         : "Для точки только на вынос посадочный зал и его мебель не применяются.",
@@ -509,7 +611,9 @@ export function pointDirectOpexProjection(
 ): PointDirectOpexProjection {
   const revenue = operational.sales.revenuePerPointRub;
   const checks = operational.sales.checksPerDay;
-  const constants = canonicalPointOpexConstants();
+  const constants = canonicalNetworkOpexConstants();
+  const historicalRoster = constants.historicalRealisticRosterHeadcount;
+  const historicalAreaM2 = historicalIntegratedPremisesAreaM2();
   const lines: DirectOpexLine[] = [];
   const missing: string[] = [];
   const add = (id: string, name: string, amountRub: number | null, reason?: string) => {
@@ -521,11 +625,41 @@ export function pointDirectOpexProjection(
   const packaging = checks === null ? null : constants.packagingBaselineMonthlyRub * checks / constants.packagingBaselineChecksPerDay;
   const acquiring = revenue === null ? null : revenue * constants.acquiringRateOfGrossRevenue;
   const variableMarketing = revenue === null ? null : revenue * constants.marketingVariableRateOfNetRevenue;
+  const household = checks === null
+    ? null
+    : constants.householdFixedMonthlyRub + constants.householdVariableMonthlyRub * checks / constants.householdBaselineChecksPerDay;
+  const equipmentService = options.baseEquipmentServiceAssetBasisRub === null || options.baseEquipmentServiceAssetBasisRub === undefined
+    || options.equipmentServiceAssetBasisRub === null || options.equipmentServiceAssetBasisRub === undefined
+    || options.baseEquipmentServiceAssetBasisRub <= 0
+    ? null
+    : constants.equipmentServiceMonthlyRub * options.equipmentServiceAssetBasisRub / options.baseEquipmentServiceAssetBasisRub;
+  const areaCalibrated = (monthlyRub: number) => cohort.totalAreaM2 === null || historicalAreaM2 <= 0
+    ? null
+    : monthlyRub * cohort.totalAreaM2 / historicalAreaM2;
+  const ventilationGrease = areaCalibrated(constants.ventilationGreaseMonthlyRub);
+  const pestControl = areaCalibrated(constants.pestControlMonthlyRub);
+  const uniformRenewal = historicalRoster <= 0 ? null : constants.uniformRenewalMonthlyRub * operational.staffing.rosterHeadcount / historicalRoster;
+  const medical = historicalRoster <= 0 ? null : constants.medicalMonthlyRub * operational.staffing.rosterHeadcount / historicalRoster;
+  const venueOpex = locationOpexDefaults(cohort.locationType);
+  const music = cohort.locationType === "street"
+    ? cohort.format === "with_seating" ? constants.musicRightsMonthlyRub : 0
+    : venueOpex.venueMusicIncluded ? 0 : null;
+  const security = cohort.venueSecurityIncluded === true
+    ? 0
+    : cohort.locationType === "street" ? constants.securityMonitoringMonthlyRub : null;
   add("food", "Сырьё", rawMaterials, "Каноническая ставка сырья; для contribution атрибутируется продажам точки, не дублируется в Production.");
   add("waste", "Списания", waste, "Каноническая доля от сырья.");
   add("consumer-packaging", "Потребительская упаковка", packaging, "Расход упаковки зависит от числа чеков.");
   add("acquiring", "Эквайринг", acquiring, "Каноническая ставка от выручки.");
   add("point-payroll", "Расходы на персонал точки", operational.staffing.totalPayrollRub, "Зарплаты, взносы и резерв на персонал.");
+  add("household", "Хозяйственные расходы точки", household, "Каноническая formula 50k + 50k × checks/300; относится к повторяемой торговой точке.");
+  add("equipment-service", "Сервис оборудования точки", equipmentService, "Регулярное обслуживание и мелкий ремонт по actual point equipment asset basis; отдельная от maintenance CAPEX линия.");
+  add("ventilation-grease", "Вентиляция и жироуловители", ventilationGrease, "Historical integrated calibration по площади применимого помещения; venue contract не подтверждает inclusion.");
+  add("uniform-renewal", "Обновление спецодежды", uniformRenewal, "Калибровано от historical realistic roster; initial uniforms остаются launch CAPEX.");
+  add("music", "Музыка и права", music, cohort.locationType === "street" ? "Только самостоятельная точка с посадкой; takeaway = 0." : "Предоставляется площадкой по planning contract.");
+  add("pest-control", "Pest control", pestControl, "Historical integrated calibration по площади; производственный/base portion уже остаётся в Current Base.");
+  add("medical", "Медосмотры и санитарные документы", medical, "Калибровано от food-operation roster; shared manager не включён.");
+  add("security-monitoring", "Пультовая охрана", security, cohort.venueSecurityIncluded === true ? "Включено в условия площадки." : "Recurring monitoring самостоятельного помещения; launch video/alarm считаются отдельно.");
 
   let occupancy: number | null;
   if (cohort.locationType === "foodhall") {
@@ -595,27 +729,6 @@ function networkSalesSummary(cohorts: NetworkPointCohortProjection[]): NetworkSa
   };
 }
 
-function unresolvedPointWashItems(cohorts: NetworkPointCohortProjection[]): NetworkScalingItem[] {
-  const formats = new Set(cohorts.filter((cohort) => cohort.cohort.count > 0).map((cohort) => cohort.cohort.format));
-  return ([
-    ["with_seating", "POINT-WASH-SEATING", "Мойка и уборочный комплект для точки с залом"],
-    ["takeaway", "POINT-WASH-TAKEAWAY", "Мойка и уборочный комплект для точки на вынос"],
-  ] as const).flatMap(([format, allocationId, name]) => {
-    if (!formats.has(format)) return [];
-    return [{
-      id: allocationId,
-      canonicalItem: allocationId,
-      name,
-      ownership: "unresolved" as const,
-      multiplier: "per_point" as const,
-      amountRub: null,
-      included: false,
-      source: "Physical Allocation · capability requirement",
-      reason: "Состав и стоимость комплекта ещё уточняются.",
-    }];
-  });
-}
-
 function networkOperatingSummary(
   configuration: InvestorConfiguration,
   cohorts: NetworkPointCohortProjection[],
@@ -628,8 +741,9 @@ function networkOperatingSummary(
   if (!totalPointCount || sales.checksPerDay === null) {
     return {
       status: "unset", pointDirectOpexRub: null, pointContributionRub: null, productionPayroll: null, baseProductionPayroll: null, expansionProductionPayrollRub: null, managerPayroll: null, expansionManagerPayrollRub: null,
+      administrativeReserveRub: null, incrementalUniformRenewalRub: null, incrementalMedicalRub: null,
       fixedMarketingRub: null, expansionFixedMarketingRub: null, logisticsRub: null, sharedExpansionOpexRub: null, operatingContributionRub: null, totalRosterHeadcount: null,
-      logisticsMode: "unknown", logisticsVehicleCapexRub: null, incompletePointCohortCount: 0,
+      logisticsMode: "unknown", logisticsVehicleCapexRub: null, productionCapacity: null, incompletePointCohortCount: 0,
       note: "Добавьте точки и заполните продажи, чтобы увидеть экономику расширения.",
     };
   }
@@ -639,54 +753,45 @@ function networkOperatingSummary(
   const pointContributionRub = directIncomplete
     ? null
     : additionalCohorts.reduce((total, cohort) => total + (cohort.directOpex.operatingContributionCohortRub ?? 0), 0);
-  const productionPayroll = productionStaffingProjection(sales.checksPerDay, configuration.networkScaling.productionSchedule);
   const baseChecksPerDay = cohorts[0]?.operational.sales.checksPerDay ?? null;
-  const baseProductionPayroll = baseChecksPerDay === null
+  const additionalNetRevenueRub = additionalCohorts.some((cohort) => cohort.operational.sales.revenueCohortRub === null)
     ? null
-    : productionStaffingProjection(baseChecksPerDay, configuration.networkScaling.productionSchedule);
-  const expansionProductionPayrollRub = baseProductionPayroll === null
+    : additionalCohorts.reduce((total, cohort) => total + (cohort.operational.sales.revenueCohortRub ?? 0), 0);
+  const shared = sharedNetworkOpexForActivePoints(configuration, {
+    totalPointCount,
+    additionalPointCount: additionalCohorts.reduce((total, cohort) => total + cohort.cohort.count, 0),
+    totalChecksPerDay: sales.checksPerDay,
+    baseChecksPerDay,
+    additionalNetRevenueRub,
+    plannedAdditionalPointCount: additionalCohorts.reduce((total, cohort) => total + cohort.cohort.count, 0),
+  });
+  const operatingContributionRub = pointContributionRub === null || shared.sharedExpansionOpexRub === null
     ? null
-    : Math.max(0, productionPayroll.totalPayrollRub - baseProductionPayroll.totalPayrollRub);
-  const managerPayroll = sharedManagerPayrollProjection(totalPointCount);
-  const baseManagerPayroll = sharedManagerPayrollProjection(cohorts[0]?.cohort.count ?? 0);
-  const expansionManagerPayrollRub = managerPayroll === null
-    ? 0
-    : Math.max(0, managerPayroll.totalPayrollRub - (baseManagerPayroll?.totalPayrollRub ?? 0));
-  const logistics = logisticsPlanning(totalPointCount);
-  const settings = configuration.networkScaling.logistics;
-  const logisticsMode = settings.mode === "auto"
-    ? logistics.ownsVehicleSuggested ? "own" : "external"
-    : settings.mode;
-  const logisticsRub = logisticsMode === "own"
-    ? settings.ownedMonthlyTotalRub ?? logistics.ownedMonthlyTotalRub
-    : settings.externalMonthlyRub ?? logistics.externalMonthlyRub;
-  const expansionFixedMarketingRub = 0;
-  const sharedExpansionOpexRub = expansionProductionPayrollRub === null || logisticsRub === null
-    ? null
-    : expansionProductionPayrollRub + expansionManagerPayrollRub + expansionFixedMarketingRub + logisticsRub;
-  const operatingContributionRub = pointContributionRub === null || sharedExpansionOpexRub === null
-    ? null
-    : pointContributionRub - sharedExpansionOpexRub;
+    : pointContributionRub - shared.sharedExpansionOpexRub;
   const totalRosterHeadcount = cohorts.reduce((total, cohort) => total + cohort.operational.staffing.rosterHeadcount * cohort.cohort.count, 0)
-    + productionPayroll.rosterHeadcount + (managerPayroll?.rosterHeadcount ?? 0);
-  const partial = directIncomplete || logisticsRub === null || sales.status !== "complete";
+    + (shared.productionPayroll?.rosterHeadcount ?? 0) + (shared.managerPayroll?.rosterHeadcount ?? 0);
+  const partial = directIncomplete || shared.logisticsRub === null || sales.status !== "complete";
   return {
     status: partial ? "partial" : "complete",
     pointDirectOpexRub,
     pointContributionRub,
-    productionPayroll,
-    baseProductionPayroll,
-    expansionProductionPayrollRub,
-    managerPayroll,
-    expansionManagerPayrollRub,
-    fixedMarketingRub: canonicalPointOpexConstants().marketingFixedMonthlyRub,
-    expansionFixedMarketingRub,
-    logisticsRub,
-    sharedExpansionOpexRub,
+    productionPayroll: shared.productionPayroll,
+    baseProductionPayroll: shared.baseProductionPayroll,
+    expansionProductionPayrollRub: shared.expansionProductionPayrollRub,
+    managerPayroll: shared.managerPayroll,
+    expansionManagerPayrollRub: shared.expansionManagerPayrollRub,
+    administrativeReserveRub: shared.administrativeReserveRub,
+    incrementalUniformRenewalRub: shared.incrementalUniformRenewalRub,
+    incrementalMedicalRub: shared.incrementalMedicalRub,
+    fixedMarketingRub: shared.fixedMarketingRub,
+    expansionFixedMarketingRub: shared.expansionFixedMarketingRub,
+    logisticsRub: shared.logisticsRub,
+    sharedExpansionOpexRub: shared.sharedExpansionOpexRub,
     operatingContributionRub,
     totalRosterHeadcount,
-    logisticsMode,
-    logisticsVehicleCapexRub: logisticsMode === "own" ? settings.ownedVehicleCapexRub ?? logistics.vehicleCapexRub : null,
+    logisticsMode: shared.logisticsMode,
+    logisticsVehicleCapexRub: shared.logisticsVehicleCapexRub,
+    productionCapacity: shared.productionCapacity,
     incompletePointCohortCount,
     note: partial
       ? "Предварительный расчёт: известная часть расходов показана отдельно от условий, которые ещё нужно уточнить."
@@ -751,19 +856,25 @@ function pointCohortProjection(configuration: InvestorConfiguration, cohort: Tra
   const posRows = pointRows.filter((row) => ["CAPEX-04-001", "CAPEX-04-003"].includes(row.item.id));
   const barRows = pointRows.filter((row) => row.moduleIds.includes("MOD-BAR"));
   const operational = pointOperationalProjection(configuration, cohort);
-  const directOpex = pointDirectOpexProjection(cohort, operational);
+  const baseEquipmentServiceAssetBasisRub = calculateLaunchBudget(configuration.launchBudget).equipment.total;
   const pointItems = [
     pointPremisesItem(configuration, cohort),
     pointPreparationItem(cohort),
     groupEquipment("point-retail-equipment", "Торговая кухня и выдача", "point", retailRows, "CAPEX: торговые модули", "Оборудование относится к повторяемой торговой точке."),
     groupEquipment("point-pos-kds", "Касса и экран заказов", "point", posRows, "CAPEX-04-001 / CAPEX-04-003", "Касса и экран заказов относятся к торговой точке."),
     groupEquipment("point-bar", "Бар и напитки", "point", barRows, "CAPEX: MOD-BAR", "Бар включён только для этой группы точек."),
+    pointWashPackageItem(configuration, cohort),
     furnitureItem(configuration, cohort, seatCount),
     pointSecurityItem(cohort),
     pointUniformItem(cohort, operational),
-    pointInitialInventoryItem(cohort, directOpex, operational.sales.workingDaysPerMonth),
     pointFitoutItem(cohort),
   ].filter((item): item is NetworkScalingItem => item !== null);
+  const equipmentServiceAssetBasisRub = pointEquipmentServiceAssetBasis(pointItems);
+  const directOpex = pointDirectOpexProjection(cohort, operational, {
+    baseEquipmentServiceAssetBasisRub,
+    equipmentServiceAssetBasisRub,
+  });
+  pointItems.push(pointInitialInventoryItem(cohort, directOpex, operational.sales.workingDaysPerMonth));
   pointItems.push(pointContingencyItem(configuration, pointItems));
   const confirmedPointInvestmentRub = sumKnown(pointItems);
   return {
@@ -777,6 +888,8 @@ function pointCohortProjection(configuration: InvestorConfiguration, cohort: Tra
     isPartial: pointItems.some((item) => item.amountRub === null || Boolean(item.partial)),
     operational,
     directOpex,
+    equipmentServiceAssetBasisRub,
+    baseEquipmentServiceAssetBasisRub,
   };
 }
 
@@ -801,8 +914,13 @@ export function networkScalingProjection(configuration: InvestorConfiguration): 
     groupEquipment("grow-module", "Модуль выращивания", "production", productionRows.filter((row) => row.moduleIds.includes("MOD-GROW")), "CAPEX: MOD-GROW", "Модуль выращивания относится к производству и создаётся один раз."),
   ].filter((item): item is NetworkScalingItem => item !== null);
   const cohorts = configuration.networkScaling.cohorts.map((cohort) => pointCohortProjection(configuration, cohort));
+  // The first cohort is the Current Base Object and is calculated by its own
+  // projection. Expansion coverage must be driven only by additional point
+  // cohorts, otherwise missing Base-only presentation inputs would silently
+  // contaminate the Network Expansion result.
+  const additionalCohorts = cohorts.slice(1);
   const unresolvedRowsByItemId = new Map<string, ComputedCapexRow>();
-  for (const cohort of configuration.networkScaling.cohorts) {
+  for (const cohort of configuration.networkScaling.cohorts.slice(1)) {
     const { parameters } = equipmentParameters(configuration, cohort);
     for (const row of buildCapexRows(
       activePointModuleIds(cohort),
@@ -813,9 +931,27 @@ export function networkScalingProjection(configuration: InvestorConfiguration): 
       if (row.independentProcurement && !excludedFromLaunchEquipment(row) && rowOwnership(row) === "unresolved") unresolvedRowsByItemId.set(row.item.id, row);
     }
   }
+  // A calculated known-basis investment must never make an unpriced point
+  // input disappear. Keep its numeric result usable, but surface the missing
+  // input as an explicit pricing exclusion. Contingency is a derivative of
+  // the unknown physical item, not a second independent exclusion.
+  const unresolvedCohortItems = additionalCohorts.flatMap((cohort) => cohort.cohort.count > 0
+    ? cohort.pointItems
+      .filter((item) => item.id !== "point-contingency" && (item.amountRub === null || item.partial === true))
+      .map((item): NetworkScalingItem => ({
+        ...item,
+        id: `unresolved:${item.id}`,
+        ownership: "unresolved",
+        multiplier: "not_aggregated",
+        amountRub: null,
+        included: false,
+        partial: true,
+        reason: `${item.reason} Не включено в расчёт инвестиций до подтверждения исходного параметра.`,
+      }))
+    : []);
   const unresolvedItems = [
     groupEquipment("unresolved-equipment", "Оборудование без утверждённой стоимости", "unresolved", [...unresolvedRowsByItemId.values()], "CAPEX: смешанные модули", "Для этого оборудования пока нет отдельной подтверждённой стоимости для сетевой точки."),
-    ...unresolvedPointWashItems(cohorts),
+    ...unresolvedCohortItems,
   ].filter((item): item is NetworkScalingItem => item !== null);
   const productionInvestmentRub = sumKnown(productionItems);
   const confirmedPointInvestmentRub = cohorts.reduce((total, cohort) => total + cohort.confirmedCohortInvestmentRub, 0);
@@ -841,18 +977,15 @@ export function networkScalingProjection(configuration: InvestorConfiguration): 
     productionInvestmentRub,
     confirmedPointInvestmentRub,
     confirmedInvestmentSubtotalRub: productionInvestmentRub + confirmedPointInvestmentRub,
-    isPartial: true,
-    capacityNote: "При росте сети потребуется проверить, хватает ли мощности текущего производства.",
-    contingencyNote: "Резерв запуска пока не включён: его текущая база смешивает включённые и требующие уточнения статьи.",
-    reserveNote: "Операционный запас расширения рассчитывается из известных ежемесячных расходов дополнительных точек.",
+    isPartial: unresolvedItems.some((item) => item.amountRub === null || item.partial === true)
+      || additionalCohorts.some((cohort) => cohort.isPartial || cohort.directOpex.isPartial),
+    capacityNote: "Спрос в portions/day рассчитан, но производительность линии и второй shift требуют отдельного подтверждения оборудования и roster.",
+    contingencyNote: "Резерв запуска включает оборудование, мебель, подготовку помещения и локальный wash kit; не включает property, deposit или prepaid rent.",
+    reserveNote: "Операционный запас расширения — 6 месяцев постоянных и полу-постоянных расходов Point, Production и Shared, финансируемых по датам cohort/service triggers; variable P&L и launch CAPEX не входят.",
     sales,
     operating,
     planningLaunch: networkPlanningLaunchSummary(cohorts, operating),
   };
-}
-
-function knownAdditionalRevenue(cohorts: NetworkPointCohortProjection[]) {
-  return cohorts.slice(1).reduce((total, cohort) => total + (cohort.operational.sales.revenueCohortRub ?? 0), 0);
 }
 
 function stableMonthlyPayback(investmentRub: number | null, cashFlowRub: number | null) {
@@ -861,65 +994,57 @@ function stableMonthlyPayback(investmentRub: number | null, cashFlowRub: number 
 }
 
 /**
- * Combines the immutable configured Base Object result with incremental network
- * planning outputs. The base is never rebuilt here; this adapter only adds the
- * additional groups, their reserve and their shared infrastructure.
+ * Combines the immutable configured Base Object with the structured expansion
+ * P&L. Network tax is recalculated from the consolidated revenue and eligible
+ * OPEX rather than summing independently presented tax cards.
  */
 export function networkEconomicsProjection(
   configuration: InvestorConfiguration,
   baseObject: BaseObjectFinancialProjection,
+  suppliedScaling = networkScalingProjection(configuration),
 ): NetworkEconomicsProjection {
-  const scaling = networkScalingProjection(configuration);
-  const additionalCohorts = scaling.cohorts.slice(1);
-  const additionalPointCount = additionalCohorts.reduce((total, cohort) => total + cohort.cohort.count, 0);
-  const pointInvestmentRub = additionalCohorts.reduce((total, cohort) => total + cohort.confirmedCohortInvestmentRub, 0);
-  const sharedInfrastructureRub = sumKnown(scaling.sharedItems);
-  const reserveMonths = configuration.launchBudget.operatingReserveMonths;
-  const operatingReserveRub = scaling.operating.pointDirectOpexRub === null
-    ? null
-    : scaling.operating.pointDirectOpexRub * reserveMonths;
-  const investmentRub = operatingReserveRub === null
-    ? null
-    : pointInvestmentRub + sharedInfrastructureRub + operatingReserveRub;
-  const revenueRub = knownAdditionalRevenue(scaling.cohorts);
-  const directOpexRub = scaling.operating.pointDirectOpexRub;
-  const sharedOpexRub = scaling.operating.sharedExpansionOpexRub;
-  const opexRub = directOpexRub === null || sharedOpexRub === null ? null : directOpexRub + sharedOpexRub;
-  const operatingResultRub = opexRub === null ? null : revenueRub - opexRub;
-  const status = scaling.operating.status;
-  const expansionCashFlowRub = operatingResultRub;
-  const expansion = {
-    additionalPointCount,
-    pointInvestmentRub,
-    sharedInfrastructureRub,
-    operatingReserveRub,
-    reserveMonths,
-    investmentRub,
-    revenueRub: scaling.sales.status === "unset" ? null : revenueRub,
-    directOpexRub,
-    sharedOpexRub,
-    opexRub,
-    operatingResultRub,
-    cashFlowRub: expansionCashFlowRub,
-    paybackMonths: stableMonthlyPayback(investmentRub, expansionCashFlowRub),
-    incompletePointCohortCount: scaling.operating.incompletePointCohortCount,
-  };
-  const networkInvestmentRub = investmentRub === null ? null : baseObject.investmentRub + investmentRub;
-  const networkRevenueRub = expansion.revenueRub === null ? null : baseObject.revenueRub + expansion.revenueRub;
-  const networkOpexRub = expansion.opexRub === null ? null : baseObject.opexRub + expansion.opexRub;
-  const networkOperatingResultRub = expansion.operatingResultRub === null ? null : baseObject.operatingResultRub + expansion.operatingResultRub;
-  const networkCashFlowRub = expansion.cashFlowRub === null ? null : baseObject.cashFlowRub + expansion.cashFlowRub;
+  const policy = configuredFinancialPolicy(configuration.scenarioId);
+  const expansionState = buildNetworkSteadyState(configuration, suppliedScaling, policy);
+  const networkPnl = combineBaseAndExpansionPnl(baseObject, expansionState, policy);
+  const networkInvestmentRub = expansionState.investmentRub === null ? null : baseObject.investmentRub + expansionState.investmentRub;
   return {
-    status,
-    expansion,
+    status: expansionState.status,
+    coverage: expansionState.coverage,
+    warnings: expansionState.warnings,
+    exclusions: expansionState.exclusions,
+    expansion: {
+      additionalPointCount: expansionState.additionalPointCount,
+      pointInvestmentRub: expansionState.pointInvestmentRub,
+      sharedInfrastructureRub: expansionState.sharedInfrastructureRub,
+      operatingReserve: expansionState.operatingReserve,
+      operatingReserveRub: expansionState.operatingReserveRub,
+      reserveMonths: expansionState.reserveMonths,
+      investmentRub: expansionState.investmentRub,
+      revenueRub: expansionState.pnl.revenueRub,
+      directOpexRub: expansionState.directOpexRub,
+      sharedOpexRub: expansionState.sharedOpexRub,
+      opexRub: expansionState.pnl.opexRub,
+      operatingResultRub: expansionState.pnl.ebitdaRub,
+      taxRub: expansionState.pnl.taxRub,
+      depreciationRub: expansionState.pnl.depreciationRub,
+      maintenanceCapexRub: expansionState.pnl.maintenanceCapexRub,
+      operatingFreeCashFlowRub: expansionState.pnl.operatingFreeCashFlowRub,
+      cashFlowRub: expansionState.pnl.operatingFreeCashFlowRub,
+      paybackMonths: expansionState.paybackMonths,
+      incompletePointCohortCount: suppliedScaling.operating.incompletePointCohortCount,
+    },
     network: {
-      pointCount: configuration.networkScaling.cohorts.reduce((total, cohort) => total + cohort.count, 0),
+      pointCount: suppliedScaling.cohorts.reduce((total, cohort) => total + cohort.cohort.count, 0),
       investmentRub: networkInvestmentRub,
-      revenueRub: networkRevenueRub,
-      opexRub: networkOpexRub,
-      operatingResultRub: networkOperatingResultRub,
-      cashFlowRub: networkCashFlowRub,
-      paybackMonths: stableMonthlyPayback(networkInvestmentRub, networkCashFlowRub),
+      revenueRub: networkPnl.revenueRub,
+      opexRub: networkPnl.opexRub,
+      operatingResultRub: networkPnl.ebitdaRub,
+      taxRub: networkPnl.taxRub,
+      depreciationRub: networkPnl.depreciationRub,
+      maintenanceCapexRub: networkPnl.maintenanceCapexRub,
+      operatingFreeCashFlowRub: networkPnl.operatingFreeCashFlowRub,
+      cashFlowRub: networkPnl.operatingFreeCashFlowRub,
+      paybackMonths: stableMonthlyPayback(networkInvestmentRub, networkPnl.operatingFreeCashFlowRub),
     },
   };
 }

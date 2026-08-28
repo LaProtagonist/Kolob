@@ -1,0 +1,18 @@
+receipt_version: 1
+iteration_id: ITR-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-02
+audited_at: 2026-08-27T00:32:02.000Z
+result: passed
+findings:
+  - This exact successor supersedes no committed content; it carries the same owner-approved B2 scope after release verification required a deterministic Network Planning snapshot refresh.
+  - Historical Integrated Pilot, Current Base Object, Network Expansion and Consolidated Network now have distinct typed provenance contexts.
+  - Current Base regression controls remain exact; Historical Integrated Pilot is retained rather than overwritten with current planning assumptions.
+  - The former Expansion cash-flow field was EBITDA / operating contribution. It now uses the same EBITDA minus tax minus maintenance CAPEX basis as Base FCF.
+  - Consolidated Network tax is recalculated from the aggregate monthly P&L instead of adding separately presented headline tax cards.
+  - Expansion reserve now covers known recurring Point, Production and Shared operating OPEX for the governed six-month horizon; tax, maintenance CAPEX and launch CAPEX remain outside it.
+  - Every historical OPEX line has explicit Current Base and Network treatment. Unpriced / unmapped recurring lines remain coverage exclusions rather than priced zeros.
+  - Network equipment uses CAPEX detail once for depreciation. Cohort-prefixed preparation rows retain the governed Engineering versus Fit-out useful-life routing.
+  - Point wash, banking, VAT confirmation, production-capacity expansion and vehicle depreciation/maintenance semantics remain explicit partial-coverage disclosures.
+  - Current Base production CAPEX remains in Base and is not added to Expansion a second time; no unapproved production-capacity CAPEX was invented.
+external_state:
+  google_apply: not_run
+  production_deploy: not_run

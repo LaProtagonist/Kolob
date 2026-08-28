@@ -1,6 +1,6 @@
 document:
   id: DOC-NETWORK-PLANNING-ASSUMPTIONS
-  version: "1.6"
+  version: "1.7"
   status: owner_approved_planning
   title: Network Planning Model — Investor Terminal v2.4
   provenance: owner-approved Investor Terminal temporal-network brief, 2026-08-26
@@ -69,6 +69,66 @@ staffing:
     prep_cooks_above_threshold: 2
     capacity_review_after_two_prep_cooks: true
     schedule_default: "one_main_shift"
+    capacity_evidence:
+      demand_metric: food_portions_per_day
+      demand_source: revenue_model.product_model.food_portions_per_check
+      operating_model: >-
+        Заготовочный цех производит тесто, начинки, подготовленные компоненты и
+        полуфабрикаты. Финальная сборка и приготовление колобков происходят на
+        торговых точках; продажная порция не является автоматически выпуском
+        одной центральной машины.
+      evidence_status: documented_machine_envelopes_without_process_capacity
+      source_registry: docs-platform/registry/sources.yaml
+      source_register: docs-platform/working/capex-equipment-register.yaml
+      operations:
+        - id: dough_mixing
+          label: Замес теста
+          asset_ids: [CAPEX-01-018]
+          documented_batch_capacity: "ROSSO B10S: максимум 5 кг загрузки чаши 10 л"
+          source_ids: [SRC-CAPACITY-20260827-ROSSO-B10S]
+          operation_demand_status: requires_technical_cards
+          limitation: "Нет граммовки теста на порцию, выхода теста и фактической длительности цикла."
+        - id: filling_mechanical_preparation
+          label: Механическая подготовка начинок
+          asset_ids: [CAPEX-01-014, CAPEX-01-015]
+          documented_batch_capacity: "Robot Coupe R 502: чаша 5,9 л; Hurakan HKN-22SC: паспортная производительность 250 кг/ч"
+          source_ids: [SRC-CAPACITY-20260827-ROBOT-COUPE-R502, SRC-CAPACITY-20260827-HURAKAN-HKN-22SC]
+          operation_demand_status: requires_technical_cards
+          limitation: "Robot Coupe остаётся рабочим ориентиром комплекта; состав начинок, маршрутизация и допустимая загрузка не подтверждены."
+        - id: thermal_preparation
+          label: Тепловая подготовка
+          asset_ids: [CAPEX-01-009, CAPEX-01-010]
+          documented_batch_capacity: "Apach AP7QT: 7 уровней GN 1/1; TATRA TSV2: рекомендованная ванна до 50 л, но количество термостатов в BOM — TBD"
+          source_ids: [SRC-CAPACITY-20260827-APACH-AP7QT, SRC-CAPACITY-20260827-TATRA-TSV2]
+          operation_demand_status: requires_technical_cards
+          limitation: "Не утверждены продуктовая загрузка GN/ванны, цикл, количество sous-vide и доля продукции, проходящая тепловую операцию."
+        - id: vacuum_packaging
+          label: Вакуумирование полуфабрикатов
+          asset_ids: [CAPEX-01-013]
+          documented_batch_capacity: "Hurakan HKN-VAC400E: камера 440×420×75 мм, насос 20 м³/ч, шов 390 мм"
+          source_ids: [SRC-CAPACITY-20260827-HURAKAN-HKN-VAC400E]
+          operation_demand_status: requires_technical_cards
+          limitation: "Нет стандарта фасовки, загрузки камеры и длительности цикла."
+        - id: cooling_and_storage
+          label: Охлаждение и хранение
+          asset_ids: [CAPEX-01-001, CAPEX-01-002, CAPEX-01-034]
+          documented_batch_capacity: "Brema CB840 HC: 80 кг льда/24 ч и бункер 40 кг; source URL камер с индексом 8.81 конфликтует с historical base-description 15,9 м³"
+          source_ids: [SRC-CAPACITY-20260827-BREMA-CB840-HC, SRC-CAPACITY-20260827-POLAIR-KHN-881]
+          operation_demand_status: requires_technical_cards_and_source_reconciliation
+          limitation: "Не выбран режим быстрого охлаждения (лёд или blast), нет нормы льда/охлаждения на кг, дней хранения, плотности укладки и согласованной модели камер."
+      required_parameters:
+        - id: production-tech-cards-and-routing
+          question: "Для каждого продуктового семейства подтвердить граммовки теста, начинки и центрально подготовленных компонентов на порцию, выход партии и границу между цехом и торговой точкой."
+          reason: "Преобразует 420/1421/2422/3423 food portions в demand конкретных операций и batch count."
+        - id: process-cycles-and-cooling-standard
+          question: "Подтвердить нормативную загрузку и длительность циклов combi/sous-vide/vacuum, а также технологию и норму быстрого охлаждения/хранения."
+          reason: "Определяет machine-hours, охлаждение и storage utilization."
+        - id: production-shift-and-utilization
+          question: "Подтвердить usable hours одной смены, санитарные/переналадочные потери и допустимость второй смены для этого процесса."
+          reason: "Определяет labour-hours, возможный эффект второй смены и её payroll; current salary semantics уже существуют."
+      equipment_capacity_status: requires_technical_cards_and_process_parameters
+      bottleneck: "Спрос в food portions/day рассчитан, но техкарты и утверждённые process cycles не позволяют превратить его в batch count, machine-hours, cooling/storage utilization или throughput линии."
+      second_shift_status: not_modelled_requires_process_parameters
   shared_manager:
     role_id: MANAGER
     count_when_point_count_at_least: 1
@@ -89,6 +149,7 @@ locations:
         shared_seating: true
         venue_security_included: true
         common_cleaning_included: true
+        venue_music_included: true
         utilities_included: true
         service_charge_monthly_rub: 50000
         storage_rent_monthly_rub: 20000
@@ -109,6 +170,7 @@ locations:
         shared_seating: true
         venue_security_included: true
         common_cleaning_included: true
+        venue_music_included: true
         utilities_included: false
         utilities_monthly_rub: 30000
         rent_per_m2_month_rub: 4000
@@ -243,6 +305,9 @@ network_rollout:
       location_type: street
       real_estate_mode: rent
       baseline_area_m2: 60
+      guest_area_m2: 30
+      approved_seat_count: 19
+      furniture_provenance: owner_approved_phase_b4_2026-08-27
       checks_per_day: 175
       first_opening_month: 10
       bar_enabled: true
@@ -313,19 +378,109 @@ opex:
     fixed_scope: shared_network
     variable_scope: cohort_revenue
   production_packaging: { status: unresolved_manual }
+  network_completion:
+    physical_allocation_source: src/lib/physical-allocation.ts
+    historical_integrated_calibration:
+      roster_scenario: realistic
+      premises_area_source: preparation.point_area_proxy.reference_area_m2
+    administrative_reserve:
+      scope: shared_network
+      driver: consolidated_net_revenue_percentage
+      expansion_treatment: incremental_revenue_only
+    household:
+      scope: point
+      driver: canonical_household_formula_per_point
+    equipment_service:
+      scope: point
+      driver: incremental_equipment_asset_value_relative_to_current_base
+      semantic_boundary: "Recurring service, preventative maintenance and minor repair; separate from maintenance CAPEX replacement reserve."
+    accounting:
+      scope: shared_network
+      treatment: one_current_base_function
+    ventilation_grease:
+      scope: point
+      driver: historical_integrated_rate_per_applicable_m2
+      venue_service_treatment: "No venue contract currently confirms inclusion; a point with cooking ventilation retains the planning OPEX."
+    uniform_renewal:
+      scope: point_and_incremental_production
+      driver: historical_realistic_roster_calibration
+    music:
+      scope: point
+      street_seating_treatment: own_public_performance_line
+      takeaway_default: 0
+      venue_treatment: venue_provided
+    pest_control:
+      scope: point
+      driver: historical_integrated_rate_per_applicable_m2
+    software:
+      scope: shared_network
+      treatment: requires_confirmation
+      note: "The historical YUMA amount remains in Current Base once; point versus central licensing has no governed contract evidence."
+    medical:
+      scope: point_and_incremental_production
+      driver: historical_realistic_roster_calibration
+      excludes: [shared_manager_without_food_operation_requirement]
+    security_monitoring:
+      scope: point
+      driver: per_self_managed_premises
+      venue_security_treatment: venue_security_included_means_zero
+    banking:
+      scope: shared_network
+      treatment: tbd_non_acquiring_service
+      materiality: minor_assumption_gap
+    other_opex:
+      scope: shared_network
+      treatment: current_base_contingency_once
+      expansion_treatment: no_second_copy
 launch:
   uniform_per_roster_employee_rub: 12000
   initial_inventory_operating_days: 3
   launch_marketing_scope: shared_network
 logistics:
   delivery_window: night_or_off_peak
-  external_logistics_monthly_rub: null
+  # Planning baseline for M4–M9 / one to two additional points. It is a
+  # research-backed allowance, not a signed carrier contract.
+  external_logistics_monthly_rub: 150000
+  external_logistics_source_ids:
+    - SRC-LOGISTICS-20260828-FIRSTEXPRESS-REFRIGERATED
+    - SRC-LOGISTICS-20260828-GETTRUCK-REFRIGERATED
+    - SRC-LOGISTICS-20260828-GRUZOVOZKIN-REFRIGERATED
+    - SRC-LOGISTICS-20260828-B5-PLANNING-BASELINE
   own_vehicle_suggested_from_point_count: 3
+  own_vehicle_point_count_scope: additional_network_points
   own_vehicle_capex_rub: 5000000
   own_vehicle_monthly_total_rub: 250000
   driver_salary_rub: 150000
+  vehicle_financial_treatment:
+    depreciation: requires_useful_life_decision
+    maintenance: included_in_owned_monthly_opex
+    generic_equipment_maintenance_capex: excluded
+  external_logistics_coverage:
+    one_to_two_additional_points: planning_baseline_requires_contract_confirmation
+    network_three_or_more_points: planning_baseline_applies_during_early_rollout_until_owned_vehicle
 equipment:
   bar_enabled_point_items:
     - item_id: CAPEX-02-013
       quantity_per_bar_enabled_point: 1
       provenance: owner_approved_point_bar_applicability
+  point_wash_packages:
+    source: CAPEX register research prices; does not activate the integrated MOD-WASH module
+    takeaway:
+      allocation_id: POINT-WASH-TAKEAWAY
+      name: "Локальная мойка и sanitation-kit точки на вынос"
+      no_dome_dishwasher: true
+      components:
+        - { item_id: CAPEX-01-019, quantity: 1, asset_class: equipment, purpose: "Мойка рабочего инвентаря" }
+        - { item_id: CAPEX-01-020, quantity: 1, asset_class: equipment, purpose: "Рукомойник персонала" }
+        - { item_id: CAPEX-01-021, quantity: 1, asset_class: small_equipment, purpose: "Мыло, антисептик и полотенца" }
+        - { item_id: CAPEX-01-006, quantity: 1, asset_class: furniture, purpose: "Компактное хранение cleaning-инвентаря" }
+    with_seating:
+      allocation_id: POINT-WASH-SEATING
+      name: "Локальная мойка и cleaning-kit точки с посадкой"
+      no_dome_dishwasher: true
+      components:
+        - { item_id: CAPEX-01-019, quantity: 1, asset_class: equipment, purpose: "Мойка рабочего инвентаря" }
+        - { item_id: CAPEX-01-020, quantity: 1, asset_class: equipment, purpose: "Рукомойник персонала" }
+        - { item_id: CAPEX-01-021, quantity: 1, asset_class: small_equipment, purpose: "Мыло, антисептик и полотенца" }
+        - { item_id: CAPEX-01-006, quantity: 1, asset_class: furniture, purpose: "Хранение cleaning-инвентаря" }
+        - { item_id: CAPEX-01-007, quantity: 1, asset_class: furniture, purpose: "Сушка и хранение чистого инвентаря" }

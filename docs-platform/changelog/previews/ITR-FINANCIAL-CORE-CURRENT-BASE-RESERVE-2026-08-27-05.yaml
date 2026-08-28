@@ -1,0 +1,50 @@
+receipt_version: 1
+iteration_id: ITR-FINANCIAL-CORE-CURRENT-BASE-RESERVE-2026-08-27-05
+decision_id: DEC-FINANCIAL-CORE-CURRENT-BASE-RESERVE-2026-08-27-05
+change_set_id: CHG-FINANCIAL-CORE-CURRENT-BASE-RESERVE-2026-08-27-05
+previewed_at: 2026-08-27T21:23:02.000Z
+result: reviewed
+mutation_performed: false
+before_state_sha256: 11b81d6a334175664707ae31e986a340feda423e058395dcc88f3b473dbf685f
+after_state_sha256: 1abe0e5ac21068f4f0e8ed3dbcfee899b6f0a8789ed01396de56ff4e9eb6778b
+current_base_reserve:
+  context: current_base_object
+  historical_route: financial_model.scenarios.rent.realistic.fixed_opex_reserve_rub
+  replacement: CurrentBaseReserveProjection
+  months: 6
+  monthly_basis_rub: 3783148.4
+  total_reserve_rub: 22698890.4
+  protected_labour_rub: 2831922
+  prepaid_rent_coverage:
+    monthly_rent_rub: 500000
+    prepaid_months: 12
+    reserve_months: 6
+    uncovered_rent_months: 0
+    uncovered_rent_rub: 0
+  excluded:
+    - raw_materials
+    - waste
+    - consumer_packaging
+    - acquiring
+    - aggregator_commission
+    - administrative_reserve
+    - depreciation
+    - maintenance_capex
+    - income_tax
+    - equipment_purchase
+    - preparation
+    - security_deposit
+    - prepaid_rent
+    - initial_inventory
+historical_pilot:
+  context: historical_integrated_pilot
+  reserve_rub: 20088988.08
+  status: unchanged
+expected_financing_deltas:
+  current_base_investment_rub: 2609902.32
+  network_5_investment_rub: 2609902.32
+  network_9_investment_rub: 2609902.32
+  network_13_investment_rub: 2609902.32
+external_changes:
+  google_apply: not_run
+  production_deploy: not_run

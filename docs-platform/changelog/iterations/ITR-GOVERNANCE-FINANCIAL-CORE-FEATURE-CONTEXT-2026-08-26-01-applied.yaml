@@ -1,0 +1,23 @@
+event_id: EVT-ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01-APPLIED
+event_type: applied
+occurred_at: 2026-08-26T20:57:02.000Z
+recorded_at: 2026-08-26T20:57:02.000Z
+iteration_id: ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01
+proposal_id: PROP-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01
+decision_id: DEC-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01
+change_set_id: CHG-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01
+actor: Codex
+tool: appendGovernanceEvent
+scope: Append-only Financial Core v2 feature worktree governance context repair only.
+summary: Appended the feature-context lifecycle evidence; only derived local governance context will be regenerated.
+approved_payload_sha256: 18f2880e6f346f97b511b7f463a822dd3c771067c9a98a2636782896cbd32e12
+before_hash: 491a9bb7df0f0179360fc7803acfcdfcd0c648cf89c3269dd305fa45262f23eb
+after_hash: 491a9bb7df0f0179360fc7803acfcdfcd0c648cf89c3269dd305fa45262f23eb
+affected_document_ids: []
+affected_section_ids: [governance.feature-worktree-context, governance.append-only-context-repair]
+source_refs: [docs-platform/changes/CHG-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01.yaml, docs-platform/changelog/change-receipts/CHG-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01.yaml, docs-platform/changelog/audit/ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01.yaml]
+git: { content_commit_hash: null, seal_commit_ref: null, iteration_tag: null, commit_message_verified: null, trailers_verified: null }
+external: { google_sync_receipts: [], deployment_receipt: null, remote_readback_hash: null, production_url: null }
+rollback: { rollback_payload: docs-platform/changelog/rollback-payloads/ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01/manifest.yaml, compensates_iteration_id: null, restores_hash: 491a9bb7df0f0179360fc7803acfcdfcd0c648cf89c3269dd305fa45262f23eb, dependency_check: Append-only feature context repair; master history and validation rules remain unchanged. }
+artifacts: { manifest_refs: [] }
+confidence: exact

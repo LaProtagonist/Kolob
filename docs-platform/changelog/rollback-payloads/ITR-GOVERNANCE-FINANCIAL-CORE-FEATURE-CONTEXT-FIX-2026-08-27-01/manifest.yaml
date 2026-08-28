@@ -1,0 +1,8 @@
+schema_version: 1
+iteration_id: ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01
+reverse_strategy:
+  derived_context: rebuild only through a new approved context repair or governed reverse change set
+  historical_events: append rollback lifecycle evidence; never delete or rewrite records
+  master_history: never mutate from this feature worktree
+git_reset_forbidden: true
+dependency_check: The scope correction preserves the failed predecessor and does not alter financial or external state.

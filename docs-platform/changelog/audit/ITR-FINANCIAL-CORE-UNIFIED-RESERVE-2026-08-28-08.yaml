@@ -1,0 +1,123 @@
+receipt_version: 1
+iteration_id: ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-08
+audited_at: 2026-08-27T23:15:32.000Z
+result: passed
+predecessors:
+  - iteration_id: ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-06
+    status: failed_before_content_commit
+    cause: strict TypeScript gate; no content commit or external mutation
+  - iteration_id: ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-07
+    status: failed_before_content_commit
+    cause: strict TypeScript gate; no content commit or external mutation
+unified_reserve_contract:
+  months: 6
+  includes:
+    - protected_or_actual_payroll
+    - fixed_utilities_and_service_charges
+    - equipment_service
+    - accounting_when_incremental
+    - ventilation_grease_uniforms_music_pest_yuma_medical_security_other
+    - fixed_marketing
+    - fixed_household
+    - mandatory_foodhall_minimum_service_and_storage
+    - dated_logistics_when_mode_active
+    - uncovered_contractual_rent_after_rent_free_and_prepayment
+  excludes:
+    - raw_materials
+    - waste
+    - consumer_packaging
+    - acquiring_and_aggregator_commission
+    - administrative_reserve
+    - variable_marketing
+    - traffic_household
+    - foodhall_revenue_share_above_minimum
+    - depreciation_maintenance_capex_income_tax
+    - initial_inventory_and_launch_capex
+current_base:
+  before:
+    monthly_reserve_basis_rub: 3783148.4
+    operating_reserve_rub: 22698890.4
+    start_investment_rub: 41830283.06
+  after:
+    monthly_reserve_basis_rub: 3481422
+    operating_reserve_rub: 20888532
+    start_investment_rub: 40019924.66
+  delta_operating_reserve_rub: -1810358.4
+  explanation: Only 150000 fixed marketing and 50000 fixed household are qualifying; the 2.4% marketing and traffic household components remain in P&L but outside the liquidity reserve.
+  historical_integrated_pilot_reserve_rub: 20088988.08
+  historical_integrated_pilot_status: unchanged
+rent_prepayment_examples:
+  current_base:
+    monthly_rent_rub: 500000
+    rent_free_months: 2
+    prepaid_months: 12
+    reserve_horizon_months: 6
+    uncovered_rent_rub: 0
+  creative_cluster_pattern:
+    rent_free_months: 2
+    prepaid_months: 1
+    rule: The prepaid month is consumed on the first payable month after rent-free months; later payable months inside the horizon are uncovered.
+network_before_after:
+  total_5_points:
+    before_expansion_reserve_rub: 102630426.42
+    after_expansion_reserve_rub: 34410155.34
+    before_total_program_investment_rub: 171452631.21
+    after_total_program_investment_rub: 101422001.73
+    upfront_investor_funding_rub: 62088281.86
+    temporal_payback_month: 19
+  total_9_points:
+    before_expansion_reserve_rub: 202802320.34
+    after_expansion_reserve_rub: 65461777.62
+    before_total_program_investment_rub: 293616445.63
+    after_total_program_investment_rub: 154465545.74
+    upfront_investor_funding_rub: 62088281.86
+    temporal_payback_month: 20
+  total_13_points:
+    before_expansion_reserve_rub: 302974213.46
+    after_expansion_reserve_rub: 96513399.9
+    before_total_program_investment_rub: 415780261.25
+    after_total_program_investment_rub: 207509089.75
+    upfront_investor_funding_rub: 62088281.86
+    temporal_payback_month: 20
+funding_5_points:
+  base_start_investment_rub: 40019924.66
+  rollout_funding_requirement_rub: 61402077.07
+  total_program_investment_rub: 101422001.73
+  upfront_investor_funding_rub: 62088281.86
+  cohort_and_shared_reserve_funding_months: [3, 6, 9, 12]
+  semantics: >-
+    Total Program Investment is the dated capital required by the approved rollout.
+    Upfront Investor Funding is the minimum external capital that prevents the
+    temporal cash balance becoming negative; it is not assumed equal to the programme total.
+external_logistics_research:
+  planning_baseline_rub_per_month: 150000
+  status: planning_only_requires_carrier_contract_or_route_quote
+  sources:
+    - provider: FirstExpress
+      url: https://spb.firstexpress.ru/gruzoperevozki/refrezirator-tc/
+      date_accessed: 2026-08-28
+    - provider: GetTruck
+      url: https://spb.gettruck.ru/perevozka-refrijeratorami
+      date_accessed: 2026-08-28
+    - provider: Gruzovozkin
+      url: https://www.gruzovozkin.pro/catalog/refrizheratornye-perevozki/perevozka-myasa-i-myasnoy-produkcii
+      date_accessed: 2026-08-28
+invariants:
+  historical_reserve_unchanged: true
+  current_base_variable_marketing_excluded: true
+  current_base_traffic_household_excluded: true
+  foodhall_revenue_share_above_minimum_excluded: true
+  prepaid_rent_consumed_after_rent_free: true
+  prepaid_rent_not_cash_paid_twice: true
+  future_cohort_reserve_not_funded_at_m3: true
+  shared_reserve_trigger_dated: true
+  base_reserve_counted_once: true
+  reserve_not_in_monthly_opex: true
+  total_program_investment_distinct_from_upfront_funding: true
+remaining_disclosures:
+  - Production capacity remains review_required; B5 does not create throughput or second-shift economics.
+  - Vehicle useful life requires separate accounting-policy confirmation; vehicle maintenance remains in logistics OPEX.
+  - VAT, banking tariff, YUMA licence ownership and external carrier contract require confirmation but do not create an unpriced zero.
+external_state:
+  google_apply: not_run
+  production_deploy: not_run

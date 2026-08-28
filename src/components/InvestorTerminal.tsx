@@ -6,7 +6,7 @@ import {
   baseObjectPlanningReference,
 } from "../lib/network-planning";
 import {
-  investorConfigurationIsCanonical,
+  investorConfigurationIsCurrentBaseFullPreparation,
   investorConfigurationIsReadyPremisesDefault,
   type InvestorScenarioId,
 } from "../lib/investor-configuration";
@@ -143,9 +143,9 @@ export function InvestorTerminalPage() {
   const baseObjectProjection = useMemo(() => baseObjectFinancialProjection(scenario), [scenario]);
   const launchBudget = configuration.launchBudget;
   const launch = useMemo(() => calculateLaunchBudget(launchBudget), [launchBudget]);
-  const isCanonical = investorConfigurationIsCanonical(configuration);
+  const isCurrentBaseFullPreparation = investorConfigurationIsCurrentBaseFullPreparation(configuration);
   const isReadyPremises = investorConfigurationIsReadyPremisesDefault(configuration);
-  const isCustom = !isCanonical && !isReadyPremises;
+  const isCustom = !isCurrentBaseFullPreparation && !isReadyPremises;
   const averageCheckRub = calculateAverageCheck();
   const currentChecksPerDay = configuration.customChecksPerDay ?? canonicalScenario.checksPerDay;
   const preparationItem = scenario.investmentBreakdown.find((item) => item.key === "preparation");
@@ -188,7 +188,7 @@ export function InvestorTerminalPage() {
     });
   }
 
-  const scenarioStatus = isCanonical
+  const scenarioStatus = isCurrentBaseFullPreparation
     ? "Базовая финансовая модель"
     : isReadyPremises
       ? "Сценарий: готовое помещение"

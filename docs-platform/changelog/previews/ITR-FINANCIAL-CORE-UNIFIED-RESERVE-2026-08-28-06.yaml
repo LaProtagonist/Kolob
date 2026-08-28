@@ -1,0 +1,28 @@
+receipt_version: 1
+iteration_id: ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-06
+decision_id: DEC-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-06
+change_set_id: CHG-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-06
+previewed_at: 2026-08-28T12:00:02.000Z
+result: reviewed
+mutation_performed: false
+before_state_sha256: 2100acc34d68687ab32b14af78f0472235985be07cbb8fd69bfd35f6a1897fce
+after_state_sha256: a4194a8de4f1326d9b0416d117acf26f3f59b20ec645ab2c060e19de4f2006ca
+current_base:
+  monthly_basis_before_rub: 3783148.4
+  monthly_basis_after_rub: 3481422
+  reserve_before_rub: 22698890.4
+  reserve_after_rub: 20888532
+  fixed_marketing_after_rub: 150000
+  fixed_household_after_rub: 50000
+  prepaid_rent_uncovered_after_rub: 0
+expansion:
+  legacy_policy: six_months_full_steady_state_expansion_opex_funded_at_first_launch
+  replacement_policy: six_months_qualifying_fixed_and_semi_fixed_opex_by_cohort
+  default_5_point_reserve_before_rub: 102630426.42
+  default_5_point_reserve_after_rub: 34410155.34
+  funding_months: [3, 6, 9, 12]
+  foodhall_reserve_basis: minimum_guarantee_plus_mandatory_fixed_service_and_storage
+  external_logistics_planning_baseline_rub_per_month: 150000
+external_changes:
+  google_apply: not_run
+  production_deploy: not_run

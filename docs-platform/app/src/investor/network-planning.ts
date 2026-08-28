@@ -20,6 +20,9 @@ export const NETWORK_PLANNING_SOURCE_PATHS = [
   NETWORK_PLANNING_SCHEMA_PATH,
   "docs-platform/working/financial-model.yaml",
   "docs-platform/working/revenue-model.yaml",
+  "docs-platform/registry/sources.yaml",
+  "docs-platform/working/capex-equipment-register.yaml",
+  "src/content/capex-configurator-data.json",
   "src/lib/physical-allocation.ts",
   "src/lib/employer-contributions.ts",
   "docs-platform/app/src/investor/network-planning.ts",
@@ -93,6 +96,10 @@ export function validateNetworkPlanningModel(model = readNetworkPlanningModel())
       errors.push(`Network rollout group ${id} does not match its approved first-stage profile.`);
     }
   }
+  const historicCenterCore = rollout?.groups?.["historic-center-core"];
+  if (historicCenterCore?.guest_area_m2 !== 30 || historicCenterCore?.approved_seat_count !== 19 || historicCenterCore?.furniture_provenance !== "owner_approved_phase_b4_2026-08-27") {
+    errors.push("Historic-center-core must retain the B4 30m² guest area and approved 19-seat furniture baseline.");
+  }
   if (rollout?.groups?.["nevsky-premium"]?.shared_seating !== true || rollout?.groups?.["central-high-traffic"]?.shared_seating !== true) errors.push("Creative Cluster and Foodhall rollout groups must use shared seating.");
   const foodhallDefaults = model.locations?.types?.foodhall?.defaults;
   if (foodhallDefaults?.revenue_share_percent !== 17 || foodhallDefaults?.minimum_guarantee_monthly_rub !== 250000 || foodhallDefaults?.service_charge_monthly_rub !== 50000 || foodhallDefaults?.storage_rent_monthly_rub !== 20000 || foodhallDefaults?.utilities_included !== true) {
@@ -104,6 +111,7 @@ export function validateNetworkPlanningModel(model = readNetworkPlanningModel())
     errors.push("Creative Cluster planning contract must retain the approved rent, utility and entry defaults.");
   }
   if (clusterDefaults?.shared_seating !== true || clusterDefaults?.venue_security_included !== true || clusterDefaults?.common_cleaning_included !== true) errors.push("Creative Cluster planning defaults must retain venue-provided common services.");
+  if (foodhallDefaults?.venue_music_included !== true || clusterDefaults?.venue_music_included !== true) errors.push("Venue-based points must retain the B3 venue-provided music treatment.");
   if (foodhallDefaults?.fitout_allowance_rub !== null || clusterDefaults?.fitout_allowance_rub !== null) errors.push("Venue preparation must not double-count the former generic fitout allowance.");
   if (model.staffing?.takeaway?.base?.up_to_portions_per_day !== 249 || model.staffing?.takeaway?.growth?.from_portions_per_day !== 250) errors.push("Takeaway staffing must retain the compact-point rounding band before growth staffing.");
   const preparation = model.preparation?.point_area_proxy;
@@ -113,10 +121,50 @@ export function validateNetworkPlanningModel(model = readNetworkPlanningModel())
   const venuePreparation = ["PREP-BUILDING", "PREP-LIGHTING", "PREP-BUILT-IN", "PREP-DESIGN"];
   const venueOptionalPreparation = ["PREP-ELECTRICAL", "PREP-WATER-DRAINAGE", "PREP-VENTILATION"];
   if (JSON.stringify(preparation?.venue_shared_default_category_ids) !== JSON.stringify(venuePreparation) || JSON.stringify(preparation?.venue_shared_optional_category_ids) !== JSON.stringify(venueOptionalPreparation)) errors.push("Venue-based points must use the approved four-category preparation default and three optional engineering categories.");
-  if (model.logistics?.own_vehicle_suggested_from_point_count !== 3) errors.push("Own logistics suggestion must start at three points.");
+  if (model.logistics?.own_vehicle_suggested_from_point_count !== 3 || model.logistics?.own_vehicle_point_count_scope !== "additional_network_points") {
+    errors.push("Own logistics suggestion must start at three additional network points.");
+  }
+  const vehicleTreatment = model.logistics?.vehicle_financial_treatment;
+  if (vehicleTreatment?.maintenance !== "included_in_owned_monthly_opex" || vehicleTreatment?.generic_equipment_maintenance_capex !== "excluded" || vehicleTreatment?.depreciation !== "requires_useful_life_decision") {
+    errors.push("Vehicle maintenance must remain inside owned logistics OPEX, outside generic maintenance CAPEX, with useful life pending a separate decision.");
+  }
+  const completion = model.opex?.network_completion;
+  if (completion?.administrative_reserve?.scope !== "shared_network" || completion?.administrative_reserve?.driver !== "consolidated_net_revenue_percentage") {
+    errors.push("Administrative reserve must be a single shared percentage of consolidated revenue.");
+  }
+  if (completion?.household?.scope !== "point" || completion?.household?.driver !== "canonical_household_formula_per_point") {
+    errors.push("Household OPEX must use the canonical per-point formula.");
+  }
+  if (completion?.equipment_service?.driver !== "incremental_equipment_asset_value_relative_to_current_base") {
+    errors.push("Equipment service must scale from the actual incremental equipment asset basis.");
+  }
+  if (completion?.accounting?.treatment !== "one_current_base_function" || completion?.other_opex?.expansion_treatment !== "no_second_copy") {
+    errors.push("Accounting and Other OPEX must remain single Base/shared functions rather than multiply across points.");
+  }
+  if (completion?.software?.treatment !== "requires_confirmation" || completion?.banking?.treatment !== "tbd_non_acquiring_service") {
+    errors.push("Unconfirmed YUMA and banking terms must remain explicit assumption gaps.");
+  }
   const barPointItems = model.equipment?.bar_enabled_point_items;
   if (!Array.isArray(barPointItems) || barPointItems.length !== 1 || barPointItems[0]?.item_id !== "CAPEX-02-013" || barPointItems[0]?.quantity_per_bar_enabled_point !== 1) {
     errors.push("A bar-enabled network point must include one CAPEX-02-013 compact ice maker through the planning equipment rule.");
+  }
+  const washPackages = model.equipment?.point_wash_packages;
+  const expectedWashItems: Record<string, string[]> = {
+    takeaway: ["CAPEX-01-019", "CAPEX-01-020", "CAPEX-01-021", "CAPEX-01-006"],
+    with_seating: ["CAPEX-01-019", "CAPEX-01-020", "CAPEX-01-021", "CAPEX-01-006", "CAPEX-01-007"],
+  };
+  for (const [format, expected] of Object.entries(expectedWashItems)) {
+    const selected = washPackages?.[format]?.components?.map((item: any) => item.item_id);
+    if (!Array.isArray(selected) || JSON.stringify(selected) !== JSON.stringify(expected) || washPackages?.[format]?.no_dome_dishwasher !== true) {
+      errors.push(`Point wash package ${format} must use the approved priced component list and exclude a dome dishwasher.`);
+    }
+  }
+  const capacityEvidence = model.staffing?.production?.capacity_evidence;
+  if (capacityEvidence?.evidence_status !== "documented_machine_envelopes_without_process_capacity" || !Array.isArray(capacityEvidence?.operations) || capacityEvidence.operations.length < 5) {
+    errors.push("Production capacity evidence must preserve B4 machine-level documentation without inventing output throughput.");
+  }
+  if (!Array.isArray(capacityEvidence?.required_parameters) || capacityEvidence.required_parameters.length !== 3) {
+    errors.push("Production capacity evidence must preserve the three precise process parameters required before capacity can be calculated.");
   }
   return errors;
 }
@@ -136,6 +184,12 @@ function payrollPolicy(financial: any) {
   };
 }
 
+function requiredOpexEntry(opex: Record<string, any>, id: string) {
+  const entry = opex[id];
+  if (!entry) throw new Error(`Canonical Financial Model is missing OPEX entry ${id}.`);
+  return entry;
+}
+
 export function buildNetworkPlanningSnapshot(root = projectRoot) {
   const model = readNetworkPlanningModel(root);
   const errors = validateNetworkPlanningModel(model);
@@ -148,6 +202,9 @@ export function buildNetworkPlanningSnapshot(root = projectRoot) {
     .map(role => [role.id, { id: role.id, name: role.role, grossSalaryRub: Number(role.gross_salary_rub) }]));
   if (Object.keys(roles).length !== requiredRoleIds.size) throw new Error("Canonical Financial Model is missing a planning role salary reference.");
   const opex = Object.fromEntries((financial.opex.entries as any[]).map(entry => [entry.id, entry]));
+  const historicalRealisticRosterHeadcount = (financial.staffing.roles as any[])
+    .reduce((total, role) => total + Number(role.realistic_headcount), 0);
+  if (historicalRealisticRosterHeadcount <= 0) throw new Error("Canonical Financial Model has no realistic roster calibration.");
   const contentState = buildNetworkPlanningContentState(root);
   return {
     meta: {
@@ -174,6 +231,22 @@ export function buildNetworkPlanningSnapshot(root = projectRoot) {
         acquiringRateOfGrossRevenue: Number(opex.ACQUIRING.rate_of_gross_revenue),
         marketingFixedMonthlyRub: Number(opex.MARKETING.fixed_amount_rub),
         marketingVariableRateOfNetRevenue: Number(opex.MARKETING.rate_of_net_revenue),
+        administrativeReserveRateOfNetRevenue: Number(requiredOpexEntry(opex, "ADMINISTRATIVE_RESERVE").rate_of_net_revenue),
+        householdFixedMonthlyRub: Number(requiredOpexEntry(opex, "HOUSEHOLD").fixed_amount_rub),
+        householdVariableMonthlyRub: Number(requiredOpexEntry(opex, "HOUSEHOLD").variable_amount_rub),
+        householdBaselineChecksPerDay: Number(requiredOpexEntry(opex, "HOUSEHOLD").baseline_checks_per_day),
+        equipmentServiceMonthlyRub: Number(requiredOpexEntry(opex, "EQUIPMENT_SERVICE").amount_rub),
+        accountingMonthlyRub: Number(requiredOpexEntry(opex, "ACCOUNTING").amount_rub),
+        ventilationGreaseMonthlyRub: Number(requiredOpexEntry(opex, "VENT_GREASE").amount_rub),
+        uniformRenewalMonthlyRub: Number(requiredOpexEntry(opex, "UNIFORM_RENEWAL").amount_rub),
+        musicRightsMonthlyRub: Number(requiredOpexEntry(opex, "MUSIC_RIGHTS").amount_rub),
+        pestControlMonthlyRub: Number(requiredOpexEntry(opex, "PEST").amount_rub),
+        softwareMonthlyRub: Number(requiredOpexEntry(opex, "YUMA").amount_rub),
+        medicalMonthlyRub: Number(requiredOpexEntry(opex, "MEDICAL").amount_rub),
+        securityMonitoringMonthlyRub: Number(requiredOpexEntry(opex, "SECURITY_MONITORING").amount_rub),
+        bankingMonthlyRub: Number(requiredOpexEntry(opex, "BANKING").amount_rub),
+        otherOpexMonthlyRub: Number(requiredOpexEntry(opex, "OTHER").amount_rub),
+        historicalRealisticRosterHeadcount,
       },
       launch: {
         launchMarketingRub: Number(financial.launch_investment.launch_marketing_rub),

@@ -1,0 +1,53 @@
+schema_version: 2
+iteration_id: ITR-FINANCIAL-CORE-CONTEXTS-2026-08-27-01
+proposal_id: PROP-FINANCIAL-CORE-CONTEXTS-2026-08-27-01
+decision_id: DEC-FINANCIAL-CORE-CONTEXTS-2026-08-27-01
+change_set_id: CHG-FINANCIAL-CORE-CONTEXTS-2026-08-27-01
+title: Establish explicit financial contexts and shared calculation primitives
+status: approved
+approved_by: project owner
+approved_at: 2026-08-27T00:24:00.000Z
+actor: Codex
+scope: Establish explicit Historical Integrated Pilot and Current Base Object routing, share tax/FCF/payback primitives, expose typed Base monthly tax and maintenance fields, and correct the Physical Allocation test catalog. No financial business fact, Google document, production deployment or visual Terminal structure changes.
+approved_payload_path: docs-platform/changelog/payloads/ITR-FINANCIAL-CORE-CONTEXTS-2026-08-27-01-approved.yaml
+approved_payload_sha256: 843f2482056eae7de01b786bd8f23920778e55e49b8810293b6602ad77273ea1
+before_state_sha256: 4e4f516f7c92ecce0bac026d867b58cdeef05c1c310db73e69b94f65c6510a30
+after_state_sha256: 1aa374be3411304af90edf5887015e1f8ee39eacdf481ac5f89d9c27e3706b0c
+affected_document_ids: []
+affected_section_ids:
+  - financial-core.context-routing
+  - financial-core.shared-primitives
+  - investor-terminal.runtime-context
+  - physical-allocation.fixture-catalog
+state_hash_paths:
+  - scripts/test-financial-core.test.ts
+  - scripts/test-investor-journey.test.ts
+  - scripts/test-physical-allocation-map.test.ts
+  - src/components/InvestorConfigurationProvider.tsx
+  - src/components/InvestorTerminal.tsx
+  - src/lib/configured-economics.ts
+  - src/lib/financial-core.ts
+  - src/lib/investor-configuration.ts
+content_paths:
+  - scripts/test-financial-core.test.ts
+  - scripts/test-investor-journey.test.ts
+  - scripts/test-physical-allocation-map.test.ts
+  - src/components/InvestorConfigurationProvider.tsx
+  - src/components/InvestorTerminal.tsx
+  - src/lib/configured-economics.ts
+  - src/lib/financial-core.ts
+  - src/lib/investor-configuration.ts
+  - docs-platform/changes/
+  - docs-platform/changelog/audit/
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/payloads/
+  - docs-platform/changelog/previews/
+  - docs-platform/changelog/verification/
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+allowed_dirty_paths: []
+rollback_payload: null

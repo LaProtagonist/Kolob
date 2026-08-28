@@ -278,7 +278,7 @@ export function calculateOperatingReserve(state: LaunchBudgetState, model = laun
   if (state.operatingExpenseMode === "custom") {
     return state.customMonthlyOpexRub === null ? null : state.customMonthlyOpexRub * state.operatingReserveMonths;
   }
-  if (financials) return financials.monthlyReserveBaseRub * state.operatingReserveMonths;
+  if (financials) return Math.round(financials.monthlyReserveBaseRub * state.operatingReserveMonths * 100) / 100;
   const monthlyOperatingExpensesRub = calculateEffectiveMonthlyOperatingExpenses(state, model);
   return monthlyOperatingExpensesRub === null ? null : monthlyOperatingExpensesRub * state.operatingReserveMonths;
 }

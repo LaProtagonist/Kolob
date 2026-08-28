@@ -1,0 +1,23 @@
+schema_version: 2
+iteration_id: ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01
+proposal_id: PROP-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01
+decision_id: DEC-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01
+change_set_id: CHG-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01
+timestamp: 2026-08-27T00:00:02.000Z
+actor: Codex
+type: Feature-worktree governance context scope correction
+reason: The scope guard correctly refused the predecessor before staging because its verification receipt was omitted from the approved content path list. The predecessor payload remains immutable and the successor persists a complete append-only audit trail.
+before:
+  state_sha256: 491a9bb7df0f0179360fc7803acfcdfcd0c648cf89c3269dd305fa45262f23eb
+after:
+  state_sha256: 491a9bb7df0f0179360fc7803acfcdfcd0c648cf89c3269dd305fa45262f23eb
+consistency:
+  financial_model: unchanged
+  network_planning: unchanged
+  terminal: unchanged
+  google: unused
+  deployment: unused
+delivery:
+  committed: pending
+  sealed: pending
+  pushed: pending

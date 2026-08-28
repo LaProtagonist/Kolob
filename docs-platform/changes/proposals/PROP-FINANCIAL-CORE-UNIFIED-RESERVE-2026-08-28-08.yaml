@@ -1,0 +1,15 @@
+schema_version: 2
+proposal_id: PROP-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-08
+iteration_id: ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-08
+title: Finalize B5 unified reserve and rollout-funding contract after failed pre-commit gates
+status: approved
+proposed_by: project owner
+proposed_at: 2026-08-27T23:15:30.000Z
+summary: >-
+  Complete the already owner-approved B5 policy in a third, sealable append-only
+  continuation. The two predecessors never reached a content commit because strict
+  TypeScript gates failed; retain them as governance evidence rather than modifying
+  their history. No external publication, production mutation or new business
+  assumption is permitted.
+approved_payload_path: docs-platform/changelog/payloads/ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-08-approved.yaml
+approved_payload_sha256: e80d8645bdc247f33b8d5b4e37dd48b5a98886ac1b4e682a679c2323e99a0fc8

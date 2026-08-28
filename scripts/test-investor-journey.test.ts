@@ -6,14 +6,16 @@ import test from "node:test";
 import { fileURLToPath } from "node:url";
 import { configuredEconomicsScenario, configuredEconomicsScenarios } from "../src/lib/configured-economics.js";
 import {
-  canonicalInvestorConfiguration,
+  currentBaseObjectFullPreparationConfiguration,
+  historicalIntegratedPilotConfiguration,
   applyNetworkRolloutPreset,
   applyLocationRentPreset,
   createNetworkPointCohort,
   createTradingPointCohort,
   defaultInvestorConfiguration,
   currentNetworkRolloutSize,
-  investorConfigurationIsCanonical,
+  financialProjectionContextForConfiguration,
+  investorConfigurationIsCurrentBaseFullPreparation,
   restoreInvestorConfiguration,
   updateCohortAreaFromRentPreset,
   updateCohortMonthlyRent,
@@ -185,7 +187,9 @@ test("scenario switching stays inside the configured projection", () => {
 
   assert.deepEqual(scenarios.map((item) => item.id), ["pessimistic", "realistic", "optimistic"]);
   assert.deepEqual(scenarios.map((item) => item.checksPerDay), [200, 300, 450]);
-  assert.ok(scenarios.every((item, index) => item.startInvestmentRub < economicsData.scenarios[index].startInvestmentRub));
+  assert.ok(scenarios.every((item) => item.context === "current_base_object"));
+  assert.ok(scenarios.every((item) => item.currentBaseReserveProjection?.totalReserveRub === item.operatingReserveRub));
+  assert.ok(scenarios.every((item) => item.investmentBreakdown.find((line) => line.key === "operating_reserve")?.amount_rub === item.operatingReserveRub));
 });
 
 test("runtime configuration is safely restored and never mutates canonical source files", () => {
@@ -206,7 +210,7 @@ test("runtime configuration is safely restored and never mutates canonical sourc
 
 test("custom checks per day is a local scenario override and canonical reset stays exact", () => {
   const before = sourceHashes();
-  const canonical = canonicalInvestorConfiguration();
+  const canonical = currentBaseObjectFullPreparationConfiguration();
   const canonicalEconomics = configuredEconomicsScenario(canonical);
   const restored = restoreInvestorConfiguration({ ...canonical, customChecksPerDay: 175 });
   const custom = configuredEconomicsScenario(restored);
@@ -298,7 +302,7 @@ test("v2.1 through v2.3 saved state migrates safely into v2.4 cohorts", () => {
 
 test("fresh and reset network defaults retain the base object and add the approved first-stage rollout", () => {
   const fresh = defaultInvestorConfiguration();
-  const reset = canonicalInvestorConfiguration();
+  const reset = currentBaseObjectFullPreparationConfiguration();
   for (const configuration of [fresh, reset]) {
     assert.equal(configuration.networkScaling.cohorts.length, 5);
     const baseCohort = configuration.networkScaling.cohorts[0];
@@ -394,15 +398,19 @@ test("temporal rollout keeps canonical ramp and seasonality separate for every o
 
   const creative = scaling.cohorts.find((cohort) => cohort.cohort.locationType === "creative_cluster")!;
   const creativeTemporal = temporal.expansion.groups.find((group) => group.cohortId === creative.cohort.id)!;
+  const directOpexOptions = (cohort: typeof creative) => ({
+    baseEquipmentServiceAssetBasisRub: cohort.baseEquipmentServiceAssetBasisRub,
+    equipmentServiceAssetBasisRub: cohort.equipmentServiceAssetBasisRub,
+  });
   const aprilSeasonality = assumptions.seasonalityProfile.find((row) => row.month === 4)!.factor;
   const openingChecks = creative.operational.sales.checksPerDay! * assumptions.rampUpProfile[0].factor * aprilSeasonality;
   const creativeOpeningOperations = pointOperationalProjectionForMonthlyChecks(configuration, creative.cohort, openingChecks, creative.operational.sales.averageCheckRub!);
-  const rentFreeDirectOpex = pointDirectOpexProjection(creative.cohort, creativeOpeningOperations, { rentChargeRub: 0 });
+  const rentFreeDirectOpex = pointDirectOpexProjection(creative.cohort, creativeOpeningOperations, { ...directOpexOptions(creative), rentChargeRub: 0 });
   assert.equal(creativeTemporal.months[4].opexRub, rentFreeDirectOpex.directOpexPerPointRub, "creative-cluster rent is zero during its two rent-free months");
   const juneSeasonality = assumptions.seasonalityProfile.find((row) => row.month === 6)!.factor;
   const postHolidayChecks = creative.operational.sales.checksPerDay! * assumptions.rampUpProfile[2].factor * juneSeasonality;
   const postHolidayOperations = pointOperationalProjectionForMonthlyChecks(configuration, creative.cohort, postHolidayChecks, creative.operational.sales.averageCheckRub!);
-  const postHolidayDirectOpex = pointDirectOpexProjection(creative.cohort, postHolidayOperations);
+  const postHolidayDirectOpex = pointDirectOpexProjection(creative.cohort, postHolidayOperations, directOpexOptions(creative));
   assert.equal(creativeTemporal.months[6].opexRub, postHolidayDirectOpex.directOpexPerPointRub, "normal rent begins after the rent-free period");
 
   const foodhall = scaling.cohorts.find((cohort) => cohort.cohort.locationType === "foodhall")!;
@@ -412,14 +420,16 @@ test("temporal rollout keeps canonical ramp and seasonality separate for every o
     const factor = assumptions.rampUpProfile[Math.min(operatingAge, assumptions.rampUpProfile.length) - 1]!.factor
       * assumptions.seasonalityProfile[(month - 1) % assumptions.seasonalityProfile.length]!.factor;
     const operational = pointOperationalProjectionForMonthlyChecks(configuration, foodhall.cohort, foodhall.operational.sales.checksPerDay! * factor, foodhall.operational.sales.averageCheckRub!);
-    const direct = pointDirectOpexProjection(foodhall.cohort, operational);
+    const direct = pointDirectOpexProjection(foodhall.cohort, operational, directOpexOptions(foodhall));
     const occupancy = direct.lines.find((line) => line.id === "foodhall-occupancy")!;
     assert.equal(occupancy.amountRub, Math.max(operational.sales.revenuePerPointRub! * 0.17, 250_000), `Foodhall payment uses actual month-${month} sales`);
     assert.equal(foodhallTemporal.months[month].opexRub, direct.directOpexPerPointRub, `Foodhall direct OPEX follows actual month-${month} sales`);
   }
 
-  assert.equal(temporal.expansion.operatingReserveRub, scaling.operating.pointDirectOpexRub! * configuration.launchBudget.operatingReserveMonths, "expansion reserve is the calculated additional-point OPEX times the selected horizon");
   const staticEconomics = networkEconomicsProjection(configuration, base);
+  assert.equal(staticEconomics.expansion.operatingReserve?.policy, "six_months_qualifying_fixed_and_semi_fixed_opex_by_cohort");
+  assert.equal(creativeTemporal.months[6].prepaidRentCreditRub, 160_000, "one prepaid Creative Cluster month is consumed only after two rent-free months");
+  assert.equal(creativeTemporal.months[6].cashFlowRub, (creativeTemporal.months[6].operatingFreeCashFlowRub ?? 0) + 160_000, "prepaid rent credit avoids a second cash rent outflow");
   assert.ok(temporal.expansion.paybackMonth! >= staticEconomics.expansion.paybackMonths!, "staggered openings and ramp cannot use the immediate steady-state payback");
 });
 
@@ -528,7 +538,7 @@ test("location rent presets remain state inputs and switch to a custom value aft
 
 test("cohort operations keep sales, area constraints and concurrent staffing independent", () => {
   const before = sourceHashes();
-  const canonical = canonicalInvestorConfiguration();
+  const canonical = currentBaseObjectFullPreparationConfiguration();
   const seating = createTradingPointCohort(canonical.launchBudget, {
     id: "seating",
     format: "with_seating",
@@ -622,7 +632,7 @@ test("physical allocation retains point, production and wash boundaries for v2.4
   assert.equal(physicalAllocationMap.find(item => item.id === "MOD-WASH")?.physicalScope, "mixed");
   assert.equal(physicalAllocationMap.find(item => item.id === "OPEX-LOGISTICS")?.physicalScope, "shared_network");
 
-  const scaling = networkScalingProjection(canonicalInvestorConfiguration());
+  const scaling = networkScalingProjection(currentBaseObjectFullPreparationConfiguration());
   assert.ok(
     scaling.cohorts.slice(1).every((cohort) => cohort.pointItems.every((item) => !item.name.includes("посудомоеч"))),
     "the integrated pilot wash zone is never treated as a repeatable point item",
@@ -634,7 +644,7 @@ test("physical allocation retains point, production and wash boundaries for v2.4
 });
 
 test("location semantics drive point contribution without creating a false EBITDA", () => {
-  const canonical = canonicalInvestorConfiguration();
+  const canonical = currentBaseObjectFullPreparationConfiguration();
   const street = createTradingPointCohort(canonical.launchBudget, {
     id: "street", format: "with_seating", count: 2, totalAreaM2: 60,
     monthlyRentRub: 350_000, prepaymentMonths: 1, securityDepositMonths: 1,
@@ -643,6 +653,7 @@ test("location semantics drive point contribution without creating a false EBITD
   });
   const foodhall = createTradingPointCohort(canonical.launchBudget, {
     id: "foodhall", format: "takeaway", count: 3, locationType: "foodhall", sharedSeating: true,
+    totalAreaM2: 25,
     venueSecurityIncluded: true, commonCleaningIncluded: true, extractionAvailable: true,
     revenueSharePercent: 12, minimumGuaranteeMonthlyRub: 120_000, utilitiesIncluded: true,
     serviceChargeMonthlyRub: 30_000, fitoutAllowanceRub: 2_000_000,
@@ -667,7 +678,7 @@ test("location semantics drive point contribution without creating a false EBITD
 
 test("network scaling aggregates independent point cohorts without inventing network economics", () => {
   const before = sourceHashes();
-  const canonical = canonicalInvestorConfiguration();
+  const canonical = currentBaseObjectFullPreparationConfiguration();
   const seatingRent = createTradingPointCohort(canonical.launchBudget, {
     id: "seating-rent",
     format: "with_seating",
@@ -730,8 +741,9 @@ test("network scaling aggregates independent point cohorts without inventing net
   assert.match(takeawayPurchase.cohorts[0].pointItems.find((item) => item.id.endsWith(":premises"))?.name ?? "", /Покупка помещения/);
   assert.ok(mixedNetwork.unresolvedItems.every((item) => item.ownership === "unresolved"));
   assert.equal(mixedNetwork.unresolvedItems.find((item) => item.id === "operating_reserve"), undefined, "the old integrated reserve is not presented as an unresolved additional-point cost");
-  assert.equal(mixedNetwork.unresolvedItems.find((item) => item.id === "POINT-WASH-TAKEAWAY")?.multiplier, "per_point");
-  assert.equal(mixedNetwork.unresolvedItems.find((item) => item.id === "POINT-WASH-SEATING")?.amountRub, null);
+  assert.equal(mixedNetwork.unresolvedItems.find((item) => item.id === "POINT-WASH-TAKEAWAY"), undefined, "B3 wash kits are now priced point items, not generic unresolved rows");
+  assert.equal(takeaway.pointItems.find((item) => item.id.endsWith(":point-wash"))?.multiplier, "per_point");
+  assert.equal(seating.pointItems.find((item) => item.id.endsWith(":point-wash"))?.amountRub, 134_534);
   assert.ok(takeaway.pointItems.some((item) => item.name === "Резерв на запуск"), "contingency is calculated from the applicable point base");
   assert.equal(mixedNetwork.isPartial, true);
   assert.equal(mixedNetwork.sales.status, "complete");
@@ -762,26 +774,21 @@ test("network scaling aggregates independent point cohorts without inventing net
   assert.deepEqual(sourceHashes(), before, "the selector is read-only against canonical sources");
 });
 
-test("expansion reserve uses additional point OPEX and does not count the base-object reserve twice", () => {
+test("expansion reserve is dated, qualifying-only and does not count the base-object reserve twice", () => {
   const configuration = defaultInvestorConfiguration();
   const base = configuredEconomicsScenario(configuration);
+  const baseProjection = baseObjectFinancialProjection(base);
   const scaling = networkScalingProjection(configuration);
-  const economics = networkEconomicsProjection(configuration, {
-    investmentRub: base.startInvestmentRub,
-    revenueRub: base.salesPerMonthRub,
-    opexRub: base.salesPerMonthRub - base.ebitdaRub,
-    operatingResultRub: base.ebitdaRub,
-    cashFlowRub: base.freeCashFlowRub,
-    paybackMonth: base.paybackMonth,
-    operatingReserveRub: base.operatingReserveRub,
-  });
+  const economics = networkEconomicsProjection(configuration, baseProjection, scaling);
   assert.equal(economics.expansion.additionalPointCount, 4);
   assert.equal(economics.network.pointCount, 5);
-  assert.equal(economics.expansion.operatingReserveRub, scaling.operating.pointDirectOpexRub! * configuration.launchBudget.operatingReserveMonths, "reserve uses known monthly OPEX of additional point groups and the selected horizon");
+  assert.equal(economics.expansion.operatingReserve?.excludedLineIds.includes("variable-marketing"), true, "variable marketing remains in P&L but out of reserve");
+  assert.equal(economics.expansion.operatingReserve?.excludedLineIds.includes("administrative-reserve"), true, "revenue-based administrative reserve remains outside liquidity reserve");
+  assert.equal(economics.expansion.operatingReserve?.fundingEvents.some((event) => event.month === 12), true, "future cohort reserve is not pulled into M3");
   assert.notEqual(economics.expansion.operatingReserveRub, base.operatingReserveRub, "the historical Integrated Pilot reserve is never reused for expansion");
   assert.equal(
-    economics.network.investmentRub,
-    base.startInvestmentRub + economics.expansion.pointInvestmentRub + economics.expansion.sharedInfrastructureRub + economics.expansion.operatingReserveRub!,
+    Math.abs((economics.network.investmentRub ?? 0) - (base.startInvestmentRub + economics.expansion.pointInvestmentRub + economics.expansion.sharedInfrastructureRub + economics.expansion.operatingReserveRub!)) < 0.01,
+    true,
     "network investment is base object plus additional point launch, shared infrastructure and expansion reserve",
   );
   assert.equal(scaling.sharedItems.find((item) => item.id === "shared-refrigerated-logistics")?.amountRub, 5_000_000, "five-point network gets the governed shared logistics infrastructure");
@@ -789,10 +796,23 @@ test("expansion reserve uses additional point OPEX and does not count the base-o
   assert.equal(economics.expansion.incompletePointCohortCount, 0, "default venue contracts are complete once their owner-approved terms are supplied");
 });
 
-test("canonical scenario selection is not presented as a user override", () => {
-  const canonical = canonicalInvestorConfiguration();
-  assert.equal(investorConfigurationIsCanonical({ ...canonical, scenarioId: "pessimistic" }), true);
-  assert.equal(investorConfigurationIsCanonical({ ...canonical, customChecksPerDay: 175 }), false);
+test("Current Base full-preparation selection is not presented as a user override", () => {
+  const currentBaseFullPreparation = currentBaseObjectFullPreparationConfiguration();
+  assert.equal(investorConfigurationIsCurrentBaseFullPreparation({ ...currentBaseFullPreparation, scenarioId: "pessimistic" }), true);
+  assert.equal(investorConfigurationIsCurrentBaseFullPreparation({ ...currentBaseFullPreparation, customChecksPerDay: 175 }), false);
+});
+
+test("Historical Integrated Pilot and Current Base are explicit, separate contexts", () => {
+  const historical = historicalIntegratedPilotConfiguration();
+  const currentBase = defaultInvestorConfiguration();
+  assert.equal(historical.launchBudget.monthlyRentRub, 350_000);
+  assert.equal(historical.launchBudget.rentFreeMonths, 0);
+  assert.equal(historical.launchBudget.preparationEnabledCategoryIds.length, 8);
+  assert.equal(currentBase.launchBudget.monthlyRentRub, 500_000);
+  assert.equal(currentBase.launchBudget.rentFreeMonths, 2);
+  assert.equal(currentBase.launchBudget.preparationEnabledCategoryIds.length, 4);
+  assert.equal(financialProjectionContextForConfiguration(historical), "historical_integrated_pilot");
+  assert.equal(financialProjectionContextForConfiguration(currentBase), "current_base_object");
 });
 
 test("economics UI has no legacy KPI literals and only consumes configured projection values", () => {
@@ -806,7 +826,9 @@ test("economics UI has no legacy KPI literals and only consumes configured proje
 
 test("Investor Terminal is a compact runtime surface, not a second hardcoded model", () => {
   const source = fs.readFileSync(path.join(projectRoot, "src/components/InvestorTerminal.tsx"), "utf8");
+  const panelSource = fs.readFileSync(path.join(projectRoot, "src/components/NetworkScalingPanel.tsx"), "utf8");
   const scalingSource = fs.readFileSync(path.join(projectRoot, "src/lib/network-scaling.ts"), "utf8");
+  const financialAdapterSource = fs.readFileSync(path.join(projectRoot, "src/lib/network-financial-projection.ts"), "utf8");
   assert.match(source, /configuredEconomicsScenario\(configuration\)/);
   assert.match(source, /setCustomChecksPerDay/);
   assert.match(source, /resetConfiguration/);
@@ -814,6 +836,9 @@ test("Investor Terminal is a compact runtime surface, not a second hardcoded mod
   assert.match(scalingSource, /networkEconomicsProjection/, "expansion and network totals are assembled in the typed planning adapter");
   assert.match(scalingSource, /findPhysicalAllocation/, "new allocation semantics are read from the typed allocation map");
   assert.match(scalingSource, /networkSalesSummary/, "network sales aggregation stays outside the React component");
+  assert.match(financialAdapterSource, /networkTemporalProjection/);
+  assert.match(financialAdapterSource, /networkEconomicsProjection/);
+  assert.match(panelSource, /networkFinancialProjection\(configuration, baseObject, baseObject\)/, "the Terminal consumes one consolidated projection adapter");
   for (const legacyLiteral of ["45.37", "23 месяца", "61.33%", "36,701,298"]) {
     assert.equal(source.includes(legacyLiteral), false, `legacy KPI literal remains: ${legacyLiteral}`);
   }

@@ -1,0 +1,29 @@
+schema_version: 2
+payload_id: PAYLOAD-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09
+iteration_id: ITR-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09
+proposal_id: PROP-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09
+decision_id: DEC-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09
+change_set_id: CHG-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09
+title: Compact and clarify the Investor Terminal network summary
+status: approved
+approved_by: project owner
+approved_at: 2026-08-28T00:10:00.000Z
+scope:
+  - Audit provenance and aggregation of the Investor Terminal right summary column.
+  - Shorten investor-facing labels and helpers without changing financial formulas or values.
+  - Make values resilient to long labels and suppress misleading zero-value incremental rows.
+  - Add targeted invariants, responsive layout checks and browser screenshot evidence.
+constraints:
+  - no financial-core formula, reserve-policy, CAPEX, OPEX or generated-projection change
+  - no Google apply, Google redesign, production deployment, master merge or Investor Sheet redesign
+  - no correction of a financial mapping defect without a separate owner decision
+affected_document_ids:
+  - DOC-INVESTOR-FINANCIAL-SUMMARY
+affected_section_ids:
+  - investor-terminal.network-summary
+  - investor-terminal.expansion-opex-summary
+  - investor-terminal.responsive-layout
+state_hash_paths:
+  - scripts/test-investor-terminal.cjs
+  - src/components/InvestorTerminal.css
+  - src/components/NetworkScalingPanel.tsx

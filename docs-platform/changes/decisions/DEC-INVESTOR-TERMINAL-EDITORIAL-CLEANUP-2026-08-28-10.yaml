@@ -1,0 +1,14 @@
+schema_version: 2
+decision_id: DEC-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10
+iteration_id: ITR-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10
+title: Approve final editorial cleanup of Investor Terminal scaling page
+status: approved
+approved_by: project owner
+approved_at: 2026-08-28T00:53:04.000Z
+scope: >-
+  Investor-facing copy and conditional rendering may be refined, including a
+  single disclosure block and short venue-provided states. Financial formulas,
+  B5 projections, CAPEX/OPEX policy, reserve semantics and all external state
+  must remain unchanged.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10-approved.yaml
+approved_payload_sha256: 6f5f47e1e5ca345f065b63aa60f79336f8b1d3cdc56047a563f52ea1c49e03c4

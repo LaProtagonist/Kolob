@@ -1,0 +1,75 @@
+receipt_version: 1
+iteration_id: ITR-FINANCIAL-CORE-CURRENT-BASE-RESERVE-2026-08-27-05
+audited_at: 2026-08-27T21:23:02.000Z
+result: passed
+finding: Current Base operating reserve had been calculated through the Historical Financial Model reserve route; this correction replaces that stale context mapping only.
+current_base_reserve_composition_rub:
+  labour: 2831922
+  utilities: 200000
+  equipment_service: 100000
+  accounting: 25000
+  ventilation_grease: 15000
+  uniform_renewal: 15000
+  music: 7000
+  pest_control: 6000
+  yuma: 6000
+  medical: 5000
+  security: 4000
+  banking_tbd: 0
+  other: 66500
+  mature_marketing: 401726.4
+  household: 100000
+  uncovered_rent: 0
+  monthly_basis: 3783148.4
+  months: 6
+  reserve: 22698890.4
+historical_pilot:
+  fixed_opex_reserve_rub: 20088988.08
+  status: unchanged
+recalculation:
+  current_base:
+    before:
+      reserve_rub: 20088988.08
+      investment_rub: 39220380.74
+      payback_month: 20
+      irr: 0.7335561455483743
+      npv_rub: 39824232.74
+    after:
+      reserve_rub: 22698890.4
+      investment_rub: 41830283.06
+      payback_month: 21
+      irr: 0.6669260500786507
+      npv_rub: 37214330.42
+    delta:
+      reserve_rub: 2609902.32
+      investment_rub: 2609902.32
+      payback_month: 1
+      npv_rub: -2609902.32
+  total_5_points:
+    before_investment_rub: 168842728.89
+    after_investment_rub: 171452631.21
+    delta_investment_rub: 2609902.32
+    temporal_payback_before_month: 25
+    temporal_payback_after_month: 25
+  total_9_points:
+    before_investment_rub: 291006544.04
+    after_investment_rub: 293616446.36
+    delta_investment_rub: 2609902.32
+    temporal_payback_before_month: 31
+    temporal_payback_after_month: 31
+  total_13_points:
+    before_investment_rub: 413170359.13
+    after_investment_rub: 415780261.45
+    delta_investment_rub: 2609902.32
+    temporal_payback_before_month: 36
+    temporal_payback_after_month: 36
+invariants:
+  historical_reserve_unchanged: true
+  protected_current_base_labour_used: true
+  prepaid_rent_not_reserved_twice: true
+  initial_inventory_not_reserved: true
+  revenue_variable_lines_not_reserved: true
+  base_reserve_in_consolidated_network_once: true
+external_state:
+  google_apply: not_run
+  production_deploy: not_run

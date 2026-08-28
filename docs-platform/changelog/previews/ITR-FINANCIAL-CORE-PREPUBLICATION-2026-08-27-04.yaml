@@ -1,0 +1,149 @@
+receipt_version: 1
+iteration_id: ITR-FINANCIAL-CORE-PREPUBLICATION-2026-08-27-04
+previewed_at: 2026-08-27T16:45:02.000Z
+result: reviewed
+before_state_sha256: ddd3c70269d60cb8410b89305a29d5c47f7986f2a12f9946bae81149305d681c
+after_state_sha256: 581ebd6d53e4398216bcc11b5f30b1f940acf7986465e7008b556126a62dd905
+furniture_preview:
+  cohort_id: rollout-historic-center-core
+  total_premises_m2: 60
+  guest_area_m2: 30
+  seats: 19
+  driver_rub_per_seat: 8500
+  furniture_rub: 161500
+  contingency_semantics: existing point contingency is restored once the last priced furniture component is no longer unknown
+  investment_delta_per_cohort_rub: 691693.3
+  investment_delta_composition_rub:
+    furniture: 161500
+    restored_existing_contingency: 530193.3
+current_base_regression_controls:
+  context: current_base_object
+  start_investment_rub: 39220380.74
+  operating_reserve_rub: 20088988.08
+  revenue_rub: 10488600
+  opex_rub: 8225135.6
+  ebitda_rub: 2263464.4
+  tax_rub: 204144.61
+  maintenance_capex_rub: 14309.99
+  free_cash_flow_rub: 2045009.8
+  payback_month: 20
+  status: unchanged
+network_b3_to_b4_preview:
+  total_5_points:
+    before:
+      investment_rub: 168151035.59
+      operating_reserve_rub: 102630426.42
+      revenue_rub: 35486430
+      opex_rub: 25330206.67
+      ebitda_rub: 10156223.33
+      tax_rub: 710935.64
+      maintenance_capex_rub: 32521.36
+      free_cash_flow_rub: 9412766.33
+      payback_month: 25
+    after:
+      investment_rub: 168842728.89
+      operating_reserve_rub: 102630426.42
+      revenue_rub: 35486430
+      opex_rub: 25330206.67
+      ebitda_rub: 10156223.33
+      tax_rub: 710935.64
+      maintenance_capex_rub: 32925.11
+      free_cash_flow_rub: 9412362.58
+      payback_month: 25
+    delta:
+      investment_rub: 691693.3
+      maintenance_capex_rub: 403.75
+      free_cash_flow_rub: -403.75
+      payback_month: 0
+  total_9_points:
+    before:
+      investment_rub: 289623157.44
+      operating_reserve_rub: 202802319.84
+      revenue_rub: 60484260
+      opex_rub: 42025522.24
+      ebitda_rub: 18458737.76
+      tax_rub: 1292111.66
+      maintenance_capex_rub: 50732.74
+      free_cash_flow_rub: 17115893.36
+      payback_month: 31
+    after:
+      investment_rub: 291006544.04
+      operating_reserve_rub: 202802319.84
+      revenue_rub: 60484260
+      opex_rub: 42025522.24
+      ebitda_rub: 18458737.76
+      tax_rub: 1292111.66
+      maintenance_capex_rub: 51540.24
+      free_cash_flow_rub: 17115085.86
+      payback_month: 31
+    delta:
+      investment_rub: 1383386.6
+      maintenance_capex_rub: 807.5
+      free_cash_flow_rub: -807.5
+      payback_month: 0
+  total_13_points:
+    before:
+      investment_rub: 411095279.23
+      operating_reserve_rub: 302974213.2
+      revenue_rub: 85482090
+      opex_rub: 58720837.8
+      ebitda_rub: 26761252.2
+      tax_rub: 1873287.68
+      maintenance_capex_rub: 68944.11
+      free_cash_flow_rub: 24819020.41
+      payback_month: 36
+    after:
+      investment_rub: 413170359.13
+      operating_reserve_rub: 302974213.2
+      revenue_rub: 85482090
+      opex_rub: 58720837.8
+      ebitda_rub: 26761252.2
+      tax_rub: 1873287.68
+      maintenance_capex_rub: 70155.36
+      free_cash_flow_rub: 24817809.16
+      payback_month: 36
+    delta:
+      investment_rub: 2075079.9
+      maintenance_capex_rub: 1211.25
+      free_cash_flow_rub: -1211.25
+      payback_month: 0
+reserve_decomposition_preview:
+  current_base:
+    policy: canonical_financial_model_fixed_opex_reserve
+    monthly_basis_rub: 3348164.68
+    months: 6
+    reserve_rub: 20088988.08
+    note: Base reserve is a governed fixed-OPEX liquidity policy, not full Current Base P&L × 6.
+  total_5_points_expansion:
+    policy: six_months_known_recurring_operating_opex
+    monthly_basis_rub: 17105071.07
+    months: 6
+    reserve_rub: 102630426.42
+  total_5_points_consolidated_financing_requirement:
+    reserve_rub: 122719414.5
+    formula: Base reserve plus Expansion reserve once each
+    comparable_to_network_pnl_opex_times_months: false
+capacity_preview:
+  base:
+    checks_per_day: 300
+    food_portions_per_check: 1.4
+    food_portions_per_day: 420
+  total_5_points:
+    checks_per_day: 1015
+    food_portions_per_check: 1.4
+    food_portions_per_day: 1421
+  total_9_points:
+    checks_per_day: 1730
+    food_portions_per_check: 1.4
+    food_portions_per_day: 2422
+  total_13_points:
+    checks_per_day: 2445
+    food_portions_per_check: 1.4
+    food_portions_per_day: 3423
+  result: Machine envelopes are documented but process technical cards, cycles and usable-shift parameters are absent; no batch count, machine-hours, utilization, second-shift payroll or capacity coverage is asserted.
+coverage:
+  calculation: complete
+  pricing: complete
+  assumptions: requires_confirmation
+  capacity: review_required
+external_changes: []

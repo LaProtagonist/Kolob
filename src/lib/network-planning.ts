@@ -105,6 +105,9 @@ export type NetworkRolloutGroup = {
   locationType: LocationType;
   realEstateMode: "rent" | "purchase";
   baselineAreaM2: number;
+  guestAreaM2: number | null;
+  /** An approved physical layout may supersede generic density rounding. */
+  approvedSeatCount: number | null;
   checksPerDay: number;
   firstOpeningMonth: number;
   sharedSeating: boolean | null;
@@ -124,6 +127,49 @@ export type NetworkTemporalAssumptions = {
   seasonalityProfile: Array<{ month: number; factor: number }>;
   launchCapexLeadMonths: number;
   rentFreeMonths: Record<Exclude<LocationType, "foodtruck">, number>;
+};
+
+export type PointWashAssetClass = "equipment" | "furniture" | "small_equipment";
+
+export type PointWashPackage = {
+  allocationId: "POINT-WASH-SEATING" | "POINT-WASH-TAKEAWAY";
+  name: string;
+  noDomeDishwasher: boolean;
+  components: Array<{
+    itemId: string;
+    quantity: number;
+    assetClass: PointWashAssetClass;
+    purpose: string;
+  }>;
+};
+
+export type ProductionCapacityProjection = {
+  checksPerDay: number | null;
+  foodPortionsPerCheck: number;
+  dailyProductionDemandPortions: number | null;
+  availableDailyProductionCapacityPortions: null;
+  utilizationPercent: null;
+  operations: Array<{
+    id: string;
+    label: string;
+    dailyDemandPortions: null;
+    batchCapacity: string | null;
+    batchesPerDay: null;
+    machineHoursPerDay: null;
+    availableMachineHoursPerDay: null;
+    utilizationPercent: null;
+    assetIds: string[];
+    sourceIds: string[];
+    status: "requires_technical_cards" | "requires_technical_cards_and_source_reconciliation";
+    limitation: string;
+  }>;
+  requiredParameters: Array<{ id: string; question: string; reason: string }>;
+  bottleneck: string;
+  currentPrepCooks: number;
+  schedule: string;
+  staffingPolicyStatus: "within_current_staffing_policy" | "review_required_after_two_prep_cooks";
+  status: "review_required";
+  secondShiftStatus: "not_modelled_requires_process_parameters";
 };
 
 export function networkRolloutDistrictPresetIds(): Exclude<LocationRentPresetId, "custom">[] {
@@ -226,6 +272,12 @@ export function networkRolloutGroups(): NetworkRolloutGroup[] {
       locationType: locationTypes.includes(group.location_type as LocationType) ? group.location_type as LocationType : "street",
       realEstateMode: group.real_estate_mode === "purchase" ? "purchase" : "rent",
       baselineAreaM2: numericPreset(group.baseline_area_m2, rentPreset.baselineAreaM2),
+      guestAreaM2: group.format === "with_seating" && typeof group.guest_area_m2 === "number" && Number.isFinite(group.guest_area_m2)
+        ? group.guest_area_m2
+        : null,
+      approvedSeatCount: group.format === "with_seating" && typeof group.approved_seat_count === "number" && Number.isFinite(group.approved_seat_count) && group.approved_seat_count > 0
+        ? Math.floor(group.approved_seat_count)
+        : null,
       checksPerDay: numericPreset(group.checks_per_day),
       firstOpeningMonth: numericPreset(group.first_opening_month),
       sharedSeating: typeof group.shared_seating === "boolean" ? group.shared_seating : null,
@@ -355,6 +407,19 @@ export function locationPlanningDefaults(locationType: LocationType, format: "wi
   };
 }
 
+/** Venue defaults that affect recurring OPEX but are not editable financial facts. */
+export function locationOpexDefaults(locationType: LocationType) {
+  const defaults = planning.locations.types[locationType]?.defaults ?? {};
+  return {
+    venueMusicIncluded: defaults.venue_music_included === true,
+  };
+}
+
+/** Calibration area for historical recurring premises services; it is not a new point area default. */
+export function historicalIntegratedPremisesAreaM2() {
+  return numericPreset(planning.preparation.point_area_proxy?.reference_area_m2);
+}
+
 export function locationMinimumAreaM2(format: "with_seating" | "takeaway", locationType: LocationType, sharedSeating: boolean | null) {
   if ((locationType === "foodhall" || locationType === "creative_cluster") && sharedSeating === true) return null;
   return format === "with_seating" ? Number(planning.staffing.seating.minimum_total_area_m2) : standardNetworkPointRentDefaults().minimumUiAreaM2;
@@ -424,20 +489,116 @@ export function productionStaffingProjection(networkChecksPerDay: number | null,
   };
 }
 
+/**
+ * B4 records documented machine envelopes, but the governed model still has
+ * no recipe routing, batch yields, cycle times or usable shift hours. It can
+ * therefore calculate demand in food portions only; all equipment utilization
+ * fields intentionally remain null until those process inputs are approved.
+ */
+export function productionCapacityProjection(networkChecksPerDay: number | null, schedule: "one_main_shift" | "custom" = "one_main_shift"): ProductionCapacityProjection {
+  const staffing = productionStaffingProjection(networkChecksPerDay, schedule);
+  const capacityEvidence = planning.staffing.production.capacity_evidence ?? {};
+  const portionsPerCheck = Number(canonical.revenue.foodPortionsPerCheck);
+  const operations = Array.isArray(capacityEvidence.operations)
+    ? capacityEvidence.operations.map((operation: any) => ({
+      id: String(operation.id),
+      label: String(operation.label),
+      dailyDemandPortions: null,
+      batchCapacity: typeof operation.documented_batch_capacity === "string" ? operation.documented_batch_capacity : null,
+      batchesPerDay: null,
+      machineHoursPerDay: null,
+      availableMachineHoursPerDay: null,
+      utilizationPercent: null,
+      assetIds: Array.isArray(operation.asset_ids) ? operation.asset_ids.filter((item: unknown): item is string => typeof item === "string") : [],
+      sourceIds: Array.isArray(operation.source_ids) ? operation.source_ids.filter((item: unknown): item is string => typeof item === "string") : [],
+      status: operation.operation_demand_status === "requires_technical_cards_and_source_reconciliation"
+        ? "requires_technical_cards_and_source_reconciliation" as const
+        : "requires_technical_cards" as const,
+      limitation: String(operation.limitation ?? "Для расчёта мощности требуется техкарта и process parameter."),
+    }))
+    : [];
+  const requiredParameters = Array.isArray(capacityEvidence.required_parameters)
+    ? capacityEvidence.required_parameters.map((parameter: any) => ({
+      id: String(parameter.id),
+      question: String(parameter.question),
+      reason: String(parameter.reason),
+    }))
+    : [];
+  return {
+    checksPerDay: networkChecksPerDay,
+    foodPortionsPerCheck: portionsPerCheck,
+    dailyProductionDemandPortions: networkChecksPerDay === null ? null : networkChecksPerDay * portionsPerCheck,
+    availableDailyProductionCapacityPortions: null,
+    utilizationPercent: null,
+    operations,
+    requiredParameters,
+    bottleneck: String(capacityEvidence.bottleneck ?? "Производительность производственной линии требует отдельного технического подтверждения."),
+    currentPrepCooks: staffing.concurrentPrepCooks,
+    schedule: staffing.schedule,
+    staffingPolicyStatus: staffing.capacityReviewRequired ? "review_required_after_two_prep_cooks" : "within_current_staffing_policy",
+    status: "review_required",
+    secondShiftStatus: "not_modelled_requires_process_parameters",
+  };
+}
+
 export function sharedManagerPayrollProjection(totalPointCount: number): PayrollProjection | null {
   if (totalPointCount < Number(planning.staffing.shared_manager.count_when_point_count_at_least)) return null;
   return payrollFromRoles(roleLines({ [planning.staffing.shared_manager.role_id]: 1 }, {}, true));
 }
 
+export type CanonicalNetworkOpexConstants = {
+  rawMaterialsRate: number;
+  wasteRate: number;
+  packagingBaselineChecksPerDay: number;
+  packagingBaselineMonthlyRub: number;
+  acquiringRateOfGrossRevenue: number;
+  marketingFixedMonthlyRub: number;
+  marketingVariableRateOfNetRevenue: number;
+  administrativeReserveRateOfNetRevenue: number;
+  householdFixedMonthlyRub: number;
+  householdVariableMonthlyRub: number;
+  householdBaselineChecksPerDay: number;
+  equipmentServiceMonthlyRub: number;
+  accountingMonthlyRub: number;
+  ventilationGreaseMonthlyRub: number;
+  uniformRenewalMonthlyRub: number;
+  musicRightsMonthlyRub: number;
+  pestControlMonthlyRub: number;
+  softwareMonthlyRub: number;
+  medicalMonthlyRub: number;
+  securityMonitoringMonthlyRub: number;
+  bankingMonthlyRub: number;
+  otherOpexMonthlyRub: number;
+  historicalRealisticRosterHeadcount: number;
+};
+
+/** All amounts remain sourced from the generated canonical Financial Model snapshot. */
+export function canonicalNetworkOpexConstants(): CanonicalNetworkOpexConstants {
+  return canonical.opex as CanonicalNetworkOpexConstants;
+}
+
+/** Compatibility alias for existing point-level callers. */
 export function canonicalPointOpexConstants() {
-  return canonical.opex as {
-    rawMaterialsRate: number;
-    wasteRate: number;
-    packagingBaselineChecksPerDay: number;
-    packagingBaselineMonthlyRub: number;
-    acquiringRateOfGrossRevenue: number;
-    marketingFixedMonthlyRub: number;
-    marketingVariableRateOfNetRevenue: number;
+  return canonicalNetworkOpexConstants();
+}
+
+export function pointWashPackage(format: "with_seating" | "takeaway"): PointWashPackage {
+  const source = planning.equipment.point_wash_packages?.[format];
+  if (!source) throw new Error(`Network Planning point wash package ${format} is unavailable.`);
+  const allocationId = String(source.allocation_id);
+  if (allocationId !== "POINT-WASH-SEATING" && allocationId !== "POINT-WASH-TAKEAWAY") throw new Error(`Point wash package ${format} has an invalid allocation ID.`);
+  const components = Array.isArray(source.components) ? source.components.map((component: any) => ({
+    itemId: String(component.item_id),
+    quantity: numericPreset(component.quantity),
+    assetClass: component.asset_class === "furniture" || component.asset_class === "small_equipment" ? component.asset_class : "equipment" as PointWashAssetClass,
+    purpose: String(component.purpose ?? ""),
+  })) : [];
+  if (!components.length) throw new Error(`Point wash package ${format} has no components.`);
+  return {
+    allocationId,
+    name: String(source.name),
+    noDomeDishwasher: source.no_dome_dishwasher === true,
+    components,
   };
 }
 
@@ -449,12 +610,15 @@ export function networkPlanningLaunchConstants() {
   };
 }
 
-export function logisticsPlanning(totalPointCount: number) {
+export function logisticsPlanning(additionalNetworkPointCount: number) {
   const logistics = planning.logistics;
-  const ownsVehicleSuggested = totalPointCount >= Number(logistics.own_vehicle_suggested_from_point_count);
+  const ownsVehicleSuggested = additionalNetworkPointCount >= Number(logistics.own_vehicle_suggested_from_point_count);
   return {
     ownsVehicleSuggested,
     externalMonthlyRub: logistics.external_logistics_monthly_rub === null ? null : Number(logistics.external_logistics_monthly_rub),
+    externalLogisticsSourceIds: Array.isArray(logistics.external_logistics_source_ids)
+      ? logistics.external_logistics_source_ids.map((id: unknown) => String(id))
+      : [],
     vehicleCapexRub: Number(logistics.own_vehicle_capex_rub),
     ownedMonthlyTotalRub: Number(logistics.own_vehicle_monthly_total_rub),
     driverSalaryRub: Number(logistics.driver_salary_rub),

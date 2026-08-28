@@ -1,0 +1,11 @@
+schema_version: 2
+decision_id: DEC-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-02
+iteration_id: ITR-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-02
+title: Approve exact B2 Network P&L, FCF and generated-snapshot consolidation
+status: approved
+approved_by: project owner
+approved_at: 2026-08-27T00:32:01.000Z
+scope: Continue the owner-approved Phase B core consolidation with its required Network Planning generated snapshot in the exact governed payload. This remains a local model/core iteration with no financial fact changes, Google publication, production deployment or design work.
+approved_payload_path: docs-platform/changelog/payloads/ITR-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-02-approved.yaml
+approved_payload_sha256: 884158214cfd885837c5dc701761ab4050c690e1c6ba733a5f551359eb49b597
+change_id: CHG-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-02

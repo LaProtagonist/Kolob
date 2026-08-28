@@ -1,0 +1,56 @@
+receipt_version: 1
+iteration_id: ITR-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10
+audited_at: 2026-08-28T00:53:04.000Z
+result: passed
+scenario: total_5_points_default
+scope_audit:
+  financial_mapping_bug: false
+  financial_values_changed: false
+  presentation_only: true
+point_opex_zero_rows:
+  Foodhall:
+    music:
+      source_status: venue_provided
+      presentation: Включено площадкой
+    security_monitoring:
+      source_status: venue_provided
+      presentation: Включено площадкой
+    utilities:
+      source_status: included_in_service_contract
+      presentation: hidden
+      represented_by: Эксплуатация и коммунальные
+  other_non_street_formats:
+    music_and_security_when_venue_provided: short_textual_state
+    other_zero_or_not_applicable_rows: hidden
+editorial_changes:
+  internal_terms_localized:
+    - Pest control -> Санитарная обработка
+    - sanitation-kit / cleaning kit -> санитарный комплект
+    - technical coverage statuses -> investor-facing Russian disclosure
+  labels:
+    - Административный резерв расширения -> Адм. расходы, 2%
+    - Общие расходы сети -> Общие параметры сети
+    - Вся программа -> Инвестиции программы
+    - Окупаемость -> Окупаемость объекта / Окупаемость расширения / Окупаемость сети
+  network_scope:
+    additional: Адм. расходы, 2%
+    base_reference: [Управляющий, Общий маркетинг, Бухгалтерия]
+    base_reference_presentation: Учтён в базе
+  investor_assumptions:
+    heading: Что требуется подтвердить
+    default: collapsed
+    unique_items: [Налоговый режим, Кассовые сервисы (YUMA), Банковское обслуживание, Мощность производства, Рефрижератор, Внешняя логистика на старте]
+financial_parity:
+  base_investment_rub: 40019925.48
+  base_operating_reserve_rub: 20888532
+  base_fcf_rub: 2045009.8
+  direct_point_opex_rub: 16195358.96466331
+  expansion_opex_rub: 17105071.07
+  network_opex_rub: 25330206.67
+  network_fcf_rub: 9412362.58
+  total_program_investment_rub: 101422001.73
+  upfront_investor_funding_rub: 62088281.86
+  network_payback_month: 19
+external_state:
+  google_apply: not_run
+  production_deploy: not_run

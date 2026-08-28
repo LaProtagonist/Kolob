@@ -1,0 +1,14 @@
+schema_version: 2
+decision_id: DEC-FINANCIAL-CORE-CURRENT-BASE-RESERVE-2026-08-27-05
+iteration_id: ITR-FINANCIAL-CORE-CURRENT-BASE-RESERVE-2026-08-27-05
+title: Current Base reserve uses Current Base fixed and semi-fixed P&L inputs
+status: approved
+approved_by: project owner
+approved_at: 2026-08-27T21:23:01.000Z
+scope: >-
+  Current Base Object must not use Historical Integrated Pilot fixed_opex_reserve_rub.
+  It reserves six months of Current Base fixed and semi-fixed operating costs, uses
+  protected Current Base labour, and excludes already-prepaid rent and separately
+  financed or revenue-variable items. Historical Pilot reserve and Expansion policy remain unchanged.
+approved_payload_path: docs-platform/changelog/payloads/ITR-FINANCIAL-CORE-CURRENT-BASE-RESERVE-2026-08-27-05-approved.yaml
+approved_payload_sha256: 17b253c6b41c2927cb590f6712414ab6fa06e2627377af79372dfcade4618482

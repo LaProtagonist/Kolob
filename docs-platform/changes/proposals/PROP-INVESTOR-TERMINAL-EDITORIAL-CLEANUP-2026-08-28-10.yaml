@@ -1,0 +1,14 @@
+schema_version: 2
+proposal_id: PROP-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10
+iteration_id: ITR-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10
+title: Final editorial cleanup of Investor Terminal scaling page
+status: approved
+proposed_by: project owner
+proposed_at: 2026-08-28T00:53:04.000Z
+summary: >-
+  Make the Scaling page read as a finished investor financial interface: remove
+  internal terminology, hide misleading zero-value rows, clarify Base versus
+  incremental Network scope, and consolidate investor disclosures. Preserve
+  every B5 financial result and external state.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10-approved.yaml
+approved_payload_sha256: 6f5f47e1e5ca345f065b63aa60f79336f8b1d3cdc56047a563f52ea1c49e03c4

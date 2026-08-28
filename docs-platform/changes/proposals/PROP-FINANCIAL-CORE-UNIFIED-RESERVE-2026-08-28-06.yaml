@@ -1,0 +1,10 @@
+schema_version: 2
+proposal_id: PROP-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-06
+iteration_id: ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-06
+title: Unify Operating Reserve and dated rollout funding semantics
+status: approved
+proposed_by: project owner
+proposed_at: 2026-08-28T12:00:00.000Z
+summary: Use one qualifying fixed/semi-fixed reserve contract for Current Base and Expansion, date expansion funding by cohort/service trigger, and separate programme cost from minimum external funding without publishing remotely.
+approved_payload_path: docs-platform/changelog/payloads/ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-06-approved.yaml
+approved_payload_sha256: 9f097b0d471b89d40f32d5100bda9c14c943728a6c8beb3baef89d4f587d1382

@@ -7,6 +7,7 @@ import {
   financialModelAllocationItemIds,
   findPhysicalAllocation,
   investorStartAllocationFieldIds,
+  networkPlanningAllocationItemIds,
   physicalAllocationIntegrityErrors,
   physicalAllocationMap,
 } from "../src/lib/physical-allocation.js";
@@ -17,6 +18,7 @@ const catalog = {
   preparationCategoryIds: new Set(launchModel.preparation.categories.map((category) => category.id)),
   financialModelItemIds: new Set(financialModelAllocationItemIds),
   investorStartFieldIds: new Set(investorStartAllocationFieldIds),
+  networkPlanningItemIds: new Set(networkPlanningAllocationItemIds),
 };
 
 test("physical allocation map has only known source references and no duplicate semantics", () => {
@@ -70,7 +72,7 @@ test("seating-only records never apply to takeaway", () => {
   }
 });
 
-test("integrated wash is unresolved while local point wash remains an unpriced capability", () => {
+test("integrated wash remains unresolved while B3 local point wash uses priced register components", () => {
   const integratedWash = findPhysicalAllocation("MOD-WASH")!;
   assert.equal(integratedWash.physicalScope, "mixed");
   assert.equal(integratedWash.status, "unresolved");
@@ -79,8 +81,8 @@ test("integrated wash is unresolved while local point wash remains an unpriced c
 
   for (const id of ["POINT-WASH-SEATING", "POINT-WASH-TAKEAWAY"]) {
     const record = findPhysicalAllocation(id)!;
-    assert.equal(record.pricingStatus, "not_priced");
-    assert.equal(record.status, "unresolved");
+    assert.equal(record.pricingStatus, "canonical_source");
+    assert.equal(record.status, "owner_decision");
     assert.equal(record.scalingDriver, "per_point");
   }
 });

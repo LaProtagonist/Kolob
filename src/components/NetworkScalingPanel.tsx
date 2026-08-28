@@ -14,13 +14,12 @@ import {
 } from "../lib/investor-configuration";
 import type { ConfiguredMonthlyProjection } from "../lib/configured-economics";
 import {
-  networkEconomicsProjection,
-  networkScalingProjection,
   type BaseObjectFinancialProjection,
   type NetworkPointCohortProjection,
   type NetworkScalingItem,
 } from "../lib/network-scaling";
-import { networkTemporalProjection, type TemporalPointGroupProjection } from "../lib/network-temporal";
+import { networkFinancialProjection } from "../lib/network-financial-projection";
+import type { TemporalPointGroupProjection } from "../lib/network-temporal";
 import { defaultPointPreparationCategoryIds, pointPreparationProjection } from "../lib/point-preparation";
 import {
   defaultLocationRentPresetId,
@@ -92,6 +91,41 @@ function investmentItemName(key: string, name: string) {
   return names[key] ?? name;
 }
 
+/** Investor Terminal never exposes implementation terminology from financial-core. */
+function investorFacingText(value: string) {
+  return value
+    .replaceAll("Pest control", "Санитарная обработка")
+    .replaceAll("sanitation-kit", "санитарный комплект")
+    .replaceAll("sanitation", "санитарный комплект")
+    .replaceAll("cleaning kit", "санитарный комплект")
+    .replaceAll("CAPEX register", "реестр оснащения")
+    .replaceAll("research-backed", "плановый")
+    .replaceAll("maintenance/repair", "обслуживание и ремонт")
+    .replaceAll("maintenance CAPEX", "капитальное обновление")
+    .replaceAll("maintenance", "обслуживание")
+    .replaceAll("carrier contract/route quote", "коммерческое предложение перевозчика")
+    .replaceAll("carrier contract", "договор перевозки")
+    .replaceAll("route quote", "коммерческое предложение перевозчика")
+    .replaceAll("planning baseline", "плановый ориентир")
+    .replaceAll("Historical", "Исторический")
+    .replaceAll("shared", "общий")
+    .replaceAll("generic", "общий")
+    .replaceAll("requires_confirmation", "требует подтверждения")
+    .replaceAll("review_required", "требуется проверка")
+    .replaceAll("TBD", "не задан");
+}
+
+function pointOpexRowPresentation(
+  line: { id: string; name: string; amountRub: number | null },
+  cohort: Pick<TradingPointCohort, "locationType">,
+) {
+  if (line.amountRub !== 0) return { label: investorFacingText(line.name), amountRub: line.amountRub, state: null };
+  if ((line.id === "music" || line.id === "security-monitoring") && cohort.locationType !== "street") {
+    return { label: investorFacingText(line.name), amountRub: null, state: "Включено площадкой" };
+  }
+  return null;
+}
+
 function ItemList({ items, multiplier }: { items: NetworkScalingItem[]; multiplier: "once" | "per_point" | "not_aggregated" }) {
   if (!items.length) return <p className="scaling-empty">Подтверждённых статей пока нет.</p>;
   return (
@@ -99,14 +133,14 @@ function ItemList({ items, multiplier }: { items: NetworkScalingItem[]; multipli
       {items.map((item) => (
         <details key={item.id} className={`scaling-item is-${item.ownership}`} data-ownership={item.ownership} data-multiplier={item.multiplier}>
           <summary>
-            <span>{item.name}{item.partial ? <small>В итог включена подтверждённая часть</small> : null}</span>
+            <span>{investorFacingText(item.name)}{item.partial ? <small>В итог включена подтверждённая часть</small> : null}</span>
             <strong>{item.amountRub === null ? "Требует уточнения" : item.included ? formatRub(item.amountRub) : "Не применяется"}</strong>
           </summary>
           <div className="scaling-item-detail">
             <p>{multiplier === "once" ? "Входит в базовый объект и создаётся один раз." : multiplier === "per_point" ? "Учитывается для каждой точки этой группы." : "Пока не входит в общий итог."}</p>
-            {multiplier === "not_aggregated" ? <p>{item.reason}</p> : null}
+            {multiplier === "not_aggregated" ? <p>{investorFacingText(item.reason)}</p> : null}
             {item.detail?.length ? <ul>
-              {item.detail.map((detail) => <li key={detail.id}><span>{detail.name}{detail.quantity === null ? " · количество уточняется" : ` · ${detail.quantity} шт.`}</span><strong>{formatRub(detail.amountRub)}</strong></li>)}
+              {item.detail.map((detail) => <li key={detail.id}><span>{investorFacingText(detail.name)}{detail.quantity === null ? " · количество уточняется" : ` · ${detail.quantity} шт.`}</span><strong>{formatRub(detail.amountRub)}</strong></li>)}
             </ul> : null}
             {multiplier === "not_aggregated" ? <em>Пока не включается в итог сети.</em> : null}
           </div>
@@ -260,7 +294,7 @@ function CohortEditor({
         {cohort.locationType === "street" ? <RentPresetSelector cohort={cohort} onChange={onChange} /> : null}
         <label className="cohort-field"><span>Количество</span><NumericInput label="Количество точек" testId={`scaling-cohort-count-${cohort.id}`} value={cohort.count} suffix="шт." integer onChange={(value) => onChange(updateCohortCount(cohort, value ?? 0))} /></label>
         <label className={`cohort-field${operations.area.status === "below-minimum" ? " has-warning" : ""}`}><span>Площадь помещения</span><NumericInput label="Площадь помещения" testId={`scaling-cohort-area-${cohort.id}`} value={cohort.totalAreaM2} suffix="м²" onChange={(value) => onChange(updateCohortAreaFromRentPreset(cohort, value))} />{operations.area.status === "below-minimum" ? <small className="cohort-validation" data-testid={`scaling-cohort-area-warning-${cohort.id}`}>Ниже минимума для формата: {operations.area.minimumM2} м².</small> : null}</label>
-        <label className="cohort-field"><span>Рабочая зона</span><NumericInput label="Рабочая зона" value={cohort.kitchenAreaM2} suffix="м²" onChange={(value) => update("kitchenAreaM2", value)} /></label>
+        {cohort.kitchenAreaM2 !== null ? <label className="cohort-field"><span>Рабочая зона</span><NumericInput label="Рабочая зона" value={cohort.kitchenAreaM2} suffix="м²" onChange={(value) => update("kitchenAreaM2", value)} /></label> : cohort.locationType === "foodhall" ? <div className="cohort-field cohort-static-value"><span>Рабочая зона</span><output>Определяется площадкой</output></div> : null}
         {cohort.format === "with_seating" ? <label className="cohort-field"><span>Посадочный зал</span><NumericInput label="Посадочный зал" value={cohort.guestAreaM2} suffix="м²" onChange={(value) => update("guestAreaM2", value)} /></label> : null}
         {cohort.locationType === "foodhall" ? <>
           <label className="cohort-field"><span>Процент площадке</span><NumericInput label="Процент площадке" value={cohort.revenueSharePercent} suffix="%" onChange={(value) => update("revenueSharePercent", value)} /><small>Площадка получает процент от выручки, но не меньше минимального ежемесячного платежа.</small></label>
@@ -270,7 +304,7 @@ function CohortEditor({
           <div className="cohort-field cohort-static-value"><span>Арендные каникулы</span><output>Не применяются</output></div>
         </> : cohort.realEstateMode === "rent" ? <>
           <label className="cohort-field"><span>Ставка за м²</span><NumericInput label="Ставка за м²" testId={`scaling-cohort-rent-rate-${cohort.id}`} value={cohort.rentPerM2Rub} suffix="₽ / м²" onChange={(value) => onChange(updateCohortRentRate(cohort, value))} /></label>
-          <label className="cohort-field"><span>Аренда в месяц</span><NumericInput label="Аренда в месяц" testId={`scaling-cohort-rent-${cohort.id}`} value={cohort.monthlyRentRub} suffix="₽" onChange={(value) => onChange(updateCohortMonthlyRent(cohort, value))} /></label>
+          <label className="cohort-field"><span>Аренда / мес.</span><NumericInput label="Аренда / мес." testId={`scaling-cohort-rent-${cohort.id}`} value={cohort.monthlyRentRub} suffix="₽" onChange={(value) => onChange(updateCohortMonthlyRent(cohort, value))} /></label>
           <label className="cohort-field"><span>Предоплата</span><select className="terminal-select-control" value={cohort.prepaymentMonths ?? ""} onChange={(event) => update("prepaymentMonths", event.target.value === "" ? null : Number(event.target.value) as TradingPointCohort["prepaymentMonths"])}><option value="">Не задано</option><option value={1}>1 мес.</option><option value={3}>3 мес.</option><option value={12}>12 мес.</option></select></label>
           <label className="cohort-field"><span>Обеспечительный платёж</span><select className="terminal-select-control" value={cohort.securityDepositMonths ?? ""} onChange={(event) => update("securityDepositMonths", event.target.value === "" ? null : Number(event.target.value) as TradingPointCohort["securityDepositMonths"])}><option value="">Не задано</option><option value={1}>1 мес.</option><option value={2}>2 мес.</option><option value={3}>3 мес.</option></select></label>
           <label className="cohort-field"><span>Арендные каникулы</span><NumericInput label="Арендные каникулы" testId={`scaling-cohort-rent-free-${cohort.id}`} value={cohort.rentFreeMonths} suffix="мес." integer onChange={(value) => update("rentFreeMonths", Math.max(0, Math.floor(value ?? 0)))} /><small>Период после открытия, когда аренда не начисляется.</small></label>
@@ -301,7 +335,7 @@ function CohortEditor({
         {cohort.locationType === "foodhall" ? <>
           <label className="cohort-field"><span>Эксплуатация и коммунальные</span><NumericInput label="Эксплуатация и коммунальные" value={cohort.serviceChargeMonthlyRub} suffix="₽" onChange={(value) => update("serviceChargeMonthlyRub", value)} /></label>
           <label className="cohort-field"><span>Склад</span><NumericInput label="Склад" value={cohort.storageRentMonthlyRub} suffix="₽" onChange={(value) => update("storageRentMonthlyRub", value)} /></label>
-        </> : <label className="cohort-field"><span>{cohort.locationType === "creative_cluster" ? "Коммунальные и эксплуатационные расходы" : "Коммунальные / месяц"}</span><NumericInput label={cohort.locationType === "creative_cluster" ? "Коммунальные и эксплуатационные расходы" : "Коммунальные / месяц"} value={cohort.utilitiesMonthlyRub} suffix="₽" onChange={(value) => update("utilitiesMonthlyRub", value)} /></label>}
+        </> : <label className="cohort-field"><span>{cohort.locationType === "creative_cluster" ? "Коммунальные и эксплуатационные расходы" : "Коммунальные / мес."}</span><NumericInput label={cohort.locationType === "creative_cluster" ? "Коммунальные и эксплуатационные расходы" : "Коммунальные / мес."} value={cohort.utilitiesMonthlyRub} suffix="₽" onChange={(value) => update("utilitiesMonthlyRub", value)} /></label>}
         <label className="cohort-field"><span>Вытяжка</span><select className="terminal-select-control" value={cohort.extractionAvailable === null ? "unknown" : cohort.extractionAvailable ? "yes" : "no"} data-testid={`scaling-cohort-extraction-${cohort.id}`} onChange={(event) => update("extractionAvailable", event.target.value === "unknown" ? null : event.target.value === "yes")}><option value="unknown">Требует подтверждения</option><option value="yes">Есть</option><option value="no">Нет</option></select>{operations.location.extractionStatus === "incompatible" ? <small className="cohort-validation" data-testid={`scaling-cohort-extraction-warning-${cohort.id}`}>Локация несовместима: для приготовления на точке нужна коммерческая вытяжка.</small> : null}</label>
         {(cohort.locationType === "foodhall" || cohort.locationType === "creative_cluster") ? <>
           <label className="cohort-field"><span>Общая посадка</span><select className="terminal-select-control" value={cohort.sharedSeating === null ? "unknown" : String(cohort.sharedSeating)} onChange={(event) => update("sharedSeating", event.target.value === "unknown" ? null : event.target.value === "true")}><option value="unknown">Требует уточнения</option><option value="true">Предоставляется площадкой</option><option value="false">Не предоставляется</option></select></label>
@@ -343,15 +377,21 @@ function CohortEditor({
           <div className="cohort-operation-result"><span>Минимальная площадь</span><strong data-testid={`scaling-cohort-area-minimum-${cohort.id}`}>{operations.area.minimumM2 === null ? "По договору" : `${operations.area.minimumM2} м²`}</strong><small>{operations.area.helper}</small></div>
           <div className="cohort-operation-result"><span>Людей на смене</span><strong data-testid={`scaling-cohort-minimum-staff-${cohort.id}`}>{operations.staffing.concurrentStaff}</strong><small>{operations.staffing.note ?? "Минимум одновременно на смене; это не количество штатных единиц."}</small></div>
           <div className="cohort-operation-result"><span>Штат по графику</span><strong data-testid={`scaling-cohort-roster-${cohort.id}`}>{operations.staffing.rosterHeadcount}</strong><small>Количество сотрудников, необходимое с учётом графика работы.</small></div>
-          <div className="cohort-operation-result"><span>Расходы на персонал / месяц</span><strong data-testid={`scaling-cohort-payroll-${cohort.id}`} data-amount-rub={operations.staffing.totalPayrollRub}>{formatRub(operations.staffing.totalPayrollRub)}</strong><small>Зарплаты, взносы и резерв на персонал.</small></div>
-          <div className="cohort-operation-result"><span>Выручка одной точки / месяц</span><strong data-testid={`scaling-cohort-revenue-point-${cohort.id}`} data-amount-rub={operations.sales.revenuePerPointRub ?? undefined}>{formatRub(operations.sales.revenuePerPointRub)}</strong><small>{operations.sales.workingDaysPerMonth} дней по существующей модели выручки.</small></div>
-          <div className="cohort-operation-result"><span>Выручка группы / месяц</span><strong data-testid={`scaling-cohort-revenue-${cohort.id}`} data-amount-rub={operations.sales.revenueCohortRub ?? undefined}>{formatRub(operations.sales.revenueCohortRub)}</strong><small>Выручка одной точки × {cohort.count}. Общие расходы сети учитываются отдельно.</small></div>
+          <div className="cohort-operation-result"><span>Расходы на персонал / мес.</span><strong data-testid={`scaling-cohort-payroll-${cohort.id}`} data-amount-rub={operations.staffing.totalPayrollRub}>{formatRub(operations.staffing.totalPayrollRub)}</strong><small>Зарплаты, взносы и резерв на персонал.</small></div>
+          <div className="cohort-operation-result"><span>Выручка одной точки / мес.</span><strong data-testid={`scaling-cohort-revenue-point-${cohort.id}`} data-amount-rub={operations.sales.revenuePerPointRub ?? undefined}>{formatRub(operations.sales.revenuePerPointRub)}</strong><small>{operations.sales.workingDaysPerMonth} дней по существующей модели выручки.</small></div>
+          <div className="cohort-operation-result"><span>Выручка группы / мес.</span><strong data-testid={`scaling-cohort-revenue-${cohort.id}`} data-amount-rub={operations.sales.revenueCohortRub ?? undefined}>{formatRub(operations.sales.revenueCohortRub)}</strong><small>Выручка одной точки × {cohort.count}. Общие расходы сети учитываются отдельно.</small></div>
         </div>
       </section>
       <section className="cohort-operations cohort-direct-opex" aria-label={`Прямые расходы ${projection.formatName}`}>
         <header><div><p>Расходы точки</p><h5>Операционный вклад точки</h5></div><small>{projection.directOpex.isPartial ? "Предварительный расчёт" : "Включено в расчёт"}</small></header>
         <div className="cohort-opex-lines">
-          {projection.directOpex.lines.map((line) => <div key={line.id}><span>{line.name}</span><strong>{formatRub(line.amountRub)}</strong></div>)}
+          {projection.directOpex.lines.map((line) => {
+            const row = pointOpexRowPresentation(line, cohort);
+            if (!row) return null;
+            return row.state
+              ? <div key={line.id} className="is-state" data-testid={`scaling-cohort-opex-state-${cohort.id}-${line.id}`}><span>{row.label}</span><small>{row.state}</small></div>
+              : <div key={line.id}><span>{row.label}</span><strong>{formatRub(row.amountRub)}</strong></div>;
+          })}
           <div className="is-total"><span>Прямые расходы точки</span><strong data-testid={`scaling-cohort-direct-opex-${cohort.id}`}>{formatRub(projection.directOpex.directOpexPerPointRub)}</strong></div>
           <div className="is-total"><span>Операционный вклад точки</span><strong data-testid={`scaling-cohort-contribution-${cohort.id}`}>{formatRub(projection.directOpex.operatingContributionPerPointRub)}</strong></div>
         </div>
@@ -367,16 +407,15 @@ function CohortEditor({
         <summary>Показать включённые статьи</summary>
         <ItemList items={projection.pointItems} multiplier="per_point" />
       </details>
-      <p className="cohort-partial-note">Не включает расходы, стоимость которых требует отдельного уточнения.</p>
+      {projection.isPartial ? <p className="cohort-partial-note">Отдельные статьи требуют уточнения до включения в инвестиции.</p> : null}
     </section>
   );
 }
 
 export function NetworkScalingPanel({ baseObject, onReturnToUnit }: { baseObject: BaseObjectSummary; onReturnToUnit: () => void }) {
   const { configuration, setNetworkScaling } = useInvestorConfiguration();
-  const projection = useMemo(() => networkScalingProjection(configuration), [configuration]);
-  const economics = useMemo(() => networkEconomicsProjection(configuration, baseObject), [baseObject, configuration]);
-  const temporal = useMemo(() => networkTemporalProjection(configuration, baseObject, baseObject), [baseObject, configuration]);
+  const financial = useMemo(() => networkFinancialProjection(configuration, baseObject, baseObject), [baseObject, configuration]);
+  const { scaling: projection, economics, temporal } = financial;
   const [unresolvedDetailsOpen, setUnresolvedDetailsOpen] = useState(false);
   const [expandedCohortId, setExpandedCohortId] = useState<string | null>(() => configuration.networkScaling.cohorts[1]?.id ?? null);
   const [newGroupFormat, setNewGroupFormat] = useState<TradingPointFormat>("takeaway");
@@ -389,9 +428,37 @@ export function NetworkScalingPanel({ baseObject, onReturnToUnit }: { baseObject
     .map((group) => group.firstOpeningMonth)
     .filter((month): month is number => month !== null)
     .sort((left, right) => left - right)[0] ?? null;
-  const networkInvestmentRub = temporal.expansion.investmentRub === null
-    ? null
-    : baseObject.investmentRub + temporal.expansion.investmentRub;
+  const networkInvestmentRub = temporal.funding.totalProgramInvestmentRub;
+  const logisticsHelper = projection.operating.logisticsMode === "own"
+    ? "Собственный рефрижератор включён в расчёт."
+    : projection.operating.logisticsMode === "external"
+      ? "Внешняя доставка до запуска собственной логистики."
+      : "Режим логистики требует уточнения.";
+  const investorAssumptions = useMemo<Array<{ id: string; title: string; detail: string }>>(() => {
+    const items: Array<{ id: string; title: string; detail: string }> = [];
+    const add = (item: { id: string; title: string; detail: string }) => {
+      if (!items.some((existing) => existing.id === item.id)) items.push(item);
+    };
+    if (financial.coverage.assumptions !== "confirmed") add({
+      id: "tax:vat-confirmation",
+      title: "Налоговый режим",
+      detail: "Требуется подтверждение. В расчёте сохранено текущее допущение.",
+    });
+    for (const exclusion of financial.exclusions) {
+      if (exclusion.id === "opex:software") add({ id: exclusion.id, title: "Кассовые сервисы (YUMA)", detail: "Уточнить схему лицензирования." });
+      else if (exclusion.id === "opex:banking") add({ id: exclusion.id, title: "Банковское обслуживание", detail: "Тариф пока не задан." });
+      else if (exclusion.id === "production:capacity-expansion") add({ id: exclusion.id, title: "Мощность производства", detail: "Требуется проверка по техкартам и производительности оборудования." });
+      else if (exclusion.id === "logistics:vehicle-depreciation-maintenance") add({ id: exclusion.id, title: "Рефрижератор", detail: "Уточнить срок амортизации; эксплуатационные расходы уже учтены в логистике." });
+      else if (exclusion.id === "logistics:external-planning-baseline" || exclusion.id === "logistics:external-monthly") add({ id: exclusion.id, title: "Внешняя логистика на старте", detail: "150 000 ₽/мес. — плановый ориентир; требуется коммерческое предложение перевозчика." });
+      else add({ id: exclusion.id, title: investorFacingText(exclusion.name), detail: investorFacingText(exclusion.reason) });
+    }
+    if (financial.coverage.capacity !== "covered" && !items.some((item) => item.title === "Мощность производства")) add({
+      id: "production:capacity-review",
+      title: "Мощность производства",
+      detail: "Требуется проверка по техкартам и производительности оборудования.",
+    });
+    return items;
+  }, [financial.coverage.assumptions, financial.coverage.capacity, financial.exclusions]);
 
   useEffect(() => {
     if (expandedCohortId && !configuration.networkScaling.cohorts.some((cohort) => cohort.id === expandedCohortId)) {
@@ -484,7 +551,7 @@ export function NetworkScalingPanel({ baseObject, onReturnToUnit }: { baseObject
               {additionalCohorts.map((cohort) => {
                 const cohortTemporal = temporal.expansion.groups.find((item) => item.cohortId === cohort.cohort.id);
                 return <button key={cohort.cohort.id} type="button" className={`cohort-table-row${expandedCohortId === cohort.cohort.id ? " is-expanded" : ""}`} data-testid={`scaling-cohort-row-${cohort.cohort.id}`} onClick={() => setExpandedCohortId((current) => current === cohort.cohort.id ? null : cohort.cohort.id)} aria-expanded={expandedCohortId === cohort.cohort.id}>
-                  <span>{cohort.cohort.locationRentPresetId === "custom" ? "Свой вариант" : locationRentPreset(cohort.cohort.locationRentPresetId).shortLabel}<small>{cohort.cohort.locationType === "street" && cohort.cohort.rentPerM2Rub !== null ? `${formatNumber(cohort.cohort.rentPerM2Rub, true)} ₽/м²` : "Условия площадки"}</small></span><span>{cohort.formatName}</span><span>{locationLabel(cohort.cohort.locationType)}<small>{cohortEstateLabel(cohort.cohort)}</small></span><strong>{cohort.cohort.totalAreaM2 === null ? "Требует уточнения" : `${formatNumber(cohort.cohort.totalAreaM2)} м²`}</strong><strong>{formatCount(cohort.operational.sales.checksPerDay)}</strong><strong>{formatCount(cohort.cohort.count)}</strong><strong>{monthText(cohortTemporal?.firstOpeningMonth ?? null)}<small>{cohortTemporal?.openingWaves.length && cohortTemporal.openingWaves.length > 1 ? openingWavesText(cohortTemporal.openingWaves.slice(1)) : "по графику"}</small></strong><strong>{formatMillion(cohort.confirmedPointInvestmentRub)}<small>{cohort.isPartial ? "не все расходы оценены" : "расчётная стоимость"}</small></strong>
+                  <span>{cohort.cohort.locationRentPresetId === "custom" ? "Свой вариант" : locationRentPreset(cohort.cohort.locationRentPresetId).shortLabel}<small>{cohort.cohort.locationType === "street" && cohort.cohort.rentPerM2Rub !== null ? `${formatNumber(cohort.cohort.rentPerM2Rub, true)} ₽/м²` : "Условия площадки"}</small></span><span>{cohort.formatName}</span><span>{locationLabel(cohort.cohort.locationType)}<small>{cohortEstateLabel(cohort.cohort)}</small></span><strong>{cohort.cohort.totalAreaM2 === null ? "Требует уточнения" : `${formatNumber(cohort.cohort.totalAreaM2)} м²`}</strong><strong>{formatCount(cohort.operational.sales.checksPerDay)}</strong><strong>{formatCount(cohort.cohort.count)}</strong><strong>{monthText(cohortTemporal?.firstOpeningMonth ?? null)}<small>{cohortTemporal?.openingWaves.length && cohortTemporal.openingWaves.length > 1 ? openingWavesText(cohortTemporal.openingWaves.slice(1)) : "по графику"}</small></strong><strong>{formatMillion(cohort.confirmedPointInvestmentRub)}<small>{cohort.isPartial ? "не все статьи оценены" : "расчётная стоимость"}</small></strong>
                 </button>;
               })}
             </div>
@@ -498,39 +565,46 @@ export function NetworkScalingPanel({ baseObject, onReturnToUnit }: { baseObject
           </section>
 
           <section className="scaling-section" aria-labelledby="network-costs-title">
-            <header><div><p>На всю сеть</p><h3 id="network-costs-title">Общие расходы сети</h3></div><strong className="scaling-multiplier">×1</strong></header>
-            <p className="scaling-section-intro">Расходы, которые относятся ко всей сети, а не к отдельной точке.</p>
+            <header><div><p>На всю сеть</p><h3 id="network-costs-title">Общие параметры сети</h3></div><strong className="scaling-multiplier">×1</strong></header>
+            <p className="scaling-section-intro">Настройки общей инфраструктуры и дополнительные расходы, не относящиеся к отдельной точке.</p>
             <div className="cohort-editor-grid">
               <label className="cohort-field"><span>Режим логистики</span><select className="terminal-select-control" value={configuration.networkScaling.logistics.mode} onChange={(event) => setNetworkScaling((current) => ({ ...current, logistics: { ...current.logistics, mode: event.target.value as "auto" | "external" | "own" } }))}><option value="auto">Авто по количеству точек</option><option value="external">Внешняя логистика</option><option value="own">Собственный рефрижератор</option></select></label>
               <label className="cohort-field"><span>График производства</span><select className="terminal-select-control" value={configuration.networkScaling.productionSchedule} onChange={(event) => setNetworkScaling((current) => ({ ...current, productionSchedule: event.target.value === "custom" ? "custom" : "one_main_shift" }))}><option value="one_main_shift">Одна основная смена</option><option value="custom">Нужен отдельный график</option></select><small>Задаёт режим работы заготовочного производства.</small></label>
-              {projection.operating.logisticsMode === "external" ? <label className="cohort-field"><span>Внешняя логистика / месяц</span><NumericInput label="Внешняя логистика" value={configuration.networkScaling.logistics.externalMonthlyRub} suffix="₽" onChange={(value) => setNetworkScaling((current) => ({ ...current, logistics: { ...current.logistics, externalMonthlyRub: value } }))} /><small>Для 1–2 точек задаётся договором.</small></label> : <>
-                <label className="cohort-field"><span>Рефрижератор · инвестиции</span><NumericInput label="Рефрижератор, инвестиции" value={configuration.networkScaling.logistics.ownedVehicleCapexRub ?? projection.operating.logisticsVehicleCapexRub} suffix="₽" onChange={(value) => setNetworkScaling((current) => ({ ...current, logistics: { ...current.logistics, ownedVehicleCapexRub: value } }))} /><small>Включает автомобиль для ежедневной развозки.</small></label>
-                <label className="cohort-field"><span>Логистика / месяц</span><NumericInput label="Логистика / месяц" value={configuration.networkScaling.logistics.ownedMonthlyTotalRub ?? projection.operating.logisticsRub} suffix="₽" onChange={(value) => setNetworkScaling((current) => ({ ...current, logistics: { ...current.logistics, ownedMonthlyTotalRub: value } }))} /><small>Включает водителя, топливо, обслуживание и резерв.</small></label>
+              {projection.operating.logisticsMode === "external" ? <label className="cohort-field"><span>Внешняя логистика / мес.</span><NumericInput label="Внешняя логистика" value={configuration.networkScaling.logistics.externalMonthlyRub} suffix="₽" onChange={(value) => setNetworkScaling((current) => ({ ...current, logistics: { ...current.logistics, externalMonthlyRub: value } }))} /><small>{logisticsHelper}</small></label> : <>
+                <label className="cohort-field"><span>Рефрижератор · инвестиции</span><NumericInput label="Рефрижератор, инвестиции" value={configuration.networkScaling.logistics.ownedVehicleCapexRub ?? projection.operating.logisticsVehicleCapexRub} suffix="₽" onChange={(value) => setNetworkScaling((current) => ({ ...current, logistics: { ...current.logistics, ownedVehicleCapexRub: value } }))} /><small>{logisticsHelper}</small></label>
+                <label className="cohort-field"><span>Логистика / мес.</span><NumericInput label="Логистика / мес." value={configuration.networkScaling.logistics.ownedMonthlyTotalRub ?? projection.operating.logisticsRub} suffix="₽" onChange={(value) => setNetworkScaling((current) => ({ ...current, logistics: { ...current.logistics, ownedMonthlyTotalRub: value } }))} /><small>Включает водителя, топливо, обслуживание и резерв.</small></label>
               </>}
             </div>
-            <div className="scaling-row"><span>Управляющий сети</span><strong>{formatRub(projection.operating.managerPayroll?.totalPayrollRub ?? null)}</strong></div>
-            <div className="scaling-row"><span>Общий маркетинг / месяц</span><strong>{formatRub(projection.operating.fixedMarketingRub)}</strong></div>
-            <div className="scaling-row is-note"><span>Прочие общие расходы</span><small>Уточняются по мере развития сети и пока не входят в итог.</small></div>
-            <p className="scaling-row is-note"><span>Развозка</span><small>Преимущественно ночью или вне пикового трафика. При росте сети можно рассмотреть собственный автомобиль.</small></p>
+            <div className="network-parameter-group">
+              <p>Дополнительные расходы</p>
+              <div className="scaling-row"><span>Адм. расходы, 2%</span><strong>{formatRub(projection.operating.administrativeReserveRub)}</strong></div>
+            </div>
+            <div className="network-parameter-group">
+              <p>Учтено в базовом объекте</p>
+              <div className="scaling-row is-note"><span>Управляющий</span><small>Учтён в базе</small></div>
+              <div className="scaling-row is-note"><span>Общий маркетинг</span><small>Учтён в базе</small></div>
+              <div className="scaling-row is-note"><span>Бухгалтерия</span><small>Учтена в базе</small></div>
+            </div>
+            <div className="scaling-row is-note"><span>Мощность производства</span><small>{projection.operating.productionCapacity?.status === "review_required" ? "Мощность требует проверки." : "Покрыто текущим графиком."}</small></div>
           </section>
 
           <section className="scaling-section is-unresolved" aria-labelledby="unresolved-title">
-            <header><div><p>Требует уточнения</p><h3 id="unresolved-title">Пока не включено в расчёт</h3></div><strong className="scaling-multiplier">{projection.unresolvedItems.length}</strong></header>
-            <div className="scaling-unresolved-brief" data-testid="scaling-reserve"><p>Эти статьи требуют уточнения и пока не входят в итог.</p></div>
-            <button type="button" className="scaling-details-button" aria-expanded={unresolvedDetailsOpen} onClick={() => setUnresolvedDetailsOpen((open) => !open)}>{unresolvedDetailsOpen ? "Скрыть список" : `Показать статьи (${projection.unresolvedItems.length})`}</button>
-            {unresolvedDetailsOpen ? <div data-testid="scaling-unresolved"><ItemList items={projection.unresolvedItems} multiplier="not_aggregated" /></div> : null}
+            <header><div><p>Допущения и ограничения</p><h3 id="unresolved-title">Что требуется подтвердить</h3></div></header>
+            <div className="scaling-unresolved-brief" data-testid="scaling-assumptions"><p>Расчёт основан на текущих плановых данных. Перед финальной инвестиционной версией необходимо уточнить несколько параметров.</p></div>
+            <button type="button" className="scaling-details-button" aria-expanded={unresolvedDetailsOpen} onClick={() => setUnresolvedDetailsOpen((open) => !open)}>{unresolvedDetailsOpen ? "Скрыть параметры" : "Показать параметры для уточнения"}</button>
+            {unresolvedDetailsOpen ? <div data-testid="scaling-unresolved"><ul className="scaling-item-list">{investorAssumptions.map((item) => <li key={item.id} className="scaling-item is-unresolved"><strong>{item.title}</strong><p>{item.detail}</p></li>)}</ul></div> : null}
           </section>
         </div>
 
-        <aside className="scaling-results" aria-label="Сводка масштабирования" tabIndex={0} onWheel={continueSummaryScroll}>
+        <aside className="scaling-results" aria-label="Сводка масштабирования" data-base-opex-rub={baseObject.opexRub} tabIndex={0} onWheel={continueSummaryScroll}>
           <p>Сводка сети</p>
           <h3>Базовый объект</h3>
           <dl>
             <div><dt>Инвестиции</dt><dd data-testid="scaling-base-object-summary" data-amount-rub={baseObject.investmentRub}>{formatRub(baseObject.investmentRub)}</dd></div>
-            <div><dt>Выручка / месяц</dt><dd>{formatRub(baseObject.revenueRub)}</dd></div>
-            <div><dt>Операционный результат</dt><dd>{formatRub(baseObject.operatingResultRub)}</dd></div>
-            <div><dt>Денежный поток</dt><dd>{formatRub(baseObject.cashFlowRub)}</dd></div>
-            <div className="is-total"><dt>Окупаемость базового объекта</dt><dd>{paybackText(baseObject.paybackMonth)}</dd></div>
+            <div><dt>Выручка / мес.</dt><dd>{formatRub(baseObject.revenueRub)}</dd></div>
+            <div><dt>EBITDA</dt><dd>{formatRub(baseObject.operatingResultRub)}</dd></div>
+            <div><dt>FCF / мес.</dt><dd data-testid="scaling-base-fcf" data-amount-rub={baseObject.cashFlowRub}>{formatRub(baseObject.cashFlowRub)}</dd></div>
+            <div className="is-total"><dt>Окупаемость объекта</dt><dd>{paybackText(baseObject.paybackMonth)}</dd></div>
           </dl>
           <section className="scaling-network-sales" aria-label="Расширение сети">
             <p>Расширение сети</p>
@@ -539,42 +613,45 @@ export function NetworkScalingPanel({ baseObject, onReturnToUnit }: { baseObject
               <div><dt>Период открытий</dt><dd>{firstAdditionalOpening === null ? "Требует уточнения" : `${monthText(firstAdditionalOpening)} → ${monthText(temporal.lastOpeningMonth)}`}</dd></div>
               <div><dt>Инвестиции точек</dt><dd data-testid="scaling-additional-investment" data-amount-rub={temporal.expansion.pointInvestmentRub}>{formatRub(temporal.expansion.pointInvestmentRub)}</dd></div>
               {projection.sharedItems.map((item) => <div key={item.id}><dt>{item.name}</dt><dd data-testid="scaling-shared-investment" data-amount-rub={item.amountRub ?? undefined}>{formatRub(item.amountRub)}</dd></div>)}
-              <div><dt>Операционный запас (предварительно)</dt><dd data-testid="scaling-expansion-reserve" data-amount-rub={temporal.expansion.operatingReserveRub ?? undefined}>{formatRub(temporal.expansion.operatingReserveRub)}<small>{configuration.launchBudget.operatingReserveMonths} мес. расчётных расходов</small></dd></div>
-              <div><dt>Выручка после выхода на режим</dt><dd>{formatRub(economics.expansion.revenueRub)}</dd></div>
-              <div><dt>Прямые расходы точек{temporal.expansion.isPartial ? " (предварительно)" : ""}</dt><dd>{formatRub(economics.expansion.directOpexRub)}</dd></div>
-              <div><dt>Дополнительные общие расходы</dt><dd>{formatRub(economics.expansion.sharedOpexRub)}</dd></div>
-              <div><dt>Денежный поток после выхода на режим</dt><dd>{formatRub(economics.expansion.cashFlowRub)}</dd></div>
-              <div className="is-total"><dt>Окупаемость программы расширения</dt><dd>{paybackText(temporal.expansion.paybackMonth)}</dd></div>
+              <div><dt>Запас расширения</dt><dd data-testid="scaling-expansion-reserve" data-amount-rub={temporal.expansion.operatingReserveRub ?? undefined}>{formatRub(temporal.expansion.operatingReserveRub)}</dd></div>
+              <div><dt>Выручка / мес.</dt><dd>{formatRub(economics.expansion.revenueRub)}</dd></div>
+              <div><dt>Прямые расходы точек</dt><dd>{formatRub(economics.expansion.directOpexRub)}</dd></div>
+              <div><dt>Доп. общие расходы</dt><dd>{formatRub(economics.expansion.sharedOpexRub)}</dd></div>
+              <div><dt>FCF / мес.</dt><dd data-testid="scaling-expansion-fcf" data-amount-rub={economics.expansion.cashFlowRub ?? undefined}>{formatRub(economics.expansion.cashFlowRub)}</dd></div>
+              <div className="is-total"><dt>Окупаемость расширения</dt><dd>{paybackText(temporal.expansion.paybackMonth)}</dd></div>
             </dl>
-            <small>{temporal.expansion.isPartial ? `Предварительный расчёт: ${temporal.expansion.missing.join(", ")}.` : `Разгон и сезонность учтены до ${monthText(temporal.fullScaleMonth)}.`}</small>
+            <small>{temporal.expansion.isPartial ? "Предварительный расчёт." : `Все точки на плановом режиме: ${monthText(temporal.fullScaleMonth)}.`}</small>
           </section>
           <section className="scaling-network-sales" aria-label="Сеть целиком" data-testid="scaling-network-sales">
             <p>Сеть целиком</p>
             <dl>
               <div><dt>Всего точек</dt><dd data-testid="scaling-network-points">{formatCount(temporal.network.pointCount)}</dd></div>
-              <div><dt>Общие инвестиции</dt><dd data-testid="scaling-network-total" data-amount-rub={networkInvestmentRub ?? undefined}>{formatRub(networkInvestmentRub)}</dd></div>
+              <div><dt>Инвестиции программы</dt><dd data-testid="scaling-network-total" data-amount-rub={networkInvestmentRub ?? undefined}>{formatRub(networkInvestmentRub)}</dd></div>
+              <div><dt>Нужно привлечь</dt><dd data-testid="scaling-upfront-funding" data-amount-rub={temporal.funding.upfrontInvestorFundingRub ?? undefined}>{formatRub(temporal.funding.upfrontInvestorFundingRub)}</dd></div>
               <div><dt>Чеков / день</dt><dd data-testid="scaling-network-checks" data-checks-per-day={projection.sales.checksPerDay ?? undefined}>{formatCount(projection.sales.checksPerDay)}</dd></div>
-              <div><dt>Выручка после выхода на режим</dt><dd data-testid="scaling-network-revenue" data-amount-rub={economics.network.revenueRub ?? undefined}>{formatRub(economics.network.revenueRub)}</dd></div>
-              <div><dt>Расходы после выхода на режим</dt><dd>{formatRub(economics.network.opexRub)}</dd></div>
-              <div><dt>Операционный результат</dt><dd>{formatRub(economics.network.operatingResultRub)}</dd></div>
-              <div><dt>Денежный поток после выхода на режим</dt><dd>{formatRub(economics.network.cashFlowRub)}</dd></div>
-              <div className="is-total"><dt>Совокупный денежный поток выходит в плюс</dt><dd>{paybackText(temporal.network.paybackMonth)}</dd></div>
+              <div><dt>Выручка / мес.</dt><dd data-testid="scaling-network-revenue" data-amount-rub={economics.network.revenueRub ?? undefined}>{formatRub(economics.network.revenueRub)}</dd></div>
+              <div><dt>OPEX / мес.</dt><dd data-testid="scaling-network-opex" data-amount-rub={economics.network.opexRub ?? undefined}>{formatRub(economics.network.opexRub)}</dd></div>
+              <div><dt>EBITDA</dt><dd>{formatRub(economics.network.operatingResultRub)}</dd></div>
+              <div><dt>FCF / мес.</dt><dd data-testid="scaling-network-fcf" data-amount-rub={economics.network.cashFlowRub ?? undefined}>{formatRub(economics.network.cashFlowRub)}</dd></div>
+              <div className="is-total"><dt>Окупаемость сети</dt><dd data-testid="scaling-network-payback" data-payback-month={temporal.network.paybackMonth ?? undefined}>{paybackText(temporal.network.paybackMonth)}</dd></div>
             </dl>
-            <small data-testid="scaling-network-sales-status">{temporal.network.isPartial ? "Предварительный расчёт: известная часть расходов показана отдельно от условий, которые ещё нужно уточнить." : `Все точки вышли на плановый режим: ${monthText(temporal.fullScaleMonth)}.`}</small>
+            <small data-testid="scaling-network-sales-status">{temporal.network.isPartial || financial.coverage.hasCaveats ? "Предварительный расчёт." : `Все точки на плановом режиме: ${monthText(temporal.fullScaleMonth)}.`}</small>
           </section>
-          <section className="scaling-network-sales scaling-network-operating" aria-label="Общие расходы сети" data-testid="scaling-network-operating">
-            <p>Общие расходы сети</p>
+          <section className="scaling-network-sales scaling-network-operating" aria-label="Расходы расширения" data-testid="scaling-network-operating">
+            <p>Расходы расширения</p>
             <dl>
-              <div><dt>Прямые расходы точек{projection.operating.incompletePointCohortCount > 0 ? " (предварительно)" : ""}</dt><dd data-testid="scaling-network-direct-opex">{formatRub(projection.operating.pointDirectOpexRub)}{projection.operating.incompletePointCohortCount > 0 ? <small>Требует уточнения: {projection.operating.incompletePointCohortCount} {projection.operating.incompletePointCohortCount === 1 ? "группа" : "группы"}</small> : null}</dd></div>
-              <div><dt>Заготовочное производство</dt><dd>{formatRub(projection.operating.expansionProductionPayrollRub)}</dd></div>
-              <div><dt>Управляющий сети</dt><dd data-testid="scaling-manager-payroll">{formatRub(projection.operating.expansionManagerPayrollRub)}</dd></div>
-              <div><dt>Логистика</dt><dd data-testid="scaling-logistics-opex">{formatRub(projection.operating.logisticsRub)}</dd></div>
-              <div><dt>Общий маркетинг</dt><dd>{formatRub(projection.operating.expansionFixedMarketingRub)}</dd></div>
-              <div className="is-total"><dt>Расходы расширения</dt><dd data-testid="scaling-base-network-opex">{formatRub(economics.expansion.sharedOpexRub)}</dd></div>
+              <div><dt>Прямые расходы точек</dt><dd data-testid="scaling-network-direct-opex" data-amount-rub={projection.operating.pointDirectOpexRub ?? undefined}>{formatRub(projection.operating.pointDirectOpexRub)}</dd></div>
+              <div><dt>Производство</dt><dd data-testid="scaling-expansion-production-opex" data-amount-rub={projection.operating.expansionProductionPayrollRub ?? undefined}>{formatRub(projection.operating.expansionProductionPayrollRub)}</dd></div>
+              {projection.operating.expansionManagerPayrollRub !== null && projection.operating.expansionManagerPayrollRub !== 0 ? <div><dt>Управляющий</dt><dd data-testid="scaling-manager-payroll" data-amount-rub={projection.operating.expansionManagerPayrollRub}>{formatRub(projection.operating.expansionManagerPayrollRub)}</dd></div> : null}
+              <div><dt>Адм. расходы, 2%</dt><dd data-testid="scaling-expansion-admin-reserve" data-amount-rub={projection.operating.administrativeReserveRub ?? undefined}>{formatRub(projection.operating.administrativeReserveRub)}</dd></div>
+              <div><dt>Спецодежда производства</dt><dd data-testid="scaling-expansion-uniforms" data-amount-rub={projection.operating.incrementalUniformRenewalRub ?? undefined}>{formatRub(projection.operating.incrementalUniformRenewalRub)}</dd></div>
+              <div><dt>Медосмотры производства</dt><dd data-testid="scaling-expansion-medical" data-amount-rub={projection.operating.incrementalMedicalRub ?? undefined}>{formatRub(projection.operating.incrementalMedicalRub)}</dd></div>
+              <div><dt>Логистика</dt><dd data-testid="scaling-logistics-opex" data-amount-rub={projection.operating.logisticsRub ?? undefined}>{formatRub(projection.operating.logisticsRub)}</dd></div>
+              {projection.operating.expansionFixedMarketingRub !== null && projection.operating.expansionFixedMarketingRub !== 0 ? <div><dt>Доп. маркетинг</dt><dd data-testid="scaling-expansion-marketing" data-amount-rub={projection.operating.expansionFixedMarketingRub}>{formatRub(projection.operating.expansionFixedMarketingRub)}</dd></div> : null}
+              <div className="is-total"><dt>Расходы расширения</dt><dd data-testid="scaling-expansion-opex" data-amount-rub={economics.expansion.opexRub ?? undefined}>{formatRub(economics.expansion.opexRub)}</dd></div>
             </dl>
-            <small data-testid="scaling-network-operating-status">Один управляющий и общий маркетинг уже относятся к базовому объекту; в расширении показано только дополнительное влияние.</small>
+            <small data-testid="scaling-network-operating-status">База не дублируется.</small>
           </section>
-          <p className="scaling-partial-note">Пока не включено: {projection.unresolvedItems.length} статей. Эти расходы уточняются по конкретному помещению и не входят в итог.</p>
           <button type="button" className="terminal-secondary-action" onClick={onReturnToUnit}>Изменить базовый объект</button>
         </aside>
       </div>

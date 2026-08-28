@@ -1,0 +1,86 @@
+schema_version: 2
+payload_id: PAYLOAD-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-01
+iteration_id: ITR-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-01
+proposal_id: PROP-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-01
+decision_id: DEC-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-01
+change_set_id: CHG-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-01
+title: Consolidate Network P&L and FCF through the shared financial core
+status: approved
+approved_by: project owner
+approved_at: 2026-08-27T00:31:01.000Z
+scope:
+  - Build structured Current Base, Network Expansion and Consolidated Network projections from shared revenue, tax, depreciation, maintenance, FCF and temporal primitives.
+  - Preserve Historical Integrated Pilot as a separate reference context and preserve accepted Current Base outputs.
+  - Replace the former Expansion operating-contribution cash-flow label with a shared EBITDA minus tax minus maintenance CAPEX FCF basis.
+  - Map each historical OPEX line explicitly to Current Base and an approved or unresolved Network scope; keep unpriced wash, banking, capacity and vehicle-policy gaps visible.
+  - Reuse governed CAPEX and useful-life routing for Network asset depreciation and maintenance, including cohort-specific preparation routing.
+  - Generate local Current Base, Expansion and 5/9/13-point Network artifacts plus local legacy Google payloads; do not apply them remotely.
+constraints:
+  - no new or changed rent, CAPEX, price, revenue, OPEX, payroll, tax-rate, reserve-horizon, rollout or capacity business facts
+  - no invented price or rule for point wash packages, banking, vehicle maintenance/depreciation, unresolved historical OPEX or a second production shift
+  - no Google apply, Google schema redesign, Google document mutation or OAuth operation
+  - no production deployment, master merge or Terminal visual redesign
+  - no change to the Historical Integrated Pilot reference facts or accepted Current Base regression controls
+affected_document_ids:
+  - DOC-FINANCIAL-MODEL
+  - DOC-INVESTOR-FINANCIAL-SUMMARY
+state_hash_paths:
+  - docs-platform/app/src/financial/financial-model.ts
+  - docs-platform/generated/financial-google-sheets-payload.json
+  - docs-platform/generated/financial-model-projection.json
+  - docs-platform/generated/investor-financial-summary-google-sheets-payload.json
+  - docs-platform/generated/investor-financial-summary.json
+  - docs-platform/generated/financial-core-projection.json
+  - docs-platform/working/investor-financial-summary.yaml
+  - package.json
+  - scripts/generate-financial-core-projection.ts
+  - scripts/test-financial-core.test.ts
+  - scripts/test-investor-journey.test.ts
+  - scripts/test-investor-terminal.cjs
+  - src/components/NetworkScalingPanel.tsx
+  - src/lib/configured-economics.ts
+  - src/lib/financial-assets.ts
+  - src/lib/financial-core.ts
+  - src/lib/network-financial-core.ts
+  - src/lib/network-financial-projection.ts
+  - src/lib/network-scaling.ts
+  - src/lib/network-temporal.ts
+  - src/lib/physical-allocation.ts
+  - verification/domains.json
+content_paths:
+  - docs-platform/app/src/financial/financial-model.ts
+  - docs-platform/generated/financial-google-sheets-payload.json
+  - docs-platform/generated/financial-model-projection.json
+  - docs-platform/generated/investor-financial-summary-google-sheets-payload.json
+  - docs-platform/generated/investor-financial-summary.json
+  - docs-platform/generated/financial-core-projection.json
+  - docs-platform/working/investor-financial-summary.yaml
+  - package.json
+  - scripts/generate-financial-core-projection.ts
+  - scripts/test-financial-core.test.ts
+  - scripts/test-investor-journey.test.ts
+  - scripts/test-investor-terminal.cjs
+  - src/components/NetworkScalingPanel.tsx
+  - src/lib/configured-economics.ts
+  - src/lib/financial-assets.ts
+  - src/lib/financial-core.ts
+  - src/lib/network-financial-core.ts
+  - src/lib/network-financial-projection.ts
+  - src/lib/network-scaling.ts
+  - src/lib/network-temporal.ts
+  - src/lib/physical-allocation.ts
+  - verification/domains.json
+  - docs-platform/changes/
+  - docs-platform/changelog/audit/
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/payloads/
+  - docs-platform/changelog/previews/
+  - docs-platform/changelog/verification/
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+allowed_dirty_paths: []
+rollback_payload: null

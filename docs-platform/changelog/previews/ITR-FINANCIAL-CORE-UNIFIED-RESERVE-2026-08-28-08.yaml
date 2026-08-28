@@ -1,0 +1,39 @@
+receipt_version: 1
+iteration_id: ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-08
+decision_id: DEC-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-08
+change_set_id: CHG-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-08
+previewed_at: 2026-08-27T23:15:32.000Z
+result: reviewed
+mutation_performed: false
+before_state_sha256: 2100acc34d68687ab32b14af78f0472235985be07cbb8fd69bfd35f6a1897fce
+after_state_sha256: 839fe84603cfaf077d31199c1f8095a167104e98df6950f51f7644830da064d1
+predecessors:
+  - iteration_id: ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-06
+    status: failed_before_content_commit
+    reason: undeclared typed Expansion operating-reserve property
+  - iteration_id: ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-07
+    status: failed_before_content_commit
+    reason: nullable reserve amount in strict aggregation
+economic_preview:
+  current_base:
+    monthly_qualifying_reserve_basis_rub: 3481422
+    operating_reserve_rub: 20888532
+    start_investment_rub: 40019924.66
+  total_5_points:
+    expansion_reserve_rub: 34410155.34
+    total_program_investment_rub: 101422001.73
+    upfront_investor_funding_rub: 62088281.86
+    temporal_payback_month: 19
+  total_9_points:
+    expansion_reserve_rub: 65461777.62
+    total_program_investment_rub: 154465545.74
+    upfront_investor_funding_rub: 62088281.86
+    temporal_payback_month: 20
+  total_13_points:
+    expansion_reserve_rub: 96513399.9
+    total_program_investment_rub: 207509089.75
+    upfront_investor_funding_rub: 62088281.86
+    temporal_payback_month: 20
+external_changes:
+  google_apply: not_run
+  production_deploy: not_run

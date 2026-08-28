@@ -1,0 +1,14 @@
+schema_version: 2
+decision_id: DEC-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09
+iteration_id: ITR-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09
+title: Approve compact value-first Investor Terminal summary presentation
+status: approved
+approved_by: project owner
+approved_at: 2026-08-28T00:10:00.000Z
+scope: >-
+  Right-summary values take precedence over labels and helpers. The presentation
+  must distinguish direct point OPEX from incremental Production and Shared
+  Expansion OPEX, hide zero rows already represented in Base, and retain the
+  existing governed B5 financial projection unchanged.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09-approved.yaml
+approved_payload_sha256: 8c0ef8ab155d4d4394d026b3375683797b579f4ea7e31896b0724cf70d5da240

@@ -1,0 +1,10 @@
+change_id: CHG-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-06
+title: Implement unified reserve and rollout funding projection
+status: approved
+created_at: 2026-08-28
+decision_id: DEC-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-06
+iteration_id: ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-06
+proposal_id: PROP-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-06
+approved_payload_path: docs-platform/changelog/payloads/ITR-FINANCIAL-CORE-UNIFIED-RESERVE-2026-08-28-06-approved.yaml
+approved_payload_sha256: 9f097b0d471b89d40f32d5100bda9c14c943728a6c8beb3baef89d4f587d1382
+operations: []

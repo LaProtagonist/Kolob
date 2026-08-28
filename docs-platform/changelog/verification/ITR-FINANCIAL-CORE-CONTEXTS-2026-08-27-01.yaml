@@ -1,0 +1,24 @@
+receipt_version: 1
+iteration_id: ITR-FINANCIAL-CORE-CONTEXTS-2026-08-27-01
+decision_id: DEC-FINANCIAL-CORE-CONTEXTS-2026-08-27-01
+change_set_id: CHG-FINANCIAL-CORE-CONTEXTS-2026-08-27-01
+verified_at: 2026-08-27T00:24:00.000Z
+result: passed
+checks:
+  - env PATH=/opt/homebrew/opt/node@25/bin:$PATH npx tsc -b --pretty false
+  - env PATH=/opt/homebrew/opt/node@25/bin:$PATH npx tsx scripts/test-financial-core.test.ts (3 passed)
+  - env PATH=/opt/homebrew/opt/node@25/bin:$PATH npx tsx scripts/test-physical-allocation-map.test.ts (9 passed)
+  - env PATH=/opt/homebrew/opt/node@25/bin:$PATH npx tsx scripts/test-investor-journey.test.ts (26 passed)
+  - env PATH=/opt/homebrew/opt/node@25/bin:$PATH node scripts/test-investor-terminal.cjs (passed on deterministic retry)
+  - env PATH=/opt/homebrew/opt/node@25/bin:$PATH npm run verify:affected (passed: TypeScript, unit, browser, desktop and mobile visual gates)
+known_test_note: A first affected-run browser attempt hit an existing flaky sticky-summary upper-boundary wheel assertion; a direct deterministic retry and the subsequent full affected run passed without code changes.
+current_base_parity:
+  context: current_base_object
+  start_investment_rub: 39220380.74
+  revenue_rub: 10488600
+  ebitda_rub: 2263464.4
+  free_cash_flow_rub: 2045009.8
+  payback_month: 20
+  irr: 0.7335561455483743
+  npv_rub: 39824232.74
+external_changes: []

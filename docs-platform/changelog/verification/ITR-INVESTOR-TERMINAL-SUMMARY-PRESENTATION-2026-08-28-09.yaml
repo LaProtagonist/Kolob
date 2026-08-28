@@ -1,0 +1,24 @@
+receipt_version: 1
+iteration_id: ITR-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09
+decision_id: DEC-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09
+change_set_id: CHG-INVESTOR-TERMINAL-SUMMARY-PRESENTATION-2026-08-28-09
+verified_at: 2026-08-28T00:10:05.000Z
+result: passed
+approved_payload_sha256: 8c0ef8ab155d4d4394d026b3375683797b579f4ea7e31896b0724cf70d5da240
+before_state_sha256: c47487ab965356cfbdf9e63da964159a0014b576aaaa9d37a6eabf1d3785a55e
+after_state_sha256: fc1105fc16bc49b96d10c17c4dccdb31c60f3962771723fa7b0af295758c1674
+checks:
+  - PATH=/Users/trbrmrdr/.nvm/versions/node/v22.15.1/bin:$PATH npm run verify:affected (passed; TypeScript, financial projection, unit, Investor Terminal browser and visual checks)
+  - PATH=/Users/trbrmrdr/.nvm/versions/node/v22.15.1/bin:$PATH npm run verify:release (passed; 277.3s; no deployment)
+  - Investor Terminal browser checks at desktop 1440px, tablet landscape 1024px and mobile 390px (passed; no horizontal overflow and every summary value visible/nonwrapping)
+invariants:
+  financial_values_unchanged_by_presentation: passed
+  direct_points_plus_incremental_production_and_shared_equals_expansion_opex: passed
+  base_opex_plus_expansion_opex_equals_network_opex: passed
+  zero_incremental_manager_and_fixed_marketing_not_misrepresented: passed
+  summary_value_visible_desktop_tablet_mobile: passed
+  no_horizontal_overflow_desktop_tablet_mobile: passed
+external_changes: []
+notes:
+  - Historical visual artifacts were provided to release governance validation through temporary local symlinks; they are neither copied nor committed.
+  - The visual change corrects a presentation total mapping only; no financial-core formula or generated B5 projection changed.

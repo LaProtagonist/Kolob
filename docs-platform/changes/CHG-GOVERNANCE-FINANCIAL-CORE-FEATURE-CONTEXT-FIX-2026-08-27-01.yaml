@@ -1,0 +1,19 @@
+schema_version: 2
+change_id: CHG-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01
+iteration_id: ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01
+proposal_id: PROP-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01
+decision_id: DEC-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-2026-08-26-01
+title: Append corrected Financial Core v2 feature-context evidence
+status: approved
+approved_payload_path: docs-platform/changelog/payloads/ITR-GOVERNANCE-FINANCIAL-CORE-FEATURE-CONTEXT-FIX-2026-08-27-01-approved.yaml
+approved_payload_sha256: e9803cfbaa3e23a1eaf369462e4cc1c8eefb63f947176fe467137137fac5db5f
+operations:
+  - preserve the failed predecessor event trail without alteration
+  - commit the complete predecessor evidence and corrected successor lifecycle scope
+  - regenerate branch-sensitive governance context only
+preview:
+  status: passed
+  mutation_performed: false
+  canonical_financial_model_change: false
+  google_operation: false
+  production_or_deployment_change: false

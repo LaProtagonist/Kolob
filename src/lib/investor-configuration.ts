@@ -8,6 +8,7 @@ import {
 } from "./launch-budget";
 import { defaultPointPreparationCategoryIds, pointPreparationCategoryIds } from "./point-preparation";
 import { calculateAverageCheck } from "./revenue-model";
+import type { FinancialProjectionContext } from "./financial-core";
 import {
   defaultLocationRentPresetId,
   defaultRentFreeMonths,
@@ -60,6 +61,8 @@ export type TradingPointCohort = {
   totalAreaM2: number | null;
   kitchenAreaM2: number | null;
   guestAreaM2: number | null;
+  /** Approved physical layout input; it overrides generic density rounding only for that cohort. */
+  approvedSeatCount: number | null;
   monthlyRentRub: number | null;
   /** A planning selector only. The Financial Model receives monthlyRentRub. */
   locationRentPresetId: LocationRentPresetId;
@@ -131,12 +134,47 @@ export function baseObjectLaunchBudgetState(): LaunchBudgetState {
   };
 }
 
+function fullPreparationLaunchBudgetState(launchBudget: LaunchBudgetState): LaunchBudgetState {
+  return {
+    ...launchBudget,
+    preparationEnabledCategoryIds: launchModel.preparation.categories
+      .filter((category) => category.enabled_by_default)
+      .map((category) => category.id),
+  };
+}
+
+/**
+ * The immutable historical reference used by Financial Model v0.2.  It is not
+ * a reset target for the Current Base Object: its 350k rent, zero rent-free
+ * term and full integrated preparation belong to a different context.
+ */
+export function historicalIntegratedPilotConfiguration(): InvestorConfiguration {
+  const reference = baseObjectPlanningReference();
+  const launchBudget = fullPreparationLaunchBudgetState({
+    ...defaultLaunchBudgetState(),
+    monthlyRentRub: reference.historicalFinancialModelRentRub,
+    rentFreeMonths: 0,
+  });
+  return {
+    schemaVersion: 8,
+    scenarioId: "realistic",
+    customChecksPerDay: null,
+    launchBudget,
+    networkScaling: defaultNetworkScalingConfiguration(launchBudget),
+  };
+}
+
 function finiteOrNull(value: unknown) {
   return typeof value === "number" && Number.isFinite(value) && value >= 0 ? value : null;
 }
 
 function positiveFiniteOrNull(value: unknown) {
   return typeof value === "number" && Number.isFinite(value) && value > 0 ? value : null;
+}
+
+function positiveIntegerOrNull(value: unknown) {
+  const numeric = positiveFiniteOrNull(value);
+  return numeric === null ? null : Math.floor(numeric);
 }
 
 function nonnegativeInteger(value: unknown, fallback = 1) {
@@ -231,6 +269,7 @@ export function createTradingPointCohort(
     totalAreaM2: finiteOrNull(valueOrDefault(overrides, "totalAreaM2", null)),
     kitchenAreaM2: finiteOrNull(valueOrDefault(overrides, "kitchenAreaM2", null)),
     guestAreaM2: format === "with_seating" ? finiteOrNull(valueOrDefault(overrides, "guestAreaM2", null)) : null,
+    approvedSeatCount: format === "with_seating" ? positiveIntegerOrNull(valueOrDefault(overrides, "approvedSeatCount", null)) : null,
     monthlyRentRub: finiteOrNull(valueOrDefault(overrides, "monthlyRentRub", null)),
     locationRentPresetId: restoredLocationRentPresetId(valueOrDefault(overrides, "locationRentPresetId", "custom")),
     rentPerM2Rub: positiveFiniteOrNull(valueOrDefault(overrides, "rentPerM2Rub", null)),
@@ -347,6 +386,8 @@ function createRolloutCohort(
     realEstateMode: group.realEstateMode,
     ...locationDefaults,
     totalAreaM2: group.baselineAreaM2,
+    guestAreaM2: group.guestAreaM2,
+    approvedSeatCount: group.approvedSeatCount,
     rentPerM2Rub: streetRent ? rentPreset.rentPerM2MonthRub : locationDefaults.rentPerM2Rub,
     monthlyRentRub: streetRent ? group.baselineAreaM2 * rentPreset.rentPerM2MonthRub : locationDefaults.monthlyRentRub,
     purchasePriceRub: null,
@@ -548,11 +589,14 @@ export function restoreNetworkScalingConfiguration(value: unknown, launchBudget:
   const rawCohorts = Array.isArray(input.cohorts) ? input.cohorts as Array<Partial<TradingPointCohort>> : [];
   const resolvedCohorts = (cohorts.length ? cohorts : defaults.cohorts).map((cohort, index) => {
     const rollout = networkRolloutGroups().find((group) => cohort.id === rolloutCohortId(group.presetId) || cohort.locationRentPresetId === group.presetId);
+    const isDefaultRolloutCohort = rollout !== undefined && cohort.id === rolloutCohortId(rollout.presetId);
     const fallbackOpeningMonth = index === 0
       ? networkRolloutSchedule().baseObjectOpeningMonth
       : rollout?.firstOpeningMonth ?? networkRolloutSchedule().firstAdditionalOpeningMonth + (index - 1) * networkRolloutSchedule().additionalOpeningIntervalMonths;
     return {
       ...cohort,
+      guestAreaM2: isDefaultRolloutCohort && cohort.guestAreaM2 === null ? rollout.guestAreaM2 : cohort.guestAreaM2,
+      approvedSeatCount: isDefaultRolloutCohort && cohort.approvedSeatCount === null ? rollout.approvedSeatCount : cohort.approvedSeatCount,
       openingWaves: restoredOpeningWaves(rawCohorts[index]?.openingWaves, cohort.count, fallbackOpeningMonth),
       rentFreeMonths: nonnegativeInteger(rawCohorts[index]?.rentFreeMonths, cohort.rentFreeMonths),
     };
@@ -571,7 +615,8 @@ export function restoreNetworkScalingConfiguration(value: unknown, launchBudget:
   };
 }
 
-export function defaultInvestorConfiguration(): InvestorConfiguration {
+/** Current approved planning context for the flagship Base Object. */
+export function currentBaseObjectInvestorConfiguration(): InvestorConfiguration {
   const launchBudget = baseObjectLaunchBudgetState();
   return {
     schemaVersion: 8,
@@ -582,20 +627,20 @@ export function defaultInvestorConfiguration(): InvestorConfiguration {
   };
 }
 
-/** The Financial Model baseline: rent and the full canonical preparation scope. */
-export function canonicalInvestorConfiguration(): InvestorConfiguration {
-  const defaults = defaultInvestorConfiguration();
-  const launchBudget = {
-    ...defaults.launchBudget,
-    preparationEnabledCategoryIds: launchModel.preparation.categories
-      .filter((category) => category.enabled_by_default)
-      .map((category) => category.id),
-  };
+/** Current Base assumptions with the full preparation scope enabled. */
+export function currentBaseObjectFullPreparationConfiguration(): InvestorConfiguration {
+  const defaults = currentBaseObjectInvestorConfiguration();
+  const launchBudget = fullPreparationLaunchBudgetState(defaults.launchBudget);
   return {
     ...defaults,
     launchBudget,
     networkScaling: defaultNetworkScalingConfiguration(launchBudget),
   };
+}
+
+/** Kept as the runtime default; its context is explicitly Current Base Object. */
+export function defaultInvestorConfiguration(): InvestorConfiguration {
+  return currentBaseObjectInvestorConfiguration();
 }
 
 export function restoreInvestorConfiguration(value: unknown): InvestorConfiguration {
@@ -636,10 +681,18 @@ function calculationState(configuration: InvestorConfiguration) {
   return { ...configuration, launchBudget };
 }
 
-export function investorConfigurationIsCanonical(configuration: InvestorConfiguration) {
-  const baseline = canonicalInvestorConfiguration();
+export function investorConfigurationIsCurrentBaseFullPreparation(configuration: InvestorConfiguration) {
+  const baseline = currentBaseObjectFullPreparationConfiguration();
   return JSON.stringify({ ...calculationState(configuration), scenarioId: baseline.scenarioId })
     === JSON.stringify(calculationState(baseline));
+}
+
+export function financialProjectionContextForConfiguration(configuration: InvestorConfiguration): FinancialProjectionContext {
+  const historical = historicalIntegratedPilotConfiguration();
+  return JSON.stringify({ ...calculationState(configuration), scenarioId: historical.scenarioId })
+    === JSON.stringify(calculationState(historical))
+    ? "historical_integrated_pilot"
+    : "current_base_object";
 }
 
 export function investorConfigurationIsReadyPremisesDefault(configuration: InvestorConfiguration) {

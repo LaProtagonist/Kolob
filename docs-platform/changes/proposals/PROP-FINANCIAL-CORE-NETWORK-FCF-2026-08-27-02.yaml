@@ -1,0 +1,10 @@
+schema_version: 2
+proposal_id: PROP-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-02
+iteration_id: ITR-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-02
+title: Consolidate Network P&L and FCF through the shared financial core
+status: approved
+proposed_by: project owner
+proposed_at: 2026-08-27T00:32:00.000Z
+summary: Exact successor to the pre-commit B2 payload: carries the same owner-approved core consolidation and includes the required deterministic Network Planning snapshot refresh discovered by release verification.
+approved_payload_path: docs-platform/changelog/payloads/ITR-FINANCIAL-CORE-NETWORK-FCF-2026-08-27-02-approved.yaml
+approved_payload_sha256: 884158214cfd885837c5dc701761ab4050c690e1c6ba733a5f551359eb49b597
