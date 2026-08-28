@@ -16,9 +16,9 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01-COMMITTED`.
-- Hash: `5acb12fc101dd51e9e9fdb97658122f428f56542c1af76e5d379a248e61ee108`.
-- generated_from_event_hash: `5acb12fc101dd51e9e9fdb97658122f428f56542c1af76e5d379a248e61ee108`.
+- Event: `EVT-ITR-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01-DEPLOYED-DEPLOY-FINANCIAL-CORE-INVESTOR-TERMINAL-2026-08-28-01`.
+- Hash: `8d6895accf57b7829f586498633e863f34c896ce0f78878aa1deaa1c2d714aea`.
+- generated_from_event_hash: `8d6895accf57b7829f586498633e863f34c896ce0f78878aa1deaa1c2d714aea`.
 
 ## 4. Канонические документы
 
@@ -63,7 +63,7 @@ Refresh local Financial Model dependency chain for Terminal release
 
 - Google: `{"configured":true,"historical_receipts":14,"receipts_with_machine_readback_hash":11,"live_drift_check":"not_run_by_context_build"}`.
 - MCP: `{"implementation_present":true,"canonical_access":"registry_document_ids_only","live_status":"not_probed_by_context_build"}`.
-- Deployment: `{"status":"receipts_present","receipts":6,"production_url":null}`.
+- Deployment: `{"status":"receipts_present","receipts":7,"production_url":null}`.
 
 ## 9. Команды проверки
 

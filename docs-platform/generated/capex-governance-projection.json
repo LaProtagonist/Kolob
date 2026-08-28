@@ -1,28 +1,39 @@
 {
   "schema_version": 1,
-  "generated_from_event_id": "EVT-ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01-DEPLOYED-DEPLOY-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01",
-  "generated_from_event_hash": "dc7b76519e64bcd902ad6865dac9e12fb5d226563ee0630df23d847c6f3a7c3b",
+  "generated_from_event_id": "EVT-ITR-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01-DEPLOYED-DEPLOY-FINANCIAL-CORE-INVESTOR-TERMINAL-2026-08-28-01",
+  "generated_from_event_hash": "8d6895accf57b7829f586498633e863f34c896ce0f78878aa1deaa1c2d714aea",
   "content_state_sha256": "a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239",
   "latest_committed_iteration": {
-    "iteration_id": "ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01",
-    "decision_id": "DEC-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01",
-    "change_set_id": "CHG-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01",
-    "content_commit_hash": "9cb055dd4fac66192602c4d361b93c8e1b153b74",
-    "seal_commit_hash": "5534327bb79df5c4c624d755d14bdd33b54ef789",
-    "iteration_tag": "iteration/ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01"
+    "iteration_id": "ITR-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01",
+    "decision_id": "DEC-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01",
+    "change_set_id": "CHG-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01",
+    "content_commit_hash": "f0e6f3cdbcdceec939a0667d0867589c3f321a01",
+    "seal_commit_hash": "e84231f50a4b1d4e564a6610de4a9e4048f647e1",
+    "iteration_tag": "iteration/ITR-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01"
   },
   "latest_deployment_event": {
-    "event_id": "EVT-ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01-DEPLOYED-DEPLOY-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01",
-    "iteration_id": "ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01",
-    "deployment_receipt": "docs-platform/changelog/deployments/DEPLOY-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01.yaml",
+    "event_id": "EVT-ITR-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01-DEPLOYED-DEPLOY-FINANCIAL-CORE-INVESTOR-TERMINAL-2026-08-28-01",
+    "iteration_id": "ITR-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01",
+    "deployment_receipt": "docs-platform/changelog/deployments/DEPLOY-FINANCIAL-CORE-INVESTOR-TERMINAL-2026-08-28-01.yaml",
     "production_url": "https://colob.spi.ski"
   },
-  "repository_head": "3f85015d882c7d019231526d54e266afaf3a76ca",
+  "repository_head": "e84231f50a4b1d4e564a6610de4a9e4048f647e1",
   "timeline_head": {
-    "event_id": "EVT-ITR-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01-DEPLOYED-DEPLOY-INVESTOR-TERMINAL-V2-RELEASE-2026-08-26-01",
-    "event_hash": "dc7b76519e64bcd902ad6865dac9e12fb5d226563ee0630df23d847c6f3a7c3b"
+    "event_id": "EVT-ITR-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01-DEPLOYED-DEPLOY-FINANCIAL-CORE-INVESTOR-TERMINAL-2026-08-28-01",
+    "event_hash": "8d6895accf57b7829f586498633e863f34c896ce0f78878aa1deaa1c2d714aea"
   },
   "deployment_receipts": [
+    {
+      "path": "docs-platform/changelog/deployments/DEPLOY-FINANCIAL-CORE-INVESTOR-TERMINAL-2026-08-28-01.yaml",
+      "deployment_id": "DEPLOY-FINANCIAL-CORE-INVESTOR-TERMINAL-2026-08-28-01",
+      "content_state_sha256": "a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239",
+      "content_commit_hash": "f0e6f3cdbcdceec939a0667d0867589c3f321a01",
+      "seal_commit_hash": "e84231f50a4b1d4e564a6610de4a9e4048f647e1",
+      "dist_sha256": "bec9e90babf9dc75ceab653c9f057bc9a2a16e1970ef9f00fc007c78ec003090",
+      "production_url": "https://colob.spi.ski",
+      "deployed_at": "2026-08-28T14:28:32.000Z",
+      "result": "failed"
+    },
     {
       "path": "docs-platform/changelog/deployments/DEPLOY-FINANCIAL-MODEL-V0-2-2026-08-19-01.yaml",
       "deployment_id": "DEPLOY-FINANCIAL-MODEL-V0-2-2026-08-19-01",
