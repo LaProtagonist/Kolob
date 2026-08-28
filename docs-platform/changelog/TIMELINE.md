@@ -4,10 +4,10 @@
 
 ## 1. Current state
 
-- Events: 353.
-- Timeline head event: `EVT-ITR-FINANCIAL-CORE-ARTIFACT-REFRESH-2026-08-29-01-COMMITTED`.
-- Timeline head SHA-256: `e2db6bb566535619e3344c232104d677d8fb17f9a4bfcb736ad6ddd64df7f4ee`.
-- Latest recorded iteration: `ITR-FINANCIAL-CORE-ARTIFACT-REFRESH-2026-08-29-01`.
+- Events: 365.
+- Timeline head event: `EVT-ITR-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-02-COMMITTED`.
+- Timeline head SHA-256: `415d4dd5dcd5e4fca0f798c10ec5fa115efd4ef366cbfef77f0c3b3164ef172a`.
+- Latest recorded iteration: `ITR-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-02`.
 
 ## 2. Modern governed iterations
 
@@ -79,6 +79,8 @@
 | 2026-08-28T22:17:56.000Z | committed | Synchronize local Financial Google Sheets payload after approved temporal recalculation | ITR-FINANCIAL-SHEETS-PAYLOAD-SYNC-2026-08-29-01 | DEC-FINANCIAL-SHEETS-PAYLOAD-SYNC-2026-08-29-01 | CHG-FINANCIAL-SHEETS-PAYLOAD-SYNC-2026-08-29-01 | e0b68f56ed337001534dc82094e2bc5e71fba5ab | iteration/ITR-FINANCIAL-SHEETS-PAYLOAD-SYNC-2026-08-29-01 | — | — | — | Synchronize local Financial Google Sheets payload after approved temporal recalculation: content commit verified and linked to the governed lifecycle before sealing. |
 | 2026-08-28T22:22:08.000Z | committed | Synchronize local Investor Financial Summary payloads after approved temporal recalculation | ITR-INVESTOR-SUMMARY-PAYLOAD-SYNC-2026-08-29-01 | DEC-INVESTOR-SUMMARY-PAYLOAD-SYNC-2026-08-29-01 | CHG-INVESTOR-SUMMARY-PAYLOAD-SYNC-2026-08-29-01 | c192feb1ce81d6124c2c3fc11922d6e7f471a7b4 | iteration/ITR-INVESTOR-SUMMARY-PAYLOAD-SYNC-2026-08-29-01 | — | — | — | Synchronize local Investor Financial Summary payloads after approved temporal recalculation: content commit verified and linked to the governed lifecycle before sealing. |
 | 2026-08-28T22:26:31.000Z | committed | Refresh local Financial Core and Investor Economics deterministic artifacts | ITR-FINANCIAL-CORE-ARTIFACT-REFRESH-2026-08-29-01 | DEC-FINANCIAL-CORE-ARTIFACT-REFRESH-2026-08-29-01 | CHG-FINANCIAL-CORE-ARTIFACT-REFRESH-2026-08-29-01 | c82946c85a5fa4908158a581af73a896d8e34174 | iteration/ITR-FINANCIAL-CORE-ARTIFACT-REFRESH-2026-08-29-01 | — | — | — | Refresh local Financial Core and Investor Economics deterministic artifacts: content commit verified and linked to the governed lifecycle before sealing. |
+| 2026-08-28T23:45:34.950Z | superseded | Seal sequential format-specific rollout and staged public investor scenarios | ITR-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-01 | DEC-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-01 | CHG-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-01 | — | — | — | — | — | Superseded before content commit; successor -02 adds the affected Financial Core regression test to governed scope without changing owner economics or external state. |
+| 2026-08-28T23:56:52.000Z | committed | Seal sequential rollout, staged public investor scenarios and reserve-date regression proof | ITR-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-02 | DEC-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-02 | CHG-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-02 | d26072443f11a65c33b176eadcb3e7b3971e52d5 | iteration/ITR-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-02 | — | — | — | Seal sequential rollout, staged public investor scenarios and reserve-date regression proof: content commit verified and linked to the governed lifecycle before sealing. |
 
 ## 3. Legacy imported history
 

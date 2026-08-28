@@ -9,16 +9,16 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 ## 2. Текущая ветка и governed iteration
 
 - Branch: `feat/investor-economics-v1`.
-- Latest closed iteration: `ITR-FINANCIAL-CORE-ARTIFACT-REFRESH-2026-08-29-01`.
-- Latest iteration tag: `iteration/ITR-FINANCIAL-CORE-ARTIFACT-REFRESH-2026-08-29-01`.
-- Latest content commit: `c82946c85a5fa4908158a581af73a896d8e34174`.
+- Latest closed iteration: `ITR-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-02`.
+- Latest iteration tag: `iteration/ITR-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-02`.
+- Latest content commit: `d26072443f11a65c33b176eadcb3e7b3971e52d5`.
 - Текущий Git HEAD намеренно не записывается: его вычисляет `npm run project:onboard`.
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-FINANCIAL-CORE-ARTIFACT-REFRESH-2026-08-29-01-COMMITTED`.
-- Hash: `e2db6bb566535619e3344c232104d677d8fb17f9a4bfcb736ad6ddd64df7f4ee`.
-- generated_from_event_hash: `e2db6bb566535619e3344c232104d677d8fb17f9a4bfcb736ad6ddd64df7f4ee`.
+- Event: `EVT-ITR-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-02-COMMITTED`.
+- Hash: `415d4dd5dcd5e4fca0f798c10ec5fa115efd4ef366cbfef77f0c3b3164ef172a`.
+- generated_from_event_hash: `415d4dd5dcd5e4fca0f798c10ec5fa115efd4ef366cbfef77f0c3b3164ef172a`.
 
 ## 4. Канонические документы
 
@@ -39,14 +39,14 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 | DOC-INVESTMENT-MEMO | proposed | `docs-platform/templates/investment-memorandum.md` | `464e46d307aaa98e57cab3a098cd639e212d32b51f82a06688de228f0e7fb4cd` |
 | DOC-INVESTOR-FINANCIAL-SUMMARY | research | `docs-platform/working/investor-financial-summary.yaml` | `790d4c84513d666157088c0afeb8ece09ed80080b33db54117ad1dde64a92a40` |
 | DOC-INVESTOR-START-MODEL | research | `docs-platform/working/investor-start-model.yaml` | `b81a6c4e8988a4532c9ba2749d492b3f96e37d83af822396afc82930244b2985` |
-| DOC-NETWORK-PLANNING-ASSUMPTIONS | approved | `docs-platform/working/network-planning-assumptions.yaml` | `74a8420872b634c79de91593938f847cd499c62f351f12d63ab0d36e10e7970d` |
+| DOC-NETWORK-PLANNING-ASSUMPTIONS | approved | `docs-platform/working/network-planning-assumptions.yaml` | `43577e9ede2f17b9e5bd01e18f9589fb7eb6cfa677d123da5a570d4567044622` |
 | DOC-PILOT-CAPEX-ASSUMPTIONS | research | `docs-platform/working/pilot-capex-assumptions.yaml` | `25e11d4db20050b3a95cab40797ef0a29e56fad93c73d33d4a39415a8071d4ac` |
 | DOC-README | approved | `docs-platform/README.md` | `04e947f296a158a1c37ceb8d4c959d1f4e31cf609d16c99bee2d3c3b79b824ab` |
 | DOC-REVENUE-MODEL | research | `docs-platform/working/revenue-model.yaml` | `ab68399813d62d861522752c8e94df9cfc5d5a48e9b7723c60f2c968c4cba721` |
 
 ## 5. Текущая рабочая тема
 
-Refresh local Financial Core and Investor Economics deterministic artifacts
+Seal sequential rollout, staged public investor scenarios and reserve-date regression proof
 
 ## 6. Decisions и change sets
 
