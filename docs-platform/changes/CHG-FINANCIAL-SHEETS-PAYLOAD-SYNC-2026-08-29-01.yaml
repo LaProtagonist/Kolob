@@ -1,0 +1,12 @@
+schema_version: 2
+change_id: CHG-FINANCIAL-SHEETS-PAYLOAD-SYNC-2026-08-29-01
+title: Synchronize local Financial Sheets payload
+status: approved
+created_at: 2026-08-29
+decision_id: DEC-FINANCIAL-SHEETS-PAYLOAD-SYNC-2026-08-29-01
+iteration_id: ITR-FINANCIAL-SHEETS-PAYLOAD-SYNC-2026-08-29-01
+proposal_id: PROP-FINANCIAL-SHEETS-PAYLOAD-SYNC-2026-08-29-01
+approved_payload_path: docs-platform/changelog/payloads/ITR-FINANCIAL-SHEETS-PAYLOAD-SYNC-2026-08-29-01-approved.yaml
+approved_payload_sha256: 712be32b7b86df57c8323bdcd99e7acfc0210cce45efae1319ea859d64108f6f
+operations: []
+

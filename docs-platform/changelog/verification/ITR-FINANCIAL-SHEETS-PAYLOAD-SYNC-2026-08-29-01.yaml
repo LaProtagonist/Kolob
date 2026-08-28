@@ -1,0 +1,12 @@
+receipt_version: 1
+iteration_id: ITR-FINANCIAL-SHEETS-PAYLOAD-SYNC-2026-08-29-01
+decision_id: DEC-FINANCIAL-SHEETS-PAYLOAD-SYNC-2026-08-29-01
+change_set_id: CHG-FINANCIAL-SHEETS-PAYLOAD-SYNC-2026-08-29-01
+verified_at: 2026-08-28T22:16:00.000Z
+result: passed
+approved_payload_sha256: 712be32b7b86df57c8323bdcd99e7acfc0210cce45efae1319ea859d64108f6f
+before_state_sha256: 2024eaeb242b3db25579e17d273f38d1df66e6bea18e7e8b0b2ac8bc49438b2b
+after_state_sha256: 68783eaea70a5b06a30d3622c348ab3acdd08b08c35e69e81c70ac3c9f95445d
+checks: [financial:sheet:payload passed, financial:sheet:check passed, remote Google not invoked]
+external_changes: { google_apply: not_run, production_deploy: not_run, master_merge: not_run }
+

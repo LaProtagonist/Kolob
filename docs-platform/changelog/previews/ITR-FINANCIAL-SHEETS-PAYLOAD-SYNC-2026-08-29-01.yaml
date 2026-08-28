@@ -1,0 +1,9 @@
+receipt_version: 1
+iteration_id: ITR-FINANCIAL-SHEETS-PAYLOAD-SYNC-2026-08-29-01
+decision_id: DEC-FINANCIAL-SHEETS-PAYLOAD-SYNC-2026-08-29-01
+change_set_id: CHG-FINANCIAL-SHEETS-PAYLOAD-SYNC-2026-08-29-01
+previewed_at: 2026-08-28T22:16:00.000Z
+result: reviewed
+mutation_performed: false
+payload: { sheet_count: 16, local_only: true, remote_apply: not_run }
+

@@ -1,0 +1,8 @@
+receipt_version: 1
+iteration_id: ITR-FINANCIAL-SHEETS-PAYLOAD-SYNC-2026-08-29-01
+audited_at: 2026-08-28T22:16:00.000Z
+result: passed
+payload_sha256: c86747191f462b824a9734c1d6eea04b3735a466d9bb27af2fa646ca1739b248
+sheet_count: 16
+remote_google_apply: not_run
+

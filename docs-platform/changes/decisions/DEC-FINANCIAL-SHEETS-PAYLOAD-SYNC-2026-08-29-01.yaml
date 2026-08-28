@@ -1,0 +1,11 @@
+schema_version: 2
+decision_id: DEC-FINANCIAL-SHEETS-PAYLOAD-SYNC-2026-08-29-01
+iteration_id: ITR-FINANCIAL-SHEETS-PAYLOAD-SYNC-2026-08-29-01
+title: Approve local Financial Sheets payload synchronization
+status: approved
+approved_by: project owner
+approved_at: 2026-08-29T00:00:00.000Z
+scope: The local 16-tab payload may be refreshed for verification; remote Google remains prohibited.
+approved_payload_path: docs-platform/changelog/payloads/ITR-FINANCIAL-SHEETS-PAYLOAD-SYNC-2026-08-29-01-approved.yaml
+approved_payload_sha256: 712be32b7b86df57c8323bdcd99e7acfc0210cce45efae1319ea859d64108f6f
+
