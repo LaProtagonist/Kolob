@@ -4,10 +4,10 @@
 
 ## 1. Current state
 
-- Events: 343.
-- Timeline head event: `EVT-ITR-FINANCIAL-SHEETS-PAYLOAD-SYNC-2026-08-29-01-COMMITTED`.
-- Timeline head SHA-256: `5203f761bd7b99b16bc5dfc795fe5cf6b157a31756143e67982f3c4140910bd5`.
-- Latest recorded iteration: `ITR-FINANCIAL-SHEETS-PAYLOAD-SYNC-2026-08-29-01`.
+- Events: 348.
+- Timeline head event: `EVT-ITR-INVESTOR-SUMMARY-PAYLOAD-SYNC-2026-08-29-01-COMMITTED`.
+- Timeline head SHA-256: `8d91a56357ed1979127d082886a6b3f4b00725b24a467938f4b000aa78380a30`.
+- Latest recorded iteration: `ITR-INVESTOR-SUMMARY-PAYLOAD-SYNC-2026-08-29-01`.
 
 ## 2. Modern governed iterations
 
@@ -77,6 +77,7 @@
 | 2026-08-28T22:06:00.000Z | superseded | Separate public participation presets, internal control workbench and four-month development lead | ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-01 | DEC-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-01 | CHG-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-01 | — | — | — | — | — | Superseded unsealed provisional manifest; reopen the same owner-approved scope with the generated financial-model projection included. |
 | 2026-08-28T22:08:21.000Z | committed | Seal public participation presets, internal control workbench and four-month development lead | ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02 | DEC-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02 | CHG-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02 | 1a0a04a98e44ec82a61edc7fab8f1f42d02e00b0 | iteration/ITR-INVESTOR-ECONOMICS-V2-CONTROL-TEMPORAL-2026-08-29-02 | — | — | — | Seal public participation presets, internal control workbench and four-month development lead: content commit verified and linked to the governed lifecycle before sealing. |
 | 2026-08-28T22:17:56.000Z | committed | Synchronize local Financial Google Sheets payload after approved temporal recalculation | ITR-FINANCIAL-SHEETS-PAYLOAD-SYNC-2026-08-29-01 | DEC-FINANCIAL-SHEETS-PAYLOAD-SYNC-2026-08-29-01 | CHG-FINANCIAL-SHEETS-PAYLOAD-SYNC-2026-08-29-01 | e0b68f56ed337001534dc82094e2bc5e71fba5ab | iteration/ITR-FINANCIAL-SHEETS-PAYLOAD-SYNC-2026-08-29-01 | — | — | — | Synchronize local Financial Google Sheets payload after approved temporal recalculation: content commit verified and linked to the governed lifecycle before sealing. |
+| 2026-08-28T22:22:08.000Z | committed | Synchronize local Investor Financial Summary payloads after approved temporal recalculation | ITR-INVESTOR-SUMMARY-PAYLOAD-SYNC-2026-08-29-01 | DEC-INVESTOR-SUMMARY-PAYLOAD-SYNC-2026-08-29-01 | CHG-INVESTOR-SUMMARY-PAYLOAD-SYNC-2026-08-29-01 | c192feb1ce81d6124c2c3fc11922d6e7f471a7b4 | iteration/ITR-INVESTOR-SUMMARY-PAYLOAD-SYNC-2026-08-29-01 | — | — | — | Synchronize local Investor Financial Summary payloads after approved temporal recalculation: content commit verified and linked to the governed lifecycle before sealing. |
 
 ## 3. Legacy imported history
 

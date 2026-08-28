@@ -1,12 +1,12 @@
 schema_version: 2
-generated_at: 2026-08-28T22:18:09.685Z
+generated_at: 2026-08-28T22:22:33.876Z
 project: Колобочная
 branch: feat/investor-economics-v1
-latest_timeline_event_id: EVT-ITR-FINANCIAL-SHEETS-PAYLOAD-SYNC-2026-08-29-01-COMMITTED
-latest_timeline_event_hash: 5203f761bd7b99b16bc5dfc795fe5cf6b157a31756143e67982f3c4140910bd5
-latest_closed_iteration_id: ITR-FINANCIAL-SHEETS-PAYLOAD-SYNC-2026-08-29-01
-latest_iteration_tag: iteration/ITR-FINANCIAL-SHEETS-PAYLOAD-SYNC-2026-08-29-01
-latest_content_commit_hash: e0b68f56ed337001534dc82094e2bc5e71fba5ab
+latest_timeline_event_id: EVT-ITR-INVESTOR-SUMMARY-PAYLOAD-SYNC-2026-08-29-01-COMMITTED
+latest_timeline_event_hash: 8d91a56357ed1979127d082886a6b3f4b00725b24a467938f4b000aa78380a30
+latest_closed_iteration_id: ITR-INVESTOR-SUMMARY-PAYLOAD-SYNC-2026-08-29-01
+latest_iteration_tag: iteration/ITR-INVESTOR-SUMMARY-PAYLOAD-SYNC-2026-08-29-01
+latest_content_commit_hash: c192feb1ce81d6124c2c3fc11922d6e7f471a7b4
 registry_hash: b59c96c1b256174cd21131cf955813e2d68fe507a4d4a85b9e581094a74264cc
 canonical_document_hashes:
   - document_id: DOC-AGENTS
@@ -92,7 +92,7 @@ open_questions:
   - Archive pending review artifacts in durable storage before treating visual verification as portable.
   - Create deployment receipts when the next governed deployment is performed.
   - Decide whether malformed superseded legacy YAML evidence should receive a separate correction event.
-current_workstream: Synchronize local Financial Google Sheets payload after approved temporal recalculation
+current_workstream: Synchronize local Investor Financial Summary payloads after approved temporal recalculation
 next_task: Select the next task through a new governed proposal; no business task is pre-authorized.
 google_integration_status:
   configured: false
