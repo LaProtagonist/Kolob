@@ -4,10 +4,10 @@
 
 ## 1. Current state
 
-- Events: 323.
-- Timeline head event: `EVT-ITR-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01-COMMITTED`.
-- Timeline head SHA-256: `ee0dea2bdddc1165c6214738edb168a9b7f7d934f33a8dca2f29ca68785f60ce`.
-- Latest recorded iteration: `ITR-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01`.
+- Events: 328.
+- Timeline head event: `EVT-ITR-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01-COMMITTED`.
+- Timeline head SHA-256: `f3764c1fedf56451567fc65ae8ba8bf02775bef4913568c577d9f095246b8541`.
+- Latest recorded iteration: `ITR-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01`.
 
 ## 2. Modern governed iterations
 
@@ -73,6 +73,7 @@
 | 2026-08-28T14:44:20.000Z | deployed | Prerender public Investor Terminal route for production release | ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02 | DEC-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02 | CHG-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02 | 50a64fbb88a30a3554cea7437914ecc915e418c7 | iteration/ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02 | — | docs-platform/changelog/deployments/DEPLOY-FINANCIAL-CORE-INVESTOR-TERMINAL-2026-08-28-02.yaml | — | Sealed content state a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239 deployed to https://colob.spi.ski; smoke test passed. |
 | 2026-08-28T19:06:15.203Z | superseded | Implement local Investor Economics v1 on the sealed Business Financial Core | ITR-INVESTOR-ECONOMICS-V1-2026-08-28-01 | DEC-INVESTOR-ECONOMICS-V1-2026-08-28-01 | CHG-INVESTOR-ECONOMICS-V1-2026-08-28-01 | — | — | — | — | — | Implement local Investor Economics v1 on the sealed Business Financial Core superseded by Correct local Investor Economics v1 and business baseline (ITR-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01). Reason: Owner-approved business baseline correction expands the unsealed local draft to Creative Cluster prepayment, tranche maturity and historical evidence repair; preserve prior draft history without changing production or Google. |
 | 2026-08-28T19:16:18.000Z | committed | Correct local Investor Economics v1 and business baseline | ITR-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01 | DEC-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01 | CHG-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01 | c919102b87d83297a839f32762d7ca1a4f6cfcfe | iteration/ITR-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01 | — | — | — | Correct local Investor Economics v1 and business baseline: content commit verified and linked to the governed lifecycle before sealing. |
+| 2026-08-28T20:35:09.000Z | committed | Apply cohort-maturity Investor Economics waterfall and final local presentation review | ITR-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01 | DEC-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01 | CHG-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01 | 5fff957e40ee6029d0baba8401318e7b6d472b8a | iteration/ITR-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01 | — | — | — | Apply cohort-maturity Investor Economics waterfall and final local presentation review: content commit verified and linked to the governed lifecycle before sealing. |
 
 ## 3. Legacy imported history
 

@@ -9,16 +9,16 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 ## 2. Текущая ветка и governed iteration
 
 - Branch: `feat/investor-economics-v1`.
-- Latest closed iteration: `ITR-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01`.
-- Latest iteration tag: `iteration/ITR-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01`.
-- Latest content commit: `c919102b87d83297a839f32762d7ca1a4f6cfcfe`.
+- Latest closed iteration: `ITR-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01`.
+- Latest iteration tag: `iteration/ITR-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01`.
+- Latest content commit: `5fff957e40ee6029d0baba8401318e7b6d472b8a`.
 - Текущий Git HEAD намеренно не записывается: его вычисляет `npm run project:onboard`.
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01-COMMITTED`.
-- Hash: `ee0dea2bdddc1165c6214738edb168a9b7f7d934f33a8dca2f29ca68785f60ce`.
-- generated_from_event_hash: `ee0dea2bdddc1165c6214738edb168a9b7f7d934f33a8dca2f29ca68785f60ce`.
+- Event: `EVT-ITR-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01-COMMITTED`.
+- Hash: `f3764c1fedf56451567fc65ae8ba8bf02775bef4913568c577d9f095246b8541`.
+- generated_from_event_hash: `f3764c1fedf56451567fc65ae8ba8bf02775bef4913568c577d9f095246b8541`.
 
 ## 4. Канонические документы
 
@@ -46,7 +46,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 5. Текущая рабочая тема
 
-Correct local Investor Economics v1 and business baseline
+Apply cohort-maturity Investor Economics waterfall and final local presentation review
 
 ## 6. Decisions и change sets
 

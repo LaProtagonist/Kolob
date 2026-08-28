@@ -1,12 +1,12 @@
 schema_version: 2
-generated_at: 2026-08-28T19:16:46.711Z
+generated_at: 2026-08-28T20:35:20.689Z
 project: Колобочная
 branch: feat/investor-economics-v1
-latest_timeline_event_id: EVT-ITR-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01-COMMITTED
-latest_timeline_event_hash: ee0dea2bdddc1165c6214738edb168a9b7f7d934f33a8dca2f29ca68785f60ce
-latest_closed_iteration_id: ITR-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01
-latest_iteration_tag: iteration/ITR-INVESTOR-ECONOMICS-CORRECTION-2026-08-28-01
-latest_content_commit_hash: c919102b87d83297a839f32762d7ca1a4f6cfcfe
+latest_timeline_event_id: EVT-ITR-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01-COMMITTED
+latest_timeline_event_hash: f3764c1fedf56451567fc65ae8ba8bf02775bef4913568c577d9f095246b8541
+latest_closed_iteration_id: ITR-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01
+latest_iteration_tag: iteration/ITR-INVESTOR-ECONOMICS-COHORT-MATURITY-2026-08-28-01
+latest_content_commit_hash: 5fff957e40ee6029d0baba8401318e7b6d472b8a
 registry_hash: b59c96c1b256174cd21131cf955813e2d68fe507a4d4a85b9e581094a74264cc
 canonical_document_hashes:
   - document_id: DOC-AGENTS
@@ -92,7 +92,7 @@ open_questions:
   - Archive pending review artifacts in durable storage before treating visual verification as portable.
   - Create deployment receipts when the next governed deployment is performed.
   - Decide whether malformed superseded legacy YAML evidence should receive a separate correction event.
-current_workstream: Correct local Investor Economics v1 and business baseline
+current_workstream: Apply cohort-maturity Investor Economics waterfall and final local presentation review
 next_task: Select the next task through a new governed proposal; no business task is pre-authorized.
 google_integration_status:
   configured: false
