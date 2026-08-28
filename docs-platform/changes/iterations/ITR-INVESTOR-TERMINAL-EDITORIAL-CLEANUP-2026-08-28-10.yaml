@@ -1,0 +1,57 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10
+proposal_id: PROP-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10
+decision_id: DEC-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10
+change_set_id: CHG-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10
+title: Final editorial cleanup of Investor Terminal scaling page
+status: approved
+approved_by: project owner
+approved_at: 2026-08-28T00:53:04.000Z
+actor: Codex
+scope: >-
+  Audit and refine investor-facing copy, conditional zero rows and information
+  architecture on the Scaling page. Preserve every B5 financial formula,
+  generated projection and external state.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10-approved.yaml
+approved_payload_sha256: 6f5f47e1e5ca345f065b63aa60f79336f8b1d3cdc56047a563f52ea1c49e03c4
+before_state_sha256: fc1105fc16bc49b96d10c17c4dccdb31c60f3962771723fa7b0af295758c1674
+after_state_sha256: ab5e870ba6677efde20d4cb767f6957e25f5b17186b16d1787d486fef63a72eb
+affected_document_ids:
+  - DOC-INVESTOR-FINANCIAL-SUMMARY
+affected_section_ids:
+  - investor-terminal.scaling-editorial-copy
+  - investor-terminal.point-opex-conditional-rows
+  - investor-terminal.network-parameters
+  - investor-terminal.assumptions-and-limitations
+  - investor-terminal.responsive-layout
+state_hash_paths:
+  - scripts/test-investor-terminal.cjs
+  - src/components/InvestorTerminal.css
+  - src/components/NetworkScalingPanel.tsx
+content_paths:
+  - scripts/test-investor-terminal.cjs
+  - src/components/InvestorTerminal.css
+  - src/components/NetworkScalingPanel.tsx
+  - docs-platform/changes/proposals/PROP-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10.yaml
+  - docs-platform/changes/decisions/DEC-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10.yaml
+  - docs-platform/changes/CHG-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10.yaml
+  - docs-platform/changes/iterations/ITR-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10.yaml
+  - docs-platform/changelog/payloads/ITR-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10-approved.yaml
+  - docs-platform/changelog/audit/ITR-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10.yaml
+  - docs-platform/changelog/previews/ITR-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10.yaml
+  - docs-platform/changelog/verification/ITR-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10.yaml
+  - docs-platform/changelog/events.ndjson
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/SNAPSHOT-ITR-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10.yaml
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+allowed_dirty_paths:
+  - analysis/
+  - output/
+rollback_payload: null
+rollback_contract:
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true

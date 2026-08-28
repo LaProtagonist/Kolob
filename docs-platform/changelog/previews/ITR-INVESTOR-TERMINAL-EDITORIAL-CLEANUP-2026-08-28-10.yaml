@@ -1,0 +1,27 @@
+receipt_version: 1
+iteration_id: ITR-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10
+decision_id: DEC-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10
+change_set_id: CHG-INVESTOR-TERMINAL-EDITORIAL-CLEANUP-2026-08-28-10
+previewed_at: 2026-08-28T00:53:04.000Z
+result: reviewed
+mutation_performed: false
+before_state_sha256: fc1105fc16bc49b96d10c17c4dccdb31c60f3962771723fa7b0af295758c1674
+after_state_sha256: ab5e870ba6677efde20d4cb767f6957e25f5b17186b16d1787d486fef63a72eb
+presentation_preview:
+  changes:
+    - Suppress financial zero rows that are not applicable or already represented by a venue contract; retain essential venue-provided information as a text state.
+    - Localize investor-facing terminology and normalize compact monthly units.
+    - Separate Current Base reference functions from incremental Network Expansion expenses.
+    - Replace diagnostic coverage taxonomy and duplicate warnings with one collapsed assumptions list.
+    - Preserve the compact right summary with short scope-correct labels.
+  invariant_values_unchanged:
+    base_fcf_rub: 2045009.8
+    direct_point_opex_rub: 16195358.96466331
+    expansion_opex_rub: 17105071.07
+    network_opex_rub: 25330206.67
+    network_fcf_rub: 9412362.58
+    total_program_investment_rub: 101422001.73
+    upfront_investor_funding_rub: 62088281.86
+external_changes:
+  google_apply: not_run
+  production_deploy: not_run

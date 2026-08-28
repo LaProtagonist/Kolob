@@ -142,7 +142,7 @@ async function run() {
     assert.equal(await page.getByTestId(`scaling-cohort-rent-${historicId}`).inputValue(), "210 000");
     assert.equal(await page.getByLabel("Предоплата").inputValue(), "12", "street rent defaults to twelve months prepaid rent");
     assert.equal(await page.getByLabel("Обеспечительный платёж").inputValue(), "2", "street rent defaults to a two-month deposit");
-    assert.equal(await page.getByLabel("Коммунальные / месяц").inputValue(), "80 000", "the approved street-seating utility default is placed directly in the field");
+    assert.equal(await page.getByLabel("Коммунальные / мес.").inputValue(), "80 000", "the approved street-seating utility default is placed directly in the field");
     assert.equal(await page.getByLabel("Видеонаблюдение").inputValue(), "70 000", "the approved street security default is placed directly in the field");
     await page.getByTestId(`scaling-cohort-rent-${historicId}`).fill("220000");
     await page.getByTestId(`scaling-cohort-rent-${historicId}`).press("Tab");
@@ -163,7 +163,9 @@ async function run() {
     assert.equal(await page.getByLabel("Минимальный платёж").inputValue(), "250 000", "Foodhall receives its minimum-payment default from the planning model");
     assert.equal(await page.getByLabel("Эксплуатация и коммунальные").inputValue(), "50 000", "Foodhall receives its service-and-utilities default from the planning model");
     assert.equal(await page.getByLabel("Склад").inputValue(), "20 000", "Foodhall receives its storage default from the planning model");
-    assert.equal(await page.getByTestId(`scaling-cohort-editor-${foodhallId}`).locator(".cohort-static-value output").count(), 3, "Foodhall visibly excludes street prepayment, deposit and rent holidays");
+    assert.equal(await page.getByLabel("Рабочая зона").count(), 0, "Foodhall does not expose a meaningless empty work-area input");
+    assert.equal(await page.getByTestId(`scaling-cohort-editor-${foodhallId}`).getByText("Определяется площадкой", { exact: true }).count(), 1, "Foodhall explains its venue-defined work area without a blank numeric field");
+    assert.equal(await page.getByTestId(`scaling-cohort-editor-${foodhallId}`).locator(".cohort-static-value output").count(), 4, "Foodhall visibly distinguishes venue-defined work area and excludes street prepayment, deposit and rent holidays");
     assert.match(await page.getByTestId(`scaling-cohort-editor-${foodhallId}`).innerText(), /Подготовка помещения\s*712 500 ₽/i, "Foodhall includes its venue adaptation preparation by default");
     assert.equal(await page.getByTestId(`scaling-cohort-preparation-${foodhallId}`).getByText("Показать состав").count(), 1);
     await page.getByTestId(`scaling-cohort-preparation-${foodhallId}`).getByText("Показать состав").click();
@@ -171,6 +173,13 @@ async function run() {
     assert.match(await foodhallPreparation.innerText(), /Общестроительная адаптация[\s\S]*375 000 ₽/i, "Foodhall preparation exposes the category calculation");
     assert.equal(await foodhallPreparation.locator("label").filter({ hasText: "Электроснабжение" }).locator("input").isChecked(), false, "Foodhall engineering categories remain optional");
     assert.match(await foodhallPreparation.innerText(), /Подготовка торгового зала[\s\S]*Не применяется/i, "Foodhall shared seating excludes guest-area preparation");
+    const foodhallOpex = page.getByTestId(`scaling-cohort-editor-${foodhallId}`).locator(".cohort-direct-opex");
+    assert.equal(await foodhallOpex.getByText("Коммунальные", { exact: true }).count(), 0, "Foodhall does not show a zero utilities row beside its service-and-utilities contract line");
+    assert.equal(await foodhallOpex.getByText("Музыка и права", { exact: true }).count(), 1, "venue-provided music remains explainable");
+    assert.match(await foodhallOpex.getByTestId(`scaling-cohort-opex-state-${foodhallId}-music`).innerText(), /Музыка и права\s*Включено площадкой/, "venue-provided music is a state, not a misleading 0 ₽ expense");
+    assert.match(await foodhallOpex.getByTestId(`scaling-cohort-opex-state-${foodhallId}-security-monitoring`).innerText(), /Пультовая охрана\s*Включено площадкой/, "venue-provided security is a state, not a misleading 0 ₽ expense");
+    assert.equal(await foodhallOpex.getByText("Санитарная обработка", { exact: true }).count(), 1, "internal Pest control terminology is localized for investors");
+    assert.equal(await foodhallOpex.getByText("Pest control", { exact: true }).count(), 0, "English internal OPEX terminology does not leak into the investor UI");
     await page.getByTestId(`scaling-cohort-row-${nevskyId}`).click();
     assert.equal(await page.getByTestId(`scaling-cohort-rent-rate-${nevskyId}`).inputValue(), "4 000", "Creative Cluster receives its rent-rate default from the planning model");
     assert.equal(await page.getByTestId(`scaling-cohort-rent-${nevskyId}`).inputValue(), "160 000", "Creative Cluster receives its monthly rent default from the planning model");
@@ -195,12 +204,29 @@ async function run() {
     assert.ok((await amount("scaling-upfront-funding")) < (await amount("scaling-network-total")), "dated rollout funding and generated FCF make upfront external funding distinct from total programme investment");
 
     const summary = page.locator(".scaling-results");
+    const networkParameters = page.locator("#network-costs-title").locator("xpath=ancestor::section[1]");
+    assert.equal(await page.getByRole("heading", { name: "Общие параметры сети" }).count(), 1, "network controls distinguish reference parameters from incremental OPEX");
+    assert.match(await networkParameters.innerText(), /Дополнительные расходы[\s\S]*Адм\. расходы, 2%[\s\S]*Учтено в базовом объекте[\s\S]*Управляющий[\s\S]*Учтён в базе/i, "Base-only shared functions are labelled as reference information, not incremental Expansion OPEX");
+    assert.match(await networkParameters.innerText(), /Собственный рефрижератор включён в расчёт\./, "owned-logistics helper reflects the active B5 logistics mode");
+    assert.match(await networkParameters.innerText(), /Мощность требует проверки\./, "capacity receives one contextual short status in network settings");
     const operatingSummary = page.getByTestId("scaling-network-operating");
     assert.equal((await operatingSummary.locator("p").first().textContent())?.trim(), "Расходы расширения", "the summary names its incremental scope rather than all network costs");
     assert.equal(await operatingSummary.getByText("Управляющий сети", { exact: true }).count(), 0, "base manager is not rendered as a misleading zero expansion row");
     assert.equal(await operatingSummary.getByText("Общий маркетинг", { exact: true }).count(), 0, "base fixed marketing is not rendered as a misleading zero expansion row");
     assert.equal(await operatingSummary.getByTestId("scaling-network-operating-status").innerText(), "База не дублируется.", "a compact scope note explains omitted Base functions");
     assert.match(await operatingSummary.innerText(), /Спецодежда производства[\s\S]*Медосмотры производства/, "incremental Production uniforms and medical are labelled by their actual scope");
+    assert.match(await operatingSummary.innerText(), /Адм\. расходы, 2%/, "the 2% OPEX line is distinct from the liquidity reserve");
+    assert.match(await summary.innerText(), /Окупаемость объекта[\s\S]*Окупаемость расширения[\s\S]*Инвестиции программы[\s\S]*Окупаемость сети/, "summary labels distinguish Base, Expansion and Network metrics");
+    assert.equal(await page.getByTestId("scaling-network-sales-status").innerText(), "Предварительный расчёт.", "the summary exposes one compact overall status without duplicate coverage taxonomy");
+
+    const assumptions = page.locator("#unresolved-title").locator("xpath=ancestor::section[1]");
+    assert.equal(await page.getByRole("heading", { name: "Что требуется подтвердить" }).count(), 1, "coverage is presented as investor-facing assumptions and limitations");
+    assert.equal(await assumptions.locator(".scaling-multiplier").count(), 0, "assumptions do not display a hardcoded or opaque count badge");
+    assert.equal(await page.getByRole("button", { name: "Показать параметры для уточнения", exact: true }).getAttribute("aria-expanded"), "false", "assumptions are collapsed by default");
+    await page.getByRole("button", { name: "Показать параметры для уточнения", exact: true }).click();
+    const assumptionText = await page.getByTestId("scaling-unresolved").innerText();
+    assert.match(assumptionText, /Налоговый режим[\s\S]*Кассовые сервисы \(YUMA\)[\s\S]*Банковское обслуживание[\s\S]*Мощность производства[\s\S]*Рефрижератор[\s\S]*Внешняя логистика на старте/, "one structured investor-facing list renders every current disclosure once");
+    assert.doesNotMatch(assumptionText, /TBD|maintenance|carrier|route quote|requires_confirmation|review_required/i, "assumptions do not expose technical coverage terminology");
 
     const directPointOpex = await amount("scaling-network-direct-opex");
     const expansionProduction = await amount("scaling-expansion-production-opex");
@@ -330,15 +356,19 @@ async function run() {
     });
     await page.screenshot({ path: path.join(projectRoot, ".cache/verification/screenshots/investor-terminal-ui-review-normal-desktop.png"), fullPage: true });
 
-    await page.getByRole("button", { name: /Показать статьи/ }).click();
     await page.locator("details.base-object-details, details.cohort-rent-preset-reference, details.cohort-preparation-details, details.cohort-items, details.cohort-temporal-details, details.scaling-item").evaluateAll((elements) => elements.forEach((element) => { element.open = true; }));
+    const renderedScalingText = await page.locator(".scaling-workspace").innerText();
+    assert.doesNotMatch(renderedScalingText, /\bPest\b|\bsanitation\b|\bTBD\b|\bmaintenance\b|\bshared\b|\bcarrier\b|\broute quote\b|\bHistorical\b|calculated zero|\bgeneric\b|requires_confirmation|review_required/i, "opened investor-facing sections do not leak audited English or internal terminology");
     await page.addStyleTag({ content: ".site-header, .scaling-results { position: static !important; max-height: none !important; overflow: visible !important; }" });
+    await foodhallOpex.screenshot({ path: path.join(projectRoot, ".cache/verification/screenshots/investor-terminal-foodhall-opex-desktop.png") });
+    await networkParameters.screenshot({ path: path.join(projectRoot, ".cache/verification/screenshots/investor-terminal-network-parameters-desktop.png") });
+    await assumptions.screenshot({ path: path.join(projectRoot, ".cache/verification/screenshots/investor-terminal-assumptions-desktop.png") });
     await page.locator(".scaling-results").screenshot({ path: path.join(projectRoot, ".cache/verification/screenshots/investor-terminal-summary-desktop.png") });
     await page.screenshot({ path: path.join(projectRoot, ".cache/verification/screenshots/investor-terminal-ui-review-full-desktop.png"), fullPage: true });
     await page.screenshot({ path: path.join(projectRoot, ".cache/verification/screenshots/investor-terminal-ui-review-audit-desktop.png"), fullPage: true });
     await page.setViewportSize({ width: 390, height: 844 });
     await page.locator("details.base-object-details, details.cohort-rent-preset-reference, details.cohort-preparation-details, details.cohort-items, details.cohort-temporal-details, details.scaling-item").evaluateAll((elements) => elements.forEach((element) => { element.open = false; }));
-    if (await page.getByRole("button", { name: "Скрыть список" }).count()) await page.getByRole("button", { name: "Скрыть список" }).click();
+    if (await page.getByRole("button", { name: "Скрыть параметры" }).count()) await page.getByRole("button", { name: "Скрыть параметры" }).click();
     await page.screenshot({ path: path.join(projectRoot, ".cache/verification/screenshots/investor-terminal-ui-review-mobile.png"), fullPage: true });
     await page.getByRole("button", { name: "Открыть меню", exact: true }).click();
     await page.getByRole("button", { name: /Инвесторам/ }).click();
