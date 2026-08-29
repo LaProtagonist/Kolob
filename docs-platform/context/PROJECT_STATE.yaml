@@ -1,12 +1,12 @@
 schema_version: 2
-generated_at: 2026-08-28T23:57:07.685Z
+generated_at: 2026-08-29T20:52:09.740Z
 project: Колобочная
 branch: feat/investor-economics-v1
-latest_timeline_event_id: EVT-ITR-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-02-COMMITTED
-latest_timeline_event_hash: 415d4dd5dcd5e4fca0f798c10ec5fa115efd4ef366cbfef77f0c3b3164ef172a
-latest_closed_iteration_id: ITR-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-02
-latest_iteration_tag: iteration/ITR-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-02
-latest_content_commit_hash: d26072443f11a65c33b176eadcb3e7b3971e52d5
+latest_timeline_event_id: EVT-ITR-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01-COMMITTED
+latest_timeline_event_hash: edc64ccc112bbff88373c078bdb707ab26b21f6dd0da126eb387a46c863bace2
+latest_closed_iteration_id: ITR-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01
+latest_iteration_tag: iteration/ITR-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01
+latest_content_commit_hash: cfc18b1cdf37e8e79ba3a7174e3a8acc935c2503
 registry_hash: b59c96c1b256174cd21131cf955813e2d68fe507a4d4a85b9e581094a74264cc
 canonical_document_hashes:
   - document_id: DOC-AGENTS
@@ -92,7 +92,7 @@ open_questions:
   - Archive pending review artifacts in durable storage before treating visual verification as portable.
   - Create deployment receipts when the next governed deployment is performed.
   - Decide whether malformed superseded legacy YAML evidence should receive a separate correction event.
-current_workstream: Seal sequential rollout, staged public investor scenarios and reserve-date regression proof
+current_workstream: Seal three equity public scenarios, residual-equity waterfall and live workbench comparison
 next_task: Select the next task through a new governed proposal; no business task is pre-authorized.
 google_integration_status:
   configured: false
@@ -110,8 +110,9 @@ deployment_status:
 known_drift:
   - malformed_legacy_yaml:docs-platform/changelog/audit/ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01.yaml
   - malformed_legacy_yaml:docs-platform/changelog/payloads/ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01-approved.yaml
+  - review_artifacts_pending_durable_archive
 artifact_status:
-  manifests: 3
-  artifacts: 14
-  pending_archive: 0
+  manifests: 4
+  artifacts: 25
+  pending_archive: 11
   durable: 0

@@ -4,10 +4,10 @@
 
 ## 1. Current state
 
-- Events: 365.
-- Timeline head event: `EVT-ITR-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-02-COMMITTED`.
-- Timeline head SHA-256: `415d4dd5dcd5e4fca0f798c10ec5fa115efd4ef366cbfef77f0c3b3164ef172a`.
-- Latest recorded iteration: `ITR-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-02`.
+- Events: 370.
+- Timeline head event: `EVT-ITR-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01-COMMITTED`.
+- Timeline head SHA-256: `edc64ccc112bbff88373c078bdb707ab26b21f6dd0da126eb387a46c863bace2`.
+- Latest recorded iteration: `ITR-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01`.
 
 ## 2. Modern governed iterations
 
@@ -81,6 +81,7 @@
 | 2026-08-28T22:26:31.000Z | committed | Refresh local Financial Core and Investor Economics deterministic artifacts | ITR-FINANCIAL-CORE-ARTIFACT-REFRESH-2026-08-29-01 | DEC-FINANCIAL-CORE-ARTIFACT-REFRESH-2026-08-29-01 | CHG-FINANCIAL-CORE-ARTIFACT-REFRESH-2026-08-29-01 | c82946c85a5fa4908158a581af73a896d8e34174 | iteration/ITR-FINANCIAL-CORE-ARTIFACT-REFRESH-2026-08-29-01 | — | — | — | Refresh local Financial Core and Investor Economics deterministic artifacts: content commit verified and linked to the governed lifecycle before sealing. |
 | 2026-08-28T23:45:34.950Z | superseded | Seal sequential format-specific rollout and staged public investor scenarios | ITR-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-01 | DEC-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-01 | CHG-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-01 | — | — | — | — | — | Superseded before content commit; successor -02 adds the affected Financial Core regression test to governed scope without changing owner economics or external state. |
 | 2026-08-28T23:56:52.000Z | committed | Seal sequential rollout, staged public investor scenarios and reserve-date regression proof | ITR-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-02 | DEC-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-02 | CHG-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-02 | d26072443f11a65c33b176eadcb3e7b3971e52d5 | iteration/ITR-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-02 | — | — | — | Seal sequential rollout, staged public investor scenarios and reserve-date regression proof: content commit verified and linked to the governed lifecycle before sealing. |
+| 2026-08-29T20:51:04.000Z | committed | Seal three equity public scenarios, residual-equity waterfall and live workbench comparison | ITR-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01 | DEC-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01 | CHG-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01 | cfc18b1cdf37e8e79ba3a7174e3a8acc935c2503 | iteration/ITR-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01 | — | — | — | Seal three equity public scenarios, residual-equity waterfall and live workbench comparison: content commit verified and linked to the governed lifecycle before sealing. |
 
 ## 3. Legacy imported history
 

@@ -9,16 +9,16 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 ## 2. Текущая ветка и governed iteration
 
 - Branch: `feat/investor-economics-v1`.
-- Latest closed iteration: `ITR-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-02`.
-- Latest iteration tag: `iteration/ITR-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-02`.
-- Latest content commit: `d26072443f11a65c33b176eadcb3e7b3971e52d5`.
+- Latest closed iteration: `ITR-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01`.
+- Latest iteration tag: `iteration/ITR-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01`.
+- Latest content commit: `cfc18b1cdf37e8e79ba3a7174e3a8acc935c2503`.
 - Текущий Git HEAD намеренно не записывается: его вычисляет `npm run project:onboard`.
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-INVESTOR-ECONOMICS-SEQUENTIAL-ROLLOUT-2026-08-29-02-COMMITTED`.
-- Hash: `415d4dd5dcd5e4fca0f798c10ec5fa115efd4ef366cbfef77f0c3b3164ef172a`.
-- generated_from_event_hash: `415d4dd5dcd5e4fca0f798c10ec5fa115efd4ef366cbfef77f0c3b3164ef172a`.
+- Event: `EVT-ITR-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01-COMMITTED`.
+- Hash: `edc64ccc112bbff88373c078bdb707ab26b21f6dd0da126eb387a46c863bace2`.
+- generated_from_event_hash: `edc64ccc112bbff88373c078bdb707ab26b21f6dd0da126eb387a46c863bace2`.
 
 ## 4. Канонические документы
 
@@ -46,7 +46,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 5. Текущая рабочая тема
 
-Seal sequential rollout, staged public investor scenarios and reserve-date regression proof
+Seal three equity public scenarios, residual-equity waterfall and live workbench comparison
 
 ## 6. Decisions и change sets
 
