@@ -45,10 +45,19 @@ test("Investor Economics has one deterministic projection and never duplicates t
 });
 
 test("published discussion presets are governed read-only terms, separate from candidate workbench variants", () => {
-  assert.equal(publishedParticipationPresets.length, 4);
+  assert.equal(publishedParticipationPresets.length, 3);
   assert.deepEqual(
     publishedParticipationPresets.map((preset) => preset.template),
-    ["equity", "priority_equity", "capped_cash_flow", "full_programme"],
+    ["equity", "priority_equity", "full_programme"],
+  );
+  assert.deepEqual(
+    publishedParticipationPresets.map((preset) => ({ id: preset.id, terms: preset.terms })),
+    [
+      { id: "INV-EQUITY-DISCUSSION", terms: { ...publishedParticipationPresets[0]!.terms, equityShare: 0.35, fundingMode: "staged" } },
+      { id: "INV-PRIORITY-DISCUSSION", terms: { ...publishedParticipationPresets[1]!.terms, priorityDistributionShare: 0.7, targetMultiple: 1.3, residualEquityShare: 0.15, postPrincipalCashFlowShare: 0, fundingMode: "staged" } },
+      { id: "INV-FULL-PROGRAMME-DISCUSSION", terms: { ...publishedParticipationPresets[2]!.terms, programmeFundingShare: 1, principalPhaseDistributionShare: 0.7, residualEquityShare: 0.4, postPrincipalCashFlowShare: 0, fundingMode: "staged" } },
+    ],
+    "approved three-scenario public terms are the governed source of truth",
   );
   const source = fivePointBusinessProjection();
   for (const preset of publishedParticipationPresets) {
@@ -128,6 +137,53 @@ test("principal repayments reduce outstanding principal and are not reported as 
   }
   assert.ok(projection.metrics.principalRepaidRub > 0);
   assert.ok(projection.metrics.investorReturnRub > 0);
+});
+
+test("full-programme residual equity distributes real post-principal cash without a direct FCF share", () => {
+  const projection = investorEconomicsProjection(fivePointBusinessProjection(), {
+    ...defaultInvestorEconomicsTerms(),
+    template: "full_programme",
+    fundingMode: "staged",
+    programmeFundingShare: 1,
+    principalPhaseDistributionShare: 0.7,
+    postPrincipalCashFlowShare: 0,
+    residualEquityShare: 0.4,
+  });
+  const payoffMonth = projection.metrics.principalPaybackMonth;
+  assert.notEqual(payoffMonth, null);
+  const payoffRow = projection.rows.find((row) => row.month === payoffMonth);
+  assert.ok(payoffRow);
+  assert.ok(projection.metrics.equityDistributionsRub > 0, "40% equity produces actual cash distributions after capital repayment");
+  assert.equal(projection.metrics.postPrincipalCashFlowDistributionsRub, 0, "disabled direct post-principal FCF right cannot pay alongside equity");
+  assert.ok(projection.metrics.cashIrr !== null && projection.metrics.cashIrr > 0, "real equity distributions enter cash IRR");
+  assert.ok(projection.metrics.cashMoic !== null && projection.metrics.cashMoic > 1, "real equity distributions enter cash MOIC");
+  for (const row of projection.rows.filter((row) => row.month < payoffMonth!)) {
+    assert.equal(row.equityDistributionRub, 0, `M${row.month}: equity must not activate before capital repayment`);
+  }
+  assert.ok(payoffRow!.equityDistributionRub > 0, "the same-month excess switches once to residual equity after principal is capped");
+  assert.ok(payoffRow!.principalRepaymentRub <= payoffRow!.outstandingPrincipalBeforeRub + payoffRow!.investorDrawdownRub + 0.02);
+  assert.deepEqual(investorEconomicsInvariantErrors(projection), []);
+});
+
+test("priority waterfall switches from priority cash to residual-equity cash without double distribution", () => {
+  const projection = investorEconomicsProjection(fivePointBusinessProjection(), {
+    ...defaultInvestorEconomicsTerms(),
+    template: "priority_equity",
+    fundingMode: "staged",
+    distributionPolicy: "current_cash_flow",
+    targetMultiple: 1.05,
+    priorityDistributionShare: 0.7,
+    residualEquityShare: 0.15,
+    postPrincipalCashFlowShare: 0,
+  });
+  const target = projection.metrics.actualContributionsRub * 1.05;
+  const transition = projection.rows.find((row) => row.cumulativeInvestorDistributionsRub + 0.01 >= target);
+  assert.ok(transition, "priority target is reached within the deterministic horizon");
+  assert.ok(projection.metrics.priorityDistributionsRub > 0);
+  assert.ok(projection.metrics.equityDistributionsRub > 0);
+  for (const row of projection.rows) {
+    assert.ok(row.priorityDistributionRub + row.equityDistributionRub <= row.distributableBusinessCashRub + 0.02);
+  }
 });
 
 test("the post-principal waterfall activates exactly once", () => {

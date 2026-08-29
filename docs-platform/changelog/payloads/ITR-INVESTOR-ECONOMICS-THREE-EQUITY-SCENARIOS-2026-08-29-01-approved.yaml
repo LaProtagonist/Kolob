@@ -1,0 +1,90 @@
+schema_version: 2
+payload_id: PAYLOAD-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01
+iteration_id: ITR-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01
+proposal_id: PROP-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01
+decision_id: DEC-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01
+change_set_id: CHG-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01
+title: Three governed equity discussion scenarios and live internal candidate comparison
+status: approved
+approved_by: project owner
+approved_at: 2026-08-29T20:00:00.000Z
+scope:
+  - Replace the four public discussion presets with exactly three approved equity-based scenarios; retain capped cash flow only as an internal workbench model.
+  - Publish the exact staged terms: 35% equity; 70% FCF to 1.30x then 15% equity; and 100% programme funding with 70% FCF to principal then 40% equity.
+  - Correct the shared Investor Economics waterfall so a residual equity right produces actual post-transition owner distributions, not an omitted right or terminal valuation.
+  - Keep Full Programme principal repayment cohort-maturity-based: each mature cohort can service capital while future rollout remains funded by the investor commitment.
+  - Make /control/participation maintain distinct governed Published presets and local Candidate terms, with a live selected-scenario delta and a candidate three-scenario comparison.
+constraints:
+  - no deployment, production mutation, master merge, Google operation, branch change, push, pull, rebase or legal-instrument claim
+  - do not alter Shared Financial Core formulas, sequential rollout, format-specific leads, ramp, reserve policy, CAPEX/OPEX, tax or capacity status
+  - residual ownership value is excluded from Cash IRR and Cash MOIC; only actual cash distributions enter the metrics
+approved_terms:
+  equity:
+    label: Долевое участие
+    equity_share: 0.35
+    funding_mode: staged
+    funding_scope: current_external_funding_requirement
+    distribution_policy: reinvest_first
+  priority_equity:
+    label: Долевое участие с приоритетным возвратом
+    priority_distribution_share: 0.70
+    target_multiple: 1.30
+    residual_equity_share: 0.15
+    post_priority_direct_fcf_share: 0
+    funding_mode: staged
+    funding_scope: current_external_funding_requirement
+  full_programme:
+    label: Полное финансирование развития
+    programme_funding_share: 1.00
+    principal_phase_distribution_share: 0.70
+    residual_equity_share: 0.40
+    post_principal_direct_fcf_share: 0
+    funding_mode: staged
+    principal_repayment_mode: cohort_maturity
+affected_document_ids: [DOC-FINANCIAL-MODEL, DOC-INVESTOR-FINANCIAL-SUMMARY, DOC-NETWORK-PLANNING-ASSUMPTIONS]
+affected_section_ids:
+  - investor-economics.public-discussion-presets
+  - investor-economics.residual-equity-waterfall
+  - investor-economics.cohort-maturity-principal-repayment
+  - control.participation-published-candidate-comparison
+state_hash_paths:
+  - docs-platform/generated/investor-economics-projection.json
+  - scripts/capture-investor-economics-v3-review.cjs
+  - scripts/generate-investor-economics-projection.ts
+  - scripts/test-investor-economics.test.ts
+  - scripts/test-investor-terminal.cjs
+  - src/components/InvestorEconomicsPanel.tsx
+  - src/components/InvestorTerminal.css
+  - src/content/investor-participation-presets.ts
+  - src/lib/investor-economics.ts
+content_paths:
+  - docs-platform/generated/investor-economics-projection.json
+  - scripts/capture-investor-economics-v3-review.cjs
+  - scripts/generate-investor-economics-projection.ts
+  - scripts/test-investor-economics.test.ts
+  - scripts/test-investor-terminal.cjs
+  - src/components/InvestorEconomicsPanel.tsx
+  - src/components/InvestorTerminal.css
+  - src/content/investor-participation-presets.ts
+  - src/lib/investor-economics.ts
+  - docs-platform/changes/proposals/PROP-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01.yaml
+  - docs-platform/changes/decisions/DEC-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01.yaml
+  - docs-platform/changes/CHG-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01.yaml
+  - docs-platform/changes/iterations/ITR-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01.yaml
+  - docs-platform/changelog/audit/ITR-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01.yaml
+  - docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01-approved.yaml
+  - docs-platform/changelog/previews/ITR-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01.yaml
+  - docs-platform/changelog/verification/ITR-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01.yaml
+  - docs-platform/changelog/artifacts/ITR-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01.yaml
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/SNAPSHOT-ITR-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01.yaml
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+allowed_dirty_paths: [analysis/, output/]
+rollback_payload: null
+rollback_contract:
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true

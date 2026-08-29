@@ -1,0 +1,75 @@
+receipt_version: 1
+iteration_id: ITR-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01
+audited_at: 2026-08-29T20:00:00.000Z
+result: passed
+promoted_public_terms:
+  - scenario: Долевое участие
+    funding_scope: внешний капитал по фактической потребности
+    funding_mode: staged
+    equity_share: 35%
+  - scenario: Долевое участие с приоритетным возвратом
+    funding_scope: внешний капитал по фактической потребности
+    funding_mode: staged
+    priority_distribution_share: 70%
+    priority_target: 1.30x
+    residual_equity_share: 15%
+    direct_post_priority_fcf_share: 0%
+  - scenario: Полное финансирование развития
+    funding_scope: 100% стоимости программы
+    funding_mode: staged
+    principal_distribution_share: 70%
+    residual_equity_share: 40%
+    direct_post_principal_fcf_share: 0%
+full_programme_residual_equity_fix:
+  root_cause: >-
+    The principal-first projector only calculated post-principal direct FCF share.
+    A positive residual equity share was rendered as a right but generated no cash
+    distribution, which could leave Cash IRR at 0% when direct FCF share was 0%.
+  correction: >-
+    After principal reaches zero, any same-month excess and later eligible
+    distributable cash are allocated once through the shared residual-equity
+    distribution path. Residual ownership itself is not a terminal cash flow.
+  same_month_transition: >-
+    Principal is capped at the outstanding amount; M32 then allocates the remaining
+    eligible cash through the 40% equity distribution without double payment.
+five_point_public_projection_m60:
+  equity_35:
+    commitment_rub: 67491710.57
+    actual_contributions_rub: 67491710.57
+    first_payout: M23
+    return_of_investment: M44
+    cash_irr: 21.6%
+    cash_moic: 1.8587x
+    investor_rights: 35% компании
+    equity_distributions_rub: 125448044.84
+  priority_70_target_1_30_residual_15:
+    commitment_rub: 68926563.37
+    actual_contributions_rub: 68926563.37
+    first_payout: M10
+    return_of_investment: M25
+    cash_irr: 39.6%
+    cash_moic: 1.9611x
+    investor_rights: 15% компании
+    priority_distributions_rub: 84305353.44
+    equity_distributions_rub: 50866644.25
+    total_distributions_rub: 135171997.69
+  full_programme_70_principal_residual_40:
+    commitment_rub: 102702001.73
+    actual_contributions_rub: 102702001.72
+    first_principal_repayment: M10
+    principal_payback: M32
+    cash_irr: 39.2%
+    cash_moic: 2.0862x
+    investor_rights: 40% компании
+    principal_returned_rub: 102702001.72
+    equity_distributions_rub: 111553837.58
+    direct_post_principal_fcf_distributions_rub: 0
+    total_distributions_rub: 214255839.30
+invariants:
+  mature_cohort_fcf_only: passed
+  full_programme_first_principal_repayment_from_base_maturity_m10: passed
+  one_business_ruble_one_destination: passed
+  residual_equity_cash_flows_enter_cash_irr_and_moic: passed
+  residual_equity_value_excluded_from_cash_metrics: passed
+  priority_and_residual_equity_do_not_double_distribute: passed
+external_state: { google_apply: not_run, production_deploy: not_run, master_merge: not_run }

@@ -278,7 +278,7 @@
 .investor-economics-template-buttons {
   display: grid;
   gap: 8px;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .investor-economics-template-buttons button {
@@ -311,6 +311,46 @@
   font-size: 0.72rem;
   line-height: 1.35;
   opacity: 0.78;
+}
+
+.investor-economics-internal-models {
+  color: #6d6659;
+  font-size: 0.78rem;
+}
+
+.investor-economics-internal-models summary {
+  cursor: pointer;
+  font-weight: 700;
+  padding: 4px 0;
+}
+
+.investor-economics-internal-models button,
+.investor-economics-card-actions button {
+  appearance: none;
+  background: #f7f2e7;
+  border: 1px solid #d2cabc;
+  border-radius: 5px;
+  color: #463f33;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.78rem;
+  margin-top: 7px;
+  padding: 8px 10px;
+  text-align: left;
+}
+
+.investor-economics-internal-models button.is-selected {
+  background: #f7e8ae;
+  border-color: #b38723;
+}
+
+.investor-economics-internal-models button strong,
+.investor-economics-internal-models button small {
+  display: block;
+}
+
+.investor-economics-internal-models button small {
+  margin-top: 3px;
 }
 
 .investor-economics-workspace {
@@ -379,6 +419,49 @@
   border-top: 1px solid #ece6db;
   margin: 0;
   padding: 11px 14px 13px;
+}
+
+.investor-economics-field-note {
+  color: #6d6659;
+  font-size: 0.75rem;
+  grid-column: 1 / -1;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.investor-economics-card-actions {
+  border-top: 1px solid #ece6db;
+  padding: 0 14px 11px;
+}
+
+.investor-economics-card-actions button {
+  margin-top: 11px;
+}
+
+.investor-economics-published dl {
+  display: grid;
+  gap: 0;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0;
+}
+
+.investor-economics-published dl > div {
+  border-bottom: 1px solid #ece6db;
+  display: grid;
+  gap: 3px;
+  padding: 10px 14px;
+}
+
+.investor-economics-published dt {
+  color: #756f62;
+  font-size: 0.72rem;
+}
+
+.investor-economics-published dd {
+  color: #242018;
+  font-size: 0.86rem;
+  font-weight: 700;
+  margin: 0;
 }
 
 .investor-economics-summary {
@@ -533,6 +616,17 @@
   white-space: normal;
 }
 
+.investor-economics-delta-table th,
+.investor-economics-delta-table td {
+  text-align: right;
+}
+
+.investor-economics-delta-table th:first-child,
+.investor-economics-delta-table td:first-child {
+  text-align: left;
+  white-space: normal;
+}
+
 @media (max-width: 980px) {
   .investor-economics-programme,
   .investor-economics-workspace {
@@ -550,6 +644,10 @@
 
   .investor-economics-summary {
     position: static;
+  }
+
+  .investor-economics-published dl {
+    grid-template-columns: 1fr;
   }
 }
 

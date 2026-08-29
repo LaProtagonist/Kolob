@@ -15,6 +15,7 @@ import {
 } from "../src/lib/investor-economics.js";
 import { networkFinancialProjection } from "../src/lib/network-financial-projection.js";
 import { baseObjectFinancialProjection } from "../src/lib/network-scaling.js";
+import { publishedParticipationPresets } from "../src/content/investor-participation-presets.js";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const outputPath = path.join(root, "docs-platform/generated/investor-economics-projection.json");
@@ -90,15 +91,33 @@ export function buildInvestorEconomicsProjectionArtifact() {
     residualEquityShare: 0,
   });
   const comparisons = investorEconomicsComparison(source);
+  const publicDiscussionPresets = publishedParticipationPresets.map((preset) => {
+    const projection = investorEconomicsProjection(source, preset.terms);
+    return {
+      id: preset.id,
+      label: preset.label,
+      status: preset.status,
+      terms: preset.terms,
+      metrics: projection.metrics,
+      cash_decomposition: {
+        principal_returned_rub: projection.metrics.principalRepaidRub,
+        priority_distributions_rub: projection.metrics.priorityDistributionsRub,
+        equity_distributions_rub: projection.metrics.equityDistributionsRub,
+        direct_post_principal_cash_flow_distributions_rub: projection.metrics.postPrincipalCashFlowDistributionsRub,
+        total_distributions_rub: projection.metrics.totalDistributionsRub,
+      },
+    };
+  });
   const invariantErrors = [
     ...investorEconomicsInvariantErrors(baseline),
     ...investorEconomicsInvariantErrors(fullProgramme),
     ...comparisons.flatMap((item) => investorEconomicsInvariantErrors(item.projection)),
+    ...publicDiscussionPresets.flatMap((preset) => investorEconomicsInvariantErrors(investorEconomicsProjection(source, preset.terms))),
   ];
   if (invariantErrors.length) throw new Error(`Investor Economics invariant failure: ${invariantErrors.join(" ")}`);
   return {
     meta: {
-      schema_version: 1,
+      schema_version: 2,
       artifact: "Investor Economics Projection",
       source_files: sourceManifest(),
       policy: "Business Financial Core is the only source of business FCF and rollout funding; Investor Economics allocates that monthly cash without recalculating operating economics.",
@@ -116,6 +135,7 @@ export function buildInvestorEconomicsProjectionArtifact() {
     launch_contingency_audit: launchContingencyAudit(source),
     baseline_reinvest_first: baseline,
     full_programme_principal_first: fullProgramme,
+    public_discussion_presets: publicDiscussionPresets,
     comparison: comparisons.map(({ id, label, terms, projection }) => ({ id, label, terms, metrics: projection.metrics })),
   };
 }

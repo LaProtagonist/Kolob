@@ -1,0 +1,29 @@
+receipt_version: 1
+iteration_id: ITR-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01
+decision_id: DEC-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01
+change_set_id: CHG-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01
+verified_at: 2026-08-29T20:45:00.000Z
+result: passed
+approved_payload_sha256: 727f253baa958d4cc9ec6d59ef6d5785bbdca7f1cee60027f9508d70219729d5
+before_state_sha256: 154669dcfa163b2e3bd2688b96f983b30d3f8303f6f13b39c554b947e9afbdc2
+after_state_sha256: abbcb643dab928c4fec69bfcdfeeeb1ef53ab41e6308b95bb3b6ce2219569de8
+checks:
+  - TypeScript (passed)
+  - Financial Core generated projection check (passed)
+  - Investor Economics deterministic generated artifact check (passed)
+  - Investor Economics tests: 26 passed (includes residual-equity cash, same-month transition, and no-double-distribution invariants)
+  - Investor Terminal browser scenario (passed; public 3 presets, candidate isolation, reset, internal capped model, responsive waterfall)
+  - visual review screenshots (passed; desktop, full expanded, control Published/Candidate and tablet local overflow)
+  - verify:affected (passed; 54.5s)
+  - verify:release (passed; 87.5s)
+invariants:
+  public_has_exactly_three_governed_scenarios: passed
+  capped_cash_flow_is_internal_only: passed
+  published_and_candidate_terms_are_isolated: passed
+  candidate_comparison_uses_live_candidate_terms: passed
+  full_programme_residual_equity_generates_actual_cash_distributions: passed
+  residual_equity_value_is_excluded_from_cash_irr_and_moic: passed
+  principal_is_capped_and_same_month_excess_uses_equity_once: passed
+  mature_cohort_fcf_only_and_single_cash_destination: passed
+  tablet_waterfall_overflow_is_local: passed
+external_changes: { google_apply: not_run, production_deploy: not_run, master_merge: not_run }

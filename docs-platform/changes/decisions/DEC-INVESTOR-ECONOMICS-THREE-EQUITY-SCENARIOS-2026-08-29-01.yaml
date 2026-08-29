@@ -1,0 +1,14 @@
+schema_version: 2
+decision_id: DEC-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01
+iteration_id: ITR-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01
+title: Approve the three equity discussion scenarios and residual-equity distribution correction
+status: approved
+approved_by: project owner
+approved_at: 2026-08-29T20:00:00.000Z
+scope: >-
+  Approve exactly 35% staged equity; 70% priority FCF to 1.30x then 15% equity;
+  and 100% staged programme funding with 70% FCF to principal then 40% equity.
+  Approve calculation of real residual-equity distributions after the applicable
+  threshold; their ownership value itself remains excluded from cash metrics.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01-approved.yaml
+approved_payload_sha256: 727f253baa958d4cc9ec6d59ef6d5785bbdca7f1cee60027f9508d70219729d5

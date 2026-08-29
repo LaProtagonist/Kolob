@@ -1,0 +1,18 @@
+schema_version: 2
+proposal_id: PROP-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01
+iteration_id: ITR-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01
+decision_id: DEC-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01
+change_set_id: CHG-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01
+title: Promote three owner-approved equity discussion scenarios and repair residual equity cash waterfall
+status: approved
+approved_by: project owner
+approved_at: 2026-08-29T20:00:00.000Z
+scope: >-
+  Replace the public four-scenario presentation with three owner-approved staged
+  equity structures, retain capped cash flow only internally, make residual equity
+  distribute actual post-transition cash, and expose a real-time Published versus
+  Candidate workbench comparison without mutating governed public state.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01-approved.yaml
+approved_payload_sha256: 727f253baa958d4cc9ec6d59ef6d5785bbdca7f1cee60027f9508d70219729d5
+before_state_sha256: 154669dcfa163b2e3bd2688b96f983b30d3f8303f6f13b39c554b947e9afbdc2
+after_state_sha256: abbcb643dab928c4fec69bfcdfeeeb1ef53ab41e6308b95bb3b6ce2219569de8

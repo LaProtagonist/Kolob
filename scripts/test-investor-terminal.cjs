@@ -400,7 +400,8 @@ async function run() {
     await investorEconomics.waitFor();
     assert.equal(await page.getByRole("heading", { name: "Сценарии для обсуждения" }).count(), 1, "Investor Economics is a distinct third Terminal section");
     assert.equal(await investorEconomics.locator("input, select").count(), 0, "public participation has no editable deal controls");
-    assert.equal(await investorEconomics.locator('[data-testid^="public-preset-"]').count(), 4, "public participation has exactly four discussion presets");
+    assert.equal(await investorEconomics.locator('[data-testid^="public-preset-"]').count(), 3, "public participation has exactly three discussion presets");
+    assert.equal(await investorEconomics.getByText("Доля в денежном потоке", { exact: true }).count(), 0, "capped cash-flow is not a public participation scenario");
     assert.equal(await investorEconomics.getByText("Все варианты", { exact: true }).count(), 0, "public participation omits workbench permutations");
     assert.match(await investorEconomics.locator(".investor-economics-comparison-table thead").innerText(), /Возврат вложений[\s\S]*Права инвестора/, "public comparison uses scenario-neutral return and rights language");
     assert.equal(await investorEconomics.getByText("Предварительный расчёт: требуется проверка мощности производства.", { exact: true }).count(), 1, "capacity caveat appears once in the public participation view");
@@ -417,6 +418,7 @@ async function run() {
     const actualContributions = await amount("economics-actual-contributions");
     assert.equal(commitment, programmeInvestment, "full-programme commitment equals the dated programme total");
     assert.ok(Math.abs(actualContributions - commitment) < 0.02, "staged full-programme drawdowns total the commitment without being an M0 outflow");
+    assert.match(await investorEconomics.getByLabel("Итог выбранного сценария").innerText(), /Доля в компании после возврата[\s\S]*40%/, "full programme exposes its 40% residual equity right rather than a direct FCF share");
     const economicsWaterfall = investorEconomics.locator(".investor-economics-waterfall");
     assert.equal(await economicsWaterfall.getAttribute("open"), null, "the 60-month waterfall is collapsed in the executive view");
     await investorEconomics.screenshot({ path: path.join(projectRoot, ".cache/verification/screenshots/investor-economics-full-programme-executive-desktop.png") });
@@ -443,13 +445,23 @@ async function run() {
     await page.goto(`${baseUrl}/control/participation`, { waitUntil: "domcontentloaded" });
     await page.getByRole("heading", { name: "Конструктор условий участия" }).waitFor();
     assert.ok(await page.locator(".investor-economics input, .investor-economics select").count() > 0, "internal workbench retains editable candidate controls");
-    const publicPresetBeforeCandidateEdit = await page.getByTestId("economics-actual-contributions").getAttribute("data-amount-rub");
+    assert.equal(await page.getByTestId("published-scenario").count(), 1, "workbench exposes the governed published scenario beside the candidate");
+    assert.equal(await page.getByTestId("published-candidate-comparison").count(), 1, "workbench exposes a published-versus-candidate comparison");
+    const publicPresetBeforeCandidateEdit = await page.getByTestId("published-scenario").innerText();
     const equityInput = page.getByLabel("Доля в компании");
-    await equityInput.fill("40");
+    await equityInput.fill("32");
     await equityInput.press("Tab");
+    assert.match(await page.getByTestId("published-candidate-comparison").innerText(), /35%[\s\S]*32%/, "candidate terms update live while published terms stay fixed");
+    assert.match(await page.getByTestId("candidate-all-scenario-comparison").innerText(), /32% компании/, "candidate all-scenario comparison uses current workbench inputs");
+    await page.getByTestId("candidate-reset").click();
+    assert.equal(await equityInput.inputValue(), "35", "reset copies the governed published value back into the candidate");
+    await page.locator(".investor-economics-internal-models").evaluate((element) => { element.open = true; });
+    await page.getByTestId("workbench-scenario-capped").click();
+    assert.equal(await page.getByLabel("Лимит выплат").count(), 1, "capped cash-flow support remains available inside the internal workbench");
     await page.goto(`${baseUrl}/investor-terminal`, { waitUntil: "domcontentloaded" });
     await page.getByRole("button", { name: "Условия участия" }).click();
-    assert.equal(await page.getByTestId("economics-actual-contributions").getAttribute("data-amount-rub"), publicPresetBeforeCandidateEdit, "candidate workbench state cannot mutate a published preset");
+    assert.match(await page.getByTestId("investor-economics-public").innerText(), /35% компании/, "candidate workbench state cannot mutate a published preset");
+    assert.notEqual(publicPresetBeforeCandidateEdit, "", "published state was observable before candidate editing");
 
     await page.getByRole("button", { name: "Экономика точки" }).click();
     await checks.waitFor();

@@ -1,0 +1,63 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01
+proposal_id: PROP-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01
+decision_id: DEC-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01
+change_set_id: CHG-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01
+title: Seal three equity public scenarios, residual-equity waterfall and live workbench comparison
+status: approved
+approved_by: project owner
+approved_at: 2026-08-29T20:00:00.000Z
+actor: Codex
+scope: >-
+  Apply the owner-approved three-scenario equity set, correct actual residual-equity
+  cash distributions after priority/principal transitions, and keep public presets
+  separate from local candidate controls. Production, master, Google, Shared Financial
+  Core, sequential rollout, ramp, reserve policy, capacity status and /control exposure
+  remain unchanged.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01-approved.yaml
+approved_payload_sha256: 727f253baa958d4cc9ec6d59ef6d5785bbdca7f1cee60027f9508d70219729d5
+before_state_sha256: 154669dcfa163b2e3bd2688b96f983b30d3f8303f6f13b39c554b947e9afbdc2
+after_state_sha256: abbcb643dab928c4fec69bfcdfeeeb1ef53ab41e6308b95bb3b6ce2219569de8
+affected_document_ids: [DOC-FINANCIAL-MODEL, DOC-INVESTOR-FINANCIAL-SUMMARY, DOC-NETWORK-PLANNING-ASSUMPTIONS]
+affected_section_ids:
+  - investor-economics.public-discussion-presets
+  - investor-economics.residual-equity-waterfall
+  - investor-economics.cohort-maturity-principal-repayment
+  - control.participation-published-candidate-comparison
+state_hash_paths:
+  - docs-platform/generated/investor-economics-projection.json
+  - scripts/capture-investor-economics-v3-review.cjs
+  - scripts/generate-investor-economics-projection.ts
+  - scripts/test-investor-economics.test.ts
+  - scripts/test-investor-terminal.cjs
+  - src/components/InvestorEconomicsPanel.tsx
+  - src/components/InvestorTerminal.css
+  - src/content/investor-participation-presets.ts
+  - src/lib/investor-economics.ts
+content_paths:
+  - docs-platform/generated/investor-economics-projection.json
+  - scripts/capture-investor-economics-v3-review.cjs
+  - scripts/generate-investor-economics-projection.ts
+  - scripts/test-investor-economics.test.ts
+  - scripts/test-investor-terminal.cjs
+  - src/components/InvestorEconomicsPanel.tsx
+  - src/components/InvestorTerminal.css
+  - src/content/investor-participation-presets.ts
+  - src/lib/investor-economics.ts
+  - docs-platform/changes/proposals/PROP-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01.yaml
+  - docs-platform/changes/decisions/DEC-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01.yaml
+  - docs-platform/changes/CHG-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01.yaml
+  - docs-platform/changes/iterations/ITR-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01.yaml
+  - docs-platform/changelog/audit/ITR-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01.yaml
+  - docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01-approved.yaml
+  - docs-platform/changelog/previews/ITR-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01.yaml
+  - docs-platform/changelog/verification/ITR-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01.yaml
+  - docs-platform/changelog/artifacts/ITR-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01.yaml
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/SNAPSHOT-ITR-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01.yaml
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+allowed_dirty_paths: [analysis/, output/]
+rollback_payload: null

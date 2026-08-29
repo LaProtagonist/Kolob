@@ -70,6 +70,12 @@ export type InvestorMonthlyWaterfall = {
   matureCohortIds: string[];
   distributableBusinessCashRub: number;
   principalRepaymentRub: number;
+  /** Priority cash paid before the priority target is reached. */
+  priorityDistributionRub: number;
+  /** Cash distributed through an actual residual-equity participation. */
+  equityDistributionRub: number;
+  /** Direct post-principal cash-flow participation, if selected instead of equity. */
+  postPrincipalCashFlowDistributionRub: number;
   investorReturnRub: number;
   totalInvestorDistributionRub: number;
   outstandingPrincipalAfterRub: number;
@@ -94,6 +100,9 @@ export type InvestorEconomicsMetrics = {
   commitmentRub: number | null;
   actualContributionsRub: number;
   principalRepaidRub: number;
+  priorityDistributionsRub: number;
+  equityDistributionsRub: number;
+  postPrincipalCashFlowDistributionsRub: number;
   outstandingPrincipalRub: number;
   investorReturnRub: number;
   totalDistributionsRub: number;
@@ -278,38 +287,83 @@ type SimulationResult = {
   contributionsRub: number;
 };
 
+type DistributionRequest = {
+  priorityDistributionRub: number;
+  equityDistributionRub: number;
+  cashFlowDistributionRub: number;
+};
+
 function requestedDistribution(
   terms: InvestorEconomicsTerms,
   distributableBusinessCashRub: number,
-  outstandingPrincipalRub: number,
   cumulativeDistributionsRub: number,
   cumulativeContributionsRub: number,
-) {
-  if (terms.template === "equity") return roundFinancial(distributableBusinessCashRub * percent(terms.equityShare));
+): DistributionRequest {
+  if (terms.template === "equity") {
+    return {
+      priorityDistributionRub: 0,
+      equityDistributionRub: roundFinancial(distributableBusinessCashRub * percent(terms.equityShare)),
+      cashFlowDistributionRub: 0,
+    };
+  }
   // Full-programme funding uses the cohort-maturity principal waterfall in
   // simulate(). Keeping it out of this generic helper prevents immature
   // operating cash from being treated like investor-distributable cash.
-  if (terms.template === "full_programme") return 0;
+  if (terms.template === "full_programme") {
+    return { priorityDistributionRub: 0, equityDistributionRub: 0, cashFlowDistributionRub: 0 };
+  }
   if (terms.template === "priority_equity") {
     const threshold = cumulativeContributionsRub * Math.max(0, terms.targetMultiple);
-    if (cumulativeDistributionsRub >= threshold) return roundFinancial(distributableBusinessCashRub * percent(terms.residualEquityShare));
+    if (cumulativeDistributionsRub >= threshold) {
+      return {
+        priorityDistributionRub: 0,
+        equityDistributionRub: roundFinancial(distributableBusinessCashRub * percent(terms.residualEquityShare)),
+        cashFlowDistributionRub: 0,
+      };
+    }
     const priorityShare = percent(terms.priorityDistributionShare);
-    if (priorityShare <= 0) return roundFinancial(distributableBusinessCashRub * percent(terms.residualEquityShare));
-    const priorityCashBase = Math.min(distributableBusinessCashRub, (threshold - cumulativeDistributionsRub) / priorityShare);
-    return roundFinancial(
-      priorityCashBase * priorityShare
-      + (distributableBusinessCashRub - priorityCashBase) * percent(terms.residualEquityShare),
-    );
+    if (priorityShare <= 0) {
+      return {
+        priorityDistributionRub: 0,
+        equityDistributionRub: roundFinancial(distributableBusinessCashRub * percent(terms.residualEquityShare)),
+        cashFlowDistributionRub: 0,
+      };
+    }
+    const priorityDistributionRub = roundFinancial(Math.min(
+      distributableBusinessCashRub * priorityShare,
+      Math.max(0, threshold - cumulativeDistributionsRub),
+    ));
+    return {
+      priorityDistributionRub,
+      equityDistributionRub: roundFinancial(Math.max(0, distributableBusinessCashRub - priorityDistributionRub) * percent(terms.residualEquityShare)),
+      cashFlowDistributionRub: 0,
+    };
   }
   const cap = cumulativeContributionsRub * Math.max(0, terms.cashFlowCapMultiple);
-  if (cumulativeDistributionsRub >= cap) return roundFinancial(distributableBusinessCashRub * percent(terms.residualEquityShare));
+  if (cumulativeDistributionsRub >= cap) {
+    return {
+      priorityDistributionRub: 0,
+      equityDistributionRub: roundFinancial(distributableBusinessCashRub * percent(terms.residualEquityShare)),
+      cashFlowDistributionRub: 0,
+    };
+  }
   const cashFlowShare = percent(terms.cashFlowShare);
-  if (cashFlowShare <= 0) return roundFinancial(distributableBusinessCashRub * percent(terms.residualEquityShare));
-  const cashFlowBase = Math.min(distributableBusinessCashRub, (cap - cumulativeDistributionsRub) / cashFlowShare);
-  return roundFinancial(
-    cashFlowBase * cashFlowShare
-    + (distributableBusinessCashRub - cashFlowBase) * percent(terms.residualEquityShare),
-  );
+  if (cashFlowShare <= 0) {
+    return {
+      priorityDistributionRub: 0,
+      equityDistributionRub: roundFinancial(distributableBusinessCashRub * percent(terms.residualEquityShare)),
+      cashFlowDistributionRub: 0,
+    };
+  }
+  const cashFlowDistributionRub = roundFinancial(Math.min(
+    distributableBusinessCashRub * cashFlowShare,
+    Math.max(0, cap - cumulativeDistributionsRub),
+  ));
+  return {
+    priorityDistributionRub: 0,
+    equityDistributionRub: roundFinancial(Math.max(0, distributableBusinessCashRub - cashFlowDistributionRub) * percent(terms.residualEquityShare)),
+    cashFlowDistributionRub,
+  };
 }
 
 function postPrincipalTermAllowsDistribution(
@@ -365,7 +419,7 @@ function simulate(input: SimulationInput): SimulationResult {
       cashAfterFundingRub = 0;
     }
     if (investorDrawdownRub > 0) {
-      outstandingPrincipalRub = roundFinancial(outstandingPrincipalRub + investorDrawdownRub);
+      if (input.fullProgrammeFunding) outstandingPrincipalRub = roundFinancial(outstandingPrincipalRub + investorDrawdownRub);
       cumulativeContributionsRub = roundFinancial(cumulativeContributionsRub + investorDrawdownRub);
       contributionTotalRub = roundFinancial(contributionTotalRub + investorDrawdownRub);
     }
@@ -399,6 +453,9 @@ function simulate(input: SimulationInput): SimulationResult {
       ))
       : 0;
     let principalRepaymentRub = 0;
+    let priorityDistributionRub = 0;
+    let equityDistributionRub = 0;
+    let postPrincipalCashFlowDistributionRub = 0;
     let investorReturnRub = 0;
     if (input.fullProgrammeFunding) {
       const repaymentEnabled = input.terms.principalRepaymentMode !== "after_programme_funding"
@@ -412,35 +469,44 @@ function simulate(input: SimulationInput): SimulationResult {
         principalPaybackMonth = source.month;
       }
       // Until every dated contribution has been returned, a distribution is
-      // capital repayment only. Any surplus before that point remains in the
-      // business rather than being misreported as investor income.
+      // capital repayment only. A same-month excess is then allocated once
+      // through either the residual-equity or direct-FCF right.
       const postPrincipalCashRub = roundFinancial(Math.max(0, distributableBusinessCashRub - principalRepaymentRub));
       const cumulativeAfterPrincipalRub = roundFinancial(cumulativeDistributionsRub + principalRepaymentRub);
-      if (outstandingPrincipalRub <= 0.01 && postPrincipalTermAllowsDistribution(
-        input.terms,
-        source.month,
-        principalPaybackMonth,
-        cumulativeAfterPrincipalRub,
-        cumulativeContributionsRub,
-      )) {
-        const postPrincipalRequestRub = roundFinancial(postPrincipalCashRub * percent(input.terms.postPrincipalCashFlowShare));
-        const targetRemainingRub = input.terms.postPrincipalParticipationTerm === "target_cash_moic"
-          ? roundFinancial(Math.max(0, cumulativeContributionsRub * Math.max(0, input.terms.postPrincipalTargetCashMoic) - cumulativeAfterPrincipalRub))
-          : postPrincipalRequestRub;
-        investorReturnRub = Math.min(postPrincipalRequestRub, targetRemainingRub);
+      if (outstandingPrincipalRub <= 0.01) {
+        if (percent(input.terms.residualEquityShare) > 0) {
+          // A residual company share is an equity-distribution right, not a
+          // terminal valuation and not an additional direct-FCF entitlement.
+          equityDistributionRub = roundFinancial(postPrincipalCashRub * percent(input.terms.residualEquityShare));
+        } else if (postPrincipalTermAllowsDistribution(
+          input.terms,
+          source.month,
+          principalPaybackMonth,
+          cumulativeAfterPrincipalRub,
+          cumulativeContributionsRub,
+        )) {
+          const postPrincipalRequestRub = roundFinancial(postPrincipalCashRub * percent(input.terms.postPrincipalCashFlowShare));
+          const targetRemainingRub = input.terms.postPrincipalParticipationTerm === "target_cash_moic"
+            ? roundFinancial(Math.max(0, cumulativeContributionsRub * Math.max(0, input.terms.postPrincipalTargetCashMoic) - cumulativeAfterPrincipalRub))
+            : postPrincipalRequestRub;
+          postPrincipalCashFlowDistributionRub = Math.min(postPrincipalRequestRub, targetRemainingRub);
+        }
+        investorReturnRub = roundFinancial(equityDistributionRub + postPrincipalCashFlowDistributionRub);
       }
     } else {
-      const requestedDistributionRub = requestedDistribution(
+      const requested = requestedDistribution(
         input.terms,
         distributableBusinessCashRub,
-        outstandingPrincipalRub,
         cumulativeDistributionsRub,
         cumulativeContributionsRub,
       );
-      const totalRequestedRub = roundFinancial(Math.min(distributableBusinessCashRub, requestedDistributionRub));
-      principalRepaymentRub = roundFinancial(Math.min(outstandingPrincipalRub, totalRequestedRub));
-      investorReturnRub = roundFinancial(totalRequestedRub - principalRepaymentRub);
-      outstandingPrincipalRub = roundFinancial(outstandingPrincipalRub - principalRepaymentRub);
+      priorityDistributionRub = requested.priorityDistributionRub;
+      equityDistributionRub = requested.equityDistributionRub;
+      postPrincipalCashFlowDistributionRub = requested.cashFlowDistributionRub;
+      investorReturnRub = roundFinancial(Math.min(
+        distributableBusinessCashRub,
+        priorityDistributionRub + equityDistributionRub + postPrincipalCashFlowDistributionRub,
+      ));
     }
     const totalInvestorDistributionRub = roundFinancial(principalRepaymentRub + investorReturnRub);
     cumulativeDistributionsRub = roundFinancial(cumulativeDistributionsRub + totalInvestorDistributionRub);
@@ -456,6 +522,9 @@ function simulate(input: SimulationInput): SimulationResult {
       matureCohortIds: input.maturity.matureCohortIdsByMonth[index] ?? [],
       distributableBusinessCashRub,
       principalRepaymentRub,
+      priorityDistributionRub,
+      equityDistributionRub,
+      postPrincipalCashFlowDistributionRub,
       investorReturnRub,
       totalInvestorDistributionRub,
       outstandingPrincipalAfterRub: outstandingPrincipalRub,
@@ -562,6 +631,9 @@ export function investorEconomicsProjection(
   const rows = result.rows;
   const totalDistributionsRub = rows.at(-1)?.cumulativeInvestorDistributionsRub ?? 0;
   const principalRepaidRub = roundFinancial(rows.reduce((sum, row) => sum + row.principalRepaymentRub, 0));
+  const priorityDistributionsRub = roundFinancial(rows.reduce((sum, row) => sum + row.priorityDistributionRub, 0));
+  const equityDistributionsRub = roundFinancial(rows.reduce((sum, row) => sum + row.equityDistributionRub, 0));
+  const postPrincipalCashFlowDistributionsRub = roundFinancial(rows.reduce((sum, row) => sum + row.postPrincipalCashFlowDistributionRub, 0));
   const investorReturnRub = roundFinancial(rows.reduce((sum, row) => sum + row.investorReturnRub, 0));
   const actualContributionsRub = result.contributionsRub;
   const cashIrr = annualIrr(rows.map((row) => roundFinancial(-row.investorDrawdownRub + row.totalInvestorDistributionRub)));
@@ -601,6 +673,9 @@ export function investorEconomicsProjection(
       commitmentRub: commitmentFor(source, terms, actualContributionsRub),
       actualContributionsRub,
       principalRepaidRub,
+      priorityDistributionsRub,
+      equityDistributionsRub,
+      postPrincipalCashFlowDistributionsRub,
       outstandingPrincipalRub: rows.at(-1)?.outstandingPrincipalAfterRub ?? 0,
       investorReturnRub,
       totalDistributionsRub,
@@ -680,6 +755,16 @@ export function investorEconomicsInvariantErrors(projection: InvestorEconomicsPr
     if (row.principalRepaymentRub - row.outstandingPrincipalBeforeRub - row.investorDrawdownRub > 0.02) errors.push(`Month ${row.month}: principal repayment exceeds outstanding capital.`);
     if (row.totalInvestorDistributionRub - row.matureCohortFreeCashFlowRub > 0.02) errors.push(`Month ${row.month}: immature cohort FCF reached an investor distribution.`);
     if (row.investorReturnRub < -0.02 || row.principalRepaymentRub < -0.02) errors.push(`Month ${row.month}: investor waterfall cannot be negative.`);
+    const returnIdentity = roundFinancial(
+      row.investorReturnRub - row.priorityDistributionRub - row.equityDistributionRub - row.postPrincipalCashFlowDistributionRub,
+    );
+    if (Math.abs(returnIdentity) > 0.02) errors.push(`Month ${row.month}: investor return is not reconciled to its distribution rights.`);
+    if (projection.terms.template === "full_programme" && projection.terms.postPrincipalCashFlowShare <= 0.0001 && row.postPrincipalCashFlowDistributionRub > 0.02) {
+      errors.push(`Month ${row.month}: disabled direct post-principal FCF right produced a payment.`);
+    }
+    if (projection.terms.template === "full_programme" && projection.terms.residualEquityShare > 0.0001 && row.equityDistributionRub > 0.02 && row.outstandingPrincipalAfterRub > 0.01) {
+      errors.push(`Month ${row.month}: residual equity activated before capital was returned.`);
+    }
     if (row.businessCashRetainedRub < -0.02) errors.push(`Month ${row.month}: liquidity is negative after required drawdown.`);
   }
   const principalPaybackRows = projection.rows.filter((row) => row.outstandingPrincipalBeforeRub > 0 && row.outstandingPrincipalAfterRub === 0);

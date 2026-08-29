@@ -1,0 +1,13 @@
+receipt_version: 1
+iteration_id: ITR-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01
+decision_id: DEC-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01
+change_set_id: CHG-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01
+previewed_at: 2026-08-29T20:00:00.000Z
+result: reviewed
+mutation_performed: false
+summary: >-
+  Public participation becomes a read-only three-scenario comparison. The capped
+  cash-flow model remains an internal workbench tool. Candidate edits are local
+  and visible beside their governed Published counterpart; no promotion action is
+  present in the browser.
+external_changes: { google_apply: not_run, production_deploy: not_run, master_merge: not_run }
