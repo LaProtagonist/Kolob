@@ -4,10 +4,10 @@
 
 ## 1. Current state
 
-- Events: 382.
-- Timeline head event: `EVT-ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02-COMMITTED`.
-- Timeline head SHA-256: `6bd30264c2152cd0b9ee2c31b73dd0f054e84c472abeb4c9c738f1000f804a02`.
-- Latest recorded iteration: `ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02`.
+- Events: 394.
+- Timeline head event: `EVT-ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02-COMMITTED`.
+- Timeline head SHA-256: `84ab01db8dd94fe5d609eab1407d42084326258ab4f24e2a9124d9f875f76b90`.
+- Latest recorded iteration: `ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02`.
 
 ## 2. Modern governed iterations
 
@@ -84,6 +84,8 @@
 | 2026-08-29T20:51:04.000Z | committed | Seal three equity public scenarios, residual-equity waterfall and live workbench comparison | ITR-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01 | DEC-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01 | CHG-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01 | cfc18b1cdf37e8e79ba3a7174e3a8acc935c2503 | iteration/ITR-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01 | — | — | — | Seal three equity public scenarios, residual-equity waterfall and live workbench comparison: content commit verified and linked to the governed lifecycle before sealing. |
 | 2026-08-30T00:57:57.669Z | superseded | Seal compact Investor Economics comparison audit and CAPEX remote parity check | ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01 | DEC-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01 | CHG-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01 | — | — | — | — | — | Seal compact Investor Economics comparison audit and CAPEX remote parity check superseded by Seal compact Investor Economics comparison audit and CAPEX remote parity check (ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02). Reason: Correct the pre-commit governed scope hashes using the project scopeHash function; functional scope and all audit results remain unchanged. |
 | 2026-08-30T01:01:38.000Z | committed | Seal compact Investor Economics comparison audit and CAPEX remote parity check | ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02 | DEC-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02 | CHG-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02 | 709c6c4feb8ce53e6ea0d50fea65c390abd62c48 | iteration/ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02 | — | — | — | Seal compact Investor Economics comparison audit and CAPEX remote parity check: content commit verified and linked to the governed lifecycle before sealing. |
+| 2026-08-30T13:26:54.158Z | superseded | Simplify cohort-maturity disclosure and publish the verified Investor Terminal | ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-01 | DEC-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-01 | CHG-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-01 | — | — | — | — | — | Superseded before content commit: three historical PNGs were hash-exactly restored; the irrecoverable duplicate executive screenshot is explicitly repaired as superseded in the successor iteration. |
+| 2026-08-30T13:32:23.000Z | committed | Simplify cohort-maturity disclosure and publish the verified Investor Terminal | ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02 | DEC-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02 | CHG-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02 | c12dc803d1d3f836bca0239bd0f17f69f260313b | iteration/ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02 | — | — | — | Simplify cohort-maturity disclosure and publish the verified Investor Terminal: content commit verified and linked to the governed lifecycle before sealing. |
 
 ## 3. Legacy imported history
 
