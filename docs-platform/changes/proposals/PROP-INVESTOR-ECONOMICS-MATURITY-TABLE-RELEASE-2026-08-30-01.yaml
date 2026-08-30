@@ -1,0 +1,12 @@
+schema_version: 2
+proposal_id: PROP-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-01
+iteration_id: ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-01
+title: Remove the duplicate mature-FCF display column and release the verified Investor Terminal
+status: approved
+submitted_by: project owner
+submitted_at: '2026-08-30T00:00:00.000Z'
+scope: >-
+  Simplify the investor-facing cohort-maturity table without changing its financial maturity calculation,
+  then publish the verified current Terminal using the project release workflow.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-01-approved.yaml
+approved_payload_sha256: bd48bc5da93caf11e75f8ecb8ffef5e550ade24b0e0c3078e50aa452e1d05d43

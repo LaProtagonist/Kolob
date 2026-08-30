@@ -1,0 +1,12 @@
+schema_version: 2
+decision_id: DEC-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-01
+iteration_id: ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-01
+title: Approve compact maturity-table presentation and production release
+status: approved
+approved_by: project owner
+approved_at: '2026-08-30T00:00:00.000Z'
+scope: >-
+  Remove the duplicate display-only mature-FCF column, retain the plan-mode milestone, preserve finance,
+  and deploy only after release verification passes.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-01-approved.yaml
+approved_payload_sha256: bd48bc5da93caf11e75f8ecb8ffef5e550ade24b0e0c3078e50aa452e1d05d43

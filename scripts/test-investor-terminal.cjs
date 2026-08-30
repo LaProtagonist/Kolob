@@ -426,6 +426,17 @@ async function run() {
     const publicComparisonHeader = await investorEconomics.locator(".investor-economics-comparison-table thead").innerText();
     assert.equal(publicComparisonHeader.replace(/\s+/g, " ").trim(), "Сценарий Капитал / обязательство Возврат вложений Cash IRR к М60 Cash MOIC к М60 Права инвестора", "public comparison keeps only the six decision-useful columns");
     assert.doesNotMatch(publicComparisonHeader, /Первые выплаты|денежный поток/i, "public comparison does not duplicate the selected-scenario first-payment timing");
+    const maturityTable = investorEconomics.locator(".investor-economics-maturity");
+    await maturityTable.locator("summary").click();
+    const maturityHeader = await maturityTable.locator("thead").innerText();
+    assert.equal(maturityHeader.replace(/\s+/g, " ").trim(), "Объект Финансирование Срок подготовки Открытие / первые продажи Плановый режим", "maturity disclosure keeps one non-duplicated plan-mode milestone");
+    assert.doesNotMatch(maturityHeader, /Первый зрелый FCF/i, "maturity disclosure does not duplicate the full-plan milestone as a separate FCF column");
+    assert.ok(
+      await maturityTable.locator("tbody tr").evaluateAll(
+        (rows) => rows.length > 0 && rows.every((row) => row.children.length === 5 && [...row.children].every((cell) => Boolean(cell.textContent?.trim()))),
+      ),
+      "maturity rows contain exactly the five useful non-empty values",
+    );
     assert.equal(await investorEconomics.getByText("Предварительный расчёт: требуется проверка мощности производства.", { exact: true }).count(), 1, "capacity caveat appears once in the public participation view");
     const programmeInvestment = await amount("economics-programme-investment");
     const externalFunding = await amount("economics-current-external-funding");
@@ -452,6 +463,12 @@ async function run() {
       const layout = await investorEconomics.evaluate((element) => ({
         overflow: document.documentElement.scrollWidth > window.innerWidth,
         summaryVisible: Boolean(element.querySelector(".investor-economics-summary")),
+        maturityHasLocalOverflow: (() => {
+          const wrapper = element.querySelector(".investor-economics-maturity .investor-economics-table-wrap");
+          return wrapper instanceof HTMLElement && wrapper.scrollWidth > wrapper.clientWidth;
+        })(),
+        maturityCellsClipped: [...element.querySelectorAll(".investor-economics-maturity th, .investor-economics-maturity td")]
+          .some((cell) => cell instanceof HTMLElement && cell.scrollWidth > cell.clientWidth),
         waterfallHasLocalOverflow: (() => {
           const wrapper = element.querySelector("[data-testid=\"economics-waterfall-scroll\"]");
           return wrapper instanceof HTMLElement && wrapper.scrollWidth > wrapper.clientWidth;
@@ -459,6 +476,8 @@ async function run() {
       }));
       assert.equal(layout.overflow, false, `Investor Economics ${label} has no horizontal page overflow`);
       assert.equal(layout.summaryVisible, true, `Investor Economics ${label} retains its scenario summary`);
+      assert.equal(layout.maturityHasLocalOverflow, false, `Investor Economics ${label} fits the compact maturity table without local overflow`);
+      assert.equal(layout.maturityCellsClipped, false, `Investor Economics ${label} renders every maturity-table cell without clipping`);
       if (label !== "desktop") assert.equal(layout.waterfallHasLocalOverflow, true, `Investor Economics ${label} keeps wide waterfall columns inside its local scroller`);
     }
     await page.setViewportSize({ width: 1440, height: 900 });

@@ -552,6 +552,22 @@
   min-width: 1050px;
 }
 
+.investor-economics-maturity .investor-economics-table-wrap table {
+  min-width: 0;
+  table-layout: fixed;
+}
+
+.investor-economics-maturity .investor-economics-table-wrap th,
+.investor-economics-maturity .investor-economics-table-wrap td {
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.investor-economics-maturity .investor-economics-table-wrap th:first-child,
+.investor-economics-maturity .investor-economics-table-wrap td:first-child {
+  width: 34%;
+}
+
 .investor-economics-maturity,
 .investor-economics-first-payment {
   background: #fffdf7;

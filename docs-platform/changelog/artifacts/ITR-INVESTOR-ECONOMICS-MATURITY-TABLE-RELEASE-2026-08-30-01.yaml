@@ -1,0 +1,4 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-01
+artifacts:
+  - { artifact_id: ART-IE-MATURITY-RELEASE-01-DESKTOP, iteration_id: ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-01, type: png, filename: analysis/screenshots/investor-economics-ui-cleanup/investor-economics-maturity-desktop.png, sha256: e779c92c1e4b201b33af4185755ffb57f830e6a60f4a175bdb93812e55afe1e8, size: 31551, created_at: '2026-08-30T00:00:00.000Z', purpose: local five-column maturity-table desktop review, storage: local review workspace, remote_url: null, status: pending_archive }

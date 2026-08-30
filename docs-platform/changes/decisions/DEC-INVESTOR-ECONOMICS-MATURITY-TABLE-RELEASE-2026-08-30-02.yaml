@@ -1,0 +1,12 @@
+schema_version: 2
+decision_id: DEC-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02
+iteration_id: ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02
+title: Approve maturity disclosure release and narrow historical evidence repair
+status: approved
+approved_by: project owner
+approved_at: '2026-08-30T00:00:00.000Z'
+scope: >-
+  Apply the display-only change and deployment after release verification; repair historic evidence only
+  through hash-exact restoration or an explicit superseded record.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02-approved.yaml
+approved_payload_sha256: f5acc3fe54bbee0eeccbb38b52d6d254dc4d215a5f40f4b4763b8c2eb198e221

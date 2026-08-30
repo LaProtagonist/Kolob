@@ -1,0 +1,13 @@
+receipt_version: 1
+iteration_id: ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02
+audited_at: '2026-08-30T00:00:00.000Z'
+result: passed
+display_metric_audit:
+  - { metric: Плановый режим, exact_meaning: Month at the approved 100% ramp factor, source: cohort.fullPlanMonth, distinct_investor_value: Sole displayed availability milestone. }
+  - { metric: Первый зрелый free cash flow, exact_meaning: Internal firstFcfEligibleMonth maturity gate, source: cohort.firstFcfEligibleMonth, distinct_investor_value: None in this table because it equals fullPlanMonth. }
+decision: Remove the duplicate public display and helper copy; retain the internal calculation input.
+financial_calculations_changed: false
+historical_review_artifact_repair:
+  hash_exact_restored: [comparison desktop, comparison tablet, comparison mobile]
+  superseded_without_replacement: [ART-IE-CAPEX-UI-EXECUTIVE, ART-IE-CAPEX-UI-02-EXECUTIVE]
+  rationale: Exact source for the shared old executive PNG was unavailable after exhaustive deterministic recapture; no substitute hash or fabricated remote URL was used.

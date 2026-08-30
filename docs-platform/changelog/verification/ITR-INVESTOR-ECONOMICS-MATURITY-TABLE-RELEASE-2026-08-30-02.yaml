@@ -1,0 +1,17 @@
+receipt_version: 1
+iteration_id: ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02
+decision_id: DEC-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02
+change_set_id: CHG-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02
+verified_at: '2026-08-30T00:00:00.000Z'
+result: passed
+approved_payload_sha256: f5acc3fe54bbee0eeccbb38b52d6d254dc4d215a5f40f4b4763b8c2eb198e221
+before_state_sha256: ba62de993c75385b23d6a6a37d60383be81f3a4c268536a14c5d524220614aaa
+after_state_sha256: 5d114023dac30dba6d1c6886c7edd9fe3c1cfc0f6854057e32912389050dd66f
+checks:
+  - TypeScript site check (passed)
+  - Investor Economics deterministic tests (passed; 26/26)
+  - Investor Terminal browser scenario (passed; five columns, no document/local table overflow or clipping at 1440, 1024 and 390)
+  - npm run verify:affected (passed)
+  - npm run verify:release (passed; 99.2s; release ready)
+invariants: { duplicate_display_removed: passed, financial_calculations_unchanged: passed, responsive_no_overflow: passed }
+external_changes: { production_deploy: pending, master_merge: not_run, google_publication: not_run }

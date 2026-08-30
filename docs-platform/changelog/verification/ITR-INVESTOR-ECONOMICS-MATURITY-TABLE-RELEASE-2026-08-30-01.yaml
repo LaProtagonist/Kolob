@@ -1,0 +1,22 @@
+receipt_version: 1
+iteration_id: ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-01
+decision_id: DEC-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-01
+change_set_id: CHG-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-01
+verified_at: '2026-08-30T00:00:00.000Z'
+result: passed
+approved_payload_sha256: bd48bc5da93caf11e75f8ecb8ffef5e550ade24b0e0c3078e50aa452e1d05d43
+before_state_sha256: ba62de993c75385b23d6a6a37d60383be81f3a4c268536a14c5d524220614aaa
+after_state_sha256: 5d114023dac30dba6d1c6886c7edd9fe3c1cfc0f6854057e32912389050dd66f
+checks:
+  - TypeScript site check (passed)
+  - Investor Economics deterministic tests (passed; 26/26)
+  - Investor Terminal deterministic browser scenario (passed; five-column maturity disclosure)
+  - Investor Economics screenshot scenario at 1440, 1024 and 390 (passed; no document/body/table overflow or clipped cells)
+  - npm run verify:affected (passed)
+  - npm run verify:release (pending)
+invariants:
+  public_maturity_table_has_five_non_empty_columns: passed
+  duplicate_first_mature_fcf_display_removed: passed
+  internal_maturity_gate_and_financial_values_unchanged: passed
+  desktop_tablet_mobile_have_no_horizontal_overflow: passed
+external_changes: { production_deploy: pending, master_merge: not_run, google_publication: not_run }

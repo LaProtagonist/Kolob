@@ -1,0 +1,12 @@
+schema_version: 2
+proposal_id: PROP-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02
+iteration_id: ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02
+title: Release the verified five-column maturity disclosure with exact evidence repair
+status: approved
+submitted_by: project owner
+submitted_at: '2026-08-30T00:00:00.000Z'
+scope: >-
+  Supersede unsealed -01 to record the historic executive-screenshot portability repair alongside the
+  approved display-only cohort-maturity correction and production release.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02-approved.yaml
+approved_payload_sha256: f5acc3fe54bbee0eeccbb38b52d6d254dc4d215a5f40f4b4763b8c2eb198e221

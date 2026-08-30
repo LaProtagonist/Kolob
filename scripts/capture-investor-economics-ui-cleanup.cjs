@@ -9,6 +9,7 @@ const { chromium } = require("playwright");
 const baseUrl = (process.env.INVESTOR_ECONOMICS_REVIEW_URL || "http://127.0.0.1:7188").replace(/\/$/, "");
 const outputDir = path.join(projectRoot, "analysis", "screenshots", "investor-economics-ui-cleanup");
 const expectedHeader = "Сценарий Капитал / обязательство Возврат вложений Cash IRR к М60 Cash MOIC к М60 Права инвестора";
+const expectedMaturityHeader = "Объект Финансирование Срок подготовки Открытие / первые продажи Плановый режим";
 fs.mkdirSync(outputDir, { recursive: true });
 
 async function participation(page) {
@@ -19,7 +20,17 @@ async function participation(page) {
   const comparison = panel.locator(".investor-economics-comparison-table");
   assert.equal((await comparison.locator("thead").innerText()).replace(/\s+/g, " ").trim(), expectedHeader);
   assert.equal(await comparison.locator("thead").getByText("Первые выплаты", { exact: true }).count(), 0);
-  return { panel, comparison };
+  const maturity = panel.locator(".investor-economics-maturity");
+  await maturity.locator("summary").click();
+  const header = await maturity.locator("thead").innerText();
+  assert.equal(header.replace(/\s+/g, " ").trim(), expectedMaturityHeader);
+  assert.doesNotMatch(header, /Первый зрелый FCF/i);
+  assert.ok(
+    await maturity.locator("tbody tr").evaluateAll(
+      (rows) => rows.length > 0 && rows.every((row) => row.children.length === 5 && [...row.children].every((cell) => Boolean(cell.textContent?.trim()))),
+    ),
+  );
+  return { panel, comparison, maturity };
 }
 
 async function assertPageFits(page) {
@@ -31,21 +42,37 @@ async function assertPageFits(page) {
   return dimensions;
 }
 
-async function capture(browser, viewport, comparisonFile, executiveFile) {
+async function assertMaturityFits(maturity) {
+  const dimensions = await maturity.evaluate((element) => {
+    const wrapper = element.querySelector(".investor-economics-table-wrap");
+    const cells = [...element.querySelectorAll("th, td")];
+    return {
+      localOverflow: wrapper instanceof HTMLElement && wrapper.scrollWidth > wrapper.clientWidth,
+      clippedCell: cells.some((cell) => cell instanceof HTMLElement && cell.scrollWidth > cell.clientWidth),
+    };
+  });
+  assert.equal(dimensions.localOverflow, false, "maturity table has no local horizontal overflow");
+  assert.equal(dimensions.clippedCell, false, "maturity-table labels and values are not clipped");
+  return dimensions;
+}
+
+async function capture(browser, viewport, comparisonFile, executiveFile, maturityFile) {
   const context = await browser.newContext({ viewport, deviceScaleFactor: 1 });
   const page = await context.newPage();
-  const { comparison } = await participation(page);
+  const { comparison, maturity } = await participation(page);
   const dimensions = await assertPageFits(page);
+  const maturityDimensions = await assertMaturityFits(maturity);
   await comparison.screenshot({ path: path.join(outputDir, comparisonFile), type: "png" });
   if (executiveFile) await page.screenshot({ path: path.join(outputDir, executiveFile), fullPage: true, type: "png" });
+  if (maturityFile) await maturity.screenshot({ path: path.join(outputDir, maturityFile), type: "png" });
   await context.close();
-  return dimensions;
+  return { ...dimensions, maturity: maturityDimensions };
 }
 
 async function run() {
   const browser = await chromium.launch({ headless: true });
   try {
-    const desktop = await capture(browser, { width: 1440, height: 900 }, "investor-economics-comparison-desktop.png", "investor-economics-participation-executive.png");
+    const desktop = await capture(browser, { width: 1440, height: 900 }, "investor-economics-comparison-desktop.png", "investor-economics-participation-executive.png", "investor-economics-maturity-desktop.png");
     const tablet = await capture(browser, { width: 1024, height: 768 }, "investor-economics-comparison-tablet.png");
     const mobile = await capture(browser, { width: 390, height: 844 }, "investor-economics-comparison-mobile.png");
     const manifest = { baseUrl, expectedHeader, desktop, tablet, mobile };

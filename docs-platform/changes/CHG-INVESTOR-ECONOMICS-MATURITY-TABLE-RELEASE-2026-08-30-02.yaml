@@ -1,0 +1,11 @@
+schema_version: 2
+change_id: CHG-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02
+title: Apply five-column maturity disclosure, artifact portability repair and release preparation
+status: approved
+created_at: '2026-08-30'
+proposal_id: PROP-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02
+decision_id: DEC-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02
+iteration_id: ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02-approved.yaml
+approved_payload_sha256: f5acc3fe54bbee0eeccbb38b52d6d254dc4d215a5f40f4b4763b8c2eb198e221
+operations: []

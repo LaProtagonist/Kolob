@@ -1,0 +1,19 @@
+receipt_version: 1
+iteration_id: ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-01
+audited_at: '2026-08-30T00:00:00.000Z'
+result: passed
+display_metric_audit:
+  - metric: Плановый режим
+    exact_meaning: Month in which the cohort reaches the approved 100% ramp factor.
+    source: cohort.fullPlanMonth
+    distinct_investor_value: The sole displayed milestone for cash-flow availability.
+  - metric: Первый зрелый free cash flow
+    exact_meaning: Internal firstFcfEligibleMonth maturity gate for Investor Economics distributions.
+    source: cohort.firstFcfEligibleMonth
+    distinct_investor_value: None as a public table column; it equals the full-plan month under the approved ramp semantics.
+decision: Remove the duplicate public column and helper copy; preserve firstFcfEligibleMonth in the financial projector.
+financial_calculations_changed: false
+responsive_review:
+  desktop_1440: { document_overflow: false, table_overflow: false, clipped_cells: false }
+  tablet_1024: { document_overflow: false, table_overflow: false, clipped_cells: false }
+  mobile_390: { document_overflow: false, table_overflow: false, clipped_cells: false }

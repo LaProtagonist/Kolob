@@ -1,0 +1,53 @@
+schema_version: 2
+payload_id: PAYLOAD-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-01
+iteration_id: ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-01
+proposal_id: PROP-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-01
+decision_id: DEC-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-01
+change_set_id: CHG-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-01
+title: Simplify cohort-maturity disclosure and publish the verified Investor Terminal
+status: approved
+approved_by: project owner
+approved_at: '2026-08-30T00:00:00.000Z'
+scope:
+  - Remove the investor-facing duplicate column "Первый зрелый free cash flow" from the cohort-maturity disclosure; retain "Плановый режим" as the single maturity milestone.
+  - Remove the now-redundant table helper copy and add responsive layout rules so the five-column table fits without document or local table overflow at desktop, tablet and mobile widths.
+  - Preserve all financial source values and maturity-gate calculations, including firstFcfEligibleMonth used internally by the Investor Economics projector.
+  - Add deterministic browser and screenshot assertions for the five-column disclosure and publish the verified current Investor Terminal through the normal deployment workflow.
+constraints:
+  - no financial formulas, values, scenario terms or temporal assumptions change
+  - no production deployment before successful release verification
+  - no master merge, Google publication, market research or unrelated UI changes
+affected_document_ids: [DOC-INVESTOR-FINANCIAL-SUMMARY]
+affected_section_ids: [investor-economics.cohort-maturity-table]
+state_hash_paths:
+  - src/components/InvestorEconomicsPanel.tsx
+  - src/components/InvestorTerminal.css
+  - scripts/test-investor-terminal.cjs
+  - scripts/capture-investor-economics-ui-cleanup.cjs
+content_paths:
+  - src/components/InvestorEconomicsPanel.tsx
+  - src/components/InvestorTerminal.css
+  - scripts/test-investor-terminal.cjs
+  - scripts/capture-investor-economics-ui-cleanup.cjs
+  - docs-platform/changes/proposals/PROP-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-01.yaml
+  - docs-platform/changes/decisions/DEC-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-01.yaml
+  - docs-platform/changes/CHG-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-01.yaml
+  - docs-platform/changes/iterations/ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-01.yaml
+  - docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-01-approved.yaml
+  - docs-platform/changelog/audit/ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-01.yaml
+  - docs-platform/changelog/previews/ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-01.yaml
+  - docs-platform/changelog/verification/ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-01.yaml
+  - docs-platform/changelog/artifacts/ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-01.yaml
+  - docs-platform/changelog/events.ndjson
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/SNAPSHOT-ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-01.yaml
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+allowed_dirty_paths: [analysis/, output/]
+rollback_payload: null
+rollback_contract:
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true

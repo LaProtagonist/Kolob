@@ -1,0 +1,12 @@
+receipt_version: 1
+iteration_id: ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-01
+decision_id: DEC-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-01
+change_set_id: CHG-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-01
+previewed_at: '2026-08-30T00:00:00.000Z'
+result: reviewed
+investor_economics:
+  rendered_columns: [Объект, Финансирование, Срок подготовки, Открытие / первые продажи, Плановый режим]
+  removed_column: Первый зрелый free cash flow
+  financial_calculations_changed: false
+  responsive_contract: no document, body or maturity-table horizontal overflow at 1440, 1024 and 390.
+external_changes: { production_deploy: pending_successful_release_verification, master_merge: not_run }
