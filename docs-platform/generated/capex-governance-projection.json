@@ -1,26 +1,26 @@
 {
   "schema_version": 1,
-  "generated_from_event_id": "EVT-ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02-DEPLOYED-DEPLOY-FINANCIAL-CORE-INVESTOR-TERMINAL-2026-08-28-02",
-  "generated_from_event_hash": "8a17f90a3f097c2c1e3e4afc33ee9dd60268e89228f0826d88e86db8d17571f4",
+  "generated_from_event_id": "EVT-ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02-DEPLOYED-DEPLOY-INVESTOR-MATURITY-TABLE-20260830T133310Z",
+  "generated_from_event_hash": "4ed49235007242124b44f2d3085c11cfa1f701d8831089a4e8246e24dd4e9bb9",
   "content_state_sha256": "a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239",
   "latest_committed_iteration": {
-    "iteration_id": "ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02",
-    "decision_id": "DEC-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02",
-    "change_set_id": "CHG-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02",
-    "content_commit_hash": "50a64fbb88a30a3554cea7437914ecc915e418c7",
-    "seal_commit_hash": "93056762f18248dd4cd9a843c436274a6454456d",
-    "iteration_tag": "iteration/ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02"
+    "iteration_id": "ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02",
+    "decision_id": "DEC-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02",
+    "change_set_id": "CHG-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02",
+    "content_commit_hash": "c12dc803d1d3f836bca0239bd0f17f69f260313b",
+    "seal_commit_hash": "150d37153c38c4bbda6b1453e81872576458d049",
+    "iteration_tag": "iteration/ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02"
   },
   "latest_deployment_event": {
-    "event_id": "EVT-ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02-DEPLOYED-DEPLOY-FINANCIAL-CORE-INVESTOR-TERMINAL-2026-08-28-02",
-    "iteration_id": "ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02",
-    "deployment_receipt": "docs-platform/changelog/deployments/DEPLOY-FINANCIAL-CORE-INVESTOR-TERMINAL-2026-08-28-02.yaml",
+    "event_id": "EVT-ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02-DEPLOYED-DEPLOY-INVESTOR-MATURITY-TABLE-20260830T133310Z",
+    "iteration_id": "ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02",
+    "deployment_receipt": "docs-platform/changelog/deployments/DEPLOY-INVESTOR-MATURITY-TABLE-20260830T133310Z.yaml",
     "production_url": "https://colob.spi.ski"
   },
-  "repository_head": "93056762f18248dd4cd9a843c436274a6454456d",
+  "repository_head": "150d37153c38c4bbda6b1453e81872576458d049",
   "timeline_head": {
-    "event_id": "EVT-ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02-DEPLOYED-DEPLOY-FINANCIAL-CORE-INVESTOR-TERMINAL-2026-08-28-02",
-    "event_hash": "8a17f90a3f097c2c1e3e4afc33ee9dd60268e89228f0826d88e86db8d17571f4"
+    "event_id": "EVT-ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02-DEPLOYED-DEPLOY-INVESTOR-MATURITY-TABLE-20260830T133310Z",
+    "event_hash": "4ed49235007242124b44f2d3085c11cfa1f701d8831089a4e8246e24dd4e9bb9"
   },
   "deployment_receipts": [
     {
@@ -65,6 +65,17 @@
       "dist_sha256": "dcc94a09894c5cefd80ec3269154208b577e4a8895155c96d3f547b04a83d59b",
       "production_url": "https://colob.spi.ski",
       "deployed_at": "2026-08-20T12:38:53.000Z",
+      "result": "passed"
+    },
+    {
+      "path": "docs-platform/changelog/deployments/DEPLOY-INVESTOR-MATURITY-TABLE-20260830T133310Z.yaml",
+      "deployment_id": "DEPLOY-INVESTOR-MATURITY-TABLE-20260830T133310Z",
+      "content_state_sha256": "a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239",
+      "content_commit_hash": "c12dc803d1d3f836bca0239bd0f17f69f260313b",
+      "seal_commit_hash": "150d37153c38c4bbda6b1453e81872576458d049",
+      "dist_sha256": "bf90ebbccc9bb197c34bf457e761761bbb7efba98aa1d3cbe76ab0a20ffee6da",
+      "production_url": "https://colob.spi.ski",
+      "deployed_at": "2026-08-30T13:33:10.000Z",
       "result": "passed"
     },
     {

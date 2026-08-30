@@ -1,9 +1,9 @@
 schema_version: 2
-generated_at: 2026-08-30T13:32:33.284Z
+generated_at: 2026-08-30T13:35:17.864Z
 project: Колобочная
 branch: feat/investor-economics-v1
-latest_timeline_event_id: EVT-ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02-COMMITTED
-latest_timeline_event_hash: 84ab01db8dd94fe5d609eab1407d42084326258ab4f24e2a9124d9f875f76b90
+latest_timeline_event_id: EVT-ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02-DEPLOYED-DEPLOY-INVESTOR-MATURITY-TABLE-20260830T133310Z
+latest_timeline_event_hash: 4ed49235007242124b44f2d3085c11cfa1f701d8831089a4e8246e24dd4e9bb9
 latest_closed_iteration_id: ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02
 latest_iteration_tag: iteration/ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02
 latest_content_commit_hash: c12dc803d1d3f836bca0239bd0f17f69f260313b
@@ -105,7 +105,7 @@ mcp_status:
   live_status: not_probed_by_context_build
 deployment_status:
   status: receipts_present
-  receipts: 8
+  receipts: 9
   production_url: null
 known_drift:
   - malformed_legacy_yaml:docs-platform/changelog/audit/ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01.yaml

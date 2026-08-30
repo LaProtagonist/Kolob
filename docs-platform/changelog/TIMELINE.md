@@ -4,9 +4,9 @@
 
 ## 1. Current state
 
-- Events: 394.
-- Timeline head event: `EVT-ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02-COMMITTED`.
-- Timeline head SHA-256: `84ab01db8dd94fe5d609eab1407d42084326258ab4f24e2a9124d9f875f76b90`.
+- Events: 395.
+- Timeline head event: `EVT-ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02-DEPLOYED-DEPLOY-INVESTOR-MATURITY-TABLE-20260830T133310Z`.
+- Timeline head SHA-256: `4ed49235007242124b44f2d3085c11cfa1f701d8831089a4e8246e24dd4e9bb9`.
 - Latest recorded iteration: `ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02`.
 
 ## 2. Modern governed iterations
@@ -85,7 +85,7 @@
 | 2026-08-30T00:57:57.669Z | superseded | Seal compact Investor Economics comparison audit and CAPEX remote parity check | ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01 | DEC-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01 | CHG-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01 | — | — | — | — | — | Seal compact Investor Economics comparison audit and CAPEX remote parity check superseded by Seal compact Investor Economics comparison audit and CAPEX remote parity check (ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02). Reason: Correct the pre-commit governed scope hashes using the project scopeHash function; functional scope and all audit results remain unchanged. |
 | 2026-08-30T01:01:38.000Z | committed | Seal compact Investor Economics comparison audit and CAPEX remote parity check | ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02 | DEC-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02 | CHG-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02 | 709c6c4feb8ce53e6ea0d50fea65c390abd62c48 | iteration/ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02 | — | — | — | Seal compact Investor Economics comparison audit and CAPEX remote parity check: content commit verified and linked to the governed lifecycle before sealing. |
 | 2026-08-30T13:26:54.158Z | superseded | Simplify cohort-maturity disclosure and publish the verified Investor Terminal | ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-01 | DEC-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-01 | CHG-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-01 | — | — | — | — | — | Superseded before content commit: three historical PNGs were hash-exactly restored; the irrecoverable duplicate executive screenshot is explicitly repaired as superseded in the successor iteration. |
-| 2026-08-30T13:32:23.000Z | committed | Simplify cohort-maturity disclosure and publish the verified Investor Terminal | ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02 | DEC-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02 | CHG-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02 | c12dc803d1d3f836bca0239bd0f17f69f260313b | iteration/ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02 | — | — | — | Simplify cohort-maturity disclosure and publish the verified Investor Terminal: content commit verified and linked to the governed lifecycle before sealing. |
+| 2026-08-30T13:33:10.000Z | deployed | Simplify cohort-maturity disclosure and publish the verified Investor Terminal | ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02 | DEC-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02 | CHG-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02 | c12dc803d1d3f836bca0239bd0f17f69f260313b | iteration/ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02 | — | docs-platform/changelog/deployments/DEPLOY-INVESTOR-MATURITY-TABLE-20260830T133310Z.yaml | — | Sealed content state a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239 deployed to https://colob.spi.ski; smoke test passed. |
 
 ## 3. Legacy imported history
 
@@ -147,6 +147,7 @@
 | 2026-08-26T16:31:34.975Z | ITR-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01 | verified | docs-platform/changelog/google-sync/2026-08-26-DOC-INVESTOR-FINANCIAL-SUMMARY-MERGE-FIX.yaml | — | — |
 | 2026-08-28T14:28:32.000Z | ITR-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01 | deployed | — | docs-platform/changelog/deployments/DEPLOY-FINANCIAL-CORE-INVESTOR-TERMINAL-2026-08-28-01.yaml | https://colob.spi.ski |
 | 2026-08-28T14:44:20.000Z | ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02 | deployed | — | docs-platform/changelog/deployments/DEPLOY-FINANCIAL-CORE-INVESTOR-TERMINAL-2026-08-28-02.yaml | https://colob.spi.ski |
+| 2026-08-30T13:33:10.000Z | ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02 | deployed | — | docs-platform/changelog/deployments/DEPLOY-INVESTOR-MATURITY-TABLE-20260830T133310Z.yaml | https://colob.spi.ski |
 
 ## 6. Open issues
 

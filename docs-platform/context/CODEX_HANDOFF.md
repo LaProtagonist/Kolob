@@ -16,9 +16,9 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02-COMMITTED`.
-- Hash: `84ab01db8dd94fe5d609eab1407d42084326258ab4f24e2a9124d9f875f76b90`.
-- generated_from_event_hash: `84ab01db8dd94fe5d609eab1407d42084326258ab4f24e2a9124d9f875f76b90`.
+- Event: `EVT-ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02-DEPLOYED-DEPLOY-INVESTOR-MATURITY-TABLE-20260830T133310Z`.
+- Hash: `4ed49235007242124b44f2d3085c11cfa1f701d8831089a4e8246e24dd4e9bb9`.
+- generated_from_event_hash: `4ed49235007242124b44f2d3085c11cfa1f701d8831089a4e8246e24dd4e9bb9`.
 
 ## 4. Канонические документы
 
@@ -63,7 +63,7 @@ Simplify cohort-maturity disclosure and publish the verified Investor Terminal
 
 - Google: `{"configured":false,"historical_receipts":14,"receipts_with_machine_readback_hash":11,"live_drift_check":"not_run_by_context_build"}`.
 - MCP: `{"implementation_present":true,"canonical_access":"registry_document_ids_only","live_status":"not_probed_by_context_build"}`.
-- Deployment: `{"status":"receipts_present","receipts":8,"production_url":null}`.
+- Deployment: `{"status":"receipts_present","receipts":9,"production_url":null}`.
 
 ## 9. Команды проверки
 

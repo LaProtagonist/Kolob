@@ -1,0 +1,14 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-ECONOMICS-MATURITY-TABLE-RELEASE-2026-08-30-02
+content_state_sha256: a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239
+content_commit_hash: c12dc803d1d3f836bca0239bd0f17f69f260313b
+seal_commit_hash: 150d37153c38c4bbda6b1453e81872576458d049
+repository_head_at_build: 150d37153c38c4bbda6b1453e81872576458d049
+dist_sha256: bf90ebbccc9bb197c34bf457e761761bbb7efba98aa1d3cbe76ab0a20ffee6da
+deployment_id: DEPLOY-INVESTOR-MATURITY-TABLE-20260830T133310Z
+production_url: https://colob.spi.ski
+built_at: 2026-08-30T13:33:10.000Z
+deployed_at: 2026-08-30T13:33:10.000Z
+build_hash: bf90ebbccc9bb197c34bf457e761761bbb7efba98aa1d3cbe76ab0a20ffee6da
+smoke_test_result: passed
+recorded_at: 2026-08-30T13:35:17.850Z
