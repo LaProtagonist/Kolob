@@ -11,6 +11,7 @@ import {
   CAPEX_REGISTER_SHEET_NAMES,
   EQUIPMENT_SHEET_HEADERS,
   LEGACY_SHEET_RENAMES,
+  sheetDiffSummary,
   chooseSpreadsheetTarget,
   sheetDatasets,
   sheetPreviewForLog,
@@ -88,7 +89,13 @@ test("preview logging masks the Google file ID and binds the current approved co
     google_file_id: "1234567890abcdef", google_file_id_masked: "1234…cdef", decision_id: REMAINING_PRICE_DECISION_ID,
     iteration_id: REMAINING_PRICE_ITERATION_ID, source_yaml_path: "docs-platform/working/capex-equipment-register.yaml",
     source_yaml_sha256: "a".repeat(64), source_record_count: 124, equipment_record_count: 160, mapped_record_count: 124,
-    unmapped_record_count: 0, sheets: CAPEX_REGISTER_SHEET_NAMES, legacy_sheet_renames: LEGACY_SHEET_RENAMES, warnings: [],
+    unmapped_record_count: 0, sheets: CAPEX_REGISTER_SHEET_NAMES, legacy_sheet_renames: LEGACY_SHEET_RENAMES,
+    remote_readback: {
+      parity: "matched", changed_tab_count: 0, changed_cell_count: 0, changed_formula_count: 0, changed_tabs: [],
+      dynamic_sync_timestamp_cell: "Описание!B7",
+      formatting_contract: { tab_order: "passed", frozen_headers: "passed", equipment_filter: "passed" },
+    },
+    warnings: [],
   });
   assert.equal("google_file_id" in logged, false);
   assert.equal(logged.google_file_id_masked, "1234…cdef");
@@ -102,4 +109,20 @@ test("Google preview and override preview contain no write path", () => {
   const importBody = publisher.slice(publisher.indexOf("export async function importCapexOverrides"));
   assert.match(importBody, /Use --preview/);
   assert.doesNotMatch(importBody, /values\.batchUpdate|spreadsheets\.batchUpdate/);
+});
+
+test("read-only preview reports remote CAPEX cell and formula drift before any apply", () => {
+  const expected = sheetDatasets(register, sources, "2026-08-01T00:00:00.000Z");
+  const actual = expected.map(dataset => ({ ...dataset, values: dataset.values.map(row => [...row]) }));
+  const description = actual.find(dataset => dataset.name === "Описание")!;
+  const bom = actual.find(dataset => dataset.name === "Комплектация")!;
+  description.values[1]![1] = "stale title";
+  description.values.push(["unexpected remote row"]);
+  bom.values[3]![4] = "=0";
+  const summary = sheetDiffSummary(expected, actual);
+  assert.equal(summary.parity, "differs");
+  assert.equal(summary.changed_tab_count, 2);
+  assert.equal(summary.changed_cell_count, 3);
+  assert.equal(summary.changed_formula_count, 1);
+  assert.deepEqual(summary.changed_tabs.map(item => item.name), ["Описание", "Комплектация"]);
 });

@@ -4,7 +4,9 @@ import { fileURLToPath } from "node:url";
 import type { GoogleConfig, TestManifest } from "./types.js";
 export const platformRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../..");
 export const secretsDir = path.join(platformRoot, ".secrets");
-export const configPath = path.join(platformRoot, "config", "google.json");
+// A feature worktree may deliberately reuse the project-approved local Google
+// profile without copying its config or OAuth secrets into the worktree.
+export const configPath = process.env.GOOGLE_CONFIG_PATH || path.join(platformRoot, "config", "google.json");
 export const credentialsPath = process.env.GOOGLE_CREDENTIALS_PATH || path.join(secretsDir, "credentials.json");
 export const tokenPath = process.env.GOOGLE_TOKEN_PATH || path.join(secretsDir, "token.json");
 export const manifestPath = path.join(secretsDir, "test-manifest.json");

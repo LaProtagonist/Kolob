@@ -1,0 +1,52 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01
+proposal_id: PROP-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01
+decision_id: DEC-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01
+change_set_id: CHG-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01
+title: Seal compact Investor Economics comparison audit and CAPEX remote parity check
+status: approved
+approved_by: project owner
+approved_at: '2026-08-30T00:00:00.000Z'
+actor: Codex
+scope: >-
+  Preserve the compact public comparison, add a regression guard against duplicated
+  first-payment timing, and perform a canonical CAPEX Google preview with exact
+  remote formula/value parity. No Google apply occurs because the diff is empty.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01-approved.yaml
+approved_payload_sha256: 2655d4185e7501939fb74a48e17bdc8ca8c53ce357a7db5f035aba3fd4fc898d
+before_state_sha256: fdcf2f295d6384acc2a10af0a288ed9c46d85e6853f332ee67a076c6b51e336d
+after_state_sha256: e0310a2a7d09ea723e87904cab89f1ba322202478f98932d2afb68bef0fc8fd3
+affected_document_ids: [DOC-INVESTOR-FINANCIAL-SUMMARY, DOC-CAPEX-EQUIPMENT-REGISTER]
+affected_section_ids:
+  - investor-economics.public-comparison
+  - capex.google-sheet.remote-parity-preview
+  - capex.google.publisher-worktree-profile-contract
+state_hash_paths:
+  - docs-platform/app/src/google/config.ts
+  - docs-platform/app/src/google/capex-register-publisher.ts
+  - docs-platform/app/test/capex-sheet-publisher.test.ts
+  - scripts/test-investor-terminal.cjs
+  - scripts/capture-investor-economics-ui-cleanup.cjs
+content_paths:
+  - docs-platform/app/src/google/config.ts
+  - docs-platform/app/src/google/capex-register-publisher.ts
+  - docs-platform/app/test/capex-sheet-publisher.test.ts
+  - scripts/test-investor-terminal.cjs
+  - scripts/capture-investor-economics-ui-cleanup.cjs
+  - docs-platform/changes/proposals/PROP-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01.yaml
+  - docs-platform/changes/decisions/DEC-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01.yaml
+  - docs-platform/changes/CHG-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01.yaml
+  - docs-platform/changes/iterations/ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01.yaml
+  - docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01-approved.yaml
+  - docs-platform/changelog/audit/ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01.yaml
+  - docs-platform/changelog/previews/ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01.yaml
+  - docs-platform/changelog/verification/ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01.yaml
+  - docs-platform/changelog/artifacts/ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01.yaml
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/SNAPSHOT-ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01.yaml
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+allowed_dirty_paths: [analysis/, output/]
+rollback_payload: null

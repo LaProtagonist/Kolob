@@ -1,0 +1,11 @@
+schema_version: 2
+change_id: CHG-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02
+title: Apply hash-exact successor of Investor Economics comparison audit and CAPEX publisher parity preview
+status: approved
+created_at: '2026-08-30'
+proposal_id: PROP-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02
+decision_id: DEC-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02
+iteration_id: ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02-approved.yaml
+approved_payload_sha256: ed1bae1e2523c2098054005b13bc5417aee1b6fe2ceaceae9826c66d2b2ab5a2
+operations: []

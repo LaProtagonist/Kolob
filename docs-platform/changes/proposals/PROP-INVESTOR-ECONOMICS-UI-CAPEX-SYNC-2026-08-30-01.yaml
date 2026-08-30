@@ -1,0 +1,14 @@
+schema_version: 2
+proposal_id: PROP-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01
+iteration_id: ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01
+title: Audit compact public Investor Economics comparison and synchronize CAPEX Sheet only when canonical drift exists
+status: approved
+submitted_by: project owner
+submitted_at: '2026-08-30T00:00:00.000Z'
+scope: >-
+  Keep the public Investor Economics comparison compact without changing financial
+  outputs, and use the canonical CAPEX register/BOM/module sources to preview the
+  registered Google Sheet. Apply is explicitly prohibited for an empty remote diff.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01-approved.yaml
+approved_payload_sha256: 2655d4185e7501939fb74a48e17bdc8ca8c53ce357a7db5f035aba3fd4fc898d
+

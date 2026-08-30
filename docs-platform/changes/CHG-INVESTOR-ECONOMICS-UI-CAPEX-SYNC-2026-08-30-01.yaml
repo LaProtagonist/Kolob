@@ -1,0 +1,12 @@
+schema_version: 2
+change_id: CHG-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01
+title: Apply Investor Economics comparison regression guard and CAPEX publisher remote-parity preview
+status: approved
+created_at: '2026-08-30'
+proposal_id: PROP-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01
+decision_id: DEC-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01
+iteration_id: ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01-approved.yaml
+approved_payload_sha256: 2655d4185e7501939fb74a48e17bdc8ca8c53ce357a7db5f035aba3fd4fc898d
+operations: []
+

@@ -1,0 +1,12 @@
+schema_version: 2
+decision_id: DEC-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02
+iteration_id: ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02
+title: Approve hash-exact successor for compact comparison audit and CAPEX Google remote parity synchronization
+status: approved
+approved_by: project owner
+approved_at: '2026-08-30T00:00:00.000Z'
+scope: >-
+  The -02 iteration supersedes unsealed -01 solely to correct scope-hash provenance;
+  functional scope, canonical CAPEX data, remote parity result and external-write limits are unchanged.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02-approved.yaml
+approved_payload_sha256: ed1bae1e2523c2098054005b13bc5417aee1b6fe2ceaceae9826c66d2b2ab5a2

@@ -1,0 +1,63 @@
+receipt_version: 1
+iteration_id: ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01
+audited_at: '2026-08-30T00:33:34.021Z'
+result: passed
+investor_economics_public_comparison:
+  rendered_columns:
+    - Сценарий
+    - Капитал / обязательство
+    - Возврат вложений
+    - Cash IRR к M60
+    - Cash MOIC к M60
+    - Права инвестора
+  temporal_metric_audit:
+    - metric: Первые выплаты
+      exact_meaning: Первый month, в котором total investor distribution больше нуля.
+      source: projection.metrics.firstDistributionMonth; first row where totalInvestorDistributionRub > 0.
+      public_surface: details выбранного сценария; не comparative table.
+      distinct_investor_value: Показывает начало фактических выплат, а не окупаемость вклада.
+    - metric: Возврат вложений
+      exact_meaning: >-
+        Для equity/priority — первый month, когда cumulative actual cash distributions
+        покрывают actual investor contributions; для full programme — month полного
+        возврата outstanding principal.
+      source: cashPaybackMonth or principalPaybackMonth through cashPaybackText.
+      public_surface: comparative table.
+      distinct_investor_value: Показывает срок окупаемости/полного возврата, а не начало cash flow.
+  decision: >-
+    No metric removed: only the materially decision-useful return measure exists in
+    the public comparison already. First-payment timing is distinct and remains only
+    in selected-scenario details, so it cannot truncate the comparison table.
+  financial_calculations_changed: false
+capex_canonical_inventory:
+  source_register: docs-platform/working/capex-equipment-register.yaml
+  source_sha256: c8853fe61ad8407ab96d0fbafb79702853842f970cbf699b6c2138b23f32c7aa
+  total_registered_items: 160
+  items_with_supplier_url: 50
+  items_with_research_price: 51
+  quote_required: 27
+  unpriced_eligible_procurement: 0
+  quantity_base_tbd: 77
+  inclusion_status_tbd: 59
+  open_parameter_count: 145
+  representative_rows:
+    - { id: CAPEX-01-043, name: Профессиональный льдогенератор повышенной производительности, module: MOD-PREP, quantity_base: 1, price_base_rub: 234270, source_url: present, quote_status: quote_required }
+    - { id: CAPEX-02-013, name: Компактный профессиональный льдогенератор отдельной торговой точки, module: MOD-BAR, quantity_base: null, price_base_rub: 36050, source_url: present, quote_status: quote_required }
+    - { id: CAPEX-04-001, name: Кассовые POS-терминалы, module: MOD-POS, quantity_base: 2, price_base_rub: 47500, source_url: present, quote_status: quote_required }
+    - { id: CAPEX-04-003, name: KDS-экраны или закреплённые планшеты, module: MOD-KDS, quantity_base: 3, price_base_rub: 47500, source_url: present, quote_status: quote_required }
+    - { id: CAPEX-08-001, name: Комплект профессиональной посудомоечной зоны, module: MOD-WASH, quantity_base: 1, price_base_rub: 304101.33, source_url: present, quote_status: quote_required }
+    - { id: CAPEX-05-007, name: Мебель зоны ожидания, module: MOD-GUEST, quantity_base: null, price_base_rub: null, source_url: absent, quote_status: not_requested }
+capex_google_remote_readback:
+  document_id: 1J7sHM8P2IoMfHVLEHfY-UJLIZ-HBid89G6n6BS4BSJA
+  action: previewed_no_apply
+  exact_formula_value_parity: passed
+  changed_tabs: 0
+  changed_cells: 0
+  changed_formulas: 0
+  dynamic_sync_timestamp_preserved: Описание!B7
+  formatting_contract: { tab_order: passed, frozen_headers: passed, equipment_filter: passed }
+  market_research: not_run
+  supplier_url_check: not_run
+  price_update: not_run
+external_state: { google_apply: not_run_due_to_empty_diff, production_deploy: not_run, master_merge: not_run }
+

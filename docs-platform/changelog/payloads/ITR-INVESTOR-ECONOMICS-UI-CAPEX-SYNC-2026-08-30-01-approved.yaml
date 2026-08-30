@@ -1,0 +1,39 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01
+proposal_id: PROP-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01
+decision_id: DEC-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01
+change_set_id: CHG-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01
+status: approved
+approved_by: project owner
+approved_at: '2026-08-30T00:00:00.000Z'
+scope:
+  investor_economics_ui:
+    - Audit the public comparison table; retain only decision-useful columns.
+    - Do not change Investor Economics calculations, public terms, financial formulas or scenario outputs.
+    - Add deterministic regression evidence that the selected-scenario first-payment timing is not duplicated in the public comparison.
+  capex_google_sync:
+    canonical_sources:
+      - docs-platform/working/capex-equipment-register.yaml
+      - docs-platform/working/capex-module-items.yaml
+      - docs-platform/working/capex-modules.yaml
+      - docs-platform/working/capex-configurations.yaml
+      - docs-platform/working/configurations/CFG-PILOT-001/equipment-bom.yaml
+    target:
+      document_id: 1J7sHM8P2IoMfHVLEHfY-UJLIZ-HBid89G6n6BS4BSJA
+      title: 03 — CAPEX — Реестр оснащения пилотного объекта
+      mode: existing_document_in_place_only
+    contract:
+      - Regenerate the publisher dataset from canonical sources and inspect the existing registered sheet.
+      - Read formulas, values, tab order and formatting guards before any apply.
+      - Do not apply when exact remote parity is confirmed.
+      - Preserve supplier URLs and current research/quote/open statuses without web research.
+constraints:
+  forbidden:
+    - market-price research
+    - supplier URL verification
+    - changes to CAPEX prices, supplier references, quantities or business assumptions
+    - financial-core formula changes
+    - Google Financial Model or Investor Sheet changes
+    - production deployment
+    - master merge
+  external_write_rule: Google apply is allowed only for a non-empty canonical diff; no-op rewrites are prohibited.

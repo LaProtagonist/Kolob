@@ -1,0 +1,12 @@
+schema_version: 2
+proposal_id: PROP-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02
+iteration_id: ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02
+title: Correct governed state attribution for the compact comparison audit and CAPEX remote parity synchronization
+status: approved
+submitted_by: project owner
+submitted_at: '2026-08-30T00:00:00.000Z'
+scope: >-
+  Successor of the unsealed -01 manifest. Preserve the completed UI audit and canonical
+  CAPEX remote-parity work with hash-exact governed state attribution before content commit.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02-approved.yaml
+approved_payload_sha256: ed1bae1e2523c2098054005b13bc5417aee1b6fe2ceaceae9826c66d2b2ab5a2

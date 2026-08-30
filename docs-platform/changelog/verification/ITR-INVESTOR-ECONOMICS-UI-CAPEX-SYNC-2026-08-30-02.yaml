@@ -1,0 +1,45 @@
+receipt_version: 1
+iteration_id: ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02
+decision_id: DEC-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02
+change_set_id: CHG-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02
+verified_at: '2026-08-30T00:52:00.000Z'
+result: passed
+approved_payload_sha256: ed1bae1e2523c2098054005b13bc5417aee1b6fe2ceaceae9826c66d2b2ab5a2
+before_state_sha256: 075e02a3a4a6554b17dbeb32b31082acf9d41a82619fad0bc2087de3a151f371
+after_state_sha256: 94a27554ddbc25792b408a1814fee29e74a628bf7ecc36a9b16178b7a5b47a45
+checks:
+  - CAPEX register validation (passed; 160 registered items, 124 mapped canonical source rows)
+  - CAPEX configuration validation (passed; 12 modules, 7 formats, 2 configurations)
+  - CAPEX web snapshot integrity check (passed; canonical source snapshot current)
+  - CAPEX Google publisher unit tests (passed; 8/8)
+  - CAPEX Google remote preview/readback (passed; 11 tabs, zero value/formula drift, formatting contract passed)
+  - Investor Economics targeted tests (passed; 26/26)
+  - Investor Terminal deterministic browser scenario (passed; comparison has exactly six approved columns)
+  - Investor Economics responsive screenshot scenario at 1440, 1024 and 390 (passed; no document/body horizontal overflow)
+  - TypeScript site and platform checks (passed)
+  - PATH=/opt/homebrew/bin:$PATH npm run verify:affected (passed)
+  - PATH=/opt/homebrew/bin:$PATH npm run verify:release (passed; 145.5s; no deployment)
+invariants:
+  public_comparison_has_only_decision_useful_columns: passed
+  first_payment_month_is_not_duplicated_in_public_comparison: passed
+  investor_economics_calculations_and_terms_unchanged: passed
+  desktop_tablet_mobile_body_has_no_horizontal_overflow: passed
+  canonical_capex_urls_prices_quantities_and_statuses_preserved: passed
+  capex_google_apply_skipped_for_empty_diff: passed
+  market_price_research_not_run: passed
+  supplier_url_research_not_run: passed
+remote_readback:
+  document_id: 1J7sHM8P2IoMfHVLEHfY-UJLIZ-HBid89G6n6BS4BSJA
+  title: 03 — CAPEX — Реестр оснащения пилотного объекта
+  tabs: 11
+  changed_tabs: 0
+  changed_cells: 0
+  changed_formulas: 0
+  formatting_contract: { tab_order: passed, frozen_headers: passed, equipment_filter: passed }
+external_changes:
+  google_apply: not_run_due_to_empty_diff
+  production_deploy: not_run
+  master_merge: not_run
+notes:
+  - Release verification ran with Node 25, the available runtime compatible with Vite 7.
+  - Generated financial artifacts were checked and deterministically regenerated during verification only; final tracked financial values and formulas are unchanged.

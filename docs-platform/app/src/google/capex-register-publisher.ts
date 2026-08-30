@@ -62,6 +62,21 @@ type MatrixValue = string | number | boolean;
 type Matrix = MatrixValue[][];
 type Dataset = { name: typeof CAPEX_REGISTER_SHEET_NAMES[number]; headers?: string[]; values: Matrix; headerRow?: number };
 type PreservedRows = { configurator: Matrix; overrides: Matrix };
+type SheetDiff = {
+  name: typeof CAPEX_REGISTER_SHEET_NAMES[number];
+  changed_cell_count: number;
+  changed_formula_count: number;
+  first_mismatch: { row: number; column: number; expected: MatrixValue; actual: MatrixValue } | null;
+};
+type RemoteReadbackPreview = {
+  parity: "matched" | "differs";
+  changed_tab_count: number;
+  changed_cell_count: number;
+  changed_formula_count: number;
+  changed_tabs: SheetDiff[];
+  dynamic_sync_timestamp_cell: "Описание!B7";
+  formatting_contract: { tab_order: "passed" | "requires_apply"; frozen_headers: "passed" | "requires_apply"; equipment_filter: "passed" | "requires_apply" };
+};
 type SheetPreview = {
   preview_id: string;
   created_at: string;
@@ -82,6 +97,7 @@ type SheetPreview = {
   unmapped_record_count: number;
   sheets: readonly string[];
   legacy_sheet_renames: typeof LEGACY_SHEET_RENAMES;
+  remote_readback: RemoteReadbackPreview;
   warnings: string[];
 };
 
@@ -348,6 +364,31 @@ async function computePreview() {
   const remote = await resolveSpreadsheet(drive, config);
   const titles = await currentSheetTitles(sheets, remote.file.id);
   validateCurrentTitles(titles);
+  const preserved: PreservedRows = {
+    configurator: await readRangeIfPresent(sheets, remote.file.id, titles, "Конфигуратор", "A2:AA1000"),
+    overrides: await readRangeIfPresent(sheets, remote.file.id, titles, "Переопределения", "A2:I1000"),
+  };
+  const description = await readRangeIfPresent(sheets, remote.file.id, titles, "Описание", "A1:B30");
+  const existingSyncTimestamp = String(description.find(row => row[0] === "Дата синхронизации UTC")?.[1] ?? "");
+  const datasets = sheetDatasets(register, sources, existingSyncTimestamp || "1970-01-01T00:00:00.000Z", preserved);
+  const ranges = datasets.map(dataset => `'${dataset.name}'!A1:${columnLetter(Math.max(...dataset.values.map(row => row.length)))}${dataset.values.length}`);
+  const readback = await sheets.spreadsheets.values.batchGet({ spreadsheetId: remote.file.id, ranges, majorDimension: "ROWS", valueRenderOption: "FORMULA" });
+  const actual = datasets.map((dataset, index) => ({ ...dataset, values: normalizedRows(readback.data.valueRanges?.[index]?.values as unknown[][] | undefined, dataset.values) }));
+  const diff = sheetDiffSummary(datasets, actual);
+  const metadata = (await sheets.spreadsheets.get({ spreadsheetId: remote.file.id, fields: "sheets(properties(sheetId,title,index,gridProperties(frozenRowCount)),basicFilter)" })).data;
+  const ordered = [...(metadata.sheets ?? [])].sort((a, b) => (a.properties?.index ?? 0) - (b.properties?.index ?? 0));
+  const orderedTitles = ordered.map(sheet => sheet.properties?.title).filter(Boolean);
+  const formatting_contract: RemoteReadbackPreview["formatting_contract"] = {
+    tab_order: JSON.stringify(orderedTitles) === JSON.stringify(CAPEX_REGISTER_SHEET_NAMES) ? "passed" : "requires_apply",
+    frozen_headers: (metadata.sheets ?? []).every(sheet => (sheet.properties?.gridProperties?.frozenRowCount ?? 0) >= 1) ? "passed" : "requires_apply",
+    equipment_filter: (metadata.sheets ?? []).find(sheet => sheet.properties?.title === "Оснащение")?.basicFilter ? "passed" : "requires_apply",
+  };
+  const remote_readback: RemoteReadbackPreview = {
+    ...diff,
+    parity: diff.parity === "matched" && Object.values(formatting_contract).every(value => value === "passed") ? "matched" : "differs",
+    dynamic_sync_timestamp_cell: "Описание!B7",
+    formatting_contract,
+  };
   const base: Omit<SheetPreview, "preview_id" | "created_at" | "google_file_id_masked"> = {
     registry_id: CAPEX_REGISTER_DOCUMENT_ID, google_title: CAPEX_REGISTER_GOOGLE_TITLE, folder_name: config.projectFolderName, folder_check: "passed",
     action: "update", google_file_id: remote.file.id, decision_id: REMAINING_PRICE_DECISION_ID, iteration_id: REMAINING_PRICE_ITERATION_ID,
@@ -355,6 +396,7 @@ async function computePreview() {
     source_record_count: register.document.source_record_count, equipment_record_count: register.document.equipment_record_count,
     mapped_record_count: register.document.mapped_record_count, unmapped_record_count: register.document.unmapped_record_count,
     sheets: CAPEX_REGISTER_SHEET_NAMES, legacy_sheet_renames: LEGACY_SHEET_RENAMES,
+    remote_readback,
     warnings: ["All price values remain research and do not approve models, suppliers, quantities, a commercial quote or final CAPEX.", "Only the existing registered Google Sheet will be updated; no Google Docs or additional files are targeted."],
   };
   const preview: SheetPreview = { ...base, preview_id: previewFingerprint(base), created_at: new Date().toISOString(), google_file_id_masked: mask(base.google_file_id) };
@@ -449,6 +491,43 @@ function firstMatrixMismatch(expected: Matrix, actual: Matrix) {
   return null;
 }
 
+/**
+ * Summarise an exact FORMULA-value readback before any external write. This is
+ * deliberately exported for the publisher test: a target sheet may be valid
+ * and still have silently drifted from the canonical CAPEX register.
+ */
+export function sheetDiffSummary(expected: Dataset[], actual: Dataset[]): Omit<RemoteReadbackPreview, "dynamic_sync_timestamp_cell" | "formatting_contract"> {
+  const changed_tabs: SheetDiff[] = expected.map((dataset, index) => {
+    const current = actual[index]?.values ?? [];
+    let changed_cell_count = 0;
+    let changed_formula_count = 0;
+    let first_mismatch: SheetDiff["first_mismatch"] = null;
+    const rowCount = Math.max(dataset.values.length, current.length);
+    for (let row = 0; row < rowCount; row += 1) {
+      const expectedRow = dataset.values[row] ?? [];
+      const actualRow = current[row] ?? [];
+      const columnCount = Math.max(expectedRow.length, actualRow.length);
+      for (let column = 0; column < columnCount; column += 1) {
+      const expectedValue = expectedRow[column] ?? "";
+      const actualValue = current[row]?.[column] ?? "";
+      if (JSON.stringify(expectedValue) === JSON.stringify(actualValue)) continue;
+      changed_cell_count += 1;
+      if (String(expectedValue).startsWith("=") || String(actualValue).startsWith("=")) changed_formula_count += 1;
+      first_mismatch ??= { row: row + 1, column: column + 1, expected: expectedValue, actual: actualValue };
+      }
+    }
+    return { name: dataset.name, changed_cell_count, changed_formula_count, first_mismatch };
+  }).filter(item => item.changed_cell_count > 0);
+  const changed_cell_count = changed_tabs.reduce((sum, item) => sum + item.changed_cell_count, 0);
+  return {
+    parity: changed_cell_count === 0 ? "matched" : "differs",
+    changed_tab_count: changed_tabs.length,
+    changed_cell_count,
+    changed_formula_count: changed_tabs.reduce((sum, item) => sum + item.changed_formula_count, 0),
+    changed_tabs,
+  };
+}
+
 async function publishAndReadback(drive: drive_v3.Drive, sheets: sheets_v4.Sheets, file: DriveFile, register: CapexRegister, sources: ModularSources, syncedAt: string) {
   const titlesBefore = await currentSheetTitles(sheets, file.id);
   const preserved: PreservedRows = {
@@ -466,7 +545,7 @@ async function publishAndReadback(drive: drive_v3.Drive, sheets: sheets_v4.Sheet
   await sheets.spreadsheets.batchUpdate({ spreadsheetId: file.id, requestBody: { requests: formattingRequests(sheetIds, datasets) } });
   const ranges = datasets.map(dataset => `'${dataset.name}'!A1:${columnLetter(Math.max(...dataset.values.map(row => row.length)))}${dataset.values.length}`);
   const readback = await sheets.spreadsheets.values.batchGet({ spreadsheetId: file.id, ranges, majorDimension: "ROWS", valueRenderOption: "FORMULA" });
-  const actual = datasets.map((dataset, index) => ({ ...dataset, values: normalizedRows(readback.data.valueRanges?.[index]?.values as unknown[][] | undefined, dataset.values) }));
+  const actual = datasets.map((dataset, index) => ({ ...dataset, values: (readback.data.valueRanges?.[index]?.values ?? []) as Matrix }));
   for (let index = 0; index < datasets.length; index += 1) if (JSON.stringify(actual[index].values) !== JSON.stringify(datasets[index].values)) {
     const mismatch = firstMatrixMismatch(datasets[index].values, actual[index].values);
     throw new Error(`${datasets[index].name} Google Sheets readback differs from the published dataset${mismatch ? ` at row ${mismatch.row}, column ${mismatch.column}: expected=${JSON.stringify(mismatch.expected)}, actual=${JSON.stringify(mismatch.actual)}` : ""}.`);

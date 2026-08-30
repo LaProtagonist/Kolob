@@ -1,0 +1,35 @@
+receipt_version: 1
+iteration_id: ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02
+supersedes_unsealed_iteration: ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01
+audited_at: '2026-08-30T00:33:34.021Z'
+result: passed
+investor_economics_public_comparison:
+  rendered_columns: [Сценарий, Капитал / обязательство, Возврат вложений, Cash IRR к M60, Cash MOIC к M60, Права инвестора]
+  temporal_metric_audit:
+    - { metric: Первые выплаты, exact_meaning: Первый month с total investor distribution больше нуля, source: projection.metrics.firstDistributionMonth, public_surface: selected-scenario details, distinct_investor_value: Начало фактических выплат }
+    - { metric: Возврат вложений, exact_meaning: Первый month покрытия actual contributions cumulative cash distributions или полного возврата outstanding principal, source: cashPaybackMonth or principalPaybackMonth, public_surface: comparative table, distinct_investor_value: Окупаемость вклада или возврат капитала }
+  decision: First-payment timing is distinct but is not a public-comparison column; no redundant public metric required removal.
+  financial_calculations_changed: false
+capex_canonical_inventory:
+  source_register: docs-platform/working/capex-equipment-register.yaml
+  source_sha256: c8853fe61ad8407ab96d0fbafb79702853842f970cbf699b6c2138b23f32c7aa
+  total_registered_items: 160
+  items_with_supplier_url: 50
+  items_with_research_price: 51
+  quote_required: 27
+  unpriced_eligible_procurement: 0
+  quantity_base_tbd: 77
+  inclusion_status_tbd: 59
+  open_parameter_count: 145
+capex_google_remote_readback:
+  document_id: 1J7sHM8P2IoMfHVLEHfY-UJLIZ-HBid89G6n6BS4BSJA
+  action: previewed_no_apply
+  exact_formula_value_parity: passed
+  changed_tabs: 0
+  changed_cells: 0
+  changed_formulas: 0
+  formatting_contract: { tab_order: passed, frozen_headers: passed, equipment_filter: passed }
+  market_research: not_run
+  supplier_url_check: not_run
+  price_update: not_run
+external_state: { google_apply: not_run_due_to_empty_diff, production_deploy: not_run, master_merge: not_run }

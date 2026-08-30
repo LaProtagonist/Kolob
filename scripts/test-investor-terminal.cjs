@@ -2,13 +2,15 @@ const assert = require("node:assert/strict");
 const { createHash } = require("node:crypto");
 const fs = require("node:fs");
 const path = require("node:path");
-const { spawn } = require("node:child_process");
+const { spawn, spawnSync } = require("node:child_process");
 
 const projectRoot = path.resolve(__dirname, "..");
 // Verification may run multiple browser domains concurrently. A per-process
 // port prevents another local Vite check from taking down this scenario.
-const port = Number(process.env.INVESTOR_TERMINAL_TEST_PORT ?? 9_000 + (process.pid % 1_000));
-const baseUrl = `http://127.0.0.1:${port}`;
+const requestedPort = Number(process.env.INVESTOR_TERMINAL_TEST_PORT ?? 9_000 + (process.pid % 1_000));
+const useExternalServer = Boolean(process.env.INVESTOR_TERMINAL_TEST_PORT);
+let port = requestedPort;
+let baseUrl = `http://127.0.0.1:${port}`;
 const canonicalPaths = [
   "docs-platform/working/financial-model.yaml",
   "docs-platform/generated/financial-model-projection.json",
@@ -32,21 +34,39 @@ async function responds() {
   }
 }
 
-async function startServer() {
-  if (await responds()) return { stop: async () => {} };
-  const server = spawn(process.execPath, ["node_modules/vite/bin/vite.js", "--host", "127.0.0.1", "--port", String(port), "--strictPort"], {
-    cwd: projectRoot,
-    env: process.env,
-    stdio: "ignore",
-  });
-  const deadline = Date.now() + 20_000;
-  while (Date.now() < deadline) {
-    if (await responds()) return { stop: async () => { if (server.exitCode === null) server.kill("SIGTERM"); } };
-    if (server.exitCode !== null) throw new Error(`Vite exited before Investor Terminal became available (${server.exitCode}).`);
-    await new Promise((resolve) => setTimeout(resolve, 200));
+function viteNodeBinary() {
+  const candidates = [process.env.VITE_NODE_BINARY, process.execPath, ...String(process.env.PATH ?? "").split(path.delimiter).map((directory) => path.join(directory, "node"))]
+    .filter(Boolean);
+  for (const candidate of [...new Set(candidates)]) {
+    const version = spawnSync(candidate, ["--version"], { encoding: "utf8" });
+    const major = Number(/^v(\d+)/.exec(version.stdout ?? "")?.[1] ?? 0);
+    if (major >= 20) return candidate;
   }
-  server.kill("SIGTERM");
-  throw new Error("Investor Terminal dev server did not become available.");
+  throw new Error("Investor Terminal browser scenario requires Node.js 20+ to launch Vite. Set VITE_NODE_BINARY to a compatible executable.");
+}
+
+async function startServer() {
+  if (useExternalServer) {
+    if (await responds()) return { stop: async () => {} };
+    throw new Error(`Configured Investor Terminal test server is unavailable at ${baseUrl}.`);
+  }
+  for (let attempt = 0; attempt < 20; attempt += 1) {
+    port = requestedPort + attempt;
+    baseUrl = `http://127.0.0.1:${port}`;
+    const server = spawn(viteNodeBinary(), ["node_modules/vite/bin/vite.js", "--host", "127.0.0.1", "--port", String(port), "--strictPort"], {
+      cwd: projectRoot,
+      env: process.env,
+      stdio: "ignore",
+    });
+    const deadline = Date.now() + 20_000;
+    while (Date.now() < deadline) {
+      if (await responds()) return { stop: async () => { if (server.exitCode === null) server.kill("SIGTERM"); } };
+      if (server.exitCode !== null) break;
+      await new Promise((resolve) => setTimeout(resolve, 200));
+    }
+    if (server.exitCode === null) server.kill("SIGTERM");
+  }
+  throw new Error("Investor Terminal dev server did not become available on an isolated test port.");
 }
 
 async function run() {
@@ -403,7 +423,9 @@ async function run() {
     assert.equal(await investorEconomics.locator('[data-testid^="public-preset-"]').count(), 3, "public participation has exactly three discussion presets");
     assert.equal(await investorEconomics.getByText("Доля в денежном потоке", { exact: true }).count(), 0, "capped cash-flow is not a public participation scenario");
     assert.equal(await investorEconomics.getByText("Все варианты", { exact: true }).count(), 0, "public participation omits workbench permutations");
-    assert.match(await investorEconomics.locator(".investor-economics-comparison-table thead").innerText(), /Возврат вложений[\s\S]*Права инвестора/, "public comparison uses scenario-neutral return and rights language");
+    const publicComparisonHeader = await investorEconomics.locator(".investor-economics-comparison-table thead").innerText();
+    assert.equal(publicComparisonHeader.replace(/\s+/g, " ").trim(), "Сценарий Капитал / обязательство Возврат вложений Cash IRR к М60 Cash MOIC к М60 Права инвестора", "public comparison keeps only the six decision-useful columns");
+    assert.doesNotMatch(publicComparisonHeader, /Первые выплаты|денежный поток/i, "public comparison does not duplicate the selected-scenario first-payment timing");
     assert.equal(await investorEconomics.getByText("Предварительный расчёт: требуется проверка мощности производства.", { exact: true }).count(), 1, "capacity caveat appears once in the public participation view");
     const programmeInvestment = await amount("economics-programme-investment");
     const externalFunding = await amount("economics-current-external-funding");

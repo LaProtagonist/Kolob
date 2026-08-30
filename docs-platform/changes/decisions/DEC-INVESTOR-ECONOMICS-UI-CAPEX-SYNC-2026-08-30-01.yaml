@@ -1,0 +1,15 @@
+schema_version: 2
+decision_id: DEC-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01
+iteration_id: ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01
+title: Approve compact comparison audit and canonical CAPEX Google parity synchronization
+status: approved
+approved_by: project owner
+approved_at: '2026-08-30T00:00:00.000Z'
+scope: >-
+  Approve a presentation-only Investor Economics comparison audit and a canonical
+  CAPEX publisher preview/readback of the existing registered Google Sheet. No
+  market research, CAPEX input change, financial formula change, Google Financial
+  Model update, Investor Sheet update, production deployment or master merge is approved.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01-approved.yaml
+approved_payload_sha256: 2655d4185e7501939fb74a48e17bdc8ca8c53ce357a7db5f035aba3fd4fc898d
+

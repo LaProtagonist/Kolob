@@ -1,0 +1,69 @@
+schema_version: 2
+payload_id: PAYLOAD-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02
+iteration_id: ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02
+proposal_id: PROP-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02
+decision_id: DEC-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02
+change_set_id: CHG-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02
+title: Compact Investor Economics comparison audit and CAPEX Google remote parity synchronization
+status: approved
+approved_by: project owner
+approved_at: '2026-08-30T00:00:00.000Z'
+supersedes_unsealed_iteration: ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01
+scope:
+  - Preserve the compact public Investor Economics comparison; do not alter financial calculations, terms or scenario outputs.
+  - Add deterministic regression coverage that first-payment timing is not duplicated in the public comparison.
+  - Regenerate the CAPEX publisher dataset from canonical register, BOM and module sources, and compare remote values/formulas, tab order and formatting before any write.
+  - Skip Google apply when the registered document has exact canonical parity.
+constraints:
+  - no market-price research, supplier URL verification or price updates
+  - no changes to CAPEX prices, quantities, supplier references, business assumptions or financial formulas
+  - no Google Financial Model or Investor Sheet update
+  - no production deployment, master merge, push, pull, rebase or branch change
+affected_document_ids: [DOC-INVESTOR-FINANCIAL-SUMMARY, DOC-CAPEX-EQUIPMENT-REGISTER]
+affected_section_ids:
+  - investor-economics.public-comparison
+  - capex.google-sheet.remote-parity-preview
+  - capex.google.publisher-worktree-profile-contract
+state_hash_paths:
+  - docs-platform/app/src/google/config.ts
+  - docs-platform/app/src/google/capex-register-publisher.ts
+  - docs-platform/app/test/capex-sheet-publisher.test.ts
+  - scripts/test-investor-terminal.cjs
+  - scripts/capture-investor-economics-ui-cleanup.cjs
+content_paths:
+  - docs-platform/app/src/google/config.ts
+  - docs-platform/app/src/google/capex-register-publisher.ts
+  - docs-platform/app/test/capex-sheet-publisher.test.ts
+  - scripts/test-investor-terminal.cjs
+  - scripts/capture-investor-economics-ui-cleanup.cjs
+  - docs-platform/changes/proposals/PROP-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01.yaml
+  - docs-platform/changes/decisions/DEC-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01.yaml
+  - docs-platform/changes/CHG-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01.yaml
+  - docs-platform/changes/iterations/ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01.yaml
+  - docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01-approved.yaml
+  - docs-platform/changelog/audit/ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01.yaml
+  - docs-platform/changelog/previews/ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01.yaml
+  - docs-platform/changelog/verification/ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01.yaml
+  - docs-platform/changelog/artifacts/ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-01.yaml
+  - docs-platform/changes/proposals/PROP-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02.yaml
+  - docs-platform/changes/decisions/DEC-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02.yaml
+  - docs-platform/changes/CHG-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02.yaml
+  - docs-platform/changes/iterations/ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02.yaml
+  - docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02-approved.yaml
+  - docs-platform/changelog/audit/ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02.yaml
+  - docs-platform/changelog/previews/ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02.yaml
+  - docs-platform/changelog/verification/ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02.yaml
+  - docs-platform/changelog/artifacts/ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02.yaml
+  - docs-platform/changelog/events.ndjson
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/SNAPSHOT-ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02.yaml
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+allowed_dirty_paths: [analysis/, output/]
+rollback_payload: null
+rollback_contract:
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true

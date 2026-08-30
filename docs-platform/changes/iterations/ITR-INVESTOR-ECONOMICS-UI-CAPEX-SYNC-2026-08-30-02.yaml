@@ -1,0 +1,30 @@
+schema_version: 2
+iteration_id: ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02
+proposal_id: PROP-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02
+decision_id: DEC-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02
+change_set_id: CHG-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02
+title: Seal compact Investor Economics comparison audit and CAPEX remote parity check
+status: approved
+approved_by: project owner
+approved_at: '2026-08-30T00:00:00.000Z'
+actor: Codex
+scope: >-
+  Hash-exact successor of unsealed -01. Preserve the compact public comparison, add a
+  regression guard against duplicated first-payment timing, and perform a canonical CAPEX
+  Google preview with exact remote formula/value parity. No Google apply occurs because the diff is empty.
+approved_payload_path: docs-platform/changelog/payloads/ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02-approved.yaml
+approved_payload_sha256: ed1bae1e2523c2098054005b13bc5417aee1b6fe2ceaceae9826c66d2b2ab5a2
+before_state_sha256: 075e02a3a4a6554b17dbeb32b31082acf9d41a82619fad0bc2087de3a151f371
+after_state_sha256: 94a27554ddbc25792b408a1814fee29e74a628bf7ecc36a9b16178b7a5b47a45
+affected_document_ids: [DOC-INVESTOR-FINANCIAL-SUMMARY, DOC-CAPEX-EQUIPMENT-REGISTER]
+affected_section_ids:
+  - investor-economics.public-comparison
+  - capex.google-sheet.remote-parity-preview
+  - capex.google.publisher-worktree-profile-contract
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/SNAPSHOT-ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02.yaml
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+rollback_payload: null
