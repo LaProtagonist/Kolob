@@ -1,12 +1,12 @@
 schema_version: 2
-generated_at: 2026-08-29T20:52:09.740Z
+generated_at: 2026-08-30T01:01:49.202Z
 project: Колобочная
 branch: feat/investor-economics-v1
-latest_timeline_event_id: EVT-ITR-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01-COMMITTED
-latest_timeline_event_hash: edc64ccc112bbff88373c078bdb707ab26b21f6dd0da126eb387a46c863bace2
-latest_closed_iteration_id: ITR-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01
-latest_iteration_tag: iteration/ITR-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01
-latest_content_commit_hash: cfc18b1cdf37e8e79ba3a7174e3a8acc935c2503
+latest_timeline_event_id: EVT-ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02-COMMITTED
+latest_timeline_event_hash: 6bd30264c2152cd0b9ee2c31b73dd0f054e84c472abeb4c9c738f1000f804a02
+latest_closed_iteration_id: ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02
+latest_iteration_tag: iteration/ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02
+latest_content_commit_hash: 709c6c4feb8ce53e6ea0d50fea65c390abd62c48
 registry_hash: b59c96c1b256174cd21131cf955813e2d68fe507a4d4a85b9e581094a74264cc
 canonical_document_hashes:
   - document_id: DOC-AGENTS
@@ -92,7 +92,7 @@ open_questions:
   - Archive pending review artifacts in durable storage before treating visual verification as portable.
   - Create deployment receipts when the next governed deployment is performed.
   - Decide whether malformed superseded legacy YAML evidence should receive a separate correction event.
-current_workstream: Seal three equity public scenarios, residual-equity waterfall and live workbench comparison
+current_workstream: Seal compact Investor Economics comparison audit and CAPEX remote parity check
 next_task: Select the next task through a new governed proposal; no business task is pre-authorized.
 google_integration_status:
   configured: false
@@ -112,7 +112,7 @@ known_drift:
   - malformed_legacy_yaml:docs-platform/changelog/payloads/ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01-approved.yaml
   - review_artifacts_pending_durable_archive
 artifact_status:
-  manifests: 4
-  artifacts: 25
-  pending_archive: 11
+  manifests: 6
+  artifacts: 33
+  pending_archive: 19
   durable: 0

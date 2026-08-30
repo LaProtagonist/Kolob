@@ -9,16 +9,16 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 ## 2. Текущая ветка и governed iteration
 
 - Branch: `feat/investor-economics-v1`.
-- Latest closed iteration: `ITR-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01`.
-- Latest iteration tag: `iteration/ITR-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01`.
-- Latest content commit: `cfc18b1cdf37e8e79ba3a7174e3a8acc935c2503`.
+- Latest closed iteration: `ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02`.
+- Latest iteration tag: `iteration/ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02`.
+- Latest content commit: `709c6c4feb8ce53e6ea0d50fea65c390abd62c48`.
 - Текущий Git HEAD намеренно не записывается: его вычисляет `npm run project:onboard`.
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-INVESTOR-ECONOMICS-THREE-EQUITY-SCENARIOS-2026-08-29-01-COMMITTED`.
-- Hash: `edc64ccc112bbff88373c078bdb707ab26b21f6dd0da126eb387a46c863bace2`.
-- generated_from_event_hash: `edc64ccc112bbff88373c078bdb707ab26b21f6dd0da126eb387a46c863bace2`.
+- Event: `EVT-ITR-INVESTOR-ECONOMICS-UI-CAPEX-SYNC-2026-08-30-02-COMMITTED`.
+- Hash: `6bd30264c2152cd0b9ee2c31b73dd0f054e84c472abeb4c9c738f1000f804a02`.
+- generated_from_event_hash: `6bd30264c2152cd0b9ee2c31b73dd0f054e84c472abeb4c9c738f1000f804a02`.
 
 ## 4. Канонические документы
 
@@ -46,7 +46,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 5. Текущая рабочая тема
 
-Seal three equity public scenarios, residual-equity waterfall and live workbench comparison
+Seal compact Investor Economics comparison audit and CAPEX remote parity check
 
 ## 6. Decisions и change sets
 
