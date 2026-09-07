@@ -1,0 +1,16 @@
+receipt_version: 1
+iteration_id: ITR-FRANCHISE-PLATFORM-LOCALIZATION-2026-09-07-01
+audited_at: 2026-09-07T20:20:00.000Z
+result: passed
+finding:
+  scope: Existing private franchise-platform investor routes and proposed strategy terminology
+  narrative: Investor-visible terminology is Russian and avoids internal enum and developer labels.
+  economics: The page explains flows without presenting them as an obligatory legal payment architecture or calculated economics.
+  scenario_boundary: Petrogradka stays an independent research scenario and no financial baseline is changed.
+resolution:
+  - retain explicit calculation assumptions next to the 10-point capacity, entry fee and royalty values
+  - retain the missing-input list instead of creating fictional franchisee or head-company results
+  - keep the proposed strategy and all scenario values at their current statuses
+external_state:
+  google_apply: not_run
+  production_deploy: not_run

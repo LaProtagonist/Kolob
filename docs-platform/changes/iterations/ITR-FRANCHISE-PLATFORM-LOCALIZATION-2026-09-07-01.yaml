@@ -1,0 +1,72 @@
+schema_version: 2
+iteration_id: ITR-FRANCHISE-PLATFORM-LOCALIZATION-2026-09-07-01
+proposal_id: PROP-FRANCHISE-PLATFORM-LOCALIZATION-2026-09-07-01
+decision_id: DEC-FRANCHISE-PLATFORM-LOCALIZATION-2026-09-07-01
+change_set_id: CHG-FRANCHISE-PLATFORM-LOCALIZATION-2026-09-07-01
+title: Localize franchise platform investor narrative
+status: approved
+approved_by: project owner
+approved_at: 2026-09-07T20:20:00.000Z
+actor: Codex
+scope: >-
+  Localize the existing investor presentation and the proposed strategy document, clarify
+  the economic logic and scenario separation, and retain all approved governing documents,
+  financial boundaries and existing scenario assumptions.
+approved_payload_path: docs-platform/changelog/payloads/ITR-FRANCHISE-PLATFORM-LOCALIZATION-2026-09-07-01-approved.yaml
+approved_payload_sha256: 602d1063bbbe73022563c3f712e03800fd754e3ec7283e5f11b8c45a18db9d19
+before_state_sha256: 09311d9678e5290b73451c61db8fbc6c932150d5711fab050ed76b10f8ff30aa
+after_state_sha256: 7c8d6f829135992ff89e7990bf674422b95af2b472256a028f80b1da94282d29
+affected_document_ids:
+  - DOC-FRANCHISE-PLATFORM-STRATEGY
+  - DOC-SCENARIO-PETROGRADKA-READY-PRODUCTION-BASE
+affected_section_ids:
+  - investor.franchise-platform.core-narrative
+  - investor.franchise-platform.economic-logic
+  - investor.franchise-platform.scenario-profiles
+  - investor.franchise-platform.petrogradka-presentation
+  - franchise-platform.display-terminology
+state_hash_paths:
+  - docs-platform/02-franchise-platform-strategy.md
+  - docs-platform/registry/decisions.yaml
+  - docs-platform/registry/dependencies.yaml
+  - docs-platform/registry/documents.yaml
+  - docs-platform/registry/sources.yaml
+  - scripts/test-franchise-platform.cjs
+  - src/components/FranchisePlatform.css
+  - src/components/FranchisePlatform.tsx
+  - src/content/franchise-platform.ts
+  - src/content/site.ts
+content_paths:
+  - docs-platform/02-franchise-platform-strategy.md
+  - docs-platform/registry/decisions.yaml
+  - docs-platform/registry/dependencies.yaml
+  - docs-platform/registry/documents.yaml
+  - docs-platform/registry/sources.yaml
+  - scripts/test-franchise-platform.cjs
+  - src/components/FranchisePlatform.css
+  - src/components/FranchisePlatform.tsx
+  - src/content/franchise-platform.ts
+  - src/content/site.ts
+  - docs-platform/changes/proposals/PROP-FRANCHISE-PLATFORM-LOCALIZATION-2026-09-07-01.yaml
+  - docs-platform/changes/decisions/DEC-FRANCHISE-PLATFORM-LOCALIZATION-2026-09-07-01.yaml
+  - docs-platform/changes/CHG-FRANCHISE-PLATFORM-LOCALIZATION-2026-09-07-01.yaml
+  - docs-platform/changes/iterations/ITR-FRANCHISE-PLATFORM-LOCALIZATION-2026-09-07-01.yaml
+  - docs-platform/changelog/payloads/ITR-FRANCHISE-PLATFORM-LOCALIZATION-2026-09-07-01-approved.yaml
+  - docs-platform/changelog/audit/ITR-FRANCHISE-PLATFORM-LOCALIZATION-2026-09-07-01.yaml
+  - docs-platform/changelog/previews/ITR-FRANCHISE-PLATFORM-LOCALIZATION-2026-09-07-01.yaml
+  - docs-platform/changelog/verification/ITR-FRANCHISE-PLATFORM-LOCALIZATION-2026-09-07-01.yaml
+  - docs-platform/changelog/events.ndjson
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/SNAPSHOT-ITR-FRANCHISE-PLATFORM-LOCALIZATION-2026-09-07-01.yaml
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+allowed_dirty_paths:
+  - analysis/
+  - output/
+rollback_payload: null
+rollback_contract:
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true

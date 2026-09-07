@@ -345,7 +345,7 @@ documents:
     local_path: docs-platform/working/network-planning-assumptions.yaml
     updated_at: 2026-08-26
   - id: DOC-FRANCHISE-PLATFORM-STRATEGY
-    title: Franchise Platform Strategy — Стратегия масштабирования через центральное производство
+    title: Стратегия масштабирования сети
     type: internal_strategy_architecture
     status: proposed
     google_file_id: null
@@ -353,11 +353,11 @@ documents:
     sections:
       - Стратегический тезис
       - Центральное производство
-      - Franchise Operating System
+      - Цифровая операционная система сети
       - Экономические контуры
-      - Scenario Profiles
-      - Missing Inputs
-    version: "0.1"
+      - Сценарии запуска
+      - Открытые входы для расчёта
+    version: "0.2"
     governance_level: working
     local_path: docs-platform/02-franchise-platform-strategy.md
     updated_at: 2026-09-07

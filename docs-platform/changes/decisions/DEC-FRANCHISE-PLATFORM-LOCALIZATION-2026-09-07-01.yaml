@@ -1,0 +1,13 @@
+schema_version: 2
+decision_id: DEC-FRANCHISE-PLATFORM-LOCALIZATION-2026-09-07-01
+iteration_id: ITR-FRANCHISE-PLATFORM-LOCALIZATION-2026-09-07-01
+title: Approve Russian investor narrative for the franchise platform
+status: approved
+approved_by: project owner
+approved_at: 2026-09-07T20:20:00.000Z
+scope: >-
+  Localize the existing investor routes and the proposed strategy's displayed terminology;
+  explain economic flows and scenario separation without changing governing documents,
+  the canonical baseline, financial engine, numeric assumptions or Petrogradka status.
+approved_payload_path: docs-platform/changelog/payloads/ITR-FRANCHISE-PLATFORM-LOCALIZATION-2026-09-07-01-approved.yaml
+approved_payload_sha256: 602d1063bbbe73022563c3f712e03800fd754e3ec7283e5f11b8c45a18db9d19

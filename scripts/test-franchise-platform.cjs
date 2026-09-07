@@ -5,6 +5,19 @@ const { spawn } = require("node:child_process");
 const projectRoot = path.resolve(__dirname, "..");
 const port = Number(process.env.FRANCHISE_PLATFORM_TEST_PORT ?? 9_200 + (process.pid % 500));
 const baseUrl = `http://127.0.0.1:${port}`;
+const forbiddenUiTerms = [
+  "Franchise Platform Strategy",
+  "Franchise Operating System",
+  "settlement",
+  "HeadCo",
+  "Core Strategy",
+  "Scenario Profiles",
+  "Media Program",
+  "Future layers",
+  "READY_PRODUCTION_BASE",
+  "CUSTOM_PRODUCTION_BASE",
+  "OWNED_PRODUCTION_BASE",
+];
 
 async function responds() {
   try {
@@ -37,6 +50,13 @@ async function assertNoOverflow(page, label) {
   assert.ok(size.body <= size.viewport + 1, `${label}: body overflow ${JSON.stringify(size)}`);
 }
 
+async function assertLocalizedInvestorCopy(page, testId) {
+  const text = await page.getByTestId(testId).innerText();
+  for (const term of forbiddenUiTerms) {
+    assert.equal(text.toLowerCase().includes(term.toLowerCase()), false, `Investor UI must not display ${term}`);
+  }
+}
+
 async function verifyRoute(browser, pathname, testId, viewport) {
   const context = await browser.newContext({ viewport });
   const page = await context.newPage();
@@ -65,16 +85,19 @@ async function run() {
 
     await page.goto(`${baseUrl}/investor/franchise-platform`, { waitUntil: "networkidle" });
     await page.getByTestId("franchise-platform-page").waitFor();
-    assert.equal(await page.locator("h1").innerText(), "Franchise Platform Strategy");
+    assert.equal(await page.locator("h1").innerText(), "Стратегия масштабирования сети");
     assert.equal(await page.locator('meta[name="robots"]').getAttribute("content"), "noindex, nofollow");
-    assert.match(await page.getByTestId("franchise-platform-page").innerText(), /proposed/);
-    assert.match(await page.getByTestId("franchise-platform-page").innerText(), /Никаких расчётных результатов до заполнения входов/);
+    assert.match(await page.getByTestId("franchise-platform-page").innerText(), /Центральное производство, цифровая операционная система и франчайзинговая модель позволяют развивать сеть без пропорционального роста капитальных затрат головной компании/);
+    assert.match(await page.getByTestId("franchise-platform-page").innerText(), /Рабочие параметры сценария — не утверждённые условия франшизы/);
+    assert.match(await page.getByTestId("franchise-money-flow").innerText(), /Гость[\s\S]*Франчайзи[\s\S]*оплата заготовок[\s\S]*центральное производство[\s\S]*результат франчайзи/i);
+    await assertLocalizedInvestorCopy(page, "franchise-platform-page");
     assert.equal(await page.getByText("$1m", { exact: false }).count(), 0);
     assert.equal(await page.getByText("30%", { exact: false }).count(), 0, "food cost benchmark is not presented as a required payment");
     await page.getByRole("link", { name: "Открыть сценарий Петроградки" }).click();
     await page.getByTestId("petrogradka-scenario-page").waitFor();
-    assert.equal(await page.locator("h1").innerText(), "READY_PRODUCTION_BASE / PETROGRADKA");
-    assert.match(await page.getByTestId("petrogradka-scenario-page").innerText(), /Scenario,\s*не baseline/i);
+    assert.equal(await page.locator("h1").innerText(), "Петроградка — готовая производственная база");
+    assert.match(await page.getByTestId("petrogradka-scenario-page").innerText(), /Сценарий,\s*не базовая модель/i);
+    await assertLocalizedInvestorCopy(page, "petrogradka-scenario-page");
     assert.ok(await page.locator('[data-status="available_subject_to_confirmation"]').count() >= 3);
     assert.match(await page.getByTestId("petrogradka-scenario-page").innerText(), /Не включено:[\s\S]*аренда[\s\S]*отдельные торговые точки/);
     assert.match(await page.getByTestId("petrogradka-scenario-page").innerText(), /3[  ]000[  ]000–3[  ]600[  ]000 ₽/);

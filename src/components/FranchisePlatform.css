@@ -54,6 +54,7 @@
 .franchise-architecture span { color: #94690a; font-size: .72rem; font-weight: 900; letter-spacing: .08em; }
 .franchise-architecture h3 { margin: 38px 0 11px; font-size: 1.08rem; }
 .franchise-architecture p { margin: 0; color: var(--franchise-muted); font-size: .81rem; line-height: 1.55; }
+.franchise-architecture-note { max-width: 920px; margin: 16px 0 0; padding: 14px 17px; border-left: 4px solid var(--franchise-green); background: #eaf2eb; color: var(--franchise-muted); font-size: .84rem; line-height: 1.55; }
 
 .franchise-split { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 .franchise-card { min-width: 0; padding: 29px; border: 1px solid var(--franchise-line); border-radius: 18px; background: var(--franchise-card); }
@@ -68,6 +69,9 @@
 .franchise-card li::before { position: absolute; top: .49em; left: 0; width: 7px; height: 7px; border-radius: 50%; background: var(--franchise-yellow); content: ""; }
 .franchise-card-note { margin: 0; padding-top: 15px; border-top: 1px solid var(--franchise-line); color: var(--franchise-muted); font-size: .78rem; line-height: 1.5; }
 .franchise-card.is-production .franchise-card-note { border-color: rgba(255,255,255,.16); color: rgba(255,255,255,.74); }
+.franchise-card-note span { display: inline-block; margin-top: 7px; color: inherit; font-weight: 800; }
+.franchise-card-list-heading { margin: 19px 0 0; padding-top: 15px; border-top: 1px solid var(--franchise-line); color: var(--franchise-ink); font-size: .77rem; font-weight: 900; letter-spacing: .04em; text-transform: uppercase; }
+.franchise-effect-list { margin-top: 12px !important; }
 
 .franchise-os { display: flex; flex-wrap: wrap; gap: 9px; }
 .franchise-os span { padding: 10px 13px; border: 1px solid var(--franchise-line); border-radius: 999px; background: #fff; font-size: .81rem; font-weight: 800; }
@@ -85,6 +89,10 @@
 .franchise-flow li span { color: #8b640c; font-size: .65rem; font-weight: 900; }
 .franchise-flow li strong { font-weight: 800; }
 .franchise-flow.is-batches li { border-color: rgba(47,107,63,.24); background: #eef5ee; }
+.franchise-compact-list { display: grid; gap: 8px; margin: 13px 0 0; padding: 0; list-style: none; }
+.franchise-compact-list li { position: relative; padding-left: 15px; color: var(--franchise-muted); font-size: .79rem; line-height: 1.45; }
+.franchise-compact-list li::before { position: absolute; top: .5em; left: 0; width: 6px; height: 6px; border-radius: 50%; background: var(--franchise-yellow); content: ""; }
+.franchise-operations-grid .franchise-card-list-heading { display: block; margin-top: 18px; }
 
 .franchise-economics-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 .franchise-economics-grid article { min-width: 0; padding: 23px; border: 1px solid var(--franchise-line); border-radius: 16px; background: var(--franchise-card); }
@@ -101,12 +109,33 @@
 .franchise-economics-grid article:last-child { color: #fff; border-color: #1c1c18; background: #1c1c18; }
 .franchise-economics-grid article:last-child p { color: rgba(255,255,255,.7); }
 .franchise-economics-grid article:last-child strong { display: block; margin-top: 25px; color: var(--franchise-yellow); font-size: 1.05rem; }
+.franchise-economics-grid article:last-child .franchise-compact-list li { color: rgba(255,255,255,.84); }
+.franchise-economics-grid article:last-child .franchise-compact-list li::before { background: var(--franchise-yellow); }
+.franchise-money-flow { display: grid; grid-template-columns: minmax(180px, .42fr) minmax(0, 1fr); gap: 1px; overflow: hidden; margin-bottom: 12px; border: 1px solid var(--franchise-line); border-radius: 16px; background: var(--franchise-line); }
+.franchise-money-flow-origin { display: grid; align-content: center; justify-items: start; gap: 9px; padding: 23px; color: #fff; background: #1c1c18; }
+.franchise-money-flow-origin strong { font-size: 1.08rem; text-transform: uppercase; }
+.franchise-money-flow-origin span { color: var(--franchise-yellow); font-size: 1.35rem; font-weight: 900; }
+.franchise-money-flow ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; margin: 0; padding: 1px; list-style: none; background: var(--franchise-line); }
+.franchise-money-flow li { min-width: 0; padding: 16px 18px; background: #fff; color: var(--franchise-muted); font-size: .8rem; line-height: 1.45; }
+.franchise-money-flow li strong { color: var(--franchise-ink); }
+.franchise-money-flow li span { color: #8b640c; font-weight: 900; }
+.franchise-economic-note { margin: 0 0 18px; color: var(--franchise-muted); font-size: .75rem; line-height: 1.5; }
+.franchise-scenario-parameters { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--franchise-line); }
+.franchise-scenario-parameters > strong { display: block; margin: 0 0 9px; font-size: .79rem; line-height: 1.4; }
+.franchise-scenario-parameters > .franchise-status { margin-bottom: 2px; }
+.franchise-scenario-parameters dl { margin: 14px 0 0; }
+.franchise-scenario-parameters dl > div:last-child { display: block; padding-bottom: 0; }
+.franchise-scenario-parameters dl > div:last-child dt { margin-bottom: 6px; }
+.franchise-scenario-parameters dl > div:last-child dd { text-align: left; line-height: 1.45; }
+.franchise-scenario-parameters small { display: block; margin-top: 10px; color: #835d08; font-size: .72rem; font-weight: 900; }
+.franchise-key-metric { display: block; margin-top: 19px; padding-top: 15px; border-top: 1px solid var(--franchise-line); color: var(--franchise-ink); font-size: .88rem; line-height: 1.45; }
 
 .franchise-profile-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 .franchise-profile-grid article { min-width: 0; padding: 22px; border: 1px solid var(--franchise-line); border-radius: 16px; background: var(--franchise-card); }
 .franchise-profile-grid article.is-active { border-color: var(--franchise-yellow); box-shadow: inset 0 0 0 1px var(--franchise-yellow); }
 .franchise-profile-grid h3 { margin: 17px 0 10px; font-size: 1.1rem; overflow-wrap: anywhere; }
 .franchise-profile-grid p { min-height: 65px; margin: 0; color: var(--franchise-muted); font-size: .8rem; line-height: 1.55; }
+.franchise-profile-grid .franchise-profile-note { min-height: 0; margin-top: 11px; color: #3b6652; font-size: .76rem; font-weight: 800; }
 .franchise-link { display: inline-flex; margin-top: 18px; padding-bottom: 3px; border-bottom: 2px solid var(--franchise-yellow); font-size: .8rem; font-weight: 900; }
 .franchise-link:hover { color: #8d650a; }
 .franchise-matrix { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 16px; padding: 17px; border-left: 4px solid var(--franchise-green); background: #eaf2eb; }
@@ -114,10 +143,11 @@
 .franchise-matrix span { padding: 5px 8px; border: 1px solid rgba(47,107,63,.22); border-radius: 999px; color: #255c42; font-size: .74rem; font-weight: 800; }
 .franchise-matrix p { width: 100%; margin: 2px 0 0; color: var(--franchise-muted); font-size: .75rem; }
 
-.franchise-scale .franchise-flow { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 1px; padding: 1px; overflow: hidden; border: 1px solid var(--franchise-line); border-radius: 16px; background: var(--franchise-line); }
+.franchise-scale .franchise-flow { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 1px; padding: 1px; overflow: hidden; border: 1px solid var(--franchise-line); border-radius: 16px; background: var(--franchise-line); }
 .franchise-scale .franchise-flow li { position: relative; display: block; min-height: 118px; padding: 19px; border: 0; border-radius: 0; background: #fff; }
 .franchise-scale .franchise-flow li:not(:last-child)::after { position: absolute; top: 50%; right: -9px; z-index: 1; width: 16px; height: 16px; border-top: 2px solid var(--franchise-yellow); border-right: 2px solid var(--franchise-yellow); content: ""; transform: translateY(-50%) rotate(45deg); }
 .franchise-scale .franchise-flow li span { display: block; margin-bottom: 15px; }
+.franchise-scale-note { max-width: 900px; margin: 15px 0 0; color: var(--franchise-muted); font-size: .78rem; line-height: 1.55; }
 .franchise-future { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 16px; }
 .franchise-future > div { padding: 20px; border-radius: 15px; background: #f1eee6; }
 .franchise-future strong { font-size: .9rem; }
@@ -157,7 +187,8 @@
   .franchise-architecture li:nth-child(3)::after { display: none; }
   .franchise-economics-grid { grid-template-columns: 1fr; }
   .franchise-scale .franchise-flow { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .franchise-scale .franchise-flow li:nth-child(3)::after { display: none; }
+  .franchise-scale .franchise-flow li:nth-child(3)::after,
+  .franchise-scale .franchise-flow li:nth-child(6)::after { display: none; }
   .petrogradka-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
@@ -169,6 +200,7 @@
   .franchise-operations-grid,
   .franchise-profile-grid,
   .franchise-future,
+  .franchise-money-flow,
   .petrogradka-grid,
   .petrogradka-operations { grid-template-columns: 1fr; }
   .franchise-architecture { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -176,6 +208,7 @@
   .franchise-architecture li:nth-child(2)::after,
   .franchise-architecture li:nth-child(4)::after { display: none; }
   .franchise-card ul { grid-template-columns: 1fr; }
+  .franchise-money-flow ul { grid-template-columns: 1fr; }
   .petrogradka-capex > div { grid-template-columns: minmax(0, 1fr) auto; }
   .petrogradka-capex small { grid-column: 1 / -1; justify-content: flex-start; }
   .franchise-next { align-items: start; flex-direction: column; }

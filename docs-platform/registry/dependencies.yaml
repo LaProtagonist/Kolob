@@ -235,7 +235,7 @@ dependencies:
     status: proposed
     version: "1.0"
     target_documents:
-      - title: Franchise Platform Strategy
+      - title: Стратегия масштабирования сети
         document_id: DOC-FRANCHISE-PLATFORM-STRATEGY
     updated_at: 2026-09-07
   - id: DEP-BMA-FRANCHISE-PLATFORM-STRATEGY
@@ -244,7 +244,7 @@ dependencies:
     status: proposed
     version: "1.0"
     target_documents:
-      - title: Franchise Platform Strategy
+      - title: Стратегия масштабирования сети
         document_id: DOC-FRANCHISE-PLATFORM-STRATEGY
     updated_at: 2026-09-07
   - id: DEP-FRANCHISE-PLATFORM-SCENARIO-LAYER

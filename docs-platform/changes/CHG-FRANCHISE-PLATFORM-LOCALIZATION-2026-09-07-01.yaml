@@ -1,0 +1,16 @@
+schema_version: 2
+change_id: CHG-FRANCHISE-PLATFORM-LOCALIZATION-2026-09-07-01
+title: Localize franchise platform investor narrative
+status: approved
+created_at: 2026-09-07
+decision_id: DEC-FRANCHISE-PLATFORM-LOCALIZATION-2026-09-07-01
+iteration_id: ITR-FRANCHISE-PLATFORM-LOCALIZATION-2026-09-07-01
+proposal_id: PROP-FRANCHISE-PLATFORM-LOCALIZATION-2026-09-07-01
+approved_payload_path: docs-platform/changelog/payloads/ITR-FRANCHISE-PLATFORM-LOCALIZATION-2026-09-07-01-approved.yaml
+approved_payload_sha256: 602d1063bbbe73022563c3f712e03800fd754e3ec7283e5f11b8c45a18db9d19
+operations:
+  - replace investor-visible internal English terminology with professional Russian terminology on the existing core and Petrogradka routes
+  - add an explanatory economic-flow diagram and clear scenario-parameter boundary without creating calculations
+  - preserve every scenario value and distinguish working assumptions from confirmed facts
+  - update only the matching display terminology in the proposed strategy document and governed registry references
+  - add a deterministic browser assertion that prohibited internal labels are absent from investor-visible text

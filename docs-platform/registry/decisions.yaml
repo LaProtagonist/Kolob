@@ -345,3 +345,17 @@ decisions:
     source_ids:
       - SRC-FRANCHISE-PLATFORM-2026-09-07-BRIEF
     updated_at: 2026-09-07
+  - id: DEC-FRANCHISE-PLATFORM-LOCALIZATION-2026-09-07-01
+    title: Переработать русскоязычный инвесторский нарратив стратегии масштабирования
+    status: approved
+    decision: Переработать существующий маршрут /investor/franchise-platform и связанное отображение сценария Петроградки на профессиональный русскоязычный язык; показать экономическую логику франчайзинговой модели, явно отделить базовую стратегию от сменных сценариев запуска и сохранить существующую архитектуру, route IDs, enum, числовые допущения и финансовый параметрический контракт.
+    rationale: Прямое задание владельца проекта от 2026-09-07. Решение не утверждает новые финансовые показатели, помещение, CAPEX, мощность производства, условия франшизы, банковскую или юридическую модель. Foundation v1.0, Business Model Architecture v1.0, утверждённые PRP-блоки, baseline и Financial Core остаются неизменными.
+    affected_documents:
+      - DOC-FRANCHISE-PLATFORM-STRATEGY
+      - DOC-SCENARIO-PETROGRADKA-READY-PRODUCTION-BASE
+    approved_by: project owner
+    approved_at: 2026-09-07
+    supersedes: null
+    source_ids:
+      - SRC-FRANCHISE-PLATFORM-LOCALIZATION-BRIEF-2026-09-07
+    updated_at: 2026-09-07

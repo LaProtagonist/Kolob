@@ -1,0 +1,13 @@
+schema_version: 2
+proposal_id: PROP-FRANCHISE-PLATFORM-LOCALIZATION-2026-09-07-01
+iteration_id: ITR-FRANCHISE-PLATFORM-LOCALIZATION-2026-09-07-01
+title: Localize franchise platform investor narrative
+status: approved
+proposed_by: project owner
+proposed_at: 2026-09-07T20:20:00.000Z
+summary: >-
+  Rework the existing private franchise-platform investor presentation into clear Russian
+  investor language, strengthen the economic explanation and preserve the proposed strategy,
+  replaceable scenario architecture, assumptions and existing financial boundaries.
+approved_payload_path: docs-platform/changelog/payloads/ITR-FRANCHISE-PLATFORM-LOCALIZATION-2026-09-07-01-approved.yaml
+approved_payload_sha256: 602d1063bbbe73022563c3f712e03800fd754e3ec7283e5f11b8c45a18db9d19
