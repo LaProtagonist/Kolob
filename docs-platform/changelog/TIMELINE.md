@@ -4,10 +4,10 @@
 
 ## 1. Current state
 
-- Events: 319.
-- Timeline head event: `EVT-ITR-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01-COMMITTED`.
-- Timeline head SHA-256: `594033389102ee18ea560b6e871695510d34b17c5d8865a80391005cd96761d0`.
-- Latest recorded iteration: `ITR-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01`.
+- Events: 325.
+- Timeline head event: `EVT-ITR-FRANCHISE-PLATFORM-LOCALIZATION-2026-09-07-01-COMMITTED`.
+- Timeline head SHA-256: `e282da874aae3a1810926d455b780f749b6e69b266858cd1f5aae0b8dc07b9ea`.
+- Latest recorded iteration: `ITR-FRANCHISE-PLATFORM-LOCALIZATION-2026-09-07-01`.
 
 ## 2. Modern governed iterations
 
@@ -72,6 +72,7 @@
 | 2026-08-28T14:28:32.000Z | deployed | Refresh local Financial Model dependency chain for Terminal release | ITR-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01 | DEC-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01 | CHG-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01 | f0e6f3cdbcdceec939a0667d0867589c3f321a01 | iteration/ITR-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01 | — | docs-platform/changelog/deployments/DEPLOY-FINANCIAL-CORE-INVESTOR-TERMINAL-2026-08-28-01.yaml | — | Sealed content state a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239 deployed to https://colob.spi.ski; smoke test failed. |
 | 2026-08-28T14:44:20.000Z | deployed | Prerender public Investor Terminal route for production release | ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02 | DEC-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02 | CHG-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02 | 50a64fbb88a30a3554cea7437914ecc915e418c7 | iteration/ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02 | — | docs-platform/changelog/deployments/DEPLOY-FINANCIAL-CORE-INVESTOR-TERMINAL-2026-08-28-02.yaml | — | Sealed content state a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239 deployed to https://colob.spi.ski; smoke test passed. |
 | 2026-09-07T18:24:31.000Z | committed | Add Franchise Platform Strategy and PETROGRADKA scenario layer | ITR-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01 | DEC-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01 | CHG-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01 | 7e1b647859cc15c5c8560121d5b3768dead71ed4 | iteration/ITR-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01 | — | — | — | Add Franchise Platform Strategy and PETROGRADKA scenario layer: content commit verified and linked to the governed lifecycle before sealing. |
+| 2026-09-07T20:32:39.000Z | committed | Localize franchise platform investor narrative | ITR-FRANCHISE-PLATFORM-LOCALIZATION-2026-09-07-01 | DEC-FRANCHISE-PLATFORM-LOCALIZATION-2026-09-07-01 | CHG-FRANCHISE-PLATFORM-LOCALIZATION-2026-09-07-01 | f5b771dbdf213846bf5c5f1bdce230d1bc721509 | iteration/ITR-FRANCHISE-PLATFORM-LOCALIZATION-2026-09-07-01 | — | — | — | Localize franchise platform investor narrative: content commit verified and linked to the governed lifecycle before sealing. |
 
 ## 3. Legacy imported history
 

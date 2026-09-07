@@ -9,16 +9,16 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 ## 2. Текущая ветка и governed iteration
 
 - Branch: `master`.
-- Latest closed iteration: `ITR-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01`.
-- Latest iteration tag: `iteration/ITR-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01`.
-- Latest content commit: `7e1b647859cc15c5c8560121d5b3768dead71ed4`.
+- Latest closed iteration: `ITR-FRANCHISE-PLATFORM-LOCALIZATION-2026-09-07-01`.
+- Latest iteration tag: `iteration/ITR-FRANCHISE-PLATFORM-LOCALIZATION-2026-09-07-01`.
+- Latest content commit: `f5b771dbdf213846bf5c5f1bdce230d1bc721509`.
 - Текущий Git HEAD намеренно не записывается: его вычисляет `npm run project:onboard`.
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01-COMMITTED`.
-- Hash: `594033389102ee18ea560b6e871695510d34b17c5d8865a80391005cd96761d0`.
-- generated_from_event_hash: `594033389102ee18ea560b6e871695510d34b17c5d8865a80391005cd96761d0`.
+- Event: `EVT-ITR-FRANCHISE-PLATFORM-LOCALIZATION-2026-09-07-01-COMMITTED`.
+- Hash: `e282da874aae3a1810926d455b780f749b6e69b266858cd1f5aae0b8dc07b9ea`.
+- generated_from_event_hash: `e282da874aae3a1810926d455b780f749b6e69b266858cd1f5aae0b8dc07b9ea`.
 
 ## 4. Канонические документы
 
@@ -39,7 +39,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 | DOC-FOUNDATION | approved | `docs-platform/00-foundation.md` | `5b4d457184c055ba11f8c4d05cc263139d2eb4f623981bcdc198c0114a50c0bb` |
 | DOC-FRANCHISE-PLATFORM-MISSING-INPUTS | research | `docs-platform/checklists/franchise-platform-missing-inputs.md` | `39fcc08a4215fe7844eca841efe5fd74d1ed7f109e4cbc79785fdfd870ea45fe` |
 | DOC-FRANCHISE-PLATFORM-PARAMETERS | research | `docs-platform/working/franchise-platform-parameters.yaml` | `4c7a77b2cb3bc4a72a5c614ffcb3113f2698329b24db7363e1254056c87b2973` |
-| DOC-FRANCHISE-PLATFORM-STRATEGY | proposed | `docs-platform/02-franchise-platform-strategy.md` | `346cd1927f64bb50bae1320df7f4ea966f87e2e71d00b0dff2147b4ed81b62b4` |
+| DOC-FRANCHISE-PLATFORM-STRATEGY | proposed | `docs-platform/02-franchise-platform-strategy.md` | `1a0918daf0ddb9250ed2294a457732881beb5dc12f5abd61629c2fb2fb039148` |
 | DOC-INVESTMENT-MEMO | proposed | `docs-platform/templates/investment-memorandum.md` | `464e46d307aaa98e57cab3a098cd639e212d32b51f82a06688de228f0e7fb4cd` |
 | DOC-INVESTOR-FINANCIAL-SUMMARY | research | `docs-platform/working/investor-financial-summary.yaml` | `790d4c84513d666157088c0afeb8ece09ed80080b33db54117ad1dde64a92a40` |
 | DOC-INVESTOR-START-MODEL | research | `docs-platform/working/investor-start-model.yaml` | `b81a6c4e8988a4532c9ba2749d492b3f96e37d83af822396afc82930244b2985` |
@@ -52,7 +52,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 5. Текущая рабочая тема
 
-Add Franchise Platform Strategy and PETROGRADKA scenario layer
+Localize franchise platform investor narrative
 
 ## 6. Decisions и change sets
 
