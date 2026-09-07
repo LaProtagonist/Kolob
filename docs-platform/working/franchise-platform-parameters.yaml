@@ -1,0 +1,103 @@
+schema_version: 1
+document:
+  id: DOC-FRANCHISE-PLATFORM-PARAMETERS
+  title: Franchise Platform Scenario Parameters
+  status: research
+  decision_id: DEC-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01
+  source_ids: [SRC-FRANCHISE-PLATFORM-2026-09-07-BRIEF]
+  purpose: >-
+    Параметрический слой для будущего расширения существующей Financial Model.
+    Он не является вторым финансовым движком и не формирует результат без подтверждённых входов.
+integration_contract:
+  canonical_financial_model: docs-platform/working/financial-model.yaml
+  network_planning_model: docs-platform/working/network-planning-assumptions.yaml
+  consolidation_rule: "Внутренние поставки производства собственным точкам исключаются при консолидации; экономика контуров сохраняется отдельно."
+  calculation_status: blocked_by_missing_inputs
+  consumer_contract: >-
+    Будущий потребитель должен передавать подтверждённые входы в существующие контуры point,
+    production, shared_network и logistics, а не дублировать формулы Financial Core.
+parameters:
+  - id: central_production_capacity
+    label: Производственная мощность центрального производства
+    value: 10
+    unit: trading_points
+    status: assumption
+    scenario: READY_PRODUCTION_BASE
+  - id: franchise_unit_count
+    label: Количество франчайзинговых точек
+    value: null
+    unit: points
+    status: scenario_input_required
+  - id: own_unit_count
+    label: Количество собственных точек
+    value: 1
+    unit: points
+    status: scenario_structure
+  - id: franchise_entry_fee
+    label: Паушальный взнос
+    value: 1000000
+    unit: RUB
+    status: assumption
+    note: "Рабочая иллюстрация, не утверждённая цена франшизы."
+  - id: royalty_rate
+    label: Роялти
+    value: 0.05
+    unit: share_of_revenue
+    status: assumption
+  - id: transfer_price_by_sku
+    label: Трансфертная цена компонентов по SKU
+    value: null
+    unit: RUB_per_component
+    status: missing_input
+  - id: production_utilization
+    label: Загрузка производства
+    value: null
+    unit: share_of_capacity
+    status: missing_input
+  - id: production_fixed_cost
+    label: Постоянные затраты производства
+    value: null
+    unit: RUB_per_month
+    status: missing_input
+  - id: production_variable_cost
+    label: Переменные затраты производства
+    value: null
+    unit: RUB_per_sku_or_month
+    status: missing_input
+  - id: delivery_cost
+    label: Стоимость доставки
+    value: null
+    unit: RUB_per_route_or_month
+    status: missing_input
+  - id: marketing_fee
+    label: Маркетинговый сбор
+    value: null
+    unit: share_or_RUB
+    status: missing_input
+  - id: franchisee_opex
+    label: Операционные расходы франчайзи
+    value: null
+    unit: RUB_per_month
+    status: missing_input
+  - id: franchisee_ebitda
+    label: EBITDA франчайзи
+    value: null
+    unit: RUB_per_month
+    status: derived_when_inputs_confirmed
+  - id: franchisee_cash_flow
+    label: Денежный поток франчайзи
+    value: null
+    unit: RUB_per_month
+    status: derived_when_inputs_confirmed
+scenario_matrix:
+  - { own_unit_count: 1, franchise_unit_count: 0, status: parameter_structure_only }
+  - { own_unit_count: 1, franchise_unit_count: 3, status: parameter_structure_only }
+  - { own_unit_count: 1, franchise_unit_count: 5, status: parameter_structure_only }
+  - { own_unit_count: 1, franchise_unit_count: 9, status: parameter_structure_only }
+required_outputs_when_inputs_confirmed:
+  headco: [entry_fees, royalty, production_revenue, production_margin, marketing_fund, support_costs]
+  franchisee: [sales, food_and_prep_cost, payroll, rent, royalty, marketing, opex, ebitda, cash_flow]
+  production: [capacity, utilization, variable_cost, fixed_cost, logistics, contribution_margin]
+explicit_non_outputs:
+  - "Не выводить сценарный результат, EBITDA, окупаемость или cash flow до заполнения required inputs."
+  - "Не использовать фиксированный процент food cost как обязательный платёж вместо SKU mix, нормы и трансфертной цены."

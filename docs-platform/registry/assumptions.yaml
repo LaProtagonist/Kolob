@@ -639,3 +639,140 @@ assumptions:
       - SRC-FINANCIAL-MODEL-V0-2-BRIEF-2026-08-18
     decision_id: DEC-FINANCIAL-MODEL-V0-2-2026-08-18-01
     updated_at: 2026-08-19
+  - id: ASM-FRANCHISE-CENTRAL-PRODUCTION-CAPACITY
+    title: Сценарная мощность центрального производства
+    value: 10
+    unit: trading points
+    status: research
+    rationale: Рабочая гипотеза сценария о возможном обслуживании до 10 торговых точек. Требует технологических карт, производственного цикла, подтверждения оборудования, персонала, хранения, маршрутов и фактической загрузки; не является утверждённой мощностью.
+    scenario: FRANCHISE_PLATFORM / READY_PRODUCTION_BASE
+    applies_to:
+      - DOC-FRANCHISE-PLATFORM-STRATEGY
+      - DOC-SCENARIO-PETROGRADKA-READY-PRODUCTION-BASE
+      - DOC-FRANCHISE-PLATFORM-PARAMETERS
+    source_ids:
+      - SRC-FRANCHISE-PLATFORM-2026-09-07-BRIEF
+    decision_id: DEC-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01
+    updated_at: 2026-09-07
+  - id: ASM-FRANCHISE-ENTRY-FEE
+    title: Сценарный паушальный взнос
+    value: 1000000
+    unit: RUB
+    status: research
+    rationale: Рабочая иллюстрация для структуры модели. Не является утверждённой ценой франшизы, офертой или прогнозом поступлений.
+    scenario: FRANCHISE_PLATFORM
+    applies_to:
+      - DOC-FRANCHISE-PLATFORM-STRATEGY
+      - DOC-FRANCHISE-PLATFORM-PARAMETERS
+    source_ids:
+      - SRC-FRANCHISE-PLATFORM-2026-09-07-BRIEF
+    decision_id: DEC-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01
+    updated_at: 2026-09-07
+  - id: ASM-FRANCHISE-ROYALTY-RATE
+    title: Сценарная ставка royalty
+    value: 5
+    unit: percent
+    status: research
+    rationale: Рабочее допущение для будущего моделирования. Не утверждает ставку, базу расчёта, договорный механизм или обязательный платёж.
+    scenario: FRANCHISE_PLATFORM
+    applies_to:
+      - DOC-FRANCHISE-PLATFORM-STRATEGY
+      - DOC-FRANCHISE-PLATFORM-PARAMETERS
+    source_ids:
+      - SRC-FRANCHISE-PLATFORM-2026-09-07-BRIEF
+    decision_id: DEC-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01
+    updated_at: 2026-09-07
+  - id: ASM-PETROGRADKA-EQUIPMENT-DELTA
+    title: Сценарная дельта оборудования центрального производства
+    value:
+      from_rub: 900000
+      to_rub: 1000000
+    unit: RUB
+    status: research
+    rationale: Рабочая оценка дооснащения при использовании готового производства. Не включает второй пароконвектомат; зависит от подтверждённого перечня, состояния и совместимости оборудования.
+    scenario: PETROGRADKA / READY_PRODUCTION_BASE
+    applies_to:
+      - DOC-SCENARIO-PETROGRADKA-READY-PRODUCTION-BASE
+    source_ids:
+      - SRC-FRANCHISE-PLATFORM-2026-09-07-BRIEF
+      - SRC-PETROGRADKA-READY-PRODUCTION-2026-09-07
+    decision_id: DEC-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01
+    updated_at: 2026-09-07
+  - id: ASM-PETROGRADKA-EQUIPMENT-SERVICE
+    title: Сценарная диагностика, обслуживание и запуск оборудования
+    value:
+      from_rub: 150000
+      to_rub: 300000
+    unit: RUB
+    status: research
+    rationale: Рабочий диапазон до диагностики, инвентаризации и сервисной оценки. Не является сметой или коммерческим предложением.
+    scenario: PETROGRADKA / READY_PRODUCTION_BASE
+    applies_to:
+      - DOC-SCENARIO-PETROGRADKA-READY-PRODUCTION-BASE
+    source_ids:
+      - SRC-FRANCHISE-PLATFORM-2026-09-07-BRIEF
+      - SRC-PETROGRADKA-READY-PRODUCTION-2026-09-07
+    decision_id: DEC-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01
+    updated_at: 2026-09-07
+  - id: ASM-PETROGRADKA-CENTRAL-PRODUCTION-DELTA
+    title: Сценарный бюджет central production equipment delta
+    value:
+      from_rub: 1100000
+      to_rub: 1300000
+    unit: RUB
+    status: research
+    rationale: Рабочий диапазон equipment delta вместе с диагностикой, обслуживанием и запуском. Не включает аренду, депозит, ФОТ, товарный запас, торговый зал или внешние торговые точки.
+    scenario: PETROGRADKA / READY_PRODUCTION_BASE
+    applies_to:
+      - DOC-SCENARIO-PETROGRADKA-READY-PRODUCTION-BASE
+    source_ids:
+      - SRC-FRANCHISE-PLATFORM-2026-09-07-BRIEF
+    decision_id: DEC-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01
+    updated_at: 2026-09-07
+  - id: ASM-FRANCHISE-EE-OFFICE-HARDWARE
+    title: Сценарный диапазон EE-office hardware
+    value:
+      from_rub: 550000
+      to_rub: 700000
+    unit: RUB
+    status: research
+    rationale: Рабочий диапазон для собственного вычислительного и аналитического контура. Не фиксирует модель устройства, поставщика или закупку.
+    scenario: FRANCHISE_PLATFORM / PETROGRADKA
+    applies_to:
+      - DOC-FRANCHISE-PLATFORM-STRATEGY
+      - DOC-SCENARIO-PETROGRADKA-READY-PRODUCTION-BASE
+    source_ids:
+      - SRC-FRANCHISE-PLATFORM-2026-09-07-BRIEF
+    decision_id: DEC-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01
+    updated_at: 2026-09-07
+  - id: ASM-FRANCHISE-FIRST-MEDIA-PROGRAM
+    title: Сценарный диапазон first Media Program
+    value:
+      from_rub: 1200000
+      to_rub: 1600000
+    unit: RUB
+    status: research
+    rationale: Рабочий диапазон первой медийной программы. Не является утверждённым бюджетом, медиапланом или гарантией трафика.
+    scenario: FRANCHISE_PLATFORM / PETROGRADKA
+    applies_to:
+      - DOC-FRANCHISE-PLATFORM-STRATEGY
+      - DOC-SCENARIO-PETROGRADKA-READY-PRODUCTION-BASE
+    source_ids:
+      - SRC-FRANCHISE-PLATFORM-2026-09-07-BRIEF
+    decision_id: DEC-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01
+    updated_at: 2026-09-07
+  - id: ASM-PETROGRADKA-INFRASTRUCTURE-BASE
+    title: Сценарная инфраструктурная база без торговой точки
+    value:
+      from_rub: 3000000
+      to_rub: 3600000
+    unit: RUB
+    status: research
+    rationale: Рабочая сумма central production delta, EE-office hardware и first Media Program. Не включает аренду, депозит, ФОТ, товарный запас, торговый зал или отдельные торговые точки.
+    scenario: PETROGRADKA / READY_PRODUCTION_BASE
+    applies_to:
+      - DOC-SCENARIO-PETROGRADKA-READY-PRODUCTION-BASE
+    source_ids:
+      - SRC-FRANCHISE-PLATFORM-2026-09-07-BRIEF
+    decision_id: DEC-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01
+    updated_at: 2026-09-07

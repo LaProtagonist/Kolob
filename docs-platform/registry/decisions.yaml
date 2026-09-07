@@ -327,3 +327,21 @@ decisions:
     source_ids:
       - SRC-INVESTOR-TERMINAL-V2-RELEASE-BRIEF-2026-08-26
     updated_at: 2026-08-26
+  - id: DEC-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01
+    title: Создать proposed Franchise Platform Strategy и research scenario layer
+    status: approved
+    decision: Создать отдельную proposed стратегическую архитектуру Franchise Platform Strategy, заменяемые профили сценариев и первую research-реализацию PETROGRADKA / READY_PRODUCTION_BASE; добавить внутреннее представление в существующий investor site и параметрический контракт поверх действующей Financial Model без создания второго financial engine.
+    rationale: Прямое задание владельца проекта от 2026-09-07. Решение не утверждает помещение, аренду, оборудование, производственную мощность, CAPEX, цену франшизы, роялти, банковскую или юридическую конструкцию, прогноз или финансовый результат. Foundation v1.0, Business Model Architecture v1.0 и существующий baseline остаются неизменными.
+    affected_documents:
+      - DOC-FRANCHISE-PLATFORM-STRATEGY
+      - DOC-SCENARIO-PETROGRADKA-READY-PRODUCTION-BASE
+      - DOC-FRANCHISE-PLATFORM-PARAMETERS
+      - DOC-FRANCHISE-PLATFORM-MISSING-INPUTS
+      - DOC-PETROGRADKA-LANDLORD-PROPOSITION
+      - DOC-BANKING-SETTLEMENT-ARCHITECTURE
+    approved_by: project owner
+    approved_at: 2026-09-07
+    supersedes: null
+    source_ids:
+      - SRC-FRANCHISE-PLATFORM-2026-09-07-BRIEF
+    updated_at: 2026-09-07

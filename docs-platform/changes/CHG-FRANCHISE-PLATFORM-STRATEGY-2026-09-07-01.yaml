@@ -1,0 +1,16 @@
+schema_version: 2
+change_id: CHG-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01
+title: Add Franchise Platform Strategy and PETROGRADKA scenario layer
+status: approved
+created_at: 2026-09-07
+decision_id: DEC-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01
+iteration_id: ITR-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01
+proposal_id: PROP-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01
+approved_payload_path: docs-platform/changelog/payloads/ITR-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01-approved.yaml
+approved_payload_sha256: 0b31b38d8cf75e9528262af59c1546e17edd2c91cd228201f2809f8a287d510a
+operations:
+  - add proposed core strategy and proposed landlord proposition without modifying approved governing documents
+  - add PETROGRADKA / READY_PRODUCTION_BASE as a replaceable research scenario with confirmation-gated listing equipment
+  - add research parameter contract and missing-inputs checklist without adding independent financial formulas
+  - add source, document, assumption, dependency and owner-decision registry records
+  - add private noindex investor routes, deterministic unit/browser checks and affected-domain verification

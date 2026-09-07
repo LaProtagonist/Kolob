@@ -1557,3 +1557,21 @@ sources:
     accessed_at: 2026-08-27
     reliability: high
     notes: B4 capacity evidence only. Official product page identifies 8.81 m³. Existing historical base-price descriptions that pair a 15.9 m³ label with an 8.81 model URL are retained for provenance and require CAPEX source reconciliation before storage kg capacity is modelled.
+  - id: SRC-FRANCHISE-PLATFORM-2026-09-07-BRIEF
+    title: Задание на Franchise Platform Strategy и сценарий Петроградки
+    type: instruction
+    location: User instruction, 2026-09-07
+    publisher: project owner
+    publication_date: 2026-09-07
+    accessed_at: 2026-09-07
+    reliability: primary
+    notes: Первичный источник разрешения создать proposed стратегическую архитектуру, research scenario layer, внутреннее инвесторское представление и параметрический контракт без изменения Foundation, BMA, baseline и существующего financial engine.
+  - id: SRC-PETROGRADKA-READY-PRODUCTION-2026-09-07
+    title: Описание готового пищевого производства на Петроградской стороне
+    type: owner_provided_listing_summary
+    location: User-provided listing summary, 2026-09-07
+    publisher: unknown listing owner
+    publication_date: null
+    accessed_at: 2026-09-07
+    reliability: low
+    notes: Перечень оборудования, инженерии и ограничений из объявления. Не является подтверждением наличия, состояния, прав собственника, площади, коммерческих условий или производственной мощности; каждая позиция оборудования требует письменного подтверждения.

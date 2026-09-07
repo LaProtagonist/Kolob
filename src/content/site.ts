@@ -104,6 +104,24 @@ export const pages: PageMeta[] = [
     noindex: true
   },
   {
+    id: "franchisePlatform",
+    path: "/investor/franchise-platform",
+    label: "Franchise Platform Strategy",
+    title: "Franchise Platform Strategy — Колобочная",
+    description: "Внутренняя proposed-архитектура центрального производства, Franchise Operating System и масштабирования сети «Колобочная».",
+    ogImage: "/media/hero-kolobok-1200.webp",
+    noindex: true
+  },
+  {
+    id: "franchisePlatformPetrogradka",
+    path: "/investor/franchise-platform/petrogradka",
+    label: "PETROGRADKA scenario",
+    title: "READY_PRODUCTION_BASE / PETROGRADKA — Колобочная",
+    description: "Research-сценарий готового производственного помещения как первого центрального заготовочного узла «Колобочной».",
+    ogImage: "/media/hero-kolobok-1200.webp",
+    noindex: true
+  },
+  {
     id: "launchBudget",
     path: "/launch-budget",
     label: "Расчёт стоимости запуска",

@@ -1,0 +1,106 @@
+schema_version: 2
+iteration_id: ITR-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01
+proposal_id: PROP-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01
+decision_id: DEC-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01
+change_set_id: CHG-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01
+title: Add Franchise Platform Strategy and PETROGRADKA scenario layer
+status: approved
+approved_by: project owner
+approved_at: 2026-09-07T10:00:00.000Z
+actor: Codex
+scope: >-
+  Add the proposed franchise-platform architecture, research scenario layer, private
+  investor presentation and input-only financial contract while preserving all approved
+  governing documents and the current financial baseline.
+approved_payload_path: docs-platform/changelog/payloads/ITR-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01-approved.yaml
+approved_payload_sha256: 0b31b38d8cf75e9528262af59c1546e17edd2c91cd228201f2809f8a287d510a
+before_state_sha256: 37bf76680813937fe97c486cb612821658a7051ca925f1ae4538907bb6d73bdb
+after_state_sha256: d6896593881c563c5464955c74b62e23112591ee9db7830bc1192d1672353f15
+affected_document_ids:
+  - DOC-FRANCHISE-PLATFORM-STRATEGY
+  - DOC-SCENARIO-PETROGRADKA-READY-PRODUCTION-BASE
+  - DOC-FRANCHISE-PLATFORM-PARAMETERS
+  - DOC-FRANCHISE-PLATFORM-MISSING-INPUTS
+  - DOC-PETROGRADKA-LANDLORD-PROPOSITION
+  - DOC-BANKING-SETTLEMENT-ARCHITECTURE
+affected_section_ids:
+  - franchise-platform.core-strategy
+  - franchise-platform.scenario-profiles
+  - franchise-platform.petrogradka-ready-production-base
+  - franchise-platform.financial-input-contract
+  - investor.franchise-platform-routes
+state_hash_paths:
+  - docs-platform/02-franchise-platform-strategy.md
+  - docs-platform/03-petrogradka-landlord-proposition.md
+  - docs-platform/app/test/franchise-platform.test.ts
+  - docs-platform/checklists/franchise-platform-missing-inputs.md
+  - docs-platform/research/banking-settlement-architecture.md
+  - docs-platform/scenarios/petrogradka-ready-production-base.yaml
+  - docs-platform/working/franchise-platform-parameters.yaml
+  - docs-platform/registry/assumptions.yaml
+  - docs-platform/registry/decisions.yaml
+  - docs-platform/registry/dependencies.yaml
+  - docs-platform/registry/documents.yaml
+  - docs-platform/registry/sources.yaml
+  - package.json
+  - scripts/prerender-dist.cjs
+  - scripts/test-franchise-platform.cjs
+  - scripts/test-franchise-platform.test.ts
+  - scripts/verification/runner.mjs
+  - src/App.tsx
+  - src/components/FranchisePlatform.css
+  - src/components/FranchisePlatform.tsx
+  - src/content/franchise-platform.ts
+  - src/content/site.ts
+  - src/lib/franchise-platform.ts
+  - src/types.ts
+  - verification/domains.json
+content_paths:
+  - docs-platform/02-franchise-platform-strategy.md
+  - docs-platform/03-petrogradka-landlord-proposition.md
+  - docs-platform/app/test/franchise-platform.test.ts
+  - docs-platform/checklists/franchise-platform-missing-inputs.md
+  - docs-platform/research/banking-settlement-architecture.md
+  - docs-platform/scenarios/petrogradka-ready-production-base.yaml
+  - docs-platform/working/franchise-platform-parameters.yaml
+  - docs-platform/registry/assumptions.yaml
+  - docs-platform/registry/decisions.yaml
+  - docs-platform/registry/dependencies.yaml
+  - docs-platform/registry/documents.yaml
+  - docs-platform/registry/sources.yaml
+  - package.json
+  - scripts/prerender-dist.cjs
+  - scripts/test-franchise-platform.cjs
+  - scripts/test-franchise-platform.test.ts
+  - scripts/verification/runner.mjs
+  - src/App.tsx
+  - src/components/FranchisePlatform.css
+  - src/components/FranchisePlatform.tsx
+  - src/content/franchise-platform.ts
+  - src/content/site.ts
+  - src/lib/franchise-platform.ts
+  - src/types.ts
+  - verification/domains.json
+  - docs-platform/changes/proposals/PROP-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01.yaml
+  - docs-platform/changes/decisions/DEC-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01.yaml
+  - docs-platform/changes/CHG-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01.yaml
+  - docs-platform/changes/iterations/ITR-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01.yaml
+  - docs-platform/changelog/payloads/ITR-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01-approved.yaml
+  - docs-platform/changelog/audit/ITR-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01.yaml
+  - docs-platform/changelog/previews/ITR-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01.yaml
+  - docs-platform/changelog/verification/ITR-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01.yaml
+  - docs-platform/changelog/events.ndjson
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/SNAPSHOT-ITR-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01.yaml
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+allowed_dirty_paths:
+  - analysis/
+  - output/
+rollback_payload: null
+rollback_contract:
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true

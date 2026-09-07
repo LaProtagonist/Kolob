@@ -28,7 +28,7 @@
     "verify:status": "node scripts/verification/status.mjs",
     "verify:invalidate": "node scripts/verification/cache.mjs invalidate",
     "verify:test": "node --test scripts/verification/test/*.test.mjs",
-    "test": "npm run investor:start:validate && npm run capex:web:check && npm run revenue:model:validate && npm run revenue:web:check && node scripts/test-site.cjs && npm --prefix docs-platform/app test",
+    "test": "npm run investor:start:validate && npm run capex:web:check && npm run revenue:model:validate && npm run revenue:web:check && node scripts/test-site.cjs && node docs-platform/app/node_modules/tsx/dist/cli.mjs --test scripts/test-franchise-platform.test.ts && node scripts/test-franchise-platform.cjs && npm --prefix docs-platform/app test",
     "capex:web:sync": "npm --prefix docs-platform/app run capex:web:sync",
     "capex:web:check": "npm --prefix docs-platform/app run capex:web:check",
     "capex:governance:sync": "npm --prefix docs-platform/app run capex:governance:sync",

@@ -1,0 +1,107 @@
+schema_version: 1
+document:
+  id: DOC-SCENARIO-PETROGRADKA-READY-PRODUCTION-BASE
+  title: "Scenario Profile — READY_PRODUCTION_BASE / PETROGRADKA"
+  status: research
+  scenario_profile: READY_PRODUCTION_BASE
+  scenario_id: PETROGRADKA
+  decision_id: DEC-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01
+  source_ids: [SRC-FRANCHISE-PLATFORM-2026-09-07-BRIEF, SRC-PETROGRADKA-READY-PRODUCTION-2026-09-07]
+  boundary: >-
+    Исследовательский сценарий готового производственного помещения на Петроградской стороне.
+    Не является baseline, утверждением помещения, договором аренды, сметой, CAPEX-планом или прогнозом.
+premises:
+  location: "Петроградская сторона"
+  commercial_status: research
+  listing_status: owner_provided_listing_summary_unverified
+  equipment_retention_constraint: "Собственник может вывезти часть оборудования."
+  equipment_retention_status: available_subject_to_confirmation
+  required_confirmation: written_owner_confirmation_of_itemized_equipment_list
+  infrastructure:
+    - { item: "Электрическая мощность", value: "58 кВт", status: available_subject_to_confirmation }
+    - { item: "Газ", value: present, status: available_subject_to_confirmation }
+    - { item: "Приточно-вытяжная вентиляция", value: present, status: available_subject_to_confirmation }
+    - { item: "Автономное отопление", value: present, status: available_subject_to_confirmation }
+    - { item: "Горячая вода", value: present, status: available_subject_to_confirmation }
+    - { item: "Вода", value: present, status: available_subject_to_confirmation }
+    - { item: "Канализация", value: present, status: available_subject_to_confirmation }
+    - { item: "Видеонаблюдение", value: present, status: available_subject_to_confirmation }
+    - { item: "Кондиционирование", value: present, status: available_subject_to_confirmation }
+    - { item: "Входы", value: 3, status: available_subject_to_confirmation }
+    - { item: "Круглосуточный доступ", value: present, status: available_subject_to_confirmation }
+equipment:
+  status: available_subject_to_confirmation
+  items:
+    - "Печь MIWE Roll-In"
+    - "Пароконвектомат Rational + 20 гастроёмкостей"
+    - "Производственный тестомес"
+    - "Расстоечный шкаф Klima"
+    - "3 производственные вагонетки с противнями"
+    - "Сковорода Tecnoinox"
+    - "Мясорубка Fimar"
+    - "Картофелечистка МОК-300"
+    - "Слайсер"
+    - "Газовая плита Tecnoinox, 6 конфорок"
+    - "Газовая плита Smeg, 5 конфорок"
+    - "Суповарка 250 л"
+    - "Холодильные камеры низко- и среднетемпературная, 2 шт."
+    - "Холодильник Fagor"
+    - "Холодильник Colibri"
+    - "Холодильник Cylinda"
+    - "Холодильник Helkama"
+    - "Производственный морозильник Polair"
+    - "Электронные весы, 2 шт."
+    - "Блинницы, 2 шт."
+    - "Производственные столы, 6 шт."
+    - "Производственные табуреты, 4 шт."
+    - "Производственные мойки, 8 шт."
+    - "Газовый котёл Vaillant"
+    - "Производственный кондиционер Lessar"
+scenario_assumptions:
+  central_production_capacity:
+    value: "до 10 торговых точек"
+    status: assumption
+    source_id: SRC-FRANCHISE-PLATFORM-2026-09-07-BRIEF
+    validation_required: [technical_cards, process_cycles, shift_plan, storage_capacity, logistics_plan]
+  trading_function:
+    option_a: "Торговая функция внутри производственного помещения"
+    option_b: "1–2 внешние эталонные точки в креативном кластере, фудкорте или торговом центре"
+    status: proposed
+    capex_treatment: "CAPEX внешних точек не входит в этот производственный сценарий. Используется существующая модель точки после привязки к подтверждённому формату."
+  second_combi_oven:
+    status: excluded
+    rationale: "На старте учитывается существующий большой Rational; второй пароконвектомат не заложен."
+capex:
+  currency: RUB
+  status: research
+  central_production_equipment_delta:
+    range_rub: [900000, 1000000]
+    status: assumption
+  existing_equipment_diagnostics_service_and_commissioning:
+    range_rub: [150000, 300000]
+    status: assumption
+  central_production_equipment_delta_total:
+    range_rub: [1100000, 1300000]
+    status: assumption
+  ee_office_hardware:
+    range_rub: [550000, 700000]
+    status: assumption
+    note: "Рабочий диапазон для scenario CAPEX; конкретная модель оборудования не утверждена."
+  first_media_program:
+    range_rub: [1200000, 1600000]
+    status: assumption
+  infrastructure_base_without_trading_point:
+    range_rub: [3000000, 3600000]
+    status: assumption
+    includes: [central_production_equipment_delta_total, ee_office_hardware, first_media_program]
+    excludes: [rent, deposit, payroll, inventory, trading_hall, individual_trading_points]
+missing_inputs_reference: docs-platform/checklists/franchise-platform-missing-inputs.md
+research_items:
+  - id: RES-BANKING-SETTLEMENT-ARCHITECTURE
+    title: Banking Settlement Architecture
+    status: research
+    scope: "Российские банковские API, Точка и сопоставимые решения; резервы, автоматические платежи, nominal/escrow-like направления и юридические ограничения."
+  - id: RES-PETROGRADKA-TECHNICAL-DUE-DILIGENCE
+    title: Petrogradka technical due diligence
+    status: research
+    scope: "Площадь, состояние, сервис, перечень оборудования, инженерия, документы и возможность торговли."

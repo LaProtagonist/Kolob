@@ -8,8 +8,8 @@ import { computeDomainFingerprint } from "./hash.mjs";
 import { runVisualVerification } from "./visual.mjs";
 import { cacheRoot, ensureCacheDirectories, isMain, parseCli, projectRoot, readConfig, shortHash, timestampSlug, writeJson } from "./utils.mjs";
 
-const SITE_DOMAINS = new Set(["capex", "revenue-ui", "launch-budget", "economics-ui", "site-core"]);
-const VISUAL_ALIASES = { economics: "economics-ui", revenue: "revenue-ui", launch: "launch-budget", capex: "capex", site: "site-core" };
+const SITE_DOMAINS = new Set(["capex", "revenue-ui", "launch-budget", "economics-ui", "franchise-platform", "site-core"]);
+const VISUAL_ALIASES = { economics: "economics-ui", revenue: "revenue-ui", launch: "launch-budget", capex: "capex", franchise: "franchise-platform", site: "site-core" };
 
 export async function executeCheck(checkId, definition, { root = projectRoot, logPrefix = "verification" } = {}) {
   ensureCacheDirectories();

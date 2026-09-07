@@ -1,0 +1,13 @@
+schema_version: 2
+decision_id: DEC-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01
+iteration_id: ITR-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01
+title: Approve proposed Franchise Platform Strategy and research scenario layer
+status: approved
+approved_by: project owner
+approved_at: 2026-09-07T10:00:00.000Z
+scope: >-
+  Create proposed/research architecture, supporting registry records, private investor
+  presentation routes and an input-only financial scenario layer; preserve governing
+  documents, the canonical baseline and the existing financial engine.
+approved_payload_path: docs-platform/changelog/payloads/ITR-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01-approved.yaml
+approved_payload_sha256: 0b31b38d8cf75e9528262af59c1546e17edd2c91cd228201f2809f8a287d510a

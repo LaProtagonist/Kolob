@@ -344,3 +344,98 @@ documents:
     governance_level: working
     local_path: docs-platform/working/network-planning-assumptions.yaml
     updated_at: 2026-08-26
+  - id: DOC-FRANCHISE-PLATFORM-STRATEGY
+    title: Franchise Platform Strategy — Стратегия масштабирования через центральное производство
+    type: internal_strategy_architecture
+    status: proposed
+    google_file_id: null
+    template: null
+    sections:
+      - Стратегический тезис
+      - Центральное производство
+      - Franchise Operating System
+      - Экономические контуры
+      - Scenario Profiles
+      - Missing Inputs
+    version: "0.1"
+    governance_level: working
+    local_path: docs-platform/02-franchise-platform-strategy.md
+    updated_at: 2026-09-07
+  - id: DOC-SCENARIO-PETROGRADKA-READY-PRODUCTION-BASE
+    title: PETROGRADKA — READY_PRODUCTION_BASE scenario
+    type: scenario_profile
+    status: research
+    google_file_id: null
+    template: null
+    sections:
+      - Scenario identity
+      - Equipment subject to confirmation
+      - Infrastructure subject to confirmation
+      - CAPEX assumptions
+      - Open confirmations
+    version: "0.1"
+    governance_level: working
+    local_path: docs-platform/scenarios/petrogradka-ready-production-base.yaml
+    updated_at: 2026-09-07
+  - id: DOC-FRANCHISE-PLATFORM-PARAMETERS
+    title: Franchise Platform scenario parameters
+    type: financial_model_parameter_contract
+    status: research
+    google_file_id: null
+    template: null
+    sections:
+      - Input contract
+      - Scenario matrix
+      - Missing inputs
+      - Calculation boundary
+    version: "0.1"
+    governance_level: working
+    local_path: docs-platform/working/franchise-platform-parameters.yaml
+    updated_at: 2026-09-07
+  - id: DOC-FRANCHISE-PLATFORM-MISSING-INPUTS
+    title: Franchise Platform — Missing Inputs checklist
+    type: internal_research_checklist
+    status: research
+    google_file_id: null
+    template: null
+    sections:
+      - Premises
+      - Equipment
+      - Production and logistics
+      - Unit economics
+      - Franchise terms
+    version: "0.1"
+    governance_level: working
+    local_path: docs-platform/checklists/franchise-platform-missing-inputs.md
+    updated_at: 2026-09-07
+  - id: DOC-PETROGRADKA-LANDLORD-PROPOSITION
+    title: Petrogradka Landlord Proposition
+    type: internal_landlord_proposition
+    status: proposed
+    google_file_id: null
+    template: null
+    sections:
+      - Project and tenant
+      - Use of production
+      - Equipment and investment
+      - Long-term lease discussion
+      - Required confirmations
+    version: "0.1"
+    governance_level: working
+    local_path: docs-platform/03-petrogradka-landlord-proposition.md
+    updated_at: 2026-09-07
+  - id: DOC-BANKING-SETTLEMENT-ARCHITECTURE
+    title: Banking Settlement Architecture
+    type: research_brief
+    status: research
+    google_file_id: null
+    template: null
+    sections:
+      - v1 settlement boundary
+      - Future banking options
+      - Research questions
+      - Legal and operational constraints
+    version: "0.1"
+    governance_level: working
+    local_path: docs-platform/research/banking-settlement-architecture.md
+    updated_at: 2026-09-07

@@ -121,6 +121,14 @@
       "cost": "integration",
       "command": ["node", "scripts/test-investor-terminal.cjs"]
     },
+    "franchise-platform:unit": {
+      "cost": "targeted",
+      "command": ["node", "docs-platform/app/node_modules/tsx/dist/cli.mjs", "--test", "scripts/test-franchise-platform.test.ts", "docs-platform/app/test/franchise-platform.test.ts"]
+    },
+    "franchise-platform:browser": {
+      "cost": "integration",
+      "command": ["node", "scripts/test-franchise-platform.cjs"]
+    },
     "governance:registry": {
       "cost": "fast",
       "command": ["npm", "run", "registry:validate", "--silent"]
@@ -256,6 +264,18 @@
       "integration": [],
       "dependency": ["investor-journey:unit"],
       "visual": {"route": "/investor-terminal", "requiredSelectors": [".investor-terminal", "#investor-terminal-title"], "defaultImpact": "high"},
+      "releaseRequired": true
+    },
+    "franchise-platform": {
+      "patterns": ["docs-platform/02-franchise-platform-strategy.md", "docs-platform/03-petrogradka-landlord-proposition.md", "docs-platform/scenarios/petrogradka-ready-production-base.yaml", "docs-platform/working/franchise-platform-parameters.yaml", "docs-platform/checklists/franchise-platform-missing-inputs.md", "docs-platform/research/banking-settlement-architecture.md", "src/components/FranchisePlatform.*", "src/content/franchise-platform.ts", "src/lib/franchise-platform.ts", "scripts/test-franchise-platform.*", "docs-platform/app/test/franchise-platform.test.ts"],
+      "upstream": [],
+      "downstream": [],
+      "testInputs": ["scripts/test-franchise-platform.test.ts", "scripts/test-franchise-platform.cjs", "docs-platform/app/test/franchise-platform.test.ts"],
+      "fast": [],
+      "targeted": ["typescript:site", "franchise-platform:unit"],
+      "integration": ["franchise-platform:browser"],
+      "dependency": ["franchise-platform:unit"],
+      "visual": {"route": "/investor/franchise-platform", "requiredSelectors": [".franchise-page", "#franchise-title"], "defaultImpact": "high"},
       "releaseRequired": true
     },
     "site-core": {

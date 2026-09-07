@@ -24,6 +24,8 @@ const routes = [
   { name: "revenue-model", label: "Revenue model", path: "/revenue-model" },
   { name: "economics", label: "Economics", path: "/economics" },
   { name: "investor-terminal", label: "Investor Terminal", path: "/investor-terminal" },
+  { name: "franchise-platform", label: "Franchise Platform", path: "/investor/franchise-platform" },
+  { name: "franchise-platform-petrogradka", label: "Franchise Platform Petrogradka", path: "/investor/franchise-platform/petrogradka" },
   { name: "not-found", label: "Not found", path: "/404" }
 ];
 

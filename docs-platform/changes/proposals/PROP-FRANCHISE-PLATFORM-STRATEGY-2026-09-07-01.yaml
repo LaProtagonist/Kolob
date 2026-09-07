@@ -1,0 +1,13 @@
+schema_version: 2
+proposal_id: PROP-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01
+iteration_id: ITR-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01
+title: Add Franchise Platform Strategy and PETROGRADKA scenario layer
+status: approved
+proposed_by: project owner
+proposed_at: 2026-09-07T10:00:00.000Z
+summary: >-
+  Formalize the central-production, digital operating-system and franchise-network
+  architecture as a proposed core strategy, then add Petrogradka only as a replaceable
+  READY_PRODUCTION_BASE research scenario.
+approved_payload_path: docs-platform/changelog/payloads/ITR-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01-approved.yaml
+approved_payload_sha256: 0b31b38d8cf75e9528262af59c1546e17edd2c91cd228201f2809f8a287d510a

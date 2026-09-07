@@ -1,0 +1,27 @@
+receipt_version: 1
+iteration_id: ITR-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01
+decision_id: DEC-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01
+change_set_id: CHG-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01
+verified_at: 2026-09-07T18:16:00.000Z
+result: passed_with_preexisting_baseline_findings
+approved_payload_sha256: 0b31b38d8cf75e9528262af59c1546e17edd2c91cd228201f2809f8a287d510a
+before_state_sha256: 37bf76680813937fe97c486cb612821658a7051ca925f1ae4538907bb6d73bdb
+after_state_sha256: d6896593881c563c5464955c74b62e23112591ee9db7830bc1192d1672353f15
+checks:
+  - npx tsc --noEmit (passed)
+  - npm run registry:validate (passed)
+  - node docs-platform/app/node_modules/tsx/dist/cli.mjs --test docs-platform/app/test/foundation.test.ts docs-platform/app/test/business-model-architecture.test.ts docs-platform/app/test/franchise-platform.test.ts (passed; 10 tests)
+  - node docs-platform/app/node_modules/tsx/dist/cli.mjs --test scripts/test-franchise-platform.test.ts docs-platform/app/test/franchise-platform.test.ts (passed; 7 tests)
+  - node scripts/test-franchise-platform.cjs under bundled Node 24 (passed; core and scenario routes at 1440, 1024, 768 and 390 px)
+  - npm test under bundled Node 24 (blocked by pre-existing stale dist assertions in scripts/test-site.cjs; no Franchise Platform assertion failed)
+  - npm run build under bundled Node 24 (blocked by pre-existing stale network planning snapshot; command requests npm run network:planning:sync)
+  - npm run verify:affected -- --no-cache under bundled Node 24 (blocked before Franchise Platform domain by pre-existing stale Financial Core projection; command requests npm run financial:core:sync)
+invariants:
+  foundation_unchanged: passed
+  business_model_architecture_unchanged: passed
+  petrogradka_is_not_baseline: passed
+  assumptions_not_confirmed: passed
+baseline_findings:
+  - scripts/test-site.cjs reads the existing dist directory, whose launch-budget output predates current canonical launch-budget inputs.
+  - npm run build stops before Vite because docs-platform/generated/network-planning-web-snapshot.json is stale; regenerating it is outside this approved Franchise Platform scope.
+  - npm run verify:affected stops in an upstream Investor Journey check because docs-platform/generated/financial-core-projection.json is stale; regenerating it is outside this approved Franchise Platform scope.

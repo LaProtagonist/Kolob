@@ -229,3 +229,34 @@ dependencies:
       - title: Investor Financial Summary
         document_id: DOC-INVESTOR-FINANCIAL-SUMMARY
     updated_at: 2026-08-19
+  - id: DEP-FOUNDATION-FRANCHISE-PLATFORM-STRATEGY
+    source_document_id: DOC-FOUNDATION
+    priority: governing_source
+    status: proposed
+    version: "1.0"
+    target_documents:
+      - title: Franchise Platform Strategy
+        document_id: DOC-FRANCHISE-PLATFORM-STRATEGY
+    updated_at: 2026-09-07
+  - id: DEP-BMA-FRANCHISE-PLATFORM-STRATEGY
+    source_document_id: DOC-BUSINESS-MODEL-ARCHITECTURE
+    priority: governing_source
+    status: proposed
+    version: "1.0"
+    target_documents:
+      - title: Franchise Platform Strategy
+        document_id: DOC-FRANCHISE-PLATFORM-STRATEGY
+    updated_at: 2026-09-07
+  - id: DEP-FRANCHISE-PLATFORM-SCENARIO-LAYER
+    source_document_id: DOC-FRANCHISE-PLATFORM-STRATEGY
+    priority: governing_source
+    status: research
+    version: "0.1"
+    target_documents:
+      - title: PETROGRADKA — READY_PRODUCTION_BASE scenario
+        document_id: DOC-SCENARIO-PETROGRADKA-READY-PRODUCTION-BASE
+      - title: Franchise Platform scenario parameters
+        document_id: DOC-FRANCHISE-PLATFORM-PARAMETERS
+      - title: Petrogradka Landlord Proposition
+        document_id: DOC-PETROGRADKA-LANDLORD-PROPOSITION
+    updated_at: 2026-09-07

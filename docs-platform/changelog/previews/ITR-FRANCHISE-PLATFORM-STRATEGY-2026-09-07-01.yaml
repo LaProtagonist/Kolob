@@ -1,0 +1,23 @@
+receipt_version: 1
+iteration_id: ITR-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01
+decision_id: DEC-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01
+change_set_id: CHG-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01
+previewed_at: 2026-09-07T10:00:00.000Z
+result: reviewed
+mutation_performed: false
+before_state_sha256: 37bf76680813937fe97c486cb612821658a7051ca925f1ae4538907bb6d73bdb
+after_state_sha256: d6896593881c563c5464955c74b62e23112591ee9db7830bc1192d1672353f15
+changes:
+  - proposed core strategy and separate scenario profiles are added
+  - PETROGRADKA remains research and non-baseline; its listing equipment stays subject to confirmation
+  - financial layer exposes parameters and missing inputs only, with no new engine or calculated result
+  - investor routes are private and static-prerendered
+invariants:
+  foundation_unchanged: true
+  business_model_architecture_unchanged: true
+  approved_prp_blocks_unchanged: true
+  canonical_financial_baseline_unchanged: true
+  production_capacity_is_assumption: true
+  petrogradka_is_not_baseline: true
+  google_mutation: not_run
+  production_deploy: not_run

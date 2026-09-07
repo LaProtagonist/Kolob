@@ -9,6 +9,8 @@ export type RouteId =
   | "privacy"
   | "capexConfigurator"
   | "investorTerminal"
+  | "franchisePlatform"
+  | "franchisePlatformPetrogradka"
   | "launchBudget"
   | "revenueModel"
   | "economics"

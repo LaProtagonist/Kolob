@@ -1,0 +1,16 @@
+receipt_version: 1
+iteration_id: ITR-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01
+audited_at: 2026-09-07T10:00:00.000Z
+result: passed
+finding:
+  scope: Franchise Platform Strategy and PETROGRADKA research scenario
+  architecture: core strategy is separated from replaceable scenario profiles
+  financial_boundary: existing Financial Model remains the only engine; parameter layer does not produce a result
+  premises_boundary: no lease, equipment, capacity, CAPEX or commercial condition is recorded as confirmed
+resolution:
+  - label all scenario values as research or assumptions
+  - hold the complete operational, commercial and legal input list in a dedicated checklist
+  - retain future banking and property layers as research/future options
+external_state:
+  google_apply: not_run
+  production_deploy: not_run
