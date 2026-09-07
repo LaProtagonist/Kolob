@@ -1,13 +1,13 @@
 schema_version: 2
-generated_at: 2026-08-28T14:46:00.995Z
+generated_at: 2026-09-07T18:25:04.480Z
 project: Колобочная
 branch: master
-latest_timeline_event_id: EVT-ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02-DEPLOYED-DEPLOY-FINANCIAL-CORE-INVESTOR-TERMINAL-2026-08-28-02
-latest_timeline_event_hash: 8a17f90a3f097c2c1e3e4afc33ee9dd60268e89228f0826d88e86db8d17571f4
-latest_closed_iteration_id: ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02
-latest_iteration_tag: iteration/ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02
-latest_content_commit_hash: 50a64fbb88a30a3554cea7437914ecc915e418c7
-registry_hash: b59c96c1b256174cd21131cf955813e2d68fe507a4d4a85b9e581094a74264cc
+latest_timeline_event_id: EVT-ITR-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01-COMMITTED
+latest_timeline_event_hash: 594033389102ee18ea560b6e871695510d34b17c5d8865a80391005cd96761d0
+latest_closed_iteration_id: ITR-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01
+latest_iteration_tag: iteration/ITR-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01
+latest_content_commit_hash: 7e1b647859cc15c5c8560121d5b3768dead71ed4
+registry_hash: 28bfe528a171d7e97f18492cd17240d68852b75771136fc4ccd492f294d6de73
 canonical_document_hashes:
   - document_id: DOC-AGENTS
     local_path: docs-platform/AGENTS.md
@@ -17,6 +17,10 @@ canonical_document_hashes:
     local_path: docs-platform/AUDIT.md
     sha256: f43cb183f4c025ba74d4f77c2a498cb0ad07e7b0622e47f38afd6212173689e7
     status: approved
+  - document_id: DOC-BANKING-SETTLEMENT-ARCHITECTURE
+    local_path: docs-platform/research/banking-settlement-architecture.md
+    sha256: 7587b405b4d982b4eab11276f927c2188d8011fa26a13de7ecb4bb9f822e7fa1
+    status: research
   - document_id: DOC-BUSINESS-MODEL-ARCHITECTURE
     local_path: docs-platform/01-business-model-architecture.md
     sha256: 1584d836a159f6e3c5859ccf539830248b2cd782ed2c7005c5963ac8730c556b
@@ -57,6 +61,18 @@ canonical_document_hashes:
     local_path: docs-platform/00-foundation.md
     sha256: 5b4d457184c055ba11f8c4d05cc263139d2eb4f623981bcdc198c0114a50c0bb
     status: approved
+  - document_id: DOC-FRANCHISE-PLATFORM-MISSING-INPUTS
+    local_path: docs-platform/checklists/franchise-platform-missing-inputs.md
+    sha256: 39fcc08a4215fe7844eca841efe5fd74d1ed7f109e4cbc79785fdfd870ea45fe
+    status: research
+  - document_id: DOC-FRANCHISE-PLATFORM-PARAMETERS
+    local_path: docs-platform/working/franchise-platform-parameters.yaml
+    sha256: 4c7a77b2cb3bc4a72a5c614ffcb3113f2698329b24db7363e1254056c87b2973
+    status: research
+  - document_id: DOC-FRANCHISE-PLATFORM-STRATEGY
+    local_path: docs-platform/02-franchise-platform-strategy.md
+    sha256: 346cd1927f64bb50bae1320df7f4ea966f87e2e71d00b0dff2147b4ed81b62b4
+    status: proposed
   - document_id: DOC-INVESTMENT-MEMO
     local_path: docs-platform/templates/investment-memorandum.md
     sha256: 464e46d307aaa98e57cab3a098cd639e212d32b51f82a06688de228f0e7fb4cd
@@ -73,6 +89,10 @@ canonical_document_hashes:
     local_path: docs-platform/working/network-planning-assumptions.yaml
     sha256: 1136e30e205cf03abef7232fb1618b624f2f4d1744d14de966089908d4c2022b
     status: approved
+  - document_id: DOC-PETROGRADKA-LANDLORD-PROPOSITION
+    local_path: docs-platform/03-petrogradka-landlord-proposition.md
+    sha256: f0996f44fd68db1b0c45643f4b7b58b8064db45e5865ac7c490ebf287d63d75e
+    status: proposed
   - document_id: DOC-PILOT-CAPEX-ASSUMPTIONS
     local_path: docs-platform/working/pilot-capex-assumptions.yaml
     sha256: 25e11d4db20050b3a95cab40797ef0a29e56fad93c73d33d4a39415a8071d4ac
@@ -85,6 +105,10 @@ canonical_document_hashes:
     local_path: docs-platform/working/revenue-model.yaml
     sha256: ab68399813d62d861522752c8e94df9cfc5d5a48e9b7723c60f2c968c4cba721
     status: research
+  - document_id: DOC-SCENARIO-PETROGRADKA-READY-PRODUCTION-BASE
+    local_path: docs-platform/scenarios/petrogradka-ready-production-base.yaml
+    sha256: e138dee3e1593df5dc2ff3faccd551a0c286502f07780dfc288106b29c43d0f7
+    status: research
 open_decisions: []
 open_change_sets:
   - CHG-EXAMPLE-001
@@ -92,7 +116,7 @@ open_questions:
   - Archive pending review artifacts in durable storage before treating visual verification as portable.
   - Create deployment receipts when the next governed deployment is performed.
   - Decide whether malformed superseded legacy YAML evidence should receive a separate correction event.
-current_workstream: Prerender public Investor Terminal route for production release
+current_workstream: Add Franchise Platform Strategy and PETROGRADKA scenario layer
 next_task: Select the next task through a new governed proposal; no business task is pre-authorized.
 google_integration_status:
   configured: true
