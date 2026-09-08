@@ -1,13 +1,13 @@
 schema_version: 2
-generated_at: 2026-09-08T01:16:30.035Z
+generated_at: 2026-09-08T02:47:24.118Z
 project: Колобочная
 branch: master
-latest_timeline_event_id: EVT-ITR-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01-COMMITTED
-latest_timeline_event_hash: fba834b558f3ffb030e4bd15f60f5fb3c6364983b3eebcceb0ce56cfe5fe4368
-latest_closed_iteration_id: ITR-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01
-latest_iteration_tag: iteration/ITR-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01
-latest_content_commit_hash: 18b7c23927da65dfb1508b2b7f927f0ad7e81a4e
-registry_hash: 4b0a6d7f6274bbbfbc181cc166eeb633e1ce9f19c770cac344ded4bfb8da6999
+latest_timeline_event_id: EVT-ITR-PETROGRADKA-LANDLORD-PRESENTATION-2026-09-08-01-COMMITTED
+latest_timeline_event_hash: 291661e47fde3b56e39f1b20f0efd2ae36aae72bcbc87d27b215e8988b2e9f69
+latest_closed_iteration_id: ITR-PETROGRADKA-LANDLORD-PRESENTATION-2026-09-08-01
+latest_iteration_tag: iteration/ITR-PETROGRADKA-LANDLORD-PRESENTATION-2026-09-08-01
+latest_content_commit_hash: de1f02a6618492818a0ab6726dfb9998591b1e50
+registry_hash: 904f41b47f605cf7dd4f5aa887970a144880aa92cef316715cf3c8be6a2bc334
 canonical_document_hashes:
   - document_id: DOC-AGENTS
     local_path: docs-platform/AGENTS.md
@@ -91,7 +91,7 @@ canonical_document_hashes:
     status: approved
   - document_id: DOC-PETROGRADKA-LANDLORD-PROPOSITION
     local_path: docs-platform/03-petrogradka-landlord-proposition.md
-    sha256: f0996f44fd68db1b0c45643f4b7b58b8064db45e5865ac7c490ebf287d63d75e
+    sha256: 47c9f5eec1c78d38977d0b5dc9ecd7de7fbe20a3a239775ac94452561ae5701f
     status: proposed
   - document_id: DOC-PILOT-CAPEX-ASSUMPTIONS
     local_path: docs-platform/working/pilot-capex-assumptions.yaml
@@ -116,7 +116,7 @@ open_questions:
   - Archive pending review artifacts in durable storage before treating visual verification as portable.
   - Create deployment receipts when the next governed deployment is performed.
   - Decide whether malformed superseded legacy YAML evidence should receive a separate correction event.
-current_workstream: Clarify franchise platform first-stage investment narrative
+current_workstream: Present Petrogradka launch scenario for the premises owner
 next_task: Select the next task through a new governed proposal; no business task is pre-authorized.
 google_integration_status:
   configured: true

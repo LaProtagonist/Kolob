@@ -4,10 +4,10 @@
 
 ## 1. Current state
 
-- Events: 331.
-- Timeline head event: `EVT-ITR-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01-COMMITTED`.
-- Timeline head SHA-256: `fba834b558f3ffb030e4bd15f60f5fb3c6364983b3eebcceb0ce56cfe5fe4368`.
-- Latest recorded iteration: `ITR-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01`.
+- Events: 337.
+- Timeline head event: `EVT-ITR-PETROGRADKA-LANDLORD-PRESENTATION-2026-09-08-01-COMMITTED`.
+- Timeline head SHA-256: `291661e47fde3b56e39f1b20f0efd2ae36aae72bcbc87d27b215e8988b2e9f69`.
+- Latest recorded iteration: `ITR-PETROGRADKA-LANDLORD-PRESENTATION-2026-09-08-01`.
 
 ## 2. Modern governed iterations
 
@@ -74,6 +74,7 @@
 | 2026-09-07T18:24:31.000Z | committed | Add Franchise Platform Strategy and PETROGRADKA scenario layer | ITR-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01 | DEC-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01 | CHG-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01 | 7e1b647859cc15c5c8560121d5b3768dead71ed4 | iteration/ITR-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01 | — | — | — | Add Franchise Platform Strategy and PETROGRADKA scenario layer: content commit verified and linked to the governed lifecycle before sealing. |
 | 2026-09-07T20:32:39.000Z | committed | Localize franchise platform investor narrative | ITR-FRANCHISE-PLATFORM-LOCALIZATION-2026-09-07-01 | DEC-FRANCHISE-PLATFORM-LOCALIZATION-2026-09-07-01 | CHG-FRANCHISE-PLATFORM-LOCALIZATION-2026-09-07-01 | f5b771dbdf213846bf5c5f1bdce230d1bc721509 | iteration/ITR-FRANCHISE-PLATFORM-LOCALIZATION-2026-09-07-01 | — | — | — | Localize franchise platform investor narrative: content commit verified and linked to the governed lifecycle before sealing. |
 | 2026-09-08T01:16:12.000Z | committed | Clarify franchise platform first-stage investment narrative | ITR-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01 | DEC-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01 | CHG-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01 | 18b7c23927da65dfb1508b2b7f927f0ad7e81a4e | iteration/ITR-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01 | — | — | — | Clarify franchise platform first-stage investment narrative: content commit verified and linked to the governed lifecycle before sealing. |
+| 2026-09-08T02:47:01.000Z | committed | Present Petrogradka launch scenario for the premises owner | ITR-PETROGRADKA-LANDLORD-PRESENTATION-2026-09-08-01 | DEC-PETROGRADKA-LANDLORD-PRESENTATION-2026-09-08-01 | CHG-PETROGRADKA-LANDLORD-PRESENTATION-2026-09-08-01 | de1f02a6618492818a0ab6726dfb9998591b1e50 | iteration/ITR-PETROGRADKA-LANDLORD-PRESENTATION-2026-09-08-01 | — | — | — | Present Petrogradka launch scenario for the premises owner: content commit verified and linked to the governed lifecycle before sealing. |
 
 ## 3. Legacy imported history
 

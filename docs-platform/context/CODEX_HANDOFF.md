@@ -9,16 +9,16 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 ## 2. Текущая ветка и governed iteration
 
 - Branch: `master`.
-- Latest closed iteration: `ITR-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01`.
-- Latest iteration tag: `iteration/ITR-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01`.
-- Latest content commit: `18b7c23927da65dfb1508b2b7f927f0ad7e81a4e`.
+- Latest closed iteration: `ITR-PETROGRADKA-LANDLORD-PRESENTATION-2026-09-08-01`.
+- Latest iteration tag: `iteration/ITR-PETROGRADKA-LANDLORD-PRESENTATION-2026-09-08-01`.
+- Latest content commit: `de1f02a6618492818a0ab6726dfb9998591b1e50`.
 - Текущий Git HEAD намеренно не записывается: его вычисляет `npm run project:onboard`.
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01-COMMITTED`.
-- Hash: `fba834b558f3ffb030e4bd15f60f5fb3c6364983b3eebcceb0ce56cfe5fe4368`.
-- generated_from_event_hash: `fba834b558f3ffb030e4bd15f60f5fb3c6364983b3eebcceb0ce56cfe5fe4368`.
+- Event: `EVT-ITR-PETROGRADKA-LANDLORD-PRESENTATION-2026-09-08-01-COMMITTED`.
+- Hash: `291661e47fde3b56e39f1b20f0efd2ae36aae72bcbc87d27b215e8988b2e9f69`.
+- generated_from_event_hash: `291661e47fde3b56e39f1b20f0efd2ae36aae72bcbc87d27b215e8988b2e9f69`.
 
 ## 4. Канонические документы
 
@@ -44,7 +44,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 | DOC-INVESTOR-FINANCIAL-SUMMARY | research | `docs-platform/working/investor-financial-summary.yaml` | `790d4c84513d666157088c0afeb8ece09ed80080b33db54117ad1dde64a92a40` |
 | DOC-INVESTOR-START-MODEL | research | `docs-platform/working/investor-start-model.yaml` | `b81a6c4e8988a4532c9ba2749d492b3f96e37d83af822396afc82930244b2985` |
 | DOC-NETWORK-PLANNING-ASSUMPTIONS | approved | `docs-platform/working/network-planning-assumptions.yaml` | `1136e30e205cf03abef7232fb1618b624f2f4d1744d14de966089908d4c2022b` |
-| DOC-PETROGRADKA-LANDLORD-PROPOSITION | proposed | `docs-platform/03-petrogradka-landlord-proposition.md` | `f0996f44fd68db1b0c45643f4b7b58b8064db45e5865ac7c490ebf287d63d75e` |
+| DOC-PETROGRADKA-LANDLORD-PROPOSITION | proposed | `docs-platform/03-petrogradka-landlord-proposition.md` | `47c9f5eec1c78d38977d0b5dc9ecd7de7fbe20a3a239775ac94452561ae5701f` |
 | DOC-PILOT-CAPEX-ASSUMPTIONS | research | `docs-platform/working/pilot-capex-assumptions.yaml` | `25e11d4db20050b3a95cab40797ef0a29e56fad93c73d33d4a39415a8071d4ac` |
 | DOC-README | approved | `docs-platform/README.md` | `04e947f296a158a1c37ceb8d4c959d1f4e31cf609d16c99bee2d3c3b79b824ab` |
 | DOC-REVENUE-MODEL | research | `docs-platform/working/revenue-model.yaml` | `ab68399813d62d861522752c8e94df9cfc5d5a48e9b7723c60f2c968c4cba721` |
@@ -52,7 +52,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 5. Текущая рабочая тема
 
-Clarify franchise platform first-stage investment narrative
+Present Petrogradka launch scenario for the premises owner
 
 ## 6. Decisions и change sets
 
