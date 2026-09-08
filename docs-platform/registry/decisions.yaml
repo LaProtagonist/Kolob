@@ -359,3 +359,17 @@ decisions:
     source_ids:
       - SRC-FRANCHISE-PLATFORM-LOCALIZATION-BRIEF-2026-09-07
     updated_at: 2026-09-07
+  - id: DEC-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01
+    title: Уточнить терминологию и зафиксировать результат первого этапа
+    status: approved
+    decision: Уточнить четыре пользовательских заголовка существующей страницы стратегии масштабирования и добавить компактный блок «Результат первого этапа» между экономикой и сценариями запуска; сохранить существующую архитектуру страницы, сменные сценарии, числовые допущения, финансовый движок и все утверждённые управляющие документы.
+    rationale: Прямое задание владельца проекта от 2026-09-08. Решение не утверждает новые финансовые показатели, помещение, CAPEX, производственную мощность, условия франшизы, юридическую модель или инвестиционный результат. Foundation v1.0, Business Model Architecture v1.0, утверждённые PRP-блоки, baseline, Financial Model и Network Planning остаются неизменными.
+    affected_documents:
+      - DOC-FRANCHISE-PLATFORM-STRATEGY
+      - DOC-SCENARIO-PETROGRADKA-READY-PRODUCTION-BASE
+    approved_by: project owner
+    approved_at: 2026-09-08
+    supersedes: null
+    source_ids:
+      - SRC-FRANCHISE-PLATFORM-FIRST-STAGE-BRIEF-2026-09-08
+    updated_at: 2026-09-08

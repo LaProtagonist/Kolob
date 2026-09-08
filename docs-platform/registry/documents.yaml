@@ -353,14 +353,16 @@ documents:
     sections:
       - Стратегический тезис
       - Центральное производство
-      - Цифровая операционная система сети
-      - Экономические контуры
+      - Цифровая система управления сетью
+      - Экономика головной компании и франчайзи
+      - Результат первого этапа
       - Сценарии запуска
+      - Экономический эффект масштаба
       - Открытые входы для расчёта
-    version: "0.2"
+    version: "0.3"
     governance_level: working
     local_path: docs-platform/02-franchise-platform-strategy.md
-    updated_at: 2026-09-07
+    updated_at: 2026-09-08
   - id: DOC-SCENARIO-PETROGRADKA-READY-PRODUCTION-BASE
     title: PETROGRADKA — READY_PRODUCTION_BASE scenario
     type: scenario_profile

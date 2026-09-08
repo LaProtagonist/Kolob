@@ -1,0 +1,34 @@
+receipt_version: 1
+iteration_id: ITR-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01
+decision_id: DEC-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01
+change_set_id: CHG-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01
+verified_at: 2026-09-08T01:09:55.000Z
+result: passed
+approved_payload_sha256: 22eaf2de0bbb7c75223934ff35d89421f264e75bd297a8cb48aafedffb2320dd
+before_state_sha256: 01c26c8946ebc4d7da6866c7a4324b1781948c668540d78fc502ab6cc097804e
+after_state_sha256: eaa70dd916e43bbc4bb8edaa9316b1727da02f40e2714d0c6d50a08fea4815fa
+checks:
+  - npx tsc --noEmit under bundled Node 24 (passed)
+  - npm run registry:validate under bundled Node 24 (passed)
+  - Foundation, Business Model Architecture and Franchise Platform unit tests (passed; 13 tests)
+  - franchise-platform browser route test under bundled Node 24 (passed; core and Petrogradka at 1440, 1024, 768 and 390 px)
+  - npm run verify:visual -- franchise under bundled Node 24 (passed; fresh desktop and mobile visual checks)
+  - direct Vite SPA build and npm run prerender (passed; both franchise-platform route HTML files generated)
+  - manual full-page screenshots for core and Petrogradka at 1440 and 390 px (passed; no console errors or horizontal overflow)
+known_unrelated_stale_artifacts:
+  - npm run build stopped before Vite because the existing Network Planning snapshot is stale or non-deterministic; no network:planning:sync was run
+  - npm run verify:affected stopped at the existing stale financial projection artifact; no financial:model:sync was run
+invariants:
+  foundation_unchanged: passed
+  business_model_architecture_unchanged: passed
+  approved_prp_blocks_unchanged: passed
+  financial_engine_unchanged: passed
+  network_planning_engine_unchanged: passed
+  canonical_financial_baseline_unchanged: passed
+  petrogradka_is_not_baseline: passed
+  petrogradka_scenario_values_unchanged: passed
+  investor_visible_legacy_terms_absent: passed
+  required_revised_terms_present: passed
+  first_stage_block_is_between_economics_and_scenarios: passed
+  google_mutation: not_run
+  production_deploy: not_run

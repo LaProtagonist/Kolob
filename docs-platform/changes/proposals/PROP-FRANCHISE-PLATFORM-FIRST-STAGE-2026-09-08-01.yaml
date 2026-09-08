@@ -1,0 +1,13 @@
+schema_version: 2
+proposal_id: PROP-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01
+iteration_id: ITR-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01
+title: Clarify franchise platform first-stage investment narrative
+status: approved
+proposed_by: project owner
+proposed_at: 2026-09-08T01:09:55.000Z
+summary: >-
+  Make the specified final terminology replacements on the existing private franchise-platform
+  presentation and add the canonical compact first-stage result bridge without changing its
+  architecture, scenario separation, assumptions or financial boundaries.
+approved_payload_path: docs-platform/changelog/payloads/ITR-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01-approved.yaml
+approved_payload_sha256: 22eaf2de0bbb7c75223934ff35d89421f264e75bd297a8cb48aafedffb2320dd

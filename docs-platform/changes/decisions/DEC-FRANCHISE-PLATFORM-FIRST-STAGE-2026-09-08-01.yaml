@@ -1,0 +1,13 @@
+schema_version: 2
+decision_id: DEC-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01
+iteration_id: ITR-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01
+title: Approve final terminology and first-stage result bridge
+status: approved
+approved_by: project owner
+approved_at: 2026-09-08T01:09:55.000Z
+scope: >-
+  Apply only the specified four investor-visible title replacements and the canonical compact
+  «Результат первого этапа» block to the existing strategy presentation and proposed strategy
+  document, while retaining all established strategy, scenario and financial boundaries.
+approved_payload_path: docs-platform/changelog/payloads/ITR-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01-approved.yaml
+approved_payload_sha256: 22eaf2de0bbb7c75223934ff35d89421f264e75bd297a8cb48aafedffb2320dd

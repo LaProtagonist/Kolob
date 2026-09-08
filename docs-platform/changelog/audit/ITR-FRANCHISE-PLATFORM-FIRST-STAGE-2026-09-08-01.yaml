@@ -1,0 +1,16 @@
+receipt_version: 1
+iteration_id: ITR-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01
+audited_at: 2026-09-08T01:09:55.000Z
+result: passed
+finding:
+  scope: Existing private franchise-platform core route and its shared terminology audit
+  narrative: The four specified legacy labels are absent from investor-visible route text and their specified replacements are present on the core route.
+  first_stage: The compact five-result block is located after the economics section and before scenario profiles without creating a new strategy or financial model.
+  scenario_boundary: Petrogradka remains an independently replaceable research scenario and does not receive a new baseline role.
+resolution:
+  - retain every existing numeric scenario assumption and its current research or assumption status
+  - retain the input-only financial contract and missing-input boundary
+  - retain the existing visual language and responsive route architecture
+external_state:
+  google_apply: not_run
+  production_deploy: not_run

@@ -70,7 +70,7 @@ export function FranchisePlatformPage() {
       <section className="franchise-main">
         <div className="section-inner">
           <section className="franchise-section" aria-labelledby="franchise-architecture-title">
-            <SectionHeading number="01" title="Архитектура масштаба" text="Головная компания создаёт платформу; собственные и партнёрские точки подключаются к её стандартам и инфраструктуре." />
+            <SectionHeading number="01" title="Архитектура масштабирования" text="Головная компания создаёт платформу; собственные и партнёрские точки подключаются к её стандартам и инфраструктуре." />
             <ol className="franchise-architecture" id="franchise-architecture-title">
               {content.architecture.map((item, index) => <li key={item.title}><span>{String(index + 1).padStart(2, "0")}</span><h3>{item.title}</h3><p>{item.text}</p></li>)}
             </ol>
@@ -83,7 +83,7 @@ export function FranchisePlatformPage() {
           </section>
 
           <section className="franchise-section" aria-labelledby="franchise-os-title">
-            <SectionHeading number="02" title="Цифровая операционная система сети" text={content.operatingSystemIntro} />
+            <SectionHeading number="02" title="Цифровая система управления сетью" text={content.operatingSystemIntro} />
             <div className="franchise-os" id="franchise-os-title">{content.operatingSystem.map((item) => <span key={item}>{item}</span>)}</div>
             <div className="franchise-control-grid">
               <div><strong>Централизованное управление</strong><p>{content.controlledLead}</p><p>{content.controlledText}</p></div>
@@ -101,7 +101,7 @@ export function FranchisePlatformPage() {
           </section>
 
           <section className="franchise-section" aria-labelledby="franchise-economics-title">
-            <SectionHeading number="04" title="Экономика платформы" text="Каждый контур считается отдельно; внутригрупповые поставки исключаются при консолидации." />
+            <SectionHeading number="04" title="Экономика головной компании и франчайзи" text="Каждый контур считается отдельно; внутригрупповые поставки исключаются при консолидации." />
             <div className="franchise-money-flow" id="franchise-economics-title" data-testid="franchise-money-flow">
               <div className="franchise-money-flow-origin"><strong>Гость</strong><span aria-hidden="true">↓</span><strong>Франчайзи</strong></div>
               <ul>
@@ -120,8 +120,16 @@ export function FranchisePlatformPage() {
             </div>
           </section>
 
+          <section className="franchise-section" aria-labelledby="franchise-first-stage-title" data-testid="franchise-first-stage">
+            <SectionHeading number="05" title="Результат первого этапа" text={content.firstStage.intro} />
+            <div className="franchise-first-stage-grid" id="franchise-first-stage-title">
+              {content.firstStage.results.map((result, index) => <article key={result.title}><span>{String(index + 1).padStart(2, "0")}</span><h3>{result.title}</h3><p>{result.text}</p></article>)}
+            </div>
+            <p className="franchise-first-stage-thesis">{content.firstStage.conclusion}</p>
+          </section>
+
           <section className="franchise-section" aria-labelledby="franchise-scenarios-title">
-            <SectionHeading number="05" title="Базовая стратегия и сценарии запуска" text="Сценарии запуска не изменяют базовую стратегию компании. Они определяют способ создания первого производственного узла в зависимости от доступной инфраструктуры, капитала и условий конкретной площадки." />
+            <SectionHeading number="06" title="Базовая стратегия и сценарии запуска" text="Сценарии запуска не изменяют базовую стратегию компании. Они определяют способ создания первого производственного узла в зависимости от доступной инфраструктуры, капитала и условий конкретной площадки." />
             <div className="franchise-profile-grid" id="franchise-scenarios-title">
               {content.scenarioProfiles.map((profile, index) => <article key={profile.id} className={index === 0 ? "is-active" : ""}><Status status={index === 0 ? "research" : "proposed"} /><h3>{profile.title}</h3><p>{profile.text}</p>{profile.petrogradka ? <><p className="franchise-profile-note">{profile.petrogradka}</p><p className="franchise-profile-note">Сценарий не является новой базовой моделью проекта.</p><a className="franchise-link" href={content.links.scenario}>Открыть сценарий Петроградки</a></> : null}</article>)}
             </div>
@@ -129,7 +137,7 @@ export function FranchisePlatformPage() {
           </section>
 
           <section className="franchise-section franchise-scale" aria-labelledby="franchise-scale-title">
-            <SectionHeading number="06" title="Петля масштаба" text="Эффект масштаба проверяется ступенчатой моделью загрузки, капитальных затрат, персонала, логистики и ограничений мощности." />
+            <SectionHeading number="07" title="Экономический эффект масштаба" text="Эффект масштаба проверяется ступенчатой моделью загрузки, капитальных затрат, персонала, логистики и ограничений мощности." />
             <Flow items={content.scaleLoop} className="is-scale" />
             <p className="franchise-scale-note">{content.scaleCaveat}</p>
             <div className="franchise-future"><div><strong>Медиапрограмма</strong><p>{content.media}</p></div><div><strong>Следующие этапы развития инфраструктуры</strong><p>{content.futureLayersIntro} {content.futureLayers.join(" → ")}.</p></div></div>

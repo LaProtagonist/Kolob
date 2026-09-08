@@ -130,6 +130,13 @@
 .franchise-scenario-parameters small { display: block; margin-top: 10px; color: #835d08; font-size: .72rem; font-weight: 900; }
 .franchise-key-metric { display: block; margin-top: 19px; padding-top: 15px; border-top: 1px solid var(--franchise-line); color: var(--franchise-ink); font-size: .88rem; line-height: 1.45; }
 
+.franchise-first-stage-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+.franchise-first-stage-grid article { min-width: 0; padding: 19px; border: 1px solid var(--franchise-line); border-radius: 16px; background: var(--franchise-card); }
+.franchise-first-stage-grid article > span { color: #8b640c; font-size: .7rem; font-weight: 900; }
+.franchise-first-stage-grid h3 { margin: 14px 0 9px; font-size: 1rem; line-height: 1.2; overflow-wrap: anywhere; }
+.franchise-first-stage-grid p { margin: 0; color: var(--franchise-muted); font-size: .77rem; line-height: 1.5; }
+.franchise-first-stage-thesis { margin: 16px 0 0; padding: 18px 20px; border-left: 4px solid var(--franchise-green); border-radius: 3px 14px 14px 3px; background: #eaf2eb; color: #255c42; font-size: .9rem; font-weight: 900; line-height: 1.5; }
+
 .franchise-profile-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 .franchise-profile-grid article { min-width: 0; padding: 22px; border: 1px solid var(--franchise-line); border-radius: 16px; background: var(--franchise-card); }
 .franchise-profile-grid article.is-active { border-color: var(--franchise-yellow); box-shadow: inset 0 0 0 1px var(--franchise-yellow); }
@@ -184,6 +191,7 @@
 
 @media (max-width: 1080px) {
   .franchise-architecture { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .franchise-first-stage-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .franchise-architecture li:nth-child(3)::after { display: none; }
   .franchise-economics-grid { grid-template-columns: 1fr; }
   .franchise-scale .franchise-flow { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -198,6 +206,7 @@
   .franchise-split,
   .franchise-control-grid,
   .franchise-operations-grid,
+  .franchise-first-stage-grid,
   .franchise-profile-grid,
   .franchise-future,
   .franchise-money-flow,

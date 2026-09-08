@@ -1,0 +1,15 @@
+schema_version: 2
+change_id: CHG-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01
+title: Clarify franchise platform first-stage investment narrative
+status: approved
+created_at: 2026-09-08
+decision_id: DEC-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01
+iteration_id: ITR-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01
+proposal_id: PROP-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01
+approved_payload_path: docs-platform/changelog/payloads/ITR-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01-approved.yaml
+approved_payload_sha256: 22eaf2de0bbb7c75223934ff35d89421f264e75bd297a8cb48aafedffb2320dd
+operations:
+  - replace only the four specified investor-visible labels in the existing core presentation and matching strategy terminology
+  - add the canonical five-result first-stage block after economics and before scenario profiles
+  - preserve current scenario separation, numeric assumptions, Petrogradka research status and financial input-only contract
+  - extend browser evidence for forbidden legacy labels, required revised labels and first-stage section placement

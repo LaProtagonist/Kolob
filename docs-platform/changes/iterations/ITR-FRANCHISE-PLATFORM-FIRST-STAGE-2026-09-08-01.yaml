@@ -1,0 +1,69 @@
+schema_version: 2
+iteration_id: ITR-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01
+proposal_id: PROP-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01
+decision_id: DEC-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01
+change_set_id: CHG-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01
+title: Clarify franchise platform first-stage investment narrative
+status: approved
+approved_by: project owner
+approved_at: 2026-09-08T01:09:55.000Z
+actor: Codex
+scope: >-
+  Make the owner-specified final terminology replacements and add the compact first-stage
+  result bridge while preserving the proposed strategy, scenario separation, financial
+  boundaries, numeric assumptions and governing documents.
+approved_payload_path: docs-platform/changelog/payloads/ITR-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01-approved.yaml
+approved_payload_sha256: 22eaf2de0bbb7c75223934ff35d89421f264e75bd297a8cb48aafedffb2320dd
+before_state_sha256: 01c26c8946ebc4d7da6866c7a4324b1781948c668540d78fc502ab6cc097804e
+after_state_sha256: eaa70dd916e43bbc4bb8edaa9316b1727da02f40e2714d0c6d50a08fea4815fa
+affected_document_ids:
+  - DOC-FRANCHISE-PLATFORM-STRATEGY
+  - DOC-SCENARIO-PETROGRADKA-READY-PRODUCTION-BASE
+affected_section_ids:
+  - investor.franchise-platform.display-terminology
+  - investor.franchise-platform.first-stage-result
+  - investor.franchise-platform.scenario-boundary
+  - franchise-platform.terminology-audit
+state_hash_paths:
+  - docs-platform/02-franchise-platform-strategy.md
+  - docs-platform/registry/decisions.yaml
+  - docs-platform/registry/documents.yaml
+  - docs-platform/registry/sources.yaml
+  - scripts/test-franchise-platform.cjs
+  - src/components/FranchisePlatform.css
+  - src/components/FranchisePlatform.tsx
+  - src/content/franchise-platform.ts
+  - src/content/site.ts
+content_paths:
+  - docs-platform/02-franchise-platform-strategy.md
+  - docs-platform/registry/decisions.yaml
+  - docs-platform/registry/documents.yaml
+  - docs-platform/registry/sources.yaml
+  - scripts/test-franchise-platform.cjs
+  - src/components/FranchisePlatform.css
+  - src/components/FranchisePlatform.tsx
+  - src/content/franchise-platform.ts
+  - src/content/site.ts
+  - docs-platform/changes/proposals/PROP-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01.yaml
+  - docs-platform/changes/decisions/DEC-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01.yaml
+  - docs-platform/changes/CHG-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01.yaml
+  - docs-platform/changes/iterations/ITR-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01.yaml
+  - docs-platform/changelog/payloads/ITR-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01-approved.yaml
+  - docs-platform/changelog/audit/ITR-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01.yaml
+  - docs-platform/changelog/previews/ITR-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01.yaml
+  - docs-platform/changelog/verification/ITR-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01.yaml
+  - docs-platform/changelog/events.ndjson
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/SNAPSHOT-ITR-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01.yaml
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+allowed_dirty_paths:
+  - analysis/
+  - output/
+rollback_payload: null
+rollback_contract:
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true
