@@ -373,3 +373,17 @@ decisions:
     source_ids:
       - SRC-FRANCHISE-PLATFORM-FIRST-STAGE-BRIEF-2026-09-08
     updated_at: 2026-09-08
+  - id: DEC-PETROGRADKA-LANDLORD-PRESENTATION-2026-09-08-01
+    title: Переработать представление Петроградки для собственника помещения
+    status: approved
+    decision: Переработать существующую страницу /investor/franchise-platform/petrogradka и внутренний draft Petrogradka Landlord Proposition в компактное профессиональное представление конкретного варианта запуска для собственника помещения; добавить три proposed working scenario estimates для цифровой платформы и двух конфигураций запуска.
+    rationale: Прямое задание владельца проекта от 2026-09-08. Решение не утверждает помещение, аренду, оборудование, условия сделки, производственную мощность, CAPEX-смету, финансовый результат или baseline. Foundation v1.0, Business Model Architecture v1.0, Franchise Platform core strategy, Financial Model, Network Planning и существующие scenario assumptions остаются неизменными.
+    affected_documents:
+      - DOC-SCENARIO-PETROGRADKA-READY-PRODUCTION-BASE
+      - DOC-PETROGRADKA-LANDLORD-PROPOSITION
+    approved_by: project owner
+    approved_at: 2026-09-08
+    supersedes: null
+    source_ids:
+      - SRC-PETROGRADKA-LANDLORD-PRESENTATION-BRIEF-2026-09-08
+    updated_at: 2026-09-08

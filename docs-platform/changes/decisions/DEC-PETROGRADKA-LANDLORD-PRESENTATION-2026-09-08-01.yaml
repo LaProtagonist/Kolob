@@ -1,0 +1,13 @@
+schema_version: 2
+decision_id: DEC-PETROGRADKA-LANDLORD-PRESENTATION-2026-09-08-01
+iteration_id: ITR-PETROGRADKA-LANDLORD-PRESENTATION-2026-09-08-01
+title: Approve Petrogradka owner presentation and proposed working estimates
+status: approved
+approved_by: project owner
+approved_at: 2026-09-08T02:28:00.000Z
+scope: >-
+  Apply the owner-specified Petrogradka presentation only: use a professional premises-owner
+  narrative, preserve the existing research scenario and its values, and register the explicitly
+  requested new figures solely as proposed working scenario estimates.
+approved_payload_path: docs-platform/changelog/payloads/ITR-PETROGRADKA-LANDLORD-PRESENTATION-2026-09-08-01-approved.yaml
+approved_payload_sha256: 249c42acd13a76a78cc160f799208efbf95147e6aed2ddd4897ffdbaffe37352

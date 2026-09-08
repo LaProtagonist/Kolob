@@ -1,0 +1,29 @@
+receipt_version: 1
+iteration_id: ITR-PETROGRADKA-LANDLORD-PRESENTATION-2026-09-08-01
+decision_id: DEC-PETROGRADKA-LANDLORD-PRESENTATION-2026-09-08-01
+change_set_id: CHG-PETROGRADKA-LANDLORD-PRESENTATION-2026-09-08-01
+previewed_at: 2026-09-08T02:30:00.000Z
+result: reviewed
+mutation_performed: false
+before_state_sha256: 6584ea26eafcf891ef53a372681fc52ddbdace84b80eb1ff0d2b3f0c2a552fa3
+after_state_sha256: 3912e222b8e0836ff419eeb0f3f37373361ff4e06942e77ee2826d31cf38fb4d
+changes:
+  - the private Petrogradka route uses a premises-owner narrative and removes owner-visible technical status language
+  - listing equipment is retained as a complete grouped inventory; infrastructure is shown as listing information subject to technical inspection
+  - project additions, a non-duplicative preliminary budget, launch configurations, capital effect, confirmations and a contact step are visible
+  - the matching proposed internal landlord draft and three requested proposed working scenario estimates are recorded
+  - the core strategy route remains outside the content scope
+invariants:
+  foundation_unchanged: true
+  business_model_architecture_unchanged: true
+  approved_prp_blocks_unchanged: true
+  franchise_platform_core_strategy_unchanged: true
+  canonical_financial_baseline_unchanged: true
+  financial_engine_unchanged: true
+  network_planning_engine_unchanged: true
+  petrogradka_is_research_scenario: true
+  petrogradka_is_not_baseline: true
+  petrogradka_yaml_equipment_and_existing_assumptions_unchanged: true
+  new_estimates_are_proposed_working_scenario_estimates: true
+  google_mutation: not_run
+  production_deploy: not_run

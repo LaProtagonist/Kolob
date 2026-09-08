@@ -29,6 +29,27 @@ const requiredCoreUiTerms = [
   "Экономический эффект масштаба",
   "Результат первого этапа",
 ];
+const forbiddenPetrogradkaTerms = [
+  "исследовательский сценарий",
+  "сценарий, не базовая модель",
+  "требует письменного подтверждения",
+  "допущение для расчёта",
+  "до получения входов сценарий не формирует финансовый результат",
+  "статус сценария",
+];
+const requiredPetrogradkaTerms = [
+  "Предлагаемая роль объекта",
+  "Почему объект подходит",
+  "Оборудование, указанное в объявлении",
+  "Инженерная инфраструктура",
+  "Что добавляет проект",
+  "Ориентировочный бюджет первого этапа",
+  "Варианты запуска",
+  "Капиталоэффективный сценарий",
+  "Что необходимо подтвердить",
+  "Предлагаемый формат",
+  "Следующий шаг",
+];
 
 async function responds() {
   try {
@@ -72,6 +93,34 @@ async function assertLocalizedInvestorCopy(page, testId, requiredTerms = []) {
   return text;
 }
 
+async function assertScenarioGutters(page, viewport, label) {
+  const gutters = await page.locator(".franchise-scenario-page .section-inner").evaluateAll((nodes) => nodes.map((node) => {
+    const rect = node.getBoundingClientRect();
+    return { left: rect.left, right: window.innerWidth - rect.right };
+  }));
+  const minimum = viewport.width <= 560 ? 16 : viewport.width <= 1080 ? 24 : 32;
+  assert.ok(gutters.length >= 2, `${label}: scenario must have hero and main containers`);
+  for (const gutter of gutters) {
+    assert.ok(gutter.left >= minimum - 1, `${label}: left gutter ${gutter.left}px is below ${minimum}px`);
+    assert.ok(gutter.right >= minimum - 1, `${label}: right gutter ${gutter.right}px is below ${minimum}px`);
+  }
+}
+
+async function assertPetrogradkaPresentation(page) {
+  const text = await assertLocalizedInvestorCopy(page, "petrogradka-scenario-page", requiredPetrogradkaTerms);
+  for (const term of forbiddenPetrogradkaTerms) {
+    assert.equal(text.toLowerCase().includes(term), false, `Petrogradka owner presentation must not display ${term}`);
+  }
+  assert.match(text, /Предлагаем использовать существующее оборудованное пищевое производство как первый центральный заготовочный узел «Колобочной»/);
+  assert.match(text, /Центральная производственная база сети с возможностью размещения эталонной торговой функции внутри помещения/);
+  assert.match(text, /до 2,5 млн ₽[\s\S]*от 6 млн ₽[\s\S]*≈11,5–12,5 млн ₽/);
+  assert.match(text, /В оценку пока не включены[\s\S]*аренда и депозит по Петроградке[\s\S]*фонд оплаты труда[\s\S]*первоначальный товарный запас/);
+  assert.match(text, /После этого сценарий переводится из предварительной оценки в точный план запуска с бюджетом и сроками/);
+  assert.equal(await page.locator('[data-status="available_subject_to_confirmation"]').count(), 0);
+  assert.equal(await page.locator("#petrogradka-budget-title > div").count(), 5, "budget has no duplicated subtotal row");
+  assert.equal(await page.getByRole("link", { name: "Обсудить условия" }).getAttribute("href"), "/investor-questions");
+}
+
 async function verifyRoute(browser, pathname, testId, viewport) {
   const context = await browser.newContext({ viewport });
   const page = await context.newPage();
@@ -81,6 +130,7 @@ async function verifyRoute(browser, pathname, testId, viewport) {
   await page.goto(`${baseUrl}${pathname}`, { waitUntil: "networkidle" });
   await page.getByTestId(testId).waitFor();
   await assertNoOverflow(page, `${pathname} ${viewport.width}px`);
+  if (testId === "petrogradka-scenario-page") await assertScenarioGutters(page, viewport, `${pathname} ${viewport.width}px`);
   assert.equal(await page.locator('meta[name="robots"]').getAttribute("content"), "noindex, nofollow");
   assert.deepEqual(errors, [], `${pathname} has no runtime errors at ${viewport.width}px`);
   await context.close();
@@ -114,11 +164,8 @@ async function run() {
     await page.getByRole("link", { name: "Открыть сценарий Петроградки" }).click();
     await page.getByTestId("petrogradka-scenario-page").waitFor();
     assert.equal(await page.locator("h1").innerText(), "Петроградка — готовая производственная база");
-    assert.match(await page.getByTestId("petrogradka-scenario-page").innerText(), /Сценарий,\s*не базовая модель/i);
-    await assertLocalizedInvestorCopy(page, "petrogradka-scenario-page");
-    assert.ok(await page.locator('[data-status="available_subject_to_confirmation"]').count() >= 3);
-    assert.match(await page.getByTestId("petrogradka-scenario-page").innerText(), /Не включено:[\s\S]*аренда[\s\S]*отдельные торговые точки/);
-    assert.match(await page.getByTestId("petrogradka-scenario-page").innerText(), /3[  ]000[  ]000–3[  ]600[  ]000 ₽/);
+    await assertPetrogradkaPresentation(page);
+    await assertScenarioGutters(page, { width: 1440, height: 1000 }, "Petrogradka desktop");
     await assertNoOverflow(page, "Petrogradka desktop");
     assert.deepEqual(errors, [], "core and scenario have no desktop runtime errors");
     await context.close();

@@ -1,0 +1,19 @@
+receipt_version: 1
+iteration_id: ITR-PETROGRADKA-LANDLORD-PRESENTATION-2026-09-08-01
+audited_at: 2026-09-08T02:42:00.000Z
+result: passed
+finding:
+  scope: Petrogradka owner presentation, matching proposed internal draft, proposed working scenario estimates and visual-review workflow rule.
+  narrative: The route explains the role of the object, why it is suitable, listing equipment and infrastructure, project additions, budget configurations, confirmations and a next step without presenting internal lifecycle labels to the premises owner.
+  equipment: The complete listing inventory remains grouped for readability; its canonical research status and the existing YAML record remain unchanged.
+  economics: Budget rows have no duplicated subtotal. The digital platform ceiling and two launch configurations are registered as proposed working scenario estimates, not confirmed facts, Financial Model inputs or results.
+  boundaries: The core strategy route, Foundation, Business Model Architecture, baseline, Financial Model and Network Planning remain outside this iteration's content scope.
+  responsive: The isolated scenario container adds 32–48 px desktop, 24 px tablet and 16 px mobile gutters; browser checks retain overflow verification at 1440, 1024, 768 and 390 px.
+resolution:
+  - retain Petrogradka as research and non-baseline
+  - retain available_subject_to_confirmation only as internal canonical equipment metadata
+  - retain all previous Petrogradka numerical assumptions unchanged
+  - retain no independent financial calculation or automatic financial synchronization
+external_state:
+  google_apply: not_run
+  production_deploy: not_run

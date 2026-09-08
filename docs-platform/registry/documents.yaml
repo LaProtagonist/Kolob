@@ -417,15 +417,16 @@ documents:
     google_file_id: null
     template: null
     sections:
-      - Project and tenant
-      - Use of production
-      - Equipment and investment
-      - Long-term lease discussion
-      - Required confirmations
-    version: "0.1"
+      - Proposed role of the object
+      - Object fit
+      - Equipment and infrastructure
+      - Project additions and launch budget
+      - Launch configurations
+      - Required confirmations and next step
+    version: "0.2"
     governance_level: working
     local_path: docs-platform/03-petrogradka-landlord-proposition.md
-    updated_at: 2026-09-07
+    updated_at: 2026-09-08
   - id: DOC-BANKING-SETTLEMENT-ARCHITECTURE
     title: Banking Settlement Architecture
     type: research_brief

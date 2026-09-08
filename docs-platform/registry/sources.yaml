@@ -1593,3 +1593,12 @@ sources:
     accessed_at: 2026-09-08
     reliability: primary
     notes: Первичный источник разрешения заменить четыре пользовательских заголовка и добавить канонический блок «Результат первого этапа» без изменения Foundation, Business Model Architecture, финансового движка, baseline, числовых допущений и статуса Петроградки как scenario.
+  - id: SRC-PETROGRADKA-LANDLORD-PRESENTATION-BRIEF-2026-09-08
+    title: Задание на представление запуска Петроградки для собственника помещения
+    type: instruction
+    location: User instruction, 2026-09-08
+    publisher: project owner
+    publication_date: 2026-09-08
+    accessed_at: 2026-09-08
+    reliability: primary
+    notes: Первичный источник редакции страницы Петроградки как компактного предложения собственнику объекта и трёх новых proposed working scenario estimates. Не утверждает помещение, аренду, оборудование, мощность, смету, финансовый результат, baseline или изменения Financial Model.

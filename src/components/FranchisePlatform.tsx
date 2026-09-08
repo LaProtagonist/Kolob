@@ -4,10 +4,6 @@ import "./FranchisePlatform.css";
 
 const rub = new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 0 });
 
-function formatRange([from, to]: readonly [number, number]) {
-  return `${rub.format(from)}–${rub.format(to)} ₽`;
-}
-
 function labelForStatus(status: string) {
   const labels: Record<string, string> = {
     proposed: "внутренний проект",
@@ -154,35 +150,98 @@ export function PetrogradkaFranchiseScenarioPage() {
     <div className="franchise-page franchise-scenario-page" data-testid="petrogradka-scenario-page">
       <section className="franchise-hero" aria-labelledby="petrogradka-title">
         <div className="section-inner">
-          <Breadcrumbs current="Сценарий Петроградки" />
-          <div className="franchise-hero-grid"><div><p className="franchise-eyebrow"><Status status="research" /> Сценарий запуска</p><h1 id="petrogradka-title">{content.title}</h1><p className="franchise-lead">{content.lead}</p></div><aside className="franchise-boundary"><strong>Сценарий, не базовая модель</strong><p>Помещение, его оборудование и условия не утверждены. Замена помещения не требует изменения стратегии масштабирования сети.</p></aside></div>
+          <Breadcrumbs current="Петроградка" />
+          <div className="franchise-hero-grid">
+            <div>
+              <p className="franchise-eyebrow">Готовая производственная база</p>
+              <h1 id="petrogradka-title">{content.title}</h1>
+              <p className="franchise-lead">{content.lead}</p>
+            </div>
+            <aside className="franchise-boundary">
+              <strong>Предлагаемая роль объекта</strong>
+              <p>{content.role}</p>
+              <small>{content.roleNote}</small>
+            </aside>
+          </div>
         </div>
       </section>
 
       <section className="franchise-main">
         <div className="section-inner">
-          <section className="franchise-section" aria-labelledby="petrogradka-summary-title">
-            <SectionHeading number="01" title="Готовая производственная база" text="Сценарий рассматривает готовое пищевое производство на Петроградской стороне как возможный первый центральный заготовочный узел." />
-            <div className="petrogradka-summary" id="petrogradka-summary-title"><div><span>Статус сценария</span><strong><Status status="research" /></strong></div><div><span>Оборудование и инженерия</span><strong><Status status="available_subject_to_confirmation" /></strong></div><div><span>Рабочее допущение мощности</span><strong><Status status="assumption" /></strong></div><div><span>Дополнительный пароконвектомат</span><strong>Не включён</strong></div></div>
+          <section className="franchise-section" aria-labelledby="petrogradka-fit-title">
+            <SectionHeading number="01" title="Почему объект подходит" text={content.fit.intro} />
+            <div className="petrogradka-fit-grid" id="petrogradka-fit-title">
+              {content.fit.items.map((item) => <article key={item.title}><h3>{item.title}</h3><p>{item.text}</p></article>)}
+            </div>
           </section>
 
           <section className="franchise-section petrogradka-grid" aria-label="Оборудование и инфраструктура">
-            <article className="franchise-card"><p className="franchise-card-kicker"><Status status="available_subject_to_confirmation" /></p><h2>Оборудование из объявления</h2><ul>{content.equipment.map((item) => <li key={item}>{item}</li>)}</ul></article>
-            <article className="franchise-card"><p className="franchise-card-kicker"><Status status="available_subject_to_confirmation" /></p><h2>Инфраструктура</h2><ul>{content.infrastructure.map((item) => <li key={item}>{item}</li>)}</ul><p className="franchise-card-note">Критическое ограничение: собственник может вывезти часть оборудования. Каждая позиция требует письменного подтверждения.</p></article>
+            <article className="franchise-card petrogradka-equipment-card">
+              <p className="franchise-card-kicker">По данным объявления</p>
+              <h2>Оборудование, указанное в объявлении</h2>
+              <p>{content.equipmentIntro}</p>
+              <div className="petrogradka-equipment-groups">
+                {content.equipmentGroups.map((group) => <section key={group.title}><h3>{group.title}</h3><ul>{group.items.map((item) => <li key={item}>{item}</li>)}</ul></section>)}
+              </div>
+            </article>
+            <article className="franchise-card petrogradka-infrastructure-card">
+              <p className="franchise-card-kicker">По данным объявления</p>
+              <h2>Инженерная инфраструктура</h2>
+              <p>{content.infrastructureIntro}</p>
+              <ul>{content.infrastructure.map((item) => <li key={item}>{item}</li>)}</ul>
+              <p className="franchise-card-note">{content.infrastructureNote}</p>
+            </article>
           </section>
 
-          <section className="franchise-section" aria-labelledby="petrogradka-capex-title">
-            <SectionHeading number="02" title="Сценарные капитальные затраты" text="Готовое производство может сократить вложения в ремонт и инженерию и направить капитал в технологию, медиа и цифровую инфраструктуру." />
-            <div className="petrogradka-capex" id="petrogradka-capex-title">{content.capexRows.map((row) => <div key={row.label}><span>{row.label}</span><strong>{formatRange(row.value)}</strong><small><Status status="assumption" /> {row.note}</small></div>)}</div>
-            <p className="franchise-exclusion"><strong>Не включено:</strong> {content.excluded.join(" · ")}.</p>
+          <section className="franchise-section" aria-labelledby="petrogradka-additions-title">
+            <SectionHeading number="02" title="Что добавляет проект" text={content.additions.intro} />
+            <div className="petrogradka-additions-grid" id="petrogradka-additions-title">
+              {content.additions.items.map((item) => <article key={item.title}><h3>{item.title}</h3><strong>{item.value}</strong><p>{item.text}</p></article>)}
+            </div>
           </section>
 
-          <section className="franchise-section" aria-labelledby="petrogradka-operations-title">
-            <SectionHeading number="03" title="Торговая функция и подтверждения" text="Производственный сценарий не поглощает капитальные затраты торговых точек и не подменяет существующую модель точки." />
-            <div className="petrogradka-operations" id="petrogradka-operations-title"><article><h3>Допустимые слои</h3><ol>{content.trading.map((item, index) => <li key={item}><span>{String(index + 1).padStart(2, "0")}</span>{item}</li>)}</ol></article><article><h3>Требует подтверждения</h3><ul>{content.confirmation.map((item) => <li key={item}>{item}</li>)}</ul></article></div>
+          <section className="franchise-section" aria-labelledby="petrogradka-budget-title">
+            <SectionHeading number="03" title="Ориентировочный бюджет первого этапа" text="Предварительная оценка до осмотра помещения и согласования условий аренды." />
+            <p className="petrogradka-estimate-note">Рабочие сценарные оценки; уточняются после осмотра.</p>
+            <div className="petrogradka-capex" id="petrogradka-budget-title">
+              {content.budgetRows.map((row) => <div key={row.label}><span>{row.label}</span><strong>{row.value}</strong></div>)}
+            </div>
+            <h3 className="petrogradka-subsection-title">Варианты запуска</h3>
+            <div className="petrogradka-launch-title"><span>Одна стратегия</span><span aria-hidden="true">→</span><strong>Две конфигурации запуска</strong></div>
+            <div className="petrogradka-launch-variants" aria-label="Варианты запуска">
+              {content.launchVariants.map((item, index) => <article key={item.title}><span>Вариант {index + 1}</span><h3>{item.title}</h3><strong>{item.value}</strong><p>{item.text}</p><small>{item.note}</small></article>)}
+            </div>
+            <aside className="petrogradka-capital-effect">
+              <strong>Капиталоэффективный сценарий</strong>
+              <p>{content.capitalEffect.text}</p>
+              <p>{content.capitalEffect.note}</p>
+            </aside>
+            <aside className="franchise-exclusion">
+              <strong>В оценку пока не включены</strong>
+              <ul>{content.excluded.map((item) => <li key={item}>{item}</li>)}</ul>
+              <p>{content.excludedNote}</p>
+            </aside>
           </section>
 
-          <section className="franchise-section franchise-next" aria-label="Следующий шаг"><div><Status status="research" /><h2>До получения входов сценарий не формирует финансовый результат.</h2><p>После проверки исходные параметры передаются в существующую финансовую модель как отдельный слой сценария: без второй независимой модели и без изменения базовой модели проекта.</p></div><a className="franchise-link" href={franchisePlatformContent.links.core}>Вернуться к стратегии масштабирования сети</a></section>
+          <section className="franchise-section" aria-labelledby="petrogradka-confirmations-title">
+            <SectionHeading number="04" title="Что необходимо подтвердить" text="Для перехода от предварительной модели к точному бюджету требуется совместно подтвердить несколько параметров объекта." />
+            <div className="petrogradka-confirmations" id="petrogradka-confirmations-title"><ul>{content.confirmation.map((item) => <li key={item}>{item}</li>)}</ul></div>
+          </section>
+
+          <section className="franchise-section petrogradka-format" aria-labelledby="petrogradka-format-title">
+            <SectionHeading number="05" title="Предлагаемый формат" />
+            <div id="petrogradka-format-title">{content.format.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</div>
+          </section>
+
+          <section className="franchise-section franchise-next petrogradka-next" aria-labelledby="petrogradka-next-title">
+            <div>
+              <p className="franchise-card-kicker">Совместная работа с собственником</p>
+              <h2 id="petrogradka-next-title">Следующий шаг</h2>
+              <p>{content.nextStep}</p>
+              <p>{content.nextStepNote}</p>
+            </div>
+            <a className="franchise-link" href="/investor-questions">Обсудить условия</a>
+          </section>
         </div>
       </section>
     </div>

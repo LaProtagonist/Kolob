@@ -10,6 +10,8 @@
   background: var(--franchise-paper);
 }
 
+.franchise-scenario-page .section-inner { width: min(1320px, calc(100% - 80px)); }
+
 .franchise-hero {
   padding: 32px 0 56px;
   color: #fff;
@@ -29,6 +31,8 @@
 .franchise-boundary { padding: 21px; border: 1px solid rgba(255,255,255,.2); border-radius: 16px; background: rgba(255,255,255,.08); backdrop-filter: blur(8px); }
 .franchise-boundary strong { display: block; color: var(--franchise-yellow); font-size: .77rem; letter-spacing: .06em; text-transform: uppercase; }
 .franchise-boundary p { margin: 8px 0 0; color: rgba(255,255,255,.76); font-size: .83rem; line-height: 1.55; }
+.franchise-boundary small { display: block; margin-top: 12px; color: rgba(255,255,255,.56); font-size: .72rem; line-height: 1.45; }
+.franchise-scenario-page .franchise-boundary strong { font-size: .95rem; letter-spacing: 0; text-transform: none; }
 .franchise-thesis { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, .85fr); gap: 28px; margin-top: 42px; padding: 22px 0 0; border-top: 1px solid rgba(255,255,255,.18); }
 .franchise-thesis p { margin: 0; color: #fff; font-size: 1.06rem; font-weight: 750; line-height: 1.5; }
 .franchise-thesis strong { color: var(--franchise-yellow); font-size: .88rem; line-height: 1.5; }
@@ -189,6 +193,64 @@
 .franchise-next p { max-width: 690px; margin: 0; color: rgba(255,255,255,.7); font-size: .84rem; line-height: 1.55; }
 .franchise-next .franchise-link { flex: 0 0 auto; color: var(--franchise-yellow); }
 
+.petrogradka-fit-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.petrogradka-fit-grid article,
+.petrogradka-additions-grid article,
+.petrogradka-launch-variants article,
+.petrogradka-confirmations,
+.petrogradka-format > div { min-width: 0; border: 1px solid var(--franchise-line); border-radius: 16px; background: var(--franchise-card); }
+.petrogradka-fit-grid article { padding: 23px; }
+.petrogradka-fit-grid h3,
+.petrogradka-additions-grid h3,
+.petrogradka-launch-variants h3 { margin: 0; font-size: 1.05rem; line-height: 1.3; }
+.petrogradka-fit-grid p,
+.petrogradka-additions-grid p,
+.petrogradka-launch-variants p { margin: 12px 0 0; color: var(--franchise-muted); font-size: .82rem; line-height: 1.55; }
+
+.petrogradka-equipment-groups { display: grid; gap: 19px; margin-top: 23px; }
+.petrogradka-equipment-groups section { padding-top: 18px; border-top: 1px solid var(--franchise-line); }
+.petrogradka-equipment-groups section:first-child { padding-top: 0; border-top: 0; }
+.petrogradka-equipment-groups h3 { margin: 0 0 10px; font-size: .82rem; letter-spacing: .04em; text-transform: uppercase; }
+.petrogradka-equipment-groups ul { margin: 0; }
+.petrogradka-infrastructure-card ul { margin-bottom: 25px; }
+
+.petrogradka-additions-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+.petrogradka-additions-grid article { padding: 20px; }
+.petrogradka-additions-grid strong { display: block; margin-top: 17px; color: #785408; font-size: 1rem; line-height: 1.25; }
+.petrogradka-additions-grid p { font-size: .77rem; }
+
+.petrogradka-estimate-note { margin: -8px 0 14px 72px; color: var(--franchise-muted); font-size: .76rem; line-height: 1.5; }
+.petrogradka-capex > div { grid-template-columns: minmax(0, 1fr) auto; }
+.petrogradka-capex > div:last-child { background: #fff; }
+.petrogradka-capex strong { color: #5e4308; font-size: 1rem; }
+.petrogradka-subsection-title { margin: 31px 0 0; font-size: 1.2rem; }
+.petrogradka-launch-title { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; margin: 9px 0 13px; color: #5f5a50; font-size: .8rem; font-weight: 800; }
+.petrogradka-launch-title span:nth-child(2) { color: #93690a; font-size: 1.2rem; }
+.petrogradka-launch-title strong { color: var(--franchise-ink); }
+.petrogradka-launch-variants { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.petrogradka-launch-variants article { padding: 24px; }
+.petrogradka-launch-variants article > span { display: block; margin-bottom: 15px; color: #86600b; font-size: .7rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; }
+.petrogradka-launch-variants article > strong { display: block; margin-top: 17px; color: #245a43; font-size: clamp(1.5rem, 3vw, 2rem); line-height: 1.1; }
+.petrogradka-launch-variants small { display: block; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--franchise-line); color: var(--franchise-muted); font-size: .73rem; line-height: 1.5; }
+.petrogradka-capital-effect { margin-top: 16px; padding: 23px 25px; border-left: 4px solid var(--franchise-green); border-radius: 3px 16px 16px 3px; background: #eaf2eb; }
+.petrogradka-capital-effect strong { color: #245a43; font-size: .95rem; }
+.petrogradka-capital-effect p { max-width: 960px; margin: 10px 0 0; color: #355849; font-size: .84rem; line-height: 1.58; }
+.franchise-exclusion ul { display: grid; gap: 6px; margin: 10px 0 0; padding: 0; list-style: none; }
+.franchise-exclusion li { position: relative; padding-left: 14px; }
+.franchise-exclusion li::before { position: absolute; top: .55em; left: 0; width: 5px; height: 5px; border-radius: 50%; background: #a96422; content: ""; }
+.franchise-exclusion p { margin: 12px 0 0; }
+
+.petrogradka-confirmations { padding: 23px; }
+.petrogradka-confirmations ul { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px 22px; margin: 0; padding: 0; list-style: none; }
+.petrogradka-confirmations li { position: relative; padding-left: 16px; color: var(--franchise-muted); font-size: .82rem; line-height: 1.5; }
+.petrogradka-confirmations li::before { position: absolute; top: .53em; left: 0; width: 7px; height: 7px; border-radius: 50%; background: var(--franchise-yellow); content: ""; }
+.petrogradka-format > div { padding: 24px; }
+.petrogradka-format p { max-width: 920px; margin: 0; color: var(--franchise-muted); font-size: .88rem; line-height: 1.58; }
+.petrogradka-format p + p { margin-top: 13px; }
+.petrogradka-next { margin-bottom: 0; }
+.petrogradka-next .franchise-card-kicker { color: var(--franchise-yellow); }
+.petrogradka-next p + p { margin-top: 10px; }
+
 @media (max-width: 1080px) {
   .franchise-architecture { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .franchise-first-stage-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -198,6 +260,9 @@
   .franchise-scale .franchise-flow li:nth-child(3)::after,
   .franchise-scale .franchise-flow li:nth-child(6)::after { display: none; }
   .petrogradka-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .franchise-scenario-page .section-inner { width: min(1320px, calc(100% - 48px)); }
+  .petrogradka-additions-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .petrogradka-confirmations ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 820px) {
@@ -211,7 +276,8 @@
   .franchise-future,
   .franchise-money-flow,
   .petrogradka-grid,
-  .petrogradka-operations { grid-template-columns: 1fr; }
+  .petrogradka-operations,
+  .petrogradka-launch-variants { grid-template-columns: 1fr; }
   .franchise-architecture { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .franchise-architecture li:nth-child(3)::after { display: block; }
   .franchise-architecture li:nth-child(2)::after,
@@ -220,6 +286,7 @@
   .franchise-money-flow ul { grid-template-columns: 1fr; }
   .petrogradka-capex > div { grid-template-columns: minmax(0, 1fr) auto; }
   .petrogradka-capex small { grid-column: 1 / -1; justify-content: flex-start; }
+  .petrogradka-additions-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .franchise-next { align-items: start; flex-direction: column; }
 }
 
@@ -238,8 +305,19 @@
   .franchise-scale .franchise-flow li::after { display: none !important; }
   .franchise-architecture h3 { margin-top: 19px; }
   .petrogradka-summary { grid-template-columns: 1fr; }
+  .franchise-scenario-page .section-inner { width: calc(100% - 32px); }
   .petrogradka-capex > div { grid-template-columns: 1fr; gap: 5px; }
   .petrogradka-capex strong { text-align: left; }
+  .petrogradka-estimate-note { margin: -5px 0 14px 46px; }
+  .petrogradka-fit-grid,
+  .petrogradka-additions-grid,
+  .petrogradka-confirmations ul { grid-template-columns: 1fr; }
+  .petrogradka-fit-grid article,
+  .petrogradka-additions-grid article,
+  .petrogradka-launch-variants article,
+  .petrogradka-confirmations,
+  .petrogradka-format > div { padding: 20px; }
+  .petrogradka-capital-effect { padding: 20px; }
   .franchise-card,
   .franchise-operations-grid article,
   .franchise-economics-grid article,

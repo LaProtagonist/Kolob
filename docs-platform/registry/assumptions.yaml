@@ -776,3 +776,49 @@ assumptions:
       - SRC-FRANCHISE-PLATFORM-2026-09-07-BRIEF
     decision_id: DEC-FRANCHISE-PLATFORM-STRATEGY-2026-09-07-01
     updated_at: 2026-09-07
+  - id: ASM-PETROGRADKA-DIGITAL-PLATFORM-FIRST-VERSION
+    title: Рабочий бюджет первой версии цифровой системы управления сетью
+    value:
+      maximum_rub: 2500000
+    unit: RUB
+    status: proposed
+    rationale: Рабочая сценарная оценка разработки первой версии цифровой системы управления сетью для представления Петроградки. Не является утверждённой сметой, договором разработки, финансовым результатом или изменением Financial Model.
+    scenario: PETROGRADKA / READY_PRODUCTION_BASE
+    applies_to:
+      - DOC-SCENARIO-PETROGRADKA-READY-PRODUCTION-BASE
+      - DOC-PETROGRADKA-LANDLORD-PROPOSITION
+    source_ids:
+      - SRC-PETROGRADKA-LANDLORD-PRESENTATION-BRIEF-2026-09-08
+    decision_id: DEC-PETROGRADKA-LANDLORD-PRESENTATION-2026-09-08-01
+    updated_at: 2026-09-08
+  - id: ASM-PETROGRADKA-COLOCATED-LAUNCH-CONFIGURATION
+    title: Рабочая оценка запуска производства и торговой функции в одном объекте
+    value:
+      minimum_rub: 6000000
+    unit: RUB
+    status: proposed
+    rationale: Рабочая сценарная оценка конфигурации, в которой эталонная торговая функция размещается в помещении на Петроградской стороне. Требует осмотра, подтверждения торговой функции и условий объекта; не является утверждённой сметой или финансовым результатом.
+    scenario: PETROGRADKA / READY_PRODUCTION_BASE
+    applies_to:
+      - DOC-SCENARIO-PETROGRADKA-READY-PRODUCTION-BASE
+      - DOC-PETROGRADKA-LANDLORD-PROPOSITION
+    source_ids:
+      - SRC-PETROGRADKA-LANDLORD-PRESENTATION-BRIEF-2026-09-08
+    decision_id: DEC-PETROGRADKA-LANDLORD-PRESENTATION-2026-09-08-01
+    updated_at: 2026-09-08
+  - id: ASM-PETROGRADKA-SEPARATE-REFERENCE-UNIT-LAUNCH-CONFIGURATION
+    title: Рабочая оценка запуска производства с отдельной эталонной точкой
+    value:
+      from_rub: 11500000
+      to_rub: 12500000
+    unit: RUB
+    status: proposed
+    rationale: Рабочая сценарная оценка конфигурации, в которой производственная база дополняется отдельной эталонной торговой точкой. Требует актуализации под конкретную локацию; не является утверждённой сметой, финансовым результатом или baseline.
+    scenario: PETROGRADKA / READY_PRODUCTION_BASE
+    applies_to:
+      - DOC-SCENARIO-PETROGRADKA-READY-PRODUCTION-BASE
+      - DOC-PETROGRADKA-LANDLORD-PROPOSITION
+    source_ids:
+      - SRC-PETROGRADKA-LANDLORD-PRESENTATION-BRIEF-2026-09-08
+    decision_id: DEC-PETROGRADKA-LANDLORD-PRESENTATION-2026-09-08-01
+    updated_at: 2026-09-08

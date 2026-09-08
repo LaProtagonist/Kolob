@@ -75,3 +75,29 @@ test("Franchise assumptions use RUB and retain explicit research status", () => 
   ].map(relativePath => fs.readFileSync(path.join(project, relativePath), "utf8")).join("\n");
   assert.doesNotMatch(trackedText, /\$1m|\$\s*1[, ]?000[, ]?000/i);
 });
+
+test("Petrogradka owner presentation keeps new launch estimates proposed and leaves the canonical scenario unchanged", () => {
+  const assumptions = yaml<{ assumptions: Array<Record<string, any>> }>("docs-platform/registry/assumptions.yaml").assumptions;
+  const decisions = yaml<{ decisions: Array<Record<string, any>> }>("docs-platform/registry/decisions.yaml").decisions;
+  const documents = yaml<{ documents: Array<Record<string, any>> }>("docs-platform/registry/documents.yaml").documents;
+  const estimates = [
+    assumptions.find(item => item.id === "ASM-PETROGRADKA-DIGITAL-PLATFORM-FIRST-VERSION"),
+    assumptions.find(item => item.id === "ASM-PETROGRADKA-COLOCATED-LAUNCH-CONFIGURATION"),
+    assumptions.find(item => item.id === "ASM-PETROGRADKA-SEPARATE-REFERENCE-UNIT-LAUNCH-CONFIGURATION"),
+  ];
+
+  assert.deepEqual(estimates.map(item => ({ value: item?.value, unit: item?.unit, status: item?.status })), [
+    { value: { maximum_rub: 2_500_000 }, unit: "RUB", status: "proposed" },
+    { value: { minimum_rub: 6_000_000 }, unit: "RUB", status: "proposed" },
+    { value: { from_rub: 11_500_000, to_rub: 12_500_000 }, unit: "RUB", status: "proposed" },
+  ]);
+  assert.ok(estimates.every(item => item?.scenario === "PETROGRADKA / READY_PRODUCTION_BASE"));
+  assert.equal(decisions.find(item => item.id === "DEC-PETROGRADKA-LANDLORD-PRESENTATION-2026-09-08-01")?.status, "approved");
+  assert.equal(documents.find(item => item.id === "DOC-PETROGRADKA-LANDLORD-PROPOSITION")?.status, "proposed");
+
+  const scenario = yaml<any>("docs-platform/scenarios/petrogradka-ready-production-base.yaml");
+  assert.equal(scenario.document.status, "research");
+  assert.equal(scenario.document.scenario_id, "PETROGRADKA");
+  assert.equal(scenario.equipment.status, "available_subject_to_confirmation");
+  assert.deepEqual(scenario.capex.infrastructure_base_without_trading_point.range_rub, [3_000_000, 3_600_000]);
+});

@@ -1,0 +1,17 @@
+schema_version: 2
+change_id: CHG-PETROGRADKA-LANDLORD-PRESENTATION-2026-09-08-01
+title: Present Petrogradka launch scenario for the premises owner
+status: approved
+created_at: 2026-09-08
+decision_id: DEC-PETROGRADKA-LANDLORD-PRESENTATION-2026-09-08-01
+iteration_id: ITR-PETROGRADKA-LANDLORD-PRESENTATION-2026-09-08-01
+proposal_id: PROP-PETROGRADKA-LANDLORD-PRESENTATION-2026-09-08-01
+approved_payload_path: docs-platform/changelog/payloads/ITR-PETROGRADKA-LANDLORD-PRESENTATION-2026-09-08-01-approved.yaml
+approved_payload_sha256: 249c42acd13a76a78cc160f799208efbf95147e6aed2ddd4897ffdbaffe37352
+operations:
+  - replace Petrogradka's technical scenario-report UI with the approved premises-owner presentation while preserving internal scenario and equipment metadata
+  - group the complete listing equipment inventory and infrastructure in compact professional sections with post-inspection clarification language
+  - add project contributions, the non-duplicative preliminary budget, two proposed working launch configurations, capital-effect explanation, confirmations, format and contact next step
+  - update the proposed internal landlord proposition and register the three explicitly requested working scenario estimates as proposed assumptions
+  - extend deterministic owner-page terminology, gutter, budget-row and responsive overflow checks
+  - record the single-desktop-full-page screenshot policy without weakening responsive browser verification

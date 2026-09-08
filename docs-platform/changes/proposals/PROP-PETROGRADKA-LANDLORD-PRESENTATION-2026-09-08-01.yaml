@@ -1,0 +1,13 @@
+schema_version: 2
+proposal_id: PROP-PETROGRADKA-LANDLORD-PRESENTATION-2026-09-08-01
+iteration_id: ITR-PETROGRADKA-LANDLORD-PRESENTATION-2026-09-08-01
+title: Present Petrogradka launch scenario for the premises owner
+status: approved
+proposed_by: project owner
+proposed_at: 2026-09-08T02:28:00.000Z
+summary: >-
+  Reframe the existing Petrogradka route as a compact professional presentation for the premises
+  owner, with explicit preliminary status for new working estimates and no change to the core
+  strategy, scenario identity, governing documents or financial engines.
+approved_payload_path: docs-platform/changelog/payloads/ITR-PETROGRADKA-LANDLORD-PRESENTATION-2026-09-08-01-approved.yaml
+approved_payload_sha256: 249c42acd13a76a78cc160f799208efbf95147e6aed2ddd4897ffdbaffe37352

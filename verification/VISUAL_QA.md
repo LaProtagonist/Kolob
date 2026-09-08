@@ -2,6 +2,12 @@
 
 Screenshot не является обязательной проверкой каждой UI-правки.
 
+## Review-artifact rule
+
+По умолчанию после итерации сохраняется один full-page screenshot изменённой страницы на desktop viewport. Проверка responsive layout остаётся обязательной, но выполняется browser checks без отдельных сохранённых screenshot для 1440, 1024, 768 и 390 px.
+
+Дополнительный screenshot допускается только при mobile-specific проблеме, скрытом состоянии, отдельном запросе владельца или необходимости показать конкретный визуальный дефект. Внутренние cache-артефакты visual runner не заменяют этот один review artifact.
+
 ## Impact classifier
 
 | Impact | Типичные изменения | Проверка |
