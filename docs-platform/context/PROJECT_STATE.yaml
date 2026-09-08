@@ -1,13 +1,13 @@
 schema_version: 2
-generated_at: 2026-09-07T20:32:54.498Z
+generated_at: 2026-09-08T01:16:30.035Z
 project: Колобочная
 branch: master
-latest_timeline_event_id: EVT-ITR-FRANCHISE-PLATFORM-LOCALIZATION-2026-09-07-01-COMMITTED
-latest_timeline_event_hash: e282da874aae3a1810926d455b780f749b6e69b266858cd1f5aae0b8dc07b9ea
-latest_closed_iteration_id: ITR-FRANCHISE-PLATFORM-LOCALIZATION-2026-09-07-01
-latest_iteration_tag: iteration/ITR-FRANCHISE-PLATFORM-LOCALIZATION-2026-09-07-01
-latest_content_commit_hash: f5b771dbdf213846bf5c5f1bdce230d1bc721509
-registry_hash: b6e35ad57d6b557398d2b4819a35724ff9ef9975f093dedfc52bd8408dd5dfbb
+latest_timeline_event_id: EVT-ITR-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01-COMMITTED
+latest_timeline_event_hash: fba834b558f3ffb030e4bd15f60f5fb3c6364983b3eebcceb0ce56cfe5fe4368
+latest_closed_iteration_id: ITR-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01
+latest_iteration_tag: iteration/ITR-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01
+latest_content_commit_hash: 18b7c23927da65dfb1508b2b7f927f0ad7e81a4e
+registry_hash: 4b0a6d7f6274bbbfbc181cc166eeb633e1ce9f19c770cac344ded4bfb8da6999
 canonical_document_hashes:
   - document_id: DOC-AGENTS
     local_path: docs-platform/AGENTS.md
@@ -71,7 +71,7 @@ canonical_document_hashes:
     status: research
   - document_id: DOC-FRANCHISE-PLATFORM-STRATEGY
     local_path: docs-platform/02-franchise-platform-strategy.md
-    sha256: 1a0918daf0ddb9250ed2294a457732881beb5dc12f5abd61629c2fb2fb039148
+    sha256: a75d51abbe4eb08e40aa6c1657765545e91025f091957cb7528528d3e9399cb3
     status: proposed
   - document_id: DOC-INVESTMENT-MEMO
     local_path: docs-platform/templates/investment-memorandum.md
@@ -116,7 +116,7 @@ open_questions:
   - Archive pending review artifacts in durable storage before treating visual verification as portable.
   - Create deployment receipts when the next governed deployment is performed.
   - Decide whether malformed superseded legacy YAML evidence should receive a separate correction event.
-current_workstream: Localize franchise platform investor narrative
+current_workstream: Clarify franchise platform first-stage investment narrative
 next_task: Select the next task through a new governed proposal; no business task is pre-authorized.
 google_integration_status:
   configured: true
