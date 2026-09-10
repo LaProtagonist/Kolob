@@ -1,0 +1,40 @@
+receipt_version: 1
+iteration_id: ITR-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01
+decision_id: DEC-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01
+change_set_id: CHG-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01
+verified_at: 2026-09-11T00:18:00.000Z
+result: passed_with_preexisting_financial_artifact
+approved_payload_sha256: 287ff015d6e19af5eb3fe8d1ce5aab7fd28fc4c05ee25ed240b6e73aa4b1f253
+before_state_sha256: 3912e222b8e0836ff419eeb0f3f37373361ff4e06942e77ee2826d31cf38fb4d
+after_state_sha256: 8dc669d133fca4bb877cb44f9d431f247fe955edf7f7ea1040b959508d808d49
+checks:
+  - npx tsc --noEmit under bundled Node 24 (passed)
+  - npm run registry:validate under bundled Node 24 (passed)
+  - franchise-platform source unit test (passed; 3 tests)
+  - docs-platform franchise-platform governance test (passed; 5 tests)
+  - franchise-platform browser route test under bundled Node 24 (passed; core and Petrogradka at 1440, 1024, 768 and 390 px)
+  - Petrogradka terminology, total-orientation, no-repeated-prices, gutter and overflow assertions (passed)
+  - manual browser verification at 1440, 1024, 768 and 390 px (passed; no console errors or horizontal overflow)
+  - desktop full-page review artifact for /investor/franchise-platform/petrogradka (passed)
+  - direct Vite SPA build and npm run prerender (passed; 16 routes generated)
+  - route prerender content verification (passed; Petrogradka HTML includes current investment and interaction blocks and excludes former public budget labels)
+known_unrelated_stale_artifacts:
+  - npm run verify:affected stopped at the pre-existing stale or non-deterministic financial projection artifact; no financial:model:sync was run
+  - no unrelated financial, network or Google synchronization was performed
+invariants:
+  foundation_unchanged: passed
+  business_model_architecture_unchanged: passed
+  approved_prp_blocks_unchanged: passed
+  franchise_platform_core_strategy_unchanged: passed
+  financial_engine_unchanged: passed
+  network_planning_engine_unchanged: passed
+  canonical_financial_baseline_unchanged: passed
+  petrogradka_is_research_scenario: passed
+  petrogradka_is_not_baseline: passed
+  petrogradka_equipment_status_unchanged: passed
+  petrogradka_existing_numeric_assumptions_unchanged: passed
+  new_total_orientations_are_proposed: passed
+  previous_public_orientations_are_superseded: passed
+  owner_visible_technical_labels_absent: passed
+  google_mutation: not_run
+  production_deploy: not_run

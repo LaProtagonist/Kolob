@@ -1,0 +1,93 @@
+schema_version: 2
+payload_id: PAYLOAD-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01
+iteration_id: ITR-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01
+proposal_id: PROP-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01
+decision_id: DEC-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01
+change_set_id: CHG-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01
+title: Strengthen Petrogradka landlord proposition
+status: approved
+approved_by: project owner
+approved_at: 2026-09-11T00:00:00.000Z
+scope:
+  - Refine only /investor/franchise-platform/petrogradka as a concise, professional proposition for the owner of the equipped production premises.
+  - Retain the core strategy route without content changes; limit CSS changes to scenario-page presentation and responsive layout.
+  - Retain the complete grouped equipment inventory and internal confirmation metadata while removing all owner-visible technical status labels.
+  - Remove repeated detailed prices from the project-additions cards and replace the public budget view with two proposed total launch orientations.
+  - Supersede the prior proposed 6m RUB and 11.5–12.5m RUB public launch orientations without deleting their history; register 10m RUB and 15m RUB as new proposed working scenario estimates.
+  - Update the matching proposed internal landlord proposition, deterministic route audit and scenario-governance test.
+constraints:
+  - Foundation v1.0 and Business Model Architecture v1.0 remain byte-for-byte unchanged.
+  - Approved PRP blocks, the canonical financial baseline, Financial Model engine, Network Planning engine and the core Franchise Platform Strategy remain unchanged.
+  - Petrogradka remains a research scenario and never becomes a baseline, premises decision, lease, financial result or approved CAPEX plan.
+  - The Petrogradka scenario YAML, equipment list, equipment status available_subject_to_confirmation, existing detailed CAPEX assumptions, room parameters, route IDs, scenario IDs and internal enum IDs remain unchanged.
+  - The 10m RUB co-located and 15m RUB separate-reference-unit orientations are proposed working scenario estimates, not confirmed facts, budgets, quotes, financial-model inputs or estimates broken down into invented costs.
+  - The earlier 6m RUB and 11.5–12.5m RUB aggregate public orientations become superseded registry assumptions; their historical records remain intact.
+  - No Financial Model calculation, Financial Model sync, Network Planning sync, Google mutation or production deployment is introduced.
+affected_document_ids:
+  - DOC-SCENARIO-PETROGRADKA-READY-PRODUCTION-BASE
+  - DOC-PETROGRADKA-LANDLORD-PROPOSITION
+affected_section_ids:
+  - investor.franchise-platform.petrogradka.owner-presentation
+  - investor.franchise-platform.petrogradka.project-additions
+  - investor.franchise-platform.petrogradka.investment-contour
+  - investor.franchise-platform.petrogradka.production-base-effect
+  - investor.franchise-platform.petrogradka.network-role
+  - investor.franchise-platform.petrogradka.interaction-model
+  - investor.franchise-platform.petrogradka.confirmations
+  - petrogradka-landlord-proposition.v0.3
+  - petrogradka-working-scenario-estimates.v2
+state_hash_paths:
+  - docs-platform/00-foundation.md
+  - docs-platform/01-business-model-architecture.md
+  - docs-platform/02-franchise-platform-strategy.md
+  - docs-platform/03-petrogradka-landlord-proposition.md
+  - docs-platform/scenarios/petrogradka-ready-production-base.yaml
+  - docs-platform/working/franchise-platform-parameters.yaml
+  - docs-platform/working/financial-model.yaml
+  - docs-platform/working/network-planning-assumptions.yaml
+  - docs-platform/registry/assumptions.yaml
+  - docs-platform/registry/decisions.yaml
+  - docs-platform/registry/dependencies.yaml
+  - docs-platform/registry/documents.yaml
+  - docs-platform/registry/sources.yaml
+  - docs-platform/app/test/franchise-platform.test.ts
+  - scripts/test-franchise-platform.cjs
+  - src/components/FranchisePlatform.css
+  - src/components/FranchisePlatform.tsx
+  - src/content/franchise-platform.ts
+  - src/lib/franchise-platform.ts
+  - verification/VISUAL_QA.md
+content_paths:
+  - docs-platform/03-petrogradka-landlord-proposition.md
+  - docs-platform/registry/assumptions.yaml
+  - docs-platform/registry/decisions.yaml
+  - docs-platform/registry/documents.yaml
+  - docs-platform/registry/sources.yaml
+  - docs-platform/app/test/franchise-platform.test.ts
+  - scripts/test-franchise-platform.cjs
+  - src/components/FranchisePlatform.css
+  - src/components/FranchisePlatform.tsx
+  - src/content/franchise-platform.ts
+  - docs-platform/changes/proposals/PROP-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01.yaml
+  - docs-platform/changes/decisions/DEC-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01.yaml
+  - docs-platform/changes/CHG-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01.yaml
+  - docs-platform/changes/iterations/ITR-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01.yaml
+  - docs-platform/changelog/payloads/ITR-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01-approved.yaml
+  - docs-platform/changelog/audit/ITR-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01.yaml
+  - docs-platform/changelog/previews/ITR-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01.yaml
+  - docs-platform/changelog/verification/ITR-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01.yaml
+  - docs-platform/changelog/events.ndjson
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/SNAPSHOT-ITR-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01.yaml
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+allowed_dirty_paths:
+  - analysis/
+  - output/
+rollback_payload: null
+rollback_contract:
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true

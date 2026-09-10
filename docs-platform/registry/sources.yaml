@@ -1602,3 +1602,15 @@ sources:
     accessed_at: 2026-09-08
     reliability: primary
     notes: Первичный источник редакции страницы Петроградки как компактного предложения собственнику объекта и трёх новых proposed working scenario estimates. Не утверждает помещение, аренду, оборудование, мощность, смету, финансовый результат, baseline или изменения Financial Model.
+  - id: SRC-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-BRIEF-2026-09-11
+    title: Задание на усиление предложения Петроградки для собственника помещения
+    type: instruction
+    location: User instruction, 2026-09-11
+    publisher: project owner
+    publication_date: 2026-09-11
+    accessed_at: 2026-09-11
+    reliability: primary
+    notes: >-
+      Первичный источник редакционной итерации страницы Петроградки: заменить публичные
+      агрегированные ориентиры запуска, сохранить детальные внутренние оценки, усилить позицию
+      проекта и не менять Foundation, BMA, core strategy, baseline или Financial Model.

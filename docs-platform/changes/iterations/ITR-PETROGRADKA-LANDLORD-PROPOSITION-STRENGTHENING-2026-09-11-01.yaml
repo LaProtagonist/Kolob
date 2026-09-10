@@ -1,0 +1,86 @@
+schema_version: 2
+iteration_id: ITR-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01
+proposal_id: PROP-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01
+decision_id: DEC-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01
+change_set_id: CHG-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01
+title: Strengthen Petrogradka landlord proposition
+status: approved
+approved_by: project owner
+approved_at: 2026-09-11T00:00:00.000Z
+actor: Codex
+scope: >-
+  Refine the Petrogradka owner presentation and its proposed internal draft while retaining the
+  research-scenario, governing, baseline and financial-model boundaries, and replace only the
+  public aggregate launch orientations through append-only governance records.
+approved_payload_path: docs-platform/changelog/payloads/ITR-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01-approved.yaml
+approved_payload_sha256: 287ff015d6e19af5eb3fe8d1ce5aab7fd28fc4c05ee25ed240b6e73aa4b1f253
+before_state_sha256: 3912e222b8e0836ff419eeb0f3f37373361ff4e06942e77ee2826d31cf38fb4d
+after_state_sha256: 8dc669d133fca4bb877cb44f9d431f247fe955edf7f7ea1040b959508d808d49
+affected_document_ids:
+  - DOC-SCENARIO-PETROGRADKA-READY-PRODUCTION-BASE
+  - DOC-PETROGRADKA-LANDLORD-PROPOSITION
+affected_section_ids:
+  - investor.franchise-platform.petrogradka.owner-presentation
+  - investor.franchise-platform.petrogradka.project-additions
+  - investor.franchise-platform.petrogradka.investment-contour
+  - investor.franchise-platform.petrogradka.production-base-effect
+  - investor.franchise-platform.petrogradka.network-role
+  - investor.franchise-platform.petrogradka.interaction-model
+  - investor.franchise-platform.petrogradka.confirmations
+  - petrogradka-landlord-proposition.v0.3
+  - petrogradka-working-scenario-estimates.v2
+state_hash_paths:
+  - docs-platform/00-foundation.md
+  - docs-platform/01-business-model-architecture.md
+  - docs-platform/02-franchise-platform-strategy.md
+  - docs-platform/03-petrogradka-landlord-proposition.md
+  - docs-platform/scenarios/petrogradka-ready-production-base.yaml
+  - docs-platform/working/franchise-platform-parameters.yaml
+  - docs-platform/working/financial-model.yaml
+  - docs-platform/working/network-planning-assumptions.yaml
+  - docs-platform/registry/assumptions.yaml
+  - docs-platform/registry/decisions.yaml
+  - docs-platform/registry/dependencies.yaml
+  - docs-platform/registry/documents.yaml
+  - docs-platform/registry/sources.yaml
+  - docs-platform/app/test/franchise-platform.test.ts
+  - scripts/test-franchise-platform.cjs
+  - src/components/FranchisePlatform.css
+  - src/components/FranchisePlatform.tsx
+  - src/content/franchise-platform.ts
+  - src/lib/franchise-platform.ts
+  - verification/VISUAL_QA.md
+content_paths:
+  - docs-platform/03-petrogradka-landlord-proposition.md
+  - docs-platform/registry/assumptions.yaml
+  - docs-platform/registry/decisions.yaml
+  - docs-platform/registry/documents.yaml
+  - docs-platform/registry/sources.yaml
+  - docs-platform/app/test/franchise-platform.test.ts
+  - scripts/test-franchise-platform.cjs
+  - src/components/FranchisePlatform.css
+  - src/components/FranchisePlatform.tsx
+  - src/content/franchise-platform.ts
+  - docs-platform/changes/proposals/PROP-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01.yaml
+  - docs-platform/changes/decisions/DEC-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01.yaml
+  - docs-platform/changes/CHG-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01.yaml
+  - docs-platform/changes/iterations/ITR-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01.yaml
+  - docs-platform/changelog/payloads/ITR-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01-approved.yaml
+  - docs-platform/changelog/audit/ITR-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01.yaml
+  - docs-platform/changelog/previews/ITR-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01.yaml
+  - docs-platform/changelog/verification/ITR-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01.yaml
+  - docs-platform/changelog/events.ndjson
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/SNAPSHOT-ITR-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01.yaml
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+allowed_dirty_paths:
+  - analysis/
+  - output/
+rollback_payload: null
+rollback_contract:
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true

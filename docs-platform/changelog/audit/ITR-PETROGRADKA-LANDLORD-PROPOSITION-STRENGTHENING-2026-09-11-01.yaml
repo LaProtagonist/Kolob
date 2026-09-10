@@ -1,0 +1,20 @@
+receipt_version: 1
+iteration_id: ITR-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01
+audited_at: 2026-09-11T00:12:00.000Z
+result: passed
+finding:
+  scope: Petrogradka owner presentation, matching proposed internal draft, superseded public orientations and new proposed working scenario estimates.
+  narrative: The route presents the premises as a potential infrastructure asset within the network model and does not present the project as seeking a resource before financing.
+  economics: Detailed component estimates remain internal. The route presents only the requested 10m RUB and 15m RUB total working orientations and states their broad, not-yet-detailed operating scope.
+  equipment: The complete grouped listing inventory and its calm post-inspection clarification remain visible; the canonical scenario YAML and internal confirmation status remain unchanged.
+  boundaries: The core strategy route, Foundation, Business Model Architecture, baseline, Financial Model and Network Planning remain outside the iteration’s content scope.
+  responsive: Scenario gutters remain isolated at 32–48 px desktop, 24 px tablet and 16 px mobile; browser checks cover 1440, 1024, 768 and 390 px without horizontal overflow.
+resolution:
+  - retain Petrogradka as research and non-baseline
+  - retain available_subject_to_confirmation only as internal canonical equipment metadata
+  - retain detailed existing Petrogradka numerical assumptions without modification
+  - retain no independent financial calculation or automatic financial synchronization
+  - retain former public aggregate orientations as superseded assumptions for historical traceability
+external_state:
+  google_apply: not_run
+  production_deploy: not_run

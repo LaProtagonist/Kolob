@@ -1,0 +1,17 @@
+schema_version: 2
+change_id: CHG-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01
+title: Strengthen Petrogradka landlord proposition
+status: approved
+created_at: 2026-09-11
+decision_id: DEC-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01
+iteration_id: ITR-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01
+proposal_id: PROP-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01
+approved_payload_path: docs-platform/changelog/payloads/ITR-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01-approved.yaml
+approved_payload_sha256: 287ff015d6e19af5eb3fe8d1ce5aab7fd28fc4c05ee25ed240b6e73aa4b1f253
+operations:
+  - retain the owner-facing route and complete equipment inventory while adding the post-inspection equipment-use note
+  - remove detailed monetary values from project-addition cards and replace the former public budget report with the investment contour and two requested total orientations
+  - replace the former capital-efficiency narrative with the ready-production-base effect, network role and interaction model
+  - replace the flat confirmation list with equipment, premises and interaction groups and use the approved proposed-format wording verbatim
+  - supersede the prior 6m RUB and 11.5–12.5m RUB public assumptions and add 10m RUB and 15m RUB proposed working scenario estimates without modifying detailed scenario assumptions
+  - update the matching proposed internal landlord proposition and deterministic route/governance tests

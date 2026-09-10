@@ -1,0 +1,13 @@
+schema_version: 2
+decision_id: DEC-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01
+iteration_id: ITR-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01
+title: Approve strengthened Petrogradka landlord proposition
+status: approved
+approved_by: project owner
+approved_at: 2026-09-11T00:00:00.000Z
+scope: >-
+  Apply the owner-specified Petrogradka presentation only: retain the research scenario and all
+  detailed internal estimates, supersede the earlier public aggregate launch orientations and use
+  the requested proposed total orientations without creating a financial calculation or CAPEX plan.
+approved_payload_path: docs-platform/changelog/payloads/ITR-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01-approved.yaml
+approved_payload_sha256: 287ff015d6e19af5eb3fe8d1ce5aab7fd28fc4c05ee25ed240b6e73aa4b1f253

@@ -76,23 +76,32 @@ test("Franchise assumptions use RUB and retain explicit research status", () => 
   assert.doesNotMatch(trackedText, /\$1m|\$\s*1[, ]?000[, ]?000/i);
 });
 
-test("Petrogradka owner presentation keeps new launch estimates proposed and leaves the canonical scenario unchanged", () => {
+test("Petrogradka owner presentation supersedes prior public launch estimates and leaves the canonical scenario unchanged", () => {
   const assumptions = yaml<{ assumptions: Array<Record<string, any>> }>("docs-platform/registry/assumptions.yaml").assumptions;
   const decisions = yaml<{ decisions: Array<Record<string, any>> }>("docs-platform/registry/decisions.yaml").decisions;
   const documents = yaml<{ documents: Array<Record<string, any>> }>("docs-platform/registry/documents.yaml").documents;
-  const estimates = [
+  const supersededEstimates = [
     assumptions.find(item => item.id === "ASM-PETROGRADKA-DIGITAL-PLATFORM-FIRST-VERSION"),
     assumptions.find(item => item.id === "ASM-PETROGRADKA-COLOCATED-LAUNCH-CONFIGURATION"),
     assumptions.find(item => item.id === "ASM-PETROGRADKA-SEPARATE-REFERENCE-UNIT-LAUNCH-CONFIGURATION"),
   ];
+  const currentEstimates = [
+    assumptions.find(item => item.id === "ASM-PETROGRADKA-COLOCATED-LAUNCH-CONFIGURATION-V2"),
+    assumptions.find(item => item.id === "ASM-PETROGRADKA-SEPARATE-REFERENCE-UNIT-LAUNCH-CONFIGURATION-V2"),
+  ];
 
-  assert.deepEqual(estimates.map(item => ({ value: item?.value, unit: item?.unit, status: item?.status })), [
+  assert.deepEqual(supersededEstimates.map(item => ({ value: item?.value, unit: item?.unit, status: item?.status })), [
     { value: { maximum_rub: 2_500_000 }, unit: "RUB", status: "proposed" },
-    { value: { minimum_rub: 6_000_000 }, unit: "RUB", status: "proposed" },
-    { value: { from_rub: 11_500_000, to_rub: 12_500_000 }, unit: "RUB", status: "proposed" },
+    { value: { minimum_rub: 6_000_000 }, unit: "RUB", status: "superseded" },
+    { value: { from_rub: 11_500_000, to_rub: 12_500_000 }, unit: "RUB", status: "superseded" },
   ]);
-  assert.ok(estimates.every(item => item?.scenario === "PETROGRADKA / READY_PRODUCTION_BASE"));
+  assert.deepEqual(currentEstimates.map(item => ({ value: item?.value, unit: item?.unit, status: item?.status })), [
+    { value: { minimum_rub: 10_000_000 }, unit: "RUB", status: "proposed" },
+    { value: { minimum_rub: 15_000_000 }, unit: "RUB", status: "proposed" },
+  ]);
+  assert.ok([...supersededEstimates, ...currentEstimates].every(item => item?.scenario === "PETROGRADKA / READY_PRODUCTION_BASE"));
   assert.equal(decisions.find(item => item.id === "DEC-PETROGRADKA-LANDLORD-PRESENTATION-2026-09-08-01")?.status, "approved");
+  assert.equal(decisions.find(item => item.id === "DEC-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01")?.status, "approved");
   assert.equal(documents.find(item => item.id === "DOC-PETROGRADKA-LANDLORD-PROPOSITION")?.status, "proposed");
 
   const scenario = yaml<any>("docs-platform/scenarios/petrogradka-ready-production-base.yaml");

@@ -1,0 +1,13 @@
+schema_version: 2
+proposal_id: PROP-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01
+iteration_id: ITR-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01
+title: Strengthen Petrogradka landlord proposition
+status: approved
+proposed_by: project owner
+proposed_at: 2026-09-11T00:00:00.000Z
+summary: >-
+  Refine the existing Petrogradka owner presentation, preserve its scenario boundary and detailed
+  internal estimates, replace only the public aggregate launch orientations and clarify the
+  project’s investment program and possible interaction model.
+approved_payload_path: docs-platform/changelog/payloads/ITR-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01-approved.yaml
+approved_payload_sha256: 287ff015d6e19af5eb3fe8d1ce5aab7fd28fc4c05ee25ed240b6e73aa4b1f253

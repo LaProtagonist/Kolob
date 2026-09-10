@@ -1,0 +1,29 @@
+receipt_version: 1
+iteration_id: ITR-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01
+decision_id: DEC-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01
+change_set_id: CHG-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01
+previewed_at: 2026-09-11T00:06:00.000Z
+result: reviewed
+mutation_performed: false
+before_state_sha256: 3912e222b8e0836ff419eeb0f3f37373361ff4e06942e77ee2826d31cf38fb4d
+after_state_sha256: 8dc669d133fca4bb877cb44f9d431f247fe955edf7f7ea1040b959508d808d49
+changes:
+  - the private Petrogradka route presents project additions without repeated detailed prices and uses two explicit proposed total orientations
+  - the ready-production-base effect explains capital allocation without presenting the combined configuration as a cheap or confirmed launch
+  - the route adds the object’s network role, a neutral interaction model and three grouped confirmations
+  - the approved proposed-format wording is presented verbatim and avoids claims about future investor fundraising
+  - previous public aggregate assumptions remain traceable as superseded and detailed internal assumptions remain intact
+invariants:
+  foundation_unchanged: true
+  business_model_architecture_unchanged: true
+  approved_prp_blocks_unchanged: true
+  franchise_platform_core_strategy_unchanged: true
+  canonical_financial_baseline_unchanged: true
+  financial_engine_unchanged: true
+  network_planning_engine_unchanged: true
+  petrogradka_is_research_scenario: true
+  petrogradka_is_not_baseline: true
+  petrogradka_yaml_equipment_and_existing_assumptions_unchanged: true
+  new_total_orientations_are_proposed_working_scenario_estimates: true
+  google_mutation: not_run
+  production_deploy: not_run
