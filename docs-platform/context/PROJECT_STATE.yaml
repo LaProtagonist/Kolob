@@ -1,13 +1,13 @@
 schema_version: 2
-generated_at: 2026-09-08T02:47:24.118Z
+generated_at: 2026-09-11T00:18:00.001Z
 project: Колобочная
 branch: master
-latest_timeline_event_id: EVT-ITR-PETROGRADKA-LANDLORD-PRESENTATION-2026-09-08-01-COMMITTED
-latest_timeline_event_hash: 291661e47fde3b56e39f1b20f0efd2ae36aae72bcbc87d27b215e8988b2e9f69
-latest_closed_iteration_id: ITR-PETROGRADKA-LANDLORD-PRESENTATION-2026-09-08-01
-latest_iteration_tag: iteration/ITR-PETROGRADKA-LANDLORD-PRESENTATION-2026-09-08-01
-latest_content_commit_hash: de1f02a6618492818a0ab6726dfb9998591b1e50
-registry_hash: 904f41b47f605cf7dd4f5aa887970a144880aa92cef316715cf3c8be6a2bc334
+latest_timeline_event_id: EVT-ITR-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01-COMMITTED
+latest_timeline_event_hash: fe73ace579601e6a92df751d63ec4f2922fe4267c58c181150005fb6d39af7d7
+latest_closed_iteration_id: ITR-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01
+latest_iteration_tag: iteration/ITR-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01
+latest_content_commit_hash: 9bbd8130ec2b53b694d0fb269e1dd80e50542b4c
+registry_hash: 85c11be90de10de39bdac46abc41aaaa25895bcc329ee007e333d217bb96421b
 canonical_document_hashes:
   - document_id: DOC-AGENTS
     local_path: docs-platform/AGENTS.md
@@ -91,7 +91,7 @@ canonical_document_hashes:
     status: approved
   - document_id: DOC-PETROGRADKA-LANDLORD-PROPOSITION
     local_path: docs-platform/03-petrogradka-landlord-proposition.md
-    sha256: 47c9f5eec1c78d38977d0b5dc9ecd7de7fbe20a3a239775ac94452561ae5701f
+    sha256: 0b5c8c023d1de080037dc7cd76d96ee184cfea7ea7bd6ea321a8d195c136366d
     status: proposed
   - document_id: DOC-PILOT-CAPEX-ASSUMPTIONS
     local_path: docs-platform/working/pilot-capex-assumptions.yaml
@@ -116,7 +116,7 @@ open_questions:
   - Archive pending review artifacts in durable storage before treating visual verification as portable.
   - Create deployment receipts when the next governed deployment is performed.
   - Decide whether malformed superseded legacy YAML evidence should receive a separate correction event.
-current_workstream: Present Petrogradka launch scenario for the premises owner
+current_workstream: Strengthen Petrogradka landlord proposition
 next_task: Select the next task through a new governed proposal; no business task is pre-authorized.
 google_integration_status:
   configured: true
