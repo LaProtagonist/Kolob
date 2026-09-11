@@ -4,9 +4,9 @@
 
 ## 1. Current state
 
-- Events: 360.
-- Timeline head event: `EVT-ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01-COMMITTED`.
-- Timeline head SHA-256: `4f2e3883bab9152c4d67e7197901af0c50e89dd2025da1fd7eef175d09bb06b5`.
+- Events: 361.
+- Timeline head event: `EVT-ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01-DEPLOYED-deploy-routes-control-20260912-01`.
+- Timeline head SHA-256: `d51998dfb8b98af9386d411e6f09fc2393b94cb4ee0c9e908766e0c387622b7a`.
 - Latest recorded iteration: `ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01`.
 
 ## 2. Modern governed iterations
@@ -78,7 +78,7 @@
 | 2026-09-10T23:58:11.000Z | committed | Strengthen Petrogradka landlord proposition | ITR-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01 | DEC-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01 | CHG-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01 | 9bbd8130ec2b53b694d0fb269e1dd80e50542b4c | iteration/ITR-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01 | — | — | — | Strengthen Petrogradka landlord proposition: content commit verified and linked to the governed lifecycle before sealing. |
 | 2026-09-11T13:01:22.000Z | committed | Finalize Petrogradka landlord narrative | ITR-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01 | DEC-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01 | CHG-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01 | bf87e9aa2ef7aac9ef7f22b83d23a804aaaf1952 | iteration/ITR-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01 | — | — | — | Finalize Petrogradka landlord narrative: content commit verified and linked to the governed lifecycle before sealing. |
 | 2026-09-11T13:09:07.000Z | committed | Align Petrogradka landlord metadata | ITR-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-2026-09-11-01 | DEC-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-2026-09-11-01 | CHG-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-2026-09-11-01 | a3dc5aa4acf39c38048e6da404c7ecb327ea1ae4 | iteration/ITR-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-2026-09-11-01 | — | — | — | Align Petrogradka landlord metadata: content commit verified and linked to the governed lifecycle before sealing. |
-| 2026-09-11T21:18:18.000Z | committed | Introduce protected Control workspace | ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01 | DEC-ROUTES-CONTROL-WORKSPACE-2026-09-12-01 | CHG-ROUTES-CONTROL-WORKSPACE-2026-09-12-01 | deef5e6c845d3bd233fcfa02495a510a35a61e77 | iteration/ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01 | — | — | — | Introduce protected Control workspace: content commit verified and linked to the governed lifecycle before sealing. |
+| 2026-09-11T21:21:32.000Z | deployed | Introduce protected Control workspace | ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01 | DEC-ROUTES-CONTROL-WORKSPACE-2026-09-12-01 | CHG-ROUTES-CONTROL-WORKSPACE-2026-09-12-01 | deef5e6c845d3bd233fcfa02495a510a35a61e77 | iteration/ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01 | — | docs-platform/changelog/deployments/deploy-routes-control-20260912-01.yaml | — | Sealed content state a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239 deployed to https://colob.spi.ski; smoke test passed. |
 
 ## 3. Legacy imported history
 
@@ -140,6 +140,7 @@
 | 2026-08-26T16:31:34.975Z | ITR-INVESTOR-SUMMARY-PUBLISHER-MERGE-FIX-2026-08-26-01 | verified | docs-platform/changelog/google-sync/2026-08-26-DOC-INVESTOR-FINANCIAL-SUMMARY-MERGE-FIX.yaml | — | — |
 | 2026-08-28T14:28:32.000Z | ITR-RELEASE-FINANCIAL-DEPENDENCY-REFRESH-2026-08-28-01 | deployed | — | docs-platform/changelog/deployments/DEPLOY-FINANCIAL-CORE-INVESTOR-TERMINAL-2026-08-28-01.yaml | https://colob.spi.ski |
 | 2026-08-28T14:44:20.000Z | ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02 | deployed | — | docs-platform/changelog/deployments/DEPLOY-FINANCIAL-CORE-INVESTOR-TERMINAL-2026-08-28-02.yaml | https://colob.spi.ski |
+| 2026-09-11T21:21:32.000Z | ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01 | deployed | — | docs-platform/changelog/deployments/deploy-routes-control-20260912-01.yaml | https://colob.spi.ski |
 
 ## 6. Open issues
 

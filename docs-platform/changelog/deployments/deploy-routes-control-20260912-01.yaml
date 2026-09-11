@@ -1,0 +1,14 @@
+schema_version: 2
+iteration_id: ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01
+content_state_sha256: a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239
+content_commit_hash: deef5e6c845d3bd233fcfa02495a510a35a61e77
+seal_commit_hash: e62021be3f8aded4662ee02b8a0c3e35e1d189e1
+repository_head_at_build: e62021be3f8aded4662ee02b8a0c3e35e1d189e1
+dist_sha256: e31b52d8c9c0fe18efa848e4994a884bd242674314a18360c0c3aae6ddd6b1cd
+deployment_id: deploy-routes-control-20260912-01
+production_url: https://colob.spi.ski
+built_at: 2026-09-11T21:21:32.000Z
+deployed_at: 2026-09-11T21:21:32.000Z
+build_hash: e31b52d8c9c0fe18efa848e4994a884bd242674314a18360c0c3aae6ddd6b1cd
+smoke_test_result: passed
+recorded_at: 2026-09-11T21:23:32.683Z

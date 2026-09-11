@@ -1,9 +1,9 @@
 schema_version: 2
-generated_at: 2026-09-11T21:18:45.771Z
+generated_at: 2026-09-11T21:23:32.702Z
 project: Колобочная
 branch: master
-latest_timeline_event_id: EVT-ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01-COMMITTED
-latest_timeline_event_hash: 4f2e3883bab9152c4d67e7197901af0c50e89dd2025da1fd7eef175d09bb06b5
+latest_timeline_event_id: EVT-ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01-DEPLOYED-deploy-routes-control-20260912-01
+latest_timeline_event_hash: d51998dfb8b98af9386d411e6f09fc2393b94cb4ee0c9e908766e0c387622b7a
 latest_closed_iteration_id: ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01
 latest_iteration_tag: iteration/ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01
 latest_content_commit_hash: deef5e6c845d3bd233fcfa02495a510a35a61e77
@@ -129,7 +129,7 @@ mcp_status:
   live_status: not_probed_by_context_build
 deployment_status:
   status: receipts_present
-  receipts: 8
+  receipts: 9
   production_url: null
 known_drift:
   - malformed_legacy_yaml:docs-platform/changelog/audit/ITR-LAUNCH-COST-PRESENTATION-2026-08-05-01.yaml

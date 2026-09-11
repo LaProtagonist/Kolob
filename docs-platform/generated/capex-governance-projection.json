@@ -1,26 +1,26 @@
 {
   "schema_version": 1,
-  "generated_from_event_id": "EVT-ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02-DEPLOYED-DEPLOY-FINANCIAL-CORE-INVESTOR-TERMINAL-2026-08-28-02",
-  "generated_from_event_hash": "8a17f90a3f097c2c1e3e4afc33ee9dd60268e89228f0826d88e86db8d17571f4",
+  "generated_from_event_id": "EVT-ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01-DEPLOYED-deploy-routes-control-20260912-01",
+  "generated_from_event_hash": "d51998dfb8b98af9386d411e6f09fc2393b94cb4ee0c9e908766e0c387622b7a",
   "content_state_sha256": "a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239",
   "latest_committed_iteration": {
-    "iteration_id": "ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02",
-    "decision_id": "DEC-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02",
-    "change_set_id": "CHG-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02",
-    "content_commit_hash": "50a64fbb88a30a3554cea7437914ecc915e418c7",
-    "seal_commit_hash": "93056762f18248dd4cd9a843c436274a6454456d",
-    "iteration_tag": "iteration/ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02"
+    "iteration_id": "ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01",
+    "decision_id": "DEC-ROUTES-CONTROL-WORKSPACE-2026-09-12-01",
+    "change_set_id": "CHG-ROUTES-CONTROL-WORKSPACE-2026-09-12-01",
+    "content_commit_hash": "deef5e6c845d3bd233fcfa02495a510a35a61e77",
+    "seal_commit_hash": "e62021be3f8aded4662ee02b8a0c3e35e1d189e1",
+    "iteration_tag": "iteration/ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01"
   },
   "latest_deployment_event": {
-    "event_id": "EVT-ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02-DEPLOYED-DEPLOY-FINANCIAL-CORE-INVESTOR-TERMINAL-2026-08-28-02",
-    "iteration_id": "ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02",
-    "deployment_receipt": "docs-platform/changelog/deployments/DEPLOY-FINANCIAL-CORE-INVESTOR-TERMINAL-2026-08-28-02.yaml",
+    "event_id": "EVT-ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01-DEPLOYED-deploy-routes-control-20260912-01",
+    "iteration_id": "ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01",
+    "deployment_receipt": "docs-platform/changelog/deployments/deploy-routes-control-20260912-01.yaml",
     "production_url": "https://colob.spi.ski"
   },
-  "repository_head": "93056762f18248dd4cd9a843c436274a6454456d",
+  "repository_head": "e62021be3f8aded4662ee02b8a0c3e35e1d189e1",
   "timeline_head": {
-    "event_id": "EVT-ITR-RELEASE-TERMINAL-PRERENDER-ROUTE-2026-08-28-02-DEPLOYED-DEPLOY-FINANCIAL-CORE-INVESTOR-TERMINAL-2026-08-28-02",
-    "event_hash": "8a17f90a3f097c2c1e3e4afc33ee9dd60268e89228f0826d88e86db8d17571f4"
+    "event_id": "EVT-ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01-DEPLOYED-deploy-routes-control-20260912-01",
+    "event_hash": "d51998dfb8b98af9386d411e6f09fc2393b94cb4ee0c9e908766e0c387622b7a"
   },
   "deployment_receipts": [
     {
@@ -109,6 +109,17 @@
       "dist_sha256": "8c7a37ca884be9592e4abefbea8bd2a8a80ce915fdfe39287374ab3dc493bd19",
       "production_url": "https://colob.spi.ski/revenue-model",
       "deployed_at": "2026-08-16T00:18:47.000Z",
+      "result": "passed"
+    },
+    {
+      "path": "docs-platform/changelog/deployments/deploy-routes-control-20260912-01.yaml",
+      "deployment_id": "deploy-routes-control-20260912-01",
+      "content_state_sha256": "a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239",
+      "content_commit_hash": "deef5e6c845d3bd233fcfa02495a510a35a61e77",
+      "seal_commit_hash": "e62021be3f8aded4662ee02b8a0c3e35e1d189e1",
+      "dist_sha256": "e31b52d8c9c0fe18efa848e4994a884bd242674314a18360c0c3aae6ddd6b1cd",
+      "production_url": "https://colob.spi.ski",
+      "deployed_at": "2026-09-11T21:21:32.000Z",
       "result": "passed"
     }
   ]

@@ -16,9 +16,9 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01-COMMITTED`.
-- Hash: `4f2e3883bab9152c4d67e7197901af0c50e89dd2025da1fd7eef175d09bb06b5`.
-- generated_from_event_hash: `4f2e3883bab9152c4d67e7197901af0c50e89dd2025da1fd7eef175d09bb06b5`.
+- Event: `EVT-ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01-DEPLOYED-deploy-routes-control-20260912-01`.
+- Hash: `d51998dfb8b98af9386d411e6f09fc2393b94cb4ee0c9e908766e0c387622b7a`.
+- generated_from_event_hash: `d51998dfb8b98af9386d411e6f09fc2393b94cb4ee0c9e908766e0c387622b7a`.
 
 ## 4. Канонические документы
 
@@ -69,7 +69,7 @@ Introduce protected Control workspace
 
 - Google: `{"configured":true,"historical_receipts":14,"receipts_with_machine_readback_hash":11,"live_drift_check":"not_run_by_context_build"}`.
 - MCP: `{"implementation_present":true,"canonical_access":"registry_document_ids_only","live_status":"not_probed_by_context_build"}`.
-- Deployment: `{"status":"receipts_present","receipts":8,"production_url":null}`.
+- Deployment: `{"status":"receipts_present","receipts":9,"production_url":null}`.
 
 ## 9. Команды проверки
 
