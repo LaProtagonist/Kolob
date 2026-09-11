@@ -9,16 +9,16 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 ## 2. Текущая ветка и governed iteration
 
 - Branch: `master`.
-- Latest closed iteration: `ITR-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01`.
-- Latest iteration tag: `iteration/ITR-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01`.
-- Latest content commit: `bf87e9aa2ef7aac9ef7f22b83d23a804aaaf1952`.
+- Latest closed iteration: `ITR-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-2026-09-11-01`.
+- Latest iteration tag: `iteration/ITR-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-2026-09-11-01`.
+- Latest content commit: `a3dc5aa4acf39c38048e6da404c7ecb327ea1ae4`.
 - Текущий Git HEAD намеренно не записывается: его вычисляет `npm run project:onboard`.
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01-COMMITTED`.
-- Hash: `9ba1692f3ac731babf62b7c593c3effd609dfde717399cc60d6af4b0a4936f69`.
-- generated_from_event_hash: `9ba1692f3ac731babf62b7c593c3effd609dfde717399cc60d6af4b0a4936f69`.
+- Event: `EVT-ITR-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-2026-09-11-01-COMMITTED`.
+- Hash: `fc2e3a402413b20fcc61baf216e5b8233d3f2999fa16246cdee5e036d7ac9643`.
+- generated_from_event_hash: `fc2e3a402413b20fcc61baf216e5b8233d3f2999fa16246cdee5e036d7ac9643`.
 
 ## 4. Канонические документы
 
@@ -52,7 +52,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 5. Текущая рабочая тема
 
-Finalize Petrogradka landlord narrative
+Align Petrogradka landlord metadata
 
 ## 6. Decisions и change sets
 

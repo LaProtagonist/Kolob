@@ -1,13 +1,13 @@
 schema_version: 2
-generated_at: 2026-09-11T13:01:35.671Z
+generated_at: 2026-09-11T13:09:15.985Z
 project: Колобочная
 branch: master
-latest_timeline_event_id: EVT-ITR-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01-COMMITTED
-latest_timeline_event_hash: 9ba1692f3ac731babf62b7c593c3effd609dfde717399cc60d6af4b0a4936f69
-latest_closed_iteration_id: ITR-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01
-latest_iteration_tag: iteration/ITR-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01
-latest_content_commit_hash: bf87e9aa2ef7aac9ef7f22b83d23a804aaaf1952
-registry_hash: 2555e43e2fbdf6abd38933f3b2351c3a7372f3a1f054b97700dba6a7c0424464
+latest_timeline_event_id: EVT-ITR-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-2026-09-11-01-COMMITTED
+latest_timeline_event_hash: fc2e3a402413b20fcc61baf216e5b8233d3f2999fa16246cdee5e036d7ac9643
+latest_closed_iteration_id: ITR-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-2026-09-11-01
+latest_iteration_tag: iteration/ITR-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-2026-09-11-01
+latest_content_commit_hash: a3dc5aa4acf39c38048e6da404c7ecb327ea1ae4
+registry_hash: 1cb21db725575ddd7866a199c9428f9dbb813f2766a9febbaaa2afac5906a538
 canonical_document_hashes:
   - document_id: DOC-AGENTS
     local_path: docs-platform/AGENTS.md
@@ -116,7 +116,7 @@ open_questions:
   - Archive pending review artifacts in durable storage before treating visual verification as portable.
   - Create deployment receipts when the next governed deployment is performed.
   - Decide whether malformed superseded legacy YAML evidence should receive a separate correction event.
-current_workstream: Finalize Petrogradka landlord narrative
+current_workstream: Align Petrogradka landlord metadata
 next_task: Select the next task through a new governed proposal; no business task is pre-authorized.
 google_integration_status:
   configured: true
