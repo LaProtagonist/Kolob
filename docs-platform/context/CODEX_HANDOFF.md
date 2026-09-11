@@ -9,16 +9,16 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 ## 2. Текущая ветка и governed iteration
 
 - Branch: `master`.
-- Latest closed iteration: `ITR-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01`.
-- Latest iteration tag: `iteration/ITR-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01`.
-- Latest content commit: `9bbd8130ec2b53b694d0fb269e1dd80e50542b4c`.
+- Latest closed iteration: `ITR-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01`.
+- Latest iteration tag: `iteration/ITR-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01`.
+- Latest content commit: `bf87e9aa2ef7aac9ef7f22b83d23a804aaaf1952`.
 - Текущий Git HEAD намеренно не записывается: его вычисляет `npm run project:onboard`.
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01-COMMITTED`.
-- Hash: `fe73ace579601e6a92df751d63ec4f2922fe4267c58c181150005fb6d39af7d7`.
-- generated_from_event_hash: `fe73ace579601e6a92df751d63ec4f2922fe4267c58c181150005fb6d39af7d7`.
+- Event: `EVT-ITR-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01-COMMITTED`.
+- Hash: `9ba1692f3ac731babf62b7c593c3effd609dfde717399cc60d6af4b0a4936f69`.
+- generated_from_event_hash: `9ba1692f3ac731babf62b7c593c3effd609dfde717399cc60d6af4b0a4936f69`.
 
 ## 4. Канонические документы
 
@@ -44,7 +44,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 | DOC-INVESTOR-FINANCIAL-SUMMARY | research | `docs-platform/working/investor-financial-summary.yaml` | `790d4c84513d666157088c0afeb8ece09ed80080b33db54117ad1dde64a92a40` |
 | DOC-INVESTOR-START-MODEL | research | `docs-platform/working/investor-start-model.yaml` | `b81a6c4e8988a4532c9ba2749d492b3f96e37d83af822396afc82930244b2985` |
 | DOC-NETWORK-PLANNING-ASSUMPTIONS | approved | `docs-platform/working/network-planning-assumptions.yaml` | `1136e30e205cf03abef7232fb1618b624f2f4d1744d14de966089908d4c2022b` |
-| DOC-PETROGRADKA-LANDLORD-PROPOSITION | proposed | `docs-platform/03-petrogradka-landlord-proposition.md` | `0b5c8c023d1de080037dc7cd76d96ee184cfea7ea7bd6ea321a8d195c136366d` |
+| DOC-PETROGRADKA-LANDLORD-PROPOSITION | proposed | `docs-platform/03-petrogradka-landlord-proposition.md` | `7d4cfbf0c95b317218bf9e3cf2d75ef31e366b50cdb3d19ab9ce622bdd782d0f` |
 | DOC-PILOT-CAPEX-ASSUMPTIONS | research | `docs-platform/working/pilot-capex-assumptions.yaml` | `25e11d4db20050b3a95cab40797ef0a29e56fad93c73d33d4a39415a8071d4ac` |
 | DOC-README | approved | `docs-platform/README.md` | `04e947f296a158a1c37ceb8d4c959d1f4e31cf609d16c99bee2d3c3b79b824ab` |
 | DOC-REVENUE-MODEL | research | `docs-platform/working/revenue-model.yaml` | `ab68399813d62d861522752c8e94df9cfc5d5a48e9b7723c60f2c968c4cba721` |
@@ -52,7 +52,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 5. Текущая рабочая тема
 
-Strengthen Petrogradka landlord proposition
+Finalize Petrogradka landlord narrative
 
 ## 6. Decisions и change sets
 

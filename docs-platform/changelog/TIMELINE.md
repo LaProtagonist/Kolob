@@ -4,10 +4,10 @@
 
 ## 1. Current state
 
-- Events: 343.
-- Timeline head event: `EVT-ITR-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01-COMMITTED`.
-- Timeline head SHA-256: `fe73ace579601e6a92df751d63ec4f2922fe4267c58c181150005fb6d39af7d7`.
-- Latest recorded iteration: `ITR-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01`.
+- Events: 349.
+- Timeline head event: `EVT-ITR-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01-COMMITTED`.
+- Timeline head SHA-256: `9ba1692f3ac731babf62b7c593c3effd609dfde717399cc60d6af4b0a4936f69`.
+- Latest recorded iteration: `ITR-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01`.
 
 ## 2. Modern governed iterations
 
@@ -76,6 +76,7 @@
 | 2026-09-08T01:16:12.000Z | committed | Clarify franchise platform first-stage investment narrative | ITR-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01 | DEC-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01 | CHG-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01 | 18b7c23927da65dfb1508b2b7f927f0ad7e81a4e | iteration/ITR-FRANCHISE-PLATFORM-FIRST-STAGE-2026-09-08-01 | — | — | — | Clarify franchise platform first-stage investment narrative: content commit verified and linked to the governed lifecycle before sealing. |
 | 2026-09-08T02:47:01.000Z | committed | Present Petrogradka launch scenario for the premises owner | ITR-PETROGRADKA-LANDLORD-PRESENTATION-2026-09-08-01 | DEC-PETROGRADKA-LANDLORD-PRESENTATION-2026-09-08-01 | CHG-PETROGRADKA-LANDLORD-PRESENTATION-2026-09-08-01 | de1f02a6618492818a0ab6726dfb9998591b1e50 | iteration/ITR-PETROGRADKA-LANDLORD-PRESENTATION-2026-09-08-01 | — | — | — | Present Petrogradka launch scenario for the premises owner: content commit verified and linked to the governed lifecycle before sealing. |
 | 2026-09-10T23:58:11.000Z | committed | Strengthen Petrogradka landlord proposition | ITR-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01 | DEC-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01 | CHG-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01 | 9bbd8130ec2b53b694d0fb269e1dd80e50542b4c | iteration/ITR-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01 | — | — | — | Strengthen Petrogradka landlord proposition: content commit verified and linked to the governed lifecycle before sealing. |
+| 2026-09-11T13:01:22.000Z | committed | Finalize Petrogradka landlord narrative | ITR-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01 | DEC-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01 | CHG-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01 | bf87e9aa2ef7aac9ef7f22b83d23a804aaaf1952 | iteration/ITR-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01 | — | — | — | Finalize Petrogradka landlord narrative: content commit verified and linked to the governed lifecycle before sealing. |
 
 ## 3. Legacy imported history
 
