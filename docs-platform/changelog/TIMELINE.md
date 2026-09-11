@@ -4,10 +4,10 @@
 
 ## 1. Current state
 
-- Events: 355.
-- Timeline head event: `EVT-ITR-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-2026-09-11-01-COMMITTED`.
-- Timeline head SHA-256: `fc2e3a402413b20fcc61baf216e5b8233d3f2999fa16246cdee5e036d7ac9643`.
-- Latest recorded iteration: `ITR-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-2026-09-11-01`.
+- Events: 360.
+- Timeline head event: `EVT-ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01-COMMITTED`.
+- Timeline head SHA-256: `4f2e3883bab9152c4d67e7197901af0c50e89dd2025da1fd7eef175d09bb06b5`.
+- Latest recorded iteration: `ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01`.
 
 ## 2. Modern governed iterations
 
@@ -78,6 +78,7 @@
 | 2026-09-10T23:58:11.000Z | committed | Strengthen Petrogradka landlord proposition | ITR-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01 | DEC-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01 | CHG-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01 | 9bbd8130ec2b53b694d0fb269e1dd80e50542b4c | iteration/ITR-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01 | — | — | — | Strengthen Petrogradka landlord proposition: content commit verified and linked to the governed lifecycle before sealing. |
 | 2026-09-11T13:01:22.000Z | committed | Finalize Petrogradka landlord narrative | ITR-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01 | DEC-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01 | CHG-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01 | bf87e9aa2ef7aac9ef7f22b83d23a804aaaf1952 | iteration/ITR-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01 | — | — | — | Finalize Petrogradka landlord narrative: content commit verified and linked to the governed lifecycle before sealing. |
 | 2026-09-11T13:09:07.000Z | committed | Align Petrogradka landlord metadata | ITR-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-2026-09-11-01 | DEC-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-2026-09-11-01 | CHG-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-2026-09-11-01 | a3dc5aa4acf39c38048e6da404c7ecb327ea1ae4 | iteration/ITR-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-2026-09-11-01 | — | — | — | Align Petrogradka landlord metadata: content commit verified and linked to the governed lifecycle before sealing. |
+| 2026-09-11T21:18:18.000Z | committed | Introduce protected Control workspace | ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01 | DEC-ROUTES-CONTROL-WORKSPACE-2026-09-12-01 | CHG-ROUTES-CONTROL-WORKSPACE-2026-09-12-01 | deef5e6c845d3bd233fcfa02495a510a35a61e77 | iteration/ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01 | — | — | — | Introduce protected Control workspace: content commit verified and linked to the governed lifecycle before sealing. |
 
 ## 3. Legacy imported history
 

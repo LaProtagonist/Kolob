@@ -9,16 +9,16 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 ## 2. Текущая ветка и governed iteration
 
 - Branch: `master`.
-- Latest closed iteration: `ITR-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-2026-09-11-01`.
-- Latest iteration tag: `iteration/ITR-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-2026-09-11-01`.
-- Latest content commit: `a3dc5aa4acf39c38048e6da404c7ecb327ea1ae4`.
+- Latest closed iteration: `ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01`.
+- Latest iteration tag: `iteration/ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01`.
+- Latest content commit: `deef5e6c845d3bd233fcfa02495a510a35a61e77`.
 - Текущий Git HEAD намеренно не записывается: его вычисляет `npm run project:onboard`.
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-2026-09-11-01-COMMITTED`.
-- Hash: `fc2e3a402413b20fcc61baf216e5b8233d3f2999fa16246cdee5e036d7ac9643`.
-- generated_from_event_hash: `fc2e3a402413b20fcc61baf216e5b8233d3f2999fa16246cdee5e036d7ac9643`.
+- Event: `EVT-ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01-COMMITTED`.
+- Hash: `4f2e3883bab9152c4d67e7197901af0c50e89dd2025da1fd7eef175d09bb06b5`.
+- generated_from_event_hash: `4f2e3883bab9152c4d67e7197901af0c50e89dd2025da1fd7eef175d09bb06b5`.
 
 ## 4. Канонические документы
 
@@ -52,7 +52,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 5. Текущая рабочая тема
 
-Align Petrogradka landlord metadata
+Introduce protected Control workspace
 
 ## 6. Decisions и change sets
 
