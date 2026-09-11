@@ -415,3 +415,17 @@ decisions:
     source_ids:
       - SRC-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-BRIEF-2026-09-11
     updated_at: 2026-09-11
+  - id: DEC-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-2026-09-11-01
+    title: Синхронизировать метаданные страницы Петроградки с финальным предложением
+    status: approved
+    decision: Заменить title и description маршрута /investor/franchise-platform/petrogradka на согласованное описание конкретной оборудованной производственной базы; исключить из метаданных прежнее название и внутреннее обозначение исследовательского сценария.
+    rationale: Прямое задание владельца проекта от 2026-09-11 в рамках финальной проверки всех пользовательских текстов страницы. Решение не меняет видимое содержание, помещение, аренду, оборудование, допущения, baseline, Foundation, Business Model Architecture, Franchise Platform core strategy, Financial Model или Network Planning.
+    affected_documents:
+      - DOC-SCENARIO-PETROGRADKA-READY-PRODUCTION-BASE
+      - DOC-PETROGRADKA-LANDLORD-PROPOSITION
+    approved_by: project owner
+    approved_at: 2026-09-11
+    supersedes: null
+    source_ids:
+      - SRC-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-BRIEF-2026-09-11
+    updated_at: 2026-09-11

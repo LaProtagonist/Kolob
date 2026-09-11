@@ -1,0 +1,13 @@
+schema_version: 2
+decision_id: DEC-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-2026-09-11-01
+iteration_id: ITR-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-2026-09-11-01
+title: Approve Petrogradka landlord metadata alignment
+status: approved
+approved_by: project owner
+approved_at: 2026-09-11T10:00:00.000Z
+scope: >-
+  Replace only the Petrogradka route title and description with the exact final owner-facing
+  proposition and assert that metadata deterministically. Do not change visible content, scenario
+  data, numerical assumptions, the core strategy or governing and financial boundaries.
+approved_payload_path: docs-platform/changelog/payloads/ITR-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-2026-09-11-01-approved.yaml
+approved_payload_sha256: 7f2e4c263fe6dcc405e75d5455dee3667fc0109ecc3ce8024489be12d970635a

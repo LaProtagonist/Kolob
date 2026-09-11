@@ -1,0 +1,24 @@
+receipt_version: 1
+iteration_id: ITR-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-2026-09-11-01
+decision_id: DEC-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-2026-09-11-01
+change_set_id: CHG-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-2026-09-11-01
+previewed_at: 2026-09-11T10:10:00.000Z
+result: reviewed
+mutation_performed: false
+before_state_sha256: 339c9069f8e37a1f4b8359bede02919e886ca9e79d02dd011130755ebcbcf466
+after_state_sha256: aababfd25859e334cfd47c715c6845e6441fc7576f2df9419f1465bc8007e360
+changes:
+  - the Petrogradka route metadata names the specific equipped production base and uses the approved proposition description
+  - deterministic browser checks verify the new title and description
+invariants:
+  visible_petrogradka_content_unchanged: true
+  petrogradka_is_research_scenario: true
+  petrogradka_is_not_baseline: true
+  scenario_equipment_and_assumptions_unchanged: true
+  foundation_unchanged: true
+  business_model_architecture_unchanged: true
+  core_strategy_unchanged: true
+  financial_engine_unchanged: true
+  network_planning_engine_unchanged: true
+  google_mutation: not_run
+  production_deploy: not_run

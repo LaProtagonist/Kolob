@@ -1,0 +1,29 @@
+receipt_version: 1
+iteration_id: ITR-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-2026-09-11-01
+decision_id: DEC-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-2026-09-11-01
+change_set_id: CHG-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-2026-09-11-01
+verified_at: 2026-09-11T13:02:30.000Z
+result: passed
+approved_payload_sha256: 7f2e4c263fe6dcc405e75d5455dee3667fc0109ecc3ce8024489be12d970635a
+before_state_sha256: 339c9069f8e37a1f4b8359bede02919e886ca9e79d02dd011130755ebcbcf466
+after_state_sha256: aababfd25859e334cfd47c715c6845e6441fc7576f2df9419f1465bc8007e360
+checks:
+  - npx tsc --noEmit under bundled Node 24 (passed)
+  - npm run registry:validate under bundled Node 24 (passed)
+  - npm run timeline:validate under bundled Node 24 (passed)
+  - franchise-platform browser route test under bundled Node 24 (passed; exact title and description plus routes at 1440, 1024, 768 and 390 px)
+  - direct Vite SPA build and npm run prerender (passed; Petrogradka HTML contains exact current title and description and excludes the former research-scenario metadata)
+  - existing desktop full-page review artifact remains representative because the metadata-only alignment does not change rendered content or layout
+invariants:
+  visible_petrogradka_content_unchanged: passed
+  foundation_unchanged: passed
+  business_model_architecture_unchanged: passed
+  franchise_platform_core_strategy_unchanged: passed
+  financial_engine_unchanged: passed
+  network_planning_engine_unchanged: passed
+  canonical_financial_baseline_unchanged: passed
+  petrogradka_is_research_scenario: passed
+  petrogradka_is_not_baseline: passed
+  petrogradka_equipment_and_assumptions_unchanged: passed
+  google_mutation: not_run
+  production_deploy: not_run

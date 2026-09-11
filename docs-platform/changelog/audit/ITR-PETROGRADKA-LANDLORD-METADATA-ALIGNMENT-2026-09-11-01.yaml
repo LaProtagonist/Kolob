@@ -1,0 +1,15 @@
+receipt_version: 1
+iteration_id: ITR-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-2026-09-11-01
+audited_at: 2026-09-11T10:12:00.000Z
+result: passed
+finding:
+  scope: Browser-tab and share-preview metadata for the existing Petrogradka landlord proposition.
+  metadata: The route title names the specific equipped production base, and the description uses the approved owner-facing proposition rather than the internal research-scenario designation.
+  boundaries: Visible page content, complete equipment listing, Petrogradka scenario data, current proposed working estimates, Foundation, BMA, core strategy, baseline and financial engines remain unchanged.
+resolution:
+  - retain Petrogradka as research and non-baseline
+  - retain current proposed working scenario estimates and detailed internal assumptions without modification
+  - retain no new review screenshot because the metadata alignment does not change the rendered page
+external_state:
+  google_apply: not_run
+  production_deploy: not_run

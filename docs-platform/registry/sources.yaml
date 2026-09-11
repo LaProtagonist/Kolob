@@ -1627,3 +1627,16 @@ sources:
       согласованные формулировки, сохранить предложенные рабочие ориентиры от 10 млн ₽ и от
       15 млн ₽, не менять сценарий, оборудование, статусы, Foundation, BMA, core strategy,
       baseline, Financial Model или Network Planning.
+  - id: SRC-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-BRIEF-2026-09-11
+    title: Задание на синхронизацию метаданных предложения Петроградки
+    type: instruction
+    location: User instruction, 2026-09-11
+    publisher: project owner
+    publication_date: 2026-09-11
+    accessed_at: 2026-09-11
+    reliability: primary
+    notes: >-
+      Первичный источник технического выравнивания user-facing title и description маршрута
+      Петроградки с финальным предложением собственнику помещения. Не меняет видимую
+      редакцию, сценарий, оборудование, статусы, допущения, baseline, Foundation, BMA,
+      core strategy, Financial Model или Network Planning.

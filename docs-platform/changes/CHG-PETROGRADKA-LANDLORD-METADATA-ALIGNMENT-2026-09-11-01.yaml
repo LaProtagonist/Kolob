@@ -1,0 +1,15 @@
+schema_version: 2
+change_id: CHG-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-2026-09-11-01
+title: Align Petrogradka landlord metadata
+status: approved
+created_at: 2026-09-11
+decision_id: DEC-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-2026-09-11-01
+iteration_id: ITR-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-2026-09-11-01
+proposal_id: PROP-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-2026-09-11-01
+approved_payload_path: docs-platform/changelog/payloads/ITR-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-2026-09-11-01-approved.yaml
+approved_payload_sha256: 7f2e4c263fe6dcc405e75d5455dee3667fc0109ecc3ce8024489be12d970635a
+operations:
+  - replace the Petrogradka route title with the final owner-facing object title
+  - replace the route description with the approved first-sentence proposition
+  - add deterministic browser assertions for title and description
+  - record the matching source and approved decision without changing scenario data or visible page content

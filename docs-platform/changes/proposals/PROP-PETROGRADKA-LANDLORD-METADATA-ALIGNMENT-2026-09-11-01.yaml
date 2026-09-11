@@ -1,0 +1,13 @@
+schema_version: 2
+proposal_id: PROP-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-2026-09-11-01
+iteration_id: ITR-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-2026-09-11-01
+title: Align Petrogradka landlord metadata
+status: approved
+proposed_by: project owner
+proposed_at: 2026-09-11T10:00:00.000Z
+summary: >-
+  Align the page metadata with the owner-authorized final Petrogradka proposition after prerender
+  verification found the previous research-scenario title and description in the browser-tab and
+  share-preview fields.
+approved_payload_path: docs-platform/changelog/payloads/ITR-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-2026-09-11-01-approved.yaml
+approved_payload_sha256: 7f2e4c263fe6dcc405e75d5455dee3667fc0109ecc3ce8024489be12d970635a
