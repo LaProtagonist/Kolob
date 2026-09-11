@@ -22,7 +22,12 @@ cat > "$ROUTE_FILE" <<'CADDY_ROUTE'
 
 # Kolobochnaya
 colob.spi.ski {
-	@kolob_contact_backend path /api/contact /api/leads /api/leads.csv /leads /leads/* /health
+	@kolob_review path /__review /__review/*
+	handle @kolob_review {
+		respond 404
+	}
+
+	@kolob_contact_backend path /api/contact /api/leads /api/leads.csv /leads /leads/* /control /control/* /investor/franchise-platform /investor/franchise-platform/* /capex-configurator /capex-configurator/ /launch-budget /launch-budget/ /revenue-model /revenue-model/ /economics /economics/ /health
 	handle @kolob_contact_backend {
 		reverse_proxy kolob-contact:8787
 	}

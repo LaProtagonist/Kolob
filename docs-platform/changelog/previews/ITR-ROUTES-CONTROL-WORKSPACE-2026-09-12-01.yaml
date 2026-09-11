@@ -1,0 +1,28 @@
+receipt_version: 1
+iteration_id: ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01
+decision_id: DEC-ROUTES-CONTROL-WORKSPACE-2026-09-12-01
+change_set_id: CHG-ROUTES-CONTROL-WORKSPACE-2026-09-12-01
+previewed_at: 2026-09-12T00:00:00.000Z
+result: reviewed
+mutation_performed: false
+before_state_sha256: 5d063adebd771164f1998099cd416308c34c0e158f337e990b7056bb292404a4
+after_state_sha256: 6a067e3b4fb3d8644300d058eddaf2f0a3558f5c403358140c34b8300e578e49
+changes:
+  - public application retains only public pages, Investor Terminal and the short Petrogradka presentation
+  - Control is a separately built authenticated workspace for the five internal views and leads access
+  - legacy internal addresses resolve as permanent server redirects and no protected chunks exist in public assets
+  - deployable dist omits review artifacts
+invariants:
+  investor_terminal_public_noindex: true
+  petrogradka_share_only_noindex: true
+  control_server_auth_required: true
+  protected_content_absent_from_public_bundle: true
+  leads_backend_preserved: true
+  foundation_unchanged: true
+  business_model_architecture_unchanged: true
+  financial_engine_unchanged: true
+  network_planning_engine_unchanged: true
+  baseline_unchanged: true
+  petrogradka_is_research_scenario: true
+  google_mutation: not_run
+  production_deploy: pending

@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const distDir = path.join(projectRoot, "dist");
 const reportPath = path.join(projectRoot, "analysis", "link-audit.md");
-const publicRoutes = new Set(["/", "/concept", "/history", "/quality", "/investment", "/materials", "/investor-questions", "/privacy", "/capex-configurator", "/launch-budget", "/404"]);
+const publicRoutes = new Set(["/", "/concept", "/history", "/quality", "/investment", "/materials", "/investor-questions", "/privacy", "/investor-terminal", "/petrogradka", "/404"]);
 const forbiddenUrlPatterns = [/trycloudflare\.com/i, /localhost/i, /127\.0\.0\.1/i, /file:\/\//i, /D:\\/i, /D:\//i, /\/mnt\/data/i, /sandbox:/i];
 
 function walk(dir, files = []) {

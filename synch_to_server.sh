@@ -58,8 +58,8 @@ build_site() {
   cd "$ROOT_DIR"
   npm run build
 
-  if [[ ! -f "$ROOT_DIR/dist/index.html" ]]; then
-    echo "Missing build output: $ROOT_DIR/dist/index.html" >&2
+  if [[ ! -f "$ROOT_DIR/dist/index.html" || ! -f "$ROOT_DIR/control-dist/control.html" ]]; then
+    echo "Missing public or Control build output." >&2
     exit 1
   fi
 }
@@ -67,25 +67,34 @@ build_site() {
 sync_site() {
   assert_remote_dir
 
-  if [[ ! -f "$ROOT_DIR/dist/index.html" ]]; then
-    echo "Missing build output: $ROOT_DIR/dist/index.html" >&2
+  if [[ ! -f "$ROOT_DIR/dist/index.html" || ! -f "$ROOT_DIR/control-dist/control.html" ]]; then
+    echo "Missing public or Control build output." >&2
     echo "Run: bash ./synch_to_server.sh -build" >&2
     exit 1
   fi
 
-  echo "Sync static files -> ${REMOTE_DIR}"
-  tar --exclude="./__review" -cf - -C "$ROOT_DIR/dist" . | ssh $SSH_OPTS "$SERVER" "
+  local stage_id="kolob-deploy-$(date +%Y%m%d%H%M%S)-$$"
+  local remote_stage="/tmp/$stage_id"
+  echo "Upload public and protected build outputs -> $REMOTE_DIR"
+  ssh $SSH_OPTS "$SERVER" "
     set -e
-    REMOTE_DIR='${REMOTE_DIR}'
-    case \"\$REMOTE_DIR\" in
-      /srv/static/colob.spi.ski) ;;
-      *) echo \"Refusing to deploy to unexpected remote dir: \$REMOTE_DIR\" >&2; exit 1 ;;
+    STAGE='$remote_stage'
+    case \"\$STAGE\" in
+      /tmp/kolob-deploy-*) ;;
+      *) echo \"Refusing unexpected stage: \$STAGE\" >&2; exit 1 ;;
     esac
-    rm -rf \"\$REMOTE_DIR\"
-    mkdir -p \"\$REMOTE_DIR\"
-    tar -xf - -C \"\$REMOTE_DIR\"
+    rm -rf \"\$STAGE\"
+    mkdir -p \"\$STAGE/public\" \"\$STAGE/control\" \"\$STAGE/app\" \"\$STAGE/scripts\"
   "
-  echo "Site synced -> https://${KOLOB_HOST}"
+  tar --exclude="./__review" -cf - -C "$ROOT_DIR/dist" . | ssh $SSH_OPTS "$SERVER" "tar -xf - -C '$remote_stage/public'"
+  tar -cf - -C "$ROOT_DIR/control-dist" . | ssh $SSH_OPTS "$SERVER" "tar -xf - -C '$remote_stage/control'"
+  tar -cf - -C "$ROOT_DIR" server/contact_server.py scripts/activate-colob-caddy-route.remote.sh scripts/deploy-colob-control-workspace.remote.sh | ssh $SSH_OPTS "$SERVER" "
+    set -e
+    tar -xf - -C '$remote_stage'
+    mv '$remote_stage/server/contact_server.py' '$remote_stage/app/contact_server.py'
+  "
+  ssh $SSH_OPTS "$SERVER" "KOLOB_DEPLOY_STAGE='$remote_stage' sh '$remote_stage/scripts/deploy-colob-control-workspace.remote.sh'"
+  echo "Site and Control workspace synced -> https://$KOLOB_HOST"
 }
 
 $DO_BUILD && build_site

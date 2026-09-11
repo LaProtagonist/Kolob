@@ -47,15 +47,15 @@ function temporaryFingerprintFixture(t) {
   return { root, fixtureConfig, fingerprint };
 }
 
-test("Economics CSS selects only economics visual verification", () => {
+test("Economics CSS stays in its data domain without a public-route screenshot", () => {
   const affected = classify(["src/components/Economics.css"]);
   assert.deepEqual(affected.directDomains, ["economics-ui"]);
   assert.deepEqual(affected.affectedDomains, ["economics-ui"]);
-  assert.equal(affected.visualImpact["economics-ui"], "high");
+  assert.equal(affected.visualImpact["economics-ui"], "none");
   const plan = planFor(affected);
   assert.equal(plan.length, 1);
-  assert.equal(plan[0].visual, true);
-  assert.equal(plan[0].visualImpact, "high");
+  assert.equal(plan[0].visual, false);
+  assert.equal(plan[0].visualImpact, "none");
   assert.doesNotMatch(plan[0].checks.join(" "), /financial|capex|governance|build/);
 });
 
@@ -76,14 +76,14 @@ test("governance timeline implementation selects governance only", () => {
   assert.equal(affected.visualImpact.governance, "none");
 });
 
-test("Revenue text-only TSX is low impact and never requests a screenshot", () => {
+test("Revenue text-only TSX is tested without a public-route screenshot", () => {
   const file = "src/components/RevenueModel.tsx";
   const affected = classify([file], { [file]: '-const label = "Old";\n+const label = "New";' });
   assert.deepEqual(affected.directDomains, ["revenue-ui"]);
-  assert.equal(affected.visualImpact["revenue-ui"], "low");
+  assert.equal(affected.visualImpact["revenue-ui"], "none");
   const plan = planFor(affected);
-  assert.equal(plan[0].visual, true);
-  assert.equal(plan[0].visualImpact, "low");
+  assert.equal(plan[0].visual, false);
+  assert.equal(plan[0].visualImpact, "none");
   assert.doesNotMatch(plan[0].checks.join(" "), /financial|capex|governance|google/);
 });
 

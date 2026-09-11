@@ -4,12 +4,13 @@ import hashlib
 import hmac
 import html
 import json
+import mimetypes
 import os
 import uuid
 from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
-from urllib.parse import parse_qs
+from urllib.parse import parse_qs, quote, unquote, urlsplit
 
 
 HOST = os.environ.get("CONTACT_SERVER_HOST", "127.0.0.1")
@@ -20,6 +21,16 @@ ADMIN_PASSWORD = os.environ.get("CONTACT_ADMIN_PASSWORD", "")
 ADMIN_SECRET = os.environ.get("CONTACT_ADMIN_SECRET", ADMIN_PASSWORD or "kolob-local-admin")
 COOKIE_NAME = "kolob_leads_auth"
 MAX_BODY_BYTES = 64 * 1024
+CONTROL_STATIC_ROOT = Path(os.environ.get("CONTROL_STATIC_ROOT", str(Path(__file__).resolve().parent / "control")))
+LEGACY_REDIRECTS = {
+    "/investor/franchise-platform/petrogradka": "/petrogradka",
+    "/investor/franchise-platform": "/control/franchise-platform",
+    "/capex-configurator": "/control/capex",
+    "/launch-budget": "/control/launch-budget",
+    "/revenue-model": "/control/revenue",
+    "/economics": "/control/economics",
+}
+PRIVATE_PREFIXES = ("/control", "/leads", "/api/leads")
 
 
 def clean(value, limit=2000):
@@ -56,6 +67,7 @@ def layout(title, body):
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow, noarchive">
   <title>{escape(title)}</title>
   <style>
     :root {{ font-family: Arial, sans-serif; color: #171717; background: #f7f1e6; }}
@@ -99,6 +111,29 @@ def login_page(message=""):
   <form class="login" method="post" action="/leads/login">
     <input name="password" type="password" autocomplete="current-password" placeholder="Пароль" required autofocus>
     <button type="submit">Открыть заявки</button>
+  </form>
+</section>""",
+    )
+
+
+def safe_control_next(value):
+    parsed = urlsplit(value or "")
+    if parsed.scheme or parsed.netloc or not parsed.path.startswith("/control"):
+        return "/control"
+    return f"{parsed.path}{f'?{parsed.query}' if parsed.query else ''}"
+
+
+def control_login_page(next_path="/control", message=""):
+    return layout(
+        "Control — Колобочная",
+        f"""<section class="panel">
+  <h1>Control</h1>
+  <p>Введите пароль для доступа к внутренним инструментам проекта.</p>
+  {f'<p>{escape(message)}</p>' if message else ''}
+  <form class="login" method="post" action="/control/login">
+    <input name="next" type="hidden" value="{escape(safe_control_next(next_path))}">
+    <input name="password" type="password" autocomplete="current-password" placeholder="Пароль" required autofocus>
+    <button type="submit">Открыть Control</button>
   </form>
 </section>""",
     )
@@ -210,12 +245,18 @@ class Handler(BaseHTTPRequestHandler):
             raise ValueError("Body too large")
         return self.rfile.read(length)
 
+    def private_headers(self):
+        path = urlsplit(self.path).path
+        return {"X-Robots-Tag": "noindex, nofollow, noarchive"} if path.startswith(PRIVATE_PREFIXES) else {}
+
     def send_json(self, status, payload):
         body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
         self.send_response(status)
         self.send_header("Content-Type", "application/json; charset=utf-8")
         self.send_header("Content-Length", str(len(body)))
         self.send_header("Cache-Control", "no-store")
+        for key, value in self.private_headers().items():
+            self.send_header(key, value)
         self.end_headers()
         self.wfile.write(body)
 
@@ -225,6 +266,8 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header("Content-Type", "text/html; charset=utf-8")
         self.send_header("Content-Length", str(len(body)))
         self.send_header("Cache-Control", "no-store")
+        for key, value in self.private_headers().items():
+            self.send_header(key, value)
         for key, value in (headers or {}).items():
             self.send_header(key, value)
         self.end_headers()
@@ -236,39 +279,93 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header("Content-Type", content_type)
         self.send_header("Content-Length", str(len(body)))
         self.send_header("Cache-Control", "no-store")
+        for key, value in self.private_headers().items():
+            self.send_header(key, value)
         for key, value in (headers or {}).items():
             self.send_header(key, value)
         self.end_headers()
         self.wfile.write(body)
 
-    def redirect(self, location, headers=None):
-        self.send_response(303)
+    def redirect(self, location, headers=None, status=303):
+        self.send_response(status)
         self.send_header("Location", location)
         self.send_header("Cache-Control", "no-store")
+        for key, value in self.private_headers().items():
+            self.send_header(key, value)
         for key, value in (headers or {}).items():
             self.send_header(key, value)
         self.end_headers()
 
+    def auth_cookie(self):
+        secure = os.environ.get("CONTACT_COOKIE_SECURE", "1").lower() not in {"0", "false", "no"}
+        return f"{COOKIE_NAME}={token()}; Path=/; HttpOnly; SameSite=Lax; Max-Age=604800{'; Secure' if secure else ''}"
+
+    def serve_control_file(self, request_path):
+        relative_path = unquote(request_path.removeprefix("/control").lstrip("/"))
+        if not relative_path or "." not in Path(relative_path).name:
+            relative_path = "control.html"
+        candidate = (CONTROL_STATIC_ROOT / relative_path).resolve()
+        root = CONTROL_STATIC_ROOT.resolve()
+        if root not in candidate.parents and candidate != root:
+            self.send_text(403, "Forbidden")
+            return
+        if not candidate.is_file():
+            self.send_text(404, "Not found")
+            return
+        content_type = mimetypes.guess_type(str(candidate))[0] or "application/octet-stream"
+        content = candidate.read_bytes()
+        self.send_response(200)
+        self.send_header("Content-Type", f"{content_type}; charset=utf-8" if content_type.startswith("text/") or content_type == "application/javascript" else content_type)
+        self.send_header("Content-Length", str(len(content)))
+        self.send_header("Cache-Control", "no-store")
+        self.send_header("X-Robots-Tag", "noindex, nofollow, noarchive")
+        self.end_headers()
+        self.wfile.write(content)
+
     def do_GET(self):
-        if self.path == "/health":
+        parsed = urlsplit(self.path)
+        path = parsed.path
+        legacy_path = path.rstrip("/") or "/"
+        if legacy_path in LEGACY_REDIRECTS:
+            query = f"?{parsed.query}" if parsed.query else ""
+            self.redirect(f"{LEGACY_REDIRECTS[legacy_path]}{query}", status=308)
+            return
+        if path == "/health":
             self.send_json(200, {"ok": True})
             return
-        if self.path == "/leads/logout":
+        if path == "/control/logout":
+            self.redirect("/control/login", {"Set-Cookie": f"{COOKIE_NAME}=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0"})
+            return
+        if path == "/control/login":
+            next_path = safe_control_next(parse_qs(parsed.query).get("next", ["/control"])[0])
+            if is_authorized(self):
+                self.redirect(next_path)
+                return
+            self.send_html(200, control_login_page(next_path))
+            return
+        if path == "/control" or path.startswith("/control/"):
+            if not is_authorized(self):
+                requested = f"{path}?{parsed.query}" if parsed.query else path
+                self.redirect(f"/control/login?next={quote(requested, safe='/')}")
+                return
+            self.serve_control_file(path)
+            return
+        if path == "/leads/logout":
             self.redirect("/leads", {"Set-Cookie": f"{COOKIE_NAME}=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0"})
             return
-        if self.path == "/leads":
+        if path == "/leads":
             if not is_authorized(self):
                 self.send_html(200, login_page())
                 return
             self.send_html(200, leads_page(read_leads()))
             return
-        if self.path == "/api/leads":
+        if path == "/api/leads":
             if not is_authorized(self):
                 self.send_json(401, {"ok": False, "error": "Unauthorized"})
                 return
             self.send_json(200, {"ok": True, "leads": read_leads()})
             return
-        if self.path == "/api/leads.csv":
+        if path == "/api/leads.csv":
             if not is_authorized(self):
                 self.send_text(401, "Unauthorized")
                 return
@@ -303,7 +400,8 @@ class Handler(BaseHTTPRequestHandler):
         self.send_text(404, "Not found")
 
     def do_POST(self):
-        if self.path == "/api/contact":
+        path = urlsplit(self.path).path
+        if path == "/api/contact":
             try:
                 payload = json.loads(self.read_body().decode("utf-8") or "{}")
             except Exception:
@@ -318,7 +416,7 @@ class Handler(BaseHTTPRequestHandler):
                 file.write(json.dumps(lead, ensure_ascii=False) + "\n")
             self.send_json(200, {"ok": True})
             return
-        if self.path == "/leads/login":
+        if path == "/leads/login":
             if not ADMIN_PASSWORD:
                 self.send_html(503, login_page("Пароль администратора не настроен на сервере."))
                 return
@@ -327,7 +425,19 @@ class Handler(BaseHTTPRequestHandler):
             if not hmac.compare_digest(hashlib.sha256(password.encode()).hexdigest(), hashlib.sha256(ADMIN_PASSWORD.encode()).hexdigest()):
                 self.send_html(401, login_page("Неверный пароль."))
                 return
-            self.redirect("/leads", {"Set-Cookie": f"{COOKIE_NAME}={token()}; Path=/; HttpOnly; SameSite=Lax; Max-Age=604800; Secure"})
+            self.redirect("/leads", {"Set-Cookie": self.auth_cookie()})
+            return
+        if path == "/control/login":
+            params = parse_qs(self.read_body().decode("utf-8"))
+            next_path = safe_control_next(params.get("next", ["/control"])[0])
+            if not ADMIN_PASSWORD:
+                self.send_html(503, control_login_page(next_path, "Пароль администратора не настроен на сервере."))
+                return
+            password = params.get("password", [""])[0]
+            if not hmac.compare_digest(hashlib.sha256(password.encode()).hexdigest(), hashlib.sha256(ADMIN_PASSWORD.encode()).hexdigest()):
+                self.send_html(401, control_login_page(next_path, "Неверный пароль."))
+                return
+            self.redirect(next_path, {"Set-Cookie": self.auth_cookie()})
             return
         self.send_text(404, "Not found")
 

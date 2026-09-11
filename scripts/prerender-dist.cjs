@@ -19,20 +19,12 @@ const routes = [
   { name: "materials", label: "Materials", path: "/materials" },
   { name: "investor-questions", label: "Investor questions", path: "/investor-questions" },
   { name: "privacy", label: "Privacy", path: "/privacy" },
-  { name: "capex-configurator", label: "CAPEX configurator", path: "/capex-configurator" },
-  { name: "launch-budget", label: "Launch budget", path: "/launch-budget" },
-  { name: "revenue-model", label: "Revenue model", path: "/revenue-model" },
-  { name: "economics", label: "Economics", path: "/economics" },
   { name: "investor-terminal", label: "Investor Terminal", path: "/investor-terminal" },
-  { name: "franchise-platform", label: "Franchise Platform", path: "/investor/franchise-platform" },
-  { name: "franchise-platform-petrogradka", label: "Franchise Platform Petrogradka", path: "/investor/franchise-platform/petrogradka" },
+  { name: "petrogradka", label: "Petrogradka", path: "/petrogradka" },
   { name: "not-found", label: "Not found", path: "/404" }
 ];
 
-const screenshotViewports = [
-  { name: "desktop-1440", width: 1440, height: 1200 },
-  { name: "mobile-390", width: 390, height: 844 }
-];
+const screenshotViewports = [];
 
 const mimeTypes = new Map([
   [".css", "text/css; charset=utf-8"],
@@ -192,7 +184,7 @@ function escapeHtml(value) {
 }
 
 function writeReviewPage(manifest) {
-  const reviewDir = path.join(distDir, "__review");
+  const reviewDir = path.join(projectRoot, ".cache", "prerender-review");
   fs.mkdirSync(reviewDir, { recursive: true });
 
   const routeLinks = routes
@@ -262,7 +254,7 @@ function writeReviewPage(manifest) {
   const spaIndexHtml = fs.readFileSync(path.join(distDir, "index.html"), "utf8");
   const server = createStaticServer(spaIndexHtml);
   const baseUrl = await listen(server);
-  const reviewShotsDir = path.join(distDir, "__review", "screenshots");
+  const reviewShotsDir = path.join(projectRoot, ".cache", "prerender-review", "screenshots");
   fs.mkdirSync(reviewShotsDir, { recursive: true });
 
   const browser = await chromium.launch({ headless: true });
@@ -314,7 +306,7 @@ function writeReviewPage(manifest) {
       {
         publicOrigin,
         routes: routes.length,
-        review: path.join(distDir, "__review", "index.html")
+        review: path.join(projectRoot, ".cache", "prerender-review", "index.html")
       },
       null,
       2

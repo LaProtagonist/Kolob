@@ -23,7 +23,7 @@ export const documents: DocumentItem[] = [
     title: "Ознакомиться с расчётами запуска",
     description:
       "Доходы, стоимость запуска и экономика объекта в трёх сценариях.",
-    href: "/revenue-model",
+    href: "/investor-terminal",
     documentUrl: null,
     featured: true,
     fullCardLink: true

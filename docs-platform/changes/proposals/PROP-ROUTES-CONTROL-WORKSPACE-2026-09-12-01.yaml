@@ -1,0 +1,13 @@
+schema_version: 2
+proposal_id: PROP-ROUTES-CONTROL-WORKSPACE-2026-09-12-01
+iteration_id: ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01
+title: Separate public, share-only and protected Control routes
+status: approved
+proposed_by: project owner
+proposed_at: 2026-09-12T00:00:00.000Z
+summary: >-
+  Separate public Investor Terminal, the share-only Petrogradka proposition and
+  internal strategic and calculation tools through server-side Control authentication,
+  permanent legacy redirects and a distinct protected build output.
+approved_payload_path: docs-platform/changelog/payloads/ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01-approved.yaml
+approved_payload_sha256: 0c0c26e552396e52fb6a1041420aaceca8cbb97879460836b00765045135c13f

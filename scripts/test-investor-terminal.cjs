@@ -354,22 +354,13 @@ async function run() {
       const element = document.querySelector(".scaling-results");
       if (element) element.scrollTop = 0;
     });
-    await page.screenshot({ path: path.join(projectRoot, ".cache/verification/screenshots/investor-terminal-ui-review-normal-desktop.png"), fullPage: true });
 
     await page.locator("details.base-object-details, details.cohort-rent-preset-reference, details.cohort-preparation-details, details.cohort-items, details.cohort-temporal-details, details.scaling-item").evaluateAll((elements) => elements.forEach((element) => { element.open = true; }));
     const renderedScalingText = await page.locator(".scaling-workspace").innerText();
     assert.doesNotMatch(renderedScalingText, /\bPest\b|\bsanitation\b|\bTBD\b|\bmaintenance\b|\bshared\b|\bcarrier\b|\broute quote\b|\bHistorical\b|calculated zero|\bgeneric\b|requires_confirmation|review_required/i, "opened investor-facing sections do not leak audited English or internal terminology");
-    await page.addStyleTag({ content: ".site-header, .scaling-results { position: static !important; max-height: none !important; overflow: visible !important; }" });
-    await foodhallOpex.screenshot({ path: path.join(projectRoot, ".cache/verification/screenshots/investor-terminal-foodhall-opex-desktop.png") });
-    await networkParameters.screenshot({ path: path.join(projectRoot, ".cache/verification/screenshots/investor-terminal-network-parameters-desktop.png") });
-    await assumptions.screenshot({ path: path.join(projectRoot, ".cache/verification/screenshots/investor-terminal-assumptions-desktop.png") });
-    await page.locator(".scaling-results").screenshot({ path: path.join(projectRoot, ".cache/verification/screenshots/investor-terminal-summary-desktop.png") });
-    await page.screenshot({ path: path.join(projectRoot, ".cache/verification/screenshots/investor-terminal-ui-review-full-desktop.png"), fullPage: true });
-    await page.screenshot({ path: path.join(projectRoot, ".cache/verification/screenshots/investor-terminal-ui-review-audit-desktop.png"), fullPage: true });
     await page.setViewportSize({ width: 390, height: 844 });
     await page.locator("details.base-object-details, details.cohort-rent-preset-reference, details.cohort-preparation-details, details.cohort-items, details.cohort-temporal-details, details.scaling-item").evaluateAll((elements) => elements.forEach((element) => { element.open = false; }));
     if (await page.getByRole("button", { name: "Скрыть параметры" }).count()) await page.getByRole("button", { name: "Скрыть параметры" }).click();
-    await page.screenshot({ path: path.join(projectRoot, ".cache/verification/screenshots/investor-terminal-ui-review-mobile.png"), fullPage: true });
     await page.getByRole("button", { name: "Открыть меню", exact: true }).click();
     await page.getByRole("button", { name: /Инвесторам/ }).click();
     assert.deepEqual(
@@ -384,12 +375,9 @@ async function run() {
     await checks.waitFor();
     assert.equal(await checks.inputValue(), "300", "reset restores the approved traffic baseline too");
     await page.getByRole("button", { name: "Показать состав", exact: true }).click();
-    await page.screenshot({ path: path.join(projectRoot, ".cache/verification/screenshots/investor-terminal-base-object-preparation-audit-desktop.png"), fullPage: true });
 
-    for (const route of ["/revenue-model", "/launch-budget", "/economics"]) {
-      const response = await page.goto(`${baseUrl}${route}`, { waitUntil: "domcontentloaded" });
-      assert.ok(response && response.status() < 400, `legacy route remains available: ${route}`);
-      await page.locator("h1").first().waitFor();
+    for (const route of ["/capex-configurator", "/launch-budget", "/revenue-model", "/economics", "/investor/franchise-platform", "/investor/franchise-platform/petrogradka", "/control"]) {
+      assert.equal(await page.locator(`a[href="${route}"]`).count(), 0, `Investor Terminal does not expose ${route}`);
     }
 
     assert.deepEqual(sourceHashes(), before, "browser runtime did not alter canonical sources");

@@ -1,0 +1,142 @@
+schema_version: 2
+iteration_id: ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01
+proposal_id: PROP-ROUTES-CONTROL-WORKSPACE-2026-09-12-01
+decision_id: DEC-ROUTES-CONTROL-WORKSPACE-2026-09-12-01
+change_set_id: CHG-ROUTES-CONTROL-WORKSPACE-2026-09-12-01
+title: Introduce protected Control workspace
+status: approved
+approved_by: project owner
+approved_at: 2026-09-12T00:00:00.000Z
+actor: Codex
+scope: >-
+  Separate public, share-only and authenticated Control web access while preserving
+  every business document, scenario and calculation boundary.
+approved_payload_path: docs-platform/changelog/payloads/ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01-approved.yaml
+approved_payload_sha256: 0c0c26e552396e52fb6a1041420aaceca8cbb97879460836b00765045135c13f
+before_state_sha256: 5d063adebd771164f1998099cd416308c34c0e158f337e990b7056bb292404a4
+after_state_sha256: 6a067e3b4fb3d8644300d058eddaf2f0a3558f5c403358140c34b8300e578e49
+affected_document_ids:
+  - DOC-FRANCHISE-PLATFORM-STRATEGY
+  - DOC-SCENARIO-PETROGRADKA-READY-PRODUCTION-BASE
+  - DOC-CAPEX-CONFIGURATIONS
+  - DOC-INVESTOR-START-MODEL
+  - DOC-REVENUE-MODEL
+  - DOC-FINANCIAL-MODEL
+  - DOC-INVESTOR-FINANCIAL-SUMMARY
+affected_section_ids:
+  - site.route-access-boundaries
+  - investor-terminal.public-access
+  - petrogradka.share-only-access
+  - control.authenticated-workspace
+  - legacy-route-redirects
+  - deployment.review-artifact-exclusion
+state_hash_paths:
+  - .gitignore
+  - package.json
+  - synch_to_server.sh
+  - vite.config.ts
+  - vite.control.config.ts
+  - control.html
+  - src/App.tsx
+  - src/ControlApp.tsx
+  - src/Control.css
+  - src/control-main.tsx
+  - src/components/Petrogradka.tsx
+  - src/components/FranchisePlatform.tsx
+  - src/components/Economics.tsx
+  - src/components/LaunchBudget.tsx
+  - src/components/RevenueModel.tsx
+  - src/content/site.ts
+  - src/content/materials.ts
+  - src/content/franchise-platform.ts
+  - src/content/investor-terminal-capex-data.json
+  - src/lib/investor-terminal-capex-runtime.ts
+  - server/contact_server.py
+  - server/contact-server.mjs
+  - scripts/prerender-dist.cjs
+  - scripts/generate-investor-terminal-capex-data.mjs
+  - scripts/activate-colob-caddy-route.remote.sh
+  - scripts/setup-colob-contact-server.remote.sh
+  - scripts/deploy-colob-control-workspace.remote.sh
+  - scripts/audit-links.mjs
+  - scripts/audit-route-html.mjs
+  - scripts/test-control-routing.cjs
+  - scripts/test-franchise-platform.cjs
+  - scripts/test-franchise-platform.test.ts
+  - scripts/test-economics-data.test.ts
+  - scripts/test-investor-terminal.cjs
+  - verification/domains.json
+  - scripts/verification/test/orchestrator.test.mjs
+  - docs-platform/00-foundation.md
+  - docs-platform/01-business-model-architecture.md
+  - docs-platform/02-franchise-platform-strategy.md
+  - docs-platform/03-petrogradka-landlord-proposition.md
+  - docs-platform/scenarios/petrogradka-ready-production-base.yaml
+  - docs-platform/working/financial-model.yaml
+  - docs-platform/working/network-planning-assumptions.yaml
+  - docs-platform/registry/assumptions.yaml
+  - docs-platform/registry/decisions.yaml
+  - docs-platform/registry/documents.yaml
+  - docs-platform/registry/sources.yaml
+content_paths:
+  - .gitignore
+  - package.json
+  - synch_to_server.sh
+  - vite.config.ts
+  - vite.control.config.ts
+  - control.html
+  - src/App.tsx
+  - src/ControlApp.tsx
+  - src/Control.css
+  - src/control-main.tsx
+  - src/components/Petrogradka.tsx
+  - src/components/FranchisePlatform.tsx
+  - src/components/Economics.tsx
+  - src/components/LaunchBudget.tsx
+  - src/components/RevenueModel.tsx
+  - src/content/site.ts
+  - src/content/materials.ts
+  - src/content/franchise-platform.ts
+  - src/content/investor-terminal-capex-data.json
+  - src/lib/investor-terminal-capex-runtime.ts
+  - server/contact_server.py
+  - server/contact-server.mjs
+  - scripts/prerender-dist.cjs
+  - scripts/generate-investor-terminal-capex-data.mjs
+  - scripts/activate-colob-caddy-route.remote.sh
+  - scripts/setup-colob-contact-server.remote.sh
+  - scripts/deploy-colob-control-workspace.remote.sh
+  - scripts/audit-links.mjs
+  - scripts/audit-route-html.mjs
+  - scripts/test-control-routing.cjs
+  - scripts/test-franchise-platform.cjs
+  - scripts/test-franchise-platform.test.ts
+  - scripts/test-economics-data.test.ts
+  - scripts/test-investor-terminal.cjs
+  - verification/domains.json
+  - scripts/verification/test/orchestrator.test.mjs
+  - docs-platform/registry/decisions.yaml
+  - docs-platform/registry/sources.yaml
+  - docs-platform/changes/proposals/PROP-ROUTES-CONTROL-WORKSPACE-2026-09-12-01.yaml
+  - docs-platform/changes/decisions/DEC-ROUTES-CONTROL-WORKSPACE-2026-09-12-01.yaml
+  - docs-platform/changes/CHG-ROUTES-CONTROL-WORKSPACE-2026-09-12-01.yaml
+  - docs-platform/changes/iterations/ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01.yaml
+  - docs-platform/changelog/payloads/ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01-approved.yaml
+  - docs-platform/changelog/audit/ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01.yaml
+  - docs-platform/changelog/previews/ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01.yaml
+  - docs-platform/changelog/verification/ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01.yaml
+  - docs-platform/changelog/events.ndjson
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/SNAPSHOT-ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01.yaml
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+allowed_dirty_paths:
+  - analysis/
+  - output/
+rollback_payload: null
+rollback_contract:
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true

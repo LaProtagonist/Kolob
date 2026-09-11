@@ -35,11 +35,10 @@ test("Scenario profiles and Petrogradka boundary remain independently replaceabl
   assert.ok(petrogradkaReadyProductionScenario.excluded.includes("отдельные торговые точки"));
 });
 
-test("Core and scenario routes are distinct private investor pages", () => {
-  const core = pageByPath("/investor/franchise-platform");
-  const scenario = pageByPath("/investor/franchise-platform/petrogradka");
-  assert.equal(core.id, "franchisePlatform");
-  assert.equal(core.noindex, true);
+test("Petrogradka is a separate share-only page while the strategy no longer has a public route", () => {
+  const scenario = pageByPath("/petrogradka");
   assert.equal(scenario.id, "franchisePlatformPetrogradka");
   assert.equal(scenario.noindex, true);
+  assert.equal(pageByPath("/investor/franchise-platform").id, "notFound");
+  assert.equal(pageByPath("/investor/franchise-platform/petrogradka").id, "notFound");
 });

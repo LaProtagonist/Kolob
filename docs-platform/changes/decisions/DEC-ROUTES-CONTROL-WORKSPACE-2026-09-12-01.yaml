@@ -1,0 +1,13 @@
+schema_version: 2
+decision_id: DEC-ROUTES-CONTROL-WORKSPACE-2026-09-12-01
+iteration_id: ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01
+title: Approve protected Control workspace and route migration
+status: approved
+approved_by: project owner
+approved_at: 2026-09-12T00:00:00.000Z
+scope: >-
+  Move only the web access boundary: keep Investor Terminal public; serve
+  Petrogradka from a short noindex address; protect Control pages and their
+  assets server-side; preserve the existing leads backend and all business content.
+approved_payload_path: docs-platform/changelog/payloads/ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01-approved.yaml
+approved_payload_sha256: 0c0c26e552396e52fb6a1041420aaceca8cbb97879460836b00765045135c13f

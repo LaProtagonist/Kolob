@@ -22,13 +22,6 @@ const forbiddenUiTerms = [
   "CUSTOM_PRODUCTION_BASE",
   "OWNED_PRODUCTION_BASE",
 ];
-const requiredCoreUiTerms = [
-  "Архитектура масштабирования",
-  "Цифровая система управления сетью",
-  "Экономика головной компании и франчайзи",
-  "Экономический эффект масштаба",
-  "Результат первого этапа",
-];
 const forbiddenPetrogradkaTerms = [
   "исследовательский сценарий",
   "сценарий, не базовая модель",
@@ -177,31 +170,17 @@ async function run() {
     page.on("pageerror", error => errors.push(error.message));
     page.on("console", message => { if (message.type() === "error") errors.push(message.text()); });
 
-    await page.goto(`${baseUrl}/investor/franchise-platform`, { waitUntil: "networkidle" });
-    await page.getByTestId("franchise-platform-page").waitFor();
-    assert.equal(await page.locator("h1").innerText(), "Стратегия масштабирования сети");
-    assert.equal(await page.locator('meta[name="robots"]').getAttribute("content"), "noindex, nofollow");
-    const coreText = await assertLocalizedInvestorCopy(page, "franchise-platform-page", requiredCoreUiTerms);
-    assert.match(coreText, /Центральное производство, цифровая система управления сетью и франчайзинговая модель позволяют развивать сеть без пропорционального роста капитальных затрат головной компании/);
-    assert.match(await page.getByTestId("franchise-platform-page").innerText(), /Рабочие параметры сценария — не утверждённые условия франшизы/);
-    assert.match(await page.getByTestId("franchise-money-flow").innerText(), /Гость[\s\S]*Франчайзи[\s\S]*оплата заготовок[\s\S]*центральное производство[\s\S]*результат франчайзи/i);
-    assert.match(await page.getByTestId("franchise-first-stage").innerText(), /Первый этап должен создать не отдельную торговую точку, а базовую инфраструктуру, необходимую для начала тиражирования сети[\s\S]*Центральный производственный узел[\s\S]*Эталонная торговая точка[\s\S]*Цифровая система управления сетью[\s\S]*Медиасистема[\s\S]*Подтверждённые показатели для масштабирования[\s\S]*Результатом первого этапа является не одна открытая точка, а инфраструктура, позволяющая начать тиражирование сети/);
-    assert.ok(coreText.indexOf("Экономика головной компании и франчайзи") < coreText.indexOf("Результат первого этапа"));
-    assert.ok(coreText.indexOf("Результат первого этапа") < coreText.indexOf("Базовая стратегия и сценарии запуска"));
-    assert.equal(await page.getByText("$1m", { exact: false }).count(), 0);
-    assert.equal(await page.getByText("30%", { exact: false }).count(), 0, "food cost benchmark is not presented as a required payment");
-    await page.getByRole("link", { name: "Открыть сценарий Петроградки" }).click();
+    await page.goto(`${baseUrl}/petrogradka`, { waitUntil: "networkidle" });
     await page.getByTestId("petrogradka-scenario-page").waitFor();
     assert.equal(await page.locator("h1").innerText(), "Оборудованная производственная база на Петроградской стороне");
     await assertPetrogradkaPresentation(page);
     await assertScenarioGutters(page, { width: 1440, height: 1000 }, "Petrogradka desktop");
     await assertNoOverflow(page, "Petrogradka desktop");
-    assert.deepEqual(errors, [], "core and scenario have no desktop runtime errors");
+    assert.deepEqual(errors, [], "Petrogradka has no desktop runtime errors");
     await context.close();
 
     for (const viewport of [{ width: 1024, height: 900 }, { width: 768, height: 900 }, { width: 390, height: 844 }]) {
-      await verifyRoute(browser, "/investor/franchise-platform", "franchise-platform-page", viewport);
-      await verifyRoute(browser, "/investor/franchise-platform/petrogradka", "petrogradka-scenario-page", viewport);
+      await verifyRoute(browser, "/petrogradka", "petrogradka-scenario-page", viewport);
     }
   } finally {
     await browser.close();

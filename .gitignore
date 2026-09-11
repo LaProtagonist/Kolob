@@ -1,5 +1,6 @@
 node_modules
 dist
+control-dist
 .vite
 npm-debug.log*
 *.tsbuildinfo
@@ -10,3 +11,4 @@ reference
 .playwright-browsers
 runtime-data
 .cache/verification/
+.cache/prerender-review/

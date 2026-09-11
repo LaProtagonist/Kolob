@@ -116,15 +116,16 @@ test("rent/purchase and two public sensitivity slices match the Investor Summary
   );
 });
 
-test("economics route is private working metadata, prerendered, and not a public navigation item", () => {
+test("economics is available only through the protected Control workspace", () => {
   const page = pageByPath("/economics");
-  assert.equal(page.path, "/economics");
-  assert.equal(page.title, "Экономика объекта — Колобочная");
+  assert.equal(page.id, "notFound");
   assert.equal(page.noindex, true);
   const navigation = fs.readFileSync(path.join(projectRoot, "src/content/navigation.ts"), "utf8");
   const prerender = fs.readFileSync(path.join(projectRoot, "scripts/prerender-dist.cjs"), "utf8");
+  const control = fs.readFileSync(path.join(projectRoot, "src/ControlApp.tsx"), "utf8");
   assert.doesNotMatch(navigation, /\/economics/);
-  assert.match(prerender, /path:\s*["']\/economics["']/);
+  assert.doesNotMatch(prerender, /path:\s*["']\/economics["']/);
+  assert.match(control, /\/control\/economics/);
 });
 
 test("Investor Terminal has registered page metadata and a static prerender route", () => {

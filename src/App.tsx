@@ -54,32 +54,12 @@ import { qualityCta, qualityDrinks, qualityHero, qualitySections, repeatableQual
 import { pageByPath, site } from "./content/site";
 import type { PageMeta } from "./types";
 
-const CapexConfiguratorPage = lazy(() =>
-  import("./components/CapexConfigurator").then((module) => ({ default: module.CapexConfiguratorPage }))
-);
-
-const LaunchBudgetPage = lazy(() =>
-  import("./components/LaunchBudget").then((module) => ({ default: module.LaunchBudgetPage }))
-);
-
-const RevenueModelPage = lazy(() =>
-  import("./components/RevenueModel").then((module) => ({ default: module.RevenueModelPage }))
-);
-
-const EconomicsPage = lazy(() =>
-  import("./components/Economics").then((module) => ({ default: module.EconomicsPage }))
-);
-
 const InvestorTerminalPage = lazy(() =>
   import("./components/InvestorTerminal").then((module) => ({ default: module.InvestorTerminalPage }))
 );
 
-const FranchisePlatformPage = lazy(() =>
-  import("./components/FranchisePlatform").then((module) => ({ default: module.FranchisePlatformPage }))
-);
-
-const PetrogradkaFranchiseScenarioPage = lazy(() =>
-  import("./components/FranchisePlatform").then((module) => ({ default: module.PetrogradkaFranchiseScenarioPage }))
+const PetrogradkaPage = lazy(() =>
+  import("./components/Petrogradka").then((module) => ({ default: module.PetrogradkaPage }))
 );
 
 function normalizePath(pathname: string) {
@@ -798,46 +778,16 @@ function renderPage(path: string) {
       return <InvestorQuestionsPage />;
     case "/privacy":
       return <PrivacyPage />;
-    case "/capex-configurator":
-      return (
-        <Suspense fallback={<main className="plain-page"><div className="section-inner"><p>Загружается CAPEX-конфигуратор…</p></div></main>}>
-          <CapexConfiguratorPage />
-        </Suspense>
-      );
-    case "/launch-budget":
-      return (
-        <Suspense fallback={<main className="plain-page"><div className="section-inner"><p>Загружается расчёт стоимости запуска…</p></div></main>}>
-          <LaunchBudgetPage />
-        </Suspense>
-      );
-    case "/revenue-model":
-      return (
-        <Suspense fallback={<main className="plain-page"><div className="section-inner"><p>Загружается расчёт объёма продаж…</p></div></main>}>
-          <RevenueModelPage />
-        </Suspense>
-      );
-    case "/economics":
-      return (
-        <Suspense fallback={<main className="plain-page"><div className="section-inner"><p>Загружается экономика объекта…</p></div></main>}>
-          <EconomicsPage />
-        </Suspense>
-      );
     case "/investor-terminal":
       return (
         <Suspense fallback={<main className="plain-page"><div className="section-inner"><p>Загружается терминал инвестора…</p></div></main>}>
           <InvestorTerminalPage />
         </Suspense>
       );
-    case "/investor/franchise-platform":
-      return (
-        <Suspense fallback={<main className="plain-page"><div className="section-inner"><p>Загружается стратегическая модель…</p></div></main>}>
-          <FranchisePlatformPage />
-        </Suspense>
-      );
-    case "/investor/franchise-platform/petrogradka":
+    case "/petrogradka":
       return (
         <Suspense fallback={<main className="plain-page"><div className="section-inner"><p>Загружается сценарий Петроградки…</p></div></main>}>
-          <PetrogradkaFranchiseScenarioPage />
+          <PetrogradkaPage />
         </Suspense>
       );
     case "/404":

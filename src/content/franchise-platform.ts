@@ -137,8 +137,8 @@ export const franchisePlatformContent = {
   futureLayersIntro: "Возможные направления, а не обязательная последовательность:",
   media: "Медиапрограмма одновременно создаёт поток гостей в собственные и партнёрские точки и формирует входящий интерес потенциальных франчайзи, партнёров и инвесторов.",
   links: {
-    scenario: "/investor/franchise-platform/petrogradka",
-    core: "/investor/franchise-platform",
+    scenario: "/petrogradka",
+    core: "/control/franchise-platform",
   },
 } as const;
 

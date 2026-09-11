@@ -429,3 +429,22 @@ decisions:
     source_ids:
       - SRC-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-BRIEF-2026-09-11
     updated_at: 2026-09-11
+  - id: DEC-ROUTES-CONTROL-WORKSPACE-2026-09-12-01
+    title: Разделить публичный сайт, адресную страницу Петроградки и защищённый Control
+    status: approved
+    decision: Создать единый защищённый контур /control для Franchise Platform Strategy и рабочих расчётных инструментов; оставить /investor-terminal публичным noindex-инструментом; перенести адресную страницу Петроградки на /petrogradka как noindex share-only страницу; установить серверные permanent redirects со старых внутренних URL и исключить review artifacts из deployable output.
+    rationale: Прямое задание владельца проекта от 2026-09-12 после отдельного аудита routing. Решение не меняет Foundation, Business Model Architecture, approved PRP, core strategy, финансовый или Network Planning engine, baseline, scenario separation, значения допущений, состав оборудования или внутренний статус available_subject_to_confirmation.
+    affected_documents:
+      - DOC-FRANCHISE-PLATFORM-STRATEGY
+      - DOC-SCENARIO-PETROGRADKA-READY-PRODUCTION-BASE
+      - DOC-CAPEX-CONFIGURATIONS
+      - DOC-INVESTOR-START-MODEL
+      - DOC-REVENUE-MODEL
+      - DOC-FINANCIAL-MODEL
+      - DOC-INVESTOR-FINANCIAL-SUMMARY
+    approved_by: project owner
+    approved_at: 2026-09-12
+    supersedes: null
+    source_ids:
+      - SRC-ROUTES-CONTROL-WORKSPACE-BRIEF-2026-09-12
+    updated_at: 2026-09-12

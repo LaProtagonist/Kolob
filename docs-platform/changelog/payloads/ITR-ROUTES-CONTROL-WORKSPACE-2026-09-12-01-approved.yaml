@@ -1,0 +1,47 @@
+schema_version: 2
+payload_id: PAYLOAD-ROUTES-CONTROL-WORKSPACE-2026-09-12-01
+iteration_id: ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01
+proposal_id: PROP-ROUTES-CONTROL-WORKSPACE-2026-09-12-01
+decision_id: DEC-ROUTES-CONTROL-WORKSPACE-2026-09-12-01
+change_set_id: CHG-ROUTES-CONTROL-WORKSPACE-2026-09-12-01
+title: Introduce protected Control workspace
+status: approved
+approved_by: project owner
+approved_at: 2026-09-12T00:00:00.000Z
+scope:
+  - Keep /investor-terminal public, noindex, outside sitemap and visible in the public header.
+  - Serve the unchanged Petrogradka proposition at /petrogradka as a noindex, navigation-free share-only page.
+  - Move the Franchise Platform strategy and four internal calculation views behind authenticated /control routes, with a common session shared with /leads.
+  - Return server HTTP permanent redirects from each superseded internal route and remove review artifacts from production output.
+constraints:
+  - Foundation v1.0, Business Model Architecture v1.0, approved PRP, Franchise Platform strategy content, Petrogradka content, scenario data, numerical assumptions, financial engine, Network Planning engine and baseline remain unchanged.
+  - Petrogradka remains a research scenario and does not become baseline.
+  - No password, secret or local configuration is committed.
+  - Protected page source and data must not be exposed in the public JavaScript bundle.
+  - No financial, network or Google sync is performed.
+affected_document_ids:
+  - DOC-FRANCHISE-PLATFORM-STRATEGY
+  - DOC-SCENARIO-PETROGRADKA-READY-PRODUCTION-BASE
+  - DOC-CAPEX-CONFIGURATIONS
+  - DOC-INVESTOR-START-MODEL
+  - DOC-REVENUE-MODEL
+  - DOC-FINANCIAL-MODEL
+  - DOC-INVESTOR-FINANCIAL-SUMMARY
+affected_section_ids:
+  - site.route-access-boundaries
+  - investor-terminal.public-access
+  - petrogradka.share-only-access
+  - control.authenticated-workspace
+  - legacy-route-redirects
+  - deployment.review-artifact-exclusion
+state_hash_paths: []
+content_paths: []
+seal_paths: []
+allowed_dirty_paths:
+  - analysis/
+  - output/
+rollback_payload: null
+rollback_contract:
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true

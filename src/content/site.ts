@@ -86,15 +86,6 @@ export const pages: PageMeta[] = [
     ogImage: "/media/hero-kolobok-1200.webp"
   },
   {
-    id: "capexConfigurator",
-    path: "/capex-configurator",
-    label: "CAPEX-конфигуратор",
-    title: "CAPEX-конфигуратор — Колобочная",
-    description: "Внутренняя рабочая страница для выбора формата точки, модулей и оборудования с исследовательскими ценами.",
-    ogImage: "/media/hero-kolobok-1200.webp",
-    noindex: true
-  },
-  {
     id: "investorTerminal",
     path: "/investor-terminal",
     label: "Терминал инвестора",
@@ -104,47 +95,11 @@ export const pages: PageMeta[] = [
     noindex: true
   },
   {
-    id: "franchisePlatform",
-    path: "/investor/franchise-platform",
-    label: "Стратегия масштабирования сети",
-    title: "Стратегия масштабирования сети — Колобочная",
-    description: "Внутренняя стратегическая архитектура центрального производства, цифровой системы управления сетью и масштабирования сети «Колобочная».",
-    ogImage: "/media/hero-kolobok-1200.webp",
-    noindex: true
-  },
-  {
     id: "franchisePlatformPetrogradka",
-    path: "/investor/franchise-platform/petrogradka",
-    label: "Сценарий Петроградки",
+    path: "/petrogradka",
+    label: "Петроградка",
     title: "Оборудованная производственная база на Петроградской стороне — Колобочная",
     description: "Предлагаем использовать существующее оборудованное пищевое производство как первый центральный заготовочный узел «Колобочной».",
-    ogImage: "/media/hero-kolobok-1200.webp",
-    noindex: true
-  },
-  {
-    id: "launchBudget",
-    path: "/launch-budget",
-    label: "Расчёт стоимости запуска",
-    title: "Расчёт стоимости запуска — Колобочная",
-    description: "Предварительный расчёт стоимости запуска первого совмещённого объекта «Колобочной» при покупке или аренде помещения.",
-    ogImage: "/media/hero-kolobok-1200.webp",
-    noindex: true
-  },
-  {
-    id: "revenueModel",
-    path: "/revenue-model",
-    label: "Расчёт объёма продаж",
-    title: "Расчёт объёма продаж — Колобочная",
-    description: "Модель потенциального объёма продаж совмещённого объекта «Колобочной»: поток заказов, структура среднего чека и производственная нагрузка.",
-    ogImage: "/media/hero-kolobok-1200.webp",
-    noindex: true
-  },
-  {
-    id: "economics",
-    path: "/economics",
-    label: "Экономика объекта",
-    title: "Экономика объекта — Колобочная",
-    description: "Модель экономики совмещённого объекта «Колобочной»: объём продаж, операционные расходы, стартовые инвестиции и срок окупаемости.",
     ogImage: "/media/hero-kolobok-1200.webp",
     noindex: true
   }

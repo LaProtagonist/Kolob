@@ -11,13 +11,29 @@ const adminPassword = process.env.CONTACT_ADMIN_PASSWORD || "";
 const adminSecret = process.env.CONTACT_ADMIN_SECRET || adminPassword || "kolob-local-admin";
 const cookieName = "kolob_leads_auth";
 const maxBodyBytes = 64 * 1024;
+const controlStaticRoot = path.resolve(process.env.CONTROL_STATIC_ROOT || path.resolve(process.cwd(), "control-dist"));
+const legacyRedirects = new Map([
+  ["/investor/franchise-platform/petrogradka", "/petrogradka"],
+  ["/investor/franchise-platform", "/control/franchise-platform"],
+  ["/capex-configurator", "/control/capex"],
+  ["/launch-budget", "/control/launch-budget"],
+  ["/revenue-model", "/control/revenue"],
+  ["/economics", "/control/economics"]
+]);
 
-function jsonResponse(res, status, payload) {
+function privateHeaders(pathname) {
+  return pathname.startsWith("/control") || pathname.startsWith("/leads") || pathname.startsWith("/api/leads")
+    ? { "X-Robots-Tag": "noindex, nofollow, noarchive" }
+    : {};
+}
+
+function jsonResponse(res, status, payload, headers = {}) {
   const body = JSON.stringify(payload);
   res.writeHead(status, {
     "Content-Type": "application/json; charset=utf-8",
     "Content-Length": Buffer.byteLength(body),
-    "Cache-Control": "no-store"
+    "Cache-Control": "no-store",
+    ...headers
   });
   res.end(body);
 }
@@ -40,8 +56,8 @@ function textResponse(res, status, text, headers = {}) {
   res.end(text);
 }
 
-function redirect(res, location, headers = {}) {
-  res.writeHead(303, { Location: location, "Cache-Control": "no-store", ...headers });
+function redirect(res, location, headers = {}, status = 303) {
+  res.writeHead(status, { Location: location, "Cache-Control": "no-store", ...headers });
   res.end();
 }
 
@@ -214,6 +230,7 @@ function layout(title, body) {
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow, noarchive" />
   <title>${escapeHtml(title)}</title>
   <style>
     :root { color-scheme: light; font-family: Arial, sans-serif; color: #171717; background: #f7f1e6; }
@@ -259,6 +276,33 @@ function loginPage(message = "") {
       <form class="login" method="post" action="/leads/login">
         <input name="password" type="password" autocomplete="current-password" placeholder="Пароль" required autofocus />
         <button type="submit">Открыть заявки</button>
+      </form>
+    </section>`
+  );
+}
+
+function safeControlNext(value) {
+  try {
+    const url = new URL(value || "/control", "http://control.local");
+    return url.origin === "http://control.local" && url.pathname.startsWith("/control")
+      ? `${url.pathname}${url.search}`
+      : "/control";
+  } catch {
+    return "/control";
+  }
+}
+
+function controlLoginPage(nextPath = "/control", message = "") {
+  return layout(
+    "Control — Колобочная",
+    `<section class="panel">
+      <h1>Control</h1>
+      <p>Введите пароль для доступа к внутренним инструментам проекта.</p>
+      ${message ? `<p>${escapeHtml(message)}</p>` : ""}
+      <form class="login" method="post" action="/control/login">
+        <input name="next" type="hidden" value="${escapeHtml(safeControlNext(nextPath))}" />
+        <input name="password" type="password" autocomplete="current-password" placeholder="Пароль" required autofocus />
+        <button type="submit">Открыть Control</button>
       </form>
     </section>`
   );
@@ -340,7 +384,7 @@ async function handleContact(req, res) {
 
 async function handleLeadsLogin(req, res) {
   if (!adminPassword) {
-    htmlResponse(res, 503, loginPage("Пароль администратора не настроен на сервере."));
+    htmlResponse(res, 503, loginPage("Пароль администратора не настроен на сервере."), privateHeaders("/leads"));
     return;
   }
 
@@ -349,41 +393,87 @@ async function handleLeadsLogin(req, res) {
   const password = String(params.get("password") || "");
 
   if (!safeCompare(hash(password), hash(adminPassword))) {
-    htmlResponse(res, 401, loginPage("Неверный пароль."));
+    htmlResponse(res, 401, loginPage("Неверный пароль."), privateHeaders("/leads"));
     return;
   }
 
-  redirect(res, "/leads", { "Set-Cookie": authCookie(req) });
+  redirect(res, "/leads", { "Set-Cookie": authCookie(req), ...privateHeaders("/leads") });
 }
 
 async function handleLeadsPage(req, res) {
   if (!isAuthorized(req)) {
-    htmlResponse(res, 200, loginPage());
+    htmlResponse(res, 200, loginPage(), privateHeaders("/leads"));
     return;
   }
 
   const leads = await readLeads();
-  htmlResponse(res, 200, leadsPage(leads));
+  htmlResponse(res, 200, leadsPage(leads), privateHeaders("/leads"));
 }
 
 async function handleLeadsApi(req, res) {
   if (!isAuthorized(req)) {
-    jsonResponse(res, 401, { ok: false, error: "Unauthorized" });
+    jsonResponse(res, 401, { ok: false, error: "Unauthorized" }, privateHeaders("/api/leads"));
     return;
   }
-  jsonResponse(res, 200, { ok: true, leads: await readLeads() });
+  jsonResponse(res, 200, { ok: true, leads: await readLeads() }, privateHeaders("/api/leads"));
 }
 
 async function handleLeadsCsv(req, res) {
   if (!isAuthorized(req)) {
-    textResponse(res, 401, "Unauthorized");
+    textResponse(res, 401, "Unauthorized", privateHeaders("/api/leads.csv"));
     return;
   }
   const csv = leadsCsv(await readLeads());
   textResponse(res, 200, csv, {
+    ...privateHeaders("/api/leads.csv"),
     "Content-Type": "text/csv; charset=utf-8",
     "Content-Disposition": 'attachment; filename="kolob-contacts.csv"'
   });
+}
+
+function controlAssetContentType(filePath) {
+  const extension = path.extname(filePath).toLowerCase();
+  return new Map([
+    [".css", "text/css; charset=utf-8"], [".html", "text/html; charset=utf-8"], [".js", "text/javascript; charset=utf-8"],
+    [".json", "application/json; charset=utf-8"], [".svg", "image/svg+xml"], [".png", "image/png"], [".webp", "image/webp"],
+    [".woff", "font/woff"], [".woff2", "font/woff2"]
+  ]).get(extension) || "application/octet-stream";
+}
+
+async function serveControl(req, res, url) {
+  if (!isAuthorized(req)) {
+    redirect(res, `/control/login?next=${encodeURIComponent(`${url.pathname}${url.search}`)}`, privateHeaders("/control"));
+    return;
+  }
+  let relative = decodeURIComponent(url.pathname.slice("/control".length)).replace(/^\/+/, "");
+  if (!relative || !path.extname(path.basename(relative))) relative = "control.html";
+  const candidate = path.resolve(controlStaticRoot, relative);
+  if (!candidate.startsWith(`${controlStaticRoot}${path.sep}`) && candidate !== controlStaticRoot) {
+    textResponse(res, 403, "Forbidden", privateHeaders("/control"));
+    return;
+  }
+  try {
+    const content = await readFile(candidate);
+    res.writeHead(200, { "Content-Type": controlAssetContentType(candidate), "Content-Length": content.length, "Cache-Control": "no-store", ...privateHeaders("/control") });
+    res.end(content);
+  } catch (error) {
+    if (error?.code === "ENOENT") textResponse(res, 404, "Not found", privateHeaders("/control"));
+    else throw error;
+  }
+}
+
+async function handleControlLogin(req, res) {
+  const params = new URLSearchParams(await readBody(req));
+  const nextPath = safeControlNext(params.get("next"));
+  if (!adminPassword) {
+    htmlResponse(res, 503, controlLoginPage(nextPath, "Пароль администратора не настроен на сервере."), privateHeaders("/control"));
+    return;
+  }
+  if (!safeCompare(hash(String(params.get("password") || "")), hash(adminPassword))) {
+    htmlResponse(res, 401, controlLoginPage(nextPath, "Неверный пароль."), privateHeaders("/control"));
+    return;
+  }
+  redirect(res, nextPath, { "Set-Cookie": authCookie(req), ...privateHeaders("/control") });
 }
 
 const server = createServer(async (req, res) => {
@@ -392,6 +482,34 @@ const server = createServer(async (req, res) => {
 
     if (req.method === "GET" && url.pathname === "/health") {
       jsonResponse(res, 200, { ok: true });
+      return;
+    }
+
+    const legacyPath = url.pathname.replace(/\/+$/, "") || "/";
+    if (req.method === "GET" && legacyRedirects.has(legacyPath)) {
+      redirect(res, `${legacyRedirects.get(legacyPath)}${url.search}`, {}, 308);
+      return;
+    }
+
+    if (req.method === "GET" && url.pathname === "/control/logout") {
+      redirect(res, "/control/login", { "Set-Cookie": clearCookie(), ...privateHeaders("/control") });
+      return;
+    }
+
+    if (req.method === "GET" && url.pathname === "/control/login") {
+      const nextPath = safeControlNext(url.searchParams.get("next"));
+      if (isAuthorized(req)) redirect(res, nextPath, privateHeaders("/control"));
+      else htmlResponse(res, 200, controlLoginPage(nextPath), privateHeaders("/control"));
+      return;
+    }
+
+    if (req.method === "POST" && url.pathname === "/control/login") {
+      await handleControlLogin(req, res);
+      return;
+    }
+
+    if (req.method === "GET" && (url.pathname === "/control" || url.pathname.startsWith("/control/"))) {
+      await serveControl(req, res, url);
       return;
     }
 
@@ -411,7 +529,7 @@ const server = createServer(async (req, res) => {
     }
 
     if (req.method === "GET" && url.pathname === "/leads/logout") {
-      redirect(res, "/leads", { "Set-Cookie": clearCookie() });
+      redirect(res, "/leads", { "Set-Cookie": clearCookie(), ...privateHeaders("/leads") });
       return;
     }
 

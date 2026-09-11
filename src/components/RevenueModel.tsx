@@ -258,8 +258,8 @@ export function RevenueModelPage() {
             <p className="launch-warning">{publicCopy.summaryWarning}</p>
           </div>
           <InvestorJourneyNavigation actions={[
-            { href: "/launch-budget", label: "Расчёт затрат →", tone: "primary", testId: "revenue-to-launch-budget" },
-            { href: "/economics", label: "Экономика объекта →", tone: "secondary", testId: "revenue-to-economics" },
+            { href: "/control/launch-budget", label: "Расчёт затрат →", tone: "primary", testId: "revenue-to-launch-budget" },
+            { href: "/control/economics", label: "Экономика объекта →", tone: "secondary", testId: "revenue-to-economics" },
           ]} />
           </aside>
         </div>

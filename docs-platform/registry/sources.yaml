@@ -1640,3 +1640,16 @@ sources:
       Петроградки с финальным предложением собственнику помещения. Не меняет видимую
       редакцию, сценарий, оборудование, статусы, допущения, baseline, Foundation, BMA,
       core strategy, Financial Model или Network Planning.
+  - id: SRC-ROUTES-CONTROL-WORKSPACE-BRIEF-2026-09-12
+    title: Задание на разделение public, share-only и Control маршрутов
+    type: instruction
+    location: User instruction, 2026-09-12
+    publisher: project owner
+    publication_date: 2026-09-12
+    accessed_at: 2026-09-12
+    reliability: primary
+    notes: >-
+      Первичный источник решения перенести внутренние web views в защищённый Control,
+      оставить Investor Terminal публичным noindex-инструментом, выделить Петроградку
+      в короткую share-only ссылку и закрыть review output. Не меняет Foundation, BMA,
+      core strategy, baseline, engines, scenario values, оборудование или статусы.

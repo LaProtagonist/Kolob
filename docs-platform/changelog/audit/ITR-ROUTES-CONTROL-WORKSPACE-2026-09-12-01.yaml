@@ -1,0 +1,16 @@
+receipt_version: 1
+iteration_id: ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01
+audited_at: 2026-09-12T00:00:00.000Z
+result: passed
+finding:
+  public_boundary: Investor Terminal remains public, noindex, absent from sitemap and without internal-tool links.
+  share_boundary: Petrogradka is independently renderable at /petrogradka, noindex and absent from public navigation and sitemap.
+  control_boundary: Internal strategy and calculation chunks are built into a separate Control output; the server checks the existing session before returning either Control HTML or assets.
+  review_boundary: Prerender review output is written outside deployable dist and the production server route denies /__review.
+resolution:
+  - keep the existing leads backend and reuse its password verification and session cookie for Control
+  - preserve every governed business and scenario boundary without content amendment
+  - use server HTTP redirects rather than client-side route replacement for historical internal addresses
+external_state:
+  google_apply: not_run
+  production_deploy: pending

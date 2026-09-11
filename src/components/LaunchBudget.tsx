@@ -461,9 +461,9 @@ export function LaunchBudgetPage() {
             <p className="launch-legal">{rawModel.public_presentation.legal_disclaimer}</p>
           </div>
           <InvestorJourneyNavigation actions={[
-            { href: "/revenue-model", label: "← Расчёт доходов", tone: "secondary", testId: "launch-budget-to-revenue" },
+            { href: "/control/revenue", label: "← Расчёт доходов", tone: "secondary", testId: "launch-budget-to-revenue" },
             {
-              href: "/economics",
+              href: "/control/economics",
               label: "Экономика объекта →",
               tone: "primary",
               testId: "launch-budget-to-economics",

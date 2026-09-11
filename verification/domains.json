@@ -129,6 +129,10 @@
       "cost": "integration",
       "command": ["node", "scripts/test-franchise-platform.cjs"]
     },
+    "control:routing": {
+      "cost": "targeted",
+      "command": ["node", "scripts/test-control-routing.cjs"]
+    },
     "governance:registry": {
       "cost": "fast",
       "command": ["npm", "run", "registry:validate", "--silent"]
@@ -227,7 +231,7 @@
       "targeted": ["typescript:site", "revenue:web"],
       "integration": [],
       "dependency": ["revenue:web"],
-      "visual": {"route": "/revenue-model", "requiredSelectors": [".revenue-model-page", "h1"], "defaultImpact": "low"},
+      "visual": {"defaultImpact": "none"},
       "releaseRequired": true
     },
     "launch-budget": {
@@ -239,7 +243,7 @@
       "targeted": ["typescript:site", "launch:unit"],
       "integration": ["launch:model"],
       "dependency": ["launch:unit"],
-      "visual": {"route": "/launch-budget", "requiredSelectors": [".launch-budget-page", "h1"], "defaultImpact": "none"},
+      "visual": {"defaultImpact": "none"},
       "releaseRequired": true
     },
     "economics-ui": {
@@ -251,7 +255,7 @@
       "targeted": ["typescript:site", "economics:data"],
       "integration": [],
       "dependency": ["economics:data"],
-      "visual": {"route": "/economics", "requiredSelectors": ["[data-testid=economics-summary]", "h1"], "defaultImpact": "none"},
+      "visual": {"defaultImpact": "none"},
       "releaseRequired": true
     },
     "investor-journey": {
@@ -263,19 +267,31 @@
       "targeted": ["typescript:site", "financial-core:projection", "investor-journey:unit", "investor-terminal:browser"],
       "integration": [],
       "dependency": ["investor-journey:unit"],
-      "visual": {"route": "/investor-terminal", "requiredSelectors": [".investor-terminal", "#investor-terminal-title"], "defaultImpact": "high"},
+      "visual": {"defaultImpact": "none"},
       "releaseRequired": true
     },
     "franchise-platform": {
-      "patterns": ["docs-platform/02-franchise-platform-strategy.md", "docs-platform/03-petrogradka-landlord-proposition.md", "docs-platform/scenarios/petrogradka-ready-production-base.yaml", "docs-platform/working/franchise-platform-parameters.yaml", "docs-platform/checklists/franchise-platform-missing-inputs.md", "docs-platform/research/banking-settlement-architecture.md", "src/components/FranchisePlatform.*", "src/content/franchise-platform.ts", "src/lib/franchise-platform.ts", "scripts/test-franchise-platform.*", "docs-platform/app/test/franchise-platform.test.ts"],
+      "patterns": ["docs-platform/02-franchise-platform-strategy.md", "docs-platform/03-petrogradka-landlord-proposition.md", "docs-platform/scenarios/petrogradka-ready-production-base.yaml", "docs-platform/working/franchise-platform-parameters.yaml", "docs-platform/checklists/franchise-platform-missing-inputs.md", "docs-platform/research/banking-settlement-architecture.md", "src/components/FranchisePlatform.*", "src/components/Petrogradka.*", "src/content/franchise-platform.ts", "src/lib/franchise-platform.ts", "scripts/test-franchise-platform.*", "docs-platform/app/test/franchise-platform.test.ts"],
       "upstream": [],
       "downstream": [],
       "testInputs": ["scripts/test-franchise-platform.test.ts", "scripts/test-franchise-platform.cjs", "docs-platform/app/test/franchise-platform.test.ts"],
       "fast": [],
-      "targeted": ["typescript:site", "franchise-platform:unit"],
-      "integration": ["franchise-platform:browser"],
+      "targeted": ["typescript:site", "franchise-platform:unit", "franchise-platform:browser"],
+      "integration": [],
       "dependency": ["franchise-platform:unit"],
-      "visual": {"route": "/investor/franchise-platform", "requiredSelectors": [".franchise-page", "#franchise-title"], "defaultImpact": "high"},
+      "visual": {"defaultImpact": "none"},
+      "releaseRequired": true
+    },
+    "control": {
+      "patterns": ["control.html", "vite.control.config.ts", "src/control-main.tsx", "src/ControlApp.tsx", "src/Control.css", "src/content/investor-terminal-capex-data.json", "src/lib/investor-terminal-capex-runtime.ts", "scripts/generate-investor-terminal-capex-data.mjs", "scripts/test-control-routing.cjs", "server/contact-server.mjs", "server/contact_server.py", "scripts/activate-colob-caddy-route.remote.sh", "scripts/setup-colob-contact-server.remote.sh", "scripts/deploy-colob-control-workspace.remote.sh", "synch_to_server.sh", "vite.config.ts"],
+      "upstream": ["capex", "revenue-model", "financial", "investor-summary"],
+      "downstream": [],
+      "testInputs": ["scripts/test-control-routing.cjs"],
+      "fast": [],
+      "targeted": ["typescript:site", "control:routing"],
+      "integration": [],
+      "dependency": ["control:routing"],
+      "visual": {"defaultImpact": "none"},
       "releaseRequired": true
     },
     "site-core": {
@@ -287,7 +303,7 @@
       "targeted": ["typescript:site"],
       "integration": [],
       "dependency": ["typescript:site"],
-      "visual": {"route": "/", "requiredSelectors": ["#root > *", "h1"], "defaultImpact": "low"},
+      "visual": {"defaultImpact": "none"},
       "releaseRequired": true
     },
     "governance": {

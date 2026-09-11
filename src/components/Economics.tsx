@@ -425,8 +425,8 @@ export function EconomicsPage() {
               <p className="launch-warning">{economicsCopy.summaryNote}</p>
             </div>
             <InvestorJourneyNavigation actions={[
-              { href: "/launch-budget", label: "← Расчёт затрат", tone: "primary", testId: "economics-to-launch-budget" },
-              { href: "/revenue-model", label: "Расчёт доходов", tone: "secondary", testId: "economics-to-revenue" },
+              { href: "/control/launch-budget", label: "← Расчёт затрат", tone: "primary", testId: "economics-to-launch-budget" },
+              { href: "/control/revenue", label: "Расчёт доходов", tone: "secondary", testId: "economics-to-revenue" },
             ]} />
             </aside>
           </div>

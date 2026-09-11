@@ -4,6 +4,7 @@ set -eu
 
 APP_DIR="/opt/kolob-contact"
 DATA_DIR="/srv/kolob-data"
+CONTROL_DIR="/srv/kolob-control"
 ENV_FILE="/etc/kolob-contact.env"
 CADDY_DIR="/opt/server.host"
 CADDYFILE="$CADDY_DIR/Caddyfile"
@@ -47,7 +48,7 @@ if [ -z "$CADDY_NETWORK" ]; then
   exit 1
 fi
 
-mkdir -p "$DATA_DIR"
+mkdir -p "$DATA_DIR" "$CONTROL_DIR"
 chmod 700 "$DATA_DIR"
 
 EXISTING_SECRET=""
@@ -71,6 +72,7 @@ CONTACT_SERVER_PORT=$CONTACT_PORT
 CONTACT_DATA_DIR=/data
 CONTACT_ADMIN_PASSWORD=$CONTACT_ADMIN_PASSWORD
 CONTACT_ADMIN_SECRET=$CONTACT_ADMIN_SECRET
+CONTROL_STATIC_ROOT=/control
 EOF
 chmod 600 "$ENV_FILE"
 
@@ -84,6 +86,7 @@ docker run -d \
   --env-file "$ENV_FILE" \
   -v "$APP_DIR:/app:ro" \
   -v "$DATA_DIR:/data" \
+  -v "$CONTROL_DIR:/control:ro" \
   "$CONTACT_IMAGE" \
   python3 /app/contact_server.py >/dev/null
 
@@ -104,7 +107,12 @@ text = p.read_text()
 
 block = """# Kolobochnaya
 colob.spi.ski {
-\t@kolob_contact_backend path /api/contact /api/leads /api/leads.csv /leads /leads/* /health
+\t@kolob_review path /__review /__review/*
+\thandle @kolob_review {
+\t\trespond 404
+\t}
+
+\t@kolob_contact_backend path /api/contact /api/leads /api/leads.csv /leads /leads/* /control /control/* /investor/franchise-platform /investor/franchise-platform/* /capex-configurator /capex-configurator/ /launch-budget /launch-budget/ /revenue-model /revenue-model/ /economics /economics/ /health
 \thandle @kolob_contact_backend {
 \t\treverse_proxy kolob-contact:8787
 \t}

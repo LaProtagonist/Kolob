@@ -1,0 +1,18 @@
+schema_version: 2
+change_id: CHG-ROUTES-CONTROL-WORKSPACE-2026-09-12-01
+title: Introduce protected Control workspace
+status: approved
+created_at: 2026-09-12
+decision_id: DEC-ROUTES-CONTROL-WORKSPACE-2026-09-12-01
+iteration_id: ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01
+proposal_id: PROP-ROUTES-CONTROL-WORKSPACE-2026-09-12-01
+approved_payload_path: docs-platform/changelog/payloads/ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01-approved.yaml
+approved_payload_sha256: 0c0c26e552396e52fb6a1041420aaceca8cbb97879460836b00765045135c13f
+operations:
+  - keep Investor Terminal public, noindex, absent from sitemap and free of internal-tool links
+  - publish the unchanged Petrogradka owner proposition at /petrogradka with noindex metadata and a short external breadcrumb
+  - serve the Control hub and five internal tools only through authenticated /control routes and protected asset requests
+  - reuse the existing leads password/session cookie for Control and preserve /leads plus its API and CSV behavior
+  - return HTTP permanent redirects from historical internal routes to their new canonical targets
+  - exclude prerender review output from public dist and deny /__review at the production server
+  - add deterministic static, HTTP and browser access tests and extend the existing deployment workflow for the protected bundle

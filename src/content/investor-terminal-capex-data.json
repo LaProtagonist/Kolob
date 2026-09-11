@@ -1,0 +1,4812 @@
+{
+  "scenarios": [
+    {
+      "id": "minimum",
+      "label": "Минимальная комплектация"
+    },
+    {
+      "id": "base",
+      "label": "Базовая комплектация"
+    },
+    {
+      "id": "scale_ready",
+      "label": "С запасом для роста"
+    }
+  ],
+  "businessCapacity": {
+    "prep_outlet_count": 5,
+    "checks_per_outlet_per_day": 100
+  },
+  "modules": [
+    {
+      "id": "MOD-PREP",
+      "name": "Заготовочный цех",
+      "status": "research"
+    },
+    {
+      "id": "MOD-RETAIL-HOT",
+      "name": "Торговая кухня и приготовление колобков",
+      "status": "research"
+    },
+    {
+      "id": "MOD-BAR",
+      "name": "Холодные и горячие напитки",
+      "status": "research"
+    },
+    {
+      "id": "MOD-GROW",
+      "name": "Выращивание зелени и микрозелени",
+      "status": "research"
+    },
+    {
+      "id": "MOD-POS",
+      "name": "Касса, складской и производственный учёт",
+      "status": "research"
+    },
+    {
+      "id": "MOD-KDS",
+      "name": "Управление заказами на рабочих постах",
+      "status": "research"
+    },
+    {
+      "id": "MOD-GUEST",
+      "name": "Гостевой зал и посадочные места",
+      "status": "research"
+    },
+    {
+      "id": "MOD-TAKEAWAY",
+      "name": "Заказ, выдача, ожидание и самообслуживание",
+      "status": "research"
+    },
+    {
+      "id": "MOD-STORAGE",
+      "name": "Складское оснащение",
+      "status": "not_started"
+    },
+    {
+      "id": "MOD-WASH",
+      "name": "Посудомоечная и санитарная зона",
+      "status": "research"
+    },
+    {
+      "id": "MOD-STAFF",
+      "name": "Служебные помещения и оснащение персонала",
+      "status": "not_started"
+    },
+    {
+      "id": "MOD-ENGINEERING",
+      "name": "Инженерная инфраструктура",
+      "status": "not_started"
+    }
+  ],
+  "formats": [
+    {
+      "id": "FMT-RESTAURANT-SEATING",
+      "requiredModules": [
+        "MOD-RETAIL-HOT",
+        "MOD-POS",
+        "MOD-KDS",
+        "MOD-GUEST",
+        "MOD-TAKEAWAY",
+        "MOD-WASH",
+        "MOD-ENGINEERING"
+      ],
+      "optionalModules": [
+        "MOD-BAR",
+        "MOD-GROW",
+        "MOD-STORAGE",
+        "MOD-STAFF"
+      ]
+    },
+    {
+      "id": "FMT-FOOD-COURT",
+      "requiredModules": [
+        "MOD-RETAIL-HOT",
+        "MOD-POS",
+        "MOD-KDS",
+        "MOD-TAKEAWAY",
+        "MOD-ENGINEERING"
+      ],
+      "optionalModules": [
+        "MOD-BAR",
+        "MOD-STORAGE",
+        "MOD-WASH"
+      ]
+    }
+  ],
+  "moduleItems": [
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-001",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 1,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-002",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 1,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-003",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 3,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-004",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 1,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-005",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-006",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-007",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-008",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-009",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 1,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-010",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-011",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-012",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": "Зависит от выбранного формата, параметров локации или отдельного решения.",
+      "defaultRequirement": "conditional"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-013",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 1,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-014",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 1,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-015",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 1,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-016",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 1,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-017",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 1,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-018",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 1,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-019",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 1,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-020",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 1,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-021",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-022",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-023",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-024",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-025",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-026",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-027",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 6,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-028",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 4,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-029",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 8,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-030",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 12,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-031",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 4,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-032",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 8,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-033",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 8,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-034",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 4,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-035",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 6,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-036",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 4,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-037",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 6,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-038",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 6,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-039",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 8,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-040",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 36,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-041",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 30,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-042",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 1,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-043",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 1,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-044",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-045",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": "Зависит от выбранного формата, параметров локации или отдельного решения.",
+      "defaultRequirement": "conditional"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-046",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-047",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-RETAIL-HOT",
+      "itemId": "CAPEX-02-001",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 2,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-RETAIL-HOT",
+      "itemId": "CAPEX-02-002",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 3,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-RETAIL-HOT",
+      "itemId": "CAPEX-02-003",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 24,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-RETAIL-HOT",
+      "itemId": "CAPEX-02-004",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 1,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-RETAIL-HOT",
+      "itemId": "CAPEX-02-005",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-RETAIL-HOT",
+      "itemId": "CAPEX-02-006",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 2,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-RETAIL-HOT",
+      "itemId": "CAPEX-02-007",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 1,
+      "aggregationRule": "max",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-RETAIL-HOT",
+      "itemId": "CAPEX-02-008",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 1,
+      "aggregationRule": "max",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-RETAIL-HOT",
+      "itemId": "CAPEX-02-009",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-RETAIL-HOT",
+      "itemId": "CAPEX-02-014",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 4,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-RETAIL-HOT",
+      "itemId": "CAPEX-02-015",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 8,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-RETAIL-HOT",
+      "itemId": "CAPEX-02-016",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 4,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-RETAIL-HOT",
+      "itemId": "CAPEX-02-017",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 12,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-RETAIL-HOT",
+      "itemId": "CAPEX-02-018",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 12,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-RETAIL-HOT",
+      "itemId": "CAPEX-02-019",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 12,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-RETAIL-HOT",
+      "itemId": "CAPEX-02-020",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 8,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-RETAIL-HOT",
+      "itemId": "CAPEX-02-021",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 4,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-RETAIL-HOT",
+      "itemId": "CAPEX-02-022",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 12,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-RETAIL-HOT",
+      "itemId": "CAPEX-02-023",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 4,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-RETAIL-HOT",
+      "itemId": "CAPEX-02-024",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 8,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-RETAIL-HOT",
+      "itemId": "CAPEX-02-025",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 4,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-RETAIL-HOT",
+      "itemId": "CAPEX-02-026",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 12,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-RETAIL-HOT",
+      "itemId": "CAPEX-02-027",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 40,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-RETAIL-HOT",
+      "itemId": "CAPEX-02-028",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 25,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-RETAIL-HOT",
+      "itemId": "CAPEX-02-029",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 24,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-RETAIL-HOT",
+      "itemId": "CAPEX-02-030",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 6,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-RETAIL-HOT",
+      "itemId": "CAPEX-02-031",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 6,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-BAR",
+      "itemId": "CAPEX-02-010",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-BAR",
+      "itemId": "CAPEX-02-011",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-BAR",
+      "itemId": "CAPEX-02-012",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 2,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-BAR",
+      "itemId": "CAPEX-02-013",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": "Зависит от выбранного формата, параметров локации или отдельного решения.",
+      "defaultRequirement": "conditional"
+    },
+    {
+      "moduleId": "MOD-BAR",
+      "itemId": "CAPEX-02-032",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 6,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-BAR",
+      "itemId": "CAPEX-02-033",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 6,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-BAR",
+      "itemId": "CAPEX-02-034",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 4,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-BAR",
+      "itemId": "CAPEX-02-035",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 24,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-BAR",
+      "itemId": "CAPEX-02-036",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 6,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-BAR",
+      "itemId": "CAPEX-02-037",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 4,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-BAR",
+      "itemId": "CAPEX-02-038",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 1,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-BAR",
+      "itemId": "CAPEX-02-039",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 2,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-BAR",
+      "itemId": "CAPEX-02-040",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 12,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-BAR",
+      "itemId": "CAPEX-02-041",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 4,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-BAR",
+      "itemId": "CAPEX-02-042",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 1,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-BAR",
+      "itemId": "CAPEX-02-043",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-BAR",
+      "itemId": "CAPEX-02-044",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": "Включается только при отдельном выборе опционального направления.",
+      "defaultRequirement": "optional"
+    },
+    {
+      "moduleId": "MOD-BAR",
+      "itemId": "CAPEX-02-045",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": "Включается только при отдельном выборе опционального направления.",
+      "defaultRequirement": "optional"
+    },
+    {
+      "moduleId": "MOD-BAR",
+      "itemId": "CAPEX-02-046",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": "Включается только при отдельном выборе опционального направления.",
+      "defaultRequirement": "optional"
+    },
+    {
+      "moduleId": "MOD-BAR",
+      "itemId": "CAPEX-02-047",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": "Включается только при отдельном выборе опционального направления.",
+      "defaultRequirement": "optional"
+    },
+    {
+      "moduleId": "MOD-BAR",
+      "itemId": "CAPEX-02-048",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": "Включается только при отдельном выборе опционального направления.",
+      "defaultRequirement": "optional"
+    },
+    {
+      "moduleId": "MOD-BAR",
+      "itemId": "CAPEX-02-049",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": "Включается только при отдельном выборе опционального направления.",
+      "defaultRequirement": "optional"
+    },
+    {
+      "moduleId": "MOD-BAR",
+      "itemId": "CAPEX-02-050",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": "Включается только при отдельном выборе опционального направления.",
+      "defaultRequirement": "optional"
+    },
+    {
+      "moduleId": "MOD-BAR",
+      "itemId": "CAPEX-02-051",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": "Включается только при отдельном выборе опционального направления.",
+      "defaultRequirement": "optional"
+    },
+    {
+      "moduleId": "MOD-BAR",
+      "itemId": "CAPEX-02-052",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": "Включается только при отдельном выборе опционального направления.",
+      "defaultRequirement": "optional"
+    },
+    {
+      "moduleId": "MOD-BAR",
+      "itemId": "CAPEX-02-053",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": "Включается только при отдельном выборе опционального направления.",
+      "defaultRequirement": "optional"
+    },
+    {
+      "moduleId": "MOD-BAR",
+      "itemId": "CAPEX-02-054",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": "alcohol_enabled == true",
+      "defaultRequirement": "conditional"
+    },
+    {
+      "moduleId": "MOD-BAR",
+      "itemId": "CAPEX-02-055",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 1,
+      "aggregationRule": "once",
+      "condition": "alcohol_enabled == true",
+      "defaultRequirement": "conditional"
+    },
+    {
+      "moduleId": "MOD-GROW",
+      "itemId": "CAPEX-03-001",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 10,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-GROW",
+      "itemId": "CAPEX-03-002",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 2,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-GROW",
+      "itemId": "CAPEX-03-003",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 20,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-GROW",
+      "itemId": "CAPEX-03-004",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-GROW",
+      "itemId": "CAPEX-03-005",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-GROW",
+      "itemId": "CAPEX-03-006",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-GROW",
+      "itemId": "CAPEX-03-007",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-GROW",
+      "itemId": "CAPEX-03-008",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-GROW",
+      "itemId": "CAPEX-03-009",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-GROW",
+      "itemId": "CAPEX-03-010",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-GROW",
+      "itemId": "CAPEX-03-011",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-GROW",
+      "itemId": "CAPEX-03-012",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-GROW",
+      "itemId": "CAPEX-03-013",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-GROW",
+      "itemId": "CAPEX-03-014",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-GROW",
+      "itemId": "CAPEX-03-015",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-GROW",
+      "itemId": "CAPEX-03-016",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-GROW",
+      "itemId": "CAPEX-03-017",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-GROW",
+      "itemId": "CAPEX-03-018",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-GROW",
+      "itemId": "CAPEX-03-019",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-POS",
+      "itemId": "CAPEX-04-001",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 2,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-POS",
+      "itemId": "CAPEX-04-002",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 1,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-KDS",
+      "itemId": "CAPEX-04-003",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 3,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-GUEST",
+      "itemId": "CAPEX-05-001",
+      "quantityRuleType": "per_seat",
+      "quantityRuleValue": null,
+      "aggregationRule": "sum",
+      "condition": "Зависит от выбранного формата, параметров локации или отдельного решения.",
+      "defaultRequirement": "conditional"
+    },
+    {
+      "moduleId": "MOD-GUEST",
+      "itemId": "CAPEX-05-002",
+      "quantityRuleType": "per_seat",
+      "quantityRuleValue": null,
+      "aggregationRule": "sum",
+      "condition": "Зависит от выбранного формата, параметров локации или отдельного решения.",
+      "defaultRequirement": "conditional"
+    },
+    {
+      "moduleId": "MOD-GUEST",
+      "itemId": "CAPEX-05-003",
+      "quantityRuleType": "per_seat",
+      "quantityRuleValue": null,
+      "aggregationRule": "sum",
+      "condition": "Зависит от выбранного формата, параметров локации или отдельного решения.",
+      "defaultRequirement": "conditional"
+    },
+    {
+      "moduleId": "MOD-GUEST",
+      "itemId": "CAPEX-05-004",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": "Зависит от выбранного формата, параметров локации или отдельного решения.",
+      "defaultRequirement": "conditional"
+    },
+    {
+      "moduleId": "MOD-GUEST",
+      "itemId": "CAPEX-05-005",
+      "quantityRuleType": "per_seat",
+      "quantityRuleValue": null,
+      "aggregationRule": "sum",
+      "condition": "Зависит от выбранного формата, параметров локации или отдельного решения.",
+      "defaultRequirement": "conditional"
+    },
+    {
+      "moduleId": "MOD-GUEST",
+      "itemId": "CAPEX-05-006",
+      "quantityRuleType": "per_seat",
+      "quantityRuleValue": null,
+      "aggregationRule": "sum",
+      "condition": "Зависит от выбранного формата, параметров локации или отдельного решения.",
+      "defaultRequirement": "conditional"
+    },
+    {
+      "moduleId": "MOD-GUEST",
+      "itemId": "CAPEX-05-007",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": "Зависит от выбранного формата, параметров локации или отдельного решения.",
+      "defaultRequirement": "conditional"
+    },
+    {
+      "moduleId": "MOD-GUEST",
+      "itemId": "CAPEX-05-022",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": "Зависит от выбранного формата, параметров локации или отдельного решения.",
+      "defaultRequirement": "conditional"
+    },
+    {
+      "moduleId": "MOD-GUEST",
+      "itemId": "CAPEX-05-023",
+      "quantityRuleType": "per_guest_area_m2",
+      "quantityRuleValue": null,
+      "aggregationRule": "sum",
+      "condition": "Зависит от выбранного формата, параметров локации или отдельного решения.",
+      "defaultRequirement": "conditional"
+    },
+    {
+      "moduleId": "MOD-GUEST",
+      "itemId": "CAPEX-05-024",
+      "quantityRuleType": "per_guest_area_m2",
+      "quantityRuleValue": null,
+      "aggregationRule": "sum",
+      "condition": "Зависит от выбранного формата, параметров локации или отдельного решения.",
+      "defaultRequirement": "conditional"
+    },
+    {
+      "moduleId": "MOD-GUEST",
+      "itemId": "CAPEX-05-025",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": "Зависит от выбранного формата, параметров локации или отдельного решения.",
+      "defaultRequirement": "conditional"
+    },
+    {
+      "moduleId": "MOD-GUEST",
+      "itemId": "CAPEX-05-026",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": "Зависит от выбранного формата, параметров локации или отдельного решения.",
+      "defaultRequirement": "conditional"
+    },
+    {
+      "moduleId": "MOD-GUEST",
+      "itemId": "CAPEX-05-027",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": "Зависит от выбранного формата, параметров локации или отдельного решения.",
+      "defaultRequirement": "conditional"
+    },
+    {
+      "moduleId": "MOD-TAKEAWAY",
+      "itemId": "CAPEX-02-007",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 1,
+      "aggregationRule": "max",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-TAKEAWAY",
+      "itemId": "CAPEX-02-008",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 1,
+      "aggregationRule": "max",
+      "condition": null,
+      "defaultRequirement": "tbd"
+    },
+    {
+      "moduleId": "MOD-TAKEAWAY",
+      "itemId": "CAPEX-05-008",
+      "quantityRuleType": "per_cashier_post",
+      "quantityRuleValue": null,
+      "aggregationRule": "sum",
+      "condition": "Зависит от выбранного формата, параметров локации или отдельного решения.",
+      "defaultRequirement": "conditional"
+    },
+    {
+      "moduleId": "MOD-TAKEAWAY",
+      "itemId": "CAPEX-05-009",
+      "quantityRuleType": "per_cashier_post",
+      "quantityRuleValue": null,
+      "aggregationRule": "sum",
+      "condition": "Зависит от выбранного формата, параметров локации или отдельного решения.",
+      "defaultRequirement": "conditional"
+    },
+    {
+      "moduleId": "MOD-TAKEAWAY",
+      "itemId": "CAPEX-05-010",
+      "quantityRuleType": "per_station",
+      "quantityRuleValue": null,
+      "aggregationRule": "sum",
+      "condition": "Зависит от выбранного формата, параметров локации или отдельного решения.",
+      "defaultRequirement": "conditional"
+    },
+    {
+      "moduleId": "MOD-TAKEAWAY",
+      "itemId": "CAPEX-05-011",
+      "quantityRuleType": "per_station",
+      "quantityRuleValue": null,
+      "aggregationRule": "sum",
+      "condition": "Зависит от выбранного формата, параметров локации или отдельного решения.",
+      "defaultRequirement": "conditional"
+    },
+    {
+      "moduleId": "MOD-TAKEAWAY",
+      "itemId": "CAPEX-05-012",
+      "quantityRuleType": "per_station",
+      "quantityRuleValue": null,
+      "aggregationRule": "sum",
+      "condition": "Зависит от выбранного формата, параметров локации или отдельного решения.",
+      "defaultRequirement": "conditional"
+    },
+    {
+      "moduleId": "MOD-TAKEAWAY",
+      "itemId": "CAPEX-05-013",
+      "quantityRuleType": "per_cashier_post",
+      "quantityRuleValue": null,
+      "aggregationRule": "sum",
+      "condition": "Зависит от выбранного формата, параметров локации или отдельного решения.",
+      "defaultRequirement": "conditional"
+    },
+    {
+      "moduleId": "MOD-TAKEAWAY",
+      "itemId": "CAPEX-05-014",
+      "quantityRuleType": "per_cashier_post",
+      "quantityRuleValue": null,
+      "aggregationRule": "sum",
+      "condition": "Зависит от выбранного формата, параметров локации или отдельного решения.",
+      "defaultRequirement": "conditional"
+    },
+    {
+      "moduleId": "MOD-TAKEAWAY",
+      "itemId": "CAPEX-05-015",
+      "quantityRuleType": "per_station",
+      "quantityRuleValue": null,
+      "aggregationRule": "sum",
+      "condition": "Зависит от выбранного формата, параметров локации или отдельного решения.",
+      "defaultRequirement": "conditional"
+    },
+    {
+      "moduleId": "MOD-TAKEAWAY",
+      "itemId": "CAPEX-05-016",
+      "quantityRuleType": "per_station",
+      "quantityRuleValue": null,
+      "aggregationRule": "sum",
+      "condition": "Зависит от выбранного формата, параметров локации или отдельного решения.",
+      "defaultRequirement": "conditional"
+    },
+    {
+      "moduleId": "MOD-TAKEAWAY",
+      "itemId": "CAPEX-05-017",
+      "quantityRuleType": "per_station",
+      "quantityRuleValue": null,
+      "aggregationRule": "sum",
+      "condition": "Зависит от выбранного формата, параметров локации или отдельного решения.",
+      "defaultRequirement": "conditional"
+    },
+    {
+      "moduleId": "MOD-TAKEAWAY",
+      "itemId": "CAPEX-05-018",
+      "quantityRuleType": "per_station",
+      "quantityRuleValue": null,
+      "aggregationRule": "sum",
+      "condition": "Зависит от выбранного формата, параметров локации или отдельного решения.",
+      "defaultRequirement": "conditional"
+    },
+    {
+      "moduleId": "MOD-TAKEAWAY",
+      "itemId": "CAPEX-05-019",
+      "quantityRuleType": "per_station",
+      "quantityRuleValue": null,
+      "aggregationRule": "sum",
+      "condition": "Зависит от выбранного формата, параметров локации или отдельного решения.",
+      "defaultRequirement": "conditional"
+    },
+    {
+      "moduleId": "MOD-TAKEAWAY",
+      "itemId": "CAPEX-05-020",
+      "quantityRuleType": "tbd",
+      "quantityRuleValue": null,
+      "aggregationRule": "manual",
+      "condition": "Зависит от выбранного формата, параметров локации или отдельного решения.",
+      "defaultRequirement": "conditional"
+    },
+    {
+      "moduleId": "MOD-TAKEAWAY",
+      "itemId": "CAPEX-05-021",
+      "quantityRuleType": "per_station",
+      "quantityRuleValue": null,
+      "aggregationRule": "sum",
+      "condition": "Зависит от выбранного формата, параметров локации или отдельного решения.",
+      "defaultRequirement": "conditional"
+    },
+    {
+      "moduleId": "MOD-PREP",
+      "itemId": "CAPEX-01-048",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 1,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-RETAIL-HOT",
+      "itemId": "CAPEX-02-056",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 1,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-BAR",
+      "itemId": "CAPEX-02-057",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 1,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-WASH",
+      "itemId": "CAPEX-08-001",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 1,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-WASH",
+      "itemId": "CAPEX-08-002",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 1,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-WASH",
+      "itemId": "CAPEX-08-003",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 1,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-WASH",
+      "itemId": "CAPEX-08-004",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 1,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-WASH",
+      "itemId": "CAPEX-08-005",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 3,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    },
+    {
+      "moduleId": "MOD-WASH",
+      "itemId": "CAPEX-08-006",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 1,
+      "aggregationRule": "once",
+      "condition": null,
+      "defaultRequirement": "required"
+    }
+  ],
+  "pilotConfiguration": {
+    "filling_count": null,
+    "cashier_post_count": 2,
+    "hot_kitchen_post_count": 2,
+    "service_station_count": null,
+    "central_supply_enabled": false
+  },
+  "investorStartModel": {
+    "point_configuration": {
+      "required_modules": [
+        "MOD-PREP",
+        "MOD-RETAIL-HOT",
+        "MOD-POS",
+        "MOD-KDS",
+        "MOD-TAKEAWAY",
+        "MOD-GUEST",
+        "MOD-STORAGE",
+        "MOD-WASH",
+        "MOD-ENGINEERING"
+      ],
+      "optional_modules": [
+        {
+          "module_id": "MOD-BAR",
+          "default_enabled": true
+        },
+        {
+          "module_id": "MOD-GROW",
+          "default_enabled": true
+        }
+      ],
+      "equipment_exclusions": [
+        {
+          "item_id_prefix": "CAPEX-05-"
+        },
+        {
+          "item_id": "CAPEX-01-012"
+        }
+      ]
+    },
+    "premises": {
+      "default_scenario": "rent",
+      "scenarios": {
+        "purchase": {
+          "default_purchase_price_rub": 69000000
+        },
+        "rent": {
+          "default_monthly_rent_rub": 350000,
+          "default_prepayment_months": 12,
+          "default_security_deposit_months": 2
+        }
+      }
+    },
+    "area": {
+      "defaults": {
+        "total_area_m2": 200,
+        "kitchen_and_production_area_m2": 90,
+        "guest_area_m2": 80
+      }
+    },
+    "seating": {
+      "default_profile": "balanced",
+      "profiles": [
+        {
+          "id": "efficient",
+          "square_metres_per_seat": 1.4
+        },
+        {
+          "id": "balanced",
+          "square_metres_per_seat": 1.6
+        },
+        {
+          "id": "comfortable",
+          "square_metres_per_seat": 1.8
+        }
+      ]
+    },
+    "furniture": {
+      "default_profile": "balanced",
+      "profiles": [
+        {
+          "id": "functional",
+          "rub_per_seat": 4500
+        },
+        {
+          "id": "balanced",
+          "rub_per_seat": 8500
+        },
+        {
+          "id": "comfort",
+          "rub_per_seat": 12000
+        }
+      ]
+    },
+    "equipment": {
+      "default_scenario": "BASE",
+      "scenarios": [
+        {
+          "id": "MINIMUM",
+          "snapshot_key": "minimum"
+        },
+        {
+          "id": "BASE",
+          "snapshot_key": "base"
+        },
+        {
+          "id": "SCALE_READY",
+          "snapshot_key": "scale_ready"
+        }
+      ]
+    },
+    "preparation": {
+      "default_mode": "breakdown",
+      "categories": [
+        {
+          "id": "PREP-BUILDING",
+          "name": "Общестроительная адаптация",
+          "amount_rub": 3000000,
+          "enabled_by_default": true
+        },
+        {
+          "id": "PREP-ELECTRICAL",
+          "name": "Электроснабжение",
+          "amount_rub": 1200000,
+          "enabled_by_default": true
+        },
+        {
+          "id": "PREP-WATER-DRAINAGE",
+          "name": "Водоснабжение и канализация",
+          "amount_rub": 800000,
+          "enabled_by_default": true
+        },
+        {
+          "id": "PREP-VENTILATION",
+          "name": "Приточно-вытяжная вентиляция",
+          "amount_rub": 2500000,
+          "enabled_by_default": true
+        },
+        {
+          "id": "PREP-LIGHTING",
+          "name": "Освещение",
+          "amount_rub": 400000,
+          "enabled_by_default": true
+        },
+        {
+          "id": "PREP-GUEST-AREA",
+          "name": "Подготовка торгового зала",
+          "amount_rub": 800000,
+          "enabled_by_default": true
+        },
+        {
+          "id": "PREP-BUILT-IN",
+          "name": "Стойки и встроенная мебель",
+          "amount_rub": 1300000,
+          "enabled_by_default": true
+        },
+        {
+          "id": "PREP-DESIGN",
+          "name": "Проектирование и согласования",
+          "amount_rub": 1000000,
+          "enabled_by_default": true
+        }
+      ]
+    },
+    "operating_reserve": {
+      "default_mode": "baseline",
+      "default_months": 6,
+      "default_accordion_open": false,
+      "categories": [
+        {
+          "id": "OPEX-PERSONNEL",
+          "name": "Персонал",
+          "amount_rub": 2073500
+        },
+        {
+          "id": "OPEX-UTILITIES",
+          "name": "Коммунальные услуги",
+          "amount_rub": 200000
+        },
+        {
+          "id": "OPEX-EQUIPMENT-MAINTENANCE",
+          "name": "Обслуживание оборудования",
+          "amount_rub": 100000
+        },
+        {
+          "id": "OPEX-HOUSEHOLD",
+          "name": "Хозяйственные расходы",
+          "amount_rub": 80000
+        },
+        {
+          "id": "OPEX-SOFTWARE-COMMS",
+          "name": "ПО и связь",
+          "amount_rub": 30000
+        },
+        {
+          "id": "OPEX-LAUNCH-MARKETING",
+          "name": "Маркетинг запуска",
+          "amount_rub": 100000
+        },
+        {
+          "id": "OPEX-OTHER",
+          "name": "Прочие расходы",
+          "amount_rub": 66500
+        }
+      ]
+    },
+    "contingency": {
+      "default_percent": 10
+    },
+    "form": {
+      "local_storage_key": "kolobochnaya.launch-budget.v0.1"
+    }
+  },
+  "items": [
+    {
+      "id": "CAPEX-01-001",
+      "name": "Холодильная камера",
+      "scenarios": {
+        "minimum": {
+          "quantity": 1,
+          "unitPriceRub": 263919
+        },
+        "base": {
+          "quantity": 1,
+          "unitPriceRub": 328655
+        },
+        "scale_ready": {
+          "quantity": 1,
+          "unitPriceRub": 358788
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "equipment",
+      "quoteStatus": "quote_required",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-002",
+      "name": "Морозильная камера",
+      "scenarios": {
+        "minimum": {
+          "quantity": 1,
+          "unitPriceRub": 307521
+        },
+        "base": {
+          "quantity": 1,
+          "unitPriceRub": 429679
+        },
+        "scale_ready": {
+          "quantity": 1,
+          "unitPriceRub": 465090
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "equipment",
+      "quoteStatus": "quote_required",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-003",
+      "name": "Производственные столы из пищевой нержавеющей стали",
+      "scenarios": {
+        "minimum": {
+          "quantity": 3,
+          "unitPriceRub": 23526
+        },
+        "base": {
+          "quantity": 3,
+          "unitPriceRub": 25896
+        },
+        "scale_ready": {
+          "quantity": 3,
+          "unitPriceRub": 39232
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "furniture",
+      "quoteStatus": "researched",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-004",
+      "name": "Стол из пищевой нержавейки с отверстием для отходов",
+      "scenarios": {
+        "minimum": {
+          "quantity": 1,
+          "unitPriceRub": 17011
+        },
+        "base": {
+          "quantity": 1,
+          "unitPriceRub": 24187
+        },
+        "scale_ready": {
+          "quantity": 1,
+          "unitPriceRub": 26887
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "furniture",
+      "quoteStatus": "researched",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-005",
+      "name": "Настенные полки из пищевой нержавеющей стали",
+      "scenarios": {
+        "minimum": {
+          "quantity": 1,
+          "unitPriceRub": 3131
+        },
+        "base": {
+          "quantity": 2,
+          "unitPriceRub": 4920
+        },
+        "scale_ready": {
+          "quantity": 3,
+          "unitPriceRub": 5620
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "furniture",
+      "quoteStatus": "researched",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-006",
+      "name": "Стеллажи и подтоварники из нержавеющей стали",
+      "scenarios": {
+        "minimum": {
+          "quantity": 1,
+          "unitPriceRub": 16921
+        },
+        "base": {
+          "quantity": 2,
+          "unitPriceRub": 32451
+        },
+        "scale_ready": {
+          "quantity": 3,
+          "unitPriceRub": 39683
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "furniture",
+      "quoteStatus": "researched",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-007",
+      "name": "Стеллаж или шкаф для сушки и хранения чистого инвентаря",
+      "scenarios": {
+        "minimum": {
+          "quantity": 1,
+          "unitPriceRub": 21612
+        },
+        "base": {
+          "quantity": 1,
+          "unitPriceRub": 25727
+        },
+        "scale_ready": {
+          "quantity": 1,
+          "unitPriceRub": 30911
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "furniture",
+      "quoteStatus": "researched",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-008",
+      "name": "Урны и закрываемые контейнеры для отходов",
+      "scenarios": {
+        "minimum": {
+          "quantity": 4,
+          "unitPriceRub": 1157
+        },
+        "base": {
+          "quantity": 6,
+          "unitPriceRub": 3169
+        },
+        "scale_ready": {
+          "quantity": 8,
+          "unitPriceRub": 3499
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "equipment",
+      "quoteStatus": "researched",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-009",
+      "name": "Профессиональный пароконвектомат",
+      "scenarios": {
+        "minimum": {
+          "quantity": 1,
+          "unitPriceRub": 300372
+        },
+        "base": {
+          "quantity": 1,
+          "unitPriceRub": 436564
+        },
+        "scale_ready": {
+          "quantity": 1,
+          "unitPriceRub": 596030
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "equipment",
+      "quoteStatus": "researched",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-010",
+      "name": "Профессиональный аппарат су-вид",
+      "scenarios": {
+        "minimum": {
+          "quantity": 1,
+          "unitPriceRub": 22643
+        },
+        "base": {
+          "quantity": 2,
+          "unitPriceRub": 60926
+        },
+        "scale_ready": {
+          "quantity": 2,
+          "unitPriceRub": 82753
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "equipment",
+      "quoteStatus": "researched",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-011",
+      "name": "Профессиональная индукционная плита",
+      "scenarios": {
+        "minimum": {
+          "quantity": 1,
+          "unitPriceRub": 83290
+        },
+        "base": {
+          "quantity": 1,
+          "unitPriceRub": 84752
+        },
+        "scale_ready": {
+          "quantity": 1,
+          "unitPriceRub": 107341
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "equipment",
+      "quoteStatus": "researched",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-012",
+      "name": "Вытяжной зонт или система вытяжных зонтов",
+      "scenarios": {
+        "minimum": {
+          "quantity": 1,
+          "unitPriceRub": 32909
+        },
+        "base": {
+          "quantity": 1,
+          "unitPriceRub": 75172
+        },
+        "scale_ready": {
+          "quantity": 1,
+          "unitPriceRub": 93669
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "system",
+      "quoteStatus": "quote_required",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-013",
+      "name": "Профессиональный вакуумный упаковщик",
+      "scenarios": {
+        "minimum": {
+          "quantity": 1,
+          "unitPriceRub": 42844
+        },
+        "base": {
+          "quantity": 1,
+          "unitPriceRub": 69161
+        },
+        "scale_ready": {
+          "quantity": 1,
+          "unitPriceRub": 111250
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "equipment",
+      "quoteStatus": "researched",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-014",
+      "name": "Robot Coupe или профессиональный аналог",
+      "scenarios": {
+        "minimum": {
+          "quantity": 1,
+          "unitPriceRub": 340273
+        },
+        "base": {
+          "quantity": 1,
+          "unitPriceRub": 472582
+        },
+        "scale_ready": {
+          "quantity": 1,
+          "unitPriceRub": 547547
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "equipment",
+      "quoteStatus": "quote_required",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-015",
+      "name": "Профессиональная электрическая мясорубка",
+      "scenarios": {
+        "minimum": {
+          "quantity": 0,
+          "unitPriceRub": 14548
+        },
+        "base": {
+          "quantity": 1,
+          "unitPriceRub": 24253
+        },
+        "scale_ready": {
+          "quantity": 1,
+          "unitPriceRub": 32505
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "equipment",
+      "quoteStatus": "quote_required",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-016",
+      "name": "Профессиональный кухонный блендер со стаканом",
+      "scenarios": {
+        "minimum": {
+          "quantity": 1,
+          "unitPriceRub": 23515
+        },
+        "base": {
+          "quantity": 1,
+          "unitPriceRub": 60116
+        },
+        "scale_ready": {
+          "quantity": 1,
+          "unitPriceRub": 105408
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "equipment",
+      "quoteStatus": "quote_required",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-017",
+      "name": "Профессиональный погружной блендер",
+      "scenarios": {
+        "minimum": {
+          "quantity": 1,
+          "unitPriceRub": 31212
+        },
+        "base": {
+          "quantity": 1,
+          "unitPriceRub": 62832
+        },
+        "scale_ready": {
+          "quantity": 1,
+          "unitPriceRub": 76237
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "equipment",
+      "quoteStatus": "researched",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-018",
+      "name": "Профессиональный планетарный миксер",
+      "scenarios": {
+        "minimum": {
+          "quantity": 1,
+          "unitPriceRub": 28965
+        },
+        "base": {
+          "quantity": 1,
+          "unitPriceRub": 44704
+        },
+        "scale_ready": {
+          "quantity": 1,
+          "unitPriceRub": 52135
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "equipment",
+      "quoteStatus": "researched",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-019",
+      "name": "Двухсекционная производственная мойка",
+      "scenarios": {
+        "minimum": {
+          "quantity": 1,
+          "unitPriceRub": 43541
+        },
+        "base": {
+          "quantity": 1,
+          "unitPriceRub": 58798
+        },
+        "scale_ready": {
+          "quantity": 1,
+          "unitPriceRub": 59366
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "equipment",
+      "quoteStatus": "researched",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-020",
+      "name": "Отдельная раковина для мытья рук персонала",
+      "scenarios": {
+        "minimum": {
+          "quantity": 1,
+          "unitPriceRub": 10943
+        },
+        "base": {
+          "quantity": 1,
+          "unitPriceRub": 10943
+        },
+        "scale_ready": {
+          "quantity": 1,
+          "unitPriceRub": 10943
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "equipment",
+      "quoteStatus": "researched",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-021",
+      "name": "Дозаторы моечной зоны",
+      "scenarios": {
+        "minimum": {
+          "quantity": 1,
+          "unitPriceRub": 2892
+        },
+        "base": {
+          "quantity": 1,
+          "unitPriceRub": 6615
+        },
+        "scale_ready": {
+          "quantity": 1,
+          "unitPriceRub": 10618
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "accessory",
+      "quoteStatus": "quote_required",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-022",
+      "name": "Производственные настольные весы",
+      "scenarios": {
+        "minimum": {
+          "quantity": 1,
+          "unitPriceRub": 19674
+        },
+        "base": {
+          "quantity": 1,
+          "unitPriceRub": 22533
+        },
+        "scale_ready": {
+          "quantity": 2,
+          "unitPriceRub": 25701
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "equipment",
+      "quoteStatus": "researched",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-023",
+      "name": "Точные порционные весы",
+      "scenarios": {
+        "minimum": {
+          "quantity": 1,
+          "unitPriceRub": 6638
+        },
+        "base": {
+          "quantity": 2,
+          "unitPriceRub": 8224
+        },
+        "scale_ready": {
+          "quantity": 3,
+          "unitPriceRub": 19453
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "equipment",
+      "quoteStatus": "researched",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-024",
+      "name": "Термощупы для продуктов",
+      "scenarios": {
+        "minimum": {
+          "quantity": 2,
+          "unitPriceRub": 153
+        },
+        "base": {
+          "quantity": 4,
+          "unitPriceRub": 153
+        },
+        "scale_ready": {
+          "quantity": 6,
+          "unitPriceRub": 153
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "equipment",
+      "quoteStatus": "quote_required",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-025",
+      "name": "Термометры для холодильной и морозильной камер",
+      "scenarios": {
+        "minimum": {
+          "quantity": 2,
+          "unitPriceRub": 150
+        },
+        "base": {
+          "quantity": 2,
+          "unitPriceRub": 780
+        },
+        "scale_ready": {
+          "quantity": 4,
+          "unitPriceRub": 866
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "equipment",
+      "quoteStatus": "researched",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-026",
+      "name": "Производственные таймеры",
+      "scenarios": {
+        "minimum": {
+          "quantity": 2,
+          "unitPriceRub": 390
+        },
+        "base": {
+          "quantity": 4,
+          "unitPriceRub": 634
+        },
+        "scale_ready": {
+          "quantity": 6,
+          "unitPriceRub": 1155
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "equipment",
+      "quoteStatus": "researched",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-027",
+      "name": "Кастрюли",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "inventory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-028",
+      "name": "Сковороды",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "inventory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-029",
+      "name": "Профессиональные ножи",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "inventory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-030",
+      "name": "Промаркированные разделочные доски",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "inventory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-031",
+      "name": "Рыбные пинцеты и специализированные щипцы",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "inventory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-032",
+      "name": "Обычные кухонные щипцы",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "inventory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-033",
+      "name": "Лопатки",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "inventory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-034",
+      "name": "Венчики",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "inventory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-035",
+      "name": "Половники",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "inventory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-036",
+      "name": "Шумовки",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "inventory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-037",
+      "name": "Сита и дуршлаги",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "inventory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-038",
+      "name": "Скребки",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "inventory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-039",
+      "name": "Мерные ёмкости",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "inventory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-040",
+      "name": "Гастроёмкости разных размеров с крышками",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "inventory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-041",
+      "name": "Герметичные контейнеры для сырья и заготовок",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "inventory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-042",
+      "name": "Раздельные комплекты инвентаря для мяса, рыбы, овощей и готовых компонентов",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "inventory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-043",
+      "name": "Профессиональный льдогенератор повышенной производительности",
+      "scenarios": {
+        "minimum": {
+          "quantity": 1,
+          "unitPriceRub": 53036
+        },
+        "base": {
+          "quantity": 1,
+          "unitPriceRub": 234270
+        },
+        "scale_ready": {
+          "quantity": 1,
+          "unitPriceRub": 308957
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "equipment",
+      "quoteStatus": "quote_required",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-044",
+      "name": "Бункер-накопитель льда",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "accessory",
+      "quoteStatus": "not_requested",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-045",
+      "name": "Ёмкости или ванны для охлаждения продуктов во льду",
+      "scenarios": {
+        "minimum": {
+          "quantity": 2,
+          "unitPriceRub": 3425
+        },
+        "base": {
+          "quantity": 4,
+          "unitPriceRub": 3425
+        },
+        "scale_ready": {
+          "quantity": 6,
+          "unitPriceRub": 3425
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "accessory",
+      "quoteStatus": "quote_required",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-046",
+      "name": "Система фильтрации воды для льдогенератора",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "system",
+      "quoteStatus": "not_requested",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-01-047",
+      "name": "Подвод воды и подключение льдогенератора к канализации",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "engineering_connection",
+      "quoteStatus": "tbd",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-02-001",
+      "name": "Газовый гриль для колобков",
+      "scenarios": {
+        "minimum": {
+          "quantity": 2,
+          "unitPriceRub": 30000
+        },
+        "base": {
+          "quantity": 2,
+          "unitPriceRub": 45000
+        },
+        "scale_ready": {
+          "quantity": 2,
+          "unitPriceRub": 60000
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "equipment",
+      "quoteStatus": "quote_required",
+      "linkedModuleIds": [
+        "MOD-RETAIL-HOT"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-002",
+      "name": "Гриль для Манчеса",
+      "scenarios": {
+        "minimum": {
+          "quantity": 3,
+          "unitPriceRub": 16500
+        },
+        "base": {
+          "quantity": 3,
+          "unitPriceRub": 20000
+        },
+        "scale_ready": {
+          "quantity": 4,
+          "unitPriceRub": 25000
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "equipment",
+      "quoteStatus": "quote_required",
+      "linkedModuleIds": [
+        "MOD-RETAIL-HOT"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-003",
+      "name": "Профессиональные ручные шприцы или пистолеты-дозаторы",
+      "scenarios": {
+        "minimum": {
+          "quantity": 24,
+          "unitPriceRub": 10000
+        },
+        "base": {
+          "quantity": 24,
+          "unitPriceRub": 10000
+        },
+        "scale_ready": {
+          "quantity": 24,
+          "unitPriceRub": 10000
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "equipment",
+      "quoteStatus": "quote_required",
+      "linkedModuleIds": [
+        "MOD-RETAIL-HOT"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-004",
+      "name": "Холодильный стол-саладетта",
+      "scenarios": {
+        "minimum": {
+          "quantity": 1,
+          "unitPriceRub": 122703
+        },
+        "base": {
+          "quantity": 1,
+          "unitPriceRub": 153287
+        },
+        "scale_ready": {
+          "quantity": 1,
+          "unitPriceRub": 156056
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "equipment",
+      "quoteStatus": "quote_required",
+      "linkedModuleIds": [
+        "MOD-RETAIL-HOT"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-005",
+      "name": "Пластиковые гастроёмкости и контейнеры с плотными крышками",
+      "scenarios": {
+        "minimum": {
+          "quantity": 8,
+          "unitPriceRub": 546
+        },
+        "base": {
+          "quantity": 16,
+          "unitPriceRub": 603
+        },
+        "scale_ready": {
+          "quantity": 24,
+          "unitPriceRub": 673
+        }
+      },
+      "inclusionStatus": "purchased_separately",
+      "recordType": "accessory",
+      "quoteStatus": "researched",
+      "linkedModuleIds": [
+        "MOD-RETAIL-HOT"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-006",
+      "name": "Столы под горячее оборудование",
+      "scenarios": {
+        "minimum": {
+          "quantity": 2,
+          "unitPriceRub": 17941
+        },
+        "base": {
+          "quantity": 2,
+          "unitPriceRub": 20320
+        },
+        "scale_ready": {
+          "quantity": 3,
+          "unitPriceRub": 25896
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "furniture",
+      "quoteStatus": "researched",
+      "linkedModuleIds": [
+        "MOD-RETAIL-HOT"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-007",
+      "name": "Стол для сортировки и сборки заказов",
+      "scenarios": {
+        "minimum": {
+          "quantity": 1,
+          "unitPriceRub": 17941
+        },
+        "base": {
+          "quantity": 1,
+          "unitPriceRub": 20320
+        },
+        "scale_ready": {
+          "quantity": 1,
+          "unitPriceRub": 25896
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "furniture",
+      "quoteStatus": "researched",
+      "linkedModuleIds": [
+        "MOD-RETAIL-HOT",
+        "MOD-TAKEAWAY"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-008",
+      "name": "Стол для сервировки и выдачи",
+      "scenarios": {
+        "minimum": {
+          "quantity": 1,
+          "unitPriceRub": 17941
+        },
+        "base": {
+          "quantity": 1,
+          "unitPriceRub": 20320
+        },
+        "scale_ready": {
+          "quantity": 1,
+          "unitPriceRub": 25896
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "furniture",
+      "quoteStatus": "researched",
+      "linkedModuleIds": [
+        "MOD-RETAIL-HOT",
+        "MOD-TAKEAWAY"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-009",
+      "name": "Стеллажи для хранения чистой посуды и рабочего инвентаря",
+      "scenarios": {
+        "minimum": {
+          "quantity": 1,
+          "unitPriceRub": 16921
+        },
+        "base": {
+          "quantity": 2,
+          "unitPriceRub": 32451
+        },
+        "scale_ready": {
+          "quantity": 3,
+          "unitPriceRub": 39683
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "furniture",
+      "quoteStatus": "researched",
+      "linkedModuleIds": [
+        "MOD-RETAIL-HOT"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-010",
+      "name": "Профессиональная post-mix система для лимонадов",
+      "scenarios": {
+        "minimum": {
+          "quantity": 1,
+          "unitPriceRub": 155711
+        },
+        "base": {
+          "quantity": 1,
+          "unitPriceRub": 199000
+        },
+        "scale_ready": {
+          "quantity": 1,
+          "unitPriceRub": 253500.46
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "system",
+      "quoteStatus": "quote_required",
+      "linkedModuleIds": [
+        "MOD-BAR"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-011",
+      "name": "Кеги для собственных сиропов",
+      "scenarios": {
+        "minimum": {
+          "quantity": 4,
+          "unitPriceRub": 9990
+        },
+        "base": {
+          "quantity": 8,
+          "unitPriceRub": 10580
+        },
+        "scale_ready": {
+          "quantity": 12,
+          "unitPriceRub": 12363
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "equipment",
+      "quoteStatus": "quote_required",
+      "linkedModuleIds": [
+        "MOD-BAR"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-012",
+      "name": "Профессиональные энергоэффективные термопоты",
+      "scenarios": {
+        "minimum": {
+          "quantity": 2,
+          "unitPriceRub": 6788
+        },
+        "base": {
+          "quantity": 2,
+          "unitPriceRub": 8536
+        },
+        "scale_ready": {
+          "quantity": 3,
+          "unitPriceRub": 8693
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "equipment",
+      "quoteStatus": "researched",
+      "linkedModuleIds": [
+        "MOD-BAR"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-013",
+      "name": "Компактный профессиональный льдогенератор отдельной торговой точки",
+      "scenarios": {
+        "minimum": {
+          "quantity": 0,
+          "unitPriceRub": 15535
+        },
+        "base": {
+          "quantity": 0,
+          "unitPriceRub": 36050
+        },
+        "scale_ready": {
+          "quantity": 1,
+          "unitPriceRub": 39688
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "equipment",
+      "quoteStatus": "quote_required",
+      "linkedModuleIds": [
+        "MOD-BAR"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-014",
+      "name": "Профессиональные ножи",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "inventory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-RETAIL-HOT"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-015",
+      "name": "Промаркированные разделочные доски",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "inventory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-RETAIL-HOT"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-016",
+      "name": "Кухонные ножницы",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "inventory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-RETAIL-HOT"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-017",
+      "name": "Лопатки",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "inventory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-RETAIL-HOT"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-018",
+      "name": "Щипцы",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "inventory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-RETAIL-HOT"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-019",
+      "name": "Вилки и ложки",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "inventory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-RETAIL-HOT"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-020",
+      "name": "Половники и шумовки",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "inventory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-RETAIL-HOT"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-021",
+      "name": "Венчики",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "inventory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-RETAIL-HOT"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-022",
+      "name": "Палочки и инструменты для работы с грилями",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "inventory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-RETAIL-HOT"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-023",
+      "name": "Сита и дуршлаги",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "inventory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-RETAIL-HOT"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-024",
+      "name": "Мерные стаканы, кувшины и мерные ложки",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "inventory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-RETAIL-HOT"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-025",
+      "name": "Весы и термощупы",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "inventory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-RETAIL-HOT"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-026",
+      "name": "Подносы и противни",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "inventory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-RETAIL-HOT"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-027",
+      "name": "Гастроёмкости и крышки",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "inventory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-RETAIL-HOT"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-028",
+      "name": "Герметичные пластиковые контейнеры",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "inventory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-RETAIL-HOT"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-029",
+      "name": "Дозаторы для соусов и топпингов",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "inventory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-RETAIL-HOT"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-030",
+      "name": "Органайзеры для рабочего инструмента",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "inventory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-RETAIL-HOT"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-031",
+      "name": "Ёмкости для санитарной обработки инвентаря",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "inventory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-RETAIL-HOT"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-032",
+      "name": "Джиггеры и мерные стаканы",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "inventory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-BAR"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-033",
+      "name": "Барные ложки",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "inventory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-BAR"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-034",
+      "name": "Кувшины",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "inventory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-BAR"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-035",
+      "name": "Бутылки, помпы и дозаторы для сиропов",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "inventory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-BAR"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-036",
+      "name": "Совки и щипцы для льда",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "inventory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-BAR"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-037",
+      "name": "Закрываемые контейнеры для льда",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "inventory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-BAR"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-038",
+      "name": "Ножи и доски для фруктов",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "inventory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-BAR"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-039",
+      "name": "Ручной пресс для цитрусовых",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "inventory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-BAR"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-040",
+      "name": "Ёмкости для лимона, мяты и других добавок",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "inventory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-BAR"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-041",
+      "name": "Поддоны и каплесборники",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "inventory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-BAR"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-042",
+      "name": "Инвентарь для мойки кег, шлангов и барного оборудования",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "inventory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-BAR"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-043",
+      "name": "Стаканы или многоразовая посуда",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "inventory",
+      "quoteStatus": "not_requested",
+      "linkedModuleIds": [
+        "MOD-BAR"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-044",
+      "name": "Шейкеры",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "inventory",
+      "quoteStatus": "not_requested",
+      "linkedModuleIds": [
+        "MOD-BAR"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-045",
+      "name": "Стрейнеры",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "inventory",
+      "quoteStatus": "not_requested",
+      "linkedModuleIds": [
+        "MOD-BAR"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-046",
+      "name": "Мадлеры",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "inventory",
+      "quoteStatus": "not_requested",
+      "linkedModuleIds": [
+        "MOD-BAR"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-047",
+      "name": "Джиггеры нескольких объёмов",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "inventory",
+      "quoteStatus": "not_requested",
+      "linkedModuleIds": [
+        "MOD-BAR"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-048",
+      "name": "Гейзеры для бутылок",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "inventory",
+      "quoteStatus": "not_requested",
+      "linkedModuleIds": [
+        "MOD-BAR"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-049",
+      "name": "Открывалки и штопоры",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "inventory",
+      "quoteStatus": "not_requested",
+      "linkedModuleIds": [
+        "MOD-BAR"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-050",
+      "name": "Ведёрки и щипцы для льда",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "inventory",
+      "quoteStatus": "not_requested",
+      "linkedModuleIds": [
+        "MOD-BAR"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-051",
+      "name": "Барные ножи",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "inventory",
+      "quoteStatus": "not_requested",
+      "linkedModuleIds": [
+        "MOD-BAR"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-052",
+      "name": "Контейнеры для гарнишей",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "inventory",
+      "quoteStatus": "not_requested",
+      "linkedModuleIds": [
+        "MOD-BAR"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-053",
+      "name": "Специализированная посуда и бокалы",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "inventory",
+      "quoteStatus": "not_requested",
+      "linkedModuleIds": [
+        "MOD-BAR"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-054",
+      "name": "Стеллажи или держатели для бутылок",
+      "scenarios": {
+        "minimum": {
+          "quantity": 1,
+          "unitPriceRub": 15299
+        },
+        "base": {
+          "quantity": 2,
+          "unitPriceRub": 15299
+        },
+        "scale_ready": {
+          "quantity": 3,
+          "unitPriceRub": 15299
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "furniture",
+      "quoteStatus": "quote_required",
+      "linkedModuleIds": [
+        "MOD-BAR"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-055",
+      "name": "Закрываемая зона хранения алкогольной продукции",
+      "scenarios": {
+        "minimum": {
+          "quantity": 1,
+          "unitPriceRub": 58443
+        },
+        "base": {
+          "quantity": 1,
+          "unitPriceRub": 83284
+        },
+        "scale_ready": {
+          "quantity": 1,
+          "unitPriceRub": 116874
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "furniture",
+      "quoteStatus": "quote_required",
+      "linkedModuleIds": [
+        "MOD-BAR"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-03-001",
+      "name": "Многоярусная стойка",
+      "scenarios": {
+        "minimum": {
+          "quantity": 2,
+          "unitPriceRub": 119000
+        },
+        "base": {
+          "quantity": 2,
+          "unitPriceRub": 129000
+        },
+        "scale_ready": {
+          "quantity": 3,
+          "unitPriceRub": 129000
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "system",
+      "quoteStatus": "quote_required",
+      "linkedModuleIds": [
+        "MOD-GROW"
+      ],
+      "sourceModuleId": "CAPEX-03"
+    },
+    {
+      "id": "CAPEX-03-002",
+      "name": "Длина каждого ряда",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "open_question",
+      "quoteStatus": "tbd",
+      "linkedModuleIds": [
+        "MOD-GROW"
+      ],
+      "sourceModuleId": "CAPEX-03"
+    },
+    {
+      "id": "CAPEX-03-003",
+      "name": "Общая длина каналов",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "open_question",
+      "quoteStatus": "tbd",
+      "linkedModuleIds": [
+        "MOD-GROW"
+      ],
+      "sourceModuleId": "CAPEX-03"
+    },
+    {
+      "id": "CAPEX-03-004",
+      "name": "Разборный каркас",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "component",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-GROW"
+      ],
+      "sourceModuleId": "CAPEX-03"
+    },
+    {
+      "id": "CAPEX-03-005",
+      "name": "Пластиковые прямоугольные вентиляционные каналы",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "component",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-GROW"
+      ],
+      "sourceModuleId": "CAPEX-03"
+    },
+    {
+      "id": "CAPEX-03-006",
+      "name": "Переходы, углы и соединения",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "component",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-GROW"
+      ],
+      "sourceModuleId": "CAPEX-03"
+    },
+    {
+      "id": "CAPEX-03-007",
+      "name": "Отверстия в верхней поверхности каналов",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "component",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-GROW"
+      ],
+      "sourceModuleId": "CAPEX-03"
+    },
+    {
+      "id": "CAPEX-03-008",
+      "name": "Съёмные многоразовые сетчатые вставки или кассеты",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "component",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-GROW"
+      ],
+      "sourceModuleId": "CAPEX-03"
+    },
+    {
+      "id": "CAPEX-03-009",
+      "name": "Светодиодные ленты",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "component",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-GROW"
+      ],
+      "sourceModuleId": "CAPEX-03"
+    },
+    {
+      "id": "CAPEX-03-010",
+      "name": "Отдельное освещение для верхнего ряда",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "component",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-GROW"
+      ],
+      "sourceModuleId": "CAPEX-03"
+    },
+    {
+      "id": "CAPEX-03-011",
+      "name": "Блоки питания и управление освещением",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "component",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-GROW"
+      ],
+      "sourceModuleId": "CAPEX-03"
+    },
+    {
+      "id": "CAPEX-03-012",
+      "name": "Герметичный резервуар для воды или питательного раствора",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "component",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-GROW"
+      ],
+      "sourceModuleId": "CAPEX-03"
+    },
+    {
+      "id": "CAPEX-03-013",
+      "name": "Ультразвуковой туманообразователь",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "component",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-GROW"
+      ],
+      "sourceModuleId": "CAPEX-03"
+    },
+    {
+      "id": "CAPEX-03-014",
+      "name": "Канальный вентилятор для перемещения тумана",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "component",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-GROW"
+      ],
+      "sourceModuleId": "CAPEX-03"
+    },
+    {
+      "id": "CAPEX-03-015",
+      "name": "Система отвода конденсата",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "system",
+      "quoteStatus": "not_requested",
+      "linkedModuleIds": [
+        "MOD-GROW"
+      ],
+      "sourceModuleId": "CAPEX-03"
+    },
+    {
+      "id": "CAPEX-03-016",
+      "name": "Датчики температуры и влажности",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "component",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-GROW"
+      ],
+      "sourceModuleId": "CAPEX-03"
+    },
+    {
+      "id": "CAPEX-03-017",
+      "name": "Датчик уровня раствора",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "component",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-GROW"
+      ],
+      "sourceModuleId": "CAPEX-03"
+    },
+    {
+      "id": "CAPEX-03-018",
+      "name": "Автоматика управления",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "system",
+      "quoteStatus": "not_requested",
+      "linkedModuleIds": [
+        "MOD-GROW"
+      ],
+      "sourceModuleId": "CAPEX-03"
+    },
+    {
+      "id": "CAPEX-03-019",
+      "name": "Электрические компоненты во влагозащищённом исполнении",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "component",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-GROW"
+      ],
+      "sourceModuleId": "CAPEX-03"
+    },
+    {
+      "id": "CAPEX-04-001",
+      "name": "Кассовые POS-терминалы",
+      "scenarios": {
+        "minimum": {
+          "quantity": 2,
+          "unitPriceRub": 35300
+        },
+        "base": {
+          "quantity": 2,
+          "unitPriceRub": 47500
+        },
+        "scale_ready": {
+          "quantity": 2,
+          "unitPriceRub": 67300
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "equipment",
+      "quoteStatus": "quote_required",
+      "linkedModuleIds": [
+        "MOD-POS"
+      ],
+      "sourceModuleId": "CAPEX-04"
+    },
+    {
+      "id": "CAPEX-04-002",
+      "name": "Терминал складского и производственного учёта в заготовочном цехе",
+      "scenarios": {
+        "minimum": {
+          "quantity": 1,
+          "unitPriceRub": 35300
+        },
+        "base": {
+          "quantity": 1,
+          "unitPriceRub": 47500
+        },
+        "scale_ready": {
+          "quantity": 1,
+          "unitPriceRub": 67300
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "equipment",
+      "quoteStatus": "quote_required",
+      "linkedModuleIds": [
+        "MOD-POS"
+      ],
+      "sourceModuleId": "CAPEX-04"
+    },
+    {
+      "id": "CAPEX-04-003",
+      "name": "KDS-экраны или закреплённые планшеты",
+      "scenarios": {
+        "minimum": {
+          "quantity": 3,
+          "unitPriceRub": 35300
+        },
+        "base": {
+          "quantity": 3,
+          "unitPriceRub": 47500
+        },
+        "scale_ready": {
+          "quantity": 3,
+          "unitPriceRub": 67300
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "equipment",
+      "quoteStatus": "quote_required",
+      "linkedModuleIds": [
+        "MOD-KDS"
+      ],
+      "sourceModuleId": "CAPEX-04"
+    },
+    {
+      "id": "CAPEX-05-001",
+      "name": "Столы гостевой зоны",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "furniture",
+      "quoteStatus": "not_requested",
+      "linkedModuleIds": [
+        "MOD-GUEST"
+      ],
+      "sourceModuleId": "CAPEX-05"
+    },
+    {
+      "id": "CAPEX-05-002",
+      "name": "Стулья",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "furniture",
+      "quoteStatus": "not_requested",
+      "linkedModuleIds": [
+        "MOD-GUEST"
+      ],
+      "sourceModuleId": "CAPEX-05"
+    },
+    {
+      "id": "CAPEX-05-003",
+      "name": "Диваны и банкетки",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "furniture",
+      "quoteStatus": "not_requested",
+      "linkedModuleIds": [
+        "MOD-GUEST"
+      ],
+      "sourceModuleId": "CAPEX-05"
+    },
+    {
+      "id": "CAPEX-05-004",
+      "name": "Барная стойка",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "furniture",
+      "quoteStatus": "not_requested",
+      "linkedModuleIds": [
+        "MOD-GUEST"
+      ],
+      "sourceModuleId": "CAPEX-05"
+    },
+    {
+      "id": "CAPEX-05-005",
+      "name": "Барные стулья",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "furniture",
+      "quoteStatus": "not_requested",
+      "linkedModuleIds": [
+        "MOD-GUEST"
+      ],
+      "sourceModuleId": "CAPEX-05"
+    },
+    {
+      "id": "CAPEX-05-006",
+      "name": "Детские стулья",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "furniture",
+      "quoteStatus": "not_requested",
+      "linkedModuleIds": [
+        "MOD-GUEST"
+      ],
+      "sourceModuleId": "CAPEX-05"
+    },
+    {
+      "id": "CAPEX-05-007",
+      "name": "Мебель зоны ожидания",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "furniture",
+      "quoteStatus": "not_requested",
+      "linkedModuleIds": [
+        "MOD-GUEST"
+      ],
+      "sourceModuleId": "CAPEX-05"
+    },
+    {
+      "id": "CAPEX-05-008",
+      "name": "Кассовая стойка",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "furniture",
+      "quoteStatus": "not_requested",
+      "linkedModuleIds": [
+        "MOD-TAKEAWAY"
+      ],
+      "sourceModuleId": "CAPEX-05"
+    },
+    {
+      "id": "CAPEX-05-009",
+      "name": "Рабочее место кассира",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "system",
+      "quoteStatus": "not_requested",
+      "linkedModuleIds": [
+        "MOD-TAKEAWAY"
+      ],
+      "sourceModuleId": "CAPEX-05"
+    },
+    {
+      "id": "CAPEX-05-010",
+      "name": "Стойка выдачи",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "furniture",
+      "quoteStatus": "not_requested",
+      "linkedModuleIds": [
+        "MOD-TAKEAWAY"
+      ],
+      "sourceModuleId": "CAPEX-05"
+    },
+    {
+      "id": "CAPEX-05-011",
+      "name": "Поверхность комплектации заказов",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "furniture",
+      "quoteStatus": "not_requested",
+      "linkedModuleIds": [
+        "MOD-TAKEAWAY"
+      ],
+      "sourceModuleId": "CAPEX-05"
+    },
+    {
+      "id": "CAPEX-05-012",
+      "name": "Полки, шкафы и хранение в зоне выдачи",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "furniture",
+      "quoteStatus": "not_requested",
+      "linkedModuleIds": [
+        "MOD-TAKEAWAY"
+      ],
+      "sourceModuleId": "CAPEX-05"
+    },
+    {
+      "id": "CAPEX-05-013",
+      "name": "Кабельные и технологические каналы стойки",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "accessory",
+      "quoteStatus": "not_requested",
+      "linkedModuleIds": [
+        "MOD-TAKEAWAY"
+      ],
+      "sourceModuleId": "CAPEX-05"
+    },
+    {
+      "id": "CAPEX-05-014",
+      "name": "Места под терминалы, принтеры и кассовое оборудование",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "accessory",
+      "quoteStatus": "not_requested",
+      "linkedModuleIds": [
+        "MOD-TAKEAWAY"
+      ],
+      "sourceModuleId": "CAPEX-05"
+    },
+    {
+      "id": "CAPEX-05-015",
+      "name": "Станция самообслуживания",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "system",
+      "quoteStatus": "not_requested",
+      "linkedModuleIds": [
+        "MOD-TAKEAWAY"
+      ],
+      "sourceModuleId": "CAPEX-05"
+    },
+    {
+      "id": "CAPEX-05-016",
+      "name": "Станция приборов и салфеток",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "system",
+      "quoteStatus": "not_requested",
+      "linkedModuleIds": [
+        "MOD-TAKEAWAY"
+      ],
+      "sourceModuleId": "CAPEX-05"
+    },
+    {
+      "id": "CAPEX-05-017",
+      "name": "Станция соусов и дополнительных ингредиентов",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "system",
+      "quoteStatus": "not_requested",
+      "linkedModuleIds": [
+        "MOD-TAKEAWAY"
+      ],
+      "sourceModuleId": "CAPEX-05"
+    },
+    {
+      "id": "CAPEX-05-018",
+      "name": "Место для подносов",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "accessory",
+      "quoteStatus": "not_requested",
+      "linkedModuleIds": [
+        "MOD-TAKEAWAY"
+      ],
+      "sourceModuleId": "CAPEX-05"
+    },
+    {
+      "id": "CAPEX-05-019",
+      "name": "Станция питьевой воды",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "system",
+      "quoteStatus": "not_requested",
+      "linkedModuleIds": [
+        "MOD-TAKEAWAY"
+      ],
+      "sourceModuleId": "CAPEX-05"
+    },
+    {
+      "id": "CAPEX-05-020",
+      "name": "Урны и сортировка отходов",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "accessory",
+      "quoteStatus": "not_requested",
+      "linkedModuleIds": [
+        "MOD-TAKEAWAY"
+      ],
+      "sourceModuleId": "CAPEX-05"
+    },
+    {
+      "id": "CAPEX-05-021",
+      "name": "Возврат многоразовой посуды",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "system",
+      "quoteStatus": "not_requested",
+      "linkedModuleIds": [
+        "MOD-TAKEAWAY"
+      ],
+      "sourceModuleId": "CAPEX-05"
+    },
+    {
+      "id": "CAPEX-05-022",
+      "name": "Гардероб",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "furniture",
+      "quoteStatus": "not_requested",
+      "linkedModuleIds": [
+        "MOD-GUEST"
+      ],
+      "sourceModuleId": "CAPEX-05"
+    },
+    {
+      "id": "CAPEX-05-023",
+      "name": "Напольные и настенные вешалки",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "accessory",
+      "quoteStatus": "not_requested",
+      "linkedModuleIds": [
+        "MOD-GUEST"
+      ],
+      "sourceModuleId": "CAPEX-05"
+    },
+    {
+      "id": "CAPEX-05-024",
+      "name": "Декоративные и функциональные стеллажи",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "furniture",
+      "quoteStatus": "not_requested",
+      "linkedModuleIds": [
+        "MOD-GUEST"
+      ],
+      "sourceModuleId": "CAPEX-05"
+    },
+    {
+      "id": "CAPEX-05-025",
+      "name": "Меню и навигация",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "system",
+      "quoteStatus": "not_requested",
+      "linkedModuleIds": [
+        "MOD-GUEST"
+      ],
+      "sourceModuleId": "CAPEX-05"
+    },
+    {
+      "id": "CAPEX-05-026",
+      "name": "Разделители очереди",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "accessory",
+      "quoteStatus": "not_requested",
+      "linkedModuleIds": [
+        "MOD-GUEST"
+      ],
+      "sourceModuleId": "CAPEX-05"
+    },
+    {
+      "id": "CAPEX-05-027",
+      "name": "Мебель и оборудование доступной среды",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "tbd",
+      "recordType": "furniture",
+      "quoteStatus": "not_requested",
+      "linkedModuleIds": [
+        "MOD-GUEST"
+      ],
+      "sourceModuleId": "CAPEX-05"
+    },
+    {
+      "id": "CAPEX-01-048",
+      "name": "Комплект мелкого инвентаря заготовочного цеха",
+      "scenarios": {
+        "minimum": {
+          "quantity": 1,
+          "unitPriceRub": 295020
+        },
+        "base": {
+          "quantity": 1,
+          "unitPriceRub": 295020
+        },
+        "scale_ready": {
+          "quantity": 1,
+          "unitPriceRub": 295020
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "system",
+      "quoteStatus": "quote_required",
+      "linkedModuleIds": [
+        "MOD-PREP"
+      ],
+      "sourceModuleId": "CAPEX-01"
+    },
+    {
+      "id": "CAPEX-02-056",
+      "name": "Комплект мелкого инвентаря торговой кухни",
+      "scenarios": {
+        "minimum": {
+          "quantity": 1,
+          "unitPriceRub": 309760
+        },
+        "base": {
+          "quantity": 1,
+          "unitPriceRub": 309760
+        },
+        "scale_ready": {
+          "quantity": 1,
+          "unitPriceRub": 309760
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "system",
+      "quoteStatus": "quote_required",
+      "linkedModuleIds": [
+        "MOD-RETAIL-HOT"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-02-057",
+      "name": "Комплект базового барного инвентаря",
+      "scenarios": {
+        "minimum": {
+          "quantity": 1,
+          "unitPriceRub": 122760
+        },
+        "base": {
+          "quantity": 1,
+          "unitPriceRub": 122760
+        },
+        "scale_ready": {
+          "quantity": 1,
+          "unitPriceRub": 122760
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "system",
+      "quoteStatus": "quote_required",
+      "linkedModuleIds": [
+        "MOD-BAR"
+      ],
+      "sourceModuleId": "CAPEX-02"
+    },
+    {
+      "id": "CAPEX-08-001",
+      "name": "Комплект профессиональной посудомоечной зоны",
+      "scenarios": {
+        "minimum": {
+          "quantity": 1,
+          "unitPriceRub": 304101.33
+        },
+        "base": {
+          "quantity": 1,
+          "unitPriceRub": 304101.33
+        },
+        "scale_ready": {
+          "quantity": 1,
+          "unitPriceRub": 304101.33
+        }
+      },
+      "inclusionStatus": "standalone",
+      "recordType": "system",
+      "quoteStatus": "quote_required",
+      "linkedModuleIds": [
+        "MOD-WASH"
+      ],
+      "sourceModuleId": "CAPEX-08"
+    },
+    {
+      "id": "CAPEX-08-002",
+      "name": "Купольная посудомоечная машина ABAT МПК-700К",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "equipment",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-WASH"
+      ],
+      "sourceModuleId": "CAPEX-08"
+    },
+    {
+      "id": "CAPEX-08-003",
+      "name": "Предмоечный стол с душирующим устройством",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "component",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-WASH"
+      ],
+      "sourceModuleId": "CAPEX-08"
+    },
+    {
+      "id": "CAPEX-08-004",
+      "name": "Выходной стол для чистой посуды",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "component",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-WASH"
+      ],
+      "sourceModuleId": "CAPEX-08"
+    },
+    {
+      "id": "CAPEX-08-005",
+      "name": "Дополнительные кассеты 500×500",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "accessory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-WASH"
+      ],
+      "sourceModuleId": "CAPEX-08"
+    },
+    {
+      "id": "CAPEX-08-006",
+      "name": "Умягчитель воды DVA LT12",
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      },
+      "inclusionStatus": "included_in_parent",
+      "recordType": "accessory",
+      "quoteStatus": "included_in_parent",
+      "linkedModuleIds": [
+        "MOD-WASH"
+      ],
+      "sourceModuleId": "CAPEX-08"
+    }
+  ]
+}
