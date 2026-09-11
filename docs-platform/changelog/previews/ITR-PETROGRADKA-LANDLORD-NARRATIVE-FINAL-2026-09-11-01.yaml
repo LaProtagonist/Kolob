@@ -1,0 +1,28 @@
+receipt_version: 1
+iteration_id: ITR-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01
+decision_id: DEC-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01
+change_set_id: CHG-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01
+previewed_at: 2026-09-11T09:10:00.000Z
+result: reviewed
+mutation_performed: false
+before_state_sha256: 8dc669d133fca4bb877cb44f9d431f247fe955edf7f7ea1040b959508d808d49
+after_state_sha256: 2611537963292a34e43f33a0a448dc01662da17704e6a9611c1816c5dcf0dac5
+changes:
+  - the Petrogradka hero, object-interest, project-creation and budget-orientation copy use the owner-approved final wording
+  - the production-base effect is a two-paragraph conclusion and does not repeat the launch orientations
+  - the route has two complete network-role cards, a distinct interaction-model section and one shared confirmations container
+  - the matching proposed internal draft, source, decision, document record and deterministic tests reflect the exact presentation
+invariants:
+  foundation_unchanged: true
+  business_model_architecture_unchanged: true
+  approved_prp_blocks_unchanged: true
+  franchise_platform_core_strategy_unchanged: true
+  canonical_financial_baseline_unchanged: true
+  financial_engine_unchanged: true
+  network_planning_engine_unchanged: true
+  petrogradka_is_research_scenario: true
+  petrogradka_is_not_baseline: true
+  petrogradka_yaml_equipment_and_existing_assumptions_unchanged: true
+  current_total_orientations_remain_proposed_working_scenario_estimates: true
+  google_mutation: not_run
+  production_deploy: not_run

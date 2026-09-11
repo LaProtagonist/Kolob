@@ -1614,3 +1614,16 @@ sources:
       Первичный источник редакционной итерации страницы Петроградки: заменить публичные
       агрегированные ориентиры запуска, сохранить детальные внутренние оценки, усилить позицию
       проекта и не менять Foundation, BMA, core strategy, baseline или Financial Model.
+  - id: SRC-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-BRIEF-2026-09-11
+    title: Задание на финальную редакционную полировку предложения Петроградки
+    type: instruction
+    location: User instruction, 2026-09-11
+    publisher: project owner
+    publication_date: 2026-09-11
+    accessed_at: 2026-09-11
+    reliability: primary
+    notes: >-
+      Первичный источник точечной финальной редакции страницы Петроградки: использовать
+      согласованные формулировки, сохранить предложенные рабочие ориентиры от 10 млн ₽ и от
+      15 млн ₽, не менять сценарий, оборудование, статусы, Foundation, BMA, core strategy,
+      baseline, Financial Model или Network Planning.

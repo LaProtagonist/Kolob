@@ -169,7 +169,7 @@ export function PetrogradkaFranchiseScenarioPage() {
       <section className="franchise-main">
         <div className="section-inner">
           <section className="franchise-section" aria-labelledby="petrogradka-fit-title">
-            <SectionHeading number="01" title="Почему объект подходит" text={content.fit.intro} />
+            <SectionHeading number="01" title="Почему объект интересен проекту" text={content.fit.intro} />
             <div className="petrogradka-fit-grid" id="petrogradka-fit-title">
               {content.fit.items.map((item) => <article key={item.title}><h3>{item.title}</h3><p>{item.text}</p></article>)}
             </div>
@@ -195,14 +195,14 @@ export function PetrogradkaFranchiseScenarioPage() {
           </section>
 
           <section className="franchise-section" aria-labelledby="petrogradka-additions-title">
-            <SectionHeading number="02" title="Что добавляет проект" text={content.additions.intro} />
+            <SectionHeading number="02" title="Что создаёт проект на этой базе" text={content.additions.intro} />
             <div className="petrogradka-additions-grid" id="petrogradka-additions-title">
               {content.additions.items.map((item) => <article key={item.title}><h3>{item.title}</h3><p>{item.text}</p></article>)}
             </div>
           </section>
 
           <section className="franchise-section" aria-labelledby="petrogradka-investment-title">
-            <SectionHeading number="03" title="Инвестиционный контур первого этапа" text={content.investment.intro} />
+            <SectionHeading number="03" title="Ориентир бюджета первого этапа" text={content.investment.intro} />
             <div className="petrogradka-launch-title"><span>Одна стратегия</span><span aria-hidden="true">→</span><strong>Две конфигурации запуска</strong></div>
             <div className="petrogradka-launch-variants" id="petrogradka-investment-title" aria-label="Варианты запуска">
               {content.investment.variants.map((item, index) => <article key={item.title}><span>Вариант {index + 1}</span><h3>{item.title}</h3><strong>{item.value}</strong><p>{item.text}</p><small>{item.note}</small></article>)}
@@ -214,22 +214,26 @@ export function PetrogradkaFranchiseScenarioPage() {
           </section>
 
           <section className="franchise-section" aria-labelledby="petrogradka-network-role-title">
-            <SectionHeading number="04" title="Роль объекта в развитии сети" text={content.networkRole[0]} />
+            <SectionHeading number="04" title="Роль объекта в развитии сети" />
             <div className="petrogradka-narrative-grid" id="petrogradka-network-role-title">
-              <article><p>{content.networkRole[1]}</p></article>
-              <article><h3>Возможная модель взаимодействия</h3>{content.interaction.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</article>
+              {content.networkRole.map((item) => <article key={item.title}><h3>{item.title}</h3><p>{item.text}</p></article>)}
             </div>
           </section>
 
+          <section className="franchise-section petrogradka-interaction" aria-labelledby="petrogradka-interaction-title">
+            <SectionHeading number="05" title="Возможная модель взаимодействия" />
+            <div id="petrogradka-interaction-title">{content.interaction.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</div>
+          </section>
+
           <section className="franchise-section" aria-labelledby="petrogradka-confirmations-title">
-            <SectionHeading number="05" title="Что необходимо подтвердить" text={content.confirmation.intro} />
+            <SectionHeading number="06" title="Что необходимо подтвердить" text={content.confirmation.intro} />
             <div className="petrogradka-confirmations" id="petrogradka-confirmations-title">
               {content.confirmation.groups.map((group) => <article key={group.title}><h3>{group.title}</h3><ul>{group.items.map((item) => <li key={item}>{item}</li>)}</ul></article>)}
             </div>
           </section>
 
           <section className="franchise-section petrogradka-format" aria-labelledby="petrogradka-format-title">
-            <SectionHeading number="06" title="Предлагаемый формат" />
+            <SectionHeading number="07" title="Предлагаемый формат запуска" />
             <div id="petrogradka-format-title">{content.format.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</div>
           </section>
 

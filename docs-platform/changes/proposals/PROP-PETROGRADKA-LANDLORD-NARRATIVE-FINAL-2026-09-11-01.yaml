@@ -1,0 +1,13 @@
+schema_version: 2
+proposal_id: PROP-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01
+iteration_id: ITR-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01
+title: Finalize Petrogradka landlord narrative
+status: approved
+proposed_by: project owner
+proposed_at: 2026-09-11T09:00:00.000Z
+summary: >-
+  Apply the exact owner-authorized final editorial polish to the existing Petrogradka landlord
+  presentation, retaining its research-scenario boundary, current proposed working estimates and
+  all governing, baseline and financial-model boundaries.
+approved_payload_path: docs-platform/changelog/payloads/ITR-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01-approved.yaml
+approved_payload_sha256: 1d6a993eaa5afb3b526a80b5ffebb056bb6985755458748d33f31e4149a9c6ae

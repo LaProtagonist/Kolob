@@ -102,7 +102,9 @@ test("Petrogradka owner presentation supersedes prior public launch estimates an
   assert.ok([...supersededEstimates, ...currentEstimates].every(item => item?.scenario === "PETROGRADKA / READY_PRODUCTION_BASE"));
   assert.equal(decisions.find(item => item.id === "DEC-PETROGRADKA-LANDLORD-PRESENTATION-2026-09-08-01")?.status, "approved");
   assert.equal(decisions.find(item => item.id === "DEC-PETROGRADKA-LANDLORD-PROPOSITION-STRENGTHENING-2026-09-11-01")?.status, "approved");
+  assert.equal(decisions.find(item => item.id === "DEC-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01")?.status, "approved");
   assert.equal(documents.find(item => item.id === "DOC-PETROGRADKA-LANDLORD-PROPOSITION")?.status, "proposed");
+  assert.equal(documents.find(item => item.id === "DOC-PETROGRADKA-LANDLORD-PROPOSITION")?.version, "0.4");
 
   const scenario = yaml<any>("docs-platform/scenarios/petrogradka-ready-production-base.yaml");
   assert.equal(scenario.document.status, "research");

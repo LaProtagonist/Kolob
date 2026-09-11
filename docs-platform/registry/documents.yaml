@@ -418,13 +418,13 @@ documents:
     template: null
     sections:
       - Proposed role of the object
-      - Object fit
+      - Why the object is of interest
       - Equipment and infrastructure
-      - Project additions and investment contour
-      - Launch configurations and production-base effect
-      - Network role and interaction model
-      - Required confirmations, proposed format and next step
-    version: "0.3"
+      - Project creation on the base
+      - First-stage budget orientation and launch configurations
+      - Production-base effect and network role
+      - Interaction model, confirmations, proposed format and next step
+    version: "0.4"
     governance_level: working
     local_path: docs-platform/03-petrogradka-landlord-proposition.md
     updated_at: 2026-09-11

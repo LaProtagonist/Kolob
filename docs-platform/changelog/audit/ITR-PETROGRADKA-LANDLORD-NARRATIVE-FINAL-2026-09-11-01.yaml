@@ -1,0 +1,20 @@
+receipt_version: 1
+iteration_id: ITR-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01
+audited_at: 2026-09-11T09:12:00.000Z
+result: passed
+finding:
+  scope: Final owner-facing copy and compact presentation refinement for Petrogradka, matching proposed internal draft and governed supporting records.
+  narrative: The route positions the equipped premises as a potential asset in a defined network-development model and contains no claim that the project needs the object to seek funding.
+  economics: The existing 10m RUB and 15m RUB proposed working scenario estimates remain only in the two launch configurations; no detailed component prices or repeated aggregate orientations are shown.
+  equipment: The complete grouped inventory remains visible. Internal available_subject_to_confirmation metadata and the canonical scenario YAML remain unchanged and are not shown to the premises owner.
+  presentation: The network-role section has two titled equal cards, the interaction model is separate, and the three confirmation groups share one responsive container.
+  boundaries: The core route, Foundation, Business Model Architecture, Franchise Platform core strategy, baseline, Financial Model and Network Planning remain outside the content change.
+resolution:
+  - retain Petrogradka as research and non-baseline
+  - retain all current detailed and aggregate Petrogradka numerical assumptions without modification
+  - retain available_subject_to_confirmation only as internal canonical equipment metadata
+  - retain no independent financial calculation or automatic financial synchronization
+  - retain no dependency update because the document relationship graph is unchanged
+external_state:
+  google_apply: not_run
+  production_deploy: not_run

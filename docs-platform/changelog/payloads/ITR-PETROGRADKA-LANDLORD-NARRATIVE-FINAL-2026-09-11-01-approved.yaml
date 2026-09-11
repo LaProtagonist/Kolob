@@ -1,0 +1,90 @@
+schema_version: 2
+payload_id: PAYLOAD-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01
+iteration_id: ITR-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01
+proposal_id: PROP-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01
+decision_id: DEC-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01
+change_set_id: CHG-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01
+title: Finalize Petrogradka landlord narrative
+status: approved
+approved_by: project owner
+approved_at: 2026-09-11T09:00:00.000Z
+scope:
+  - Apply only the owner-specified final copy and compact layout refinement to /investor/franchise-platform/petrogradka and the matching proposed internal landlord draft.
+  - Keep the core strategy route unchanged in meaning; limit shared code and CSS changes to the Petrogradka presentation and its responsive confirmation container.
+  - Replace the approved Petrogradka user-facing headings and paragraphs exactly, retain the complete grouped equipment inventory and keep all internal equipment confirmation metadata out of the owner-facing UI.
+  - Present the two existing proposed working scenario estimates only in the launch configurations, without repeating them in the production-base-effect conclusion.
+  - Update the matching proposed internal landlord proposition, registry records and deterministic route/governance checks.
+constraints:
+  - Foundation v1.0 and Business Model Architecture v1.0 remain byte-for-byte unchanged.
+  - Approved PRP blocks, the Franchise Platform core strategy, canonical financial baseline, Financial Model engine and Network Planning engine remain unchanged.
+  - Petrogradka remains a research scenario and never becomes a baseline, premises decision, lease, financial result or approved CAPEX plan.
+  - The Petrogradka scenario YAML, equipment list, equipment status available_subject_to_confirmation, existing detailed CAPEX assumptions, current 10m RUB and 15m RUB proposed working scenario estimates, room parameters, route IDs, scenario IDs and internal enum IDs remain unchanged.
+  - No financial calculation, Financial Model sync, Network Planning sync, Google mutation or production deployment is introduced.
+affected_document_ids:
+  - DOC-SCENARIO-PETROGRADKA-READY-PRODUCTION-BASE
+  - DOC-PETROGRADKA-LANDLORD-PROPOSITION
+affected_section_ids:
+  - investor.franchise-platform.petrogradka.owner-presentation
+  - investor.franchise-platform.petrogradka.object-interest
+  - investor.franchise-platform.petrogradka.project-creation
+  - investor.franchise-platform.petrogradka.budget-orientation
+  - investor.franchise-platform.petrogradka.production-base-effect
+  - investor.franchise-platform.petrogradka.network-role
+  - investor.franchise-platform.petrogradka.interaction-model
+  - investor.franchise-platform.petrogradka.confirmations
+  - investor.franchise-platform.petrogradka.proposed-format
+  - petrogradka-landlord-proposition.v0.4
+state_hash_paths:
+  - docs-platform/00-foundation.md
+  - docs-platform/01-business-model-architecture.md
+  - docs-platform/02-franchise-platform-strategy.md
+  - docs-platform/03-petrogradka-landlord-proposition.md
+  - docs-platform/scenarios/petrogradka-ready-production-base.yaml
+  - docs-platform/working/franchise-platform-parameters.yaml
+  - docs-platform/working/financial-model.yaml
+  - docs-platform/working/network-planning-assumptions.yaml
+  - docs-platform/registry/assumptions.yaml
+  - docs-platform/registry/decisions.yaml
+  - docs-platform/registry/dependencies.yaml
+  - docs-platform/registry/documents.yaml
+  - docs-platform/registry/sources.yaml
+  - docs-platform/app/test/franchise-platform.test.ts
+  - scripts/test-franchise-platform.cjs
+  - src/components/FranchisePlatform.css
+  - src/components/FranchisePlatform.tsx
+  - src/content/franchise-platform.ts
+  - src/lib/franchise-platform.ts
+  - verification/VISUAL_QA.md
+content_paths:
+  - docs-platform/03-petrogradka-landlord-proposition.md
+  - docs-platform/registry/decisions.yaml
+  - docs-platform/registry/documents.yaml
+  - docs-platform/registry/sources.yaml
+  - docs-platform/app/test/franchise-platform.test.ts
+  - scripts/test-franchise-platform.cjs
+  - src/components/FranchisePlatform.css
+  - src/components/FranchisePlatform.tsx
+  - src/content/franchise-platform.ts
+  - docs-platform/changes/proposals/PROP-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01.yaml
+  - docs-platform/changes/decisions/DEC-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01.yaml
+  - docs-platform/changes/CHG-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01.yaml
+  - docs-platform/changes/iterations/ITR-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01.yaml
+  - docs-platform/changelog/payloads/ITR-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01-approved.yaml
+  - docs-platform/changelog/audit/ITR-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01.yaml
+  - docs-platform/changelog/previews/ITR-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01.yaml
+  - docs-platform/changelog/verification/ITR-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01.yaml
+  - docs-platform/changelog/events.ndjson
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/SNAPSHOT-ITR-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01.yaml
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+allowed_dirty_paths:
+  - analysis/
+  - output/
+rollback_payload: null
+rollback_contract:
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true

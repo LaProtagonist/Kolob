@@ -1,0 +1,17 @@
+schema_version: 2
+change_id: CHG-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01
+title: Finalize Petrogradka landlord narrative
+status: approved
+created_at: 2026-09-11
+decision_id: DEC-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01
+iteration_id: ITR-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01
+proposal_id: PROP-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01
+approved_payload_path: docs-platform/changelog/payloads/ITR-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01-approved.yaml
+approved_payload_sha256: 1d6a993eaa5afb3b526a80b5ffebb056bb6985755458748d33f31e4149a9c6ae
+operations:
+  - replace the agreed Petrogradka owner-facing title, section headings and exact approved explanatory copy
+  - retain the complete grouped equipment listing while replacing only its owner-facing introduction and post-inspection note
+  - retain the current 10m RUB and 15m RUB proposed working scenario estimates exclusively in the launch configurations and remove their repeated display from the production-base effect
+  - replace the incomplete network-role presentation with two equal titled cards and move the interaction model into its own compact section
+  - present the three confirmation groups in one responsive container and retain the exact proposed-format and next-step copy
+  - update the matching proposed landlord draft, document/version record, source/decision records and deterministic route/governance tests
