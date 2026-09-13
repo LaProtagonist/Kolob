@@ -4,10 +4,10 @@
 
 ## 1. Current state
 
-- Events: 361.
-- Timeline head event: `EVT-ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01-DEPLOYED-deploy-routes-control-20260912-01`.
-- Timeline head SHA-256: `d51998dfb8b98af9386d411e6f09fc2393b94cb4ee0c9e908766e0c387622b7a`.
-- Latest recorded iteration: `ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01`.
+- Events: 367.
+- Timeline head event: `EVT-ITR-FRANCHISE-MODEL-V01-2026-09-13-01-COMMITTED`.
+- Timeline head SHA-256: `c4ba8f4be9cf652fd8af2d681e8855ef8cd67bbf690e071772ed1e4e8a18ee80`.
+- Latest recorded iteration: `ITR-FRANCHISE-MODEL-V01-2026-09-13-01`.
 
 ## 2. Modern governed iterations
 
@@ -79,6 +79,7 @@
 | 2026-09-11T13:01:22.000Z | committed | Finalize Petrogradka landlord narrative | ITR-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01 | DEC-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01 | CHG-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01 | bf87e9aa2ef7aac9ef7f22b83d23a804aaaf1952 | iteration/ITR-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-2026-09-11-01 | — | — | — | Finalize Petrogradka landlord narrative: content commit verified and linked to the governed lifecycle before sealing. |
 | 2026-09-11T13:09:07.000Z | committed | Align Petrogradka landlord metadata | ITR-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-2026-09-11-01 | DEC-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-2026-09-11-01 | CHG-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-2026-09-11-01 | a3dc5aa4acf39c38048e6da404c7ecb327ea1ae4 | iteration/ITR-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-2026-09-11-01 | — | — | — | Align Petrogradka landlord metadata: content commit verified and linked to the governed lifecycle before sealing. |
 | 2026-09-11T21:21:32.000Z | deployed | Introduce protected Control workspace | ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01 | DEC-ROUTES-CONTROL-WORKSPACE-2026-09-12-01 | CHG-ROUTES-CONTROL-WORKSPACE-2026-09-12-01 | deef5e6c845d3bd233fcfa02495a510a35a61e77 | iteration/ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01 | — | docs-platform/changelog/deployments/deploy-routes-control-20260912-01.yaml | — | Sealed content state a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239 deployed to https://colob.spi.ski; smoke test passed. |
+| 2026-09-13T17:06:59.000Z | committed | Модель сети и франшизы v0.1 — защищённый рабочий стенд | ITR-FRANCHISE-MODEL-V01-2026-09-13-01 | DEC-FRANCHISE-MODEL-V01-2026-09-13-01 | CHG-FRANCHISE-MODEL-V01-2026-09-13-01 | 07bbb9ba9ab1093e49ef80d8b57c95314ebe4c8e | iteration/ITR-FRANCHISE-MODEL-V01-2026-09-13-01 | — | — | — | Модель сети и франшизы v0.1 — защищённый рабочий стенд: content commit verified and linked to the governed lifecycle before sealing. |
 
 ## 3. Legacy imported history
 

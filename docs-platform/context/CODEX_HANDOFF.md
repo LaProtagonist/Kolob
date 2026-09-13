@@ -9,16 +9,16 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 ## 2. Текущая ветка и governed iteration
 
 - Branch: `master`.
-- Latest closed iteration: `ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01`.
-- Latest iteration tag: `iteration/ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01`.
-- Latest content commit: `deef5e6c845d3bd233fcfa02495a510a35a61e77`.
+- Latest closed iteration: `ITR-FRANCHISE-MODEL-V01-2026-09-13-01`.
+- Latest iteration tag: `iteration/ITR-FRANCHISE-MODEL-V01-2026-09-13-01`.
+- Latest content commit: `07bbb9ba9ab1093e49ef80d8b57c95314ebe4c8e`.
 - Текущий Git HEAD намеренно не записывается: его вычисляет `npm run project:onboard`.
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01-DEPLOYED-deploy-routes-control-20260912-01`.
-- Hash: `d51998dfb8b98af9386d411e6f09fc2393b94cb4ee0c9e908766e0c387622b7a`.
-- generated_from_event_hash: `d51998dfb8b98af9386d411e6f09fc2393b94cb4ee0c9e908766e0c387622b7a`.
+- Event: `EVT-ITR-FRANCHISE-MODEL-V01-2026-09-13-01-COMMITTED`.
+- Hash: `c4ba8f4be9cf652fd8af2d681e8855ef8cd67bbf690e071772ed1e4e8a18ee80`.
+- generated_from_event_hash: `c4ba8f4be9cf652fd8af2d681e8855ef8cd67bbf690e071772ed1e4e8a18ee80`.
 
 ## 4. Канонические документы
 
@@ -37,6 +37,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 | DOC-CAPEX-PRICE-RESEARCH | research | `docs-platform/working/capex-price-research.yaml` | `b2b752f1822db8b529d58d822b83b32d44bcba9a0110ae35062d3b561f08249d` |
 | DOC-FINANCIAL-MODEL | research | `docs-platform/working/financial-model.yaml` | `6a76990d3635e62ac633610754415d401edba989f1a49a463091e2cece1e329b` |
 | DOC-FOUNDATION | approved | `docs-platform/00-foundation.md` | `5b4d457184c055ba11f8c4d05cc263139d2eb4f623981bcdc198c0114a50c0bb` |
+| DOC-FRANCHISE-MODEL-V01 | research | `docs-platform/working/franchise-model-v0.1.json` | `e5d6cbdeb8266729835a942973bfa60b8e94b2ceeb57be88892cb0448264f0a5` |
 | DOC-FRANCHISE-PLATFORM-MISSING-INPUTS | research | `docs-platform/checklists/franchise-platform-missing-inputs.md` | `39fcc08a4215fe7844eca841efe5fd74d1ed7f109e4cbc79785fdfd870ea45fe` |
 | DOC-FRANCHISE-PLATFORM-PARAMETERS | research | `docs-platform/working/franchise-platform-parameters.yaml` | `4c7a77b2cb3bc4a72a5c614ffcb3113f2698329b24db7363e1254056c87b2973` |
 | DOC-FRANCHISE-PLATFORM-STRATEGY | proposed | `docs-platform/02-franchise-platform-strategy.md` | `a75d51abbe4eb08e40aa6c1657765545e91025f091957cb7528528d3e9399cb3` |
@@ -52,7 +53,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 5. Текущая рабочая тема
 
-Introduce protected Control workspace
+Модель сети и франшизы v0.1 — защищённый рабочий стенд
 
 ## 6. Decisions и change sets
 
