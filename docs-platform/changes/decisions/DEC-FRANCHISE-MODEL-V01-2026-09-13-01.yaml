@@ -1,0 +1,10 @@
+schema_version: 2
+decision_id: DEC-FRANCHISE-MODEL-V01-2026-09-13-01
+iteration_id: ITR-FRANCHISE-MODEL-V01-2026-09-13-01
+title: Модель сети и франшизы — independent research v0.1
+status: approved
+approved_by: project owner
+approved_at: 2026-09-13T12:54:02.082Z
+scope: Approve implementation of research model; no baseline or assumption promotion
+approved_payload_path: docs-platform/changelog/payloads/ITR-FRANCHISE-MODEL-V01-2026-09-13-01-approved.yaml
+approved_payload_sha256: 1de54fffaafd466a820bd40224ea85df7b392782ebdb883c45aa9cee9964e9ae

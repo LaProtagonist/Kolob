@@ -1,0 +1,15 @@
+receipt_version: 1
+iteration_id: ITR-FRANCHISE-MODEL-V01-2026-09-13-01
+recorded_at: 2026-09-13T16:44:19.797Z
+scope: Provenance consistency required by the owner-authorized Network Planning metadata patch and v0.1 checkpoint; no calculation changes
+discovered_dependency: Financial Core meta.source_files includes the raw Network Planning snapshot hash
+path: docs-platform/generated/financial-core-projection.json
+field: meta.source_files[6].sha256
+source_path: src/content/network-planning-data.json
+before: 05e5e24ffa1690b7d552405c5a370d816630d87da458e52d3c9fcc8d3fb1df6a
+after: e8f8854cba928f3d79100977717e08e327ef917d6df8e1360b92794feed5545d
+verification: Exact string replacement; all remaining bytes preserved. No Financial Model or Network Planning sync invoked.
+owner_constraints_preserved:
+  - Calculation values, formulas and approved assumptions unchanged
+  - Public Investor Terminal UI unchanged
+  - No v0.2 content included

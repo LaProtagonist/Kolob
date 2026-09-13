@@ -16,7 +16,7 @@
       },
       {
         "path": "docs-platform/registry/sources.yaml",
-        "sha256": "ea971517bc812adb368dab9e968ce6f88e40634aaa5191c5476142f533313f3c"
+        "sha256": "bf94e075167222b5dfa60062d9e33ac246bb47a80f4cf0c1e1051bfa20a30336"
       },
       {
         "path": "docs-platform/working/capex-equipment-register.yaml",
@@ -36,7 +36,7 @@
       },
       {
         "path": "src/content/network-planning-data.json",
-        "sha256": "05e5e24ffa1690b7d552405c5a370d816630d87da458e52d3c9fcc8d3fb1df6a"
+        "sha256": "e8f8854cba928f3d79100977717e08e327ef917d6df8e1360b92794feed5545d"
       },
       {
         "path": "src/lib/configured-economics.ts",

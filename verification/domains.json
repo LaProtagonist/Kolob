@@ -25,6 +25,10 @@
     "scripts/verification/**/*.mjs"
   ],
   "checks": {
+
+    "franchise-model:unit": {"cost": "targeted", "command": ["node", "docs-platform/app/node_modules/tsx/dist/cli.mjs", "--test", "scripts/test-franchise-model.test.ts"]},
+    "franchise-model:build": {"cost": "integration", "command": ["npm", "run", "build:control", "--silent"]},
+    "franchise-model:browser": {"cost": "integration", "command": ["node", "scripts/test-franchise-model.cjs"]},
     "diff:check": {
       "cost": "fast",
       "command": ["node", "scripts/verification/static.mjs", "diff"]
@@ -174,6 +178,7 @@
     }
   },
   "domains": {
+    "franchise-model": {"patterns": ["src/lib/franchise-model-*.ts", "src/components/FranchiseModel.tsx", "src/components/FranchiseModel.css", "src/components/franchise-model-language.ts", "docs-platform/working/franchise-model-v0.1.*", "scripts/test-franchise-model*"], "upstream": [], "downstream": [], "testInputs": ["scripts/test-franchise-model.test.ts", "scripts/test-franchise-model.cjs"], "fast": [], "targeted": ["typescript:site", "franchise-model:unit", "franchise-model:build", "franchise-model:browser"], "integration": [], "dependency": ["franchise-model:unit"], "visual": {"defaultImpact": "none"}, "releaseRequired": true},
     "financial": {
       "patterns": ["docs-platform/working/financial-model.yaml", "docs-platform/generated/financial-model-projection.json", "docs-platform/app/src/financial/financial-model.ts", "docs-platform/app/src/financial/google-sheet.ts", "docs-platform/schemas/financial-*.json", "docs-platform/app/test/financial-model.test.ts"],
       "upstream": ["capex", "revenue-model"],

@@ -1,0 +1,10 @@
+schema_version: 2
+proposal_id: PROP-FRANCHISE-MODEL-V01-2026-09-13-01
+iteration_id: ITR-FRANCHISE-MODEL-V01-2026-09-13-01
+title: Модель сети и франшизы — independent research v0.1
+status: approved
+proposed_by: project owner
+proposed_at: 2026-09-13T12:54:02.082Z
+summary: Protected /control/franchise-model and navigation; separate build/state/engine/types; Editable research scenario Compact Production + Franchise v0.1, provenance, reset/duplicate/rename/delete/compare up to three; Bottom-up staffing, initial draw, normative settlement independent of actual franchise costs; Separate own/production/franchise/HeadCo economics; fixed costs once; dynamic rollout and manual capacity expansion; Staged funding on actual draws, reserve protection, bounded waterfall, investor CF IRR/MOIC; no commitment-as-investment; Required unit, auth, deterministic browser/responsive tests and one desktop screenshot
+approved_payload_path: docs-platform/changelog/payloads/ITR-FRANCHISE-MODEL-V01-2026-09-13-01-approved.yaml
+approved_payload_sha256: 1de54fffaafd466a820bd40224ea85df7b392782ebdb883c45aa9cee9964e9ae

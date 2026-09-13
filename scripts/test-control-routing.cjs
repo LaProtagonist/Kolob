@@ -11,6 +11,7 @@ const port = Number(process.env.CONTROL_ROUTING_TEST_PORT || 18_000 + (process.p
 const baseUrl = `http://127.0.0.1:${port}`;
 const password = "control-routing-test-password";
 const controlRoutes = [
+  ["/control/franchise-model", "Модель сети и франшизы"],
   ["/control", "Control"],
   ["/control/franchise-platform", "Стратегия масштабирования сети"],
   ["/control/capex", "CAPEX-конфигуратор"],
@@ -83,6 +84,9 @@ function assertProductionArtifacts() {
     .map((file) => read(path.join(distRoot, "assets", file)))
     .join("\n");
   for (const protectedCopy of [
+    "Compact Production + Franchise v0.1",
+    "kolobochnaya.control.franchise-model.v1",
+    "ASM-FRANCHISE-MODEL-V01",
     "CAPEX-конфигуратор",
     "Стратегия масштабирования сети",
     "Расчёт стоимости запуска",

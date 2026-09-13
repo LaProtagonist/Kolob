@@ -5,10 +5,12 @@
     "lib": ["ES2023"],
     "module": "ESNext",
     "moduleResolution": "Bundler",
+    "types": ["node"],
+    "typeRoots": ["./docs-platform/app/node_modules/@types"],
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true
   },
-  "include": ["vite.config.ts"]
+  "include": ["vite.config.ts", "vite.control.config.ts"]
 }

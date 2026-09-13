@@ -1,0 +1,22 @@
+receipt_version: 1
+iteration_id: ITR-FRANCHISE-MODEL-V01-2026-09-13-01
+decision_id: DEC-FRANCHISE-MODEL-V01-2026-09-13-01
+change_set_id: CHG-FRANCHISE-MODEL-V01-2026-09-13-01
+approved_by: project owner
+recorded_at: 2026-09-13T16:41:01.724Z
+authorization: Owner explicitly authorizes the prepared Network Planning provenance-only patch, strict release verification, v0.1 checkpoint commit and governed seal before a separate v0.2 iteration.
+original_approved_payload: docs-platform/changelog/payloads/ITR-FRANCHISE-MODEL-V01-2026-09-13-01-approved.yaml
+original_payload_sha256: 1de54fffaafd466a820bd40224ea85df7b392782ebdb883c45aa9cee9964e9ae
+patch_reference: analysis/franchise-model-network-provenance-only.patch
+patch_sha256: 7a576533ca2584e0785e0ef3b220c614f83ecbcc6efe3b54b13a3dc657f71582
+affected_path: src/content/network-planning-data.json
+metadata_fields:
+  - meta.contentStateSha256
+  - meta.sourceFiles[4].sha256
+before_state: byte-identical to 6e32ecb
+after_file_sha256: e8f8854cba928f3d79100977717e08e327ef917d6df8e1360b92794feed5545d
+non_metadata: All other bytes unchanged; no Network Planning sync or value/output mutation
+constraints:
+  - No Financial Model, Current Base or Investor Terminal calculation changes
+  - No v0.2 content in this checkpoint
+  - No push or deployment

@@ -1,0 +1,106 @@
+schema_version: 2
+iteration_id: ITR-FRANCHISE-MODEL-V01-2026-09-13-01
+proposal_id: PROP-FRANCHISE-MODEL-V01-2026-09-13-01
+decision_id: DEC-FRANCHISE-MODEL-V01-2026-09-13-01
+change_set_id: CHG-FRANCHISE-MODEL-V01-2026-09-13-01
+status: approved
+approved_by: project owner
+approved_at: 2026-09-13T12:54:02.082Z
+title: Модель сети и франшизы — independent research v0.1
+authorization: User implementation brief, sections 1–56, including content/code commit and governed seal. No deployment or Google publication.
+scope:
+  - Protected /control/franchise-model and navigation; separate build/state/engine/types
+  - Editable research scenario Compact Production + Franchise v0.1, provenance, reset/duplicate/rename/delete/compare up to three
+  - Bottom-up staffing, initial draw, normative settlement independent of actual franchise costs
+  - Separate own/production/franchise/HeadCo economics; fixed costs once; dynamic rollout and manual capacity expansion
+  - Staged funding on actual draws, reserve protection, bounded waterfall, investor CF IRR/MOIC; no commitment-as-investment
+  - Required unit, auth, deterministic browser/responsive tests and one desktop screenshot
+constraints:
+  - Current Base, Financial Model v0.2, public Investor Terminal, Network Planning, Foundation/BMA and approved assumptions remain byte-identical
+  - No invented confirmed costs/capacity; working references never become baseline
+  - Missing franchise CAPEX and onboarding cost remain null; no missing-to-zero metric substitution
+  - No central subsidy of actual local inefficiency; central settlement is management economics, not legal payment advice
+  - Entry fee is gross cash, not automatically profit; taxes and maintenance require explicit inputs
+  - No public route, header/footer/sitemap/prerender/bundle additions; no Google or deployment
+working_defaults:
+  area: 120
+  rent: 350000
+  prepayment: 1
+  deposit: 2
+  fitout: 3500000
+  equipment: 5298993.33
+  furniture: 425000
+  video: 70000
+  alarm: 35000
+  launchMarketing: 700000
+  uniforms: 180000
+  inventory: 1000000
+  software: 2500000
+  computing: 625000
+  retailRoles:
+    - 1
+    - 1
+  hours: 12
+  days: 30
+  fteHours: 165
+  coverage: 1.15
+  retailLoadedCost: 120000
+  productionFte: 3
+  productionLoaded: 120000
+  managerFte: 0.5
+  managerLoaded: 150000
+  utilities: 200000
+  centralMarketing: 150000
+  logistics: 100000
+  overhead: 100000
+  softwareRecurring: 10000
+  reserveMonths: 4
+  revenueDay: 200000
+  averageCheck: 1165.4
+  retailRentAllocation: 0.25
+  normative:
+    - 0.15
+    - 0.08
+    - 0.05
+  target: 0.15
+  royalty: 0
+  entryFee: 1000000
+  raw: 0.3
+  waste: 0.04
+  packaging: 27.77777777777778
+  networkMarketing: 0.03
+  delivery: 50000
+  support: 50000
+  capacity: 5
+  rollout:
+    - 1
+    - 9
+    - 12
+    - 15
+    - 18
+  commitment: 40000000
+  waterfall: 0.8
+  cap: 1.25
+  targetIrr: 0.2
+  equity: false
+state_hash_paths:
+  - src/ControlApp.tsx
+  - src/components/FranchiseModel.tsx
+  - src/components/FranchiseModel.css
+  - src/lib/franchise-model-types.ts
+  - src/lib/franchise-model-scenario.ts
+  - src/lib/franchise-model-engine.ts
+  - src/lib/franchise-model-storage.ts
+  - scripts/test-franchise-model.test.ts
+  - scripts/test-franchise-model.cjs
+  - scripts/test-control-routing.cjs
+  - verification/domains.json
+  - verification/FRANCHISE_MODEL.md
+  - docs-platform/working/franchise-model-v0.1.json
+  - docs-platform/working/franchise-model-v0.1.md
+  - docs-platform/registry/documents.yaml
+  - docs-platform/registry/decisions.yaml
+  - docs-platform/registry/sources.yaml
+allowed_dirty_paths:
+  - output/
+  - analysis/

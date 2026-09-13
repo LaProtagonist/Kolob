@@ -1,6 +1,8 @@
 import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import { InvestorConfigurationProvider } from "./components/InvestorConfigurationProvider";
 
+const FranchiseModelPage = lazy(() => import("./components/FranchiseModel").then((module) => ({ default: module.FranchiseModelPage })));
+
 const CapexConfiguratorPage = lazy(() => import("./components/CapexConfigurator").then((module) => ({ default: module.CapexConfiguratorPage })));
 const LaunchBudgetPage = lazy(() => import("./components/LaunchBudget").then((module) => ({ default: module.LaunchBudgetPage })));
 const RevenueModelPage = lazy(() => import("./components/RevenueModel").then((module) => ({ default: module.RevenueModelPage })));
@@ -9,6 +11,7 @@ const FranchisePlatformPage = lazy(() => import("./components/FranchisePlatform"
 
 const controlLinks = [
   { href: "/control", label: "Control" },
+  { href: "/control/franchise-model", label: "Модель сети и франшизы" },
   { href: "/control/franchise-platform", label: "Franchise Platform" },
   { href: "/control/capex", label: "CAPEX" },
   { href: "/control/launch-budget", label: "Launch Budget" },
@@ -26,6 +29,7 @@ function Loading() {
 
 function ControlHub() {
   const internalTools = [
+    { href: "/control/franchise-model", title: "Модель сети и франшизы", text: "Рабочие сценарии первого узла, франчайзи, HeadCo и инвестора." },
     { href: "/control/franchise-platform", title: "Стратегия франчайзинговой платформы", text: "Общая стратегическая архитектура, сценарии и параметры масштабирования." },
     { href: "/control/capex", title: "CAPEX-конфигуратор", text: "Рабочая конфигурация оборудования и модулей точки." },
     { href: "/control/launch-budget", title: "Расчёт стоимости запуска", text: "Подготовка бюджета запуска и параметров помещения." },
@@ -54,6 +58,7 @@ function ControlHub() {
 function renderControlPage(path: string) {
   switch (path) {
     case "/control": return <ControlHub />;
+    case "/control/franchise-model": return <Suspense fallback={<Loading />}><FranchiseModelPage /></Suspense>;
     case "/control/franchise-platform": return <Suspense fallback={<Loading />}><FranchisePlatformPage /></Suspense>;
     case "/control/capex": return <Suspense fallback={<Loading />}><CapexConfiguratorPage /></Suspense>;
     case "/control/launch-budget": return <Suspense fallback={<Loading />}><LaunchBudgetPage /></Suspense>;
@@ -65,6 +70,7 @@ function renderControlPage(path: string) {
 
 export default function ControlApp() {
   const [path, setPath] = useState(() => normalizePath(window.location.pathname));
+  const [desktopNavigation, setDesktopNavigation] = useState(() => window.matchMedia("(min-width: 780px)").matches);
   const active = useMemo(() => controlLinks.find((item) => item.href === path)?.href ?? "/control", [path]);
 
   useEffect(() => {
@@ -73,22 +79,28 @@ export default function ControlApp() {
     return () => window.removeEventListener("popstate", onPopState);
   }, []);
 
-  return (
-    <InvestorConfigurationProvider>
+  useEffect(() => {
+    const media = window.matchMedia("(min-width: 780px)");
+    const onChange = () => setDesktopNavigation(media.matches);
+    media.addEventListener("change", onChange);
+    return () => media.removeEventListener("change", onChange);
+  }, []);
+
+  const shell = (
       <div className="control-shell">
         <header className="control-header">
-          <a className="control-brand" href="/control">Control <span>Колобочная</span></a>
-          <details className="control-navigation">
-            <summary aria-label="Навигация Control">Разделы</summary>
-            <nav aria-label="Навигация Control">
-              {controlLinks.map((link) => <a key={link.href} href={link.href} aria-current={active === link.href ? "page" : undefined}>{link.label}</a>)}
-              <a href="/leads">Leads</a>
+          <a className="control-brand" href="/control">{path === "/control/franchise-model" ? "Управление" : "Control"} <span>Колобочная</span></a>
+          <details className="control-navigation" open={desktopNavigation || undefined}>
+            <summary aria-label={path === "/control/franchise-model" ? "Навигация рабочего пространства" : "Навигация Control"}>Разделы</summary>
+            <nav aria-label={path === "/control/franchise-model" ? "Навигация рабочего пространства" : "Навигация Control"}>
+              {controlLinks.map((link, i) => <a key={link.href} href={link.href} aria-current={active === link.href ? "page" : undefined}>{path === "/control/franchise-model" ? ["Управление", "Модель сети и франшизы", "Стратегия франшизы", "Инвестиции в запуск", "Бюджет запуска", "Выручка", "Экономика"][i] : link.label}</a>)}
+              <a href="/leads">{path === "/control/franchise-model" ? "Заявки" : "Leads"}</a>
               <a className="control-logout" href="/control/logout">Выйти</a>
             </nav>
           </details>
         </header>
         {renderControlPage(path)}
       </div>
-    </InvestorConfigurationProvider>
   );
+  return path === "/control/franchise-model" ? shell : <InvestorConfigurationProvider>{shell}</InvestorConfigurationProvider>;
 }

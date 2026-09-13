@@ -443,3 +443,19 @@ documents:
     governance_level: working
     local_path: docs-platform/research/banking-settlement-architecture.md
     updated_at: 2026-09-07
+  - id: DOC-FRANCHISE-MODEL-V01
+    title: Compact Production + Franchise v0.1 — research parameters
+    type: working_parameters
+    status: research
+    google_file_id: null
+    template: null
+    sections:
+      - first_node
+      - own_point
+      - franchise_point
+      - headco
+      - network
+      - investor
+    local_path: docs-platform/working/franchise-model-v0.1.json
+    version: "0.1"
+    updated_at: 2026-09-13

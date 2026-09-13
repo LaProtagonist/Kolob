@@ -1,0 +1,36 @@
+receipt_version: 1
+iteration_id: ITR-FRANCHISE-MODEL-V01-2026-09-13-01
+decision_id: DEC-FRANCHISE-MODEL-V01-2026-09-13-01
+change_set_id: CHG-FRANCHISE-MODEL-V01-2026-09-13-01
+approved_by: project owner
+recorded_at: 2026-09-13T14:32:53.028Z
+authorization: "Owner follow-up explicitly continues the open iteration: Russian user-facing terminology, layout review, six expanded full-page screenshots, provenance-only Financial Core metadata correction, strict release, content commit and governed seal."
+original_approved_payload: docs-platform/changelog/payloads/ITR-FRANCHISE-MODEL-V01-2026-09-13-01-approved.yaml
+original_payload_sha256: 1de54fffaafd466a820bd40224ea85df7b392782ebdb883c45aa9cee9964e9ae
+supplements_without_rewriting:
+  - Original approved payload, prior events and receipts remain unchanged
+  - The previous one-screenshot limit is superseded by six explicitly requested tab screenshots
+  - Only source metadata hash may change in the existing Financial Core projection; all other bytes remain unchanged
+approved_scope:
+  - Presentation labels, notes, statuses, scenario display names, engine-message translation at render boundary
+  - Group wide monthly tables vertically without changing fields or calculations
+  - Navigation translation applies only to /control/franchise-model
+  - Browser terminology/access/responsive assertions; no math fixture or schema changes
+  - Six 1440 px full-page images with active-tab details expanded; isolated blank expansion/capital-call rows expose optional controls
+prohibited_changes:
+  - Engine and working scenario values
+  - Initial draw, reserve, franchise economics and waterfall formulas
+  - Current Base, public Investor Terminal, Foundation, BMA
+  - Publishing or deployment
+protected_math_sha256:
+  src/lib/franchise-model-scenario.ts: 06a3ed7b846d2995f01a469be483f54f5ddd7bb1dde4bcd88aa52121aed5ec71
+  src/lib/franchise-model-engine.ts: bef1ad8f84c818f05c209d47fb7cab8d7ed98d7e3a0fd2ae604c6626cccb8836
+  src/lib/franchise-model-types.ts: 89dea3e004a8fb3cabba481792ead6cc27c180d3a29146899d8a14f48dbc0bb2
+  src/lib/franchise-model-storage.ts: 64f8a42be9b92f638ddb56a69120416e005c3ce1efd8af0c61a7ceee960bbe25
+  docs-platform/working/franchise-model-v0.1.json: e5d6cbdeb8266729835a942973bfa60b8e94b2ceeb57be88892cb0448264f0a5
+provenance_only_patch:
+  path: docs-platform/generated/financial-core-projection.json
+  field: meta.source_files[1].sha256
+  source_path: docs-platform/registry/sources.yaml
+  before: ea971517bc812adb368dab9e968ce6f88e40634aaa5191c5476142f533313f3c
+  after: bf94e075167222b5dfa60062d9e33ac246bb47a80f4cf0c1e1051bfa20a30336

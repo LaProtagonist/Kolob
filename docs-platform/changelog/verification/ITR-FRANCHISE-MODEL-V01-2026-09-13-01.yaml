@@ -1,0 +1,115 @@
+receipt_version: 1
+iteration_id: ITR-FRANCHISE-MODEL-V01-2026-09-13-01
+decision_id: DEC-FRANCHISE-MODEL-V01-2026-09-13-01
+change_set_id: CHG-FRANCHISE-MODEL-V01-2026-09-13-01
+verified_at: 2026-09-13T16:48:51.353Z
+result: passed
+approved_payload_sha256: 1de54fffaafd466a820bd40224ea85df7b392782ebdb883c45aa9cee9964e9ae
+supplemental_owner_authorization:
+  - docs-platform/changelog/audit/ITR-FRANCHISE-MODEL-V01-2026-09-13-01-ui-authorization.yaml
+  - docs-platform/changelog/audit/ITR-FRANCHISE-MODEL-V01-2026-09-13-01-network-metadata-authorization.yaml
+metadata_consistency_receipt: docs-platform/changelog/audit/ITR-FRANCHISE-MODEL-V01-2026-09-13-01-metadata-linkage.yaml
+before_state_sha256: 03f16a36297439430ffc744b955762fedfa3e105fedaaa3a1c5526c4fa3eb379
+after_state_sha256: 358d46f76abbd37d36773ca44845af00a49c125c26e0ed5d69e1bedca4abe298
+runtime: Node 22.15.1
+checks:
+  - npx tsc --noEmit; site and Vite TypeScript integration
+  - 35 pure financial/storage/immutability tests
+  - 15 deterministic browser/auth scenarios; Python and Node servers; all six tabs at 1440/1024/768/390
+  - "Russian terminology audit: visible strings, tooltips, accessibility labels, selectors, comparison/reference, missing and invalid states"
+  - Control routes, protected assets, login/reload/logout, no public asset/prerender/sitemap leakage
+  - "Strict verify:release PASS: current domain receipts plus all mandatory gates"
+  - Registry, timeline, context and governance validation
+  - Manual visual review of all six full-page captures; desktop table columns visible
+release_duration_ms: 201373
+screenshots:
+  - file: franchise-model-01-first-node-full.png
+    viewport:
+      width: 1440
+      height: 1000
+    fullPage: true
+    title: 01 Первый узел
+    height: 5215
+    allTabDetailsOpen: true
+    globalWarningsOpen: true
+    inputs: 34
+    state: Working scenario defaults
+    path: analysis/screenshots/franchise-model-ru-2026-09-13/franchise-model-01-first-node-full.png
+    sha256: d46b96fefab30eed0135493e13ec530968866b99bac8a6f1f7ee2b6faf76aa6d
+  - file: franchise-model-02-own-point-full.png
+    viewport:
+      width: 1440
+      height: 1000
+    fullPage: true
+    title: 02 Собственная точка
+    height: 2991
+    allTabDetailsOpen: true
+    globalWarningsOpen: true
+    inputs: 9
+    state: Working scenario defaults
+    path: analysis/screenshots/franchise-model-ru-2026-09-13/franchise-model-02-own-point-full.png
+    sha256: 04c4cc2f07949017f380e97b539b88a61631ba7a1b00e7643d6a22dc2aa6be73
+  - file: franchise-model-03-franchise-point-full.png
+    viewport:
+      width: 1440
+      height: 1000
+    fullPage: true
+    title: 03 Франчайзинговая точка
+    height: 3439
+    allTabDetailsOpen: true
+    globalWarningsOpen: true
+    inputs: 15
+    state: Working scenario defaults
+    path: analysis/screenshots/franchise-model-ru-2026-09-13/franchise-model-03-franchise-point-full.png
+    sha256: 7cce717e74ef92773d23f4fbb852226ef0b4206e7ab8c04785bdf2a6d2c62140
+  - file: franchise-model-04-head-company-full.png
+    viewport:
+      width: 1440
+      height: 1000
+    fullPage: true
+    title: 04 Головная компания
+    height: 3324
+    allTabDetailsOpen: true
+    globalWarningsOpen: true
+    inputs: 8
+    state: Working scenario defaults
+    path: analysis/screenshots/franchise-model-ru-2026-09-13/franchise-model-04-head-company-full.png
+    sha256: 1c17a4ac6c270647a45c5fa16416abee97ea1b62f1e69dcfd07d3a108dbd8eb2
+  - file: franchise-model-05-network-full.png
+    viewport:
+      width: 1440
+      height: 1000
+    fullPage: true
+    title: 05 Сеть
+    height: 10628
+    allTabDetailsOpen: true
+    globalWarningsOpen: true
+    inputs: 62
+    state: Working defaults plus one blank expansion editor row; no costs filled
+    path: analysis/screenshots/franchise-model-ru-2026-09-13/franchise-model-05-network-full.png
+    sha256: cccaf6f819bd89843b60b7ba5d4ac3ed412a6aa0f509bf9de4070b3faa9ae034
+  - file: franchise-model-06-investor-full.png
+    viewport:
+      width: 1440
+      height: 1000
+    fullPage: true
+    title: 06 Инвестор
+    height: 9199
+    allTabDetailsOpen: true
+    globalWarningsOpen: true
+    inputs: 12
+    state: Working defaults plus one blank manual capital call; no amount filled
+    path: analysis/screenshots/franchise-model-ru-2026-09-13/franchise-model-06-investor-full.png
+    sha256: dd03b45fa1044dba9f9dbf5d40acd3d14495a9105a2a1f0808fb2474b20c85f3
+baseline_immutability:
+  protected_original_paths: 46
+  current_base_math: byte-identical to 6e32ecb
+  public_investor_terminal: byte-identical to 6e32ecb
+  new_engine_and_scenario: byte-identical to pre-localization snapshot
+  projection_exception: "Financial Core: registry source hash and dependent Network Planning file hash; Network Planning: two authorized metadata hashes. All remaining bytes unchanged"
+terminology_only: true
+internal_identifiers: preserved; display adapters and monthly table rendering only
+reference_not_promoted: true
+default_investor_metrics: "Not calculated: explicitly missing costs remain missing"
+google_mutation: not_run
+production_deployment: not_run

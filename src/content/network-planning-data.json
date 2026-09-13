@@ -2,7 +2,7 @@
   "meta": {
     "schemaVersion": 1,
     "dataVersion": "1.7",
-    "contentStateSha256": "e591343bbfea16db200a086a07da6dce6630c3371d06921b6ae9b9ff02bc5224",
+    "contentStateSha256": "9202ab2e670703f3066de14379bf4f4e4faffdd1caf3b3c22d4f73173fedd4ac",
     "sourceFiles": [
       {
         "path": "docs-platform/working/network-planning-assumptions.yaml",
@@ -22,7 +22,7 @@
       },
       {
         "path": "docs-platform/registry/sources.yaml",
-        "sha256": "21c262a713588884d39cdc4a7eeebb83f22359ebf8be20611aafd0c8643f404f"
+        "sha256": "89c408270c9a04c4f315db68517b17af0614e6a2e95c8c9ecdca5053d4133ef8"
       },
       {
         "path": "docs-platform/working/capex-equipment-register.yaml",

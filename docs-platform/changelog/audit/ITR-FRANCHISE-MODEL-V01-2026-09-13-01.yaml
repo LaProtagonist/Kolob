@@ -1,0 +1,61 @@
+receipt_version: 1
+iteration_id: ITR-FRANCHISE-MODEL-V01-2026-09-13-01
+approved_payload_sha256: 1de54fffaafd466a820bd40224ea85df7b392782ebdb883c45aa9cee9964e9ae
+before_state_sha256: c5f132909ced5d9a162b3c3471c4640e035b56f779a95b0c7d563a2279f4226f
+after_state_sha256: 496b688a0074a4c6a99dae276d15db3ff232544086a6c70f1f554b67931ff9b3
+initial_planned_scope_hash: 7498116e209cd04ea4bd6c5c0cd94fc91a7d9d0fda25f855ff4f4b4733304f58
+initial_head: 6e32ecba6d6adf03fa36d0316ec49677730fd26b
+scope_adjustments:
+  - Existing FranchisePlatform optional property type guard; no content change
+  - Existing Node typings from installed docs-platform dependency explicitly selected in tsconfig.node; Control Vite config now typechecked
+  - Existing closed desktop Control details navigation opened at desktop breakpoint
+baseline_invariants:
+  src/App.tsx: byte-identical
+  src/components/InvestorTerminal.tsx: byte-identical
+  src/lib/capex-runtime.ts: byte-identical
+  src/lib/configured-economics.ts: byte-identical
+  src/lib/economics.ts: byte-identical
+  src/lib/employer-contributions.ts: byte-identical
+  src/lib/financial-assets.ts: byte-identical
+  src/lib/financial-core.ts: byte-identical
+  src/lib/franchise-platform.ts: byte-identical
+  src/lib/investor-configuration.ts: byte-identical
+  src/lib/investor-terminal-capex-runtime.ts: byte-identical
+  src/lib/launch-budget.ts: byte-identical
+  src/lib/launch-financials.ts: byte-identical
+  src/lib/network-financial-core.ts: byte-identical
+  src/lib/network-financial-projection.ts: byte-identical
+  src/lib/network-planning.ts: byte-identical
+  src/lib/network-scaling.ts: byte-identical
+  src/lib/network-temporal.ts: byte-identical
+  src/lib/physical-allocation.ts: byte-identical
+  src/lib/point-operations.ts: byte-identical
+  src/lib/point-preparation.ts: byte-identical
+  src/lib/rent-prepayment.ts: byte-identical
+  src/lib/revenue-model.ts: byte-identical
+  src/content/approved-copy.ts: byte-identical
+  src/content/capex-configurator-data.json: byte-identical
+  src/content/concept.ts: byte-identical
+  src/content/economics.ts: byte-identical
+  src/content/franchise-platform.ts: byte-identical
+  src/content/history.ts: byte-identical
+  src/content/home.ts: byte-identical
+  src/content/investment.ts: byte-identical
+  src/content/investor-terminal-capex-data.json: byte-identical
+  src/content/investorQuestions.ts: byte-identical
+  src/content/materials.ts: byte-identical
+  src/content/media-map.ts: byte-identical
+  src/content/navigation.ts: byte-identical
+  src/content/network-planning-data.json: byte-identical
+  src/content/production-route.ts: byte-identical
+  src/content/quality.ts: byte-identical
+  src/content/revenue-model-data.json: byte-identical
+  src/content/site.ts: byte-identical
+  docs-platform/00-foundation.md: byte-identical
+  docs-platform/01-business-model-architecture.md: byte-identical
+  docs-platform/working/financial-model.yaml: byte-identical
+  docs-platform/working/network-planning-assumptions.yaml: byte-identical
+  docs-platform/registry/assumptions.yaml: byte-identical
+missing_outputs: "Default investor principal/cap/IRR/MOIC/retained remain N/A: own local OPEX, onboarding, point software, additional production, tax proxies, maintenance. Franchise CAPEX only blocks franchise payback."
+google_mutation: not_run
+production_deployment: not_run

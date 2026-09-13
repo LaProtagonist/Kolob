@@ -1475,7 +1475,7 @@ sources:
     publication_date: null
     accessed_at: 2026-08-28
     reliability: medium
-    notes: "B5 external-logistics market evidence. Published starting prices include 1.5t/10m³ from 3,500 ₽ for 3h and 2t/14m³ from 4,200 ₽ for 4h. Used as a commercial refrigerated-route comparison; actual daily route terms require a carrier quote."
+    notes: B5 external-logistics market evidence. Published starting prices include 1.5t/10m³ from 3,500 ₽ for 3h and 2t/14m³ from 4,200 ₽ for 4h. Used as a commercial refrigerated-route comparison; actual daily route terms require a carrier quote.
   - id: SRC-LOGISTICS-20260828-GRUZOVOZKIN-REFRIGERATED
     title: Грузовозкин — рефрижераторные перевозки для ресторанных продуктов
     type: supplier_tariff
@@ -1484,7 +1484,7 @@ sources:
     publication_date: null
     accessed_at: 2026-08-28
     reliability: medium
-    notes: "B5 external-logistics market evidence. Published small refrigerated vehicle rates start at 400 ₽/h (0.6t), 500 ₽/h (1.5t) and 600 ₽/h (3t), with restaurant/food-product delivery applicability. It corroborates an allowance above the lowest ad-hoc day rate."
+    notes: B5 external-logistics market evidence. Published small refrigerated vehicle rates start at 400 ₽/h (0.6t), 500 ₽/h (1.5t) and 600 ₽/h (3t), with restaurant/food-product delivery applicability. It corroborates an allowance above the lowest ad-hoc day rate.
   - id: SRC-LOGISTICS-20260828-B5-PLANNING-BASELINE
     title: B5 planning baseline for early external refrigerated logistics
     type: calculation_assumption
@@ -1493,7 +1493,7 @@ sources:
     publication_date: 2026-08-28
     accessed_at: 2026-08-28
     reliability: medium
-    notes: "Conservative planning allowance 150,000 ₽/month for approximately one daily commercial temperature-controlled route serving 1–2 additional points in Saint Petersburg. It is 39% above the 108,000 ₽/month FirstExpress Gazelle day-rate equivalent and remains subject to a carrier contract/route quote."
+    notes: Conservative planning allowance 150,000 ₽/month for approximately one daily commercial temperature-controlled route serving 1–2 additional points in Saint Petersburg. It is 39% above the 108,000 ₽/month FirstExpress Gazelle day-rate equivalent and remains subject to a carrier contract/route quote.
   - id: SRC-CAPACITY-20260827-TATRA-TSV2
     title: TATRA TSV2 — documented sous-vide envelope
     type: supplier_product_card
@@ -1610,10 +1610,7 @@ sources:
     publication_date: 2026-09-11
     accessed_at: 2026-09-11
     reliability: primary
-    notes: >-
-      Первичный источник редакционной итерации страницы Петроградки: заменить публичные
-      агрегированные ориентиры запуска, сохранить детальные внутренние оценки, усилить позицию
-      проекта и не менять Foundation, BMA, core strategy, baseline или Financial Model.
+    notes: "Первичный источник редакционной итерации страницы Петроградки: заменить публичные агрегированные ориентиры запуска, сохранить детальные внутренние оценки, усилить позицию проекта и не менять Foundation, BMA, core strategy, baseline или Financial Model."
   - id: SRC-PETROGRADKA-LANDLORD-NARRATIVE-FINAL-BRIEF-2026-09-11
     title: Задание на финальную редакционную полировку предложения Петроградки
     type: instruction
@@ -1622,11 +1619,7 @@ sources:
     publication_date: 2026-09-11
     accessed_at: 2026-09-11
     reliability: primary
-    notes: >-
-      Первичный источник точечной финальной редакции страницы Петроградки: использовать
-      согласованные формулировки, сохранить предложенные рабочие ориентиры от 10 млн ₽ и от
-      15 млн ₽, не менять сценарий, оборудование, статусы, Foundation, BMA, core strategy,
-      baseline, Financial Model или Network Planning.
+    notes: "Первичный источник точечной финальной редакции страницы Петроградки: использовать согласованные формулировки, сохранить предложенные рабочие ориентиры от 10 млн ₽ и от 15 млн ₽, не менять сценарий, оборудование, статусы, Foundation, BMA, core strategy, baseline, Financial Model или Network Planning."
   - id: SRC-PETROGRADKA-LANDLORD-METADATA-ALIGNMENT-BRIEF-2026-09-11
     title: Задание на синхронизацию метаданных предложения Петроградки
     type: instruction
@@ -1635,11 +1628,7 @@ sources:
     publication_date: 2026-09-11
     accessed_at: 2026-09-11
     reliability: primary
-    notes: >-
-      Первичный источник технического выравнивания user-facing title и description маршрута
-      Петроградки с финальным предложением собственнику помещения. Не меняет видимую
-      редакцию, сценарий, оборудование, статусы, допущения, baseline, Foundation, BMA,
-      core strategy, Financial Model или Network Planning.
+    notes: Первичный источник технического выравнивания user-facing title и description маршрута Петроградки с финальным предложением собственнику помещения. Не меняет видимую редакцию, сценарий, оборудование, статусы, допущения, baseline, Foundation, BMA, core strategy, Financial Model или Network Planning.
   - id: SRC-ROUTES-CONTROL-WORKSPACE-BRIEF-2026-09-12
     title: Задание на разделение public, share-only и Control маршрутов
     type: instruction
@@ -1648,8 +1637,13 @@ sources:
     publication_date: 2026-09-12
     accessed_at: 2026-09-12
     reliability: primary
-    notes: >-
-      Первичный источник решения перенести внутренние web views в защищённый Control,
-      оставить Investor Terminal публичным noindex-инструментом, выделить Петроградку
-      в короткую share-only ссылку и закрыть review output. Не меняет Foundation, BMA,
-      core strategy, baseline, engines, scenario values, оборудование или статусы.
+    notes: Первичный источник решения перенести внутренние web views в защищённый Control, оставить Investor Terminal публичным noindex-инструментом, выделить Петроградку в короткую share-only ссылку и закрыть review output. Не меняет Foundation, BMA, core strategy, baseline, engines, scenario values, оборудование или статусы.
+  - id: SRC-FRANCHISE-MODEL-V01-BRIEF-2026-09-13
+    title: Franchise Model v0.1 implementation brief and financial audit references
+    type: instruction
+    location: User instruction, sections 1–56, 2026-09-13
+    publisher: project owner
+    publication_date: 2026-09-13
+    accessed_at: 2026-09-13
+    reliability: primary
+    notes: Authorizes isolated research implementation, content commit and seal; does not approve business assumptions or authorize deployment/Google publication.

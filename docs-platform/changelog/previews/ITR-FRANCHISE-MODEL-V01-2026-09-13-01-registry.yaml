@@ -1,0 +1,85 @@
+receipt_version: 1
+iteration_id: ITR-FRANCHISE-MODEL-V01-2026-09-13-01
+result: reviewed
+mutation_performed: false
+before_hash: 74b0ac0608a104de1b83e7483bb71380e5fd5b46276f5f6d68051b3303bf8988
+after_hash: 83e122764b230c2dc0c9dd305bb703013ba4574a5e38a68373fa0e9ecab4f3c1
+approved_payload_sha256: 1de54fffaafd466a820bd40224ea85df7b392782ebdb883c45aa9cee9964e9ae
+operations:
+  - type: add
+    entity: sources
+    id: SRC-FRANCHISE-MODEL-V01-BRIEF-2026-09-13
+    before: null
+    after:
+      id: SRC-FRANCHISE-MODEL-V01-BRIEF-2026-09-13
+      title: Franchise Model v0.1 implementation brief and financial audit references
+      type: instruction
+      location: User instruction, sections 1–56, 2026-09-13
+      publisher: project owner
+      publication_date: 2026-09-13
+      accessed_at: 2026-09-13
+      reliability: primary
+      notes: Authorizes isolated research implementation, content commit and seal; does not approve business assumptions or authorize deployment/Google publication.
+    before_index: null
+    after_index: 182
+    before_sha256: null
+    after_sha256: 3c2f6aedec43ba0b25eaa3b9a005d33c31b2c41dd94f134befaa8bfd17cb9a61
+    reverse_operation:
+      type: remove
+      entity: sources
+      id: SRC-FRANCHISE-MODEL-V01-BRIEF-2026-09-13
+  - type: add
+    entity: documents
+    id: DOC-FRANCHISE-MODEL-V01
+    before: null
+    after:
+      id: DOC-FRANCHISE-MODEL-V01
+      title: Compact Production + Franchise v0.1 — research parameters
+      type: working_parameters
+      status: research
+      google_file_id: null
+      template: null
+      sections:
+        - first_node
+        - own_point
+        - franchise_point
+        - headco
+        - network
+        - investor
+      local_path: docs-platform/working/franchise-model-v0.1.json
+      version: "0.1"
+      updated_at: 2026-09-13
+    before_index: null
+    after_index: 27
+    before_sha256: null
+    after_sha256: 83a4fa6f9ec694420f431d2062499eed64987a170363b133a3503e3cc7c3e845
+    reverse_operation:
+      type: remove
+      entity: documents
+      id: DOC-FRANCHISE-MODEL-V01
+  - type: add
+    entity: decisions
+    id: DEC-FRANCHISE-MODEL-V01-2026-09-13-01
+    before: null
+    after:
+      id: DEC-FRANCHISE-MODEL-V01-2026-09-13-01
+      title: Реализовать отдельный рабочий стенд модели сети и франшизы
+      status: approved
+      decision: Реализовать защищённый /control/franchise-model, отдельный research engine и сценарии с прозрачными WORKING / REFERENCE / MISSING; проверить расчёты, изоляцию и доступ; выполнить content commit и governed seal. Параметры не становятся approved baseline.
+      rationale: Прямое задание владельца от 13.09.2026. Current Base, Financial Model v0.2, публичный Investor Terminal, Network Planning, Foundation/BMA и approved assumptions сохраняются. Bootstrap registration follows existing DEC-001 registry convention.
+      affected_documents:
+        - DOC-FRANCHISE-MODEL-V01
+      approved_by: project owner
+      approved_at: 2026-09-13
+      supersedes: null
+      source_ids:
+        - SRC-FRANCHISE-MODEL-V01-BRIEF-2026-09-13
+      updated_at: 2026-09-13
+    before_index: null
+    after_index: 31
+    before_sha256: null
+    after_sha256: 37d8f05d52e33acd7ed636e2d2af2e2dec50ba8c70fedb354d6bcb51a6b7904e
+    reverse_operation:
+      type: remove
+      entity: decisions
+      id: DEC-FRANCHISE-MODEL-V01-2026-09-13-01
