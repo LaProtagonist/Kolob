@@ -9,16 +9,16 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 ## 2. Текущая ветка и governed iteration
 
 - Branch: `master`.
-- Latest closed iteration: `ITR-FRANCHISE-MODEL-V01-2026-09-13-01`.
-- Latest iteration tag: `iteration/ITR-FRANCHISE-MODEL-V01-2026-09-13-01`.
-- Latest content commit: `07bbb9ba9ab1093e49ef80d8b57c95314ebe4c8e`.
+- Latest closed iteration: `ITR-FRANCHISE-MODEL-V02-2026-09-13-01`.
+- Latest iteration tag: `iteration/ITR-FRANCHISE-MODEL-V02-2026-09-13-01`.
+- Latest content commit: `d9c33049ac797e09bb38bac15e226bacbba78f79`.
 - Текущий Git HEAD намеренно не записывается: его вычисляет `npm run project:onboard`.
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-FRANCHISE-MODEL-V01-2026-09-13-01-COMMITTED`.
-- Hash: `c4ba8f4be9cf652fd8af2d681e8855ef8cd67bbf690e071772ed1e4e8a18ee80`.
-- generated_from_event_hash: `c4ba8f4be9cf652fd8af2d681e8855ef8cd67bbf690e071772ed1e4e8a18ee80`.
+- Event: `EVT-ITR-FRANCHISE-MODEL-V02-2026-09-13-01-COMMITTED`.
+- Hash: `5f5b08b8e6fe9c8d70c815e795dee4cd6d756eb475042443d4078ddd42a1582b`.
+- generated_from_event_hash: `5f5b08b8e6fe9c8d70c815e795dee4cd6d756eb475042443d4078ddd42a1582b`.
 
 ## 4. Канонические документы
 
@@ -38,6 +38,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 | DOC-FINANCIAL-MODEL | research | `docs-platform/working/financial-model.yaml` | `6a76990d3635e62ac633610754415d401edba989f1a49a463091e2cece1e329b` |
 | DOC-FOUNDATION | approved | `docs-platform/00-foundation.md` | `5b4d457184c055ba11f8c4d05cc263139d2eb4f623981bcdc198c0114a50c0bb` |
 | DOC-FRANCHISE-MODEL-V01 | research | `docs-platform/working/franchise-model-v0.1.json` | `e5d6cbdeb8266729835a942973bfa60b8e94b2ceeb57be88892cb0448264f0a5` |
+| DOC-FRANCHISE-MODEL-V02 | research | `docs-platform/working/franchise-model-v0.2.json` | `235625eb77e6940582b70160ab0011cd4292762f5d646f9ca02979ae98c7ac8d` |
 | DOC-FRANCHISE-PLATFORM-MISSING-INPUTS | research | `docs-platform/checklists/franchise-platform-missing-inputs.md` | `39fcc08a4215fe7844eca841efe5fd74d1ed7f109e4cbc79785fdfd870ea45fe` |
 | DOC-FRANCHISE-PLATFORM-PARAMETERS | research | `docs-platform/working/franchise-platform-parameters.yaml` | `4c7a77b2cb3bc4a72a5c614ffcb3113f2698329b24db7363e1254056c87b2973` |
 | DOC-FRANCHISE-PLATFORM-STRATEGY | proposed | `docs-platform/02-franchise-platform-strategy.md` | `a75d51abbe4eb08e40aa6c1657765545e91025f091957cb7528528d3e9399cb3` |
@@ -53,7 +54,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 5. Текущая рабочая тема
 
-Модель сети и франшизы v0.1 — защищённый рабочий стенд
+Модель сети и франшизы v0.2 — данные и читаемость
 
 ## 6. Decisions и change sets
 

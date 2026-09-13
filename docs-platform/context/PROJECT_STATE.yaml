@@ -1,13 +1,13 @@
 schema_version: 2
-generated_at: 2026-09-13T17:07:18.710Z
+generated_at: 2026-09-13T17:52:01.890Z
 project: Колобочная
 branch: master
-latest_timeline_event_id: EVT-ITR-FRANCHISE-MODEL-V01-2026-09-13-01-COMMITTED
-latest_timeline_event_hash: c4ba8f4be9cf652fd8af2d681e8855ef8cd67bbf690e071772ed1e4e8a18ee80
-latest_closed_iteration_id: ITR-FRANCHISE-MODEL-V01-2026-09-13-01
-latest_iteration_tag: iteration/ITR-FRANCHISE-MODEL-V01-2026-09-13-01
-latest_content_commit_hash: 07bbb9ba9ab1093e49ef80d8b57c95314ebe4c8e
-registry_hash: d4c962b6dae918278df076d9368848f921b9ef11cbfdfc0d90ab333a88c2c38a
+latest_timeline_event_id: EVT-ITR-FRANCHISE-MODEL-V02-2026-09-13-01-COMMITTED
+latest_timeline_event_hash: 5f5b08b8e6fe9c8d70c815e795dee4cd6d756eb475042443d4078ddd42a1582b
+latest_closed_iteration_id: ITR-FRANCHISE-MODEL-V02-2026-09-13-01
+latest_iteration_tag: iteration/ITR-FRANCHISE-MODEL-V02-2026-09-13-01
+latest_content_commit_hash: d9c33049ac797e09bb38bac15e226bacbba78f79
+registry_hash: 672cbb4e52ddb3ae9b6de9e2810ed664bd933656e0677c9503e07111c9499505
 canonical_document_hashes:
   - document_id: DOC-AGENTS
     local_path: docs-platform/AGENTS.md
@@ -65,6 +65,10 @@ canonical_document_hashes:
     local_path: docs-platform/working/franchise-model-v0.1.json
     sha256: e5d6cbdeb8266729835a942973bfa60b8e94b2ceeb57be88892cb0448264f0a5
     status: research
+  - document_id: DOC-FRANCHISE-MODEL-V02
+    local_path: docs-platform/working/franchise-model-v0.2.json
+    sha256: 235625eb77e6940582b70160ab0011cd4292762f5d646f9ca02979ae98c7ac8d
+    status: research
   - document_id: DOC-FRANCHISE-PLATFORM-MISSING-INPUTS
     local_path: docs-platform/checklists/franchise-platform-missing-inputs.md
     sha256: 39fcc08a4215fe7844eca841efe5fd74d1ed7f109e4cbc79785fdfd870ea45fe
@@ -120,7 +124,7 @@ open_questions:
   - Archive pending review artifacts in durable storage before treating visual verification as portable.
   - Create deployment receipts when the next governed deployment is performed.
   - Decide whether malformed superseded legacy YAML evidence should receive a separate correction event.
-current_workstream: Модель сети и франшизы v0.1 — защищённый рабочий стенд
+current_workstream: Модель сети и франшизы v0.2 — данные и читаемость
 next_task: Select the next task through a new governed proposal; no business task is pre-authorized.
 google_integration_status:
   configured: true
