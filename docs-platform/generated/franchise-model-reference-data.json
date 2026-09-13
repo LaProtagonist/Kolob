@@ -1,0 +1,329 @@
+{
+  "schemaVersion": 1,
+  "status": "research",
+  "sources": [
+    {
+      "id": "financial",
+      "title": "Финансовая модель",
+      "path": "docs-platform/working/financial-model.yaml",
+      "sha256": "6a76990d3635e62ac633610754415d401edba989f1a49a463091e2cece1e329b"
+    },
+    {
+      "id": "revenue",
+      "title": "Модель объёма продаж",
+      "path": "docs-platform/working/revenue-model.yaml",
+      "sha256": "ab68399813d62d861522752c8e94df9cfc5d5a48e9b7723c60f2c968c4cba721"
+    },
+    {
+      "id": "register",
+      "title": "Реестр оборудования",
+      "path": "docs-platform/working/capex-equipment-register.yaml",
+      "sha256": "c8853fe61ad8407ab96d0fbafb79702853842f970cbf699b6c2138b23f32c7aa"
+    },
+    {
+      "id": "specification",
+      "title": "Спецификация оборудования",
+      "path": "docs-platform/working/capex-equipment-specification.md",
+      "sha256": "2157364e09699173fecfbfe861edf4e6fac85a0437e23aebe100caebeab599d6"
+    },
+    {
+      "id": "start",
+      "title": "Стартовая инвестиционная модель",
+      "path": "docs-platform/working/investor-start-model.yaml",
+      "sha256": "b81a6c4e8988a4532c9ba2749d492b3f96e37d83af822396afc82930244b2985"
+    },
+    {
+      "id": "network",
+      "title": "Допущения развития сети",
+      "path": "docs-platform/working/network-planning-assumptions.yaml",
+      "sha256": "1136e30e205cf03abef7232fb1618b624f2f4d1744d14de966089908d4c2022b"
+    },
+    {
+      "id": "franchise",
+      "title": "Параметры франшизы",
+      "path": "docs-platform/working/franchise-platform-parameters.yaml",
+      "sha256": "4c7a77b2cb3bc4a72a5c614ffcb3113f2698329b24db7363e1254056c87b2973"
+    },
+    {
+      "id": "petrogradka",
+      "title": "Сценарий готового производства",
+      "path": "docs-platform/scenarios/petrogradka-ready-production-base.yaml",
+      "sha256": "e138dee3e1593df5dc2ff3faccd551a0c286502f07780dfc288106b29c43d0f7"
+    },
+    {
+      "id": "v01",
+      "title": "Задание и рабочий сценарий v0.1",
+      "path": "docs-platform/working/franchise-model-v0.1.json",
+      "sha256": "e5d6cbdeb8266729835a942973bfa60b8e94b2ceeb57be88892cb0448264f0a5"
+    },
+    {
+      "id": "pilot",
+      "title": "Ранние допущения пилотного объекта",
+      "path": "docs-platform/working/pilot-capex-assumptions.yaml",
+      "sha256": "25e11d4db20050b3a95cab40797ef0a29e56fad93c73d33d4a39415a8071d4ac"
+    },
+    {
+      "id": "projection",
+      "title": "Расчёт старой финансовой модели",
+      "path": "docs-platform/generated/financial-model-projection.json",
+      "sha256": "f65b092c0909ff8e45f3ee9e819b82d9bb559ecf64cf7194ce3e2f62f5986e42"
+    },
+    {
+      "id": "assumptions",
+      "title": "Реестр допущений",
+      "path": "docs-platform/registry/assumptions.yaml",
+      "sha256": "e9269511a9ceb88c54dcd42df6fe78f3c421ca9f3f5ed128779b67adbb0cf405"
+    }
+  ],
+  "values": {
+    "rent": 350000,
+    "deposit": 2,
+    "equipment": 5298993.33,
+    "furniture": 425000,
+    "video": 70000,
+    "alarm": 35000,
+    "launch": 700000,
+    "uniforms": 180000,
+    "inventory": 1000000,
+    "utilities": 200000,
+    "recurring": 10000,
+    "own_check": 1165.4,
+    "franchise_check": 1165.4,
+    "raw": 0.3,
+    "waste": 0.04,
+    "packaging": 27.77777777777778,
+    "own_acquiring": 0.02,
+    "own_household_per_check": 5.555555555555555,
+    "own_marketing_rate": 0.024,
+    "own_service_rate": 0.018871508939982,
+    "tax_profit": 0.07,
+    "tax_sales": 0.01,
+    "maintenance_rate": 0.03
+  },
+  "provenance": {
+    "rent": {
+      "source": "financial",
+      "selector": "opex.entries[RENT].amount_rub",
+      "assumptionId": "ASM-FINANCIAL-OPEX",
+      "note": "Ранний ориентир совмещённого объекта; цена нового помещения не подтверждена."
+    },
+    "deposit": {
+      "source": "financial",
+      "selector": "real_estate.scenarios.rent.security_deposit_months",
+      "assumptionId": "ASM-FINANCIAL-REAL-ESTATE",
+      "note": ""
+    },
+    "equipment": {
+      "source": "projection",
+      "selector": "launch_capital.equipment_rub",
+      "assumptionId": "ASM-FINANCIAL-CAPEX-CONFIG",
+      "note": "Старая комплектация; новый состав рассчитывается из выбранных позиций."
+    },
+    "furniture": {
+      "source": "projection",
+      "selector": "launch_capital.furniture_rub",
+      "assumptionId": "ASM-INVESTOR-START-FURNITURE",
+      "note": "Стоимость старой конфигурации на 50 мест, не автоматический результат площади нового узла."
+    },
+    "video": {
+      "source": "financial",
+      "selector": "launch_investment.video_surveillance_rub",
+      "assumptionId": null,
+      "note": ""
+    },
+    "alarm": {
+      "source": "financial",
+      "selector": "launch_investment.alarm_rub",
+      "assumptionId": null,
+      "note": ""
+    },
+    "launch": {
+      "source": "financial",
+      "selector": "launch_investment.launch_marketing_rub",
+      "assumptionId": null,
+      "note": ""
+    },
+    "uniforms": {
+      "source": "financial",
+      "selector": "launch_investment.initial_uniform_rub",
+      "assumptionId": null,
+      "note": ""
+    },
+    "inventory": {
+      "source": "financial",
+      "selector": "launch_investment.initial_inventory_rub",
+      "assumptionId": null,
+      "note": ""
+    },
+    "utilities": {
+      "source": "financial",
+      "selector": "opex.entries[UTILITIES].amount_rub",
+      "assumptionId": "ASM-FINANCIAL-OPEX",
+      "note": ""
+    },
+    "recurring": {
+      "source": "pilot",
+      "selector": "software.amount_rub_per_year / 12",
+      "assumptionId": "ASM-PILOT-SOFTWARE",
+      "note": "120 тыс. ₽/год — ранняя исследовательская оценка; не полная стоимость новой платформы."
+    },
+    "own_check": {
+      "source": "revenue",
+      "selector": "product_model.average_check_rub",
+      "assumptionId": "ASM-REVENUE-AVERAGE-CHECK",
+      "note": ""
+    },
+    "franchise_check": {
+      "source": "revenue",
+      "selector": "product_model.average_check_rub",
+      "assumptionId": "ASM-REVENUE-AVERAGE-CHECK",
+      "note": ""
+    },
+    "raw": {
+      "source": "financial",
+      "selector": "food_cost.protected_formula.raw_materials_rate",
+      "assumptionId": "ASM-FINANCIAL-FOOD-COST",
+      "note": ""
+    },
+    "waste": {
+      "source": "financial",
+      "selector": "food_cost.waste.default_rate",
+      "assumptionId": "ASM-FINANCIAL-FOOD-COST",
+      "note": "Доля стоимости сырья, не доля выручки."
+    },
+    "packaging": {
+      "source": "financial",
+      "selector": "packaging.baseline_monthly_rub / (packaging.baseline_checks_per_day × model.days_per_month)",
+      "assumptionId": "ASM-FINANCIAL-FOOD-COST",
+      "note": ""
+    },
+    "own_acquiring": {
+      "source": "financial",
+      "selector": "opex.entries[ACQUIRING].rate_of_gross_revenue",
+      "assumptionId": "ASM-FINANCIAL-OPEX",
+      "note": "В старом источнике база — выручка до косвенных налогов. Здесь справочный расчёт при их отсутствии; преобразование валовой выручки требует уточнения."
+    },
+    "own_household_per_check": {
+      "source": "financial",
+      "selector": "opex.entries[HOUSEHOLD].variable_amount_rub / (baseline_checks_per_day × model.days_per_month)",
+      "assumptionId": "ASM-FINANCIAL-OPEX",
+      "note": "Только переменная часть; постоянная часть задаётся отдельно."
+    },
+    "own_marketing_rate": {
+      "source": "financial",
+      "selector": "opex.entries[MARKETING].rate_of_net_revenue",
+      "assumptionId": "ASM-FINANCIAL-OPEX",
+      "note": "Переменная часть для собственной точки. Центральные 150 тыс. ₽/мес. не прибавляются повторно."
+    },
+    "own_service_rate": {
+      "source": "financial",
+      "selector": "opex.entries[EQUIPMENT_SERVICE].amount_rub / legacy equipment",
+      "assumptionId": "ASM-FINANCIAL-OPEX",
+      "note": "Месячный сервис пропорционально оборудованию торговой функции; методика старого сетевого расчёта."
+    },
+    "tax_profit": {
+      "source": "financial",
+      "selector": "tax.scenarios.base.usn_income_less_expenses_rate",
+      "assumptionId": "ASM-FINANCIAL-TAX-PROXY",
+      "note": ""
+    },
+    "tax_sales": {
+      "source": "financial",
+      "selector": "tax.scenarios.base.minimum_usn_income_rate",
+      "assumptionId": "ASM-FINANCIAL-TAX-PROXY",
+      "note": ""
+    },
+    "maintenance_rate": {
+      "source": "financial",
+      "selector": "maintenance_capex.annual_rate",
+      "assumptionId": null,
+      "note": "Оборудование и мебель; новые цифровые активы и расходы расширения требуют отдельной оценки."
+    }
+  },
+  "ramp": [
+    {
+      "month": 1,
+      "ramp_factor": 0.6
+    },
+    {
+      "month": 2,
+      "ramp_factor": 0.7
+    },
+    {
+      "month": 3,
+      "ramp_factor": 0.8
+    },
+    {
+      "month": 4,
+      "ramp_factor": 0.85
+    },
+    {
+      "month": 5,
+      "ramp_factor": 0.9
+    },
+    {
+      "month": 6,
+      "ramp_factor": 0.95
+    },
+    {
+      "month": 7,
+      "ramp_factor": 1
+    }
+  ],
+  "seasonality": [
+    {
+      "month": 1,
+      "seasonality_coefficient": 0.93
+    },
+    {
+      "month": 2,
+      "seasonality_coefficient": 0.75
+    },
+    {
+      "month": 3,
+      "seasonality_coefficient": 0.88
+    },
+    {
+      "month": 4,
+      "seasonality_coefficient": 0.95
+    },
+    {
+      "month": 5,
+      "seasonality_coefficient": 1.02
+    },
+    {
+      "month": 6,
+      "seasonality_coefficient": 0.96
+    },
+    {
+      "month": 7,
+      "seasonality_coefficient": 0.96
+    },
+    {
+      "month": 8,
+      "seasonality_coefficient": 0.98
+    },
+    {
+      "month": 9,
+      "seasonality_coefficient": 1.12
+    },
+    {
+      "month": 10,
+      "seasonality_coefficient": 1.16
+    },
+    {
+      "month": 11,
+      "seasonality_coefficient": 1.1
+    },
+    {
+      "month": 12,
+      "seasonality_coefficient": 1.18
+    }
+  ],
+  "temporalSource": {
+    "source": "financial",
+    "rampSelector": "model.ramp_up_profile",
+    "seasonalitySelector": "model.seasonality_profile",
+    "note": "Профиль находится в Financial Model, использующей Revenue Model. Это справочный перенос; исходники не меняются."
+  }
+}

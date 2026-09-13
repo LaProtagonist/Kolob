@@ -1,0 +1,59 @@
+schema_version: 2
+iteration_id: ITR-FRANCHISE-MODEL-V02-2026-09-13-01
+proposal_id: PROP-FRANCHISE-MODEL-V02-2026-09-13-01
+decision_id: DEC-FRANCHISE-MODEL-V02-2026-09-13-01
+change_set_id: CHG-FRANCHISE-MODEL-V02-2026-09-13-01
+status: approved
+approved_by: project owner
+approved_at: 2026-09-13T17:10:03.411Z
+title: Модель сети и франшизы v0.2 — данные и читаемость
+owner_instruction: Full v0.2 brief, initial sections 0–10 and continuation sections 10–52; explicit separate content commit and seal after v0.1 checkpoint.
+scope:
+  - Russian formatting/parsing with practical precision, no numeric tails; percentages/rubles flow with two central cost denominators
+  - Traceable read-only integration of Financial/Revenue/CAPEX/Franchise/Petrogradka sources; preserve source status, expose source IDs
+  - Scenario BOM by canonical item IDs, quantity and explicit overrides; node grouping; optional BAR/GROW off; separate FRANCHISE_COMPACT_POINT partial BOM
+  - Structured own point OPEX; reference acquiring, management taxes, maintenance, per-point ramp and optional seasonality
+  - Semantic missing/not_applicable, distinct missing/limitations counts, contour coverage; target/actual franchise EBITDA
+  - Network milestones and collapsed full timeline; blocked final investor and separate explicitly incomplete shadow estimate
+  - Preserve scenario operations and isolated storage; deterministic tests, full agreed release checks and seven requested screenshots
+constraints:
+  - No changes to Current Base, public Investor Terminal code/calculations/UI, public routes/content, old Financial/Network projections, Foundation/BMA or historical investment models
+  - No edits to approved/research source values, no source promotion, no Google or deployment
+  - Keep 15% target, 5-point capacity, 350k rent, M9/M12/M15/M18 openings, 4-month reserve; equipment may derive from selected BOM
+  - Unknown costs are not zero; known-basis/shadow output enumerates exclusions and never replaces final cash flow
+  - 3.5m fitout remains the owner-specified v0.1 reference; current old projection uses 11m, so disclose differing context without silently replacing either
+source_documents:
+  - financial-model.yaml
+  - revenue-model.yaml
+  - capex-equipment-register.yaml
+  - capex-equipment-specification.md
+  - investor-start-model.yaml
+  - network-planning-assumptions.yaml
+  - franchise-platform-parameters.yaml
+  - petrogradka-ready-production-base.yaml
+  - franchise-model-v0.1.md
+  - pilot-capex-assumptions.yaml
+baseline_commit: bd4de6e65484efa29a56a94a67ccc41c6e817b3b
+state_hash_paths:
+  - src/components/FranchiseModel.tsx
+  - src/components/FranchiseModel.css
+  - src/components/franchise-model-language.ts
+  - src/components/FranchiseModelData.tsx
+  - src/lib/control-format.ts
+  - src/lib/franchise-model-types.ts
+  - src/lib/franchise-model-scenario.ts
+  - src/lib/franchise-model-storage.ts
+  - src/lib/franchise-model-engine.ts
+  - src/lib/franchise-model-data.ts
+  - src/lib/franchise-model-bom.ts
+  - docs-platform/working/franchise-model-v0.2.json
+  - docs-platform/working/franchise-model-v0.2.md
+  - docs-platform/generated/franchise-model-reference-data.json
+  - scripts/franchise-model-references.cjs
+  - scripts/test-franchise-model.test.ts
+  - scripts/test-franchise-model-v02.test.ts
+  - scripts/test-franchise-model.cjs
+  - verification/domains.json
+  - verification/FRANCHISE_MODEL.md
+  - docs-platform/registry/documents.yaml
+  - docs-platform/registry/decisions.yaml

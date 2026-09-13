@@ -1,0 +1,43 @@
+change_id: CHG-FRANCHISE-MODEL-V02-2026-09-13-01
+title: Модель сети и франшизы v0.2 — данные и читаемость
+status: approved
+created_at: 2026-09-13
+decision_id: DEC-001
+iteration_id: ITR-FRANCHISE-MODEL-V02-2026-09-13-01
+proposal_id: PROP-FRANCHISE-MODEL-V02-2026-09-13-01
+approved_payload_path: docs-platform/changelog/payloads/ITR-FRANCHISE-MODEL-V02-2026-09-13-01-approved.yaml
+approved_payload_sha256: 0cf32f61886b7f732150ee8fc89184c066866a86c283e6e555e4ecdfff4c21cd
+operations:
+  - type: add
+    entity: documents
+    value:
+      id: DOC-FRANCHISE-MODEL-V02
+      title: Модель сети и франшизы v0.2 — источники и профили
+      type: working_parameters
+      status: research
+      google_file_id: null
+      template: null
+      sections:
+        - references
+        - equipment_profiles
+        - data_states
+        - cash_flow
+      local_path: docs-platform/working/franchise-model-v0.2.json
+      version: "0.2"
+      updated_at: 2026-09-13
+  - type: add
+    entity: decisions
+    value:
+      id: DEC-FRANCHISE-MODEL-V02-2026-09-13-01
+      title: Подключить источники и улучшить читаемость модели сети и франшизы
+      status: approved
+      decision: Выполнить отдельную v0.2 по полному заданию владельца; сохранить финансовые границы, обеспечить прослеживаемость, семантику отсутствующих данных и предварительных результатов; выполнить commit и seal.
+      rationale: Прямое продолжение задания владельца; точный объём сохранён в approved payload. Одобрение относится к реализации, не к финансовым гипотезам.
+      affected_documents:
+        - DOC-FRANCHISE-MODEL-V02
+      approved_by: project owner
+      approved_at: 2026-09-13
+      supersedes: null
+      source_ids:
+        - SRC-FRANCHISE-MODEL-V01-BRIEF-2026-09-13
+      updated_at: 2026-09-13

@@ -1,5 +1,10 @@
 import { newStore, parameters, STORAGE_KEY } from "./franchise-model-scenario";
 import type { Scenario, ScenarioStore } from "./franchise-model-types";
+import {
+  defaultIntegration,
+  integrationParameters,
+  referenceValues,
+} from "./franchise-model-data";
 const record = (x: unknown): x is Record<string, unknown> =>
   !!x && typeof x === "object" && !Array.isArray(x);
 const numeric = (x: unknown) =>
@@ -17,6 +22,39 @@ function scenarioShape(x: unknown): x is Scenario {
     return false;
   const values = x.inputs;
   if (!parameters.every((p) => numeric(values[p.id]))) return false;
+  if (x.integration !== undefined) {
+    const i = x.integration;
+    if (
+      !record(i) ||
+      i.version !== 2 ||
+      !["bom", "manual"].includes(String(i.equipmentMode)) ||
+      !["structured", "manual"].includes(String(i.ownOpexMode)) ||
+      !["reference", "manual"].includes(String(i.taxMode)) ||
+      !["reference", "manual"].includes(String(i.maintenanceMode)) ||
+      typeof i.bar !== "boolean" ||
+      typeof i.grow !== "boolean" ||
+      typeof i.seasonality !== "boolean" ||
+      typeof i.calendarStartMonth !== "number" ||
+      !Number.isInteger(i.calendarStartMonth) ||
+      i.calendarStartMonth < 1 ||
+      i.calendarStartMonth > 12
+    )
+      return false;
+    for (const name of ["nodeBom", "franchiseBom"])
+      if (
+        !Array.isArray(i[name]) ||
+        i[name].length > 300 ||
+        !i[name].every(
+          (r: unknown) =>
+            record(r) &&
+            typeof r.itemId === "string" &&
+            typeof r.selected === "boolean" &&
+            numeric(r.quantity) &&
+            numeric(r.override),
+        )
+      )
+        return false;
+  }
   if (
     !Array.isArray(x.edited) ||
     !x.edited.every(
@@ -33,6 +71,9 @@ function scenarioShape(x: unknown): x is Scenario {
         typeof p.id === "string" &&
         typeof p.name === "string" &&
         typeof p.active === "boolean" &&
+        (p.ramp === undefined ||
+          p.ramp === "reference" ||
+          p.ramp === "mature") &&
         ["OWN", "FRANCHISE"].includes(String(p.type)) &&
         typeof p.month === "number" &&
         Number.isFinite(p.month) &&
@@ -79,6 +120,13 @@ function scenarioShape(x: unknown): x is Scenario {
 export function parseStore(raw: string): ScenarioStore | null {
   try {
     const x: unknown = JSON.parse(raw);
+    // Extend the v1 storage contract without deleting saved scenarios or changing their explicit inputs.
+    if (record(x) && x.schemaVersion === 1 && Array.isArray(x.scenarios))
+      for (const candidate of x.scenarios) {
+        if (!record(candidate) || !record(candidate.inputs)) continue;
+        for (const p of integrationParameters)
+          if (!(p.id in candidate.inputs)) candidate.inputs[p.id] = p.value;
+      }
     if (
       !record(x) ||
       x.schemaVersion !== 1 ||
@@ -108,6 +156,31 @@ export function parseStore(raw: string): ScenarioStore | null {
     return null;
   }
 }
+function integrateSaved(s: Scenario): Scenario {
+  if (s.integration) return s;
+  const next = structuredClone(s),
+    i = defaultIntegration();
+  i.equipmentMode = "manual";
+  i.ownOpexMode = s.inputs.own_local !== null ? "manual" : "structured";
+  i.taxMode = s.edited.some((id) => ["tax_profit", "tax_sales"].includes(id))
+    ? "manual"
+    : "reference";
+  if (i.taxMode === "reference")
+    for (const id of ["tax_profit", "tax_sales"])
+      next.inputs[id] = referenceValues[id];
+  i.maintenanceMode =
+    s.inputs.maintenance !== null || s.edited.includes("maintenance")
+      ? "manual"
+      : "reference";
+  for (const id of ["point_software", "extra_production"])
+    if (!s.edited.includes(id)) next.inputs[id] = null;
+  next.integration = i;
+  next.rollout = next.rollout.map((p) => ({
+    ...p,
+    ramp: p.ramp ?? "reference",
+  }));
+  return next;
+}
 export function loadStore(storage: Pick<Storage, "getItem">): {
   store: ScenarioStore;
   error: string | null;
@@ -117,7 +190,12 @@ export function loadStore(storage: Pick<Storage, "getItem">): {
     if (!raw) return { store: newStore(), error: null };
     const store = parseStore(raw);
     return store
-      ? { store, error: null }
+      ? {
+          store: { ...store, scenarios: store.scenarios.map(integrateSaved) },
+          error: store.scenarios.some((s) => !s.integration)
+            ? "Сценарии v0.1 перенесены в v0.2: введённые значения сохранены, оборудование оставлено ручным итогом. Профили запуска и справочные расчёты доступны в настройках."
+            : null,
+        }
       : {
           store: newStore(),
           error:

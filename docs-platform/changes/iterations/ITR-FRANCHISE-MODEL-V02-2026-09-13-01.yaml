@@ -1,0 +1,90 @@
+schema_version: 2
+iteration_id: ITR-FRANCHISE-MODEL-V02-2026-09-13-01
+proposal_id: PROP-FRANCHISE-MODEL-V02-2026-09-13-01
+decision_id: DEC-FRANCHISE-MODEL-V02-2026-09-13-01
+change_set_id: CHG-FRANCHISE-MODEL-V02-2026-09-13-01
+title: Модель сети и франшизы v0.2 — данные и читаемость
+status: approved
+approved_by: project owner
+approved_at: 2026-09-13T17:10:03.411Z
+actor: Codex
+scope: Owner-requested standalone v0.2 integration, readability and deterministic verification
+approved_payload_path: docs-platform/changelog/payloads/ITR-FRANCHISE-MODEL-V02-2026-09-13-01-approved.yaml
+approved_payload_sha256: 0cf32f61886b7f732150ee8fc89184c066866a86c283e6e555e4ecdfff4c21cd
+before_state_sha256: de68076543fed17c7ce0de6e09cd950ba30163dbfa4d2942649b66dd7195f1ee
+after_state_sha256: 2af8a33e4829cb685d3be5f35293669fd36f66ec5eb93f29af977d2ce3bb6a87
+affected_document_ids:
+  - DOC-FRANCHISE-MODEL-V02
+affected_section_ids:
+  - control.franchise-model
+state_hash_paths:
+  - src/components/FranchiseModel.tsx
+  - src/components/FranchiseModel.css
+  - src/components/franchise-model-language.ts
+  - src/components/FranchiseModelData.tsx
+  - src/lib/control-format.ts
+  - src/lib/franchise-model-types.ts
+  - src/lib/franchise-model-scenario.ts
+  - src/lib/franchise-model-storage.ts
+  - src/lib/franchise-model-engine.ts
+  - src/lib/franchise-model-data.ts
+  - src/lib/franchise-model-bom.ts
+  - docs-platform/working/franchise-model-v0.2.json
+  - docs-platform/working/franchise-model-v0.2.md
+  - docs-platform/generated/franchise-model-reference-data.json
+  - scripts/franchise-model-references.cjs
+  - scripts/test-franchise-model.test.ts
+  - scripts/test-franchise-model-v02.test.ts
+  - scripts/test-franchise-model.cjs
+  - verification/domains.json
+  - verification/FRANCHISE_MODEL.md
+  - docs-platform/registry/documents.yaml
+  - docs-platform/registry/decisions.yaml
+content_paths:
+  - docs-platform/changelog/changes.log
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/registry/decisions.yaml
+  - docs-platform/registry/documents.yaml
+  - scripts/test-franchise-model.cjs
+  - scripts/test-franchise-model.test.ts
+  - src/components/FranchiseModel.css
+  - src/components/FranchiseModel.tsx
+  - src/components/franchise-model-language.ts
+  - src/lib/franchise-model-engine.ts
+  - src/lib/franchise-model-scenario.ts
+  - src/lib/franchise-model-storage.ts
+  - src/lib/franchise-model-types.ts
+  - verification/FRANCHISE_MODEL.md
+  - verification/domains.json
+  - docs-platform/changelog/2026-09-13T17-40-39-860Z-CHG-FRANCHISE-MODEL-V02-2026-09-13-01.md
+  - docs-platform/changelog/change-receipts/CHG-FRANCHISE-MODEL-V02-2026-09-13-01.yaml
+  - docs-platform/changelog/payloads/ITR-FRANCHISE-MODEL-V02-2026-09-13-01-approved.yaml
+  - docs-platform/changelog/previews/ITR-FRANCHISE-MODEL-V02-2026-09-13-01-registry.yaml
+  - docs-platform/changes/CHG-FRANCHISE-MODEL-V02-2026-09-13-01.yaml
+  - docs-platform/changes/decisions/DEC-FRANCHISE-MODEL-V02-2026-09-13-01.yaml
+  - docs-platform/changes/proposals/PROP-FRANCHISE-MODEL-V02-2026-09-13-01.yaml
+  - docs-platform/generated/franchise-model-reference-data.json
+  - docs-platform/working/franchise-model-v0.2.json
+  - docs-platform/working/franchise-model-v0.2.md
+  - scripts/franchise-model-references.cjs
+  - scripts/test-franchise-model-v02.test.ts
+  - src/components/FranchiseModelData.tsx
+  - src/lib/control-format.ts
+  - src/lib/franchise-model-bom.ts
+  - src/lib/franchise-model-data.ts
+  - docs-platform/changes/iterations/ITR-FRANCHISE-MODEL-V02-2026-09-13-01.yaml
+  - docs-platform/changelog/verification/ITR-FRANCHISE-MODEL-V02-2026-09-13-01.yaml
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/changelog/snapshots/SNAPSHOT-ITR-FRANCHISE-MODEL-V02-2026-09-13-01.yaml
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+allowed_dirty_paths:
+  - analysis/
+  - output/
+rollback_payload: null
+rollback_contract:
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true

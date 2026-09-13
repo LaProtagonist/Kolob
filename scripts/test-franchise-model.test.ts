@@ -421,7 +421,7 @@ test("engine deterministic and does not mutate scenario, canonical Current Base 
   }
   assert.ok(
     parameters.every((p) =>
-      p.assumptionId.startsWith("ASM-FRANCHISE-MODEL-V01-"),
+      /^ASM-FRANCHISE-MODEL-V0[12]-/.test(p.assumptionId),
     ),
   );
 });

@@ -7,6 +7,7 @@ export const statusLabels = {
   REFERENCE: "Справочное значение",
   MISSING: "Требуются данные",
   DERIVED: "Рассчитано",
+  NOT_APPLICABLE: "Не применяется",
 };
 
 const labels: Record<string, string> = {

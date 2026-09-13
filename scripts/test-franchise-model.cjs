@@ -114,25 +114,77 @@ async function auth() {
 }
 async function terminologyAudit(page) {
   const strings = await page.evaluate(() => {
-    const root = document.querySelector(".control-shell");
-    const items = [root.innerText];
-    for (const el of root.querySelectorAll("[title], [aria-label], input, select")) {
-      if (!el.getClientRects().length) continue;
-      for (const name of ["title", "aria-label", "placeholder"]) {
+    const root = document.querySelector(".fm-page");
+    const copy = root.cloneNode(true);
+    copy.querySelectorAll("[data-provenance], code").forEach((n) => n.remove());
+    // innerText on the live surface respects collapsed details; ignore machine-readable source metadata.
+    const items = [];
+    const walk = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    while (walk.nextNode()) {
+      const node = walk.currentNode,
+        parent = node.parentElement;
+      if (
+        parent.closest("[data-provenance],code") ||
+        !parent.getClientRects().length
+      )
+        continue;
+      const range = document.createRange();
+      range.selectNodeContents(node);
+      if (range.getBoundingClientRect().height > 0)
+        items.push(node.textContent);
+    }
+    for (const el of root.querySelectorAll(
+      "[title], [aria-label], input, select",
+    )) {
+      if (!el.getClientRects().length || el.closest("[data-provenance]"))
+        continue;
+      for (const name of ["title", "aria-label", "placeholder"])
         if (el.getAttribute(name)) items.push(el.getAttribute(name));
-      }
-      if (el instanceof HTMLInputElement && el.type === "text") items.push(el.value);
-      if (el instanceof HTMLSelectElement) items.push(...[...el.options].map(o => o.text));
+      if (el instanceof HTMLInputElement && el.type === "text")
+        items.push(el.value);
+      if (el instanceof HTMLSelectElement)
+        items.push(...[...el.options].map((o) => o.text));
     }
     return items;
   });
-  const remaining = strings.map(text => text.replace(/\b(?:EBITDA|FCF|IRR|MOIC|FTE)\b/g, ""))
-    .filter(text => /[A-Za-z]/.test(text));
-  assert.deepEqual(remaining, [], "User-facing terminology must be Russian, including tooltips and empty states");
+  const remaining = strings
+    .map((t) =>
+      t
+        .replace(/CAPEX-\d{2}-\d{3}/g, "")
+        .replace(/v0\.[12]/g, "")
+        .replace(/\b(?:EBITDA|FCF|IRR|MOIC|FTE|IT|POS|KDS|BAR|GROW)\b/g, ""),
+    )
+    .filter((t) => /[A-Za-z]/.test(t));
+  assert.deepEqual(
+    [...new Set(remaining)],
+    [],
+    "Russian terminology; source identifiers and named equipment abbreviations are separate metadata",
+  );
+  const tails = strings.filter((t) =>
+    /\d+[.,]\d{4,}/.test(t.replace(/\d{2}\.\d{2}\.\d{4}/g, "")),
+  );
+  assert.deepEqual(tails, [], "No visible long decimal tails");
+  const unformatted = await page
+    .locator(".fm-number input")
+    .evaluateAll((nodes) =>
+      nodes
+        .filter(
+          (n) =>
+            n.getClientRects().length && /^-?\d{5,}(?:[.,]\d+)?$/.test(n.value),
+        )
+        .map((n) => ({ label: n.getAttribute("aria-label"), value: n.value })),
+    );
+  assert.deepEqual(unformatted, [], "Large numeric inputs must be grouped");
 }
 async function expandTab(page) {
-  await page.locator('[role="tabpanel"] details').evaluateAll(nodes => nodes.forEach(n => n.open = true));
-  await page.locator('.fm-notice').evaluate(el => el.open = true);
+  await page
+    .locator(
+      '[role="tabpanel"] details:not(.fm-detailed):not([data-provenance])',
+    )
+    .evaluateAll((nodes) => nodes.forEach((n) => (n.open = true)));
+  await page
+    .locator(".fm-quality-blocks details")
+    .evaluateAll((nodes) => nodes.forEach((n) => (n.open = true)));
 }
 async function run() {
   const started = Date.now();
@@ -178,10 +230,10 @@ async function run() {
       );
       const digits = async (id) =>
         (await page.getByTestId(id).innerText()).replace(/\s/g, "");
-      assert.equal(await digits("fm-initial-draw"), "23172720,6₽");
-      assert.equal(await digits("fm-burn"), "1947181,82₽");
-      assert.equal(await digits("fm-franchise-ebitda"), "900000₽");
-      assert.equal(await digits("fm-irr"), "Нерассчитано");
+      assert.equal(await digits("fm-initial-draw"), "≈22,49млн₽");
+      assert.equal(await digits("fm-burn"), "≈1,95млн₽/мес.");
+      assert.equal(await digits("fm-franchise-ebitda"), "900тыс.₽/мес.");
+      assert.equal(await digits("fm-irr"), "Недостаточноданных");
       assert.equal(
         await page.evaluate(() =>
           localStorage.getItem("kolobochnaya.investor-terminal.fixture"),
@@ -199,45 +251,53 @@ async function run() {
       );
       scenarios++;
       const input = (label) =>
-        page.getByRole("spinbutton", { name: label, exact: true });
+        page.getByRole("textbox", { name: label, exact: true });
       await input("Операционный резерв").fill("3");
       await page.waitForFunction(() =>
         localStorage
           .getItem("kolobochnaya.control.franchise-model.v1")
           ?.includes("reserve_months"),
       );
-      assert.equal(await digits("fm-initial-draw"), "21225538,78₽");
+      assert.equal(await digits("fm-initial-draw"), "≈20,54млн₽");
       await page.reload();
       await page.getByTestId("fm-initial-draw").waitFor();
-      assert.equal(await digits("fm-initial-draw"), "21225538,78₽");
+      assert.equal(await digits("fm-initial-draw"), "≈20,54млн₽");
       await page
         .getByRole("button", {
           name: "Сбросить: Операционный резерв",
           exact: true,
         })
         .click();
-      assert.equal(await digits("fm-initial-draw"), "23172720,6₽");
+      assert.equal(await digits("fm-initial-draw"), "≈22,49млн₽");
       scenarios++;
       await page.getByRole("tab", { name: /Франчайзинговая точка/ }).click();
       await input("Франчайзи: выручка в день").fill("150000");
-      assert.equal(await digits("fm-franchise-ebitda"), "675000₽");
+      assert.equal(await digits("fm-franchise-ebitda"), "675тыс.₽/мес.");
       await page
         .getByRole("combobox", { name: "Фактические расходы", exact: true })
         .selectOption("1");
       await input("Фактическая аренда").fill("1000000");
-      assert.ok(
-        (await page.getByTestId("fm-franchise-ebitda").innerText()).includes(
-          "35",
-        ),
+      await input("Фактическая аренда").blur();
+      assert.equal(
+        await digits("fm-franchise-ebitda"),
+        "675тыс.₽/мес.",
+        "Target card stays target; actual is displayed separately",
+      );
+      assert.match(
+        await page.locator('[role="tabpanel"]').innerText(),
+        /Отклонение/,
       );
       assert.equal(await digits("fm-settlement"), "57%");
       scenarios++;
       // Clearing a required field keeps an editable INVALID form, not a render crash.
       await input("Франчайзи: средний чек").fill("");
-      assert.equal(await digits("fm-initial-draw"), "Нерассчитано");
+      assert.equal(await digits("fm-initial-draw"), "Недостаточноданных");
       await input("Франчайзи: средний чек").fill("1165.4");
       await page
-        .getByRole("button", { name: "Сбросить к рабочему сценарию", exact: true })
+        .getByRole("button", {
+          name: "Сбросить к рабочему сценарию",
+          exact: true,
+        })
         .click();
       scenarios++;
       await page
@@ -264,32 +324,48 @@ async function run() {
       scenarios++;
       await page.getByRole("tab", { name: /Сеть/ }).click();
       await input("Мощность первого узла").fill("3");
+      await page
+        .getByTestId("fm-network-details")
+        .locator("summary")
+        .first()
+        .click();
       assert.ok(
         (await page.getByTestId("fm-network-table").innerText()).includes(
           "Не проверено",
         ),
       );
       await page
-        .getByRole("button", { name: "Сбросить к рабочему сценарию", exact: true })
+        .getByRole("button", {
+          name: "Сбросить к рабочему сценарию",
+          exact: true,
+        })
         .click();
       await page
         .getByRole("button", { name: "+ Добавить расширение", exact: true })
         .click();
-      if ((await page.locator(".fm-notice").getAttribute("open")) === null)
-        await page.locator(".fm-notice summary").click();
-      assert.ok(
-        (await page.locator(".fm-notice").innerText()).includes(
-          "заполните инвестиции",
-        ),
+      await expandTab(page);
+      assert.match(
+        await page.locator(".fm-quality-blocks").innerText(),
+        /заполните инвестиции/,
       );
       scenarios++;
-      await page.getByRole("button", { name: "Сбросить к рабочему сценарию", exact: true }).click();
+      await page
+        .getByRole("button", {
+          name: "Сбросить к рабочему сценарию",
+          exact: true,
+        })
+        .click();
       await expandTab(page);
-      await page.locator('.fm-reference summary').click();
+      await page.locator(".fm-reference summary").click();
       await terminologyAudit(page);
-      await page.locator('.fm-reference summary').click();
+      await page.locator(".fm-reference summary").click();
       await page.getByRole("tab", { name: /Инвестор/ }).click();
-      await page.getByRole("button", { name: "+ Добавить запрос финансирования", exact: true }).click();
+      await page
+        .getByRole("button", {
+          name: "+ Добавить запрос финансирования",
+          exact: true,
+        })
+        .click();
       await expandTab(page);
       await terminologyAudit(page);
       scenarios++;
@@ -328,13 +404,51 @@ async function run() {
       );
       await page.reload();
       await page.getByTestId("fm-irr").waitFor();
-      assert.notEqual(await digits("fm-irr"), "Нерассчитано");
+      assert.notEqual(await digits("fm-irr"), "Недостаточноданных");
       await page.getByRole("tab", { name: /Инвестор/ }).click();
+      await page
+        .getByTestId("fm-investor-details")
+        .locator("summary")
+        .first()
+        .click();
       assert.ok(
         (await page.getByTestId("fm-investor-table").innerText()).includes(
           "М60",
         ),
       );
+      scenarios++;
+      await page
+        .getByRole("button", {
+          name: "Сбросить к рабочему сценарию",
+          exact: true,
+        })
+        .click();
+      await page.reload();
+      await page.getByTestId("fm-initial-draw").waitFor();
+      await page.getByRole("tab", { name: /Инвестор/ }).click();
+      assert.ok(await page.getByTestId("fm-investor-blocked").isVisible());
+      assert.ok(await page.getByTestId("fm-shadow").isVisible());
+      assert.equal(
+        await page.getByTestId("fm-investor-details").getAttribute("open"),
+        null,
+      );
+      await page.getByRole("tab", { name: /Сеть/ }).click();
+      assert.equal(
+        await page.getByTestId("fm-network-details").getAttribute("open"),
+        null,
+      );
+      assert.match(await page.locator(".fm-milestones").innerText(), /М60/);
+      await page.getByRole("button", { name: "Рубли", exact: true }).click();
+      assert.equal(await digits("fm-settlement"), "3420000₽");
+      await page.getByRole("button", { name: "Проценты", exact: true }).click();
+      assert.equal(await digits("fm-settlement"), "57%");
+      for (const detail of await page
+        .locator(".fm-quality-blocks details")
+        .all()) {
+        const text = await detail.locator("summary").innerText();
+        const count = Number(text.match(/\d+/)[0]);
+        assert.equal(await detail.locator("li").count(), count);
+      }
       scenarios++;
       // All tabs, tables, dashboard, flow and compare are checked at every required width.
       for (const width of [1440, 1024, 768, 390]) {
@@ -370,42 +484,87 @@ async function run() {
       }
       assert.deepEqual(errors, []);
       if (process.argv.includes("--screenshots")) {
-        const directory = path.join(root, "analysis/screenshots/franchise-model-ru-2026-09-13");
+        const directory = path.join(
+          root,
+          "analysis/screenshots/franchise-model-v02-2026-09-13",
+        );
         fs.mkdirSync(directory, { recursive: true });
-        const names = ["first-node", "own-point", "franchise-point", "head-company", "network", "investor"];
-        const manifest = [];
+        const names = [
+            "first-node",
+            "own-point",
+            "franchise-point",
+            "head-company",
+            "network",
+            "investor",
+          ],
+          manifest = [];
+        await page.setViewportSize({ width: 1440, height: 1000 });
         for (let tab = 0; tab < names.length; tab++) {
-          const defaults = fixture();
-          await page.evaluate(({key, defaults}) => localStorage.setItem(key, JSON.stringify({
-            schemaVersion: 1, activeId: defaults.id, compareIds: [defaults.id], scenarios: [defaults],
-          })), {key, defaults});
+          await page.evaluate((key) => localStorage.removeItem(key), key);
           await page.reload();
           await page.getByTestId("fm-initial-draw").waitFor();
-          await page.setViewportSize({ width: 1440, height: 1000 });
           await page.getByRole("tab").nth(tab).click();
-          // Blank editable rows expose conditional form controls without inventing costs.
-          if (tab === 4) await page.getByRole("button", { name: "+ Добавить расширение", exact: true }).click();
-          if (tab === 5) await page.getByRole("button", { name: "+ Добавить запрос финансирования", exact: true }).click();
           await expandTab(page);
           await terminologyAudit(page);
-          assert.equal(await page.locator('[role="tabpanel"] details:not([open])').count(), 0);
+          const closedInputs = await page
+            .locator(
+              '[role="tabpanel"] details:not([open]):not(.fm-detailed):not([data-provenance]) input',
+            )
+            .count();
+          assert.equal(closedInputs, 0, "All active-tab input groups expanded");
+          assert.equal(
+            await page.locator('[role="tabpanel"] .fm-detailed[open]').count(),
+            0,
+            "Monthly detail tables remain collapsed",
+          );
           await page.evaluate(() => document.fonts.ready);
-          const overflowing = await page.locator('.fm-table-scroll').evaluateAll(nodes => nodes
-            .filter(n => n.scrollWidth > n.clientWidth + 1).map(n => ({width:n.clientWidth, content:n.scrollWidth})));
-          assert.deepEqual(overflowing, [], "Desktop full-page capture must expose every table column");
+          const overflowing = await page
+            .locator(".fm-table-scroll")
+            .evaluateAll((nodes) =>
+              nodes
+                .filter(
+                  (n) =>
+                    n.getClientRects().length &&
+                    n.scrollWidth > n.clientWidth + 1,
+                )
+                .map((n) => ({ width: n.clientWidth, content: n.scrollWidth })),
+            );
+          assert.deepEqual(
+            overflowing,
+            [],
+            "Desktop tables expose every column",
+          );
           await page.evaluate(() => scrollTo(0, 0));
-          const file = `franchise-model-${String(tab+1).padStart(2,"0")}-${names[tab]}-full.png`;
-          await page.screenshot({ path: path.join(directory, file), fullPage: true });
-          manifest.push({file, viewport:{width:1440,height:1000}, fullPage:true,
-            title: await page.getByRole('tab').nth(tab).innerText(),
-            height: await page.evaluate(() => document.documentElement.scrollHeight),
-            allTabDetailsOpen:true, globalWarningsOpen:true,
-            inputs: await page.locator('[role="tabpanel"] input, [role="tabpanel"] select').count(),
-            state: tab===4 ? 'Working defaults plus one blank expansion editor row; no costs filled' :
-              tab===5 ? 'Working defaults plus one blank manual capital call; no amount filled' : 'Working scenario defaults',
+          const file = `franchise-model-${String(tab + 1).padStart(2, "0")}-${names[tab]}-full.png`;
+          await page.screenshot({
+            path: path.join(directory, file),
+            fullPage: true,
           });
+          manifest.push({
+            file,
+            viewport: { width: 1440, height: 1000 },
+            fullPage: true,
+            title: await page.getByRole("tab").nth(tab).innerText(),
+            height: await page.evaluate(
+              () => document.documentElement.scrollHeight,
+            ),
+            mainParametersExpanded: true,
+            monthlyDetailsCollapsed: true,
+            state: "Unmodified v0.2 working scenario",
+          });
+          if (tab === 0) {
+            const bottom = await page
+              .locator(".fm-tabs")
+              .evaluate((n) => n.getBoundingClientRect().bottom + scrollY);
+            await page.setViewportSize({width:1440,height:Math.ceil(bottom)});
+            await page.screenshot({path:path.join(directory,'franchise-model-overview.png')});
+            await page.setViewportSize({width:1440,height:1000});
+          }
         }
-        fs.writeFileSync(path.join(directory, "manifest.json"), JSON.stringify(manifest,null,2));
+        fs.writeFileSync(
+          path.join(directory, "manifest.json"),
+          JSON.stringify(manifest, null, 2),
+        );
       }
       await page.goto(base + "/control/logout");
       await page.goto(base + route);

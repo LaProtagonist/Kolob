@@ -789,3 +789,222 @@
   padding: 5px 8px;
   background: #f3e7c0;
 }
+
+/* v0.2: retain the Control palette; give provenance and partial data a clear hierarchy. */
+.fm-wide {
+  grid-column: 1 / -1;
+  min-width: 0;
+}
+.fm-quality-blocks {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.fm-coverage {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  border: 1px solid #d5cec1;
+  border-radius: 8px;
+  background: #eee9df;
+  padding: 12px 16px;
+  margin: 0 0 18px;
+  font-size: 12px;
+}
+.fm-coverage strong {
+  flex-basis: 100%;
+}
+.fm-source {
+  margin-top: 9px;
+  font-size: 11px;
+  color: #706859;
+}
+.fm-source summary,
+.fm-bom-items summary,
+.fm-detailed summary {
+  cursor: pointer;
+  font-weight: 650;
+}
+.fm-source code,
+.fm-page [data-provenance] code {
+  display: block;
+  overflow-wrap: anywhere;
+  white-space: normal;
+  font-size: 10px;
+  margin: 6px 0;
+}
+.fm-source p {
+  margin: 8px 0 4px;
+}
+.fm-na {
+  color: #6d716b;
+  background: #e8eae2;
+  border-radius: 6px;
+  padding: 9px;
+  font-size: 12px;
+}
+.fm-na small {
+  display: block;
+}
+.fm-status-not_applicable {
+  background: #e8eae2;
+  color: #5e655a;
+}
+.fm-bom .fm-inline {
+  flex-wrap: wrap;
+  gap: 14px;
+}
+.fm-bom-breakdown {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 9px;
+  margin: 18px 0;
+}
+.fm-bom-breakdown > div {
+  padding: 12px;
+  background: #f0eadc;
+  border-radius: 7px;
+  font-size: 12px;
+}
+.fm-bom-breakdown strong {
+  display: block;
+  margin-top: 7px;
+}
+.fm-bom-row {
+  display: grid;
+  grid-template-columns: minmax(220px, 2fr) minmax(110px, 0.7fr) minmax(
+      120px,
+      0.8fr
+    ) minmax(180px, 1.1fr) minmax(130px, 0.8fr);
+  gap: 18px;
+  align-items: start;
+  border-bottom: 1px solid #e0d7c7;
+  padding: 15px 0;
+  font-size: 12px;
+}
+.fm-bom-row > * {
+  min-width: 0;
+}
+.fm-bom-row small,
+.fm-bom-row strong {
+  display: block;
+}
+.fm-bom-row small {
+  color: #756a57;
+  margin: 5px 0;
+}
+.fm-bom-row input[type="checkbox"] {
+  margin-right: 7px;
+}
+.fm-bom-row details {
+  margin-top: 6px;
+}
+.fm-bom-items > summary {
+  padding: 12px 0;
+}
+.fm-partial,
+.fm-shadow > strong {
+  color: #8c6411;
+  font-weight: 750;
+}
+.fm-central-percent > div {
+  padding: 10px 0;
+  border-bottom: 1px solid #e5ddcd;
+}
+.fm-central-percent strong,
+.fm-central-percent span,
+.fm-central-percent b {
+  display: block;
+  font-size: 12px;
+}
+.fm-central-percent span {
+  color: #756a57;
+  font-size: 11px;
+}
+.fm-flow-bridge {
+  grid-template-columns: 0.8fr 1.15fr 1.05fr;
+}
+.fm-flow-bridge > div:first-child > strong {
+  font-size: clamp(24px, 3vw, 42px);
+  overflow-wrap: anywhere;
+}
+.fm-milestones {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin: 18px 0;
+}
+.fm-milestones article {
+  border: 1px solid #ded5c5;
+  border-radius: 8px;
+  padding: 16px;
+}
+.fm-detailed {
+  margin-top: 18px;
+}
+.fm-detailed > summary {
+  padding: 12px 0;
+}
+.fm-investor-blocked,
+.fm-shadow {
+  background: #f6edda;
+  border-color: #d7bf85;
+}
+.fm-fields > label {
+  font-size: 12px;
+  font-weight: 600;
+  min-width: 0;
+}
+.fm-fields > label select {
+  margin-top: 7px;
+}
+@media (max-width: 1100px) {
+  .fm-bom-row {
+    grid-template-columns: minmax(180px, 2fr) minmax(100px, 1fr) minmax(
+        120px,
+        1fr
+      );
+  }
+  .fm-bom-row > :first-child {
+    grid-row: span 2;
+  }
+  .fm-bom-breakdown {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .fm-flow-bridge {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 767px) {
+  .fm-quality-blocks,
+  .fm-milestones {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .fm-milestones {
+    gap: 12px;
+  }
+  .fm-bom-breakdown {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .fm-bom-row {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 12px;
+  }
+  .fm-bom-row > :first-child {
+    grid-column: 1/-1;
+    grid-row: auto;
+  }
+  .fm-flow-bridge {
+    grid-template-columns: 1fr;
+  }
+  .fm-coverage {
+    gap: 6px 14px;
+  }
+  .fm-coverage span {
+    flex-basis: 42%;
+  }
+}
+
+.fm-reference-controls > label { display: block; margin-top: 12px; }
+.fm-reference-controls > label select { display: block; margin-top: 6px; }

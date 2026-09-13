@@ -1,0 +1,60 @@
+receipt_version: 1
+iteration_id: ITR-FRANCHISE-MODEL-V02-2026-09-13-01
+result: reviewed
+mutation_performed: false
+before_hash: 83e122764b230c2dc0c9dd305bb703013ba4574a5e38a68373fa0e9ecab4f3c1
+after_hash: 936e8ba2fb3276b886a21670b056e434ddab3b9c9376969b0c1036cdb816da44
+operations:
+  - type: add
+    entity: documents
+    id: DOC-FRANCHISE-MODEL-V02
+    before: null
+    after:
+      id: DOC-FRANCHISE-MODEL-V02
+      title: Модель сети и франшизы v0.2 — источники и профили
+      type: working_parameters
+      status: research
+      google_file_id: null
+      template: null
+      sections:
+        - references
+        - equipment_profiles
+        - data_states
+        - cash_flow
+      local_path: docs-platform/working/franchise-model-v0.2.json
+      version: "0.2"
+      updated_at: 2026-09-13
+    before_index: null
+    after_index: 28
+    before_sha256: null
+    after_sha256: 534c99b5e979a993adb7bd1fef79435707052be3fdb7ab0d53929042ddb0a7a3
+    reverse_operation:
+      type: remove
+      entity: documents
+      id: DOC-FRANCHISE-MODEL-V02
+  - type: add
+    entity: decisions
+    id: DEC-FRANCHISE-MODEL-V02-2026-09-13-01
+    before: null
+    after:
+      id: DEC-FRANCHISE-MODEL-V02-2026-09-13-01
+      title: Подключить источники и улучшить читаемость модели сети и франшизы
+      status: approved
+      decision: Выполнить отдельную v0.2 по полному заданию владельца; сохранить финансовые границы, обеспечить прослеживаемость, семантику отсутствующих данных и предварительных результатов; выполнить commit и seal.
+      rationale: Прямое продолжение задания владельца; точный объём сохранён в approved payload. Одобрение относится к реализации, не к финансовым гипотезам.
+      affected_documents:
+        - DOC-FRANCHISE-MODEL-V02
+      approved_by: project owner
+      approved_at: 2026-09-13
+      supersedes: null
+      source_ids:
+        - SRC-FRANCHISE-MODEL-V01-BRIEF-2026-09-13
+      updated_at: 2026-09-13
+    before_index: null
+    after_index: 32
+    before_sha256: null
+    after_sha256: 5446b0c620537f34bcec6d7cfa109b3dc65f815eae7995e70d4b0bb2ed275dab
+    reverse_operation:
+      type: remove
+      entity: decisions
+      id: DEC-FRANCHISE-MODEL-V02-2026-09-13-01

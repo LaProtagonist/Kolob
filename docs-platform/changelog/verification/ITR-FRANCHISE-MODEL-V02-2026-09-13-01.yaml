@@ -1,0 +1,21 @@
+receipt_version: 1
+iteration_id: ITR-FRANCHISE-MODEL-V02-2026-09-13-01
+decision_id: DEC-FRANCHISE-MODEL-V02-2026-09-13-01
+change_set_id: CHG-FRANCHISE-MODEL-V02-2026-09-13-01
+result: passed
+verified_at: 2026-09-13T17:50:25.879Z
+approved_payload_sha256: 0cf32f61886b7f732150ee8fc89184c066866a86c283e6e555e4ecdfff4c21cd
+before_state_sha256: de68076543fed17c7ce0de6e09cd950ba30163dbfa4d2942649b66dd7195f1ee
+after_state_sha256: 2af8a33e4829cb685d3be5f35293669fd36f66ec5eb93f29af977d2ce3bb6a87
+checks:
+  - TypeScript; reference snapshot parity; v0.1/v0.2 financial and data tests
+  - Deterministic browser, two server auth paths, terminology and decimal audit, 1440/1024/768/390 responsive checks
+  - Strict release verification with all agreed validation domains/gates
+  - Six expanded-tab full-page desktop screenshots plus overview, detailed monthly tables collapsed
+protected_path_count: 755
+baseline_commit: bd4de6e65484efa29a56a94a67ccc41c6e817b3b
+old_sources_and_public_ui: byte-identical
+release_duration_ms: 169378
+screenshots_directory: analysis/screenshots/franchise-model-v02-2026-09-13
+google: not_run
+deployment: not_run

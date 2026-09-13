@@ -1,8 +1,17 @@
 /** Pure, standalone management model. All sales are NET of indirect taxes.
- * Does not import Current Base / Investor Terminal / Network Planning adapters.
+ * Uses read-only reference adapters and pure helpers; never writes existing sources.
  * Unknown costs have a separate known-basis subtotal; never become a final FCF.
  */
 import { parameters, parameterStatus } from "./franchise-model-scenario";
+import {
+  effectiveEquipment,
+  ownLocalCosts,
+  salesFactor,
+  taxReference,
+  maintenanceReference,
+  notApplicable,
+} from "./franchise-model-data";
+import { equipmentBom } from "./franchise-model-bom";
 import type {
   Scenario,
   Point,
@@ -79,7 +88,7 @@ export function firstNode(s: Scenario) {
   ];
   const startup: Line[] = ids.map((id) => ({
     label: parameters.find((p) => p.id === id)!.label,
-    amount: val(s, id),
+    amount: id === "equipment" ? effectiveEquipment(s) : val(s, id),
   }));
   startup.push(
     { label: "Предоплата аренды", amount: val(s, "rent") * val(s, "prepay") },
@@ -103,7 +112,12 @@ export function directCosts(s: Scenario, sales: number, checks: number) {
     packaging = checks * val(s, "packaging");
   return { raw, waste, packaging, total: raw + waste + packaging };
 }
-export function pointSales(s: Scenario, type: Point["type"], point?: Point) {
+export function pointSales(
+  s: Scenario,
+  type: Point["type"],
+  point?: Point,
+  month?: number,
+) {
   const own = type === "OWN",
     check =
       point?.averageCheck ?? val(s, own ? "own_check" : "franchise_check");
@@ -113,17 +127,18 @@ export function pointSales(s: Scenario, type: Point["type"], point?: Point) {
       ? val(s, "own_checks") * check
       : val(s, own ? "own_revenue" : "franchise_revenue"));
   const days = point?.days ?? val(s, own ? "own_days" : "franchise_days");
+  const adjustedDay = revenueDay * salesFactor(s, point, month);
   return {
-    revenueDay,
+    revenueDay: adjustedDay,
     check,
     days,
-    checksDay: revenueDay / check,
-    checks: (revenueDay / check) * days,
-    sales: revenueDay * days,
+    checksDay: adjustedDay / check,
+    checks: (adjustedDay / check) * days,
+    sales: adjustedDay * days,
   };
 }
-export function franchisePoint(s: Scenario, point?: Point) {
-  const revenue = pointSales(s, "FRANCHISE", point),
+export function franchisePoint(s: Scenario, point?: Point, month?: number) {
+  const revenue = pointSales(s, "FRANCHISE", point, month),
     sales = revenue.sales;
   const normative = {
     labor: sales * val(s, "norm_labor"),
@@ -194,8 +209,9 @@ export function ownPoint(
   s: Scenario,
   point?: Point,
   embedded = val(s, "embedded") === 1,
+  month?: number,
 ) {
-  const revenue = pointSales(s, "OWN", point),
+  const revenue = pointSales(s, "OWN", point, month),
     staff = staffing(s),
     direct = directCosts(s, revenue.sales, revenue.checks);
   const labor = point?.labor ?? staff.retail;
@@ -204,17 +220,25 @@ export function ownPoint(
     (embedded
       ? val(s, "rent") * val(s, "retail_allocation")
       : s.inputs.own_external_rent);
-  const opex = point?.opex ?? s.inputs.own_local;
+  const localCosts =
+    s.integration?.ownOpexMode === "structured"
+      ? ownLocalCosts(s, revenue.sales, revenue.checks, embedded)
+      : null;
+  const opex =
+    point?.opex ?? (localCosts ? localCosts.total : s.inputs.own_local);
+  const knownOpex =
+    point?.opex ?? (localCosts ? localCosts.known : (s.inputs.own_local ?? 0));
   const knownEbitda =
-    revenue.sales - labor - (rent ?? 0) - (opex ?? 0) - direct.total;
+    revenue.sales - labor - (rent ?? 0) - knownOpex - direct.total;
   const ebitda = rent === null || opex === null ? null : knownEbitda;
   const consolidatedBeforeDirect =
-    revenue.sales - labor - (opex ?? 0) - (embedded ? 0 : (rent ?? 0));
+    revenue.sales - labor - knownOpex - (embedded ? 0 : (rent ?? 0));
   return {
     ...revenue,
     labor,
     rent,
     opex,
+    localCosts,
     direct,
     knownEbitda,
     ebitda,
@@ -230,6 +254,7 @@ export function validateScenario(s: Scenario): Issue[] {
   const bad = (id: string, message: string) =>
     issues.push({ id, message, severity: "invalid" });
   for (const p of parameters) {
+    if(s.integration && (notApplicable(s,p.id) || p.id === "equipment" && s.integration.equipmentMode === "bom")) continue;
     const n = s.inputs[p.id];
     if (n === null) {
       if (p.required) bad(p.id, `${p.label}: требуется числовое значение.`);
@@ -253,6 +278,40 @@ export function validateScenario(s: Scenario): Issue[] {
         id,
         `${parameters.find((p) => p.id === id)!.label}: нужно целое число.`,
       );
+  if (s.integration) {
+    const i = s.integration;
+    if (
+      !Number.isInteger(i.calendarStartMonth) ||
+      i.calendarStartMonth < 1 ||
+      i.calendarStartMonth > 12
+    )
+      bad("calendar", "Календарный месяц должен быть от 1 до 12.");
+    for (const key of ["nodeBom", "franchiseBom"] as const) {
+      const seen = new Set<string>();
+      for (const row of i[key]) {
+        if (seen.has(row.itemId))
+          bad(
+            "equipment-duplicate",
+            "Одна позиция оборудования не может повторяться в составе.",
+          );
+        seen.add(row.itemId);
+        for (const value of [row.quantity, row.override])
+          if (value !== null && (!Number.isFinite(value) || value < 0))
+            bad(
+              "equipment-value",
+              "Количество и цена оборудования должны быть неотрицательными числами.",
+            );
+      }
+    }
+    if (i.equipmentMode === "bom" && !equipmentBom(s, "node").complete)
+      bad(
+        "node-bom",
+        "Для первоначальной потребности необходимо оценить и классифицировать все выбранные позиции оборудования узла.",
+      );
+    for (const p of s.rollout)
+      if (p.ramp !== undefined && !["reference", "mature"].includes(p.ramp))
+        bad("ramp", "Неизвестный профиль выхода точки на выручку.");
+  }
   const ids = new Set<string>();
   for (const row of [...s.rollout, ...s.expansions, ...s.capitalCalls]) {
     if (!row.id || ids.has(row.id))
@@ -633,7 +692,9 @@ export function calculateFranchiseModel(s: Scenario) {
     "point_software",
     "extra_production",
   ].filter(
-    (id) => s.inputs[id] === null || parameterStatus(s, id) === "MISSING",
+    (id) =>
+      parameterStatus(s, id) !== "NOT_APPLICABLE" &&
+      (s.inputs[id] === null || parameterStatus(s, id) === "MISSING"),
   );
   for (const id of commonMissing)
     missing(
@@ -645,8 +706,71 @@ export function calculateFranchiseModel(s: Scenario) {
       "onboarding",
       "Стоимость открытия франчайзи не определена: net opening contribution = N/A.",
     );
-  if (s.inputs.own_local === null)
+  if (
+    (!s.integration || s.integration.ownOpexMode === "manual") &&
+    s.inputs.own_local === null
+  )
     missing("own_local", "Локальный OPEX собственной точки не определён.");
+  if (s.integration) {
+    if (
+      s.integration.ownOpexMode === "structured" &&
+      s.integration.equipmentMode === "manual"
+    )
+      missing(
+        "service-allocation",
+        "Для сервиса торгового оборудования требуется состав оборудования узла либо ручная общая оценка расходов собственной точки.",
+      );
+    if (s.integration.ownOpexMode === "structured")
+      for (const p of parameters.filter((p) => p.group === "own_ops"))
+        if (parameterStatus(s, p.id) === "MISSING")
+          missing(p.id, p.label + ": требуется значение.");
+    if (s.integration.maintenanceMode === "reference")
+      for (const id of ["maintenance_extra", "maintenance_growth"])
+        if (!notApplicable(s, id) && s.inputs[id] === null) {
+          commonMissing.push(id);
+          missing(
+            id,
+            parameters.find((p) => p.id === id)!.label +
+              ": требуется значение.",
+          );
+        }
+    if (
+      s.integration.equipmentMode === "bom" &&
+      !equipmentBom(s, "node").complete
+    ) {
+      commonMissing.push("node-bom");
+      missing(
+        "node-bom",
+        "Не все выбранные позиции оборудования первого узла оценены и классифицированы.",
+      );
+    }
+    issues.push(
+      {
+        id: "legal-structure",
+        severity: "warning",
+        message:
+          "Юридическая структура центрального расчётного потока не определена.",
+      },
+      {
+        id: "tax-reference",
+        severity: "warning",
+        message:
+          "Справочная налоговая модель подлежит уточнению после выбора юридической структуры группы и платежей франчайзи.",
+      },
+      {
+        id: "maintenance-reference",
+        severity: "warning",
+        message:
+          "Справочная формула поддержания оборудования и мебели не подтверждает расходы новых цифровых активов и расширения.",
+      },
+      {
+        id: "burn-scope",
+        severity: "warning",
+        message:
+          "Резерв рассчитывается по заданному составу фиксированных расходов узла. Дополнительные локальные статьи расходов показываются отдельно.",
+      },
+    );
+  }
   if (val(s, "equity") === 1 && s.inputs.post_cap_share === null)
     missing("post_cap_share", "При equity требуется доля инвестора после cap.");
   issues.push(
@@ -698,9 +822,11 @@ export function calculateFranchiseModel(s: Scenario) {
     const ownRows = active.filter((p) => p.type === "OWN"),
       franchiseRows = active.filter((p) => p.type === "FRANCHISE");
     const ownModels = ownRows.map((p) =>
-      ownPoint(s, p, p.id === firstOwn && val(s, "embedded") === 1),
+      ownPoint(s, p, p.id === firstOwn && val(s, "embedded") === 1, month),
     );
-    const franchiseModels = franchiseRows.map((p) => franchisePoint(s, p));
+    const franchiseModels = franchiseRows.map((p) =>
+      franchisePoint(s, p, month),
+    );
     const openingFranchise = franchiseRows.filter(
       (p) => p.month === month,
     ).length;
@@ -764,22 +890,16 @@ export function calculateFranchiseModel(s: Scenario) {
         ? null
         : grossFees - openingFranchise * (s.inputs.onboarding ?? 0);
     const incomeKnown = recurringContribution + (netFees ?? grossFees);
-    const tax =
-      s.inputs.tax_profit === null || s.inputs.tax_sales === null
-        ? null
-        : Math.max(
-            Math.max(0, incomeKnown) * s.inputs.tax_profit,
-            cashInflow * s.inputs.tax_sales,
-          );
+    const tax = taxReference(s, cashInflow, incomeKnown);
+    const maintenance =
+      s.integration?.maintenanceMode === "reference"
+        ? maintenanceReference(s).known
+        : (s.inputs.maintenance ?? 0);
     // Prepaid rent was already funded in M0: accrual rent stays in EBITDA, cash is not paid twice.
     const prepaidRentCredit =
       Math.max(0, Math.min(1, val(s, "prepay") - (month - 1))) * val(s, "rent");
     const knownFcf =
-      incomeKnown -
-      (tax ?? 0) -
-      (s.inputs.maintenance ?? 0) -
-      capex +
-      prepaidRentCredit;
+      incomeKnown - (tax ?? 0) - maintenance - capex + prepaidRentCredit;
     const missingOwn = ownModels.some(
       (p) => p.opex === null || p.rent === null,
     );
@@ -874,6 +994,16 @@ export function calculateFranchiseModel(s: Scenario) {
         p.capex === null &&
         s.inputs.own_growth_capex === null,
     );
+  const fundingPolicy = {
+    commitment: val(s, "commitment"),
+    initialDraw: node.initialDraw,
+    startupSpend: node.startupSpend,
+    share: val(s, "share"),
+    capMultiple: val(s, "return_cap"),
+    upfront: val(s, "funding_mode") === 1,
+    equityShare: val(s, "equity") === 0 ? 0 : s.inputs.post_cap_share,
+    capitalCalls: s.capitalCalls,
+  };
   const investor = investorWaterfall(
     months.map((m) => ({
       month: m.month,
@@ -887,18 +1017,43 @@ export function calculateFranchiseModel(s: Scenario) {
         m.validated &&
         !issues.some((i) => i.severity === "invalid" && i.month === undefined),
     })),
-    {
-      commitment: val(s, "commitment"),
-      initialDraw: node.initialDraw,
-      startupSpend: node.startupSpend,
-      share: val(s, "share"),
-      capMultiple: val(s, "return_cap"),
-      upfront: val(s, "funding_mode") === 1,
-      equityShare: val(s, "equity") === 0 ? 0 : s.inputs.post_cap_share,
-      capitalCalls: s.capitalCalls,
-    },
+    fundingPolicy,
   );
   issues.push(...investor.issues);
+  const shadowExclusions = [
+    ...new Map(
+      issues
+        .filter((i) => i.severity === "missing" && i.id !== "franchise_capex")
+        .map((i) => [i.id, i]),
+    ).values(),
+  ];
+  const shadowInvestor =
+    s.integration &&
+    shadowExclusions.length > 0 &&
+    !shadowExclusions.some((i) =>
+      ["tax_profit", "tax_sales", "maintenance", "node-bom"].includes(i.id),
+    ) &&
+    !unknownFutureGrowth &&
+    !s.capitalCalls.some((c) => c.amount === null) &&
+    fundingPolicy.equityShare !== null
+      ? investorWaterfall(
+          months.map((m) => ({
+            month: m.month,
+            fcf: m.knownFcf,
+            growthCapex: m.capex,
+            reserveFloor: m.reserveFloor,
+            futureGrowthCapex: sum(
+              months.filter((n) => n.month > m.month).map((n) => n.capex),
+            ),
+            validated:
+              m.validated &&
+              !issues.some(
+                (i) => i.severity === "invalid" && i.month === undefined,
+              ),
+          })),
+          fundingPolicy,
+        )
+      : null;
   const status: Validity = issues.some((i) => i.severity === "invalid")
     ? "INVALID"
     : issues.length ||
@@ -914,6 +1069,8 @@ export function calculateFranchiseModel(s: Scenario) {
       franchise,
       months,
       investor,
+      shadowInvestor,
+      shadowExclusions,
       unvalidated,
       capacityExceededMonth,
     },

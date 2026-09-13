@@ -1,0 +1,10 @@
+schema_version: 2
+proposal_id: PROP-FRANCHISE-MODEL-V02-2026-09-13-01
+iteration_id: ITR-FRANCHISE-MODEL-V02-2026-09-13-01
+title: Модель сети и франшизы v0.2 — данные и читаемость
+status: approved
+proposed_by: project owner
+proposed_at: 2026-09-13T17:10:03.411Z
+summary: Russian formatting/parsing with practical precision, no numeric tails; percentages/rubles flow with two central cost denominators; Traceable read-only integration of Financial/Revenue/CAPEX/Franchise/Petrogradka sources; preserve source status, expose source IDs; Scenario BOM by canonical item IDs, quantity and explicit overrides; node grouping; optional BAR/GROW off; separate FRANCHISE_COMPACT_POINT partial BOM; Structured own point OPEX; reference acquiring, management taxes, maintenance, per-point ramp and optional seasonality; Semantic missing/not_applicable, distinct missing/limitations counts, contour coverage; target/actual franchise EBITDA; Network milestones and collapsed full timeline; blocked final investor and separate explicitly incomplete shadow estimate; Preserve scenario operations and isolated storage; deterministic tests, full agreed release checks and seven requested screenshots
+approved_payload_path: docs-platform/changelog/payloads/ITR-FRANCHISE-MODEL-V02-2026-09-13-01-approved.yaml
+approved_payload_sha256: 0cf32f61886b7f732150ee8fc89184c066866a86c283e6e555e4ecdfff4c21cd

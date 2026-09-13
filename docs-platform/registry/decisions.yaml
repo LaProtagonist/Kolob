@@ -461,3 +461,16 @@ decisions:
     source_ids:
       - SRC-FRANCHISE-MODEL-V01-BRIEF-2026-09-13
     updated_at: 2026-09-13
+  - id: DEC-FRANCHISE-MODEL-V02-2026-09-13-01
+    title: Подключить источники и улучшить читаемость модели сети и франшизы
+    status: approved
+    decision: Выполнить отдельную v0.2 по полному заданию владельца; сохранить финансовые границы, обеспечить прослеживаемость, семантику отсутствующих данных и предварительных результатов; выполнить commit и seal.
+    rationale: Прямое продолжение задания владельца; точный объём сохранён в approved payload. Одобрение относится к реализации, не к финансовым гипотезам.
+    affected_documents:
+      - DOC-FRANCHISE-MODEL-V02
+    approved_by: project owner
+    approved_at: 2026-09-13
+    supersedes: null
+    source_ids:
+      - SRC-FRANCHISE-MODEL-V01-BRIEF-2026-09-13
+    updated_at: 2026-09-13

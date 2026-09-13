@@ -4,7 +4,35 @@ export type ParameterStatus =
   | "WORKING"
   | "REFERENCE"
   | "MISSING"
+  | "NOT_APPLICABLE"
   | "DERIVED";
+export type DataState =
+  | {
+      kind: "value";
+      value: number;
+      status: Exclude<ParameterStatus, "MISSING" | "NOT_APPLICABLE">;
+    }
+  | { kind: "missing"; reason: string }
+  | { kind: "not_applicable"; reason: string };
+export type EquipmentSelection = {
+  itemId: string;
+  selected: boolean;
+  quantity: number | null;
+  override: number | null;
+};
+export type IntegrationSettings = {
+  version: 2;
+  equipmentMode: "bom" | "manual";
+  nodeBom: EquipmentSelection[];
+  franchiseBom: EquipmentSelection[];
+  bar: boolean;
+  grow: boolean;
+  taxMode: "reference" | "manual";
+  maintenanceMode: "reference" | "manual";
+  ownOpexMode: "structured" | "manual";
+  seasonality: boolean;
+  calendarStartMonth: number;
+};
 export type Validity = "COMPLETE" | "PRELIMINARY" | "INVALID";
 export type Parameter = {
   id: string;
@@ -36,6 +64,7 @@ export type Point = {
   rent: number | null;
   opex: number | null;
   capex: number | null;
+  ramp?: "reference" | "mature";
 };
 export type Expansion = {
   id: string;
@@ -57,6 +86,7 @@ export type Scenario = {
   rollout: Point[];
   expansions: Expansion[];
   capitalCalls: CapitalCall[];
+  integration?: IntegrationSettings;
 };
 export type ScenarioStore = {
   schemaVersion: 1;
