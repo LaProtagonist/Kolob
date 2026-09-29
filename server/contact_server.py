@@ -6,11 +6,14 @@ import html
 import json
 import mimetypes
 import os
+import threading
+import time
+import urllib.request
 import uuid
 from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
-from urllib.parse import parse_qs, quote, unquote, urlsplit
+from urllib.parse import parse_qs, quote, unquote, urlencode, urlsplit
 
 
 HOST = os.environ.get("CONTACT_SERVER_HOST", "127.0.0.1")
@@ -19,6 +22,18 @@ DATA_DIR = Path(os.environ.get("CONTACT_DATA_DIR", "runtime-data"))
 LEADS_FILE = Path(os.environ.get("CONTACT_LEADS_FILE", str(DATA_DIR / "contacts.jsonl")))
 ADMIN_PASSWORD = os.environ.get("CONTACT_ADMIN_PASSWORD", "")
 ADMIN_SECRET = os.environ.get("CONTACT_ADMIN_SECRET", ADMIN_PASSWORD or "kolob-local-admin")
+ADMIN_LINK_KEY = os.environ.get("CONTACT_ADMIN_LINK_KEY", "")
+ADMIN_LINK_KEY_FILE = Path(os.environ.get("CONTACT_ADMIN_LINK_KEY_FILE", str(DATA_DIR / "admin-link.key")))
+ADMIN_LINK_KEY_MIN_LENGTH = 32
+BRIDGE_FILE = Path(os.environ.get("CONTACT_BRIDGE_FILE", str(DATA_DIR / "google-bridge.json")))
+BRIDGE_URL_PREFIX = os.environ.get("CONTACT_BRIDGE_URL_PREFIX", "https://script.google.com/")
+BRIDGE_TIMEOUT_SECONDS = 8
+BRIDGE_MAX_RESPONSE_BYTES = 2 * 1024 * 1024
+INPUTS_SCHEMA_FILE = Path(os.environ.get("CONTACT_INPUTS_SCHEMA_FILE", str(Path(__file__).resolve().parent / "inputs-schema.json")))
+INPUTS_CACHE_FILE = Path(os.environ.get("CONTACT_INPUTS_CACHE_FILE", str(DATA_DIR / "inputs-cache.json")))
+INPUTS_MAX_AGE_SECONDS = int(os.environ.get("CONTACT_INPUTS_MAX_AGE", "30"))
+INPUTS_LOCK = threading.Lock()
+INPUTS_STATE = {"payload": None, "checked_at": 0.0}
 COOKIE_NAME = "kolob_leads_auth"
 MAX_BODY_BYTES = 64 * 1024
 CONTROL_STATIC_ROOT = Path(os.environ.get("CONTROL_STATIC_ROOT", str(Path(__file__).resolve().parent / "control")))
@@ -56,6 +71,183 @@ def is_authorized(handler):
         return False
     cookie = parse_cookies(handler.headers.get("Cookie")).get(COOKIE_NAME, "")
     return hmac.compare_digest(cookie, token())
+
+
+def link_key():
+    if ADMIN_LINK_KEY:
+        return ADMIN_LINK_KEY
+    try:
+        return ADMIN_LINK_KEY_FILE.read_text(encoding="utf-8").strip()
+    except OSError:
+        return ""
+
+
+def is_valid_link_key(value):
+    expected = link_key()
+    if not ADMIN_PASSWORD or len(expected) < ADMIN_LINK_KEY_MIN_LENGTH:
+        return False
+    return hmac.compare_digest(hashlib.sha256(value.encode()).hexdigest(), hashlib.sha256(expected.encode()).hexdigest())
+
+
+def utc_now():
+    return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+
+
+def read_json(path):
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+
+
+def write_json(path, payload):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_name(f"{path.name}.next")
+    temporary.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    temporary.replace(path)
+
+
+def bridge_config():
+    config = read_json(BRIDGE_FILE)
+    if not isinstance(config, dict):
+        return None
+    url = str(config.get("url") or "")
+    key = str(config.get("key") or "")
+    if not url.startswith(BRIDGE_URL_PREFIX) or len(key) < 32:
+        return None
+    return {"url": url, "key": key, "sheetUrl": str(config.get("sheetUrl") or "")}
+
+
+def bridge_call(action, payload=None, timeout=BRIDGE_TIMEOUT_SECONDS):
+    config = bridge_config()
+    if not config:
+        raise RuntimeError("мост к таблице не подключён")
+    if payload is None:
+        request = urllib.request.Request(f"{config['url']}?{urlencode({'action': action, 'key': config['key']})}")
+    else:
+        body = json.dumps({**payload, "action": action, "key": config["key"]}, ensure_ascii=False).encode("utf-8")
+        request = urllib.request.Request(config["url"], data=body, headers={"Content-Type": "application/json"})
+    with urllib.request.urlopen(request, timeout=timeout) as response:
+        result = json.loads(response.read(BRIDGE_MAX_RESPONSE_BYTES).decode("utf-8"))
+    if not isinstance(result, dict) or not result.get("ok"):
+        raise RuntimeError(clean(result.get("error") if isinstance(result, dict) else "", 120) or "таблица ответила ошибкой")
+    return result
+
+
+def inputs_schema():
+    schema = read_json(INPUTS_SCHEMA_FILE)
+    if not isinstance(schema, dict):
+        return []
+    return [item for item in schema.get("inputs", []) if isinstance(item, dict) and item.get("key")]
+
+
+def format_input_value(value):
+    if isinstance(value, bool):
+        return "да" if value else "нет"
+    if isinstance(value, (int, float)):
+        text = f"{value:,.2f}".rstrip("0").rstrip(".") if value != int(value) else f"{int(value):,}"
+        return text.replace(",", " ").replace(".", ",")
+    return str(value if value is not None else "")
+
+
+def parse_number(value):
+    if isinstance(value, bool):
+        raise ValueError("нужно число")
+    if isinstance(value, (int, float)):
+        return float(value)
+    text = str(value).replace("\u00a0", "").replace(" ", "").replace(",", ".").rstrip("₽%")
+    try:
+        return float(text)
+    except ValueError:
+        raise ValueError("нужно число") from None
+
+
+def coerce_input(item, value):
+    kind = item.get("type", "number")
+    if kind == "boolean":
+        if isinstance(value, bool):
+            return value
+        text = str(value).strip().lower()
+        if text in {"да", "true", "1", "вкл", "yes"}:
+            return True
+        if text in {"нет", "false", "0", "выкл", "no"}:
+            return False
+        raise ValueError("нужно «да» или «нет»")
+    if kind == "choice":
+        text = str(value).strip()
+        if text not in item.get("choices", []):
+            raise ValueError("можно только " + ", ".join(item.get("choices", [])))
+        return text
+    number = parse_number(value)
+    if number != number or number in (float("inf"), float("-inf")):
+        raise ValueError("нужно число")
+    if kind == "integer":
+        if number != int(number):
+            raise ValueError("нужно целое число")
+        number = int(number)
+    if "allowed" in item and number not in item["allowed"]:
+        raise ValueError("можно только " + ", ".join(format_input_value(value) for value in item["allowed"]))
+    if "min" in item and number < item["min"]:
+        raise ValueError(f"меньше допустимого ({format_input_value(item['min'])})")
+    if "max" in item and number > item["max"]:
+        raise ValueError(f"больше допустимого ({format_input_value(item['max'])})")
+    return number
+
+
+def validate_inputs(rows, previous):
+    supplied = {}
+    for row in rows if isinstance(rows, list) else []:
+        if isinstance(row, dict) and clean(row.get("key"), 80):
+            supplied[clean(row.get("key"), 80)] = row.get("value")
+    values = {}
+    errors = []
+    for item in inputs_schema():
+        key = item["key"]
+        fallback = previous.get(key, item.get("default"))
+        empty = key not in supplied or supplied[key] is None or str(supplied[key]).strip() == ""
+        if empty and item.get("optional"):
+            values[key] = None
+            continue
+        if key not in supplied:
+            values[key] = fallback
+            errors.append({"key": key, "message": "в таблице нет строки с этим ключом"})
+            continue
+        if empty:
+            values[key] = fallback
+            errors.append({"key": key, "message": "значение пустое"})
+            continue
+        try:
+            values[key] = coerce_input(item, supplied[key])
+        except ValueError as error:
+            values[key] = fallback
+            errors.append({"key": key, "message": str(error)})
+    return values, errors
+
+
+def default_inputs():
+    return {"source": "defaults", "fetchedAt": None, "inputs": {item["key"]: item.get("default") for item in inputs_schema()}, "errors": []}
+
+
+def current_inputs(force=False):
+    with INPUTS_LOCK:
+        payload = INPUTS_STATE["payload"]
+        if payload is None:
+            cached = read_json(INPUTS_CACHE_FILE)
+            payload = {**cached, "source": "cache"} if isinstance(cached, dict) else default_inputs()
+        known = {item["key"]: item.get("default") for item in inputs_schema()}
+        payload["inputs"] = {key: payload.get("inputs", {}).get(key, default) for key, default in known.items()}
+        due = time.time() - INPUTS_STATE["checked_at"] >= INPUTS_MAX_AGE_SECONDS
+        if bridge_config() and (force or due):
+            INPUTS_STATE["checked_at"] = time.time()
+            try:
+                result = bridge_call("inputs")
+                values, errors = validate_inputs(result.get("inputs"), payload["inputs"])
+                payload = {"source": "google", "fetchedAt": utc_now(), "inputs": values, "errors": errors}
+                write_json(INPUTS_CACHE_FILE, payload)
+            except Exception as error:
+                payload = {**payload, "source": "cache" if payload.get("fetchedAt") else "defaults", "bridgeError": clean(error, 200)}
+        INPUTS_STATE["payload"] = payload
+        return payload
 
 
 def escape(value):
@@ -188,6 +380,56 @@ def leads_page(leads):
     <a class="button" href="/leads/logout">Выйти</a>
   </div>
   {table}
+</section>""",
+    )
+
+
+def inputs_page(payload):
+    config = bridge_config()
+    errors = {item["key"]: item["message"] for item in payload.get("errors", [])}
+    fetched = payload.get("fetchedAt") or ""
+    try:
+        fetched = datetime.fromisoformat(fetched.replace("Z", "+00:00")).astimezone().strftime("%d.%m.%Y, %H:%M:%S")
+    except Exception:
+        pass
+    if not config:
+        status = "Таблица не подключена. Сайт считает на значениях по умолчанию."
+    elif payload.get("source") == "google":
+        status = f"Значения взяты из таблицы: {fetched}."
+    elif payload.get("fetchedAt"):
+        status = f"Таблица не ответила, показана последняя исправная копия от {fetched}."
+    else:
+        status = "Таблица не ответила, копии ещё нет. Сайт считает на значениях по умолчанию."
+    if payload.get("bridgeError"):
+        status += f" Причина: {payload['bridgeError']}."
+    rows = []
+    for item in inputs_schema():
+        key = item["key"]
+        note = f'<br><strong>Не принято: {escape(errors[key])}. Оставлено прежнее значение.</strong>' if key in errors else ""
+        rows.append(
+            f"""<tr>
+  <td data-label="Название">{escape(item.get('title'))}{note}</td>
+  <td data-label="Значение">{escape(format_input_value(payload.get('inputs', {}).get(key)))}</td>
+  <td data-label="Единица">{escape(item.get('unit'))}</td>
+  <td data-label="Ключ">{escape(key)}</td>
+</tr>"""
+        )
+    sheet_button = f'<a class="button" href="{escape(config["sheetUrl"])}" target="_blank" rel="noreferrer">Открыть таблицу</a>' if config and config.get("sheetUrl") else ""
+    return layout(
+        "Вводные — Колобочная",
+        f"""<section class="panel">
+  <h1>Вводные</h1>
+  <p>{escape(status)}</p>
+  <div class="toolbar">
+    {sheet_button}
+    <form method="post" action="/control/inputs/refresh"><button type="submit">Обновить сейчас</button></form>
+    <a class="button" href="/control">В Control</a>
+    <a class="button" href="/leads">Заявки</a>
+  </div>
+  <table>
+    <thead><tr><th>Название</th><th>Значение</th><th>Единица</th><th>Ключ</th></tr></thead>
+    <tbody>{''.join(rows)}</tbody>
+  </table>
 </section>""",
     )
 
@@ -334,8 +576,24 @@ class Handler(BaseHTTPRequestHandler):
         if path == "/health":
             self.send_json(200, {"ok": True})
             return
+        if path.startswith("/control/key/"):
+            if not is_valid_link_key(unquote(path.removeprefix("/control/key/")).strip("/")):
+                self.send_text(404, "Not found")
+                return
+            self.redirect("/control", {"Set-Cookie": self.auth_cookie()})
+            return
         if path == "/control/logout":
             self.redirect("/control/login", {"Set-Cookie": f"{COOKIE_NAME}=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0"})
+            return
+        if path == "/api/inputs":
+            payload = current_inputs()
+            self.send_json(200, {"ok": True, "source": payload.get("source"), "fetchedAt": payload.get("fetchedAt"), "inputs": payload.get("inputs", {})})
+            return
+        if path == "/control/inputs":
+            if not is_authorized(self):
+                self.redirect("/control/login?next=/control/inputs")
+                return
+            self.send_html(200, inputs_page(current_inputs()))
             return
         if path == "/control/login":
             next_path = safe_control_next(parse_qs(parsed.query).get("next", ["/control"])[0])
@@ -416,6 +674,13 @@ class Handler(BaseHTTPRequestHandler):
             with LEADS_FILE.open("a", encoding="utf-8") as file:
                 file.write(json.dumps(lead, ensure_ascii=False) + "\n")
             self.send_json(200, {"ok": True})
+            return
+        if path == "/control/inputs/refresh":
+            if not is_authorized(self):
+                self.redirect("/control/login?next=/control/inputs")
+                return
+            current_inputs(force=True)
+            self.redirect("/control/inputs")
             return
         if path == "/leads/login":
             if not ADMIN_PASSWORD:

@@ -642,9 +642,93 @@ export function currentBaseObjectFullPreparationConfiguration(): InvestorConfigu
   };
 }
 
+export const sheetInputKeys = [
+  "scenario_default",
+  "checks_per_day",
+  "premises_mode",
+  "rent_monthly_rub",
+  "rent_prepayment_months",
+  "rent_deposit_months",
+  "rent_free_months",
+  "purchase_price_rub",
+  "area_total_m2",
+  "area_kitchen_m2",
+  "area_guest_m2",
+  "preparation_rub",
+  "equipment_level",
+  "bar_enabled",
+  "operating_reserve_months",
+  "contingency_percent",
+] as const;
+export type SheetInputKey = (typeof sheetInputKeys)[number];
+
+/** Values of the «Вводные» sheet as delivered by the site backend. */
+export type SheetInputs = Partial<Record<SheetInputKey, number | boolean | string | null>>;
+
+let sheetInputs: SheetInputs = {};
+
+/**
+ * Runtime defaults from the «Вводные» sheet. They change only what a visitor
+ * sees before editing; the Base Object and historical baselines used by the
+ * calculation core stay as built.
+ */
+export function setSheetInputs(next: SheetInputs) {
+  sheetInputs = { ...next };
+}
+
+function sheetNumber(value: unknown) {
+  return typeof value === "number" && Number.isFinite(value) && value >= 0 ? value : undefined;
+}
+
+function sheetChoice<T extends string | number>(value: unknown, allowed: readonly T[]) {
+  return allowed.find((item) => String(item) === String(value));
+}
+
+function applySheetInputs(base: InvestorConfiguration, inputs: SheetInputs): InvestorConfiguration {
+  if (!Object.keys(inputs).length) return base;
+  const launchBudget = { ...base.launchBudget };
+
+  launchBudget.premisesScenario = sheetChoice(inputs.premises_mode, ["rent", "purchase"] as const) ?? launchBudget.premisesScenario;
+  launchBudget.monthlyRentRub = sheetNumber(inputs.rent_monthly_rub) ?? launchBudget.monthlyRentRub;
+  launchBudget.purchasePriceRub = sheetNumber(inputs.purchase_price_rub) ?? launchBudget.purchasePriceRub;
+  launchBudget.prepaymentMonths = sheetChoice(inputs.rent_prepayment_months, [1, 3, 12] as const) ?? launchBudget.prepaymentMonths;
+  launchBudget.securityDepositMonths = sheetChoice(inputs.rent_deposit_months, [1, 2, 3] as const) ?? launchBudget.securityDepositMonths;
+  launchBudget.operatingReserveMonths = sheetChoice(inputs.operating_reserve_months, [3, 6, 9] as const) ?? launchBudget.operatingReserveMonths;
+  launchBudget.contingencyPercent = sheetChoice(inputs.contingency_percent, [5, 10, 15] as const) ?? launchBudget.contingencyPercent;
+  launchBudget.equipmentScenarioId = sheetChoice(inputs.equipment_level, ["MINIMUM", "BASE", "SCALE_READY"] as const) ?? launchBudget.equipmentScenarioId;
+  if (typeof inputs.bar_enabled === "boolean") launchBudget.barEnabled = inputs.bar_enabled;
+
+  const rentFreeMonths = sheetNumber(inputs.rent_free_months);
+  if (rentFreeMonths !== undefined) launchBudget.rentFreeMonths = Math.floor(rentFreeMonths);
+
+  const totalAreaM2 = sheetNumber(inputs.area_total_m2) ?? launchBudget.totalAreaM2;
+  const kitchenAreaM2 = sheetNumber(inputs.area_kitchen_m2) ?? launchBudget.kitchenAreaM2;
+  const guestAreaM2 = sheetNumber(inputs.area_guest_m2) ?? launchBudget.guestAreaM2;
+  if (totalAreaM2 !== null && kitchenAreaM2 !== null && guestAreaM2 !== null && totalAreaM2 >= kitchenAreaM2 + guestAreaM2) {
+    launchBudget.totalAreaM2 = totalAreaM2;
+    launchBudget.kitchenAreaM2 = kitchenAreaM2;
+    launchBudget.guestAreaM2 = guestAreaM2;
+  }
+
+  const preparationRub = sheetNumber(inputs.preparation_rub);
+  if (preparationRub !== undefined) {
+    launchBudget.preparationMode = "manual";
+    launchBudget.preparationManualRub = preparationRub;
+  }
+
+  const checksPerDay = sheetNumber(inputs.checks_per_day);
+  return {
+    ...base,
+    scenarioId: sheetChoice(inputs.scenario_default, investorScenarioIds) ?? base.scenarioId,
+    customChecksPerDay: checksPerDay !== undefined && checksPerDay >= 1 ? Math.floor(checksPerDay) : base.customChecksPerDay,
+    launchBudget,
+    networkScaling: defaultNetworkScalingConfiguration(launchBudget),
+  };
+}
+
 /** Kept as the runtime default; its context is explicitly Current Base Object. */
 export function defaultInvestorConfiguration(): InvestorConfiguration {
-  return currentBaseObjectInvestorConfiguration();
+  return applySheetInputs(currentBaseObjectInvestorConfiguration(), sheetInputs);
 }
 
 export function restoreInvestorConfiguration(value: unknown): InvestorConfiguration {
@@ -683,6 +767,20 @@ export function investorConfigurationIsBaseline(configuration: InvestorConfigura
 function calculationState(configuration: InvestorConfiguration) {
   const { preparationAccordionOpen, operatingReserveAccordionOpen, ...launchBudget } = configuration.launchBudget;
   return { ...configuration, launchBudget };
+}
+
+function stableJson(value: unknown): string {
+  if (Array.isArray(value)) return `[${value.map(stableJson).join(",")}]`;
+  if (value && typeof value === "object") {
+    const entries = Object.entries(value as Record<string, unknown>).filter(([, item]) => item !== undefined);
+    return `{${entries.sort(([left], [right]) => (left < right ? -1 : 1)).map(([key, item]) => `${JSON.stringify(key)}:${stableJson(item)}`).join(",")}}`;
+  }
+  return JSON.stringify(value) ?? "null";
+}
+
+/** True while the visitor has not changed anything, scenario and traffic included. */
+export function investorConfigurationIsDefault(configuration: InvestorConfiguration) {
+  return stableJson(calculationState(configuration)) === stableJson(calculationState(defaultInvestorConfiguration()));
 }
 
 export function investorConfigurationIsCurrentBaseFullPreparation(configuration: InvestorConfiguration) {

@@ -1,0 +1,156 @@
+{
+  "inputs": [
+    {
+      "key": "scenario_default",
+      "title": "Сценарий по умолчанию",
+      "unit": "",
+      "type": "choice",
+      "choices": ["pessimistic", "realistic", "optimistic"],
+      "default": "realistic",
+      "comment": "Какой сценарий открыт у нового посетителя: pessimistic, realistic или optimistic."
+    },
+    {
+      "key": "checks_per_day",
+      "title": "Чеков в день",
+      "unit": "чеков",
+      "type": "integer",
+      "min": 1,
+      "max": 100000,
+      "default": 300,
+      "comment": "Поток гостей первой точки. От него считается выручка. Кнопки сценариев на сайте по-прежнему ставят 200, 300 и 450."
+    },
+    {
+      "key": "premises_mode",
+      "title": "Режим помещения",
+      "unit": "",
+      "type": "choice",
+      "choices": ["rent", "purchase"],
+      "default": "rent",
+      "comment": "rent — аренда, purchase — покупка."
+    },
+    {
+      "key": "rent_monthly_rub",
+      "title": "Аренда в месяц",
+      "unit": "₽",
+      "type": "number",
+      "min": 0,
+      "max": 1000000000,
+      "default": 500000,
+      "comment": "Входит в операционные расходы, предоплату и обеспечительный платёж."
+    },
+    {
+      "key": "rent_prepayment_months",
+      "title": "Предоплата аренды",
+      "unit": "мес.",
+      "type": "integer",
+      "allowed": [1, 3, 12],
+      "default": 12,
+      "comment": "Допустимо 1, 3 или 12. Входит в стартовые инвестиции."
+    },
+    {
+      "key": "rent_deposit_months",
+      "title": "Обеспечительный платёж",
+      "unit": "мес.",
+      "type": "integer",
+      "allowed": [1, 2, 3],
+      "default": 2,
+      "comment": "Допустимо 1, 2 или 3. Входит в стартовые инвестиции."
+    },
+    {
+      "key": "rent_free_months",
+      "title": "Арендные каникулы",
+      "unit": "мес.",
+      "type": "integer",
+      "min": 0,
+      "max": 60,
+      "default": 2,
+      "comment": "Сколько месяцев после получения помещения аренда не начисляется."
+    },
+    {
+      "key": "purchase_price_rub",
+      "title": "Стоимость помещения при покупке",
+      "unit": "₽",
+      "type": "number",
+      "min": 0,
+      "max": 100000000000,
+      "default": 69000000,
+      "comment": "Работает в режиме purchase."
+    },
+    {
+      "key": "area_total_m2",
+      "title": "Общая площадь",
+      "unit": "м²",
+      "type": "number",
+      "min": 0,
+      "max": 100000,
+      "default": 200,
+      "comment": "Должна быть не меньше суммы кухни и зала, иначе три площади не применяются."
+    },
+    {
+      "key": "area_kitchen_m2",
+      "title": "Кухня и производство",
+      "unit": "м²",
+      "type": "number",
+      "min": 0,
+      "max": 100000,
+      "default": 90,
+      "comment": ""
+    },
+    {
+      "key": "area_guest_m2",
+      "title": "Посадочный зал",
+      "unit": "м²",
+      "type": "number",
+      "min": 0,
+      "max": 100000,
+      "default": 80,
+      "comment": "От площади зала считается число мест и стоимость мебели."
+    },
+    {
+      "key": "preparation_rub",
+      "title": "Подготовка помещения одной суммой",
+      "unit": "₽",
+      "type": "number",
+      "min": 0,
+      "max": 100000000000,
+      "optional": true,
+      "default": null,
+      "comment": "Пусто — сайт считает подготовку по составу работ (сейчас 3 500 000 ₽). Число — берётся эта сумма."
+    },
+    {
+      "key": "equipment_level",
+      "title": "Комплектация оборудования",
+      "unit": "",
+      "type": "choice",
+      "choices": ["MINIMUM", "BASE", "SCALE_READY"],
+      "default": "BASE",
+      "comment": "MINIMUM — минимальная, BASE — базовая, SCALE_READY — с запасом."
+    },
+    {
+      "key": "bar_enabled",
+      "title": "Бар и напитки",
+      "unit": "",
+      "type": "boolean",
+      "default": true,
+      "comment": "да или нет."
+    },
+    {
+      "key": "operating_reserve_months",
+      "title": "Операционный запас",
+      "unit": "мес.",
+      "type": "integer",
+      "allowed": [3, 6, 9],
+      "default": 6,
+      "comment": "Допустимо 3, 6 или 9. Входит в стартовые инвестиции."
+    },
+    {
+      "key": "contingency_percent",
+      "title": "Непредвиденные расходы",
+      "unit": "%",
+      "type": "integer",
+      "allowed": [5, 10, 15],
+      "default": 10,
+      "comment": "Допустимо 5, 10 или 15."
+    }
+  ]
+}

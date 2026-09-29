@@ -9,6 +9,8 @@ const dataDir = process.env.CONTACT_DATA_DIR || path.resolve(process.cwd(), "run
 const leadsFile = process.env.CONTACT_LEADS_FILE || path.join(dataDir, "contacts.jsonl");
 const adminPassword = process.env.CONTACT_ADMIN_PASSWORD || "";
 const adminSecret = process.env.CONTACT_ADMIN_SECRET || adminPassword || "kolob-local-admin";
+const adminLinkKey = process.env.CONTACT_ADMIN_LINK_KEY || "";
+const adminLinkKeyMinLength = 32;
 const cookieName = "kolob_leads_auth";
 const maxBodyBytes = 64 * 1024;
 const controlStaticRoot = path.resolve(process.env.CONTROL_STATIC_ROOT || path.resolve(process.cwd(), "control-dist"));
@@ -95,6 +97,19 @@ function isAuthorized(req) {
   if (!adminPassword) return false;
   const cookies = parseCookies(req);
   return typeof cookies[cookieName] === "string" && safeCompare(cookies[cookieName], authToken());
+}
+
+function isValidLinkKey(value) {
+  if (!adminPassword || adminLinkKey.length < adminLinkKeyMinLength) return false;
+  return safeCompare(hash(value), hash(adminLinkKey));
+}
+
+function linkKeyFromPath(pathname) {
+  try {
+    return decodeURIComponent(pathname.slice("/control/key/".length)).replace(/^\/+|\/+$/g, "");
+  } catch {
+    return "";
+  }
 }
 
 function readBody(req) {
@@ -489,6 +504,12 @@ const server = createServer(async (req, res) => {
     const legacyPath = url.pathname.replace(/\/+$/, "") || "/";
     if (req.method === "GET" && legacyRedirects.has(legacyPath)) {
       redirect(res, `${legacyRedirects.get(legacyPath)}${url.search}`, {}, 308);
+      return;
+    }
+
+    if (req.method === "GET" && url.pathname.startsWith("/control/key/")) {
+      if (isValidLinkKey(linkKeyFromPath(url.pathname))) redirect(res, "/control", { "Set-Cookie": authCookie(req), ...privateHeaders("/control") });
+      else textResponse(res, 404, "Not found", privateHeaders("/control"));
       return;
     }
 

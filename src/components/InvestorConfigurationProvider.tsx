@@ -1,15 +1,18 @@
-import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import {
   currentBaseObjectFullPreparationConfiguration,
   defaultInvestorConfiguration,
   defaultNetworkScalingConfiguration,
+  investorConfigurationIsDefault,
   investorConfigurationStorageKey,
   restoreInvestorConfiguration,
+  setSheetInputs,
   type InvestorConfiguration,
   type InvestorScenarioId,
   type NetworkScalingConfiguration,
 } from "../lib/investor-configuration";
 import { launchModel, restoreLaunchBudgetState, type LaunchBudgetState } from "../lib/launch-budget";
+import { loadSheetInputs, withoutScenarioTraffic } from "../lib/sheet-inputs";
 
 type InvestorConfigurationContextValue = {
   configuration: InvestorConfiguration;
@@ -43,14 +46,34 @@ function initialConfiguration() {
 
 export function InvestorConfigurationProvider({ children }: { children: ReactNode }) {
   const [configuration, setConfiguration] = useState<InvestorConfiguration>(initialConfiguration);
+  const [sheetInputsVersion, setSheetInputsVersion] = useState(0);
+  const latestConfiguration = useRef(configuration);
+  latestConfiguration.current = configuration;
+
+  useEffect(() => {
+    let active = true;
+    void loadSheetInputs().then((inputs) => {
+      if (!active || !inputs) return;
+      // A visitor who has not edited anything follows the sheet; saved edits win.
+      const untouched = investorConfigurationIsDefault(latestConfiguration.current);
+      setSheetInputs(withoutScenarioTraffic(inputs));
+      if (untouched) setConfiguration(defaultInvestorConfiguration());
+      setSheetInputsVersion((version) => version + 1);
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
 
   useEffect(() => {
     try {
-      window.localStorage.setItem(investorConfigurationStorageKey, JSON.stringify(configuration));
+      // Untouched defaults are not stored: they must keep following the sheet on the next visit.
+      if (investorConfigurationIsDefault(configuration)) window.localStorage.removeItem(investorConfigurationStorageKey);
+      else window.localStorage.setItem(investorConfigurationStorageKey, JSON.stringify(configuration));
     } catch {
       // Runtime configuration is optional local state; it never changes canonical project data.
     }
-  }, [configuration]);
+  }, [configuration, sheetInputsVersion]);
 
   const value = useMemo<InvestorConfigurationContextValue>(() => ({
     configuration,
@@ -93,7 +116,7 @@ export function InvestorConfigurationProvider({ children }: { children: ReactNod
       setConfiguration(currentBaseObjectFullPreparationConfiguration());
     },
     applyReadyPremisesPreset: () => setConfiguration(defaultInvestorConfiguration()),
-  }), [configuration]);
+  }), [configuration, sheetInputsVersion]);
 
   return <InvestorConfigurationContext.Provider value={value}>{children}</InvestorConfigurationContext.Provider>;
 }

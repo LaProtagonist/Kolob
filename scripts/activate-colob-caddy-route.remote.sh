@@ -27,7 +27,7 @@ colob.spi.ski {
 		respond 404
 	}
 
-	@kolob_contact_backend path /api/contact /api/leads /api/leads.csv /leads /leads/* /control /control/* /investor/franchise-platform /investor/franchise-platform/* /capex-configurator /capex-configurator/ /launch-budget /launch-budget/ /revenue-model /revenue-model/ /economics /economics/ /health
+	@kolob_contact_backend path /api/contact /api/inputs /api/leads /api/leads.csv /leads /leads/* /control /control/* /investor/franchise-platform /investor/franchise-platform/* /capex-configurator /capex-configurator/ /launch-budget /launch-budget/ /revenue-model /revenue-model/ /economics /economics/ /health
 	handle @kolob_contact_backend {
 		reverse_proxy kolob-contact:8787
 	}

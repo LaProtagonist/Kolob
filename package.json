@@ -79,7 +79,11 @@
     "build:reproduce:sealed": "node scripts/check-sealed-build.mjs",
     "artifact:validate": "npm --prefix docs-platform/app run artifact:validate",
     "governance:validate": "npm --prefix docs-platform/app run governance:validate",
-    "contact:server": "node server/contact-server.mjs"
+    "contact:server": "node server/contact-server.mjs",
+    "admin:link": "bash scripts/admin-link.sh",
+    "backend:deploy": "bash ./synch_to_server.sh -backend",
+    "sheet:connect": "node scripts/sheet-connect.mjs",
+    "test:sheet": "node scripts/test-sheet-inputs.cjs"
   },
   "dependencies": {
     "react": "^19.2.1",

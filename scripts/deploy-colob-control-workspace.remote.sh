@@ -83,6 +83,11 @@ if [ -f "$APP_DIR/contact_server.py" ]; then
   mv "$APP_DIR/contact_server.py" "$APP_DIR/contact_server.py.bak.$STAMP"
 fi
 mv "$APP_NEXT" "$APP_DIR/contact_server.py"
+if [ -f "$APP_STAGE/inputs-schema.json" ]; then
+  cp "$APP_STAGE/inputs-schema.json" "$APP_DIR/inputs-schema.json.next.$STAMP"
+  chmod 644 "$APP_DIR/inputs-schema.json.next.$STAMP"
+  mv "$APP_DIR/inputs-schema.json.next.$STAMP" "$APP_DIR/inputs-schema.json"
+fi
 
 ENV_NEXT="$ENV_FILE.next.$STAMP"
 grep -v '^CONTROL_STATIC_ROOT=' "$ENV_FILE" > "$ENV_NEXT" || true

@@ -10,6 +10,7 @@ const distRoot = path.join(projectRoot, "dist");
 const port = Number(process.env.CONTROL_ROUTING_TEST_PORT || 18_000 + (process.pid % 1_000));
 const baseUrl = `http://127.0.0.1:${port}`;
 const password = "control-routing-test-password";
+const linkKey = "control-routing-test-link-key-0123456789abcdef";
 const controlRoutes = [
   ["/control/franchise-model", "Модель сети и франшизы"],
   ["/control", "Control"],
@@ -121,6 +122,7 @@ async function run() {
       CONTACT_DATA_DIR: dataDir,
       CONTACT_ADMIN_PASSWORD: password,
       CONTACT_ADMIN_SECRET: "control-routing-test-secret",
+      CONTACT_ADMIN_LINK_KEY: linkKey,
       CONTACT_COOKIE_SECURE: "0",
       CONTROL_STATIC_ROOT: controlRoot,
     },
@@ -165,6 +167,17 @@ async function run() {
       assert.match(response.headers.get("x-robots-tag") || "", /noindex/);
       assert.match(await response.text(), /\/control\/assets\//);
     }
+    const wrongKey = await request(`/control/key/${linkKey.slice(0, -1)}x`);
+    assert.equal(wrongKey.status, 404, "a wrong link key must not reveal the login flow");
+    assert.equal(wrongKey.headers.get("set-cookie"), null, "a wrong link key must not set a session");
+    assert.equal((await request("/control/key/")).status, 404, "an empty link key must be rejected");
+    const byLink = await request(`/control/key/${linkKey}`);
+    assert.equal(byLink.status, 303, "the link key opens a session");
+    assert.equal(byLink.headers.get("location"), "/control");
+    const linkCookie = responseCookie(byLink);
+    assert.equal(linkCookie, cookie, "the link key issues the same session as the password");
+    assert.equal((await request("/control/capex", { headers: { Cookie: linkCookie } })).status, 200, "the link session opens Control");
+
     const leads = await request("/leads", { headers: { Cookie: cookie } });
     assert.equal(leads.status, 200, "the Control session must also authorize /leads");
     assert.match(leads.headers.get("x-robots-tag") || "", /noindex/);
