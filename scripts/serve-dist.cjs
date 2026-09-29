@@ -91,6 +91,12 @@ const server = http.createServer((req, res) => {
     res.end();
     return;
   }
+  if (url.pathname === "/api/inputs") {
+    // The static preview has no backend: answer as a backend without a connected sheet.
+    res.writeHead(200, { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store" });
+    res.end(JSON.stringify({ ok: true, source: "defaults", fetchedAt: null, inputs: {} }));
+    return;
+  }
   const filePath = resolveRequestPath(url.pathname);
   if (!filePath) {
     const notFoundPath = resolveNotFoundPath();

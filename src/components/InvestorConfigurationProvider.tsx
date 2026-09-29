@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import {
   currentBaseObjectFullPreparationConfiguration,
   defaultInvestorConfiguration,
@@ -23,6 +23,7 @@ type InvestorConfigurationContextValue = {
   resetConfiguration: () => void;
   resetToCurrentBaseFullPreparation: () => void;
   applyReadyPremisesPreset: () => void;
+  requestSheetDefaults: () => void;
 };
 
 const InvestorConfigurationContext = createContext<InvestorConfigurationContextValue | null>(null);
@@ -50,19 +51,20 @@ export function InvestorConfigurationProvider({ children }: { children: ReactNod
   const latestConfiguration = useRef(configuration);
   latestConfiguration.current = configuration;
 
-  useEffect(() => {
-    let active = true;
+  const sheetDefaultsRequested = useRef(false);
+
+  // Only calculator pages ask for the sheet; the rest of the site never waits for it.
+  const requestSheetDefaults = useCallback(() => {
+    if (sheetDefaultsRequested.current) return;
+    sheetDefaultsRequested.current = true;
     void loadSheetInputs().then((inputs) => {
-      if (!active || !inputs) return;
+      if (!inputs) return;
       // A visitor who has not edited anything follows the sheet; saved edits win.
       const untouched = investorConfigurationIsDefault(latestConfiguration.current);
       setSheetInputs(withoutScenarioTraffic(inputs));
       if (untouched) setConfiguration(defaultInvestorConfiguration());
       setSheetInputsVersion((version) => version + 1);
     });
-    return () => {
-      active = false;
-    };
   }, []);
 
   useEffect(() => {
@@ -116,7 +118,8 @@ export function InvestorConfigurationProvider({ children }: { children: ReactNod
       setConfiguration(currentBaseObjectFullPreparationConfiguration());
     },
     applyReadyPremisesPreset: () => setConfiguration(defaultInvestorConfiguration()),
-  }), [configuration, sheetInputsVersion]);
+    requestSheetDefaults,
+  }), [configuration, sheetInputsVersion, requestSheetDefaults]);
 
   return <InvestorConfigurationContext.Provider value={value}>{children}</InvestorConfigurationContext.Provider>;
 }
@@ -124,5 +127,7 @@ export function InvestorConfigurationProvider({ children }: { children: ReactNod
 export function useInvestorConfiguration() {
   const value = useContext(InvestorConfigurationContext);
   if (!value) throw new Error("useInvestorConfiguration must be used within InvestorConfigurationProvider.");
+  const { requestSheetDefaults } = value;
+  useEffect(requestSheetDefaults, [requestSheetDefaults]);
   return value;
 }
