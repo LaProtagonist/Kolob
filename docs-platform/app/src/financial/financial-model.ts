@@ -1,5 +1,6 @@
 import crypto from "node:crypto";
 import fs from "node:fs";
+import { compatibleFinancialCapexImport } from "../capex/import-compatibility.js";
 import path from "node:path";
 import { Ajv2020 } from "ajv/dist/2020.js";
 import YAML from "yaml";
@@ -43,6 +44,8 @@ export const FINANCIAL_CONTENT_SOURCE_PATHS = [
   "src/lib/capex-runtime.ts",
   "src/lib/financial-assets.ts",
   "src/lib/launch-budget.ts",
+  "docs-platform/app/src/capex/import-compatibility.ts",
+  "docs-platform/working/capex-financial-import-pin.json",
 ] as const;
 
 export type SalesScenarioId = "pessimistic" | "realistic" | "optimistic";
@@ -754,7 +757,7 @@ export function validateFinancialModel(model = readFinancialModel(), root = proj
   const currentInvestor = rawFileSha256(model.imports.investor_start_model.path, root);
   const currentBom = rawFileSha256(model.imports.capex.equipment_bom_path, root);
   if (model.imports.revenue_model.content_state_sha256 !== currentRevenue) errors.push(`Stale Revenue input: expected ${model.imports.revenue_model.content_state_sha256}, actual ${currentRevenue}.`);
-  if (model.imports.capex.content_state_sha256 !== currentCapex) errors.push(`Stale CAPEX input: expected ${model.imports.capex.content_state_sha256}, actual ${currentCapex}.`);
+  if (model.imports.capex.content_state_sha256 !== currentCapex && !compatibleFinancialCapexImport(root, model.imports.capex.content_state_sha256)) errors.push(`Stale CAPEX input: expected ${model.imports.capex.content_state_sha256}, actual ${currentCapex}.`);
   if (model.imports.investor_start_model.file_sha256 !== currentInvestor) errors.push(`Stale Investor Start input: expected ${model.imports.investor_start_model.file_sha256}, actual ${currentInvestor}.`);
   if (model.imports.capex.equipment_bom_sha256 !== currentBom) errors.push(`Stale Equipment BOM input: expected ${model.imports.capex.equipment_bom_sha256}, actual ${currentBom}.`);
 

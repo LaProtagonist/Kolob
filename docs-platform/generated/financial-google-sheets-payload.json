@@ -5,8 +5,8 @@
     "title": "04 — Финансовая модель пилотного объекта",
     "folder_name": "Колобочная — Investment",
     "native_google_sheet": true,
-    "content_state_sha256": "cceb60a13c4ee09c1e7e5403fa90dbedbaa6dec1afed2d26c53a633c1b706ffb",
-    "financial_projection_sha256": "f65b092c0909ff8e45f3ee9e819b82d9bb559ecf64cf7194ce3e2f62f5986e42",
+    "content_state_sha256": "6aee03fe338d79dba1e38fc4a419e9470d4622849c7c6c341d20ba89a59e7930",
+    "financial_projection_sha256": "0f460bc37b34c7363599e8a71bffebf761a3c8d024f9d71461340b013d2701d1",
     "formula_input_mode": "USER_ENTERED"
   },
   "sheets": [
@@ -44,7 +44,7 @@
         ],
         [
           "Content state SHA-256",
-          "cceb60a13c4ee09c1e7e5403fa90dbedbaa6dec1afed2d26c53a633c1b706ffb"
+          "6aee03fe338d79dba1e38fc4a419e9470d4622849c7c6c341d20ba89a59e7930"
         ],
         [
           "Источник Revenue",
@@ -3413,7 +3413,7 @@
         [
           "DOC-CAPEX-GENERATED-EQUIPMENT-BOM",
           "Equipment CAPEX",
-          "a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239",
+          "836a08cb0e65d837b350704efb9fd28da800bdd0bdd2837f9eadb94b7d1c611c",
           "2026-08-16",
           "imported_canonical",
           "current",

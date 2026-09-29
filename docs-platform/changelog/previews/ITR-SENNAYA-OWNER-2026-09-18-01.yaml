@@ -1,0 +1,56 @@
+receipt_version: 1
+iteration_id: ITR-SENNAYA-OWNER-2026-09-18-01
+result: reviewed
+mutation_performed: false
+before_hash: 542e7ed87bdbb2464c25631c64030b901b925649ab5466a894c4fa4d68c6bbb1
+after_hash: bf2b6f39c73d928884e2881f0f7e5add3a4fd6941be79c034c5942aff9991e13
+operations:
+  - type: add
+    entity: sources
+    id: SRC-SENNAYA-OWNER-BRIEF-20260918
+    before: null
+    after:
+      id: SRC-SENNAYA-OWNER-BRIEF-20260918
+      title: "Сенная: сценарий использования коммерческой недвижимости"
+      type: instruction
+      location: Owner chat request, 2026-09-18
+      publisher: project owner
+      publication_date: 2026-09-18
+      accessed_at: 2026-09-18
+      reliability: primary
+      notes: Owner-provided final copy and five independent scope switches. Exclude operating reserve, deposits and rent entry from public budget; no payer allocation. No Git mutations, seal or publication.
+    before_index: null
+    after_index: 197
+    before_sha256: null
+    after_sha256: 149dff880e2e596944d135dcf3b680025797e08bdec9be0fc7f035631bd4e0c3
+    reverse_operation:
+      type: remove
+      entity: sources
+      id: SRC-SENNAYA-OWNER-BRIEF-20260918
+  - type: add
+    entity: decisions
+    id: DEC-SENNAYA-OWNER-2026-09-18-01
+    before: null
+    after:
+      id: DEC-SENNAYA-OWNER-2026-09-18-01
+      title: Сенная для покупателя недвижимости
+      status: approved
+      decision: Применить тексты владельца, пять переключателей состава работ с каноническим пересчётом резерва, исключить публичный операционный резерв и распределение плательщиков. Сохранить общую комплектацию и цены. Проверить ОФД как источник 5000 рублей.
+      rationale: Прямое разрешение владельца на изменение кода и governance; значения остаются исследовательскими, обязательств финансирования не возникает.
+      affected_documents:
+        - DOC-SENNAYA-FLAGSHIP
+      approved_by: project owner
+      approved_at: 2026-09-18
+      supersedes: null
+      source_ids:
+        - SRC-SENNAYA-OWNER-BRIEF-20260918
+      updated_at: 2026-09-18
+    before_index: null
+    after_index: 35
+    before_sha256: null
+    after_sha256: 3f228d872ca5980bba3fa8f2c5a468d11d7abcd758cb5bc5768598407692124a
+    reverse_operation:
+      type: remove
+      entity: decisions
+      id: DEC-SENNAYA-OWNER-2026-09-18-01
+canonical_changes: Owner copy, five scope groups and canonical contingency selection; no new financial engine or change to prices/other scenarios

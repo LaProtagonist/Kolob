@@ -86,6 +86,11 @@ const port = Number(getArg("--port", process.env.PORT || "4174"));
 
 const server = http.createServer((req, res) => {
   const url = new URL(req.url || "/", `http://${host}:${port}`);
+  if (url.pathname.replace(/\/+$/, "") === "/investor/franchise-platform/sennaya") {
+    res.writeHead(308, { Location: `/sennaya${url.search}`, "Cache-Control": "no-store" });
+    res.end();
+    return;
+  }
   const filePath = resolveRequestPath(url.pathname);
   if (!filePath) {
     const notFoundPath = resolveNotFoundPath();

@@ -23,6 +23,7 @@ export const CONTENT_SOURCE_PATHS = [
   "docs-platform/app/src/capex/register.ts",
   "docs-platform/app/src/capex/modular.ts",
   "docs-platform/app/src/capex/price-research.ts",
+  "src/lib/capex-composition.ts",
   "docs-platform/schemas/capex-web-snapshot.schema.json",
 ] as const;
 

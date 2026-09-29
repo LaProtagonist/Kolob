@@ -1,0 +1,10 @@
+schema_version: 2
+decision_id: DEC-SENNAYA-OWNER-2026-09-18-01
+iteration_id: ITR-SENNAYA-OWNER-2026-09-18-01
+title: Сенная — недвижимость и сценарий использования
+status: approved
+approved_by: project owner
+approved_at: 2026-09-18T11:52:05.376Z
+scope: Owner copy, five scope groups and canonical contingency selection; no new financial engine or change to prices/other scenarios
+approved_payload_path: docs-platform/changelog/payloads/ITR-SENNAYA-OWNER-2026-09-18-01-approved.yaml
+approved_payload_sha256: be9cba99929a3a3f44d9f17c0012131145aaa61189e8b98db13364f03908cbcf

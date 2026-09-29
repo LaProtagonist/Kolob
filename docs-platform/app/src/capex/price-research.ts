@@ -49,7 +49,7 @@ export type PriceScenarioValue = PriceQuote & {
 
 export type PriceResearchItem = {
   item_id: string;
-  module_id: "MOD-PREP" | "MOD-RETAIL-HOT" | "MOD-BAR" | "MOD-GROW" | "MOD-POS" | "MOD-KDS" | "MOD-WASH";
+  module_id: "MOD-PREP" | "MOD-RETAIL-HOT" | "MOD-BAR" | "MOD-GROW" | "MOD-POS" | "MOD-KDS" | "MOD-WASH" | "MOD-GUEST";
   valuation_status: "priced" | "quote_required";
   quote_status: "researched" | "quote_required";
   high_risk: boolean;
@@ -546,10 +546,10 @@ export function validatePriceResearch(research: CapexPriceResearch, register?: C
     const validate = new Ajv2020({ allErrors: true, strict: false }).compile(JSON.parse(fs.readFileSync(schemaPath, "utf8")));
     if (!validate(research)) errors.push(...(validate.errors ?? []).map(error => `schema ${error.instancePath || "/"} ${error.message}`));
   }
-  if (research.items.length !== CURRENT_PRICE_SCOPE_COUNT) errors.push(`Expected ${CURRENT_PRICE_SCOPE_COUNT} eligible price records, got ${research.items.length}.`);
+  if (research.items.length !== research.scope.eligible_procurement_record_count) errors.push(`Expected ${CURRENT_PRICE_SCOPE_COUNT} eligible price records, got ${research.items.length}.`);
   const ids = research.items.map(item => item.item_id);
   if (new Set(ids).size !== ids.length) errors.push("Duplicate price research item_id.");
-  if (research.summary.priced_record_count + research.summary.unpriced_record_count !== CURRENT_PRICE_SCOPE_COUNT) errors.push(`Price coverage summary must total ${CURRENT_PRICE_SCOPE_COUNT}.`);
+  if (research.summary.priced_record_count + research.summary.unpriced_record_count !== research.items.length) errors.push(`Price coverage summary must total ${CURRENT_PRICE_SCOPE_COUNT}.`);
   for (const item of research.items) {
     if (item.valuation_status === "priced") {
       for (const scenario of PRICE_SCENARIOS) {

@@ -6,14 +6,14 @@ document:
   russian_title: CAPEX — Первичная ценовая оценка пищевого оснащения
   version: "0.4"
   status: research
-  decision_id: DEC-015
-  iteration_id: ITR-CAPEX-REMAINING-PRICES-2026-08-05-01
-  proposal_id: PROP-CAPEX-REMAINING-PRICES-2026-08-05-01
-  checked_at: 2026-08-05T18:14:24.000Z
+  decision_id: DEC-SENNAYA-CAPEX-2026-09-17-02
+  iteration_id: ITR-SENNAYA-CAPEX-2026-09-17-02
+  proposal_id: PROP-SENNAYA-CAPEX-2026-09-17-02
+  checked_at: 2026-09-17T18:00:00.000Z
   currency: RUB
   source_register_path: docs-platform/working/capex-equipment-register.yaml
   source_register_before_sha256: e5e835ecae0d0d433afd24cff8923026097d115d87c234f1af475c463bb8f6e0
-  warning: Цены имеют статус research и quote_required; они перенесены из утверждённого владельцем payload без нового интернет-исследования и не являются коммерческими предложениями или окончательным CAPEX.
+  warning: Цены прежних записей сохранены. Дополнительные позиции общей торговой точки — исследование 17.09.2026, не коммерческая смета и не утверждённый бюджет. Одинаковая цена трёх сценариев означает одну выбранную модель, а не подтверждённую производительность.
 business_capacity:
   prep_outlet_count: 5
   checks_per_outlet_per_day: 100
@@ -28,9 +28,8 @@ scope:
     - MOD-POS
     - MOD-KDS
     - MOD-WASH
-  excluded_modules_and_categories:
     - MOD-GUEST
-    - CAPEX-05
+  excluded_modules_and_categories:
     - ремонт
     - инженерное проектирование и монтаж
     - пожарная безопасность
@@ -38,7 +37,7 @@ scope:
     - оборотный капитал
     - резерв
     - ещё не сформированные разделы
-  eligible_procurement_record_count: 51
+  eligible_procurement_record_count: 70
 items:
   - item_id: CAPEX-01-001
     module_id: MOD-PREP
@@ -348,7 +347,7 @@ items:
         confidence: high
         notes: Цена за один профессиональный нержавеющий стеллаж.
         source_id: SRC-PRICE-20260802-RACK-MINIMUM
-        additional_urls: &a4 []
+        additional_urls: []
         checked_at: 2026-08-01T22:19:05.000Z
         price_includes_vat: null
         delivery_included: null
@@ -364,7 +363,7 @@ items:
         confidence: high
         notes: Цена за один профессиональный нержавеющий стеллаж.
         source_id: SRC-PRICE-20260802-RACK-BASE
-        additional_urls: &a5 []
+        additional_urls: []
         checked_at: 2026-08-01T22:19:05.000Z
         price_includes_vat: null
         delivery_included: null
@@ -380,7 +379,7 @@ items:
         confidence: high
         notes: Цена за один профессиональный нержавеющий стеллаж.
         source_id: SRC-PRICE-20260802-RACK-SCALE-READY
-        additional_urls: &a6 []
+        additional_urls: []
         checked_at: 2026-08-01T22:19:05.000Z
         price_includes_vat: null
         delivery_included: null
@@ -2014,7 +2013,7 @@ items:
         confidence: medium
         notes: Ориентир для компактного профессионального стола.
         source_id: SRC-PRICE-20260802-TABLE-GENERAL-MINIMUM
-        additional_urls: &a1 []
+        additional_urls: []
         checked_at: 2026-08-01T22:19:05.000Z
         price_includes_vat: null
         delivery_included: null
@@ -2030,7 +2029,7 @@ items:
         confidence: medium
         notes: Ориентир для базового профессионального стола.
         source_id: SRC-PRICE-20260802-TABLE-GENERAL-BASE
-        additional_urls: &a2 []
+        additional_urls: []
         checked_at: 2026-08-01T22:19:05.000Z
         price_includes_vat: null
         delivery_included: null
@@ -2046,7 +2045,7 @@ items:
         confidence: medium
         notes: Ориентир увеличенной рабочей поверхности.
         source_id: SRC-PRICE-20260802-TABLE-GENERAL-SCALE-READY
-        additional_urls: &a3 []
+        additional_urls: []
         checked_at: 2026-08-01T22:19:05.000Z
         price_includes_vat: null
         delivery_included: null
@@ -2070,7 +2069,7 @@ items:
         confidence: medium
         notes: Ориентир для компактного профессионального стола.
         source_id: SRC-PRICE-20260802-TABLE-GENERAL-MINIMUM
-        additional_urls: *a1
+        additional_urls: []
         checked_at: 2026-08-01T22:19:05.000Z
         price_includes_vat: null
         delivery_included: null
@@ -2086,7 +2085,7 @@ items:
         confidence: medium
         notes: Ориентир для базового профессионального стола.
         source_id: SRC-PRICE-20260802-TABLE-GENERAL-BASE
-        additional_urls: *a2
+        additional_urls: []
         checked_at: 2026-08-01T22:19:05.000Z
         price_includes_vat: null
         delivery_included: null
@@ -2102,7 +2101,7 @@ items:
         confidence: medium
         notes: Ориентир увеличенной рабочей поверхности.
         source_id: SRC-PRICE-20260802-TABLE-GENERAL-SCALE-READY
-        additional_urls: *a3
+        additional_urls: []
         checked_at: 2026-08-01T22:19:05.000Z
         price_includes_vat: null
         delivery_included: null
@@ -2126,7 +2125,7 @@ items:
         confidence: medium
         notes: Ориентир для компактного профессионального стола.
         source_id: SRC-PRICE-20260802-TABLE-GENERAL-MINIMUM
-        additional_urls: *a1
+        additional_urls: []
         checked_at: 2026-08-01T22:19:05.000Z
         price_includes_vat: null
         delivery_included: null
@@ -2142,7 +2141,7 @@ items:
         confidence: medium
         notes: Ориентир для базового профессионального стола.
         source_id: SRC-PRICE-20260802-TABLE-GENERAL-BASE
-        additional_urls: *a2
+        additional_urls: []
         checked_at: 2026-08-01T22:19:05.000Z
         price_includes_vat: null
         delivery_included: null
@@ -2158,7 +2157,7 @@ items:
         confidence: medium
         notes: Ориентир увеличенной рабочей поверхности.
         source_id: SRC-PRICE-20260802-TABLE-GENERAL-SCALE-READY
-        additional_urls: *a3
+        additional_urls: []
         checked_at: 2026-08-01T22:19:05.000Z
         price_includes_vat: null
         delivery_included: null
@@ -2182,7 +2181,7 @@ items:
         confidence: high
         notes: Цена за один профессиональный нержавеющий стеллаж.
         source_id: SRC-PRICE-20260802-RACK-MINIMUM
-        additional_urls: *a4
+        additional_urls: []
         checked_at: 2026-08-01T22:19:05.000Z
         price_includes_vat: null
         delivery_included: null
@@ -2198,7 +2197,7 @@ items:
         confidence: high
         notes: Цена за один профессиональный нержавеющий стеллаж.
         source_id: SRC-PRICE-20260802-RACK-BASE
-        additional_urls: *a5
+        additional_urls: []
         checked_at: 2026-08-01T22:19:05.000Z
         price_includes_vat: null
         delivery_included: null
@@ -2214,7 +2213,7 @@ items:
         confidence: high
         notes: Цена за один профессиональный нержавеющий стеллаж.
         source_id: SRC-PRICE-20260802-RACK-SCALE-READY
-        additional_urls: *a6
+        additional_urls: []
         checked_at: 2026-08-01T22:19:05.000Z
         price_includes_vat: null
         delivery_included: null
@@ -2772,7 +2771,7 @@ items:
         confidence: medium
         notes: Аппаратная часть POS; фискализация, эквайринг, ПО, лицензии, внедрение и периферия не включены.
         source_id: SRC-PRICE-20260802-POS-TERMINAL-MINIMUM
-        additional_urls: &a7 []
+        additional_urls: []
         checked_at: 2026-08-01T22:19:05.000Z
         price_includes_vat: null
         delivery_included: null
@@ -2788,7 +2787,7 @@ items:
         confidence: medium
         notes: Аппаратная часть POS; ПО и периферия не включены.
         source_id: SRC-PRICE-20260802-POS-TERMINAL-BASE
-        additional_urls: &a8 []
+        additional_urls: []
         checked_at: 2026-08-01T22:19:05.000Z
         price_includes_vat: null
         delivery_included: null
@@ -2804,7 +2803,7 @@ items:
         confidence: medium
         notes: Аппаратная часть POS с резервом; ПО, фискализация и периферия не включены.
         source_id: SRC-PRICE-20260802-POS-TERMINAL-SCALE-READY
-        additional_urls: &a9 []
+        additional_urls: []
         checked_at: 2026-08-01T22:19:05.000Z
         price_includes_vat: null
         delivery_included: null
@@ -2828,7 +2827,7 @@ items:
         confidence: medium
         notes: Аппаратная часть POS; фискализация, эквайринг, ПО, лицензии, внедрение и периферия не включены.
         source_id: SRC-PRICE-20260802-POS-TERMINAL-MINIMUM
-        additional_urls: *a7
+        additional_urls: []
         checked_at: 2026-08-01T22:19:05.000Z
         price_includes_vat: null
         delivery_included: null
@@ -2844,7 +2843,7 @@ items:
         confidence: medium
         notes: Аппаратная часть POS; ПО и периферия не включены.
         source_id: SRC-PRICE-20260802-POS-TERMINAL-BASE
-        additional_urls: *a8
+        additional_urls: []
         checked_at: 2026-08-01T22:19:05.000Z
         price_includes_vat: null
         delivery_included: null
@@ -2860,7 +2859,7 @@ items:
         confidence: medium
         notes: Аппаратная часть POS с резервом; ПО, фискализация и периферия не включены.
         source_id: SRC-PRICE-20260802-POS-TERMINAL-SCALE-READY
-        additional_urls: *a9
+        additional_urls: []
         checked_at: 2026-08-01T22:19:05.000Z
         price_includes_vat: null
         delivery_included: null
@@ -2884,7 +2883,7 @@ items:
         confidence: medium
         notes: Аппаратная часть POS; фискализация, эквайринг, ПО, лицензии, внедрение и периферия не включены.
         source_id: SRC-PRICE-20260802-POS-TERMINAL-MINIMUM
-        additional_urls: *a7
+        additional_urls: []
         checked_at: 2026-08-01T22:19:05.000Z
         price_includes_vat: null
         delivery_included: null
@@ -2900,7 +2899,7 @@ items:
         confidence: medium
         notes: Аппаратная часть POS; ПО и периферия не включены.
         source_id: SRC-PRICE-20260802-POS-TERMINAL-BASE
-        additional_urls: *a8
+        additional_urls: []
         checked_at: 2026-08-01T22:19:05.000Z
         price_includes_vat: null
         delivery_included: null
@@ -2916,7 +2915,7 @@ items:
         confidence: medium
         notes: Аппаратная часть POS с резервом; ПО, фискализация и периферия не включены.
         source_id: SRC-PRICE-20260802-POS-TERMINAL-SCALE-READY
-        additional_urls: *a9
+        additional_urls: []
         checked_at: 2026-08-01T22:19:05.000Z
         price_includes_vat: null
         delivery_included: null
@@ -2986,24 +2985,809 @@ items:
         quantity_basis: register
         line_total_rub: 304101.33
     notes: "Композит: машина 214 410 ₽ + предмоечный стол 48 486 ₽ + выходной стол 23 128 ₽ + три кассеты 6 207 ₽ + умягчитель 11 870,33 ₽. Доставка, монтаж, химия, вода, канализация и электрическое подключение не включены."
+  - item_id: CAPEX-02-058
+    module_id: MOD-RETAIL-HOT
+    valuation_status: priced
+    quote_status: quote_required
+    high_risk: true
+    risk_reason: Исследовательская цена; техническая применимость и КП ещё не подтверждены.
+    scenarios:
+      minimum:
+        source_id: SRC-PRICE-20260917-02-058
+        source_type: supplier_product_card
+        supplier_name: Polair Shop
+        product_name: Polair CM107-S / 1001170d
+        source_url: https://www.polair-shop.ru/catalog/kholodilnye-shkafy/holodilnie_shkafi_s_metallicheskimi_dvermi/hs_standard2/cm107-s/
+        additional_urls: []
+        observed_unit_price_rub: 77493
+        availability_status: research; verify quotation before purchase
+        checked_at: 2026-09-17T18:00:00.000Z
+        price_includes_vat: true
+        delivery_included: false
+        confidence: medium
+        notes: 700 л номинально; 0…+6 °C; 697×925×1960 мм. Цена для центрального региона; перевозка в СПб, разгрузка и подключение не включены. Полезный объём и размещение дневного запаса ещё не проверены.
+        quantity: 2
+        quantity_basis: research_assumption
+        line_total_rub: 154986
+      base:
+        source_id: SRC-PRICE-20260917-02-058
+        source_type: supplier_product_card
+        supplier_name: Polair Shop
+        product_name: Polair CM107-S / 1001170d
+        source_url: https://www.polair-shop.ru/catalog/kholodilnye-shkafy/holodilnie_shkafi_s_metallicheskimi_dvermi/hs_standard2/cm107-s/
+        additional_urls: []
+        observed_unit_price_rub: 77493
+        availability_status: research; verify quotation before purchase
+        checked_at: 2026-09-17T18:00:00.000Z
+        price_includes_vat: true
+        delivery_included: false
+        confidence: medium
+        notes: 700 л номинально; 0…+6 °C; 697×925×1960 мм. Цена для центрального региона; перевозка в СПб, разгрузка и подключение не включены. Полезный объём и размещение дневного запаса ещё не проверены.
+        quantity: 2
+        quantity_basis: research_assumption
+        line_total_rub: 154986
+      scale_ready:
+        source_id: SRC-PRICE-20260917-02-058
+        source_type: supplier_product_card
+        supplier_name: Polair Shop
+        product_name: Polair CM107-S / 1001170d
+        source_url: https://www.polair-shop.ru/catalog/kholodilnye-shkafy/holodilnie_shkafi_s_metallicheskimi_dvermi/hs_standard2/cm107-s/
+        additional_urls: []
+        observed_unit_price_rub: 77493
+        availability_status: research; verify quotation before purchase
+        checked_at: 2026-09-17T18:00:00.000Z
+        price_includes_vat: true
+        delivery_included: false
+        confidence: medium
+        notes: 700 л номинально; 0…+6 °C; 697×925×1960 мм. Цена для центрального региона; перевозка в СПб, разгрузка и подключение не включены. Полезный объём и размещение дневного запаса ещё не проверены.
+        quantity: 2
+        quantity_basis: research_assumption
+        line_total_rub: 154986
+    notes: 700 л номинально; 0…+6 °C; 697×925×1960 мм. Цена для центрального региона; перевозка в СПб, разгрузка и подключение не включены. Полезный объём и размещение дневного запаса ещё не проверены.
+  - item_id: CAPEX-02-059
+    module_id: MOD-RETAIL-HOT
+    valuation_status: priced
+    quote_status: quote_required
+    high_risk: true
+    risk_reason: Исследовательская цена; техническая применимость и КП ещё не подтверждены.
+    scenarios:
+      minimum:
+        source_id: SRC-PRICE-20260917-02-059
+        source_type: supplier_product_card
+        supplier_name: Frostor
+        product_name: Frostor F400S
+        source_url: https://frostor.ru/catalog/morozilnye_lari/f-400-s/
+        additional_urls: []
+        observed_unit_price_rub: 46296
+        availability_status: research; verify quotation before purchase
+        checked_at: 2026-09-17T18:00:00.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: medium
+        notes: 380 л охлаждаемого объёма; −18…−22 °C; 1200×600×840 мм; 230 В, 140 Вт; две корзины. Цена акции; доставка в СПб и подключение не включены. Полезная загрузка требует проверки.
+        quantity: 1
+        quantity_basis: research_assumption
+        line_total_rub: 46296
+      base:
+        source_id: SRC-PRICE-20260917-02-059
+        source_type: supplier_product_card
+        supplier_name: Frostor
+        product_name: Frostor F400S
+        source_url: https://frostor.ru/catalog/morozilnye_lari/f-400-s/
+        additional_urls: []
+        observed_unit_price_rub: 46296
+        availability_status: research; verify quotation before purchase
+        checked_at: 2026-09-17T18:00:00.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: medium
+        notes: 380 л охлаждаемого объёма; −18…−22 °C; 1200×600×840 мм; 230 В, 140 Вт; две корзины. Цена акции; доставка в СПб и подключение не включены. Полезная загрузка требует проверки.
+        quantity: 1
+        quantity_basis: research_assumption
+        line_total_rub: 46296
+      scale_ready:
+        source_id: SRC-PRICE-20260917-02-059
+        source_type: supplier_product_card
+        supplier_name: Frostor
+        product_name: Frostor F400S
+        source_url: https://frostor.ru/catalog/morozilnye_lari/f-400-s/
+        additional_urls: []
+        observed_unit_price_rub: 46296
+        availability_status: research; verify quotation before purchase
+        checked_at: 2026-09-17T18:00:00.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: medium
+        notes: 380 л охлаждаемого объёма; −18…−22 °C; 1200×600×840 мм; 230 В, 140 Вт; две корзины. Цена акции; доставка в СПб и подключение не включены. Полезная загрузка требует проверки.
+        quantity: 1
+        quantity_basis: research_assumption
+        line_total_rub: 46296
+    notes: 380 л охлаждаемого объёма; −18…−22 °C; 1200×600×840 мм; 230 В, 140 Вт; две корзины. Цена акции; доставка в СПб и подключение не включены. Полезная загрузка требует проверки.
+  - item_id: CAPEX-04-004
+    module_id: MOD-POS
+    valuation_status: priced
+    quote_status: quote_required
+    high_risk: true
+    risk_reason: Исследовательская цена; техническая применимость и КП ещё не подтверждены.
+    scenarios:
+      minimum:
+        source_id: SRC-PRICE-20260917-04-004
+        source_type: supplier_product_card
+        supplier_name: Гексагон
+        product_name: АТОЛ 30Ф, ФН 1.2 36 месяцев / 58205
+        source_url: https://geksagon.ru/ru/product/atol-30f/
+        additional_urls: []
+        observed_unit_price_rub: 50600
+        availability_status: research; verify quotation before purchase
+        checked_at: 2026-09-17T18:00:00.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: medium
+        notes: ФН и встроенный чековый принтер включены; USB, 44–58 мм, 75 мм/с; БП и USB-кабель включены. Регистрация, ОФД и внедрение отдельно. Применимость срока ФН уточнить после выбора налогового режима.
+        quantity: 2
+        quantity_basis: research_assumption
+        line_total_rub: 101200
+      base:
+        source_id: SRC-PRICE-20260917-04-004
+        source_type: supplier_product_card
+        supplier_name: Гексагон
+        product_name: АТОЛ 30Ф, ФН 1.2 36 месяцев / 58205
+        source_url: https://geksagon.ru/ru/product/atol-30f/
+        additional_urls: []
+        observed_unit_price_rub: 50600
+        availability_status: research; verify quotation before purchase
+        checked_at: 2026-09-17T18:00:00.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: medium
+        notes: ФН и встроенный чековый принтер включены; USB, 44–58 мм, 75 мм/с; БП и USB-кабель включены. Регистрация, ОФД и внедрение отдельно. Применимость срока ФН уточнить после выбора налогового режима.
+        quantity: 2
+        quantity_basis: research_assumption
+        line_total_rub: 101200
+      scale_ready:
+        source_id: SRC-PRICE-20260917-04-004
+        source_type: supplier_product_card
+        supplier_name: Гексагон
+        product_name: АТОЛ 30Ф, ФН 1.2 36 месяцев / 58205
+        source_url: https://geksagon.ru/ru/product/atol-30f/
+        additional_urls: []
+        observed_unit_price_rub: 50600
+        availability_status: research; verify quotation before purchase
+        checked_at: 2026-09-17T18:00:00.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: medium
+        notes: ФН и встроенный чековый принтер включены; USB, 44–58 мм, 75 мм/с; БП и USB-кабель включены. Регистрация, ОФД и внедрение отдельно. Применимость срока ФН уточнить после выбора налогового режима.
+        quantity: 2
+        quantity_basis: research_assumption
+        line_total_rub: 101200
+    notes: ФН и встроенный чековый принтер включены; USB, 44–58 мм, 75 мм/с; БП и USB-кабель включены. Регистрация, ОФД и внедрение отдельно. Применимость срока ФН уточнить после выбора налогового режима.
+  - item_id: CAPEX-04-005
+    module_id: MOD-POS
+    valuation_status: priced
+    quote_status: quote_required
+    high_risk: true
+    risk_reason: Исследовательская цена; техническая применимость и КП ещё не подтверждены.
+    scenarios:
+      minimum:
+        source_id: SRC-PRICE-20260917-04-005
+        source_type: supplier_product_card
+        supplier_name: TP-Link.ru
+        product_name: TP-Link ER605
+        source_url: https://tp-link.ru/catalog/marshrutizatory/er605-tl-r605/
+        additional_urls: []
+        observed_unit_price_rub: 5990
+        availability_status: research; verify quotation before purchase
+        checked_at: 2026-09-17T18:00:00.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: medium
+        notes: Гигабитный маршрутизатор; резервирование WAN при подключении второго канала. Под заказ; второй канал, кабели и настройка не включены.
+        quantity: 1
+        quantity_basis: research_assumption
+        line_total_rub: 5990
+      base:
+        source_id: SRC-PRICE-20260917-04-005
+        source_type: supplier_product_card
+        supplier_name: TP-Link.ru
+        product_name: TP-Link ER605
+        source_url: https://tp-link.ru/catalog/marshrutizatory/er605-tl-r605/
+        additional_urls: []
+        observed_unit_price_rub: 5990
+        availability_status: research; verify quotation before purchase
+        checked_at: 2026-09-17T18:00:00.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: medium
+        notes: Гигабитный маршрутизатор; резервирование WAN при подключении второго канала. Под заказ; второй канал, кабели и настройка не включены.
+        quantity: 1
+        quantity_basis: research_assumption
+        line_total_rub: 5990
+      scale_ready:
+        source_id: SRC-PRICE-20260917-04-005
+        source_type: supplier_product_card
+        supplier_name: TP-Link.ru
+        product_name: TP-Link ER605
+        source_url: https://tp-link.ru/catalog/marshrutizatory/er605-tl-r605/
+        additional_urls: []
+        observed_unit_price_rub: 5990
+        availability_status: research; verify quotation before purchase
+        checked_at: 2026-09-17T18:00:00.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: medium
+        notes: Гигабитный маршрутизатор; резервирование WAN при подключении второго канала. Под заказ; второй канал, кабели и настройка не включены.
+        quantity: 1
+        quantity_basis: research_assumption
+        line_total_rub: 5990
+    notes: Гигабитный маршрутизатор; резервирование WAN при подключении второго канала. Под заказ; второй канал, кабели и настройка не включены.
+  - item_id: CAPEX-04-006
+    module_id: MOD-POS
+    valuation_status: priced
+    quote_status: quote_required
+    high_risk: true
+    risk_reason: Исследовательская цена; техническая применимость и КП ещё не подтверждены.
+    scenarios:
+      minimum:
+        source_id: SRC-PRICE-20260917-04-006
+        source_type: supplier_product_card
+        supplier_name: TP-Link.ru
+        product_name: TP-Link EAP225
+        source_url: https://tp-link.ru/catalog/rasshirenie-seti-wi-fi/tochki-dostupa/eap225/
+        additional_urls: []
+        observed_unit_price_rub: 7390
+        availability_status: research; verify quotation before purchase
+        checked_at: 2026-09-17T18:00:00.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: medium
+        notes: AC1350; PoE. Покрытие, состав инжектора питания и монтаж проверить в проекте сети.
+        quantity: 1
+        quantity_basis: research_assumption
+        line_total_rub: 7390
+      base:
+        source_id: SRC-PRICE-20260917-04-006
+        source_type: supplier_product_card
+        supplier_name: TP-Link.ru
+        product_name: TP-Link EAP225
+        source_url: https://tp-link.ru/catalog/rasshirenie-seti-wi-fi/tochki-dostupa/eap225/
+        additional_urls: []
+        observed_unit_price_rub: 7390
+        availability_status: research; verify quotation before purchase
+        checked_at: 2026-09-17T18:00:00.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: medium
+        notes: AC1350; PoE. Покрытие, состав инжектора питания и монтаж проверить в проекте сети.
+        quantity: 1
+        quantity_basis: research_assumption
+        line_total_rub: 7390
+      scale_ready:
+        source_id: SRC-PRICE-20260917-04-006
+        source_type: supplier_product_card
+        supplier_name: TP-Link.ru
+        product_name: TP-Link EAP225
+        source_url: https://tp-link.ru/catalog/rasshirenie-seti-wi-fi/tochki-dostupa/eap225/
+        additional_urls: []
+        observed_unit_price_rub: 7390
+        availability_status: research; verify quotation before purchase
+        checked_at: 2026-09-17T18:00:00.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: medium
+        notes: AC1350; PoE. Покрытие, состав инжектора питания и монтаж проверить в проекте сети.
+        quantity: 1
+        quantity_basis: research_assumption
+        line_total_rub: 7390
+    notes: AC1350; PoE. Покрытие, состав инжектора питания и монтаж проверить в проекте сети.
+  - item_id: CAPEX-04-007
+    module_id: MOD-POS
+    valuation_status: priced
+    quote_status: quote_required
+    high_risk: true
+    risk_reason: Исследовательская цена; техническая применимость и КП ещё не подтверждены.
+    scenarios:
+      minimum:
+        source_id: SRC-PRICE-20260917-04-007
+        source_type: supplier_product_card
+        supplier_name: TP-Link.ru
+        product_name: TP-Link TL-SG108E
+        source_url: https://tp-link.ru/catalog/kommutatory/smart/tl-sg108e/
+        additional_urls: []
+        observed_unit_price_rub: 3890
+        availability_status: research; verify quotation before purchase
+        checked_at: 2026-09-17T18:00:00.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: medium
+        notes: 8 гигабитных портов, VLAN, без PoE. Под заказ; окончательный портовый баланс с видеонаблюдением и питание точки доступа требуют проверки.
+        quantity: 1
+        quantity_basis: research_assumption
+        line_total_rub: 3890
+      base:
+        source_id: SRC-PRICE-20260917-04-007
+        source_type: supplier_product_card
+        supplier_name: TP-Link.ru
+        product_name: TP-Link TL-SG108E
+        source_url: https://tp-link.ru/catalog/kommutatory/smart/tl-sg108e/
+        additional_urls: []
+        observed_unit_price_rub: 3890
+        availability_status: research; verify quotation before purchase
+        checked_at: 2026-09-17T18:00:00.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: medium
+        notes: 8 гигабитных портов, VLAN, без PoE. Под заказ; окончательный портовый баланс с видеонаблюдением и питание точки доступа требуют проверки.
+        quantity: 1
+        quantity_basis: research_assumption
+        line_total_rub: 3890
+      scale_ready:
+        source_id: SRC-PRICE-20260917-04-007
+        source_type: supplier_product_card
+        supplier_name: TP-Link.ru
+        product_name: TP-Link TL-SG108E
+        source_url: https://tp-link.ru/catalog/kommutatory/smart/tl-sg108e/
+        additional_urls: []
+        observed_unit_price_rub: 3890
+        availability_status: research; verify quotation before purchase
+        checked_at: 2026-09-17T18:00:00.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: medium
+        notes: 8 гигабитных портов, VLAN, без PoE. Под заказ; окончательный портовый баланс с видеонаблюдением и питание точки доступа требуют проверки.
+        quantity: 1
+        quantity_basis: research_assumption
+        line_total_rub: 3890
+    notes: 8 гигабитных портов, VLAN, без PoE. Под заказ; окончательный портовый баланс с видеонаблюдением и питание точки доступа требуют проверки.
+  - item_id: CAPEX-04-008
+    module_id: MOD-POS
+    valuation_status: priced
+    quote_status: quote_required
+    high_risk: true
+    risk_reason: Исследовательская цена; техническая применимость и КП ещё не подтверждены.
+    scenarios:
+      minimum:
+        source_id: SRC-PRICE-20260917-04-008
+        source_type: supplier_product_card
+        supplier_name: IPPON Russia
+        product_name: IPPON Back Basic 850 / 403406
+        source_url: https://ippon-russia.ru/istochnik-besperebojnogo-pitanija-ippon-back-basic-850
+        additional_urls: []
+        observed_unit_price_rub: 6490
+        availability_status: research; verify quotation before purchase
+        checked_at: 2026-09-17T18:00:00.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: medium
+        notes: "850 ВА / 480 Вт; рабочее количество: два кассовых поста и сеть. IEC-подключения; кабели/адаптеры и автономность по нагрузке требуют проверки."
+        quantity: 3
+        quantity_basis: research_assumption
+        line_total_rub: 19470
+      base:
+        source_id: SRC-PRICE-20260917-04-008
+        source_type: supplier_product_card
+        supplier_name: IPPON Russia
+        product_name: IPPON Back Basic 850 / 403406
+        source_url: https://ippon-russia.ru/istochnik-besperebojnogo-pitanija-ippon-back-basic-850
+        additional_urls: []
+        observed_unit_price_rub: 6490
+        availability_status: research; verify quotation before purchase
+        checked_at: 2026-09-17T18:00:00.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: medium
+        notes: "850 ВА / 480 Вт; рабочее количество: два кассовых поста и сеть. IEC-подключения; кабели/адаптеры и автономность по нагрузке требуют проверки."
+        quantity: 3
+        quantity_basis: research_assumption
+        line_total_rub: 19470
+      scale_ready:
+        source_id: SRC-PRICE-20260917-04-008
+        source_type: supplier_product_card
+        supplier_name: IPPON Russia
+        product_name: IPPON Back Basic 850 / 403406
+        source_url: https://ippon-russia.ru/istochnik-besperebojnogo-pitanija-ippon-back-basic-850
+        additional_urls: []
+        observed_unit_price_rub: 6490
+        availability_status: research; verify quotation before purchase
+        checked_at: 2026-09-17T18:00:00.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: medium
+        notes: "850 ВА / 480 Вт; рабочее количество: два кассовых поста и сеть. IEC-подключения; кабели/адаптеры и автономность по нагрузке требуют проверки."
+        quantity: 3
+        quantity_basis: research_assumption
+        line_total_rub: 19470
+    notes: "850 ВА / 480 Вт; рабочее количество: два кассовых поста и сеть. IEC-подключения; кабели/адаптеры и автономность по нагрузке требуют проверки."
+  - item_id: CAPEX-04-009
+    module_id: MOD-POS
+    valuation_status: quote_required
+    quote_status: quote_required
+    high_risk: true
+    risk_reason: Исследовательская цена; техническая применимость и КП ещё не подтверждены.
+    scenarios:
+      minimum: null
+      base: null
+      scale_ready: null
+    notes: Патч-корды, линии, розетки, монтажные материалы, питание Wi-Fi и адаптеры UPS. Сначала сверка с электромонтажом подготовки; цена отсутствует.
+  - item_id: CAPEX-04-010
+    module_id: MOD-POS
+    valuation_status: quote_required
+    quote_status: quote_required
+    high_risk: true
+    risk_reason: Исследовательская цена; техническая применимость и КП ещё не подтверждены.
+    scenarios:
+      minimum: null
+      base: null
+      scale_ready: null
+    notes: Настройка VLAN, Wi-Fi, резервного канала, UPS и тестирование. Не входит в цены устройств.
+  - item_id: CAPEX-04-011
+    module_id: MOD-POS
+    valuation_status: priced
+    quote_status: quote_required
+    high_risk: true
+    risk_reason: Исследовательская цена; техническая применимость и КП ещё не подтверждены.
+    scenarios:
+      minimum:
+        source_id: SRC-PRICE-20260917-04-011
+        source_type: supplier_product_card
+        supplier_name: КИФ / Эвотор СПб
+        product_name: Выездное подключение кассы в Санкт-Петербурге
+        source_url: https://evotor.spb.ru/product/podklucheniye-k-ofd/
+        additional_urls: []
+        observed_unit_price_rub: 3000
+        availability_status: research; verify quotation before purchase
+        checked_at: 2026-09-17T18:00:00.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: medium
+        notes: Цена за кассу включает вводное обучение. Не прибавлять отдельно аналогичную настройку за 2000 ₽; состав регистрации ФНС, загрузки номенклатуры и интеграции с учётом уточнить.
+        quantity: 2
+        quantity_basis: research_assumption
+        line_total_rub: 6000
+      base:
+        source_id: SRC-PRICE-20260917-04-011
+        source_type: supplier_product_card
+        supplier_name: КИФ / Эвотор СПб
+        product_name: Выездное подключение кассы в Санкт-Петербурге
+        source_url: https://evotor.spb.ru/product/podklucheniye-k-ofd/
+        additional_urls: []
+        observed_unit_price_rub: 3000
+        availability_status: research; verify quotation before purchase
+        checked_at: 2026-09-17T18:00:00.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: medium
+        notes: Цена за кассу включает вводное обучение. Не прибавлять отдельно аналогичную настройку за 2000 ₽; состав регистрации ФНС, загрузки номенклатуры и интеграции с учётом уточнить.
+        quantity: 2
+        quantity_basis: research_assumption
+        line_total_rub: 6000
+      scale_ready:
+        source_id: SRC-PRICE-20260917-04-011
+        source_type: supplier_product_card
+        supplier_name: КИФ / Эвотор СПб
+        product_name: Выездное подключение кассы в Санкт-Петербурге
+        source_url: https://evotor.spb.ru/product/podklucheniye-k-ofd/
+        additional_urls: []
+        observed_unit_price_rub: 3000
+        availability_status: research; verify quotation before purchase
+        checked_at: 2026-09-17T18:00:00.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: medium
+        notes: Цена за кассу включает вводное обучение. Не прибавлять отдельно аналогичную настройку за 2000 ₽; состав регистрации ФНС, загрузки номенклатуры и интеграции с учётом уточнить.
+        quantity: 2
+        quantity_basis: research_assumption
+        line_total_rub: 6000
+    notes: Цена за кассу включает вводное обучение. Не прибавлять отдельно аналогичную настройку за 2000 ₽; состав регистрации ФНС, загрузки номенклатуры и интеграции с учётом уточнить.
+  - item_id: CAPEX-04-012
+    module_id: MOD-POS
+    valuation_status: priced
+    quote_status: quote_required
+    high_risk: true
+    risk_reason: Исследовательская цена; техническая применимость и КП ещё не подтверждены.
+    scenarios:
+      minimum:
+        source_id: SRC-PRICE-20260917-04-012
+        source_type: supplier_product_card
+        supplier_name: КИФ / Эвотор СПб
+        product_name: Подключение ОФД на один год
+        source_url: https://evotor.spb.ru/product/podklucheniye-k-ofd/
+        additional_urls: []
+        observed_unit_price_rub: 2500
+        availability_status: research; verify quotation before purchase
+        checked_at: 2026-09-17T18:00:00.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: medium
+        notes: Годовая предоплата сервиса на кассу; не физическое оборудование. Продление — регулярный OPEX.
+        quantity: 2
+        quantity_basis: research_assumption
+        line_total_rub: 5000
+      base:
+        source_id: SRC-PRICE-20260917-04-012
+        source_type: supplier_product_card
+        supplier_name: КИФ / Эвотор СПб
+        product_name: Подключение ОФД на один год
+        source_url: https://evotor.spb.ru/product/podklucheniye-k-ofd/
+        additional_urls: []
+        observed_unit_price_rub: 2500
+        availability_status: research; verify quotation before purchase
+        checked_at: 2026-09-17T18:00:00.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: medium
+        notes: Годовая предоплата сервиса на кассу; не физическое оборудование. Продление — регулярный OPEX.
+        quantity: 2
+        quantity_basis: research_assumption
+        line_total_rub: 5000
+      scale_ready:
+        source_id: SRC-PRICE-20260917-04-012
+        source_type: supplier_product_card
+        supplier_name: КИФ / Эвотор СПб
+        product_name: Подключение ОФД на один год
+        source_url: https://evotor.spb.ru/product/podklucheniye-k-ofd/
+        additional_urls: []
+        observed_unit_price_rub: 2500
+        availability_status: research; verify quotation before purchase
+        checked_at: 2026-09-17T18:00:00.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: medium
+        notes: Годовая предоплата сервиса на кассу; не физическое оборудование. Продление — регулярный OPEX.
+        quantity: 2
+        quantity_basis: research_assumption
+        line_total_rub: 5000
+    notes: Годовая предоплата сервиса на кассу; не физическое оборудование. Продление — регулярный OPEX.
+  - item_id: CAPEX-05-028
+    module_id: MOD-GUEST
+    valuation_status: priced
+    quote_status: quote_required
+    high_risk: true
+    risk_reason: Исследовательская цена; техническая применимость и КП ещё не подтверждены.
+    scenarios:
+      minimum:
+        source_id: SRC-PRICE-20260917-05-028
+        source_type: supplier_product_card
+        supplier_name: Horeca.ru
+        product_name: Cambro 1418FF, тёмно-синий
+        source_url: https://horeca.ru/catalog/item/49331/
+        additional_urls: []
+        observed_unit_price_rub: 490
+        availability_status: research; verify quotation before purchase
+        checked_at: 2026-09-17T18:00:00.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: medium
+        notes: Полипропилен, 460 мм. Цена индексируемого каталога; прямое чтение карточки недоступно, подтвердить КП. Рабочий запас — один поднос на место; оборачиваемость требует проверки.
+        quantity: 26
+        quantity_basis: research_assumption
+        line_total_rub: 12740
+      base:
+        source_id: SRC-PRICE-20260917-05-028
+        source_type: supplier_product_card
+        supplier_name: Horeca.ru
+        product_name: Cambro 1418FF, тёмно-синий
+        source_url: https://horeca.ru/catalog/item/49331/
+        additional_urls: []
+        observed_unit_price_rub: 490
+        availability_status: research; verify quotation before purchase
+        checked_at: 2026-09-17T18:00:00.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: medium
+        notes: Полипропилен, 460 мм. Цена индексируемого каталога; прямое чтение карточки недоступно, подтвердить КП. Рабочий запас — один поднос на место; оборачиваемость требует проверки.
+        quantity: 26
+        quantity_basis: research_assumption
+        line_total_rub: 12740
+      scale_ready:
+        source_id: SRC-PRICE-20260917-05-028
+        source_type: supplier_product_card
+        supplier_name: Horeca.ru
+        product_name: Cambro 1418FF, тёмно-синий
+        source_url: https://horeca.ru/catalog/item/49331/
+        additional_urls: []
+        observed_unit_price_rub: 490
+        availability_status: research; verify quotation before purchase
+        checked_at: 2026-09-17T18:00:00.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: medium
+        notes: Полипропилен, 460 мм. Цена индексируемого каталога; прямое чтение карточки недоступно, подтвердить КП. Рабочий запас — один поднос на место; оборачиваемость требует проверки.
+        quantity: 26
+        quantity_basis: research_assumption
+        line_total_rub: 12740
+    notes: Полипропилен, 460 мм. Цена индексируемого каталога; прямое чтение карточки недоступно, подтвердить КП. Рабочий запас — один поднос на место; оборачиваемость требует проверки.
+  - item_id: CAPEX-05-029
+    module_id: MOD-GUEST
+    valuation_status: priced
+    quote_status: quote_required
+    high_risk: true
+    risk_reason: Исследовательская цена; техническая применимость и КП ещё не подтверждены.
+    scenarios:
+      minimum:
+        source_id: SRC-PRICE-20260917-05-029
+        source_type: supplier_product_card
+        supplier_name: ВсеИнструменты
+        product_name: NV-BIN30L, 30 л
+        source_url: https://www.vseinstrumenti.ru/product/urna-dlya-musora-s-pedalyu-nv-30-l-nv-bin30l-13011521/
+        additional_urls: []
+        observed_unit_price_rub: 4150
+        availability_status: research; verify quotation before purchase
+        checked_at: 2026-09-17T18:00:00.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: medium
+        notes: Нержавеющая сталь, внутреннее ведро. Две урны — рабочий ориентир, не санитарный проект.
+        quantity: 2
+        quantity_basis: research_assumption
+        line_total_rub: 8300
+      base:
+        source_id: SRC-PRICE-20260917-05-029
+        source_type: supplier_product_card
+        supplier_name: ВсеИнструменты
+        product_name: NV-BIN30L, 30 л
+        source_url: https://www.vseinstrumenti.ru/product/urna-dlya-musora-s-pedalyu-nv-30-l-nv-bin30l-13011521/
+        additional_urls: []
+        observed_unit_price_rub: 4150
+        availability_status: research; verify quotation before purchase
+        checked_at: 2026-09-17T18:00:00.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: medium
+        notes: Нержавеющая сталь, внутреннее ведро. Две урны — рабочий ориентир, не санитарный проект.
+        quantity: 2
+        quantity_basis: research_assumption
+        line_total_rub: 8300
+      scale_ready:
+        source_id: SRC-PRICE-20260917-05-029
+        source_type: supplier_product_card
+        supplier_name: ВсеИнструменты
+        product_name: NV-BIN30L, 30 л
+        source_url: https://www.vseinstrumenti.ru/product/urna-dlya-musora-s-pedalyu-nv-30-l-nv-bin30l-13011521/
+        additional_urls: []
+        observed_unit_price_rub: 4150
+        availability_status: research; verify quotation before purchase
+        checked_at: 2026-09-17T18:00:00.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: medium
+        notes: Нержавеющая сталь, внутреннее ведро. Две урны — рабочий ориентир, не санитарный проект.
+        quantity: 2
+        quantity_basis: research_assumption
+        line_total_rub: 8300
+    notes: Нержавеющая сталь, внутреннее ведро. Две урны — рабочий ориентир, не санитарный проект.
+  - item_id: CAPEX-05-030
+    module_id: MOD-GUEST
+    valuation_status: quote_required
+    quote_status: quote_required
+    high_risk: true
+    risk_reason: Исследовательская цена; техническая применимость и КП ещё не подтверждены.
+    scenarios:
+      minimum: null
+      base: null
+      scale_ready: null
+    notes: Держатели подносов и гостевых расходников, элементы ожидания. Номенклатура после планировки; столы, стулья и встроенные стойки сюда повторно не включаются.
+  - item_id: CAPEX-02-060
+    module_id: MOD-RETAIL-HOT
+    valuation_status: quote_required
+    quote_status: quote_required
+    high_risk: true
+    risk_reason: Исследовательская цена; техническая применимость и КП ещё не подтверждены.
+    scenarios:
+      minimum: null
+      base: null
+      scale_ready: null
+    notes: Консолидированная доставка в СПб по фактической ведомости; бесплатная доставка до терминала не означает доставку до объекта.
+  - item_id: CAPEX-02-061
+    module_id: MOD-RETAIL-HOT
+    valuation_status: quote_required
+    quote_status: quote_required
+    high_risk: true
+    risk_reason: Исследовательская цена; техническая применимость и КП ещё не подтверждены.
+    scenarios:
+      minimum: null
+      base: null
+      scale_ready: null
+    notes: Габариты входов, этаж, способ разгрузки и сборка на месте пока неизвестны.
+  - item_id: CAPEX-02-062
+    module_id: MOD-RETAIL-HOT
+    valuation_status: quote_required
+    quote_status: quote_required
+    high_risk: true
+    risk_reason: Исследовательская цена; техническая применимость и КП ещё не подтверждены.
+    scenarios:
+      minimum: null
+      base: null
+      scale_ready: null
+    notes: Только работы по оборудованию, не вентиляция/электрика/встроенные конструкции из подготовки. Требуется коммерческое предложение.
+  - item_id: CAPEX-02-063
+    module_id: MOD-WASH
+    valuation_status: quote_required
+    quote_status: quote_required
+    high_risk: true
+    risk_reason: Исследовательская цена; техническая применимость и КП ещё не подтверждены.
+    scenarios:
+      minimum: null
+      base: null
+      scale_ready: null
+    notes: Мыло, полотенца, моющие средства и гостевые расходники. Не дублировать товарный запас и упаковку заказов. Состав и цена отсутствуют.
+  - item_id: CAPEX-08-007
+    module_id: MOD-WASH
+    valuation_status: priced
+    quote_status: quote_required
+    high_risk: true
+    risk_reason: Исследовательская цена; техническая применимость и КП ещё не подтверждены.
+    scenarios:
+      minimum:
+        source_id: SRC-PRICE-20260917-08-007
+        source_type: supplier_product_card
+        supplier_name: Abat.shop
+        product_name: ABAT МПК-500Ф-01-GN1/1 / 15000001002
+        source_url: https://abat.shop/shop/product/frontalnaia-posudomoechnaia-mashina-abat-mpk-500f-01-moika-gn1-1
+        additional_urls: []
+        observed_unit_price_rub: 179466
+        availability_status: research; verify quotation before purchase
+        checked_at: 2026-09-17T18:00:00.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: medium
+        notes: 595×660×875 мм; кассета 500×500; 380 В / 6,8 кВт; насос слива, дозаторы. Отдельная опция; вода, фильтрация, подключение и расходники не оценены. Цена каталога; подтвердить КП.
+        quantity: 1
+        quantity_basis: research_assumption
+        line_total_rub: 179466
+      base:
+        source_id: SRC-PRICE-20260917-08-007
+        source_type: supplier_product_card
+        supplier_name: Abat.shop
+        product_name: ABAT МПК-500Ф-01-GN1/1 / 15000001002
+        source_url: https://abat.shop/shop/product/frontalnaia-posudomoechnaia-mashina-abat-mpk-500f-01-moika-gn1-1
+        additional_urls: []
+        observed_unit_price_rub: 179466
+        availability_status: research; verify quotation before purchase
+        checked_at: 2026-09-17T18:00:00.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: medium
+        notes: 595×660×875 мм; кассета 500×500; 380 В / 6,8 кВт; насос слива, дозаторы. Отдельная опция; вода, фильтрация, подключение и расходники не оценены. Цена каталога; подтвердить КП.
+        quantity: 1
+        quantity_basis: research_assumption
+        line_total_rub: 179466
+      scale_ready:
+        source_id: SRC-PRICE-20260917-08-007
+        source_type: supplier_product_card
+        supplier_name: Abat.shop
+        product_name: ABAT МПК-500Ф-01-GN1/1 / 15000001002
+        source_url: https://abat.shop/shop/product/frontalnaia-posudomoechnaia-mashina-abat-mpk-500f-01-moika-gn1-1
+        additional_urls: []
+        observed_unit_price_rub: 179466
+        availability_status: research; verify quotation before purchase
+        checked_at: 2026-09-17T18:00:00.000Z
+        price_includes_vat: null
+        delivery_included: false
+        confidence: medium
+        notes: 595×660×875 мм; кассета 500×500; 380 В / 6,8 кВт; насос слива, дозаторы. Отдельная опция; вода, фильтрация, подключение и расходники не оценены. Цена каталога; подтвердить КП.
+        quantity: 1
+        quantity_basis: research_assumption
+        line_total_rub: 179466
+    notes: 595×660×875 мм; кассета 500×500; 380 В / 6,8 кВт; насос слива, дозаторы. Отдельная опция; вода, фильтрация, подключение и расходники не оценены. Цена каталога; подтвердить КП.
 summary:
-  eligible_procurement_record_count: 51
-  priced_record_count: 51
-  unpriced_record_count: 0
-  quote_required_count: 27
+  eligible_procurement_record_count: 70
+  priced_record_count: 63
+  unpriced_record_count: 7
+  quote_required_count: 46
   totals_rub:
-    minimum: 4085990.33
-    base: 5488047.33
-    scale_ready: 6915980.79
+    minimum: 4636718.33
+    base: 6038775.33
+    scale_ready: 7466708.79
   module_totals_rub:
     MOD-PREP:
       minimum: 2051324
       base: 3094715
       scale_ready: 3877428
     MOD-RETAIL-HOT:
-      minimum: 875016
-      base: 1008877
-      scale_ready: 1190497
+      minimum: 1076298
+      base: 1210159
+      scale_ready: 1391779
     MOD-BAR:
       minimum: 405749
       base: 537354
@@ -3013,21 +3797,21 @@ summary:
       base: 258000
       scale_ready: 387000
     MOD-POS:
-      minimum: 105900
-      base: 142500
-      scale_ready: 201900
+      minimum: 254840
+      base: 291440
+      scale_ready: 350840
     MOD-KDS:
       minimum: 105900
       base: 142500
       scale_ready: 201900
     MOD-WASH:
-      minimum: 304101.33
-      base: 304101.33
-      scale_ready: 304101.33
+      minimum: 483567.33
+      base: 483567.33
+      scale_ready: 483567.33
     POS/KDS:
-      minimum: 211800
-      base: 285000
-      scale_ready: 403800
+      minimum: 360740
+      base: 433940
+      scale_ready: 552740
   top_10_base:
     - item_id: CAPEX-01-014
       module_id: MOD-PREP
@@ -3087,3 +3871,22 @@ summary:
     - CAPEX-04-002
     - CAPEX-04-003
     - CAPEX-08-001
+    - CAPEX-02-058
+    - CAPEX-02-059
+    - CAPEX-04-004
+    - CAPEX-04-005
+    - CAPEX-04-006
+    - CAPEX-04-007
+    - CAPEX-04-008
+    - CAPEX-04-009
+    - CAPEX-04-010
+    - CAPEX-04-011
+    - CAPEX-04-012
+    - CAPEX-05-028
+    - CAPEX-05-029
+    - CAPEX-05-030
+    - CAPEX-02-060
+    - CAPEX-02-061
+    - CAPEX-02-062
+    - CAPEX-02-063
+    - CAPEX-08-007

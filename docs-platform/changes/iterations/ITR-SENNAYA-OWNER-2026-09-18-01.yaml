@@ -1,0 +1,72 @@
+schema_version: 2
+iteration_id: ITR-SENNAYA-OWNER-2026-09-18-01
+proposal_id: PROP-SENNAYA-OWNER-2026-09-18-01
+decision_id: DEC-SENNAYA-OWNER-2026-09-18-01
+change_set_id: CHG-SENNAYA-OWNER-2026-09-18-01
+title: Сенная — недвижимость и сценарий использования
+status: approved
+approved_by: project owner
+approved_at: 2026-09-18T11:52:05.376Z
+actor: Codex
+scope: Owner copy, five scope groups and canonical contingency selection; no new financial engine or change to prices/other scenarios
+approved_payload_path: docs-platform/changelog/payloads/ITR-SENNAYA-OWNER-2026-09-18-01-approved.yaml
+approved_payload_sha256: be9cba99929a3a3f44d9f17c0012131145aaa61189e8b98db13364f03908cbcf
+before_state_sha256: 5054c1d566f2eb7752ee9127e9979253d6fef9e954deeffc4cac5f200c1dff6b
+after_state_sha256: cda8cc4b14a8227ceb8a80d7f276bae0034959594aa1c55bba147d3adb9854fb
+affected_document_ids:
+  - DOC-SENNAYA-FLAGSHIP
+affected_section_ids:
+  - sennaya
+state_hash_paths:
+  - src/components/Sennaya.tsx
+  - src/components/Sennaya.css
+  - src/content/sennaya.ts
+  - src/content/sennaya-data.json
+  - src/content/site.ts
+  - src/lib/property-funding.ts
+  - src/lib/network-scaling.ts
+  - scripts/sennaya-projection.ts
+  - scripts/test-sennaya.test.ts
+  - scripts/test-sennaya.cjs
+  - docs-platform/working/sennaya-investor-page.md
+  - docs-platform/registry/sources.yaml
+  - docs-platform/registry/decisions.yaml
+  - docs-platform/generated/financial-core-projection.json
+  - src/content/network-planning-data.json
+content_paths:
+  - src/components/Sennaya.tsx
+  - src/components/Sennaya.css
+  - src/content/sennaya.ts
+  - src/content/sennaya-data.json
+  - src/content/site.ts
+  - src/lib/property-funding.ts
+  - src/lib/network-scaling.ts
+  - scripts/sennaya-projection.ts
+  - scripts/test-sennaya.test.ts
+  - scripts/test-sennaya.cjs
+  - docs-platform/working/sennaya-investor-page.md
+  - docs-platform/registry/sources.yaml
+  - docs-platform/registry/decisions.yaml
+  - docs-platform/generated/financial-core-projection.json
+  - src/content/network-planning-data.json
+  - verification/domains.json
+  - src/content/capex-configurator-data.json
+  - docs-platform/generated/financial-model-projection.json
+  - docs-platform/generated/investor-financial-summary.json
+  - docs-platform/generated/financial-google-sheets-payload.json
+  - docs-platform/generated/investor-financial-summary-google-sheets-payload.json
+  - docs-platform/generated/franchise-model-reference-data.json
+  - docs-platform/working/investor-financial-summary.yaml
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+allowed_dirty_paths:
+  - analysis/
+  - output/
+rollback_payload: null
+rollback_contract:
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true

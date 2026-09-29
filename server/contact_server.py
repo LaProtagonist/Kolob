@@ -23,6 +23,7 @@ COOKIE_NAME = "kolob_leads_auth"
 MAX_BODY_BYTES = 64 * 1024
 CONTROL_STATIC_ROOT = Path(os.environ.get("CONTROL_STATIC_ROOT", str(Path(__file__).resolve().parent / "control")))
 LEGACY_REDIRECTS = {
+    "/investor/franchise-platform/sennaya": "/sennaya",
     "/investor/franchise-platform/petrogradka": "/petrogradka",
     "/investor/franchise-platform": "/control/franchise-platform",
     "/capex-configurator": "/control/capex",

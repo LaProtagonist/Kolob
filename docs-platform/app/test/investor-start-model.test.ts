@@ -26,6 +26,15 @@ const projectRoot = path.resolve(platformRoot, "..");
 const modelPath = path.join(projectRoot, "docs-platform/working/investor-start-model.yaml");
 const payloadPath = path.join(projectRoot, INVESTOR_START_PAYLOAD_PATH);
 
+// Full preparation tests must opt in explicitly: the existing runtime default
+// is a ready restaurant premises and intentionally excludes core engineering.
+function fullPreparationState(): LaunchBudgetState {
+  return {
+    ...defaultLaunchBudgetState(),
+    preparationEnabledCategoryIds: capexData.investorStartModel.preparation.categories.map(category => category.id),
+  };
+}
+
 function filled(overrides: Partial<LaunchBudgetState> = {}): LaunchBudgetState {
   return {
     ...defaultLaunchBudgetState(),
@@ -213,7 +222,8 @@ test("27. reset restores the governed demonstration scenario and leaves canonica
   assert.equal(reset.preparationMode, "breakdown");
   assert.equal(reset.preparationManualRub, null);
   assert.equal(reset.preparationAccordionOpen, false);
-  assert.deepEqual(reset.preparationEnabledCategoryIds, capexData.investorStartModel.preparation.categories.map(category => category.id));
+  assert.deepEqual(reset.preparationEnabledCategoryIds, ["PREP-LIGHTING", "PREP-GUEST-AREA", "PREP-BUILT-IN", "PREP-DESIGN"]);
+  assert.equal(calculateEffectivePreparationAmount(reset), 3_500_000);
   assert.equal(reset.operatingReserveMonths, 6);
   assert.equal(reset.operatingReserveAccordionOpen, false);
   assert.equal(JSON.stringify(capexData.investorStartModel), before);
@@ -308,26 +318,26 @@ test("36. public preparation descriptions are read from structured data, not dup
   for (const category of capexData.investorStartModel.preparation.categories) assert.equal(component.includes(category.description), false, category.id);
 });
 
-test("37. default preparation breakdown equals 11000000 RUB", () => {
-  const state = defaultLaunchBudgetState();
+test("37. explicit full preparation breakdown equals 11000000 RUB", () => {
+  const state = fullPreparationState();
   assert.equal(calculatePreparationBreakdown(state), 11_000_000);
   assert.equal(calculateEffectivePreparationAmount(state), 11_000_000);
 });
 
 test("38. excluding ventilation produces 8500000 RUB", () => {
-  const state = defaultLaunchBudgetState();
+  const state = fullPreparationState();
   state.preparationEnabledCategoryIds = state.preparationEnabledCategoryIds.filter(id => id !== "PREP-VENTILATION");
   assert.equal(calculatePreparationBreakdown(state), 8_500_000);
 });
 
 test("39. excluding ventilation and design produces 7500000 RUB", () => {
-  const state = defaultLaunchBudgetState();
+  const state = fullPreparationState();
   state.preparationEnabledCategoryIds = state.preparationEnabledCategoryIds.filter(id => !["PREP-VENTILATION", "PREP-DESIGN"].includes(id));
   assert.equal(calculatePreparationBreakdown(state), 7_500_000);
 });
 
 test("40. re-enabling ventilation with design excluded restores 10000000 RUB", () => {
-  const state = defaultLaunchBudgetState();
+  const state = fullPreparationState();
   state.preparationEnabledCategoryIds = state.preparationEnabledCategoryIds.filter(id => id !== "PREP-DESIGN");
   assert.equal(calculatePreparationBreakdown(state), 10_000_000);
 });
@@ -352,8 +362,8 @@ test("42. manual preparation replaces breakdown and category toggles do not chan
 });
 
 test("43. contingency follows breakdown exclusions and manual preparation", () => {
-  const baseline = calculateLaunchBudget(filled({ preparationMode: "breakdown", preparationEnabledCategoryIds: defaultLaunchBudgetState().preparationEnabledCategoryIds, contingencyPercent: 10 }));
-  const noVentilationIds = defaultLaunchBudgetState().preparationEnabledCategoryIds.filter(id => id !== "PREP-VENTILATION");
+  const baseline = calculateLaunchBudget(filled({ preparationMode: "breakdown", preparationEnabledCategoryIds: fullPreparationState().preparationEnabledCategoryIds, contingencyPercent: 10 }));
+  const noVentilationIds = fullPreparationState().preparationEnabledCategoryIds.filter(id => id !== "PREP-VENTILATION");
   const noVentilation = calculateLaunchBudget(filled({ preparationMode: "breakdown", preparationEnabledCategoryIds: noVentilationIds, contingencyPercent: 10 }));
   const manual = calculateLaunchBudget(filled({ preparationMode: "manual", preparationManualRub: 5_000_000, contingencyPercent: 10 }));
   assert.equal(baseline.contingencyRub - noVentilation.contingencyRub, 250_000);

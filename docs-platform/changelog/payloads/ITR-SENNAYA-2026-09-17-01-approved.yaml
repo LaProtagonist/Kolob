@@ -1,0 +1,98 @@
+schema_version: 2
+iteration_id: ITR-SENNAYA-2026-09-17-01
+proposal_id: PROP-SENNAYA-2026-09-17-01
+decision_id: DEC-SENNAYA-2026-09-17-01
+change_set_id: CHG-SENNAYA-2026-09-17-01
+status: approved
+approved_by: project owner
+approved_at: 2026-09-17T13:09:40.137Z
+title: Сенная — адресное предложение инвестору
+scope:
+  - Short Russian property proposal matching Petrogradka components and page rhythm; light surface, mobile-safe scenario table
+  - Separate selected retail BOM and revenue snapshots using existing engines; preserve sources and financial cores
+  - 500k monthly occupancy remains in operator calculations even investor-owned; property purchase excluded from operating launch capital
+  - Noindex/share-only canonical /sennaya with requested /investor/franchise-platform/sennaya alias; reciprocal Petrogradka link and existing contact CTA
+  - Production build, targeted and existing release checks, full-page desktop/mobile screenshots, staging only
+constraints:
+  - No changes to Current Base, Financial Model, Investor Terminal calculations/UI, Petrogradka financial values, approved Network Planning, Foundation/BMA
+  - No new financial engine or prices; unknown capital and costs remain missing
+  - No production/Google publication, staging, commit, push or seal Git operations; only already explicitly requested feature branch creation
+source_conflicts:
+  - CFG-PILOT-001 5298993.33 is integrated; use existing point physical allocation, partial point equipment subtotal
+  - Average check 1165.4 overrides requested1200; canonical revenue table differs
+  - Preparation area proxy gives4042500, proposed3.5m is unconfirmed reduction target
+  - Point contribution is before central costs, so proposed profit figures are not published
+  - No floor plan supplied:24–28 remains goal;42m2 at1.6m2/seat gives26 illustrative seats
+registry_operations:
+  - type: add
+    entity: sources
+    value:
+      id: SRC-SENNAYA-BRIEF-2026-09-17
+      title: "Задание владельца: инвесторская страница Московский, 4"
+      type: instruction
+      location: User instruction, 2026-09-17
+      publisher: project owner
+      publication_date: 2026-09-17
+      accessed_at: 2026-09-17
+      reliability: primary
+      notes: Working property description and targets; not verified listing evidence. Authorizes feature branch, page and staging. No production publication or Git commit authorization.
+  - type: add
+    entity: documents
+    value:
+      id: DOC-SENNAYA-FLAGSHIP
+      title: Сенная — рабочая конфигурация флагманской торговой точки
+      type: scenario
+      status: research
+      google_file_id: null
+      template: null
+      sections:
+        - property
+        - equipment
+        - sales
+        - occupancy
+        - source_conflicts
+      local_path: docs-platform/scenarios/sennaya-flagship.json
+      version: "0.1"
+      updated_at: 2026-09-17
+  - type: add
+    entity: decisions
+    value:
+      id: DEC-SENNAYA-2026-09-17-01
+      title: Создать короткую инвесторскую страницу Сенной для staging
+      status: approved
+      decision: Реализовать share-only страницу Сенной на компонентах Петроградки; использовать существующие канонические расчёты, явно показать пробелы данных и отдельную стоимость пользования недвижимостью; проверить и показать staging. Финансовые гипотезы остаются research.
+      rationale: Прямое задание владельца. Канонические значения приоритетны при расхождениях; неподтверждённую прибыль разрешено не публиковать.
+      affected_documents:
+        - DOC-SENNAYA-FLAGSHIP
+      approved_by: project owner
+      approved_at: 2026-09-17
+      supersedes: null
+      source_ids:
+        - SRC-SENNAYA-BRIEF-2026-09-17
+      updated_at: 2026-09-17
+state_hash_paths:
+  - src/App.tsx
+  - src/content/site.ts
+  - src/components/Petrogradka.tsx
+  - src/components/PropertyProposal.tsx
+  - src/components/Sennaya.tsx
+  - src/components/Sennaya.css
+  - src/content/sennaya-data.json
+  - scripts/sennaya-projection.ts
+  - scripts/generate-sennaya-data.ts
+  - scripts/test-sennaya.test.ts
+  - scripts/test-sennaya.cjs
+  - scripts/prerender-dist.cjs
+  - scripts/serve-dist.cjs
+  - scripts/test-control-routing.cjs
+  - scripts/audit-links.mjs
+  - scripts/audit-route-html.mjs
+  - server/contact-server.mjs
+  - server/contact_server.py
+  - verification/domains.json
+  - docs-platform/scenarios/sennaya-flagship.json
+  - docs-platform/working/sennaya-investor-page.md
+  - docs-platform/registry/documents.yaml
+  - docs-platform/registry/decisions.yaml
+  - docs-platform/registry/sources.yaml
+baseline_commit: 945373fa2f3f50b32dac7b48af1979f4e2005177

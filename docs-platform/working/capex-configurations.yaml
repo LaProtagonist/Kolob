@@ -7,9 +7,9 @@ document:
   version: "0.1"
   status: research
   document_type: Working CAPEX object configurations
-  decision_id: DEC-011
-  iteration_id: ITR-PILOT-CAPEX-BASELINE-2026-08-03-01
-  proposal_id: PROP-PILOT-CAPEX-BASELINE-2026-08-03-01
+  decision_id: DEC-SENNAYA-CAPEX-2026-09-17-02
+  iteration_id: ITR-SENNAYA-CAPEX-2026-09-17-02
+  proposal_id: PROP-SENNAYA-CAPEX-2026-09-17-02
 configurations:
   - configuration_id: CFG-TEMPLATE-001
     name: Пустая шаблонная конфигурация
@@ -67,3 +67,34 @@ configurations:
     excluded_modules:
       - MOD-GROW
     notes: Каноническая research-конфигурация пилота по DEC-011. Площадь, число посадочных мест, инженерия и мебель остаются открытыми до выбора помещения.
+  - configuration_id: CFG-RETAIL-SEATING-001
+    name: Типовая торговая точка с залом, без кофе
+    format_id: FMT-RESTAURANT-SEATING
+    lifecycle_status: research
+    total_area_m2: null
+    guest_area_m2: null
+    hall_count: 1
+    seat_count: 26
+    cashier_post_count: 2
+    hot_kitchen_post_count: 2
+    filling_count: null
+    service_station_count: null
+    peak_orders_per_hour: null
+    daily_orders: 200
+    bar_enabled: true
+    alcohol_enabled: false
+    prep_enabled: false
+    grow_enabled: false
+    central_supply_enabled: true
+    self_service_enabled: false
+    reusable_tableware_enabled: false
+    shared_seating: false
+    mobile_format: false
+    selected_modules:
+      - MOD-BAR
+    excluded_modules:
+      - MOD-PREP
+      - MOD-GROW
+    notes: Общий типовой профиль, не адресная ведомость. Площадь и посадка задаются параметрами объекта.
+    composition_profile: retail_complete
+    wash_mode: manual

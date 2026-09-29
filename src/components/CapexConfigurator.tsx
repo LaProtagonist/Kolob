@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import type { CSSProperties, ReactNode } from "react";
-import { buildCapexRows as buildRows, capexData, type CapexItem, type CapexModule, type CapexParameters as Parameters, type ComputedCapexRow as ComputedRow, type NumericParameterKey, type ScenarioId } from "../lib/capex-runtime";
+import { buildCapexRows as buildRows, buildFormatCapexRows, formatCompositionSummary, capexData, type CapexItem, type CapexModule, type CapexParameters as Parameters, type ComputedCapexRow as ComputedRow, type NumericParameterKey, type ScenarioId } from "../lib/capex-runtime";
 import "./CapexConfigurator.css";
 const scenarioIds = capexData.scenarios.filter(scenario => scenario.availableInSelector).map(scenario => scenario.id as ScenarioId);
 const statusLabels: Record<string, string> = {
@@ -115,6 +115,7 @@ export function CapexConfiguratorPage() {
     centralSupply: pilotConfiguration?.central_supply_enabled ?? false,
     mobileFormat: pilotConfiguration?.mobile_format ?? false,
   });
+  const [washMode, setWashMode] = useState<"manual" | "machine">("manual");
   const [search, setSearch] = useState("");
   const [moduleFilter, setModuleFilter] = useState("all");
   const [requirementFilter, setRequirementFilter] = useState("all");
@@ -135,14 +136,16 @@ export function CapexConfiguratorPage() {
 
   useEffect(() => {
     const isPilot = formatId === pilotConfiguration?.format_id;
-    setSelectedModuleIds(isPilot ? pilotConfiguration.selected_modules : []);
+    const seated = formatId === "FMT-RESTAURANT-SEATING";
+    const defaults = capexData.formats.find(format => format.id === formatId)?.defaultConfiguration;
+    setSelectedModuleIds(isPilot ? pilotConfiguration.selected_modules : seated ? ["MOD-BAR"] : []);
     setModuleFilter("all");
     setParameters(current => ({
       ...current,
-      fillingCount: isPilot ? pilotConfiguration.filling_count : null,
-      cashierPostCount: isPilot ? pilotConfiguration.cashier_post_count : null,
-      hotKitchenPostCount: isPilot ? pilotConfiguration.hot_kitchen_post_count : null,
-      seatCount: isPilot ? pilotConfiguration.seat_count : null,
+      fillingCount: isPilot ? pilotConfiguration.filling_count : defaults?.filling_count ?? null,
+      cashierPostCount: isPilot || seated ? pilotConfiguration.cashier_post_count : null,
+      hotKitchenPostCount: isPilot || seated ? pilotConfiguration.hot_kitchen_post_count : null,
+      seatCount: isPilot ? pilotConfiguration.seat_count : defaults?.seat_count ?? null,
       guestAreaM2: isPilot ? pilotConfiguration.guest_area_m2 : null,
       serviceStationCount: isPilot ? pilotConfiguration.service_station_count : null,
       alcoholEnabled: isPilot ? pilotConfiguration.alcohol_enabled ?? false : false,
@@ -154,7 +157,9 @@ export function CapexConfiguratorPage() {
   }, [formatId, pilotConfiguration]);
 
   const activeModuleIds = useMemo(() => new Set([...currentFormat.requiredModules, ...selectedModuleIds]), [currentFormat.requiredModules, selectedModuleIds]);
-  const rows = useMemo(() => buildRows(activeModuleIds, scenarioId, parameters), [activeModuleIds, scenarioId, parameters]);
+  const compositionOptions = { barEnabled: activeModuleIds.has("MOD-BAR"), washMode };
+  const rows = currentFormat.composition ? buildFormatCapexRows(formatId, scenarioId, parameters, compositionOptions) : buildRows(activeModuleIds, scenarioId, parameters);
+  const composition = currentFormat.composition ? formatCompositionSummary(formatId, scenarioId, rows, compositionOptions) : null;
   const activeModules = capexData.modules.filter(module => activeModuleIds.has(module.id));
   const requiredModules = currentFormat.requiredModules.map(id => moduleById.get(id)).filter(Boolean) as CapexModule[];
   const incompleteRequiredModules = requiredModules.filter(module => module.status === "not_started");
@@ -178,12 +183,12 @@ export function CapexConfiguratorPage() {
   });
 
   const scenarioSummaries = useMemo(() => scenarioIds.map(scenario => {
-    const scenarioRows = buildRows(activeModuleIds, scenario, parameters);
+    const scenarioRows = currentFormat.composition ? buildFormatCapexRows(formatId, scenario, parameters, { barEnabled: activeModuleIds.has("MOD-BAR"), washMode }) : buildRows(activeModuleIds, scenario, parameters);
     const priced = scenarioRows.filter(row => row.independentProcurement && row.quantity !== 0 && row.lineTotal !== null);
     const coverage = scenarioRows.filter(row => row.independentProcurement && row.quantity !== 0);
     const moduleTotals = Object.fromEntries(activeModules.map(module => [module.id, scenarioRows.filter(row => row.primaryModuleId === module.id).reduce((sum, row) => sum + (row.lineTotal ?? 0), 0)]));
     return { scenario, total: priced.reduce((sum, row) => sum + (row.lineTotal ?? 0), 0), priced: priced.length, unpriced: coverage.length - priced.length, quote: coverage.filter(row => row.quoteRequired).length, moduleTotals };
-  }), [activeModuleIds, parameters, activeModules]);
+  }), [activeModuleIds, parameters, activeModules, currentFormat, formatId, washMode]);
 
   const suppliers = [...new Set(rows.map(row => row.price?.supplierName).filter(Boolean) as string[])].sort((a, b) => a.localeCompare(b, "ru"));
   const recordTypes = [...new Set(rows.map(row => row.item.recordType))].sort();
@@ -260,7 +265,7 @@ export function CapexConfiguratorPage() {
 
       <section className="capex-summary-section" aria-label="Сводка текущей комплектации">
         <div className="section-inner capex-metrics-grid">
-          <MetricCard tone="dark" title="Стоимость текущей комплектации оборудования" value={`${unpricedRows.length ? "от " : ""}${formatRub(total)}`} detail={`Только ${pricedRows.length} оценённых позиций · ${capexData.scenarios.find(item => item.id === scenarioId)?.label}`} />
+          <MetricCard tone="dark" title={composition ? "Оценённые закупки и услуги" : "Стоимость текущей комплектации оборудования"} value={`${unpricedRows.length ? "от " : ""}${formatRub(total)}`} detail={`Только ${pricedRows.length} оценённых позиций · ${capexData.scenarios.find(item => item.id === scenarioId)?.label}`} />
           <MetricCard title="Ценовое покрытие" value={`${pricedRows.length} из ${coverageRows.length}`} detail={`${percentFormatter.format(coveragePercent)}% самостоятельных и системных позиций`} />
           <MetricCard tone={unpricedRows.length ? "warning" : "default"} title="Без цены" value={String(unpricedRows.length)} detail="Не считаются как 0 ₽" />
           <MetricCard tone={quoteRows.length ? "warning" : "default"} title="Требуют КП" value={String(quoteRows.length)} detail="Отдельно от показателя «Без цены»" />
@@ -269,6 +274,13 @@ export function CapexConfiguratorPage() {
         </div>
       </section>
 
+      {composition ? <section className="capex-format-section"><div className="section-inner">
+        <h2>Функциональная полнота торговой точки</h2>
+        <p>Исследовательская комплектация. Мебель, подготовка и безопасность рассчитываются отдельными статьями общей модели запуска.</p>
+        <label>Сценарий мойки <select aria-label="Сценарий мойки" value={washMode} onChange={event => setWashMode(event.target.value as "manual" | "machine")}><option value="manual">Локальная ручная мойка</option><option value="machine">Локальная мойка + компактная машина</option></select></label>
+        <p>Физическое оснащение: {formatRub(composition.groups.filter(group => group.kind === "equipment").reduce((sum, group) => sum + group.knownRub, 0))}. Денежный резерв комплектов: {formatRub(composition.reserveRub)} — отдельно от оснащения.</p>
+        <details><summary>Проверка 18 функций и открытые вопросы</summary><ul>{composition.functions.map(fn => <li key={fn.id}><strong>{fn.name}: {fn.status === "covered" ? "Состав учтён" : fn.status === "not_applicable" ? "Не применяется" : "Требует проверки"}</strong>{fn.gaps.map(gap => <p key={gap}>{gap}</p>)}{fn.missingPrices.length ? <p>Без цены: {fn.missingPrices.join(", ")}</p> : null}</li>)}</ul></details>
+      </div></section> : null}
       <section className="capex-pilot-baseline" aria-labelledby="capex-pilot-baseline-title">
         <div className="section-inner">
           <div className="capex-section-title"><span>База пилота</span><h2 id="capex-pilot-baseline-title">Что уже можно заложить, а что ждёт помещения</h2><p>Пилот зафиксирован как заготовочный цех, совмещённый с торговой точкой и собственным посадочным залом. BASE ниже — нижняя граница оборудования, а не полный бюджет открытия.</p></div>

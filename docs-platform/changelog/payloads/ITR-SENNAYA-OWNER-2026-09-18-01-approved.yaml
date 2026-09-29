@@ -1,0 +1,62 @@
+schema_version: 2
+iteration_id: ITR-SENNAYA-OWNER-2026-09-18-01
+proposal_id: PROP-SENNAYA-OWNER-2026-09-18-01
+decision_id: DEC-SENNAYA-OWNER-2026-09-18-01
+change_set_id: CHG-SENNAYA-OWNER-2026-09-18-01
+status: approved
+approved_by: project owner
+approved_at: 2026-09-18T11:52:05.376Z
+title: Сенная — недвижимость и сценарий использования
+authorization_scope: Owner copy, five scope groups and canonical contingency selection; no new financial engine or change to prices/other scenarios
+constraints:
+  - No Git/index/branch/commit/push/seal/publication
+  - No public operating reserve or rent entry
+  - Keep three UFO, no coffee, two kitchen refrigerators, freezer chest
+  - Petrogradka, Current Base, Investor Terminal and other scenarios unchanged
+  - No invented launch costs; disclose annual OFD 5000 from existing register
+before_state_sha256: 5054c1d566f2eb7752ee9127e9979253d6fef9e954deeffc4cac5f200c1dff6b
+registry_operations:
+  - type: add
+    entity: sources
+    value:
+      id: SRC-SENNAYA-OWNER-BRIEF-20260918
+      title: "Сенная: сценарий использования коммерческой недвижимости"
+      type: instruction
+      location: Owner chat request, 2026-09-18
+      publisher: project owner
+      publication_date: 2026-09-18
+      accessed_at: 2026-09-18
+      reliability: primary
+      notes: Owner-provided final copy and five independent scope switches. Exclude operating reserve, deposits and rent entry from public budget; no payer allocation. No Git mutations, seal or publication.
+  - type: add
+    entity: decisions
+    value:
+      id: DEC-SENNAYA-OWNER-2026-09-18-01
+      title: Сенная для покупателя недвижимости
+      status: approved
+      decision: Применить тексты владельца, пять переключателей состава работ с каноническим пересчётом резерва, исключить публичный операционный резерв и распределение плательщиков. Сохранить общую комплектацию и цены. Проверить ОФД как источник 5000 рублей.
+      rationale: Прямое разрешение владельца на изменение кода и governance; значения остаются исследовательскими, обязательств финансирования не возникает.
+      affected_documents:
+        - DOC-SENNAYA-FLAGSHIP
+      approved_by: project owner
+      approved_at: 2026-09-18
+      supersedes: null
+      source_ids:
+        - SRC-SENNAYA-OWNER-BRIEF-20260918
+      updated_at: 2026-09-18
+state_hash_paths:
+  - src/components/Sennaya.tsx
+  - src/components/Sennaya.css
+  - src/content/sennaya.ts
+  - src/content/sennaya-data.json
+  - src/content/site.ts
+  - src/lib/property-funding.ts
+  - src/lib/network-scaling.ts
+  - scripts/sennaya-projection.ts
+  - scripts/test-sennaya.test.ts
+  - scripts/test-sennaya.cjs
+  - docs-platform/working/sennaya-investor-page.md
+  - docs-platform/registry/sources.yaml
+  - docs-platform/registry/decisions.yaml
+  - docs-platform/generated/financial-core-projection.json
+  - src/content/network-planning-data.json

@@ -12,6 +12,7 @@ import {
   PRICE_SCENARIOS,
   priceSourceRegistryEntries,
   readPriceResearch,
+  recalculatePriceSummary,
   uniquePriceQuotes,
   validatePriceResearch,
 } from "../src/capex/price-research.js";
@@ -25,14 +26,20 @@ import { CAPEX_REGISTER_SOURCE_SHA256, readRegister, sha256 } from "../src/capex
 
 const platform = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 const project = path.resolve(platform, "..");
-const research = readPriceResearch();
+const currentResearch = readPriceResearch();
 const register = readRegister();
+// Historical price contract remains exact while the current register adds a versioned scope.
+const research = structuredClone(currentResearch);
+research.items = research.items.filter(item => !register.equipment.find(row => row.item_id === item.item_id)?.composition_profile);
+research.summary = recalculatePriceSummary(research.items);
+research.scope.included_modules = research.scope.included_modules.filter(id => id !== "MOD-GUEST");
+research.scope.eligible_procurement_record_count = research.items.length;
 
 test("preliminary research covers exactly the 51 eligible pilot procurement records", () => {
-  assert.deepEqual(validatePriceResearch(research, register), []);
+  assert.deepEqual(validatePriceResearch(currentResearch, register), []);
   assert.equal(research.document.status, "research");
-  assert.equal(research.document.decision_id, REMAINING_PRICE_DECISION_ID);
-  assert.equal(research.document.iteration_id, REMAINING_PRICE_ITERATION_ID);
+  assert.equal(research.document.decision_id, "DEC-SENNAYA-CAPEX-2026-09-17-02");
+  assert.equal(research.document.iteration_id, "ITR-SENNAYA-CAPEX-2026-09-17-02");
   assert.equal(research.document.version, "0.4");
   assert.deepEqual(research.scope.included_modules, ["MOD-PREP", "MOD-RETAIL-HOT", "MOD-BAR", "MOD-GROW", "MOD-POS", "MOD-KDS", "MOD-WASH"]);
   assert.equal(research.summary.eligible_procurement_record_count, 51);
@@ -50,7 +57,7 @@ test("preliminary research covers exactly the 51 eligible pilot procurement reco
 });
 
 test("every stored price has three dated sources and non-purchasable records remain unpriced", () => {
-  const priced = register.equipment.filter(item => item.price_base !== null);
+  const priced = register.equipment.filter(item => !item.composition_profile && item.price_base !== null);
   assert.equal(priced.length, 51);
   for (const item of priced) {
     assert.equal(item.currency, "RUB");
@@ -61,7 +68,7 @@ test("every stored price has three dated sources and non-purchasable records rem
     assert.ok(item.price_base_source_id);
     assert.ok(item.price_max_source_id);
   }
-  const forbidden = register.equipment.filter(item => item.item_id.startsWith("CAPEX-05-") || item.inclusion_status === "included_in_parent" || ["component", "engineering_connection", "open_question"].includes(item.record_type));
+  const forbidden = register.equipment.filter(item => (!item.composition_profile && item.item_id.startsWith("CAPEX-05-")) || item.inclusion_status === "included_in_parent" || ["component", "engineering_connection", "open_question"].includes(item.record_type));
   assert.equal(forbidden.every(item => item.price_min === null && item.price_base === null && item.price_max === null), true);
   assert.equal(forbidden.filter(item => item.inclusion_status === "included_in_parent" || item.record_type === "component").every(item => item.quote_status === "included_in_parent"), true);
 });

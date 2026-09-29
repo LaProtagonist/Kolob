@@ -1,32 +1,210 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
-  "required": ["schema_version", "document", "formats"],
+  "required": [
+    "schema_version",
+    "document",
+    "formats"
+  ],
   "properties": {
-    "schema_version": { "const": 1 },
-    "document": { "type": "object" },
+    "schema_version": {
+      "const": 1
+    },
+    "document": {
+      "type": "object"
+    },
     "formats": {
-      "type": "array", "minItems": 7, "maxItems": 7,
+      "type": "array",
+      "minItems": 7,
+      "maxItems": 7,
       "items": {
         "type": "object",
-        "required": ["format_id", "name", "purpose", "lifecycle_status", "required_modules", "optional_modules", "conditional_modules", "excluded_modules", "exclusion_mode", "manual_selection", "notes"],
+        "required": [
+          "format_id",
+          "name",
+          "purpose",
+          "lifecycle_status",
+          "required_modules",
+          "optional_modules",
+          "conditional_modules",
+          "excluded_modules",
+          "exclusion_mode",
+          "manual_selection",
+          "notes"
+        ],
         "properties": {
-          "format_id": { "type": "string", "pattern": "^FMT-[A-Z-]+$" },
-          "name": { "type": "string", "minLength": 1 },
-          "purpose": { "type": "string", "minLength": 1 },
-          "lifecycle_status": { "const": "research" },
-          "required_modules": { "$ref": "#/$defs/modules" },
-          "optional_modules": { "$ref": "#/$defs/modules" },
-          "conditional_modules": { "$ref": "#/$defs/modules" },
-          "excluded_modules": { "$ref": "#/$defs/modules" },
-          "exclusion_mode": { "enum": ["excluded", "excluded_by_default", "none"] },
-          "manual_selection": { "type": "boolean" },
-          "notes": { "type": ["string", "null"] }
+          "format_id": {
+            "type": "string",
+            "pattern": "^FMT-[A-Z-]+$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "purpose": {
+            "type": "string",
+            "minLength": 1
+          },
+          "lifecycle_status": {
+            "const": "research"
+          },
+          "required_modules": {
+            "$ref": "#/$defs/modules"
+          },
+          "optional_modules": {
+            "$ref": "#/$defs/modules"
+          },
+          "conditional_modules": {
+            "$ref": "#/$defs/modules"
+          },
+          "excluded_modules": {
+            "$ref": "#/$defs/modules"
+          },
+          "exclusion_mode": {
+            "enum": [
+              "excluded",
+              "excluded_by_default",
+              "none"
+            ]
+          },
+          "manual_selection": {
+            "type": "boolean"
+          },
+          "notes": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "composition": {
+            "type": "object",
+            "required": [
+              "id",
+              "version",
+              "label",
+              "groups",
+              "quantity_overrides",
+              "functions",
+              "external_groups",
+              "notes"
+            ],
+            "properties": {
+              "id": {
+                "const": "retail_complete"
+              },
+              "version": {
+                "const": 1
+              },
+              "label": {
+                "type": "string"
+              },
+              "groups": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "name",
+                    "kind",
+                    "item_ids"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "kind": {
+                      "enum": [
+                        "equipment",
+                        "service",
+                        "prepaid",
+                        "startup"
+                      ]
+                    },
+                    "item_ids": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "uniqueItems": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "quantity_overrides": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "number",
+                  "minimum": 0
+                }
+              },
+              "functions": {
+                "type": "array",
+                "minItems": 18,
+                "maxItems": 18,
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "name",
+                    "item_ids",
+                    "gaps"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "item_ids": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "uniqueItems": true
+                    },
+                    "gaps": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "uniqueItems": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "external_groups": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "uniqueItems": true
+              },
+              "notes": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          }
         },
         "additionalProperties": false
       }
     }
   },
-  "$defs": { "modules": { "type": "array", "items": { "type": "string", "pattern": "^MOD-[A-Z-]+$" }, "uniqueItems": true } },
+  "$defs": {
+    "modules": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^MOD-[A-Z-]+$"
+      },
+      "uniqueItems": true
+    }
+  },
   "additionalProperties": false
 }

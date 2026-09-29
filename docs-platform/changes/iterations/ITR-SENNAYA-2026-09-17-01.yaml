@@ -1,0 +1,106 @@
+schema_version: 2
+iteration_id: ITR-SENNAYA-2026-09-17-01
+proposal_id: PROP-SENNAYA-2026-09-17-01
+decision_id: DEC-SENNAYA-2026-09-17-01
+change_set_id: CHG-SENNAYA-2026-09-17-01
+title: Сенная — адресное предложение инвестору
+status: approved
+approved_by: project owner
+approved_at: 2026-09-17T13:09:40.137Z
+actor: Codex
+scope: Standalone short Sennaya proposal; staging only, no Git commit authorized
+approved_payload_path: docs-platform/changelog/payloads/ITR-SENNAYA-2026-09-17-01-approved.yaml
+approved_payload_sha256: b4fa08eea11f9dc8925a1517bcb6fe99f2091db5ca169d31776867c55e08d8d1
+before_state_sha256: 8e7c18ed7c91d5077711fc31383737a168388b74fa4c6a0f34886c5acf099086
+after_state_sha256: 623da7f0a11f4634bb8956bb2c79d4d9d90045f2978df43adbcb7dd2341c9a87
+affected_document_ids:
+  - DOC-SENNAYA-FLAGSHIP
+affected_section_ids:
+  - sennaya
+state_hash_paths:
+  - src/content/network-planning-data.json
+  - docs-platform/generated/financial-core-projection.json
+  - src/App.tsx
+  - src/types.ts
+  - src/content/site.ts
+  - src/components/Petrogradka.tsx
+  - src/components/PropertyProposal.tsx
+  - src/components/Sennaya.tsx
+  - src/components/Sennaya.css
+  - src/content/sennaya-data.json
+  - scripts/sennaya-projection.ts
+  - scripts/generate-sennaya-data.ts
+  - scripts/test-franchise-model.test.ts
+  - scripts/test-sennaya.test.ts
+  - scripts/test-sennaya.cjs
+  - scripts/prerender-dist.cjs
+  - scripts/serve-dist.cjs
+  - scripts/test-control-routing.cjs
+  - scripts/audit-links.mjs
+  - scripts/audit-route-html.mjs
+  - server/contact-server.mjs
+  - server/contact_server.py
+  - verification/domains.json
+  - docs-platform/scenarios/sennaya-flagship.json
+  - docs-platform/working/sennaya-investor-page.md
+  - docs-platform/registry/documents.yaml
+  - docs-platform/registry/decisions.yaml
+  - docs-platform/registry/sources.yaml
+content_paths:
+  - docs-platform/changelog/changes.log
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/generated/financial-core-projection.json
+  - docs-platform/registry/decisions.yaml
+  - docs-platform/registry/documents.yaml
+  - docs-platform/registry/sources.yaml
+  - scripts/audit-links.mjs
+  - scripts/audit-route-html.mjs
+  - scripts/prerender-dist.cjs
+  - scripts/serve-dist.cjs
+  - scripts/test-control-routing.cjs
+  - scripts/test-franchise-model.test.ts
+  - server/contact-server.mjs
+  - server/contact_server.py
+  - src/App.tsx
+  - src/components/Petrogradka.tsx
+  - src/content/network-planning-data.json
+  - src/content/site.ts
+  - src/types.ts
+  - verification/domains.json
+  - docs-platform/changelog/2026-09-17T13-14-08-572Z-CHG-SENNAYA-2026-09-17-01.md
+  - docs-platform/changelog/change-receipts/CHG-SENNAYA-2026-09-17-01.yaml
+  - docs-platform/changelog/payloads/ITR-SENNAYA-2026-09-17-01-approved.yaml
+  - docs-platform/changelog/previews/ITR-SENNAYA-2026-09-17-01.yaml
+  - docs-platform/changes/CHG-SENNAYA-2026-09-17-01.yaml
+  - docs-platform/changes/decisions/DEC-SENNAYA-2026-09-17-01.yaml
+  - docs-platform/changes/iterations/ITR-SENNAYA-2026-09-17-01.yaml
+  - docs-platform/changes/proposals/PROP-SENNAYA-2026-09-17-01.yaml
+  - docs-platform/scenarios/sennaya-flagship.json
+  - docs-platform/working/sennaya-investor-page.md
+  - '"output/review/investor-sheet-readonly-audit-2026-09-04/investor-financial-summary-\320\264\320\276\320\277\321\203\321\211\320\265\320\275\320\270\321\217.png"'
+  - '"output/review/investor-sheet-readonly-audit-2026-09-04/investor-financial-summary-\320\264\320\276\321\205\320\276\320\264\321\213-\320\270-\321\200\320\260\321\201\321\205\320\276\320\264\321\213.png"'
+  - '"output/review/investor-sheet-readonly-audit-2026-09-04/investor-financial-summary-\320\270\320\275\320\262\320\265\321\201\321\202\320\270\321\206\320\270\320\270.png"'
+  - '"output/review/investor-sheet-readonly-audit-2026-09-04/investor-financial-summary-\320\276\321\201\320\275\320\276\320\262\320\275\321\213\320\265-\320\277\320\276\320\272\320\260\320\267\320\260\321\202\320\265\320\273\320\270.png"'
+  - '"output/review/investor-sheet-readonly-audit-2026-09-04/investor-financial-summary-\321\201\321\206\320\265\320\275\320\260\321\200\320\270\320\270.png"'
+  - scripts/generate-sennaya-data.ts
+  - scripts/sennaya-projection.ts
+  - scripts/test-sennaya.cjs
+  - scripts/test-sennaya.test.ts
+  - src/components/PropertyProposal.tsx
+  - src/components/Sennaya.css
+  - src/components/Sennaya.tsx
+  - src/content/sennaya-data.json
+  - docs-platform/changelog/verification/ITR-SENNAYA-2026-09-17-01.yaml
+seal_paths:
+  - docs-platform/changelog/events.ndjson
+  - docs-platform/changelog/TIMELINE.md
+  - docs-platform/context/PROJECT_STATE.yaml
+  - docs-platform/context/CODEX_HANDOFF.md
+allowed_dirty_paths:
+  - analysis/
+  - output/
+rollback_payload: null
+rollback_contract:
+  mode: governed_reverse_change_set
+  preserves_history: true
+  git_reset_forbidden: true

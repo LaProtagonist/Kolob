@@ -49,7 +49,7 @@ test("canonical YAML passes schema and reference validation and CSV is generated
   assert.deepEqual(validateRegister(register, source), []);
   assert.equal(fs.readFileSync(yamlPath, "utf8"), serializeRegister(register));
   assert.equal(fs.readFileSync(csvPath, "utf8"), equipmentCsv(register));
-  assert.equal(fs.readFileSync(csvPath, "utf8").trimEnd().split("\n").length, 161);
+  assert.equal(fs.readFileSync(csvPath, "utf8").trimEnd().split("\n").length, 180);
   assert.equal(fs.readFileSync(csvPath, "utf8").split("\n", 1)[0], EQUIPMENT_COLUMNS.join(","));
 });
 
@@ -91,7 +91,7 @@ test("the 124 source records preserve history outside the governed DEC-010/DEC-0
   assert.equal(grinder.requirement, "required");
   assert.equal(withoutPriceResearch.find(item => item.item_id === "CAPEX-02-001")?.name, "Газовый гриль для колобков");
   assert.equal(withoutPriceResearch.find(item => item.item_id === "CAPEX-02-002")?.name, "Гриль для Манчеса");
-  assert.equal(current.equipment.slice(124).length, 36);
+  assert.equal(current.equipment.slice(124, 160).length, 36);
 });
 
 test("parent references, inclusion and numerical uncertainty rules prevent double counting", () => {
@@ -111,9 +111,9 @@ test("parent references, inclusion and numerical uncertainty rules prevent doubl
     }
     assert.equal(item.lifecycle_status, "research");
   }
-  assert.equal(register.equipment.filter(item => item.price_base !== null).length, 51);
+  assert.equal(register.equipment.filter(item => item.price_base !== null).length, 63);
   assert.equal(register.equipment.filter(item => item.price_base !== null).every(item => item.supplier !== null && item.checked_at && (item.source_url || item.price_source_type === "owner_approved_research_estimate")), true);
-  assert.equal(register.equipment.filter(item => item.item_id.startsWith("CAPEX-05-")).every(item => item.price_min === null && item.price_base === null && item.price_max === null), true);
+  assert.equal(register.equipment.filter(item => !item.composition_profile && item.item_id.startsWith("CAPEX-05-")).every(item => item.price_min === null && item.price_base === null && item.price_max === null), true);
   assert.equal(register.equipment.filter(item => item.inclusion_status === "included_in_parent" || ["component", "engineering_connection", "open_question"].includes(item.record_type)).every(item => item.price_min === null && item.price_base === null && item.price_max === null), true);
   const baseline = registerStatistics(register).main_procurement_records;
   const synthetic = structuredClone(register);
@@ -146,19 +146,19 @@ test("register statistics distinguish source records from independent procuremen
   assert.deepEqual(statistics, {
     source_record_count: 124,
     mapped_record_count: 124,
-    added_research_record_count: 36,
-    equipment_record_count: 160,
+    added_research_record_count: 55,
+    equipment_record_count: 179,
     unmapped_record_count: 0,
-    main_procurement_records: 51,
+    main_procurement_records: 70,
     by_record_type: {
-      equipment: 31, system: 17, component: 16, accessory: 12, inventory: 56, furniture: 25,
+      equipment: 50, system: 17, component: 16, accessory: 12, inventory: 56, furniture: 25,
       engineering_connection: 1, installation_service: 0, consumable: 0, software: 0, open_question: 2,
     },
     inclusion_status_tbd: 59,
     quantity_base_tbd: 77,
-    priced_record_count: 51,
-    unpriced_eligible_procurement_record_count: 0,
-    quote_required_count: 27,
+    priced_record_count: 63,
+    unpriced_eligible_procurement_record_count: 7,
+    quote_required_count: 46,
     open_parameter_count: 145,
     missing_section_count: 27,
   });

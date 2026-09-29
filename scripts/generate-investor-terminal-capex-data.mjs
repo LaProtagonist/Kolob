@@ -22,7 +22,7 @@ const moduleIds = new Set([
   ...source.investorStartModel.point_configuration.optional_modules.map((item) => item.module_id),
 ]);
 const moduleItems = source.moduleItems
-  .filter((item) => moduleIds.has(item.moduleId))
+  .filter((item) => moduleIds.has(item.moduleId) && !item.condition?.startsWith("retail_complete"))
   .map((item) => ({
     moduleId: item.moduleId,
     itemId: item.itemId,

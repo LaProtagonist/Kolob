@@ -37,9 +37,9 @@ const exact = {
 } as const;
 
 test("all eight approved items have exact research prices and remain quote_required", () => {
-  assert.equal(register.equipment.length, 160);
-  assert.equal(research.summary.priced_record_count, 51);
-  assert.equal(research.summary.unpriced_record_count, 0);
+  assert.equal(register.equipment.filter(item => !item.composition_profile).length, 160);
+  assert.equal(research.items.filter(item => !register.equipment.find(row => row.item_id === item.item_id)?.composition_profile && item.valuation_status === "priced").length, 51);
+  assert.equal(research.items.filter(item => !register.equipment.find(row => row.item_id === item.item_id)?.composition_profile && item.valuation_status !== "priced").length, 0);
   for (const itemId of itemIds) {
     const source = research.items.find(item => item.item_id === itemId)!;
     const item = register.equipment.find(entry => entry.item_id === itemId)!;

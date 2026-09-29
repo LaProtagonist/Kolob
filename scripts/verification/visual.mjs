@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import os from "node:os";
 import { spawn } from "node:child_process";
 import { cacheRoot, isMain, parseCli, projectRoot, readConfig, shortHash, writeJson } from "./utils.mjs";
 
@@ -71,7 +72,33 @@ function screenshotFile(domainId, hash, viewport) {
   return path.join(cacheRoot, "screenshots", `${domainId}-${shortHash(hash)}-${viewport}.png`);
 }
 
-async function inspectPage(browser, { baseUrl, domainId, domain, impact, hash, viewportName }) {
+// Protected workbenches use an isolated authenticated fixture, never a public route.
+async function acquireControlServer(root) {
+  const dataDir = fs.mkdtempSync(path.join(os.tmpdir(), "kolob-visual-control-"));
+  const port = 23000 + process.pid % 2000;
+  const baseUrl = `http://127.0.0.1:${port}`;
+  const loginPassword = "visual-control-fixture";
+  const child = spawn("python3", ["server/contact_server.py"], {
+    cwd: root, stdio: "ignore", env: { ...process.env,
+      CONTACT_SERVER_HOST: "127.0.0.1", CONTACT_SERVER_PORT: String(port),
+      CONTACT_DATA_DIR: dataDir, CONTACT_ADMIN_PASSWORD: loginPassword,
+      CONTACT_ADMIN_SECRET: "visual-control-fixture-secret", CONTACT_COOKIE_SECURE: "0",
+      CONTROL_STATIC_ROOT: path.join(root, "control-dist"),
+    },
+  });
+  const stop = async () => {
+    if (child.exitCode === null) {
+      const exited = new Promise(resolve => child.once("exit", resolve));
+      child.kill("SIGTERM"); await exited;
+    }
+    fs.rmSync(dataDir, {recursive:true, force:true});
+  };
+  try { await waitForServer(`${baseUrl}/control/login`, child); }
+  catch (error) { await stop(); throw error; }
+  return { baseUrl, loginPassword, reused:false, stop };
+}
+
+async function inspectPage(browser, { baseUrl, loginPassword, domainId, domain, impact, hash, viewportName }) {
   const viewport = VIEWPORTS[viewportName];
   const context = await browser.newContext({ viewport, deviceScaleFactor: 1 });
   const page = await context.newPage();
@@ -82,12 +109,24 @@ async function inspectPage(browser, { baseUrl, domainId, domain, impact, hash, v
   });
   page.on("pageerror", error => pageErrors.push(error.message));
   try {
+    if (loginPassword) {
+      const login = await context.request.post(`${baseUrl}/control/login`, { form: { password: loginPassword, next: domain.visual.route }, maxRedirects:0 });
+      if (login.status() !== 303) throw new Error("Control fixture authentication failed");
+    }
     const response = await page.goto(`${baseUrl}${domain.visual.route}`, { waitUntil: "domcontentloaded", timeout: 15000 });
     if (!response || response.status() >= 400) throw new Error(`HTTP ${response?.status() ?? "no response"}`);
     await page.locator("#root > *").first().waitFor({ state: "visible", timeout: 10000 });
     for (const selector of domain.visual.requiredSelectors || []) {
       const locator = page.locator(selector).first();
       await locator.waitFor({ state: "visible", timeout: 10000 });
+    }
+    for (const selector of domain.visual.clickSelectors || []) await page.locator(selector).click();
+    if (domainId === "capex" && domain.visual.route.startsWith("/control/")) {
+      await page.getByText("Функциональная полнота торговой точки", {exact:true}).waitFor();
+      for (const id of ["CAPEX-02-001", "CAPEX-02-002", "CAPEX-02-058", "CAPEX-02-059"]) {
+        if (await page.locator(`tr[data-item-id="${id}"]`).count() !== 1) throw new Error(`Missing or duplicated point item ${id}`);
+      }
+      if (await page.locator('tr[data-item-id="CAPEX-01-001"]').count()) throw new Error("Production chamber leaked into retail format");
     }
     const metrics = await page.evaluate(() => ({
       viewport: window.innerWidth,
@@ -115,7 +154,10 @@ async function inspectPage(browser, { baseUrl, domainId, domain, impact, hash, v
 
 export async function runVisualVerification({ selections, config = readConfig(), baseUrl = DEFAULT_URL, root = projectRoot } = {}) {
   if (!selections?.length) return { serverReused: false, results: [], screenshotPaths: [] };
-  const server = await acquireServer(baseUrl, root);
+  const hasControl = selections.some(item => config.domains[item.domain]?.visual?.route?.startsWith("/control/"));
+  const hasPublic = selections.some(item => !config.domains[item.domain]?.visual?.route?.startsWith("/control/"));
+  const server = hasPublic ? await acquireServer(baseUrl, root) : null;
+  const controlServer = hasControl ? await acquireControlServer(root) : null;
   process.env.PLAYWRIGHT_BROWSERS_PATH = path.join(root, ".playwright-browsers");
   const { chromium } = await import("playwright");
   const browser = await chromium.launch({ headless: true });
@@ -127,7 +169,8 @@ export async function runVisualVerification({ selections, config = readConfig(),
       const viewports = selection.impact === "high" ? ["desktop", "mobile"] : ["desktop"];
       for (const viewportName of viewports) {
         try {
-          results.push(await inspectPage(browser, { baseUrl: server.baseUrl, domainId: selection.domain, domain, impact: selection.impact, hash: selection.hash, viewportName }));
+          const selectedServer = domain.visual.route.startsWith("/control/") ? controlServer : server;
+          results.push(await inspectPage(browser, { baseUrl: selectedServer.baseUrl, loginPassword: selectedServer.loginPassword, domainId: selection.domain, domain, impact: selection.impact, hash: selection.hash, viewportName }));
         } catch (error) {
           error.domain = selection.domain;
           error.partialResults = results;
@@ -137,11 +180,12 @@ export async function runVisualVerification({ selections, config = readConfig(),
     }
   } finally {
     await browser.close();
-    await server.stop();
+    await server?.stop();
+    await controlServer?.stop();
   }
   const report = {
     generatedAt: new Date().toISOString(),
-    serverReused: server.reused,
+    serverReused: server?.reused ?? false,
     results,
     screenshotPaths: results.map(result => result.screenshotPath).filter(Boolean).map(filename => path.relative(root, filename)),
   };

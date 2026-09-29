@@ -5,14 +5,14 @@
     "title": "CAPEX-конфигуратор",
     "status": "research",
     "statusLabel": "Исследование",
-    "dataVersion": "0.1+DEC-015",
-    "generatedAt": "2026-08-05T19:23:29.000Z",
-    "priceCheckedAt": "2026-08-05T18:14:24.000Z",
+    "dataVersion": "0.1+DEC-SENNAYA-CAPEX-2026-09-17-02",
+    "generatedAt": "2026-09-17T20:53:43.114Z",
+    "priceCheckedAt": "2026-09-17T18:00:00.000Z",
     "currency": "RUB",
-    "decisionId": "DEC-015",
-    "changeSetId": "CHG-030",
-    "iterationId": "ITR-CAPEX-REMAINING-PRICES-2026-08-05-01",
-    "approvedPayloadSha256": "123b291763b8571d36a5650d9b49d8159839834b574895e666ed943f4089f6d1",
+    "decisionId": "DEC-SENNAYA-CAPEX-2026-09-17-02",
+    "changeSetId": "CHG-SENNAYA-CAPEX-2026-09-17-02",
+    "iterationId": "ITR-SENNAYA-CAPEX-2026-09-17-02",
+    "approvedPayloadSha256": "da4966a1d73d3ecc3fffed1900b51ed629c67191696dddbaba9b88a70c326efb",
     "gitBaselineCommit": "не зафиксирован",
     "warning": "В сумму включены только оценённые позиции выбранной комплектации оборудования. Инженерные работы, подготовка помещения, монтаж, расходы запуска, первоначальный запас, оборотный капитал и резерв бюджета пока не рассчитаны.",
     "contentState": {
@@ -21,12 +21,12 @@
       "source_files": [
         {
           "path": "docs-platform/working/capex-equipment-register.yaml",
-          "sha256": "f095aaaf5ba6500636d5982966a95f3f675319912d6b8523d4a93cbfbf7c908b",
+          "sha256": "3d82ff1803525ff21ecb367e465410102de420b14e309f90e5f069ee8c984fb3",
           "normalization": "yaml_canonical_nfc"
         },
         {
           "path": "docs-platform/working/capex-price-research.yaml",
-          "sha256": "efd3da7b0cdb9ad8bbd6b6adb96db79b23c3348c2e8012e44e141dd1774b1e02",
+          "sha256": "e8c17de882d9c330cb6dc4c9dc9acb364bf0a7a88ee01cc2dc1eb209047409cc",
           "normalization": "yaml_canonical_nfc"
         },
         {
@@ -36,17 +36,17 @@
         },
         {
           "path": "docs-platform/working/capex-module-items.yaml",
-          "sha256": "3ae07752491dacad1af1985874f0fe597b331a79f58efdb22f2e48e9a739f443",
+          "sha256": "77a35873ff0002a8520d15579b0ea88dd146dc59173b96a6006a6789ec1bcbd3",
           "normalization": "yaml_canonical_nfc"
         },
         {
           "path": "docs-platform/working/capex-point-formats.yaml",
-          "sha256": "ed1c5d1cb46558cab7a1b18576f576d58bbec88cd753d52cb23665a37308c55f",
+          "sha256": "599050431b34b18e052f8e95f4f9fd1ff48727165a45fca82bb9678e358b01a7",
           "normalization": "yaml_canonical_nfc"
         },
         {
           "path": "docs-platform/working/capex-configurations.yaml",
-          "sha256": "acfb1665162cc663fd987fa0877be579df6884aecad0dfbf8aa6b5daad0cb9fa",
+          "sha256": "3f8ccbbeb8c2d5c09a8099c94983aed77f338b3be6346ed8120c1556b6e3ff49",
           "normalization": "yaml_canonical_nfc"
         },
         {
@@ -71,27 +71,32 @@
         },
         {
           "path": "docs-platform/app/src/capex/web-snapshot.ts",
-          "sha256": "e2d1f83ae5084fcd74485e84223c4151dee7542133aff37f3baf18fd812352ff",
+          "sha256": "a18266e43d24f847d2b8a0bb93805fea3f522cc647d26c61c6317f5069d94135",
           "normalization": "text_lf_nfc"
         },
         {
           "path": "docs-platform/app/src/capex/content-state.ts",
-          "sha256": "65e00bdf29366e2950b4048eaeea7f35a9cbf23689b64baa28ed24d0682171e4",
+          "sha256": "df622f36da7c65bc3b3965492b3b00798602bed3308fa9258b2fecb57132f600",
           "normalization": "text_lf_nfc"
         },
         {
           "path": "docs-platform/app/src/capex/register.ts",
-          "sha256": "00969d3047f046efd76c3b267722eb40b6215431d6d1f50dfb0b6950ac30b652",
+          "sha256": "46f6364ecbbc139251214eb30e8778fb0d8fe1d01d38f44a4271cfddc599432a",
           "normalization": "text_lf_nfc"
         },
         {
           "path": "docs-platform/app/src/capex/modular.ts",
-          "sha256": "886bd8a48c17af6859bdf5c61fec1048c3f855113bf39e33d94f1dc20e84f84d",
+          "sha256": "05c326fb9de8f5795a3853fe3c78fed3104421926e0d4b13a0e3f8e42a932248",
           "normalization": "text_lf_nfc"
         },
         {
           "path": "docs-platform/app/src/capex/price-research.ts",
-          "sha256": "3eb4da773f7f6b5f43c7301ed4ce427329f4172e8af6ee10c603978e654fc945",
+          "sha256": "00c6fb08b0464bf823ed461d72c367507727a60bb0b3f3d902f675af8c4f80f5",
+          "normalization": "text_lf_nfc"
+        },
+        {
+          "path": "src/lib/capex-composition.ts",
+          "sha256": "970124119bdd1dafb8c7def2dfc8f99aed31f09366290ed902f6b277d138753c",
           "normalization": "text_lf_nfc"
         },
         {
@@ -100,35 +105,36 @@
           "normalization": "json_canonical_nfc"
         }
       ],
-      "content_state_sha256": "a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239"
+      "content_state_sha256": "836a08cb0e65d837b350704efb9fd28da800bdd0bdd2837f9eadb94b7d1c611c"
     },
-    "contentStateSha256": "a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239",
+    "contentStateSha256": "836a08cb0e65d837b350704efb9fd28da800bdd0bdd2837f9eadb94b7d1c611c",
     "sourceHashes": {
-      "docs-platform/working/capex-equipment-register.yaml": "f095aaaf5ba6500636d5982966a95f3f675319912d6b8523d4a93cbfbf7c908b",
-      "docs-platform/working/capex-price-research.yaml": "efd3da7b0cdb9ad8bbd6b6adb96db79b23c3348c2e8012e44e141dd1774b1e02",
+      "docs-platform/working/capex-equipment-register.yaml": "3d82ff1803525ff21ecb367e465410102de420b14e309f90e5f069ee8c984fb3",
+      "docs-platform/working/capex-price-research.yaml": "e8c17de882d9c330cb6dc4c9dc9acb364bf0a7a88ee01cc2dc1eb209047409cc",
       "docs-platform/working/capex-modules.yaml": "1a30bb6c704d4be612e9af85d10ab9802a90721231178e2676ea12a10ca6ddb4",
-      "docs-platform/working/capex-module-items.yaml": "3ae07752491dacad1af1985874f0fe597b331a79f58efdb22f2e48e9a739f443",
-      "docs-platform/working/capex-point-formats.yaml": "ed1c5d1cb46558cab7a1b18576f576d58bbec88cd753d52cb23665a37308c55f",
-      "docs-platform/working/capex-configurations.yaml": "acfb1665162cc663fd987fa0877be579df6884aecad0dfbf8aa6b5daad0cb9fa",
+      "docs-platform/working/capex-module-items.yaml": "77a35873ff0002a8520d15579b0ea88dd146dc59173b96a6006a6789ec1bcbd3",
+      "docs-platform/working/capex-point-formats.yaml": "599050431b34b18e052f8e95f4f9fd1ff48727165a45fca82bb9678e358b01a7",
+      "docs-platform/working/capex-configurations.yaml": "3f8ccbbeb8c2d5c09a8099c94983aed77f338b3be6346ed8120c1556b6e3ff49",
       "docs-platform/working/capex-configuration-overrides.yaml": "3d425fb54554816595c5788875d1e34a9e838d5c615e31b1044fdc82e779561a",
       "docs-platform/working/pilot-capex-assumptions.yaml": "c000b07214cf0fb239adad1815d0bc3de2cbe95a8fca309ed0a7d8ef5a5db0c8",
       "docs-platform/working/investor-start-model.yaml": "ac83ec0506b535b58078a2b111f6303fa6ee5548a09bbc65dbd254a36227efd3",
       "docs-platform/registry/documents.yaml": "64159ad1868dff174b21ebc0953e5a1793526b78aa0bcbd340ffbe6194290ed5",
-      "docs-platform/app/src/capex/web-snapshot.ts": "e2d1f83ae5084fcd74485e84223c4151dee7542133aff37f3baf18fd812352ff",
-      "docs-platform/app/src/capex/content-state.ts": "65e00bdf29366e2950b4048eaeea7f35a9cbf23689b64baa28ed24d0682171e4",
-      "docs-platform/app/src/capex/register.ts": "00969d3047f046efd76c3b267722eb40b6215431d6d1f50dfb0b6950ac30b652",
-      "docs-platform/app/src/capex/modular.ts": "886bd8a48c17af6859bdf5c61fec1048c3f855113bf39e33d94f1dc20e84f84d",
-      "docs-platform/app/src/capex/price-research.ts": "3eb4da773f7f6b5f43c7301ed4ce427329f4172e8af6ee10c603978e654fc945",
+      "docs-platform/app/src/capex/web-snapshot.ts": "a18266e43d24f847d2b8a0bb93805fea3f522cc647d26c61c6317f5069d94135",
+      "docs-platform/app/src/capex/content-state.ts": "df622f36da7c65bc3b3965492b3b00798602bed3308fa9258b2fecb57132f600",
+      "docs-platform/app/src/capex/register.ts": "46f6364ecbbc139251214eb30e8778fb0d8fe1d01d38f44a4271cfddc599432a",
+      "docs-platform/app/src/capex/modular.ts": "05c326fb9de8f5795a3853fe3c78fed3104421926e0d4b13a0e3f8e42a932248",
+      "docs-platform/app/src/capex/price-research.ts": "00c6fb08b0464bf823ed461d72c367507727a60bb0b3f3d902f675af8c4f80f5",
+      "src/lib/capex-composition.ts": "970124119bdd1dafb8c7def2dfc8f99aed31f09366290ed902f6b277d138753c",
       "docs-platform/schemas/capex-web-snapshot.schema.json": "8bb5bf8c512bc3c8d14ed010ef9567778ae667ed048013ce5f00880264045874"
     },
-    "sourceBundleSha256": "a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239",
+    "sourceBundleSha256": "836a08cb0e65d837b350704efb9fd28da800bdd0bdd2837f9eadb94b7d1c611c",
     "counts": {
-      "equipmentRecords": 160,
-      "independentProcurementRecords": 51,
-      "foodPriceScopeRecords": 51,
-      "pricedRecords": 51,
-      "unpricedRecords": 0,
-      "quoteRequiredRecords": 27,
+      "equipmentRecords": 179,
+      "independentProcurementRecords": 70,
+      "foodPriceScopeRecords": 70,
+      "pricedRecords": 63,
+      "unpricedRecords": 7,
+      "quoteRequiredRecords": 46,
       "modules": 12,
       "formats": 7
     },
@@ -255,6 +261,8 @@
       "id": "FMT-PREP-CENTER",
       "name": "Заготовочный цех",
       "canonicalName": "Заготовочный цех",
+      "defaultConfiguration": null,
+      "composition": null,
       "purpose": "Производство и подготовка компонентов без собственной полноценной розничной точки.",
       "status": "research",
       "manualSelection": false,
@@ -281,6 +289,8 @@
       "id": "FMT-INTEGRATED",
       "name": "Совмещённый объект",
       "canonicalName": "Совмещённый объект",
+      "defaultConfiguration": null,
+      "composition": null,
       "purpose": "Заготовочный цех и торговая точка в одном помещении. Может работать с посадочным залом или без него.",
       "status": "research",
       "manualSelection": false,
@@ -309,6 +319,1111 @@
       "id": "FMT-RESTAURANT-SEATING",
       "name": "Торговая точка с посадочным залом",
       "canonicalName": "Торговая точка с посадочным залом",
+      "defaultConfiguration": {
+        "configuration_id": "CFG-RETAIL-SEATING-001",
+        "name": "Типовая торговая точка с залом, без кофе",
+        "format_id": "FMT-RESTAURANT-SEATING",
+        "lifecycle_status": "research",
+        "total_area_m2": null,
+        "guest_area_m2": null,
+        "hall_count": 1,
+        "seat_count": 26,
+        "cashier_post_count": 2,
+        "hot_kitchen_post_count": 2,
+        "filling_count": null,
+        "service_station_count": null,
+        "peak_orders_per_hour": null,
+        "daily_orders": 200,
+        "bar_enabled": true,
+        "alcohol_enabled": false,
+        "prep_enabled": false,
+        "grow_enabled": false,
+        "central_supply_enabled": true,
+        "self_service_enabled": false,
+        "reusable_tableware_enabled": false,
+        "shared_seating": false,
+        "mobile_format": false,
+        "selected_modules": [
+          "MOD-BAR"
+        ],
+        "excluded_modules": [
+          "MOD-PREP",
+          "MOD-GROW"
+        ],
+        "notes": "Общий типовой профиль, не адресная ведомость. Площадь и посадка задаются параметрами объекта.",
+        "composition_profile": "retail_complete",
+        "wash_mode": "manual"
+      },
+      "composition": {
+        "id": "retail_complete",
+        "version": 1,
+        "label": "Точка с залом — полная функциональная проверка",
+        "groups": [
+          {
+            "id": "point-retail-equipment",
+            "name": "Кухня и холодильное хранение",
+            "kind": "equipment",
+            "item_ids": [
+              "CAPEX-02-001",
+              "CAPEX-02-002",
+              "CAPEX-02-003",
+              "CAPEX-02-004",
+              "CAPEX-02-005",
+              "CAPEX-02-006",
+              "CAPEX-02-007",
+              "CAPEX-02-008",
+              "CAPEX-02-009",
+              "CAPEX-02-056",
+              "CAPEX-01-025",
+              "CAPEX-02-058",
+              "CAPEX-02-059"
+            ]
+          },
+          {
+            "id": "point-bar",
+            "name": "Напиточная зона",
+            "kind": "equipment",
+            "item_ids": [
+              "CAPEX-02-010",
+              "CAPEX-02-011",
+              "CAPEX-02-012",
+              "CAPEX-02-013",
+              "CAPEX-02-057"
+            ]
+          },
+          {
+            "id": "point-pos-kds",
+            "name": "Кассы и цифровой контур",
+            "kind": "equipment",
+            "item_ids": [
+              "CAPEX-04-001",
+              "CAPEX-04-003",
+              "CAPEX-04-004",
+              "CAPEX-04-005",
+              "CAPEX-04-006",
+              "CAPEX-04-007",
+              "CAPEX-04-008",
+              "CAPEX-04-009"
+            ]
+          },
+          {
+            "id": "point-wash",
+            "name": "Мойка и санитария",
+            "kind": "equipment",
+            "item_ids": [
+              "CAPEX-01-019",
+              "CAPEX-01-020",
+              "CAPEX-01-021",
+              "CAPEX-01-006",
+              "CAPEX-01-007",
+              "CAPEX-08-007"
+            ]
+          },
+          {
+            "id": "point-guest-accessories",
+            "name": "Принадлежности зала",
+            "kind": "equipment",
+            "item_ids": [
+              "CAPEX-05-028",
+              "CAPEX-05-029",
+              "CAPEX-05-030"
+            ]
+          },
+          {
+            "id": "point-installation",
+            "name": "Доставка, монтаж и пусконаладка",
+            "kind": "service",
+            "item_ids": [
+              "CAPEX-04-010",
+              "CAPEX-04-011",
+              "CAPEX-02-060",
+              "CAPEX-02-061",
+              "CAPEX-02-062"
+            ]
+          },
+          {
+            "id": "point-prepaid",
+            "name": "Предоплата цифровых сервисов",
+            "kind": "prepaid",
+            "item_ids": [
+              "CAPEX-04-012"
+            ]
+          },
+          {
+            "id": "point-opening-supplies",
+            "name": "Первоначальные санитарные и гостевые расходники",
+            "kind": "startup",
+            "item_ids": [
+              "CAPEX-02-063"
+            ]
+          }
+        ],
+        "quantity_overrides": {
+          "CAPEX-02-001": 2,
+          "CAPEX-02-002": 3,
+          "CAPEX-02-003": 24,
+          "CAPEX-02-004": 1,
+          "CAPEX-02-013": 1,
+          "CAPEX-01-025": 4,
+          "CAPEX-01-019": 1,
+          "CAPEX-01-020": 1,
+          "CAPEX-01-021": 1,
+          "CAPEX-01-006": 1,
+          "CAPEX-01-007": 1
+        },
+        "functions": [
+          {
+            "id": "receiving",
+            "name": "Приём дневного запаса",
+            "item_ids": [
+              "CAPEX-02-009"
+            ],
+            "gaps": [
+              "График поставок, тара и зона приёмки не определены"
+            ]
+          },
+          {
+            "id": "chilled",
+            "name": "Среднетемпературное хранение",
+            "item_ids": [
+              "CAPEX-02-058",
+              "CAPEX-02-004"
+            ],
+            "gaps": [
+              "Полезные объёмы, разделение продуктов и масса дневного запаса не подтверждены"
+            ]
+          },
+          {
+            "id": "frozen",
+            "name": "Морозильное хранение",
+            "item_ids": [
+              "CAPEX-02-059"
+            ],
+            "gaps": [
+              "График поставок и полезная загрузка не подтверждены"
+            ]
+          },
+          {
+            "id": "temperature",
+            "name": "Контроль температур",
+            "item_ids": [
+              "CAPEX-01-025"
+            ],
+            "gaps": [
+              "Проверить размещение четырёх приборов и процедуру контроля"
+            ]
+          },
+          {
+            "id": "hot",
+            "name": "Финальная готовка",
+            "item_ids": [
+              "CAPEX-02-001",
+              "CAPEX-02-002",
+              "CAPEX-02-006"
+            ],
+            "gaps": [
+              "Газ, мощность, вытяжка, теплозащита и пожарные решения — технический проект в подготовке"
+            ]
+          },
+          {
+            "id": "assembly",
+            "name": "Холодная сборка",
+            "item_ids": [
+              "CAPEX-02-004",
+              "CAPEX-02-007"
+            ],
+            "gaps": []
+          },
+          {
+            "id": "dosing",
+            "name": "Дозирование начинок",
+            "item_ids": [
+              "CAPEX-02-003",
+              "CAPEX-02-005"
+            ],
+            "gaps": [
+              "24 дозатора: 16 рабочих и 8 запасных; пересечение GN с комплектом требует спецификации поставщика"
+            ]
+          },
+          {
+            "id": "packing",
+            "name": "Комплектация заказа",
+            "item_ids": [
+              "CAPEX-02-056"
+            ],
+            "gaps": [
+              "Кухонные подносы не являются гостевыми; состав комплектов сверить с закупочной спецификацией"
+            ]
+          },
+          {
+            "id": "drinks",
+            "name": "Напиточная зона без кофе",
+            "item_ids": [
+              "CAPEX-02-010",
+              "CAPEX-02-011",
+              "CAPEX-02-012",
+              "CAPEX-02-013",
+              "CAPEX-02-057"
+            ],
+            "gaps": [
+              "Post-mix: подтвердить охладитель, газовый баллон, водоподготовку и подключение; отдельный барный холод пока не обоснован меню"
+            ]
+          },
+          {
+            "id": "issuing",
+            "name": "Выдача",
+            "item_ids": [
+              "CAPEX-02-008"
+            ],
+            "gaps": []
+          },
+          {
+            "id": "wash",
+            "name": "Мойка рабочего инвентаря",
+            "item_ids": [
+              "CAPEX-01-019",
+              "CAPEX-01-007"
+            ],
+            "gaps": [
+              "Горячая вода, фильтрация и необходимость жироуловителя — после обследования"
+            ]
+          },
+          {
+            "id": "sanitation",
+            "name": "Санитарное оснащение",
+            "item_ids": [
+              "CAPEX-01-020",
+              "CAPEX-01-021",
+              "CAPEX-02-063"
+            ],
+            "gaps": [
+              "Не оценён первоначальный комплект санитарных расходников"
+            ]
+          },
+          {
+            "id": "fiscal",
+            "name": "Кассы и фискализация",
+            "item_ids": [
+              "CAPEX-04-001",
+              "CAPEX-04-004",
+              "CAPEX-04-011",
+              "CAPEX-04-012"
+            ],
+            "gaps": [
+              "Договор эквайринга, регистрация и интеграция учёта требуют уточнения; отдельный чековый принтер не нужен"
+            ]
+          },
+          {
+            "id": "kds",
+            "name": "Экраны заказов",
+            "item_ids": [
+              "CAPEX-04-003"
+            ],
+            "gaps": [
+              "Кухонный принтер не добавляется при KDS; резервный процесс выдачи уточнить"
+            ]
+          },
+          {
+            "id": "network",
+            "name": "Сеть и резервное питание",
+            "item_ids": [
+              "CAPEX-04-005",
+              "CAPEX-04-006",
+              "CAPEX-04-007",
+              "CAPEX-04-008",
+              "CAPEX-04-009",
+              "CAPEX-04-010"
+            ],
+            "gaps": [
+              "Покрытие, порты, PoE, кабели, автономность и резервный интернет ещё не закрыты; интернет — регулярный расход"
+            ]
+          },
+          {
+            "id": "hall",
+            "name": "Зал и гостевой поток",
+            "item_ids": [
+              "CAPEX-05-028",
+              "CAPEX-05-029",
+              "CAPEX-05-030"
+            ],
+            "gaps": [
+              "Мебель по нормативу на место, не утверждённая ведомость столов и стульев; навигация и встроенные стойки — в подготовке"
+            ]
+          },
+          {
+            "id": "safety",
+            "name": "Безопасность",
+            "item_ids": [],
+            "gaps": [
+              "Видеонаблюдение и охрана — отдельный существующий норматив; пожарная безопасность и газ — технический проект"
+            ]
+          },
+          {
+            "id": "installation",
+            "name": "Доставка и запуск оборудования",
+            "item_ids": [
+              "CAPEX-02-060",
+              "CAPEX-02-061",
+              "CAPEX-02-062"
+            ],
+            "gaps": [
+              "Требуются смета поставщиков, схема подключения и условия разгрузки"
+            ]
+          }
+        ],
+        "external_groups": [
+          "furniture",
+          "security",
+          "point-preparation"
+        ],
+        "notes": "Общий профиль; старые сохранённые конфигурации явно продолжают прежний состав. Полнота требует закрытия всех функций, не только наличия цены. Кофе и центральное производство исключены.",
+        "bom": {
+          "schema_version": 1,
+          "document": {
+            "project": "Колобочная",
+            "title": "Generated Equipment BOM",
+            "russian_title": "Сформированная комплектация объекта",
+            "version": "0.1",
+            "status": "research",
+            "configuration_id": "CFG-RETAIL-SEATING-001",
+            "format_id": "FMT-RESTAURANT-SEATING",
+            "warning": "Цены и итоговый CAPEX не определены. Пустые количества требуют уточнения и не заменяются нулём."
+          },
+          "active_modules": [
+            {
+              "module_id": "MOD-RETAIL-HOT",
+              "source": "format_required"
+            },
+            {
+              "module_id": "MOD-POS",
+              "source": "format_required"
+            },
+            {
+              "module_id": "MOD-KDS",
+              "source": "format_required"
+            },
+            {
+              "module_id": "MOD-GUEST",
+              "source": "format_required"
+            },
+            {
+              "module_id": "MOD-TAKEAWAY",
+              "source": "format_required"
+            },
+            {
+              "module_id": "MOD-WASH",
+              "source": "format_required"
+            },
+            {
+              "module_id": "MOD-ENGINEERING",
+              "source": "format_required"
+            },
+            {
+              "module_id": "MOD-BAR",
+              "source": "bar_enabled"
+            }
+          ],
+          "equipment": [
+            {
+              "item_id": "CAPEX-01-006",
+              "name": "Стеллажи и подтоварники из нержавеющей стали",
+              "modules": "MOD-PREP",
+              "inclusion_source": "format_composition",
+              "requirement": "tbd",
+              "calculated_quantity": 1,
+              "unit": "tbd",
+              "quantity_rule": "tbd",
+              "calculation_status": "Рассчитано",
+              "override": null,
+              "inclusion_status": "standalone",
+              "independent_procurement": true,
+              "open_parameters": "количество и размеры",
+              "specification": "нержавеющая сталь",
+              "notes": null
+            },
+            {
+              "item_id": "CAPEX-01-007",
+              "name": "Стеллаж или шкаф для сушки и хранения чистого инвентаря",
+              "modules": "MOD-PREP",
+              "inclusion_source": "format_composition",
+              "requirement": "tbd",
+              "calculated_quantity": 1,
+              "unit": "tbd",
+              "quantity_rule": "tbd",
+              "calculation_status": "Рассчитано",
+              "override": null,
+              "inclusion_status": "standalone",
+              "independent_procurement": true,
+              "open_parameters": "тип, количество и размеры",
+              "specification": "сушка и хранение чистого инвентаря",
+              "notes": null
+            },
+            {
+              "item_id": "CAPEX-01-019",
+              "name": "Двухсекционная производственная мойка",
+              "modules": "MOD-PREP",
+              "inclusion_source": "format_composition",
+              "requirement": "tbd",
+              "calculated_quantity": 1,
+              "unit": "шт.",
+              "quantity_rule": "fixed",
+              "calculation_status": "Рассчитано",
+              "override": null,
+              "inclusion_status": "standalone",
+              "independent_procurement": true,
+              "open_parameters": "размеры и подключение",
+              "specification": "двухсекционная производственная конструкция",
+              "notes": null
+            },
+            {
+              "item_id": "CAPEX-01-020",
+              "name": "Отдельная раковина для мытья рук персонала",
+              "modules": "MOD-PREP",
+              "inclusion_source": "format_composition",
+              "requirement": "tbd",
+              "calculated_quantity": 1,
+              "unit": "шт.",
+              "quantity_rule": "fixed",
+              "calculation_status": "Рассчитано",
+              "override": null,
+              "inclusion_status": "standalone",
+              "independent_procurement": true,
+              "open_parameters": "размещение и подключение",
+              "specification": "отдельная раковина для рук персонала",
+              "notes": null
+            },
+            {
+              "item_id": "CAPEX-01-021",
+              "name": "Дозаторы моечной зоны",
+              "modules": "MOD-PREP",
+              "inclusion_source": "format_composition",
+              "requirement": "tbd",
+              "calculated_quantity": 1,
+              "unit": "tbd",
+              "quantity_rule": "tbd",
+              "calculation_status": "Рассчитано",
+              "override": null,
+              "inclusion_status": "standalone",
+              "independent_procurement": true,
+              "open_parameters": "количество",
+              "specification": "дозаторы для жидкого мыла, антисептика и бумажных полотенец",
+              "notes": null
+            },
+            {
+              "item_id": "CAPEX-01-025",
+              "name": "Термометры для холодильной и морозильной камер",
+              "modules": "MOD-PREP",
+              "inclusion_source": "format_composition",
+              "requirement": "tbd",
+              "calculated_quantity": 4,
+              "unit": "tbd",
+              "quantity_rule": "tbd",
+              "calculation_status": "Рассчитано",
+              "override": null,
+              "inclusion_status": "standalone",
+              "independent_procurement": true,
+              "open_parameters": null,
+              "specification": "Количество и характеристики — tbd; зависят от конфигурации камер.",
+              "notes": null
+            },
+            {
+              "item_id": "CAPEX-02-001",
+              "name": "Газовый гриль для колобков",
+              "modules": "MOD-RETAIL-HOT",
+              "inclusion_source": "format_composition",
+              "requirement": "tbd",
+              "calculated_quantity": 2,
+              "unit": "шт.",
+              "quantity_rule": "fixed",
+              "calculation_status": "Рассчитано",
+              "override": null,
+              "inclusion_status": "standalone",
+              "independent_procurement": true,
+              "open_parameters": "количество ячеек, диаметр формы, мощность и способ газоснабжения",
+              "specification": "Профессиональный газовый гриль с полусферическими ячейками по геометрии takoyaki; продукт и рабочее название — колобки. Две независимые установки по исходной рабочей спецификации.",
+              "notes": "Надёжная российская карточка профессионального газового аппарата нужной геометрии не найдена; требуется технический подбор, сертификация газовой схемы и КП."
+            },
+            {
+              "item_id": "CAPEX-02-002",
+              "name": "Гриль для Манчеса",
+              "modules": "MOD-RETAIL-HOT",
+              "inclusion_source": "format_composition",
+              "requirement": "tbd",
+              "calculated_quantity": 3,
+              "unit": "шт.",
+              "quantity_rule": "fixed",
+              "calculation_status": "Рассчитано",
+              "override": null,
+              "inclusion_status": "standalone",
+              "independent_procurement": true,
+              "open_parameters": "технические характеристики",
+              "specification": "Профессиональный гриль для приготовления продукта «Манчес»; точная конструкция, мощность и производительность требуют спецификации.",
+              "notes": "Рабочее название приведено к продукту сайта; исходная спецификация использовала термин UFO-гриль."
+            },
+            {
+              "item_id": "CAPEX-02-003",
+              "name": "Профессиональные ручные шприцы или пистолеты-дозаторы",
+              "modules": "MOD-RETAIL-HOT",
+              "inclusion_source": "format_composition",
+              "requirement": "tbd",
+              "calculated_quantity": 24,
+              "unit": "шт.",
+              "quantity_rule": "fixed",
+              "calculation_status": "Рассчитано",
+              "override": null,
+              "inclusion_status": "standalone",
+              "independent_procurement": true,
+              "open_parameters": "конкретная конструкция",
+              "specification": "минимум 8 видов начинок; 8 шт. — первый рабочий комплект; 8 шт. — второй рабочий комплект для параллельной работы; 8 шт. — резервный комплект; закрепление каждого дозатора за конкретной начинкой; работа с густыми, рублеными и неоднородными начинками; пищевая нержавейка; сменные насадки; быстрая разборка и санитарная мойка",
+              "notes": "конструкция выбирается после изучения референсов; конкретная модель не выбрана"
+            },
+            {
+              "item_id": "CAPEX-02-004",
+              "name": "Холодильный стол-саладетта",
+              "modules": "MOD-RETAIL-HOT",
+              "inclusion_source": "format_composition",
+              "requirement": "tbd",
+              "calculated_quantity": 1,
+              "unit": "шт.",
+              "quantity_rule": "fixed",
+              "calculation_status": "Рассчитано",
+              "override": null,
+              "inclusion_status": "standalone",
+              "independent_procurement": true,
+              "open_parameters": "размер и количество секций",
+              "specification": "охлаждаемая нижняя часть; верхняя зона минимум под 8 начинок и дополнительные топпинги; допускается общая подъёмная крышка",
+              "notes": null
+            },
+            {
+              "item_id": "CAPEX-02-005",
+              "name": "Пластиковые гастроёмкости и контейнеры с плотными крышками",
+              "modules": "MOD-RETAIL-HOT",
+              "inclusion_source": "format_composition",
+              "requirement": "tbd",
+              "calculated_quantity": 16,
+              "unit": "tbd",
+              "quantity_rule": "tbd",
+              "calculation_status": "Рассчитано",
+              "override": null,
+              "inclusion_status": "purchased_separately",
+              "independent_procurement": true,
+              "open_parameters": "количество, размеры и объёмы",
+              "specification": "профессиональный пищевой пластик; для начинок, топпингов и оперативного запаса; пригодность для холодильного хранения; возможность штабелирования",
+              "notes": "учитываются отдельно от саладетты"
+            },
+            {
+              "item_id": "CAPEX-02-006",
+              "name": "Столы под горячее оборудование",
+              "modules": "MOD-RETAIL-HOT",
+              "inclusion_source": "format_composition",
+              "requirement": "tbd",
+              "calculated_quantity": 2,
+              "unit": "шт.",
+              "quantity_rule": "fixed",
+              "calculation_status": "Рассчитано",
+              "override": null,
+              "inclusion_status": "standalone",
+              "independent_procurement": true,
+              "open_parameters": "окончательное количество и размеры",
+              "specification": "усиленная пищевая нержавеющая сталь; размещение газовых грилей и UFO-грилей",
+              "notes": null
+            },
+            {
+              "item_id": "CAPEX-02-007",
+              "name": "Стол для сортировки и сборки заказов",
+              "modules": "MOD-RETAIL-HOT, MOD-TAKEAWAY",
+              "inclusion_source": "format_composition",
+              "requirement": "tbd",
+              "calculated_quantity": 1,
+              "unit": "шт.",
+              "quantity_rule": "fixed",
+              "calculation_status": "Рассчитано",
+              "override": null,
+              "inclusion_status": "standalone",
+              "independent_procurement": true,
+              "open_parameters": "размеры",
+              "specification": "пищевая нержавейка; желательно с нижней полкой",
+              "notes": null
+            },
+            {
+              "item_id": "CAPEX-02-008",
+              "name": "Стол для сервировки и выдачи",
+              "modules": "MOD-RETAIL-HOT, MOD-TAKEAWAY",
+              "inclusion_source": "format_composition",
+              "requirement": "tbd",
+              "calculated_quantity": 1,
+              "unit": "шт.",
+              "quantity_rule": "fixed",
+              "calculation_status": "Рассчитано",
+              "override": null,
+              "inclusion_status": "standalone",
+              "independent_procurement": true,
+              "open_parameters": "размеры и организация хранения",
+              "specification": "окончательное оформление продукта; комплектация заказа; размещение упаковки, салфеток и приборов; желательно с нижней полкой",
+              "notes": null
+            },
+            {
+              "item_id": "CAPEX-02-009",
+              "name": "Стеллажи для хранения чистой посуды и рабочего инвентаря",
+              "modules": "MOD-RETAIL-HOT",
+              "inclusion_source": "format_composition",
+              "requirement": "tbd",
+              "calculated_quantity": 2,
+              "unit": "tbd",
+              "quantity_rule": "tbd",
+              "calculation_status": "Рассчитано",
+              "override": null,
+              "inclusion_status": "standalone",
+              "independent_procurement": true,
+              "open_parameters": "количество и размеры",
+              "specification": "предпочтительно нержавеющая сталь",
+              "notes": null
+            },
+            {
+              "item_id": "CAPEX-02-010",
+              "name": "Профессиональная post-mix система для лимонадов",
+              "modules": "MOD-BAR",
+              "inclusion_source": "format_composition",
+              "requirement": "tbd",
+              "calculated_quantity": 1,
+              "unit": "tbd",
+              "quantity_rule": "tbd",
+              "calculation_status": "Рассчитано",
+              "override": null,
+              "inclusion_status": "standalone",
+              "independent_procurement": true,
+              "open_parameters": "конфигурация, количество вкусов и производительность",
+              "specification": "охладитель; карбонизатор для приготовления содовой; баллон CO₂; редуктор давления; насосы подачи сиропов; ручной post-mix пистолет либо отдельные краны; пищевые шланги; фитинги; поддон-каплесборник; фильтрация воды",
+              "notes": null
+            },
+            {
+              "item_id": "CAPEX-02-011",
+              "name": "Кеги для собственных сиропов",
+              "modules": "MOD-BAR",
+              "inclusion_source": "format_composition",
+              "requirement": "tbd",
+              "calculated_quantity": 8,
+              "unit": "tbd",
+              "quantity_rule": "tbd",
+              "calculation_status": "Рассчитано",
+              "override": null,
+              "inclusion_status": "standalone",
+              "independent_procurement": true,
+              "open_parameters": "количество и объём кег",
+              "specification": "пищевая нержавеющая сталь; стандартные взаимозаменяемые фитинги; возможность полноценной санитарной мойки",
+              "notes": null
+            },
+            {
+              "item_id": "CAPEX-02-012",
+              "name": "Профессиональные энергоэффективные термопоты",
+              "modules": "MOD-BAR",
+              "inclusion_source": "format_composition",
+              "requirement": "tbd",
+              "calculated_quantity": 2,
+              "unit": "шт.",
+              "quantity_rule": "fixed",
+              "calculation_status": "Рассчитано",
+              "override": null,
+              "inclusion_status": "standalone",
+              "independent_procurement": true,
+              "open_parameters": "объём и технические характеристики",
+              "specification": "теплоизолированный корпус; регулируемая температура; внутренняя ёмкость из пищевой нержавейки; возможность полной мойки",
+              "notes": "один термопот может использоваться для приготовления и поддержания готового пуэра"
+            },
+            {
+              "item_id": "CAPEX-02-013",
+              "name": "Компактный профессиональный льдогенератор отдельной торговой точки",
+              "modules": "MOD-BAR",
+              "inclusion_source": "format_composition",
+              "requirement": "conditional",
+              "calculated_quantity": 1,
+              "unit": "tbd",
+              "quantity_rule": "tbd",
+              "calculation_status": "Рассчитано",
+              "override": null,
+              "inclusion_status": "standalone",
+              "independent_procurement": true,
+              "open_parameters": "производительность и конфигурация",
+              "specification": "меньшая производительность; обеспечение лимонадов, холодных напитков и коктейлей; без расчёта на охлаждение крупных партий после су-вида",
+              "notes": "предусматривается для торговой точки без заготовочного цеха"
+            },
+            {
+              "item_id": "CAPEX-04-001",
+              "name": "Кассовые POS-терминалы",
+              "modules": "MOD-POS",
+              "inclusion_source": "format_composition",
+              "requirement": "tbd",
+              "calculated_quantity": 2,
+              "unit": "шт.",
+              "quantity_rule": "fixed",
+              "calculation_status": "Рассчитано",
+              "override": null,
+              "inclusion_status": "standalone",
+              "independent_procurement": true,
+              "open_parameters": "аппаратная конфигурация, интеграции и программное обеспечение",
+              "specification": "два кассовых поста; приём и оплата заказов; формирование состава заказа; распределение позиций по рабочим зонам; интеграция с эквайрингом, фискализацией и системой учёта",
+              "notes": "конкретные модели и лицензии не выбраны"
+            },
+            {
+              "item_id": "CAPEX-04-003",
+              "name": "KDS-экраны или закреплённые планшеты",
+              "modules": "MOD-KDS",
+              "inclusion_source": "format_composition",
+              "requirement": "tbd",
+              "calculated_quantity": 3,
+              "unit": "шт.",
+              "quantity_rule": "fixed",
+              "calculation_status": "Рассчитано",
+              "override": null,
+              "inclusion_status": "standalone",
+              "independent_procurement": true,
+              "open_parameters": "тип устройств, размеры экранов, крепления, программное обеспечение и интеграции",
+              "specification": "отдельные рабочие зоны для бара и напитков; газовых грилей, приготовления и наполнения колобков; UFO-грилей и дополнительной горячей кухни; получение относящихся к зоне позиций; показ заказов в реальном времени; отображение порядка и времени ожидания; статусы принят, готовится, готов; синхронизация готовности общего заказа",
+              "notes": "конкретные модели не выбраны"
+            },
+            {
+              "item_id": "CAPEX-02-056",
+              "name": "Комплект мелкого инвентаря торговой кухни",
+              "modules": "MOD-RETAIL-HOT",
+              "inclusion_source": "format_composition",
+              "requirement": "required",
+              "calculated_quantity": 1,
+              "unit": "комплект",
+              "quantity_rule": "fixed",
+              "calculation_status": "Рассчитано",
+              "override": null,
+              "inclusion_status": "standalone",
+              "independent_procurement": true,
+              "open_parameters": "Точный cart по брендам, размерам, материалам и количеству рабочих постов подтверждается после меню, техкарт и планировки.",
+              "specification": "Расчётный комплект: 18 групп инвентаря; сумма строк 281600 ₽ + 10% резерв на дубли, бой и замену 28160 ₽ = 309760 ₽.",
+              "notes": "Добавлено решением DEC-011 как research-позиция; не является утверждённой закупкой или финальным CAPEX."
+            },
+            {
+              "item_id": "CAPEX-02-057",
+              "name": "Комплект базового барного инвентаря",
+              "modules": "MOD-BAR",
+              "inclusion_source": "format_composition",
+              "requirement": "required",
+              "calculated_quantity": 1,
+              "unit": "комплект",
+              "quantity_rule": "fixed",
+              "calculation_status": "Рассчитано",
+              "override": null,
+              "inclusion_status": "standalone",
+              "independent_procurement": true,
+              "open_parameters": "Точный cart по брендам, размерам, материалам и количеству рабочих постов подтверждается после меню, техкарт и планировки.",
+              "specification": "Расчётный комплект: 11 групп инвентаря; сумма строк 111600 ₽ + 10% резерв на дубли, бой и замену 11160 ₽ = 122760 ₽.",
+              "notes": "Добавлено решением DEC-011 как research-позиция; не является утверждённой закупкой или финальным CAPEX."
+            },
+            {
+              "item_id": "CAPEX-02-058",
+              "name": "Холодильный шкаф торговой кухни",
+              "modules": "MOD-RETAIL-HOT",
+              "inclusion_source": "format_composition",
+              "requirement": "required",
+              "calculated_quantity": 2,
+              "unit": "шт.",
+              "quantity_rule": "fixed",
+              "calculation_status": "Рассчитано",
+              "override": null,
+              "inclusion_status": "standalone",
+              "independent_procurement": true,
+              "open_parameters": "Геометрия, состав поставки, совместимость и коммерческое предложение",
+              "specification": "700 л номинально; 0…+6 °C; 697×925×1960 мм. Цена для центрального региона; перевозка в СПб, разгрузка и подключение не включены. Полезный объём и размещение дневного запаса ещё не проверены.",
+              "notes": "700 л номинально; 0…+6 °C; 697×925×1960 мм. Цена для центрального региона; перевозка в СПб, разгрузка и подключение не включены. Полезный объём и размещение дневного запаса ещё не проверены."
+            },
+            {
+              "item_id": "CAPEX-02-059",
+              "name": "Морозильный ларь торговой кухни",
+              "modules": "MOD-RETAIL-HOT",
+              "inclusion_source": "format_composition",
+              "requirement": "required",
+              "calculated_quantity": 1,
+              "unit": "шт.",
+              "quantity_rule": "fixed",
+              "calculation_status": "Рассчитано",
+              "override": null,
+              "inclusion_status": "standalone",
+              "independent_procurement": true,
+              "open_parameters": "Геометрия, состав поставки, совместимость и коммерческое предложение",
+              "specification": "380 л охлаждаемого объёма; −18…−22 °C; 1200×600×840 мм; 230 В, 140 Вт; две корзины. Цена акции; доставка в СПб и подключение не включены. Полезная загрузка требует проверки.",
+              "notes": "380 л охлаждаемого объёма; −18…−22 °C; 1200×600×840 мм; 230 В, 140 Вт; две корзины. Цена акции; доставка в СПб и подключение не включены. Полезная загрузка требует проверки."
+            },
+            {
+              "item_id": "CAPEX-04-004",
+              "name": "Фискальный регистратор с накопителем и чековым принтером",
+              "modules": "MOD-POS",
+              "inclusion_source": "format_composition",
+              "requirement": "required",
+              "calculated_quantity": 2,
+              "unit": "шт.",
+              "quantity_rule": "per_cashier_post",
+              "calculation_status": "Рассчитано",
+              "override": null,
+              "inclusion_status": "standalone",
+              "independent_procurement": true,
+              "open_parameters": "Геометрия, состав поставки, совместимость и коммерческое предложение",
+              "specification": "ФН и встроенный чековый принтер включены; USB, 44–58 мм, 75 мм/с; БП и USB-кабель включены. Регистрация, ОФД и внедрение отдельно. Применимость срока ФН уточнить после выбора налогового режима.",
+              "notes": "ФН и встроенный чековый принтер включены; USB, 44–58 мм, 75 мм/с; БП и USB-кабель включены. Регистрация, ОФД и внедрение отдельно. Применимость срока ФН уточнить после выбора налогового режима."
+            },
+            {
+              "item_id": "CAPEX-04-005",
+              "name": "Маршрутизатор точки",
+              "modules": "MOD-POS",
+              "inclusion_source": "format_composition",
+              "requirement": "required",
+              "calculated_quantity": 1,
+              "unit": "шт.",
+              "quantity_rule": "fixed",
+              "calculation_status": "Рассчитано",
+              "override": null,
+              "inclusion_status": "standalone",
+              "independent_procurement": true,
+              "open_parameters": "Геометрия, состав поставки, совместимость и коммерческое предложение",
+              "specification": "Гигабитный маршрутизатор; резервирование WAN при подключении второго канала. Под заказ; второй канал, кабели и настройка не включены.",
+              "notes": "Гигабитный маршрутизатор; резервирование WAN при подключении второго канала. Под заказ; второй канал, кабели и настройка не включены."
+            },
+            {
+              "item_id": "CAPEX-04-006",
+              "name": "Точка доступа Wi-Fi",
+              "modules": "MOD-POS",
+              "inclusion_source": "format_composition",
+              "requirement": "required",
+              "calculated_quantity": 1,
+              "unit": "шт.",
+              "quantity_rule": "fixed",
+              "calculation_status": "Рассчитано",
+              "override": null,
+              "inclusion_status": "standalone",
+              "independent_procurement": true,
+              "open_parameters": "Геометрия, состав поставки, совместимость и коммерческое предложение",
+              "specification": "AC1350; PoE. Покрытие, состав инжектора питания и монтаж проверить в проекте сети.",
+              "notes": "AC1350; PoE. Покрытие, состав инжектора питания и монтаж проверить в проекте сети."
+            },
+            {
+              "item_id": "CAPEX-04-007",
+              "name": "Сетевой коммутатор",
+              "modules": "MOD-POS",
+              "inclusion_source": "format_composition",
+              "requirement": "required",
+              "calculated_quantity": 1,
+              "unit": "шт.",
+              "quantity_rule": "fixed",
+              "calculation_status": "Рассчитано",
+              "override": null,
+              "inclusion_status": "standalone",
+              "independent_procurement": true,
+              "open_parameters": "Геометрия, состав поставки, совместимость и коммерческое предложение",
+              "specification": "8 гигабитных портов, VLAN, без PoE. Под заказ; окончательный портовый баланс с видеонаблюдением и питание точки доступа требуют проверки.",
+              "notes": "8 гигабитных портов, VLAN, без PoE. Под заказ; окончательный портовый баланс с видеонаблюдением и питание точки доступа требуют проверки."
+            },
+            {
+              "item_id": "CAPEX-04-008",
+              "name": "Источник бесперебойного питания",
+              "modules": "MOD-POS",
+              "inclusion_source": "format_composition",
+              "requirement": "required",
+              "calculated_quantity": 3,
+              "unit": "шт.",
+              "quantity_rule": "fixed",
+              "calculation_status": "Рассчитано",
+              "override": null,
+              "inclusion_status": "standalone",
+              "independent_procurement": true,
+              "open_parameters": "Геометрия, состав поставки, совместимость и коммерческое предложение",
+              "specification": "850 ВА / 480 Вт; рабочее количество: два кассовых поста и сеть. IEC-подключения; кабели/адаптеры и автономность по нагрузке требуют проверки.",
+              "notes": "850 ВА / 480 Вт; рабочее количество: два кассовых поста и сеть. IEC-подключения; кабели/адаптеры и автономность по нагрузке требуют проверки."
+            },
+            {
+              "item_id": "CAPEX-04-009",
+              "name": "Кабельная инфраструктура и питание сети",
+              "modules": "MOD-POS",
+              "inclusion_source": "format_composition",
+              "requirement": "required",
+              "calculated_quantity": 1,
+              "unit": "шт.",
+              "quantity_rule": "fixed",
+              "calculation_status": "Рассчитано",
+              "override": null,
+              "inclusion_status": "standalone",
+              "independent_procurement": true,
+              "open_parameters": "Геометрия, состав поставки, совместимость и коммерческое предложение",
+              "specification": "Патч-корды, линии, розетки, монтажные материалы, питание Wi-Fi и адаптеры UPS. Сначала сверка с электромонтажом подготовки; цена отсутствует.",
+              "notes": "Патч-корды, линии, розетки, монтажные материалы, питание Wi-Fi и адаптеры UPS. Сначала сверка с электромонтажом подготовки; цена отсутствует."
+            },
+            {
+              "item_id": "CAPEX-04-010",
+              "name": "Настройка и внедрение локальной сети",
+              "modules": "MOD-POS",
+              "inclusion_source": "format_composition",
+              "requirement": "required",
+              "calculated_quantity": 1,
+              "unit": "шт.",
+              "quantity_rule": "fixed",
+              "calculation_status": "Рассчитано",
+              "override": null,
+              "inclusion_status": "standalone",
+              "independent_procurement": true,
+              "open_parameters": "Геометрия, состав поставки, совместимость и коммерческое предложение",
+              "specification": "Настройка VLAN, Wi-Fi, резервного канала, UPS и тестирование. Не входит в цены устройств.",
+              "notes": "Настройка VLAN, Wi-Fi, резервного канала, UPS и тестирование. Не входит в цены устройств."
+            },
+            {
+              "item_id": "CAPEX-04-011",
+              "name": "Подключение кассы с вводным обучением",
+              "modules": "MOD-POS",
+              "inclusion_source": "format_composition",
+              "requirement": "required",
+              "calculated_quantity": 2,
+              "unit": "шт.",
+              "quantity_rule": "per_cashier_post",
+              "calculation_status": "Рассчитано",
+              "override": null,
+              "inclusion_status": "standalone",
+              "independent_procurement": true,
+              "open_parameters": "Геометрия, состав поставки, совместимость и коммерческое предложение",
+              "specification": "Цена за кассу включает вводное обучение. Не прибавлять отдельно аналогичную настройку за 2000 ₽; состав регистрации ФНС, загрузки номенклатуры и интеграции с учётом уточнить.",
+              "notes": "Цена за кассу включает вводное обучение. Не прибавлять отдельно аналогичную настройку за 2000 ₽; состав регистрации ФНС, загрузки номенклатуры и интеграции с учётом уточнить."
+            },
+            {
+              "item_id": "CAPEX-04-012",
+              "name": "Стартовый ОФД на один год",
+              "modules": "MOD-POS",
+              "inclusion_source": "format_composition",
+              "requirement": "required",
+              "calculated_quantity": 2,
+              "unit": "шт.",
+              "quantity_rule": "per_cashier_post",
+              "calculation_status": "Рассчитано",
+              "override": null,
+              "inclusion_status": "standalone",
+              "independent_procurement": true,
+              "open_parameters": "Геометрия, состав поставки, совместимость и коммерческое предложение",
+              "specification": "Годовая предоплата сервиса на кассу; не физическое оборудование. Продление — регулярный OPEX.",
+              "notes": "Годовая предоплата сервиса на кассу; не физическое оборудование. Продление — регулярный OPEX."
+            },
+            {
+              "item_id": "CAPEX-05-028",
+              "name": "Гостевой поднос",
+              "modules": "MOD-GUEST",
+              "inclusion_source": "format_composition",
+              "requirement": "required",
+              "calculated_quantity": 26,
+              "unit": "шт.",
+              "quantity_rule": "per_seat",
+              "calculation_status": "Рассчитано",
+              "override": null,
+              "inclusion_status": "standalone",
+              "independent_procurement": true,
+              "open_parameters": "Геометрия, состав поставки, совместимость и коммерческое предложение",
+              "specification": "Полипропилен, 460 мм. Цена индексируемого каталога; прямое чтение карточки недоступно, подтвердить КП. Рабочий запас — один поднос на место; оборачиваемость требует проверки.",
+              "notes": "Полипропилен, 460 мм. Цена индексируемого каталога; прямое чтение карточки недоступно, подтвердить КП. Рабочий запас — один поднос на место; оборачиваемость требует проверки."
+            },
+            {
+              "item_id": "CAPEX-05-029",
+              "name": "Гостевая урна с педалью",
+              "modules": "MOD-GUEST",
+              "inclusion_source": "format_composition",
+              "requirement": "required",
+              "calculated_quantity": 2,
+              "unit": "шт.",
+              "quantity_rule": "fixed",
+              "calculation_status": "Рассчитано",
+              "override": null,
+              "inclusion_status": "standalone",
+              "independent_procurement": true,
+              "open_parameters": "Геометрия, состав поставки, совместимость и коммерческое предложение",
+              "specification": "Нержавеющая сталь, внутреннее ведро. Две урны — рабочий ориентир, не санитарный проект.",
+              "notes": "Нержавеющая сталь, внутреннее ведро. Две урны — рабочий ориентир, не санитарный проект."
+            },
+            {
+              "item_id": "CAPEX-05-030",
+              "name": "Дополнительные принадлежности гостевой зоны",
+              "modules": "MOD-GUEST",
+              "inclusion_source": "format_composition",
+              "requirement": "required",
+              "calculated_quantity": 1,
+              "unit": "шт.",
+              "quantity_rule": "fixed",
+              "calculation_status": "Рассчитано",
+              "override": null,
+              "inclusion_status": "standalone",
+              "independent_procurement": true,
+              "open_parameters": "Геометрия, состав поставки, совместимость и коммерческое предложение",
+              "specification": "Держатели подносов и гостевых расходников, элементы ожидания. Номенклатура после планировки; столы, стулья и встроенные стойки сюда повторно не включаются.",
+              "notes": "Держатели подносов и гостевых расходников, элементы ожидания. Номенклатура после планировки; столы, стулья и встроенные стойки сюда повторно не включаются."
+            },
+            {
+              "item_id": "CAPEX-02-060",
+              "name": "Доставка оборудования до объекта",
+              "modules": "MOD-RETAIL-HOT",
+              "inclusion_source": "format_composition",
+              "requirement": "required",
+              "calculated_quantity": 1,
+              "unit": "шт.",
+              "quantity_rule": "fixed",
+              "calculation_status": "Рассчитано",
+              "override": null,
+              "inclusion_status": "standalone",
+              "independent_procurement": true,
+              "open_parameters": "Геометрия, состав поставки, совместимость и коммерческое предложение",
+              "specification": "Консолидированная доставка в СПб по фактической ведомости; бесплатная доставка до терминала не означает доставку до объекта.",
+              "notes": "Консолидированная доставка в СПб по фактической ведомости; бесплатная доставка до терминала не означает доставку до объекта."
+            },
+            {
+              "item_id": "CAPEX-02-061",
+              "name": "Разгрузка и подъём оборудования",
+              "modules": "MOD-RETAIL-HOT",
+              "inclusion_source": "format_composition",
+              "requirement": "required",
+              "calculated_quantity": 1,
+              "unit": "шт.",
+              "quantity_rule": "fixed",
+              "calculation_status": "Рассчитано",
+              "override": null,
+              "inclusion_status": "standalone",
+              "independent_procurement": true,
+              "open_parameters": "Геометрия, состав поставки, совместимость и коммерческое предложение",
+              "specification": "Габариты входов, этаж, способ разгрузки и сборка на месте пока неизвестны.",
+              "notes": "Габариты входов, этаж, способ разгрузки и сборка на месте пока неизвестны."
+            },
+            {
+              "item_id": "CAPEX-02-062",
+              "name": "Монтаж, подключение и пусконаладка оборудования",
+              "modules": "MOD-RETAIL-HOT",
+              "inclusion_source": "format_composition",
+              "requirement": "required",
+              "calculated_quantity": 1,
+              "unit": "шт.",
+              "quantity_rule": "fixed",
+              "calculation_status": "Рассчитано",
+              "override": null,
+              "inclusion_status": "standalone",
+              "independent_procurement": true,
+              "open_parameters": "Геометрия, состав поставки, совместимость и коммерческое предложение",
+              "specification": "Только работы по оборудованию, не вентиляция/электрика/встроенные конструкции из подготовки. Требуется коммерческое предложение.",
+              "notes": "Только работы по оборудованию, не вентиляция/электрика/встроенные конструкции из подготовки. Требуется коммерческое предложение."
+            },
+            {
+              "item_id": "CAPEX-02-063",
+              "name": "Первоначальные санитарные и гостевые расходники",
+              "modules": "MOD-WASH",
+              "inclusion_source": "format_composition",
+              "requirement": "required",
+              "calculated_quantity": 1,
+              "unit": "шт.",
+              "quantity_rule": "fixed",
+              "calculation_status": "Рассчитано",
+              "override": null,
+              "inclusion_status": "standalone",
+              "independent_procurement": true,
+              "open_parameters": "Геометрия, состав поставки, совместимость и коммерческое предложение",
+              "specification": "Мыло, полотенца, моющие средства и гостевые расходники. Не дублировать товарный запас и упаковку заказов. Состав и цена отсутствуют.",
+              "notes": "Мыло, полотенца, моющие средства и гостевые расходники. Не дублировать товарный запас и упаковку заказов. Состав и цена отсутствуют."
+            }
+          ]
+        }
+      },
       "purpose": "Полноценная торговая точка с собственной гостевой зоной, получающая часть компонентов из централизованного производства.",
       "status": "research",
       "manualSelection": false,
@@ -338,6 +1453,8 @@
       "id": "FMT-FOOD-COURT",
       "name": "Точка на фудкорте",
       "canonicalName": "Точка на фудкорте",
+      "defaultConfiguration": null,
+      "composition": null,
       "purpose": "Торговая точка, использующая общую посадочную зону фудкорта.",
       "status": "research",
       "manualSelection": false,
@@ -366,6 +1483,8 @@
       "id": "FMT-STREET-PICKUP",
       "name": "Уличная точка выдачи / павильон",
       "canonicalName": "Уличная точка выдачи / павильон",
+      "defaultConfiguration": null,
+      "composition": null,
       "purpose": "Точка, ориентированная преимущественно на заказ и выдачу без посадочного зала.",
       "status": "research",
       "manualSelection": false,
@@ -394,6 +1513,8 @@
       "id": "FMT-FOODTRUCK",
       "name": "Фудтрак",
       "canonicalName": "Фудтрак",
+      "defaultConfiguration": null,
+      "composition": null,
       "purpose": "Мобильная торговая точка с ограниченной площадью и максимально компактным составом оборудования.",
       "status": "research",
       "manualSelection": false,
@@ -420,6 +1541,8 @@
       "id": "FMT-CUSTOM",
       "name": "Собрать вручную",
       "canonicalName": "Произвольная конфигурация",
+      "defaultConfiguration": null,
+      "composition": null,
       "purpose": "Ручная сборка объекта из любых доступных функциональных модулей.",
       "status": "research",
       "manualSelection": true,
@@ -2213,6 +3336,215 @@
       "aggregationRule": "once",
       "condition": null,
       "notes": "Фиксированное research-количество по DEC-011; одинаковый item_id учитывается один раз."
+    },
+    {
+      "moduleId": "MOD-RETAIL-HOT",
+      "itemId": "CAPEX-02-058",
+      "defaultRequirement": "required",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 2,
+      "minimumQuantity": null,
+      "aggregationRule": "once",
+      "condition": "retail_complete",
+      "notes": "Общий профиль торговой точки с залом; старые конфигурации используют прежнюю версию."
+    },
+    {
+      "moduleId": "MOD-RETAIL-HOT",
+      "itemId": "CAPEX-02-059",
+      "defaultRequirement": "required",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 1,
+      "minimumQuantity": null,
+      "aggregationRule": "once",
+      "condition": "retail_complete",
+      "notes": "Общий профиль торговой точки с залом; старые конфигурации используют прежнюю версию."
+    },
+    {
+      "moduleId": "MOD-POS",
+      "itemId": "CAPEX-04-004",
+      "defaultRequirement": "required",
+      "quantityRuleType": "per_cashier_post",
+      "quantityRuleValue": 1,
+      "minimumQuantity": null,
+      "aggregationRule": "once",
+      "condition": "retail_complete",
+      "notes": "Общий профиль торговой точки с залом; старые конфигурации используют прежнюю версию."
+    },
+    {
+      "moduleId": "MOD-POS",
+      "itemId": "CAPEX-04-005",
+      "defaultRequirement": "required",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 1,
+      "minimumQuantity": null,
+      "aggregationRule": "once",
+      "condition": "retail_complete",
+      "notes": "Общий профиль торговой точки с залом; старые конфигурации используют прежнюю версию."
+    },
+    {
+      "moduleId": "MOD-POS",
+      "itemId": "CAPEX-04-006",
+      "defaultRequirement": "required",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 1,
+      "minimumQuantity": null,
+      "aggregationRule": "once",
+      "condition": "retail_complete",
+      "notes": "Общий профиль торговой точки с залом; старые конфигурации используют прежнюю версию."
+    },
+    {
+      "moduleId": "MOD-POS",
+      "itemId": "CAPEX-04-007",
+      "defaultRequirement": "required",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 1,
+      "minimumQuantity": null,
+      "aggregationRule": "once",
+      "condition": "retail_complete",
+      "notes": "Общий профиль торговой точки с залом; старые конфигурации используют прежнюю версию."
+    },
+    {
+      "moduleId": "MOD-POS",
+      "itemId": "CAPEX-04-008",
+      "defaultRequirement": "required",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 3,
+      "minimumQuantity": null,
+      "aggregationRule": "once",
+      "condition": "retail_complete",
+      "notes": "Общий профиль торговой точки с залом; старые конфигурации используют прежнюю версию."
+    },
+    {
+      "moduleId": "MOD-POS",
+      "itemId": "CAPEX-04-009",
+      "defaultRequirement": "required",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 1,
+      "minimumQuantity": null,
+      "aggregationRule": "once",
+      "condition": "retail_complete",
+      "notes": "Общий профиль торговой точки с залом; старые конфигурации используют прежнюю версию."
+    },
+    {
+      "moduleId": "MOD-POS",
+      "itemId": "CAPEX-04-010",
+      "defaultRequirement": "required",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 1,
+      "minimumQuantity": null,
+      "aggregationRule": "once",
+      "condition": "retail_complete",
+      "notes": "Общий профиль торговой точки с залом; старые конфигурации используют прежнюю версию."
+    },
+    {
+      "moduleId": "MOD-POS",
+      "itemId": "CAPEX-04-011",
+      "defaultRequirement": "required",
+      "quantityRuleType": "per_cashier_post",
+      "quantityRuleValue": 1,
+      "minimumQuantity": null,
+      "aggregationRule": "once",
+      "condition": "retail_complete",
+      "notes": "Общий профиль торговой точки с залом; старые конфигурации используют прежнюю версию."
+    },
+    {
+      "moduleId": "MOD-POS",
+      "itemId": "CAPEX-04-012",
+      "defaultRequirement": "required",
+      "quantityRuleType": "per_cashier_post",
+      "quantityRuleValue": 1,
+      "minimumQuantity": null,
+      "aggregationRule": "once",
+      "condition": "retail_complete",
+      "notes": "Общий профиль торговой точки с залом; старые конфигурации используют прежнюю версию."
+    },
+    {
+      "moduleId": "MOD-GUEST",
+      "itemId": "CAPEX-05-028",
+      "defaultRequirement": "required",
+      "quantityRuleType": "per_seat",
+      "quantityRuleValue": 1,
+      "minimumQuantity": null,
+      "aggregationRule": "once",
+      "condition": "retail_complete",
+      "notes": "Общий профиль торговой точки с залом; старые конфигурации используют прежнюю версию."
+    },
+    {
+      "moduleId": "MOD-GUEST",
+      "itemId": "CAPEX-05-029",
+      "defaultRequirement": "required",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 2,
+      "minimumQuantity": null,
+      "aggregationRule": "once",
+      "condition": "retail_complete",
+      "notes": "Общий профиль торговой точки с залом; старые конфигурации используют прежнюю версию."
+    },
+    {
+      "moduleId": "MOD-GUEST",
+      "itemId": "CAPEX-05-030",
+      "defaultRequirement": "required",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 1,
+      "minimumQuantity": null,
+      "aggregationRule": "once",
+      "condition": "retail_complete",
+      "notes": "Общий профиль торговой точки с залом; старые конфигурации используют прежнюю версию."
+    },
+    {
+      "moduleId": "MOD-RETAIL-HOT",
+      "itemId": "CAPEX-02-060",
+      "defaultRequirement": "required",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 1,
+      "minimumQuantity": null,
+      "aggregationRule": "once",
+      "condition": "retail_complete",
+      "notes": "Общий профиль торговой точки с залом; старые конфигурации используют прежнюю версию."
+    },
+    {
+      "moduleId": "MOD-RETAIL-HOT",
+      "itemId": "CAPEX-02-061",
+      "defaultRequirement": "required",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 1,
+      "minimumQuantity": null,
+      "aggregationRule": "once",
+      "condition": "retail_complete",
+      "notes": "Общий профиль торговой точки с залом; старые конфигурации используют прежнюю версию."
+    },
+    {
+      "moduleId": "MOD-RETAIL-HOT",
+      "itemId": "CAPEX-02-062",
+      "defaultRequirement": "required",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 1,
+      "minimumQuantity": null,
+      "aggregationRule": "once",
+      "condition": "retail_complete",
+      "notes": "Общий профиль торговой точки с залом; старые конфигурации используют прежнюю версию."
+    },
+    {
+      "moduleId": "MOD-WASH",
+      "itemId": "CAPEX-02-063",
+      "defaultRequirement": "required",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 1,
+      "minimumQuantity": null,
+      "aggregationRule": "once",
+      "condition": "retail_complete",
+      "notes": "Общий профиль торговой точки с залом; старые конфигурации используют прежнюю версию."
+    },
+    {
+      "moduleId": "MOD-WASH",
+      "itemId": "CAPEX-08-007",
+      "defaultRequirement": "optional",
+      "quantityRuleType": "fixed",
+      "quantityRuleValue": 1,
+      "minimumQuantity": null,
+      "aggregationRule": "once",
+      "condition": "retail_complete && machine_wash",
+      "notes": "Общий профиль торговой точки с залом; старые конфигурации используют прежнюю версию."
     }
   ],
   "configurationTemplate": {
@@ -3096,6 +4428,9 @@
   "items": [
     {
       "id": "CAPEX-01-001",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -3186,6 +4521,9 @@
     },
     {
       "id": "CAPEX-01-002",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -3276,6 +4614,9 @@
     },
     {
       "id": "CAPEX-01-003",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -3366,6 +4707,9 @@
     },
     {
       "id": "CAPEX-01-004",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -3456,6 +4800,9 @@
     },
     {
       "id": "CAPEX-01-005",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -3546,6 +4893,9 @@
     },
     {
       "id": "CAPEX-01-006",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -3636,6 +4986,9 @@
     },
     {
       "id": "CAPEX-01-007",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -3726,6 +5079,9 @@
     },
     {
       "id": "CAPEX-01-008",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -3816,6 +5172,9 @@
     },
     {
       "id": "CAPEX-01-009",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -3906,6 +5265,9 @@
     },
     {
       "id": "CAPEX-01-010",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -3996,6 +5358,9 @@
     },
     {
       "id": "CAPEX-01-011",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -4086,6 +5451,9 @@
     },
     {
       "id": "CAPEX-01-012",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -4176,6 +5544,9 @@
     },
     {
       "id": "CAPEX-01-013",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -4266,6 +5637,9 @@
     },
     {
       "id": "CAPEX-01-014",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -4356,6 +5730,9 @@
     },
     {
       "id": "CAPEX-01-015",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -4446,6 +5823,9 @@
     },
     {
       "id": "CAPEX-01-016",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -4536,6 +5916,9 @@
     },
     {
       "id": "CAPEX-01-017",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -4626,6 +6009,9 @@
     },
     {
       "id": "CAPEX-01-018",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -4716,6 +6102,9 @@
     },
     {
       "id": "CAPEX-01-019",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -4806,6 +6195,9 @@
     },
     {
       "id": "CAPEX-01-020",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -4896,6 +6288,9 @@
     },
     {
       "id": "CAPEX-01-021",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -4986,6 +6381,9 @@
     },
     {
       "id": "CAPEX-01-022",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -5076,6 +6474,9 @@
     },
     {
       "id": "CAPEX-01-023",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -5166,6 +6567,9 @@
     },
     {
       "id": "CAPEX-01-024",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -5256,6 +6660,9 @@
     },
     {
       "id": "CAPEX-01-025",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -5346,6 +6753,9 @@
     },
     {
       "id": "CAPEX-01-026",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -5436,6 +6846,9 @@
     },
     {
       "id": "CAPEX-01-027",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -5481,6 +6894,9 @@
     },
     {
       "id": "CAPEX-01-028",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -5526,6 +6942,9 @@
     },
     {
       "id": "CAPEX-01-029",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -5571,6 +6990,9 @@
     },
     {
       "id": "CAPEX-01-030",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -5616,6 +7038,9 @@
     },
     {
       "id": "CAPEX-01-031",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -5661,6 +7086,9 @@
     },
     {
       "id": "CAPEX-01-032",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -5706,6 +7134,9 @@
     },
     {
       "id": "CAPEX-01-033",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -5751,6 +7182,9 @@
     },
     {
       "id": "CAPEX-01-034",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -5796,6 +7230,9 @@
     },
     {
       "id": "CAPEX-01-035",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -5841,6 +7278,9 @@
     },
     {
       "id": "CAPEX-01-036",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -5886,6 +7326,9 @@
     },
     {
       "id": "CAPEX-01-037",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -5931,6 +7374,9 @@
     },
     {
       "id": "CAPEX-01-038",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -5976,6 +7422,9 @@
     },
     {
       "id": "CAPEX-01-039",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -6021,6 +7470,9 @@
     },
     {
       "id": "CAPEX-01-040",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -6066,6 +7518,9 @@
     },
     {
       "id": "CAPEX-01-041",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -6111,6 +7566,9 @@
     },
     {
       "id": "CAPEX-01-042",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -6156,6 +7614,9 @@
     },
     {
       "id": "CAPEX-01-043",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -6250,6 +7711,9 @@
     },
     {
       "id": "CAPEX-01-044",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -6295,6 +7759,9 @@
     },
     {
       "id": "CAPEX-01-045",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -6385,6 +7852,9 @@
     },
     {
       "id": "CAPEX-01-046",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -6430,6 +7900,9 @@
     },
     {
       "id": "CAPEX-01-047",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -6475,6 +7948,9 @@
     },
     {
       "id": "CAPEX-02-001",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-RETAIL-HOT"
@@ -6565,6 +8041,9 @@
     },
     {
       "id": "CAPEX-02-002",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-RETAIL-HOT"
@@ -6655,6 +8134,9 @@
     },
     {
       "id": "CAPEX-02-003",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-RETAIL-HOT"
@@ -6745,6 +8227,9 @@
     },
     {
       "id": "CAPEX-02-004",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-RETAIL-HOT"
@@ -6837,6 +8322,9 @@
     },
     {
       "id": "CAPEX-02-005",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-RETAIL-HOT"
@@ -6927,6 +8415,9 @@
     },
     {
       "id": "CAPEX-02-006",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-RETAIL-HOT"
@@ -7017,6 +8508,9 @@
     },
     {
       "id": "CAPEX-02-007",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-RETAIL-HOT",
@@ -7108,6 +8602,9 @@
     },
     {
       "id": "CAPEX-02-008",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-RETAIL-HOT",
@@ -7199,6 +8696,9 @@
     },
     {
       "id": "CAPEX-02-009",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-RETAIL-HOT"
@@ -7289,6 +8789,9 @@
     },
     {
       "id": "CAPEX-02-010",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-BAR"
@@ -7379,6 +8882,9 @@
     },
     {
       "id": "CAPEX-02-011",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-BAR"
@@ -7469,6 +8975,9 @@
     },
     {
       "id": "CAPEX-02-012",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-BAR"
@@ -7559,6 +9068,9 @@
     },
     {
       "id": "CAPEX-02-013",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-BAR"
@@ -7649,6 +9161,9 @@
     },
     {
       "id": "CAPEX-02-014",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-RETAIL-HOT"
@@ -7694,6 +9209,9 @@
     },
     {
       "id": "CAPEX-02-015",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-RETAIL-HOT"
@@ -7739,6 +9257,9 @@
     },
     {
       "id": "CAPEX-02-016",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-RETAIL-HOT"
@@ -7784,6 +9305,9 @@
     },
     {
       "id": "CAPEX-02-017",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-RETAIL-HOT"
@@ -7829,6 +9353,9 @@
     },
     {
       "id": "CAPEX-02-018",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-RETAIL-HOT"
@@ -7874,6 +9401,9 @@
     },
     {
       "id": "CAPEX-02-019",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-RETAIL-HOT"
@@ -7919,6 +9449,9 @@
     },
     {
       "id": "CAPEX-02-020",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-RETAIL-HOT"
@@ -7964,6 +9497,9 @@
     },
     {
       "id": "CAPEX-02-021",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-RETAIL-HOT"
@@ -8009,6 +9545,9 @@
     },
     {
       "id": "CAPEX-02-022",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-RETAIL-HOT"
@@ -8054,6 +9593,9 @@
     },
     {
       "id": "CAPEX-02-023",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-RETAIL-HOT"
@@ -8099,6 +9641,9 @@
     },
     {
       "id": "CAPEX-02-024",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-RETAIL-HOT"
@@ -8144,6 +9689,9 @@
     },
     {
       "id": "CAPEX-02-025",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-RETAIL-HOT"
@@ -8189,6 +9737,9 @@
     },
     {
       "id": "CAPEX-02-026",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-RETAIL-HOT"
@@ -8234,6 +9785,9 @@
     },
     {
       "id": "CAPEX-02-027",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-RETAIL-HOT"
@@ -8279,6 +9833,9 @@
     },
     {
       "id": "CAPEX-02-028",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-RETAIL-HOT"
@@ -8324,6 +9881,9 @@
     },
     {
       "id": "CAPEX-02-029",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-RETAIL-HOT"
@@ -8369,6 +9929,9 @@
     },
     {
       "id": "CAPEX-02-030",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-RETAIL-HOT"
@@ -8414,6 +9977,9 @@
     },
     {
       "id": "CAPEX-02-031",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-RETAIL-HOT"
@@ -8459,6 +10025,9 @@
     },
     {
       "id": "CAPEX-02-032",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-BAR"
@@ -8504,6 +10073,9 @@
     },
     {
       "id": "CAPEX-02-033",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-BAR"
@@ -8549,6 +10121,9 @@
     },
     {
       "id": "CAPEX-02-034",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-BAR"
@@ -8594,6 +10169,9 @@
     },
     {
       "id": "CAPEX-02-035",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-BAR"
@@ -8639,6 +10217,9 @@
     },
     {
       "id": "CAPEX-02-036",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-BAR"
@@ -8684,6 +10265,9 @@
     },
     {
       "id": "CAPEX-02-037",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-BAR"
@@ -8729,6 +10313,9 @@
     },
     {
       "id": "CAPEX-02-038",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-BAR"
@@ -8774,6 +10361,9 @@
     },
     {
       "id": "CAPEX-02-039",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-BAR"
@@ -8819,6 +10409,9 @@
     },
     {
       "id": "CAPEX-02-040",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-BAR"
@@ -8864,6 +10457,9 @@
     },
     {
       "id": "CAPEX-02-041",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-BAR"
@@ -8909,6 +10505,9 @@
     },
     {
       "id": "CAPEX-02-042",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-BAR"
@@ -8954,6 +10553,9 @@
     },
     {
       "id": "CAPEX-02-043",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-BAR"
@@ -8999,6 +10601,9 @@
     },
     {
       "id": "CAPEX-02-044",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-BAR"
@@ -9044,6 +10649,9 @@
     },
     {
       "id": "CAPEX-02-045",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-BAR"
@@ -9089,6 +10697,9 @@
     },
     {
       "id": "CAPEX-02-046",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-BAR"
@@ -9134,6 +10745,9 @@
     },
     {
       "id": "CAPEX-02-047",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-BAR"
@@ -9179,6 +10793,9 @@
     },
     {
       "id": "CAPEX-02-048",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-BAR"
@@ -9224,6 +10841,9 @@
     },
     {
       "id": "CAPEX-02-049",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-BAR"
@@ -9269,6 +10889,9 @@
     },
     {
       "id": "CAPEX-02-050",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-BAR"
@@ -9314,6 +10937,9 @@
     },
     {
       "id": "CAPEX-02-051",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-BAR"
@@ -9359,6 +10985,9 @@
     },
     {
       "id": "CAPEX-02-052",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-BAR"
@@ -9404,6 +11033,9 @@
     },
     {
       "id": "CAPEX-02-053",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-BAR"
@@ -9449,6 +11081,9 @@
     },
     {
       "id": "CAPEX-02-054",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-BAR"
@@ -9539,6 +11174,9 @@
     },
     {
       "id": "CAPEX-02-055",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-BAR"
@@ -9629,6 +11267,9 @@
     },
     {
       "id": "CAPEX-03-001",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-03",
       "linkedModuleIds": [
         "MOD-GROW"
@@ -9738,6 +11379,9 @@
     },
     {
       "id": "CAPEX-03-002",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-03",
       "linkedModuleIds": [
         "MOD-GROW"
@@ -9783,6 +11427,9 @@
     },
     {
       "id": "CAPEX-03-003",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-03",
       "linkedModuleIds": [
         "MOD-GROW"
@@ -9828,6 +11475,9 @@
     },
     {
       "id": "CAPEX-03-004",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-03",
       "linkedModuleIds": [
         "MOD-GROW"
@@ -9873,6 +11523,9 @@
     },
     {
       "id": "CAPEX-03-005",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-03",
       "linkedModuleIds": [
         "MOD-GROW"
@@ -9918,6 +11571,9 @@
     },
     {
       "id": "CAPEX-03-006",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-03",
       "linkedModuleIds": [
         "MOD-GROW"
@@ -9963,6 +11619,9 @@
     },
     {
       "id": "CAPEX-03-007",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-03",
       "linkedModuleIds": [
         "MOD-GROW"
@@ -10008,6 +11667,9 @@
     },
     {
       "id": "CAPEX-03-008",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-03",
       "linkedModuleIds": [
         "MOD-GROW"
@@ -10053,6 +11715,9 @@
     },
     {
       "id": "CAPEX-03-009",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-03",
       "linkedModuleIds": [
         "MOD-GROW"
@@ -10098,6 +11763,9 @@
     },
     {
       "id": "CAPEX-03-010",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-03",
       "linkedModuleIds": [
         "MOD-GROW"
@@ -10143,6 +11811,9 @@
     },
     {
       "id": "CAPEX-03-011",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-03",
       "linkedModuleIds": [
         "MOD-GROW"
@@ -10188,6 +11859,9 @@
     },
     {
       "id": "CAPEX-03-012",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-03",
       "linkedModuleIds": [
         "MOD-GROW"
@@ -10233,6 +11907,9 @@
     },
     {
       "id": "CAPEX-03-013",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-03",
       "linkedModuleIds": [
         "MOD-GROW"
@@ -10278,6 +11955,9 @@
     },
     {
       "id": "CAPEX-03-014",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-03",
       "linkedModuleIds": [
         "MOD-GROW"
@@ -10323,6 +12003,9 @@
     },
     {
       "id": "CAPEX-03-015",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-03",
       "linkedModuleIds": [
         "MOD-GROW"
@@ -10368,6 +12051,9 @@
     },
     {
       "id": "CAPEX-03-016",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-03",
       "linkedModuleIds": [
         "MOD-GROW"
@@ -10413,6 +12099,9 @@
     },
     {
       "id": "CAPEX-03-017",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-03",
       "linkedModuleIds": [
         "MOD-GROW"
@@ -10458,6 +12147,9 @@
     },
     {
       "id": "CAPEX-03-018",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-03",
       "linkedModuleIds": [
         "MOD-GROW"
@@ -10503,6 +12195,9 @@
     },
     {
       "id": "CAPEX-03-019",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-03",
       "linkedModuleIds": [
         "MOD-GROW"
@@ -10548,6 +12243,9 @@
     },
     {
       "id": "CAPEX-04-001",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-04",
       "linkedModuleIds": [
         "MOD-POS"
@@ -10638,6 +12336,9 @@
     },
     {
       "id": "CAPEX-04-002",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-04",
       "linkedModuleIds": [
         "MOD-POS"
@@ -10728,6 +12429,9 @@
     },
     {
       "id": "CAPEX-04-003",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-04",
       "linkedModuleIds": [
         "MOD-KDS"
@@ -10818,6 +12522,9 @@
     },
     {
       "id": "CAPEX-05-001",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-05",
       "linkedModuleIds": [
         "MOD-GUEST"
@@ -10863,6 +12570,9 @@
     },
     {
       "id": "CAPEX-05-002",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-05",
       "linkedModuleIds": [
         "MOD-GUEST"
@@ -10908,6 +12618,9 @@
     },
     {
       "id": "CAPEX-05-003",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-05",
       "linkedModuleIds": [
         "MOD-GUEST"
@@ -10953,6 +12666,9 @@
     },
     {
       "id": "CAPEX-05-004",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-05",
       "linkedModuleIds": [
         "MOD-GUEST"
@@ -10998,6 +12714,9 @@
     },
     {
       "id": "CAPEX-05-005",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-05",
       "linkedModuleIds": [
         "MOD-GUEST"
@@ -11043,6 +12762,9 @@
     },
     {
       "id": "CAPEX-05-006",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-05",
       "linkedModuleIds": [
         "MOD-GUEST"
@@ -11088,6 +12810,9 @@
     },
     {
       "id": "CAPEX-05-007",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-05",
       "linkedModuleIds": [
         "MOD-GUEST"
@@ -11133,6 +12858,9 @@
     },
     {
       "id": "CAPEX-05-008",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-05",
       "linkedModuleIds": [
         "MOD-TAKEAWAY"
@@ -11178,6 +12906,9 @@
     },
     {
       "id": "CAPEX-05-009",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-05",
       "linkedModuleIds": [
         "MOD-TAKEAWAY"
@@ -11223,6 +12954,9 @@
     },
     {
       "id": "CAPEX-05-010",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-05",
       "linkedModuleIds": [
         "MOD-TAKEAWAY"
@@ -11268,6 +13002,9 @@
     },
     {
       "id": "CAPEX-05-011",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-05",
       "linkedModuleIds": [
         "MOD-TAKEAWAY"
@@ -11313,6 +13050,9 @@
     },
     {
       "id": "CAPEX-05-012",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-05",
       "linkedModuleIds": [
         "MOD-TAKEAWAY"
@@ -11358,6 +13098,9 @@
     },
     {
       "id": "CAPEX-05-013",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-05",
       "linkedModuleIds": [
         "MOD-TAKEAWAY"
@@ -11403,6 +13146,9 @@
     },
     {
       "id": "CAPEX-05-014",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-05",
       "linkedModuleIds": [
         "MOD-TAKEAWAY"
@@ -11448,6 +13194,9 @@
     },
     {
       "id": "CAPEX-05-015",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-05",
       "linkedModuleIds": [
         "MOD-TAKEAWAY"
@@ -11493,6 +13242,9 @@
     },
     {
       "id": "CAPEX-05-016",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-05",
       "linkedModuleIds": [
         "MOD-TAKEAWAY"
@@ -11538,6 +13290,9 @@
     },
     {
       "id": "CAPEX-05-017",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-05",
       "linkedModuleIds": [
         "MOD-TAKEAWAY"
@@ -11583,6 +13338,9 @@
     },
     {
       "id": "CAPEX-05-018",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-05",
       "linkedModuleIds": [
         "MOD-TAKEAWAY"
@@ -11628,6 +13386,9 @@
     },
     {
       "id": "CAPEX-05-019",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-05",
       "linkedModuleIds": [
         "MOD-TAKEAWAY"
@@ -11673,6 +13434,9 @@
     },
     {
       "id": "CAPEX-05-020",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-05",
       "linkedModuleIds": [
         "MOD-TAKEAWAY"
@@ -11718,6 +13482,9 @@
     },
     {
       "id": "CAPEX-05-021",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-05",
       "linkedModuleIds": [
         "MOD-TAKEAWAY"
@@ -11763,6 +13530,9 @@
     },
     {
       "id": "CAPEX-05-022",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-05",
       "linkedModuleIds": [
         "MOD-GUEST"
@@ -11808,6 +13578,9 @@
     },
     {
       "id": "CAPEX-05-023",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-05",
       "linkedModuleIds": [
         "MOD-GUEST"
@@ -11853,6 +13626,9 @@
     },
     {
       "id": "CAPEX-05-024",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-05",
       "linkedModuleIds": [
         "MOD-GUEST"
@@ -11898,6 +13674,9 @@
     },
     {
       "id": "CAPEX-05-025",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-05",
       "linkedModuleIds": [
         "MOD-GUEST"
@@ -11943,6 +13722,9 @@
     },
     {
       "id": "CAPEX-05-026",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-05",
       "linkedModuleIds": [
         "MOD-GUEST"
@@ -11988,6 +13770,9 @@
     },
     {
       "id": "CAPEX-05-027",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-05",
       "linkedModuleIds": [
         "MOD-GUEST"
@@ -12033,6 +13818,9 @@
     },
     {
       "id": "CAPEX-01-048",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-01",
       "linkedModuleIds": [
         "MOD-PREP"
@@ -12140,6 +13928,13 @@
     },
     {
       "id": "CAPEX-02-056",
+      "costKind": "equipment",
+      "cashReserveRub": {
+        "minimum": 28160,
+        "base": 28160,
+        "scale_ready": 28160
+      },
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-RETAIL-HOT"
@@ -12249,6 +14044,13 @@
     },
     {
       "id": "CAPEX-02-057",
+      "costKind": "equipment",
+      "cashReserveRub": {
+        "minimum": 11160,
+        "base": 11160,
+        "scale_ready": 11160
+      },
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-02",
       "linkedModuleIds": [
         "MOD-BAR"
@@ -12351,6 +14153,9 @@
     },
     {
       "id": "CAPEX-08-001",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-08",
       "linkedModuleIds": [
         "MOD-WASH"
@@ -12447,6 +14252,9 @@
     },
     {
       "id": "CAPEX-08-002",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-08",
       "linkedModuleIds": [
         "MOD-WASH"
@@ -12492,6 +14300,9 @@
     },
     {
       "id": "CAPEX-08-003",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-08",
       "linkedModuleIds": [
         "MOD-WASH"
@@ -12537,6 +14348,9 @@
     },
     {
       "id": "CAPEX-08-004",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-08",
       "linkedModuleIds": [
         "MOD-WASH"
@@ -12582,6 +14396,9 @@
     },
     {
       "id": "CAPEX-08-005",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-08",
       "linkedModuleIds": [
         "MOD-WASH"
@@ -12627,6 +14444,9 @@
     },
     {
       "id": "CAPEX-08-006",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": null,
       "sourceModuleId": "CAPEX-08",
       "linkedModuleIds": [
         "MOD-WASH"
@@ -12668,6 +14488,1500 @@
         "minimum": null,
         "base": null,
         "scale_ready": null
+      }
+    },
+    {
+      "id": "CAPEX-02-058",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": "retail_complete",
+      "sourceModuleId": "CAPEX-02",
+      "linkedModuleIds": [
+        "MOD-RETAIL-HOT"
+      ],
+      "name": "Холодильный шкаф торговой кухни",
+      "category": "Торговая точка с залом",
+      "subcategory": "point-retail-equipment",
+      "recordType": "equipment",
+      "parentItemId": null,
+      "childItemIds": [],
+      "inclusionStatus": "standalone",
+      "requirement": "required",
+      "lifecycleStatus": "research",
+      "unit": "шт.",
+      "sourceQuantity": "2; рабочее количество",
+      "specification": "700 л номинально; 0…+6 °C; 697×925×1960 мм. Цена для центрального региона; перевозка в СПб, разгрузка и подключение не включены. Полезный объём и размещение дневного запаса ещё не проверены.",
+      "openParameters": "Геометрия, состав поставки, совместимость и коммерческое предложение",
+      "premisesDependency": "Проверить после обследования",
+      "procurementMode": "tbd",
+      "powerKw": null,
+      "voltage": null,
+      "waterRequired": null,
+      "drainageRequired": null,
+      "gasRequired": null,
+      "extractionRequired": null,
+      "dimensions": null,
+      "serviceClearance": null,
+      "quoteStatus": "quote_required",
+      "priceDate": "2026-09-17",
+      "supplier": "Polair Shop",
+      "sourceUrl": "https://www.polair-shop.ru/catalog/kholodilnye-shkafy/holodilnie_shkafi_s_metallicheskimi_dvermi/hs_standard2/cm107-s/",
+      "availabilityStatus": "research; verify quotation before purchase",
+      "confidence": "medium",
+      "priceNotes": "700 л номинально; 0…+6 °C; 697×925×1960 мм. Цена для центрального региона; перевозка в СПб, разгрузка и подключение не включены. Полезный объём и размещение дневного запаса ещё не проверены.",
+      "notes": "700 л номинально; 0…+6 °C; 697×925×1960 мм. Цена для центрального региона; перевозка в СПб, разгрузка и подключение не включены. Полезный объём и размещение дневного запаса ещё не проверены.",
+      "sourceId": "SRC-PRICE-20260917-02-058",
+      "priceResearch": {
+        "valuationStatus": "priced",
+        "quoteStatus": "quote_required",
+        "highRisk": true,
+        "riskReason": "Исследовательская цена; техническая применимость и КП ещё не подтверждены.",
+        "notes": "700 л номинально; 0…+6 °C; 697×925×1960 мм. Цена для центрального региона; перевозка в СПб, разгрузка и подключение не включены. Полезный объём и размещение дневного запаса ещё не проверены."
+      },
+      "scenarios": {
+        "minimum": {
+          "supplierName": "Polair Shop",
+          "productName": "Polair CM107-S / 1001170d",
+          "sourceUrl": "https://www.polair-shop.ru/catalog/kholodilnye-shkafy/holodilnie_shkafi_s_metallicheskimi_dvermi/hs_standard2/cm107-s/",
+          "unitPriceRub": 77493,
+          "quantity": 2,
+          "quantityBasis": "research_assumption",
+          "lineTotalRub": 154986,
+          "availabilityStatus": "research; verify quotation before purchase",
+          "checkedAt": "2026-09-17T18:00:00.000Z",
+          "confidence": "medium",
+          "notes": "700 л номинально; 0…+6 °C; 697×925×1960 мм. Цена для центрального региона; перевозка в СПб, разгрузка и подключение не включены. Полезный объём и размещение дневного запаса ещё не проверены.",
+          "sourceId": "SRC-PRICE-20260917-02-058"
+        },
+        "base": {
+          "supplierName": "Polair Shop",
+          "productName": "Polair CM107-S / 1001170d",
+          "sourceUrl": "https://www.polair-shop.ru/catalog/kholodilnye-shkafy/holodilnie_shkafi_s_metallicheskimi_dvermi/hs_standard2/cm107-s/",
+          "unitPriceRub": 77493,
+          "quantity": 2,
+          "quantityBasis": "research_assumption",
+          "lineTotalRub": 154986,
+          "availabilityStatus": "research; verify quotation before purchase",
+          "checkedAt": "2026-09-17T18:00:00.000Z",
+          "confidence": "medium",
+          "notes": "700 л номинально; 0…+6 °C; 697×925×1960 мм. Цена для центрального региона; перевозка в СПб, разгрузка и подключение не включены. Полезный объём и размещение дневного запаса ещё не проверены.",
+          "sourceId": "SRC-PRICE-20260917-02-058"
+        },
+        "scale_ready": {
+          "supplierName": "Polair Shop",
+          "productName": "Polair CM107-S / 1001170d",
+          "sourceUrl": "https://www.polair-shop.ru/catalog/kholodilnye-shkafy/holodilnie_shkafi_s_metallicheskimi_dvermi/hs_standard2/cm107-s/",
+          "unitPriceRub": 77493,
+          "quantity": 2,
+          "quantityBasis": "research_assumption",
+          "lineTotalRub": 154986,
+          "availabilityStatus": "research; verify quotation before purchase",
+          "checkedAt": "2026-09-17T18:00:00.000Z",
+          "confidence": "medium",
+          "notes": "700 л номинально; 0…+6 °C; 697×925×1960 мм. Цена для центрального региона; перевозка в СПб, разгрузка и подключение не включены. Полезный объём и размещение дневного запаса ещё не проверены.",
+          "sourceId": "SRC-PRICE-20260917-02-058"
+        }
+      }
+    },
+    {
+      "id": "CAPEX-02-059",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": "retail_complete",
+      "sourceModuleId": "CAPEX-02",
+      "linkedModuleIds": [
+        "MOD-RETAIL-HOT"
+      ],
+      "name": "Морозильный ларь торговой кухни",
+      "category": "Торговая точка с залом",
+      "subcategory": "point-retail-equipment",
+      "recordType": "equipment",
+      "parentItemId": null,
+      "childItemIds": [],
+      "inclusionStatus": "standalone",
+      "requirement": "required",
+      "lifecycleStatus": "research",
+      "unit": "шт.",
+      "sourceQuantity": "1; рабочее количество",
+      "specification": "380 л охлаждаемого объёма; −18…−22 °C; 1200×600×840 мм; 230 В, 140 Вт; две корзины. Цена акции; доставка в СПб и подключение не включены. Полезная загрузка требует проверки.",
+      "openParameters": "Геометрия, состав поставки, совместимость и коммерческое предложение",
+      "premisesDependency": "Проверить после обследования",
+      "procurementMode": "tbd",
+      "powerKw": null,
+      "voltage": null,
+      "waterRequired": null,
+      "drainageRequired": null,
+      "gasRequired": null,
+      "extractionRequired": null,
+      "dimensions": null,
+      "serviceClearance": null,
+      "quoteStatus": "quote_required",
+      "priceDate": "2026-09-17",
+      "supplier": "Frostor",
+      "sourceUrl": "https://frostor.ru/catalog/morozilnye_lari/f-400-s/",
+      "availabilityStatus": "research; verify quotation before purchase",
+      "confidence": "medium",
+      "priceNotes": "380 л охлаждаемого объёма; −18…−22 °C; 1200×600×840 мм; 230 В, 140 Вт; две корзины. Цена акции; доставка в СПб и подключение не включены. Полезная загрузка требует проверки.",
+      "notes": "380 л охлаждаемого объёма; −18…−22 °C; 1200×600×840 мм; 230 В, 140 Вт; две корзины. Цена акции; доставка в СПб и подключение не включены. Полезная загрузка требует проверки.",
+      "sourceId": "SRC-PRICE-20260917-02-059",
+      "priceResearch": {
+        "valuationStatus": "priced",
+        "quoteStatus": "quote_required",
+        "highRisk": true,
+        "riskReason": "Исследовательская цена; техническая применимость и КП ещё не подтверждены.",
+        "notes": "380 л охлаждаемого объёма; −18…−22 °C; 1200×600×840 мм; 230 В, 140 Вт; две корзины. Цена акции; доставка в СПб и подключение не включены. Полезная загрузка требует проверки."
+      },
+      "scenarios": {
+        "minimum": {
+          "supplierName": "Frostor",
+          "productName": "Frostor F400S",
+          "sourceUrl": "https://frostor.ru/catalog/morozilnye_lari/f-400-s/",
+          "unitPriceRub": 46296,
+          "quantity": 1,
+          "quantityBasis": "research_assumption",
+          "lineTotalRub": 46296,
+          "availabilityStatus": "research; verify quotation before purchase",
+          "checkedAt": "2026-09-17T18:00:00.000Z",
+          "confidence": "medium",
+          "notes": "380 л охлаждаемого объёма; −18…−22 °C; 1200×600×840 мм; 230 В, 140 Вт; две корзины. Цена акции; доставка в СПб и подключение не включены. Полезная загрузка требует проверки.",
+          "sourceId": "SRC-PRICE-20260917-02-059"
+        },
+        "base": {
+          "supplierName": "Frostor",
+          "productName": "Frostor F400S",
+          "sourceUrl": "https://frostor.ru/catalog/morozilnye_lari/f-400-s/",
+          "unitPriceRub": 46296,
+          "quantity": 1,
+          "quantityBasis": "research_assumption",
+          "lineTotalRub": 46296,
+          "availabilityStatus": "research; verify quotation before purchase",
+          "checkedAt": "2026-09-17T18:00:00.000Z",
+          "confidence": "medium",
+          "notes": "380 л охлаждаемого объёма; −18…−22 °C; 1200×600×840 мм; 230 В, 140 Вт; две корзины. Цена акции; доставка в СПб и подключение не включены. Полезная загрузка требует проверки.",
+          "sourceId": "SRC-PRICE-20260917-02-059"
+        },
+        "scale_ready": {
+          "supplierName": "Frostor",
+          "productName": "Frostor F400S",
+          "sourceUrl": "https://frostor.ru/catalog/morozilnye_lari/f-400-s/",
+          "unitPriceRub": 46296,
+          "quantity": 1,
+          "quantityBasis": "research_assumption",
+          "lineTotalRub": 46296,
+          "availabilityStatus": "research; verify quotation before purchase",
+          "checkedAt": "2026-09-17T18:00:00.000Z",
+          "confidence": "medium",
+          "notes": "380 л охлаждаемого объёма; −18…−22 °C; 1200×600×840 мм; 230 В, 140 Вт; две корзины. Цена акции; доставка в СПб и подключение не включены. Полезная загрузка требует проверки.",
+          "sourceId": "SRC-PRICE-20260917-02-059"
+        }
+      }
+    },
+    {
+      "id": "CAPEX-04-004",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": "retail_complete",
+      "sourceModuleId": "CAPEX-04",
+      "linkedModuleIds": [
+        "MOD-POS"
+      ],
+      "name": "Фискальный регистратор с накопителем и чековым принтером",
+      "category": "Торговая точка с залом",
+      "subcategory": "point-pos-kds",
+      "recordType": "equipment",
+      "parentItemId": null,
+      "childItemIds": [],
+      "inclusionStatus": "standalone",
+      "requirement": "required",
+      "lifecycleStatus": "research",
+      "unit": "шт.",
+      "sourceQuantity": "2; рабочее количество",
+      "specification": "ФН и встроенный чековый принтер включены; USB, 44–58 мм, 75 мм/с; БП и USB-кабель включены. Регистрация, ОФД и внедрение отдельно. Применимость срока ФН уточнить после выбора налогового режима.",
+      "openParameters": "Геометрия, состав поставки, совместимость и коммерческое предложение",
+      "premisesDependency": "Проверить после обследования",
+      "procurementMode": "tbd",
+      "powerKw": null,
+      "voltage": null,
+      "waterRequired": null,
+      "drainageRequired": null,
+      "gasRequired": null,
+      "extractionRequired": null,
+      "dimensions": null,
+      "serviceClearance": null,
+      "quoteStatus": "quote_required",
+      "priceDate": "2026-09-17",
+      "supplier": "Гексагон",
+      "sourceUrl": "https://geksagon.ru/ru/product/atol-30f/",
+      "availabilityStatus": "research; verify quotation before purchase",
+      "confidence": "medium",
+      "priceNotes": "ФН и встроенный чековый принтер включены; USB, 44–58 мм, 75 мм/с; БП и USB-кабель включены. Регистрация, ОФД и внедрение отдельно. Применимость срока ФН уточнить после выбора налогового режима.",
+      "notes": "ФН и встроенный чековый принтер включены; USB, 44–58 мм, 75 мм/с; БП и USB-кабель включены. Регистрация, ОФД и внедрение отдельно. Применимость срока ФН уточнить после выбора налогового режима.",
+      "sourceId": "SRC-PRICE-20260917-04-004",
+      "priceResearch": {
+        "valuationStatus": "priced",
+        "quoteStatus": "quote_required",
+        "highRisk": true,
+        "riskReason": "Исследовательская цена; техническая применимость и КП ещё не подтверждены.",
+        "notes": "ФН и встроенный чековый принтер включены; USB, 44–58 мм, 75 мм/с; БП и USB-кабель включены. Регистрация, ОФД и внедрение отдельно. Применимость срока ФН уточнить после выбора налогового режима."
+      },
+      "scenarios": {
+        "minimum": {
+          "supplierName": "Гексагон",
+          "productName": "АТОЛ 30Ф, ФН 1.2 36 месяцев / 58205",
+          "sourceUrl": "https://geksagon.ru/ru/product/atol-30f/",
+          "unitPriceRub": 50600,
+          "quantity": 2,
+          "quantityBasis": "research_assumption",
+          "lineTotalRub": 101200,
+          "availabilityStatus": "research; verify quotation before purchase",
+          "checkedAt": "2026-09-17T18:00:00.000Z",
+          "confidence": "medium",
+          "notes": "ФН и встроенный чековый принтер включены; USB, 44–58 мм, 75 мм/с; БП и USB-кабель включены. Регистрация, ОФД и внедрение отдельно. Применимость срока ФН уточнить после выбора налогового режима.",
+          "sourceId": "SRC-PRICE-20260917-04-004"
+        },
+        "base": {
+          "supplierName": "Гексагон",
+          "productName": "АТОЛ 30Ф, ФН 1.2 36 месяцев / 58205",
+          "sourceUrl": "https://geksagon.ru/ru/product/atol-30f/",
+          "unitPriceRub": 50600,
+          "quantity": 2,
+          "quantityBasis": "research_assumption",
+          "lineTotalRub": 101200,
+          "availabilityStatus": "research; verify quotation before purchase",
+          "checkedAt": "2026-09-17T18:00:00.000Z",
+          "confidence": "medium",
+          "notes": "ФН и встроенный чековый принтер включены; USB, 44–58 мм, 75 мм/с; БП и USB-кабель включены. Регистрация, ОФД и внедрение отдельно. Применимость срока ФН уточнить после выбора налогового режима.",
+          "sourceId": "SRC-PRICE-20260917-04-004"
+        },
+        "scale_ready": {
+          "supplierName": "Гексагон",
+          "productName": "АТОЛ 30Ф, ФН 1.2 36 месяцев / 58205",
+          "sourceUrl": "https://geksagon.ru/ru/product/atol-30f/",
+          "unitPriceRub": 50600,
+          "quantity": 2,
+          "quantityBasis": "research_assumption",
+          "lineTotalRub": 101200,
+          "availabilityStatus": "research; verify quotation before purchase",
+          "checkedAt": "2026-09-17T18:00:00.000Z",
+          "confidence": "medium",
+          "notes": "ФН и встроенный чековый принтер включены; USB, 44–58 мм, 75 мм/с; БП и USB-кабель включены. Регистрация, ОФД и внедрение отдельно. Применимость срока ФН уточнить после выбора налогового режима.",
+          "sourceId": "SRC-PRICE-20260917-04-004"
+        }
+      }
+    },
+    {
+      "id": "CAPEX-04-005",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": "retail_complete",
+      "sourceModuleId": "CAPEX-04",
+      "linkedModuleIds": [
+        "MOD-POS"
+      ],
+      "name": "Маршрутизатор точки",
+      "category": "Торговая точка с залом",
+      "subcategory": "point-pos-kds",
+      "recordType": "equipment",
+      "parentItemId": null,
+      "childItemIds": [],
+      "inclusionStatus": "standalone",
+      "requirement": "required",
+      "lifecycleStatus": "research",
+      "unit": "шт.",
+      "sourceQuantity": "1; рабочее количество",
+      "specification": "Гигабитный маршрутизатор; резервирование WAN при подключении второго канала. Под заказ; второй канал, кабели и настройка не включены.",
+      "openParameters": "Геометрия, состав поставки, совместимость и коммерческое предложение",
+      "premisesDependency": "Проверить после обследования",
+      "procurementMode": "tbd",
+      "powerKw": null,
+      "voltage": null,
+      "waterRequired": null,
+      "drainageRequired": null,
+      "gasRequired": null,
+      "extractionRequired": null,
+      "dimensions": null,
+      "serviceClearance": null,
+      "quoteStatus": "quote_required",
+      "priceDate": "2026-09-17",
+      "supplier": "TP-Link.ru",
+      "sourceUrl": "https://tp-link.ru/catalog/marshrutizatory/er605-tl-r605/",
+      "availabilityStatus": "research; verify quotation before purchase",
+      "confidence": "medium",
+      "priceNotes": "Гигабитный маршрутизатор; резервирование WAN при подключении второго канала. Под заказ; второй канал, кабели и настройка не включены.",
+      "notes": "Гигабитный маршрутизатор; резервирование WAN при подключении второго канала. Под заказ; второй канал, кабели и настройка не включены.",
+      "sourceId": "SRC-PRICE-20260917-04-005",
+      "priceResearch": {
+        "valuationStatus": "priced",
+        "quoteStatus": "quote_required",
+        "highRisk": true,
+        "riskReason": "Исследовательская цена; техническая применимость и КП ещё не подтверждены.",
+        "notes": "Гигабитный маршрутизатор; резервирование WAN при подключении второго канала. Под заказ; второй канал, кабели и настройка не включены."
+      },
+      "scenarios": {
+        "minimum": {
+          "supplierName": "TP-Link.ru",
+          "productName": "TP-Link ER605",
+          "sourceUrl": "https://tp-link.ru/catalog/marshrutizatory/er605-tl-r605/",
+          "unitPriceRub": 5990,
+          "quantity": 1,
+          "quantityBasis": "research_assumption",
+          "lineTotalRub": 5990,
+          "availabilityStatus": "research; verify quotation before purchase",
+          "checkedAt": "2026-09-17T18:00:00.000Z",
+          "confidence": "medium",
+          "notes": "Гигабитный маршрутизатор; резервирование WAN при подключении второго канала. Под заказ; второй канал, кабели и настройка не включены.",
+          "sourceId": "SRC-PRICE-20260917-04-005"
+        },
+        "base": {
+          "supplierName": "TP-Link.ru",
+          "productName": "TP-Link ER605",
+          "sourceUrl": "https://tp-link.ru/catalog/marshrutizatory/er605-tl-r605/",
+          "unitPriceRub": 5990,
+          "quantity": 1,
+          "quantityBasis": "research_assumption",
+          "lineTotalRub": 5990,
+          "availabilityStatus": "research; verify quotation before purchase",
+          "checkedAt": "2026-09-17T18:00:00.000Z",
+          "confidence": "medium",
+          "notes": "Гигабитный маршрутизатор; резервирование WAN при подключении второго канала. Под заказ; второй канал, кабели и настройка не включены.",
+          "sourceId": "SRC-PRICE-20260917-04-005"
+        },
+        "scale_ready": {
+          "supplierName": "TP-Link.ru",
+          "productName": "TP-Link ER605",
+          "sourceUrl": "https://tp-link.ru/catalog/marshrutizatory/er605-tl-r605/",
+          "unitPriceRub": 5990,
+          "quantity": 1,
+          "quantityBasis": "research_assumption",
+          "lineTotalRub": 5990,
+          "availabilityStatus": "research; verify quotation before purchase",
+          "checkedAt": "2026-09-17T18:00:00.000Z",
+          "confidence": "medium",
+          "notes": "Гигабитный маршрутизатор; резервирование WAN при подключении второго канала. Под заказ; второй канал, кабели и настройка не включены.",
+          "sourceId": "SRC-PRICE-20260917-04-005"
+        }
+      }
+    },
+    {
+      "id": "CAPEX-04-006",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": "retail_complete",
+      "sourceModuleId": "CAPEX-04",
+      "linkedModuleIds": [
+        "MOD-POS"
+      ],
+      "name": "Точка доступа Wi-Fi",
+      "category": "Торговая точка с залом",
+      "subcategory": "point-pos-kds",
+      "recordType": "equipment",
+      "parentItemId": null,
+      "childItemIds": [],
+      "inclusionStatus": "standalone",
+      "requirement": "required",
+      "lifecycleStatus": "research",
+      "unit": "шт.",
+      "sourceQuantity": "1; рабочее количество",
+      "specification": "AC1350; PoE. Покрытие, состав инжектора питания и монтаж проверить в проекте сети.",
+      "openParameters": "Геометрия, состав поставки, совместимость и коммерческое предложение",
+      "premisesDependency": "Проверить после обследования",
+      "procurementMode": "tbd",
+      "powerKw": null,
+      "voltage": null,
+      "waterRequired": null,
+      "drainageRequired": null,
+      "gasRequired": null,
+      "extractionRequired": null,
+      "dimensions": null,
+      "serviceClearance": null,
+      "quoteStatus": "quote_required",
+      "priceDate": "2026-09-17",
+      "supplier": "TP-Link.ru",
+      "sourceUrl": "https://tp-link.ru/catalog/rasshirenie-seti-wi-fi/tochki-dostupa/eap225/",
+      "availabilityStatus": "research; verify quotation before purchase",
+      "confidence": "medium",
+      "priceNotes": "AC1350; PoE. Покрытие, состав инжектора питания и монтаж проверить в проекте сети.",
+      "notes": "AC1350; PoE. Покрытие, состав инжектора питания и монтаж проверить в проекте сети.",
+      "sourceId": "SRC-PRICE-20260917-04-006",
+      "priceResearch": {
+        "valuationStatus": "priced",
+        "quoteStatus": "quote_required",
+        "highRisk": true,
+        "riskReason": "Исследовательская цена; техническая применимость и КП ещё не подтверждены.",
+        "notes": "AC1350; PoE. Покрытие, состав инжектора питания и монтаж проверить в проекте сети."
+      },
+      "scenarios": {
+        "minimum": {
+          "supplierName": "TP-Link.ru",
+          "productName": "TP-Link EAP225",
+          "sourceUrl": "https://tp-link.ru/catalog/rasshirenie-seti-wi-fi/tochki-dostupa/eap225/",
+          "unitPriceRub": 7390,
+          "quantity": 1,
+          "quantityBasis": "research_assumption",
+          "lineTotalRub": 7390,
+          "availabilityStatus": "research; verify quotation before purchase",
+          "checkedAt": "2026-09-17T18:00:00.000Z",
+          "confidence": "medium",
+          "notes": "AC1350; PoE. Покрытие, состав инжектора питания и монтаж проверить в проекте сети.",
+          "sourceId": "SRC-PRICE-20260917-04-006"
+        },
+        "base": {
+          "supplierName": "TP-Link.ru",
+          "productName": "TP-Link EAP225",
+          "sourceUrl": "https://tp-link.ru/catalog/rasshirenie-seti-wi-fi/tochki-dostupa/eap225/",
+          "unitPriceRub": 7390,
+          "quantity": 1,
+          "quantityBasis": "research_assumption",
+          "lineTotalRub": 7390,
+          "availabilityStatus": "research; verify quotation before purchase",
+          "checkedAt": "2026-09-17T18:00:00.000Z",
+          "confidence": "medium",
+          "notes": "AC1350; PoE. Покрытие, состав инжектора питания и монтаж проверить в проекте сети.",
+          "sourceId": "SRC-PRICE-20260917-04-006"
+        },
+        "scale_ready": {
+          "supplierName": "TP-Link.ru",
+          "productName": "TP-Link EAP225",
+          "sourceUrl": "https://tp-link.ru/catalog/rasshirenie-seti-wi-fi/tochki-dostupa/eap225/",
+          "unitPriceRub": 7390,
+          "quantity": 1,
+          "quantityBasis": "research_assumption",
+          "lineTotalRub": 7390,
+          "availabilityStatus": "research; verify quotation before purchase",
+          "checkedAt": "2026-09-17T18:00:00.000Z",
+          "confidence": "medium",
+          "notes": "AC1350; PoE. Покрытие, состав инжектора питания и монтаж проверить в проекте сети.",
+          "sourceId": "SRC-PRICE-20260917-04-006"
+        }
+      }
+    },
+    {
+      "id": "CAPEX-04-007",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": "retail_complete",
+      "sourceModuleId": "CAPEX-04",
+      "linkedModuleIds": [
+        "MOD-POS"
+      ],
+      "name": "Сетевой коммутатор",
+      "category": "Торговая точка с залом",
+      "subcategory": "point-pos-kds",
+      "recordType": "equipment",
+      "parentItemId": null,
+      "childItemIds": [],
+      "inclusionStatus": "standalone",
+      "requirement": "required",
+      "lifecycleStatus": "research",
+      "unit": "шт.",
+      "sourceQuantity": "1; рабочее количество",
+      "specification": "8 гигабитных портов, VLAN, без PoE. Под заказ; окончательный портовый баланс с видеонаблюдением и питание точки доступа требуют проверки.",
+      "openParameters": "Геометрия, состав поставки, совместимость и коммерческое предложение",
+      "premisesDependency": "Проверить после обследования",
+      "procurementMode": "tbd",
+      "powerKw": null,
+      "voltage": null,
+      "waterRequired": null,
+      "drainageRequired": null,
+      "gasRequired": null,
+      "extractionRequired": null,
+      "dimensions": null,
+      "serviceClearance": null,
+      "quoteStatus": "quote_required",
+      "priceDate": "2026-09-17",
+      "supplier": "TP-Link.ru",
+      "sourceUrl": "https://tp-link.ru/catalog/kommutatory/smart/tl-sg108e/",
+      "availabilityStatus": "research; verify quotation before purchase",
+      "confidence": "medium",
+      "priceNotes": "8 гигабитных портов, VLAN, без PoE. Под заказ; окончательный портовый баланс с видеонаблюдением и питание точки доступа требуют проверки.",
+      "notes": "8 гигабитных портов, VLAN, без PoE. Под заказ; окончательный портовый баланс с видеонаблюдением и питание точки доступа требуют проверки.",
+      "sourceId": "SRC-PRICE-20260917-04-007",
+      "priceResearch": {
+        "valuationStatus": "priced",
+        "quoteStatus": "quote_required",
+        "highRisk": true,
+        "riskReason": "Исследовательская цена; техническая применимость и КП ещё не подтверждены.",
+        "notes": "8 гигабитных портов, VLAN, без PoE. Под заказ; окончательный портовый баланс с видеонаблюдением и питание точки доступа требуют проверки."
+      },
+      "scenarios": {
+        "minimum": {
+          "supplierName": "TP-Link.ru",
+          "productName": "TP-Link TL-SG108E",
+          "sourceUrl": "https://tp-link.ru/catalog/kommutatory/smart/tl-sg108e/",
+          "unitPriceRub": 3890,
+          "quantity": 1,
+          "quantityBasis": "research_assumption",
+          "lineTotalRub": 3890,
+          "availabilityStatus": "research; verify quotation before purchase",
+          "checkedAt": "2026-09-17T18:00:00.000Z",
+          "confidence": "medium",
+          "notes": "8 гигабитных портов, VLAN, без PoE. Под заказ; окончательный портовый баланс с видеонаблюдением и питание точки доступа требуют проверки.",
+          "sourceId": "SRC-PRICE-20260917-04-007"
+        },
+        "base": {
+          "supplierName": "TP-Link.ru",
+          "productName": "TP-Link TL-SG108E",
+          "sourceUrl": "https://tp-link.ru/catalog/kommutatory/smart/tl-sg108e/",
+          "unitPriceRub": 3890,
+          "quantity": 1,
+          "quantityBasis": "research_assumption",
+          "lineTotalRub": 3890,
+          "availabilityStatus": "research; verify quotation before purchase",
+          "checkedAt": "2026-09-17T18:00:00.000Z",
+          "confidence": "medium",
+          "notes": "8 гигабитных портов, VLAN, без PoE. Под заказ; окончательный портовый баланс с видеонаблюдением и питание точки доступа требуют проверки.",
+          "sourceId": "SRC-PRICE-20260917-04-007"
+        },
+        "scale_ready": {
+          "supplierName": "TP-Link.ru",
+          "productName": "TP-Link TL-SG108E",
+          "sourceUrl": "https://tp-link.ru/catalog/kommutatory/smart/tl-sg108e/",
+          "unitPriceRub": 3890,
+          "quantity": 1,
+          "quantityBasis": "research_assumption",
+          "lineTotalRub": 3890,
+          "availabilityStatus": "research; verify quotation before purchase",
+          "checkedAt": "2026-09-17T18:00:00.000Z",
+          "confidence": "medium",
+          "notes": "8 гигабитных портов, VLAN, без PoE. Под заказ; окончательный портовый баланс с видеонаблюдением и питание точки доступа требуют проверки.",
+          "sourceId": "SRC-PRICE-20260917-04-007"
+        }
+      }
+    },
+    {
+      "id": "CAPEX-04-008",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": "retail_complete",
+      "sourceModuleId": "CAPEX-04",
+      "linkedModuleIds": [
+        "MOD-POS"
+      ],
+      "name": "Источник бесперебойного питания",
+      "category": "Торговая точка с залом",
+      "subcategory": "point-pos-kds",
+      "recordType": "equipment",
+      "parentItemId": null,
+      "childItemIds": [],
+      "inclusionStatus": "standalone",
+      "requirement": "required",
+      "lifecycleStatus": "research",
+      "unit": "шт.",
+      "sourceQuantity": "3; рабочее количество",
+      "specification": "850 ВА / 480 Вт; рабочее количество: два кассовых поста и сеть. IEC-подключения; кабели/адаптеры и автономность по нагрузке требуют проверки.",
+      "openParameters": "Геометрия, состав поставки, совместимость и коммерческое предложение",
+      "premisesDependency": "Проверить после обследования",
+      "procurementMode": "tbd",
+      "powerKw": null,
+      "voltage": null,
+      "waterRequired": null,
+      "drainageRequired": null,
+      "gasRequired": null,
+      "extractionRequired": null,
+      "dimensions": null,
+      "serviceClearance": null,
+      "quoteStatus": "quote_required",
+      "priceDate": "2026-09-17",
+      "supplier": "IPPON Russia",
+      "sourceUrl": "https://ippon-russia.ru/istochnik-besperebojnogo-pitanija-ippon-back-basic-850",
+      "availabilityStatus": "research; verify quotation before purchase",
+      "confidence": "medium",
+      "priceNotes": "850 ВА / 480 Вт; рабочее количество: два кассовых поста и сеть. IEC-подключения; кабели/адаптеры и автономность по нагрузке требуют проверки.",
+      "notes": "850 ВА / 480 Вт; рабочее количество: два кассовых поста и сеть. IEC-подключения; кабели/адаптеры и автономность по нагрузке требуют проверки.",
+      "sourceId": "SRC-PRICE-20260917-04-008",
+      "priceResearch": {
+        "valuationStatus": "priced",
+        "quoteStatus": "quote_required",
+        "highRisk": true,
+        "riskReason": "Исследовательская цена; техническая применимость и КП ещё не подтверждены.",
+        "notes": "850 ВА / 480 Вт; рабочее количество: два кассовых поста и сеть. IEC-подключения; кабели/адаптеры и автономность по нагрузке требуют проверки."
+      },
+      "scenarios": {
+        "minimum": {
+          "supplierName": "IPPON Russia",
+          "productName": "IPPON Back Basic 850 / 403406",
+          "sourceUrl": "https://ippon-russia.ru/istochnik-besperebojnogo-pitanija-ippon-back-basic-850",
+          "unitPriceRub": 6490,
+          "quantity": 3,
+          "quantityBasis": "research_assumption",
+          "lineTotalRub": 19470,
+          "availabilityStatus": "research; verify quotation before purchase",
+          "checkedAt": "2026-09-17T18:00:00.000Z",
+          "confidence": "medium",
+          "notes": "850 ВА / 480 Вт; рабочее количество: два кассовых поста и сеть. IEC-подключения; кабели/адаптеры и автономность по нагрузке требуют проверки.",
+          "sourceId": "SRC-PRICE-20260917-04-008"
+        },
+        "base": {
+          "supplierName": "IPPON Russia",
+          "productName": "IPPON Back Basic 850 / 403406",
+          "sourceUrl": "https://ippon-russia.ru/istochnik-besperebojnogo-pitanija-ippon-back-basic-850",
+          "unitPriceRub": 6490,
+          "quantity": 3,
+          "quantityBasis": "research_assumption",
+          "lineTotalRub": 19470,
+          "availabilityStatus": "research; verify quotation before purchase",
+          "checkedAt": "2026-09-17T18:00:00.000Z",
+          "confidence": "medium",
+          "notes": "850 ВА / 480 Вт; рабочее количество: два кассовых поста и сеть. IEC-подключения; кабели/адаптеры и автономность по нагрузке требуют проверки.",
+          "sourceId": "SRC-PRICE-20260917-04-008"
+        },
+        "scale_ready": {
+          "supplierName": "IPPON Russia",
+          "productName": "IPPON Back Basic 850 / 403406",
+          "sourceUrl": "https://ippon-russia.ru/istochnik-besperebojnogo-pitanija-ippon-back-basic-850",
+          "unitPriceRub": 6490,
+          "quantity": 3,
+          "quantityBasis": "research_assumption",
+          "lineTotalRub": 19470,
+          "availabilityStatus": "research; verify quotation before purchase",
+          "checkedAt": "2026-09-17T18:00:00.000Z",
+          "confidence": "medium",
+          "notes": "850 ВА / 480 Вт; рабочее количество: два кассовых поста и сеть. IEC-подключения; кабели/адаптеры и автономность по нагрузке требуют проверки.",
+          "sourceId": "SRC-PRICE-20260917-04-008"
+        }
+      }
+    },
+    {
+      "id": "CAPEX-04-009",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": "retail_complete",
+      "sourceModuleId": "CAPEX-04",
+      "linkedModuleIds": [
+        "MOD-POS"
+      ],
+      "name": "Кабельная инфраструктура и питание сети",
+      "category": "Торговая точка с залом",
+      "subcategory": "point-pos-kds",
+      "recordType": "equipment",
+      "parentItemId": null,
+      "childItemIds": [],
+      "inclusionStatus": "standalone",
+      "requirement": "required",
+      "lifecycleStatus": "research",
+      "unit": "шт.",
+      "sourceQuantity": "1; рабочее количество",
+      "specification": "Патч-корды, линии, розетки, монтажные материалы, питание Wi-Fi и адаптеры UPS. Сначала сверка с электромонтажом подготовки; цена отсутствует.",
+      "openParameters": "Геометрия, состав поставки, совместимость и коммерческое предложение",
+      "premisesDependency": "Проверить после обследования",
+      "procurementMode": "tbd",
+      "powerKw": null,
+      "voltage": null,
+      "waterRequired": null,
+      "drainageRequired": null,
+      "gasRequired": null,
+      "extractionRequired": null,
+      "dimensions": null,
+      "serviceClearance": null,
+      "quoteStatus": "quote_required",
+      "priceDate": null,
+      "supplier": null,
+      "sourceUrl": null,
+      "availabilityStatus": "research; verify quotation before purchase",
+      "confidence": "medium",
+      "priceNotes": "Патч-корды, линии, розетки, монтажные материалы, питание Wi-Fi и адаптеры UPS. Сначала сверка с электромонтажом подготовки; цена отсутствует.",
+      "notes": "Патч-корды, линии, розетки, монтажные материалы, питание Wi-Fi и адаптеры UPS. Сначала сверка с электромонтажом подготовки; цена отсутствует.",
+      "sourceId": "SRC-SEATED-RETAIL-BRIEF-20260917",
+      "priceResearch": {
+        "valuationStatus": "quote_required",
+        "quoteStatus": "quote_required",
+        "highRisk": true,
+        "riskReason": "Исследовательская цена; техническая применимость и КП ещё не подтверждены.",
+        "notes": "Патч-корды, линии, розетки, монтажные материалы, питание Wi-Fi и адаптеры UPS. Сначала сверка с электромонтажом подготовки; цена отсутствует."
+      },
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      }
+    },
+    {
+      "id": "CAPEX-04-010",
+      "costKind": "service",
+      "cashReserveRub": null,
+      "compositionProfile": "retail_complete",
+      "sourceModuleId": "CAPEX-04",
+      "linkedModuleIds": [
+        "MOD-POS"
+      ],
+      "name": "Настройка и внедрение локальной сети",
+      "category": "Торговая точка с залом",
+      "subcategory": "point-installation",
+      "recordType": "equipment",
+      "parentItemId": null,
+      "childItemIds": [],
+      "inclusionStatus": "standalone",
+      "requirement": "required",
+      "lifecycleStatus": "research",
+      "unit": "шт.",
+      "sourceQuantity": "1; рабочее количество",
+      "specification": "Настройка VLAN, Wi-Fi, резервного канала, UPS и тестирование. Не входит в цены устройств.",
+      "openParameters": "Геометрия, состав поставки, совместимость и коммерческое предложение",
+      "premisesDependency": "Проверить после обследования",
+      "procurementMode": "tbd",
+      "powerKw": null,
+      "voltage": null,
+      "waterRequired": null,
+      "drainageRequired": null,
+      "gasRequired": null,
+      "extractionRequired": null,
+      "dimensions": null,
+      "serviceClearance": null,
+      "quoteStatus": "quote_required",
+      "priceDate": null,
+      "supplier": null,
+      "sourceUrl": null,
+      "availabilityStatus": "research; verify quotation before purchase",
+      "confidence": "medium",
+      "priceNotes": "Настройка VLAN, Wi-Fi, резервного канала, UPS и тестирование. Не входит в цены устройств.",
+      "notes": "Настройка VLAN, Wi-Fi, резервного канала, UPS и тестирование. Не входит в цены устройств.",
+      "sourceId": "SRC-SEATED-RETAIL-BRIEF-20260917",
+      "priceResearch": {
+        "valuationStatus": "quote_required",
+        "quoteStatus": "quote_required",
+        "highRisk": true,
+        "riskReason": "Исследовательская цена; техническая применимость и КП ещё не подтверждены.",
+        "notes": "Настройка VLAN, Wi-Fi, резервного канала, UPS и тестирование. Не входит в цены устройств."
+      },
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      }
+    },
+    {
+      "id": "CAPEX-04-011",
+      "costKind": "service",
+      "cashReserveRub": null,
+      "compositionProfile": "retail_complete",
+      "sourceModuleId": "CAPEX-04",
+      "linkedModuleIds": [
+        "MOD-POS"
+      ],
+      "name": "Подключение кассы с вводным обучением",
+      "category": "Торговая точка с залом",
+      "subcategory": "point-installation",
+      "recordType": "equipment",
+      "parentItemId": null,
+      "childItemIds": [],
+      "inclusionStatus": "standalone",
+      "requirement": "required",
+      "lifecycleStatus": "research",
+      "unit": "шт.",
+      "sourceQuantity": "2; рабочее количество",
+      "specification": "Цена за кассу включает вводное обучение. Не прибавлять отдельно аналогичную настройку за 2000 ₽; состав регистрации ФНС, загрузки номенклатуры и интеграции с учётом уточнить.",
+      "openParameters": "Геометрия, состав поставки, совместимость и коммерческое предложение",
+      "premisesDependency": "Проверить после обследования",
+      "procurementMode": "tbd",
+      "powerKw": null,
+      "voltage": null,
+      "waterRequired": null,
+      "drainageRequired": null,
+      "gasRequired": null,
+      "extractionRequired": null,
+      "dimensions": null,
+      "serviceClearance": null,
+      "quoteStatus": "quote_required",
+      "priceDate": "2026-09-17",
+      "supplier": "КИФ / Эвотор СПб",
+      "sourceUrl": "https://evotor.spb.ru/product/podklucheniye-k-ofd/",
+      "availabilityStatus": "research; verify quotation before purchase",
+      "confidence": "medium",
+      "priceNotes": "Цена за кассу включает вводное обучение. Не прибавлять отдельно аналогичную настройку за 2000 ₽; состав регистрации ФНС, загрузки номенклатуры и интеграции с учётом уточнить.",
+      "notes": "Цена за кассу включает вводное обучение. Не прибавлять отдельно аналогичную настройку за 2000 ₽; состав регистрации ФНС, загрузки номенклатуры и интеграции с учётом уточнить.",
+      "sourceId": "SRC-PRICE-20260917-04-011",
+      "priceResearch": {
+        "valuationStatus": "priced",
+        "quoteStatus": "quote_required",
+        "highRisk": true,
+        "riskReason": "Исследовательская цена; техническая применимость и КП ещё не подтверждены.",
+        "notes": "Цена за кассу включает вводное обучение. Не прибавлять отдельно аналогичную настройку за 2000 ₽; состав регистрации ФНС, загрузки номенклатуры и интеграции с учётом уточнить."
+      },
+      "scenarios": {
+        "minimum": {
+          "supplierName": "КИФ / Эвотор СПб",
+          "productName": "Выездное подключение кассы в Санкт-Петербурге",
+          "sourceUrl": "https://evotor.spb.ru/product/podklucheniye-k-ofd/",
+          "unitPriceRub": 3000,
+          "quantity": 2,
+          "quantityBasis": "research_assumption",
+          "lineTotalRub": 6000,
+          "availabilityStatus": "research; verify quotation before purchase",
+          "checkedAt": "2026-09-17T18:00:00.000Z",
+          "confidence": "medium",
+          "notes": "Цена за кассу включает вводное обучение. Не прибавлять отдельно аналогичную настройку за 2000 ₽; состав регистрации ФНС, загрузки номенклатуры и интеграции с учётом уточнить.",
+          "sourceId": "SRC-PRICE-20260917-04-011"
+        },
+        "base": {
+          "supplierName": "КИФ / Эвотор СПб",
+          "productName": "Выездное подключение кассы в Санкт-Петербурге",
+          "sourceUrl": "https://evotor.spb.ru/product/podklucheniye-k-ofd/",
+          "unitPriceRub": 3000,
+          "quantity": 2,
+          "quantityBasis": "research_assumption",
+          "lineTotalRub": 6000,
+          "availabilityStatus": "research; verify quotation before purchase",
+          "checkedAt": "2026-09-17T18:00:00.000Z",
+          "confidence": "medium",
+          "notes": "Цена за кассу включает вводное обучение. Не прибавлять отдельно аналогичную настройку за 2000 ₽; состав регистрации ФНС, загрузки номенклатуры и интеграции с учётом уточнить.",
+          "sourceId": "SRC-PRICE-20260917-04-011"
+        },
+        "scale_ready": {
+          "supplierName": "КИФ / Эвотор СПб",
+          "productName": "Выездное подключение кассы в Санкт-Петербурге",
+          "sourceUrl": "https://evotor.spb.ru/product/podklucheniye-k-ofd/",
+          "unitPriceRub": 3000,
+          "quantity": 2,
+          "quantityBasis": "research_assumption",
+          "lineTotalRub": 6000,
+          "availabilityStatus": "research; verify quotation before purchase",
+          "checkedAt": "2026-09-17T18:00:00.000Z",
+          "confidence": "medium",
+          "notes": "Цена за кассу включает вводное обучение. Не прибавлять отдельно аналогичную настройку за 2000 ₽; состав регистрации ФНС, загрузки номенклатуры и интеграции с учётом уточнить.",
+          "sourceId": "SRC-PRICE-20260917-04-011"
+        }
+      }
+    },
+    {
+      "id": "CAPEX-04-012",
+      "costKind": "prepaid",
+      "cashReserveRub": null,
+      "compositionProfile": "retail_complete",
+      "sourceModuleId": "CAPEX-04",
+      "linkedModuleIds": [
+        "MOD-POS"
+      ],
+      "name": "Стартовый ОФД на один год",
+      "category": "Торговая точка с залом",
+      "subcategory": "point-prepaid",
+      "recordType": "equipment",
+      "parentItemId": null,
+      "childItemIds": [],
+      "inclusionStatus": "standalone",
+      "requirement": "required",
+      "lifecycleStatus": "research",
+      "unit": "шт.",
+      "sourceQuantity": "2; рабочее количество",
+      "specification": "Годовая предоплата сервиса на кассу; не физическое оборудование. Продление — регулярный OPEX.",
+      "openParameters": "Геометрия, состав поставки, совместимость и коммерческое предложение",
+      "premisesDependency": "Проверить после обследования",
+      "procurementMode": "tbd",
+      "powerKw": null,
+      "voltage": null,
+      "waterRequired": null,
+      "drainageRequired": null,
+      "gasRequired": null,
+      "extractionRequired": null,
+      "dimensions": null,
+      "serviceClearance": null,
+      "quoteStatus": "quote_required",
+      "priceDate": "2026-09-17",
+      "supplier": "КИФ / Эвотор СПб",
+      "sourceUrl": "https://evotor.spb.ru/product/podklucheniye-k-ofd/",
+      "availabilityStatus": "research; verify quotation before purchase",
+      "confidence": "medium",
+      "priceNotes": "Годовая предоплата сервиса на кассу; не физическое оборудование. Продление — регулярный OPEX.",
+      "notes": "Годовая предоплата сервиса на кассу; не физическое оборудование. Продление — регулярный OPEX.",
+      "sourceId": "SRC-PRICE-20260917-04-012",
+      "priceResearch": {
+        "valuationStatus": "priced",
+        "quoteStatus": "quote_required",
+        "highRisk": true,
+        "riskReason": "Исследовательская цена; техническая применимость и КП ещё не подтверждены.",
+        "notes": "Годовая предоплата сервиса на кассу; не физическое оборудование. Продление — регулярный OPEX."
+      },
+      "scenarios": {
+        "minimum": {
+          "supplierName": "КИФ / Эвотор СПб",
+          "productName": "Подключение ОФД на один год",
+          "sourceUrl": "https://evotor.spb.ru/product/podklucheniye-k-ofd/",
+          "unitPriceRub": 2500,
+          "quantity": 2,
+          "quantityBasis": "research_assumption",
+          "lineTotalRub": 5000,
+          "availabilityStatus": "research; verify quotation before purchase",
+          "checkedAt": "2026-09-17T18:00:00.000Z",
+          "confidence": "medium",
+          "notes": "Годовая предоплата сервиса на кассу; не физическое оборудование. Продление — регулярный OPEX.",
+          "sourceId": "SRC-PRICE-20260917-04-012"
+        },
+        "base": {
+          "supplierName": "КИФ / Эвотор СПб",
+          "productName": "Подключение ОФД на один год",
+          "sourceUrl": "https://evotor.spb.ru/product/podklucheniye-k-ofd/",
+          "unitPriceRub": 2500,
+          "quantity": 2,
+          "quantityBasis": "research_assumption",
+          "lineTotalRub": 5000,
+          "availabilityStatus": "research; verify quotation before purchase",
+          "checkedAt": "2026-09-17T18:00:00.000Z",
+          "confidence": "medium",
+          "notes": "Годовая предоплата сервиса на кассу; не физическое оборудование. Продление — регулярный OPEX.",
+          "sourceId": "SRC-PRICE-20260917-04-012"
+        },
+        "scale_ready": {
+          "supplierName": "КИФ / Эвотор СПб",
+          "productName": "Подключение ОФД на один год",
+          "sourceUrl": "https://evotor.spb.ru/product/podklucheniye-k-ofd/",
+          "unitPriceRub": 2500,
+          "quantity": 2,
+          "quantityBasis": "research_assumption",
+          "lineTotalRub": 5000,
+          "availabilityStatus": "research; verify quotation before purchase",
+          "checkedAt": "2026-09-17T18:00:00.000Z",
+          "confidence": "medium",
+          "notes": "Годовая предоплата сервиса на кассу; не физическое оборудование. Продление — регулярный OPEX.",
+          "sourceId": "SRC-PRICE-20260917-04-012"
+        }
+      }
+    },
+    {
+      "id": "CAPEX-05-028",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": "retail_complete",
+      "sourceModuleId": "CAPEX-05",
+      "linkedModuleIds": [
+        "MOD-GUEST"
+      ],
+      "name": "Гостевой поднос",
+      "category": "Торговая точка с залом",
+      "subcategory": "point-guest-accessories",
+      "recordType": "equipment",
+      "parentItemId": null,
+      "childItemIds": [],
+      "inclusionStatus": "standalone",
+      "requirement": "required",
+      "lifecycleStatus": "research",
+      "unit": "шт.",
+      "sourceQuantity": "26; рабочее количество",
+      "specification": "Полипропилен, 460 мм. Цена индексируемого каталога; прямое чтение карточки недоступно, подтвердить КП. Рабочий запас — один поднос на место; оборачиваемость требует проверки.",
+      "openParameters": "Геометрия, состав поставки, совместимость и коммерческое предложение",
+      "premisesDependency": "Проверить после обследования",
+      "procurementMode": "tbd",
+      "powerKw": null,
+      "voltage": null,
+      "waterRequired": null,
+      "drainageRequired": null,
+      "gasRequired": null,
+      "extractionRequired": null,
+      "dimensions": null,
+      "serviceClearance": null,
+      "quoteStatus": "quote_required",
+      "priceDate": "2026-09-17",
+      "supplier": "Horeca.ru",
+      "sourceUrl": "https://horeca.ru/catalog/item/49331/",
+      "availabilityStatus": "research; verify quotation before purchase",
+      "confidence": "medium",
+      "priceNotes": "Полипропилен, 460 мм. Цена индексируемого каталога; прямое чтение карточки недоступно, подтвердить КП. Рабочий запас — один поднос на место; оборачиваемость требует проверки.",
+      "notes": "Полипропилен, 460 мм. Цена индексируемого каталога; прямое чтение карточки недоступно, подтвердить КП. Рабочий запас — один поднос на место; оборачиваемость требует проверки.",
+      "sourceId": "SRC-PRICE-20260917-05-028",
+      "priceResearch": {
+        "valuationStatus": "priced",
+        "quoteStatus": "quote_required",
+        "highRisk": true,
+        "riskReason": "Исследовательская цена; техническая применимость и КП ещё не подтверждены.",
+        "notes": "Полипропилен, 460 мм. Цена индексируемого каталога; прямое чтение карточки недоступно, подтвердить КП. Рабочий запас — один поднос на место; оборачиваемость требует проверки."
+      },
+      "scenarios": {
+        "minimum": {
+          "supplierName": "Horeca.ru",
+          "productName": "Cambro 1418FF, тёмно-синий",
+          "sourceUrl": "https://horeca.ru/catalog/item/49331/",
+          "unitPriceRub": 490,
+          "quantity": 26,
+          "quantityBasis": "research_assumption",
+          "lineTotalRub": 12740,
+          "availabilityStatus": "research; verify quotation before purchase",
+          "checkedAt": "2026-09-17T18:00:00.000Z",
+          "confidence": "medium",
+          "notes": "Полипропилен, 460 мм. Цена индексируемого каталога; прямое чтение карточки недоступно, подтвердить КП. Рабочий запас — один поднос на место; оборачиваемость требует проверки.",
+          "sourceId": "SRC-PRICE-20260917-05-028"
+        },
+        "base": {
+          "supplierName": "Horeca.ru",
+          "productName": "Cambro 1418FF, тёмно-синий",
+          "sourceUrl": "https://horeca.ru/catalog/item/49331/",
+          "unitPriceRub": 490,
+          "quantity": 26,
+          "quantityBasis": "research_assumption",
+          "lineTotalRub": 12740,
+          "availabilityStatus": "research; verify quotation before purchase",
+          "checkedAt": "2026-09-17T18:00:00.000Z",
+          "confidence": "medium",
+          "notes": "Полипропилен, 460 мм. Цена индексируемого каталога; прямое чтение карточки недоступно, подтвердить КП. Рабочий запас — один поднос на место; оборачиваемость требует проверки.",
+          "sourceId": "SRC-PRICE-20260917-05-028"
+        },
+        "scale_ready": {
+          "supplierName": "Horeca.ru",
+          "productName": "Cambro 1418FF, тёмно-синий",
+          "sourceUrl": "https://horeca.ru/catalog/item/49331/",
+          "unitPriceRub": 490,
+          "quantity": 26,
+          "quantityBasis": "research_assumption",
+          "lineTotalRub": 12740,
+          "availabilityStatus": "research; verify quotation before purchase",
+          "checkedAt": "2026-09-17T18:00:00.000Z",
+          "confidence": "medium",
+          "notes": "Полипропилен, 460 мм. Цена индексируемого каталога; прямое чтение карточки недоступно, подтвердить КП. Рабочий запас — один поднос на место; оборачиваемость требует проверки.",
+          "sourceId": "SRC-PRICE-20260917-05-028"
+        }
+      }
+    },
+    {
+      "id": "CAPEX-05-029",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": "retail_complete",
+      "sourceModuleId": "CAPEX-05",
+      "linkedModuleIds": [
+        "MOD-GUEST"
+      ],
+      "name": "Гостевая урна с педалью",
+      "category": "Торговая точка с залом",
+      "subcategory": "point-guest-accessories",
+      "recordType": "equipment",
+      "parentItemId": null,
+      "childItemIds": [],
+      "inclusionStatus": "standalone",
+      "requirement": "required",
+      "lifecycleStatus": "research",
+      "unit": "шт.",
+      "sourceQuantity": "2; рабочее количество",
+      "specification": "Нержавеющая сталь, внутреннее ведро. Две урны — рабочий ориентир, не санитарный проект.",
+      "openParameters": "Геометрия, состав поставки, совместимость и коммерческое предложение",
+      "premisesDependency": "Проверить после обследования",
+      "procurementMode": "tbd",
+      "powerKw": null,
+      "voltage": null,
+      "waterRequired": null,
+      "drainageRequired": null,
+      "gasRequired": null,
+      "extractionRequired": null,
+      "dimensions": null,
+      "serviceClearance": null,
+      "quoteStatus": "quote_required",
+      "priceDate": "2026-09-17",
+      "supplier": "ВсеИнструменты",
+      "sourceUrl": "https://www.vseinstrumenti.ru/product/urna-dlya-musora-s-pedalyu-nv-30-l-nv-bin30l-13011521/",
+      "availabilityStatus": "research; verify quotation before purchase",
+      "confidence": "medium",
+      "priceNotes": "Нержавеющая сталь, внутреннее ведро. Две урны — рабочий ориентир, не санитарный проект.",
+      "notes": "Нержавеющая сталь, внутреннее ведро. Две урны — рабочий ориентир, не санитарный проект.",
+      "sourceId": "SRC-PRICE-20260917-05-029",
+      "priceResearch": {
+        "valuationStatus": "priced",
+        "quoteStatus": "quote_required",
+        "highRisk": true,
+        "riskReason": "Исследовательская цена; техническая применимость и КП ещё не подтверждены.",
+        "notes": "Нержавеющая сталь, внутреннее ведро. Две урны — рабочий ориентир, не санитарный проект."
+      },
+      "scenarios": {
+        "minimum": {
+          "supplierName": "ВсеИнструменты",
+          "productName": "NV-BIN30L, 30 л",
+          "sourceUrl": "https://www.vseinstrumenti.ru/product/urna-dlya-musora-s-pedalyu-nv-30-l-nv-bin30l-13011521/",
+          "unitPriceRub": 4150,
+          "quantity": 2,
+          "quantityBasis": "research_assumption",
+          "lineTotalRub": 8300,
+          "availabilityStatus": "research; verify quotation before purchase",
+          "checkedAt": "2026-09-17T18:00:00.000Z",
+          "confidence": "medium",
+          "notes": "Нержавеющая сталь, внутреннее ведро. Две урны — рабочий ориентир, не санитарный проект.",
+          "sourceId": "SRC-PRICE-20260917-05-029"
+        },
+        "base": {
+          "supplierName": "ВсеИнструменты",
+          "productName": "NV-BIN30L, 30 л",
+          "sourceUrl": "https://www.vseinstrumenti.ru/product/urna-dlya-musora-s-pedalyu-nv-30-l-nv-bin30l-13011521/",
+          "unitPriceRub": 4150,
+          "quantity": 2,
+          "quantityBasis": "research_assumption",
+          "lineTotalRub": 8300,
+          "availabilityStatus": "research; verify quotation before purchase",
+          "checkedAt": "2026-09-17T18:00:00.000Z",
+          "confidence": "medium",
+          "notes": "Нержавеющая сталь, внутреннее ведро. Две урны — рабочий ориентир, не санитарный проект.",
+          "sourceId": "SRC-PRICE-20260917-05-029"
+        },
+        "scale_ready": {
+          "supplierName": "ВсеИнструменты",
+          "productName": "NV-BIN30L, 30 л",
+          "sourceUrl": "https://www.vseinstrumenti.ru/product/urna-dlya-musora-s-pedalyu-nv-30-l-nv-bin30l-13011521/",
+          "unitPriceRub": 4150,
+          "quantity": 2,
+          "quantityBasis": "research_assumption",
+          "lineTotalRub": 8300,
+          "availabilityStatus": "research; verify quotation before purchase",
+          "checkedAt": "2026-09-17T18:00:00.000Z",
+          "confidence": "medium",
+          "notes": "Нержавеющая сталь, внутреннее ведро. Две урны — рабочий ориентир, не санитарный проект.",
+          "sourceId": "SRC-PRICE-20260917-05-029"
+        }
+      }
+    },
+    {
+      "id": "CAPEX-05-030",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": "retail_complete",
+      "sourceModuleId": "CAPEX-05",
+      "linkedModuleIds": [
+        "MOD-GUEST"
+      ],
+      "name": "Дополнительные принадлежности гостевой зоны",
+      "category": "Торговая точка с залом",
+      "subcategory": "point-guest-accessories",
+      "recordType": "equipment",
+      "parentItemId": null,
+      "childItemIds": [],
+      "inclusionStatus": "standalone",
+      "requirement": "required",
+      "lifecycleStatus": "research",
+      "unit": "шт.",
+      "sourceQuantity": "1; рабочее количество",
+      "specification": "Держатели подносов и гостевых расходников, элементы ожидания. Номенклатура после планировки; столы, стулья и встроенные стойки сюда повторно не включаются.",
+      "openParameters": "Геометрия, состав поставки, совместимость и коммерческое предложение",
+      "premisesDependency": "Проверить после обследования",
+      "procurementMode": "tbd",
+      "powerKw": null,
+      "voltage": null,
+      "waterRequired": null,
+      "drainageRequired": null,
+      "gasRequired": null,
+      "extractionRequired": null,
+      "dimensions": null,
+      "serviceClearance": null,
+      "quoteStatus": "quote_required",
+      "priceDate": null,
+      "supplier": null,
+      "sourceUrl": null,
+      "availabilityStatus": "research; verify quotation before purchase",
+      "confidence": "medium",
+      "priceNotes": "Держатели подносов и гостевых расходников, элементы ожидания. Номенклатура после планировки; столы, стулья и встроенные стойки сюда повторно не включаются.",
+      "notes": "Держатели подносов и гостевых расходников, элементы ожидания. Номенклатура после планировки; столы, стулья и встроенные стойки сюда повторно не включаются.",
+      "sourceId": "SRC-SEATED-RETAIL-BRIEF-20260917",
+      "priceResearch": {
+        "valuationStatus": "quote_required",
+        "quoteStatus": "quote_required",
+        "highRisk": true,
+        "riskReason": "Исследовательская цена; техническая применимость и КП ещё не подтверждены.",
+        "notes": "Держатели подносов и гостевых расходников, элементы ожидания. Номенклатура после планировки; столы, стулья и встроенные стойки сюда повторно не включаются."
+      },
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      }
+    },
+    {
+      "id": "CAPEX-02-060",
+      "costKind": "service",
+      "cashReserveRub": null,
+      "compositionProfile": "retail_complete",
+      "sourceModuleId": "CAPEX-02",
+      "linkedModuleIds": [
+        "MOD-RETAIL-HOT"
+      ],
+      "name": "Доставка оборудования до объекта",
+      "category": "Торговая точка с залом",
+      "subcategory": "point-installation",
+      "recordType": "equipment",
+      "parentItemId": null,
+      "childItemIds": [],
+      "inclusionStatus": "standalone",
+      "requirement": "required",
+      "lifecycleStatus": "research",
+      "unit": "шт.",
+      "sourceQuantity": "1; рабочее количество",
+      "specification": "Консолидированная доставка в СПб по фактической ведомости; бесплатная доставка до терминала не означает доставку до объекта.",
+      "openParameters": "Геометрия, состав поставки, совместимость и коммерческое предложение",
+      "premisesDependency": "Проверить после обследования",
+      "procurementMode": "tbd",
+      "powerKw": null,
+      "voltage": null,
+      "waterRequired": null,
+      "drainageRequired": null,
+      "gasRequired": null,
+      "extractionRequired": null,
+      "dimensions": null,
+      "serviceClearance": null,
+      "quoteStatus": "quote_required",
+      "priceDate": null,
+      "supplier": null,
+      "sourceUrl": null,
+      "availabilityStatus": "research; verify quotation before purchase",
+      "confidence": "medium",
+      "priceNotes": "Консолидированная доставка в СПб по фактической ведомости; бесплатная доставка до терминала не означает доставку до объекта.",
+      "notes": "Консолидированная доставка в СПб по фактической ведомости; бесплатная доставка до терминала не означает доставку до объекта.",
+      "sourceId": "SRC-SEATED-RETAIL-BRIEF-20260917",
+      "priceResearch": {
+        "valuationStatus": "quote_required",
+        "quoteStatus": "quote_required",
+        "highRisk": true,
+        "riskReason": "Исследовательская цена; техническая применимость и КП ещё не подтверждены.",
+        "notes": "Консолидированная доставка в СПб по фактической ведомости; бесплатная доставка до терминала не означает доставку до объекта."
+      },
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      }
+    },
+    {
+      "id": "CAPEX-02-061",
+      "costKind": "service",
+      "cashReserveRub": null,
+      "compositionProfile": "retail_complete",
+      "sourceModuleId": "CAPEX-02",
+      "linkedModuleIds": [
+        "MOD-RETAIL-HOT"
+      ],
+      "name": "Разгрузка и подъём оборудования",
+      "category": "Торговая точка с залом",
+      "subcategory": "point-installation",
+      "recordType": "equipment",
+      "parentItemId": null,
+      "childItemIds": [],
+      "inclusionStatus": "standalone",
+      "requirement": "required",
+      "lifecycleStatus": "research",
+      "unit": "шт.",
+      "sourceQuantity": "1; рабочее количество",
+      "specification": "Габариты входов, этаж, способ разгрузки и сборка на месте пока неизвестны.",
+      "openParameters": "Геометрия, состав поставки, совместимость и коммерческое предложение",
+      "premisesDependency": "Проверить после обследования",
+      "procurementMode": "tbd",
+      "powerKw": null,
+      "voltage": null,
+      "waterRequired": null,
+      "drainageRequired": null,
+      "gasRequired": null,
+      "extractionRequired": null,
+      "dimensions": null,
+      "serviceClearance": null,
+      "quoteStatus": "quote_required",
+      "priceDate": null,
+      "supplier": null,
+      "sourceUrl": null,
+      "availabilityStatus": "research; verify quotation before purchase",
+      "confidence": "medium",
+      "priceNotes": "Габариты входов, этаж, способ разгрузки и сборка на месте пока неизвестны.",
+      "notes": "Габариты входов, этаж, способ разгрузки и сборка на месте пока неизвестны.",
+      "sourceId": "SRC-SEATED-RETAIL-BRIEF-20260917",
+      "priceResearch": {
+        "valuationStatus": "quote_required",
+        "quoteStatus": "quote_required",
+        "highRisk": true,
+        "riskReason": "Исследовательская цена; техническая применимость и КП ещё не подтверждены.",
+        "notes": "Габариты входов, этаж, способ разгрузки и сборка на месте пока неизвестны."
+      },
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      }
+    },
+    {
+      "id": "CAPEX-02-062",
+      "costKind": "service",
+      "cashReserveRub": null,
+      "compositionProfile": "retail_complete",
+      "sourceModuleId": "CAPEX-02",
+      "linkedModuleIds": [
+        "MOD-RETAIL-HOT"
+      ],
+      "name": "Монтаж, подключение и пусконаладка оборудования",
+      "category": "Торговая точка с залом",
+      "subcategory": "point-installation",
+      "recordType": "equipment",
+      "parentItemId": null,
+      "childItemIds": [],
+      "inclusionStatus": "standalone",
+      "requirement": "required",
+      "lifecycleStatus": "research",
+      "unit": "шт.",
+      "sourceQuantity": "1; рабочее количество",
+      "specification": "Только работы по оборудованию, не вентиляция/электрика/встроенные конструкции из подготовки. Требуется коммерческое предложение.",
+      "openParameters": "Геометрия, состав поставки, совместимость и коммерческое предложение",
+      "premisesDependency": "Проверить после обследования",
+      "procurementMode": "tbd",
+      "powerKw": null,
+      "voltage": null,
+      "waterRequired": null,
+      "drainageRequired": null,
+      "gasRequired": null,
+      "extractionRequired": null,
+      "dimensions": null,
+      "serviceClearance": null,
+      "quoteStatus": "quote_required",
+      "priceDate": null,
+      "supplier": null,
+      "sourceUrl": null,
+      "availabilityStatus": "research; verify quotation before purchase",
+      "confidence": "medium",
+      "priceNotes": "Только работы по оборудованию, не вентиляция/электрика/встроенные конструкции из подготовки. Требуется коммерческое предложение.",
+      "notes": "Только работы по оборудованию, не вентиляция/электрика/встроенные конструкции из подготовки. Требуется коммерческое предложение.",
+      "sourceId": "SRC-SEATED-RETAIL-BRIEF-20260917",
+      "priceResearch": {
+        "valuationStatus": "quote_required",
+        "quoteStatus": "quote_required",
+        "highRisk": true,
+        "riskReason": "Исследовательская цена; техническая применимость и КП ещё не подтверждены.",
+        "notes": "Только работы по оборудованию, не вентиляция/электрика/встроенные конструкции из подготовки. Требуется коммерческое предложение."
+      },
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      }
+    },
+    {
+      "id": "CAPEX-02-063",
+      "costKind": "startup",
+      "cashReserveRub": null,
+      "compositionProfile": "retail_complete",
+      "sourceModuleId": "CAPEX-02",
+      "linkedModuleIds": [
+        "MOD-WASH"
+      ],
+      "name": "Первоначальные санитарные и гостевые расходники",
+      "category": "Торговая точка с залом",
+      "subcategory": "point-opening-supplies",
+      "recordType": "equipment",
+      "parentItemId": null,
+      "childItemIds": [],
+      "inclusionStatus": "standalone",
+      "requirement": "required",
+      "lifecycleStatus": "research",
+      "unit": "шт.",
+      "sourceQuantity": "1; рабочее количество",
+      "specification": "Мыло, полотенца, моющие средства и гостевые расходники. Не дублировать товарный запас и упаковку заказов. Состав и цена отсутствуют.",
+      "openParameters": "Геометрия, состав поставки, совместимость и коммерческое предложение",
+      "premisesDependency": "Проверить после обследования",
+      "procurementMode": "tbd",
+      "powerKw": null,
+      "voltage": null,
+      "waterRequired": null,
+      "drainageRequired": null,
+      "gasRequired": null,
+      "extractionRequired": null,
+      "dimensions": null,
+      "serviceClearance": null,
+      "quoteStatus": "quote_required",
+      "priceDate": null,
+      "supplier": null,
+      "sourceUrl": null,
+      "availabilityStatus": "research; verify quotation before purchase",
+      "confidence": "medium",
+      "priceNotes": "Мыло, полотенца, моющие средства и гостевые расходники. Не дублировать товарный запас и упаковку заказов. Состав и цена отсутствуют.",
+      "notes": "Мыло, полотенца, моющие средства и гостевые расходники. Не дублировать товарный запас и упаковку заказов. Состав и цена отсутствуют.",
+      "sourceId": "SRC-SEATED-RETAIL-BRIEF-20260917",
+      "priceResearch": {
+        "valuationStatus": "quote_required",
+        "quoteStatus": "quote_required",
+        "highRisk": true,
+        "riskReason": "Исследовательская цена; техническая применимость и КП ещё не подтверждены.",
+        "notes": "Мыло, полотенца, моющие средства и гостевые расходники. Не дублировать товарный запас и упаковку заказов. Состав и цена отсутствуют."
+      },
+      "scenarios": {
+        "minimum": null,
+        "base": null,
+        "scale_ready": null
+      }
+    },
+    {
+      "id": "CAPEX-08-007",
+      "costKind": "equipment",
+      "cashReserveRub": null,
+      "compositionProfile": "retail_complete",
+      "sourceModuleId": "CAPEX-08",
+      "linkedModuleIds": [
+        "MOD-WASH"
+      ],
+      "name": "Компактная фронтальная посудомоечная машина",
+      "category": "Торговая точка с залом",
+      "subcategory": "point-wash",
+      "recordType": "equipment",
+      "parentItemId": null,
+      "childItemIds": [],
+      "inclusionStatus": "standalone",
+      "requirement": "optional",
+      "lifecycleStatus": "research",
+      "unit": "шт.",
+      "sourceQuantity": "1; рабочее количество",
+      "specification": "595×660×875 мм; кассета 500×500; 380 В / 6,8 кВт; насос слива, дозаторы. Отдельная опция; вода, фильтрация, подключение и расходники не оценены. Цена каталога; подтвердить КП.",
+      "openParameters": "Геометрия, состав поставки, совместимость и коммерческое предложение",
+      "premisesDependency": "Проверить после обследования",
+      "procurementMode": "tbd",
+      "powerKw": null,
+      "voltage": null,
+      "waterRequired": null,
+      "drainageRequired": null,
+      "gasRequired": null,
+      "extractionRequired": null,
+      "dimensions": null,
+      "serviceClearance": null,
+      "quoteStatus": "quote_required",
+      "priceDate": "2026-09-17",
+      "supplier": "Abat.shop",
+      "sourceUrl": "https://abat.shop/shop/product/frontalnaia-posudomoechnaia-mashina-abat-mpk-500f-01-moika-gn1-1",
+      "availabilityStatus": "research; verify quotation before purchase",
+      "confidence": "medium",
+      "priceNotes": "595×660×875 мм; кассета 500×500; 380 В / 6,8 кВт; насос слива, дозаторы. Отдельная опция; вода, фильтрация, подключение и расходники не оценены. Цена каталога; подтвердить КП.",
+      "notes": "595×660×875 мм; кассета 500×500; 380 В / 6,8 кВт; насос слива, дозаторы. Отдельная опция; вода, фильтрация, подключение и расходники не оценены. Цена каталога; подтвердить КП.",
+      "sourceId": "SRC-PRICE-20260917-08-007",
+      "priceResearch": {
+        "valuationStatus": "priced",
+        "quoteStatus": "quote_required",
+        "highRisk": true,
+        "riskReason": "Исследовательская цена; техническая применимость и КП ещё не подтверждены.",
+        "notes": "595×660×875 мм; кассета 500×500; 380 В / 6,8 кВт; насос слива, дозаторы. Отдельная опция; вода, фильтрация, подключение и расходники не оценены. Цена каталога; подтвердить КП."
+      },
+      "scenarios": {
+        "minimum": {
+          "supplierName": "Abat.shop",
+          "productName": "ABAT МПК-500Ф-01-GN1/1 / 15000001002",
+          "sourceUrl": "https://abat.shop/shop/product/frontalnaia-posudomoechnaia-mashina-abat-mpk-500f-01-moika-gn1-1",
+          "unitPriceRub": 179466,
+          "quantity": 1,
+          "quantityBasis": "research_assumption",
+          "lineTotalRub": 179466,
+          "availabilityStatus": "research; verify quotation before purchase",
+          "checkedAt": "2026-09-17T18:00:00.000Z",
+          "confidence": "medium",
+          "notes": "595×660×875 мм; кассета 500×500; 380 В / 6,8 кВт; насос слива, дозаторы. Отдельная опция; вода, фильтрация, подключение и расходники не оценены. Цена каталога; подтвердить КП.",
+          "sourceId": "SRC-PRICE-20260917-08-007"
+        },
+        "base": {
+          "supplierName": "Abat.shop",
+          "productName": "ABAT МПК-500Ф-01-GN1/1 / 15000001002",
+          "sourceUrl": "https://abat.shop/shop/product/frontalnaia-posudomoechnaia-mashina-abat-mpk-500f-01-moika-gn1-1",
+          "unitPriceRub": 179466,
+          "quantity": 1,
+          "quantityBasis": "research_assumption",
+          "lineTotalRub": 179466,
+          "availabilityStatus": "research; verify quotation before purchase",
+          "checkedAt": "2026-09-17T18:00:00.000Z",
+          "confidence": "medium",
+          "notes": "595×660×875 мм; кассета 500×500; 380 В / 6,8 кВт; насос слива, дозаторы. Отдельная опция; вода, фильтрация, подключение и расходники не оценены. Цена каталога; подтвердить КП.",
+          "sourceId": "SRC-PRICE-20260917-08-007"
+        },
+        "scale_ready": {
+          "supplierName": "Abat.shop",
+          "productName": "ABAT МПК-500Ф-01-GN1/1 / 15000001002",
+          "sourceUrl": "https://abat.shop/shop/product/frontalnaia-posudomoechnaia-mashina-abat-mpk-500f-01-moika-gn1-1",
+          "unitPriceRub": 179466,
+          "quantity": 1,
+          "quantityBasis": "research_assumption",
+          "lineTotalRub": 179466,
+          "availabilityStatus": "research; verify quotation before purchase",
+          "checkedAt": "2026-09-17T18:00:00.000Z",
+          "confidence": "medium",
+          "notes": "595×660×875 мм; кассета 500×500; 380 В / 6,8 кВт; насос слива, дозаторы. Отдельная опция; вода, фильтрация, подключение и расходники не оценены. Цена каталога; подтвердить КП.",
+          "sourceId": "SRC-PRICE-20260917-08-007"
+        }
       }
     }
   ],
@@ -12962,76 +16276,76 @@
   ],
   "timeline": [
     {
-      "id": "EVT-ITR-GOVERNANCE-HISTORY-V2-2026-08-05-01-APPROVED",
-      "timestamp": "2026-08-05T18:31:01.000Z",
-      "status": "approved",
-      "action": "approved",
-      "decisionId": "DEC-GOVERNANCE-HISTORY-V2-2026-08-05-01",
-      "changeSetId": "CHG-GOVERNANCE-HISTORY-V2-2026-08-05-01",
-      "summary": "Владелец проекта утвердил инфраструктурный payload Governance History v2; CAPEX, Investor Start Model, Google и опубликованный сайт исключены из scope."
-    },
-    {
-      "id": "EVT-ITR-GOVERNANCE-HISTORY-V2-2026-08-05-01-APPLIED",
-      "timestamp": "2026-08-05T18:31:03.000Z",
+      "id": "EVT-ITR-SENNAYA-2026-09-17-01-APPLIED",
+      "timestamp": "2026-09-17T13:14:09.354Z",
       "status": "applied",
       "action": "applied",
-      "decisionId": "DEC-GOVERNANCE-HISTORY-V2-2026-08-05-01",
-      "changeSetId": "CHG-GOVERNANCE-HISTORY-V2-2026-08-05-01",
-      "summary": "Governance History v2 применена: исторические связи импортированы без выдуманных стадий, созданы annotated tags, проверки drift, artifacts, snapshots и generated context."
+      "decisionId": "DEC-SENNAYA-2026-09-17-01",
+      "changeSetId": "CHG-SENNAYA-2026-09-17-01",
+      "summary": "Sennaya page applied; owner instruction authorizes implementation and staging only, not commits or production."
     },
     {
-      "id": "EVT-ITR-GOVERNANCE-HISTORY-V2-2026-08-05-01-VERIFIED",
-      "timestamp": "2026-08-05T18:31:04.000Z",
+      "id": "EVT-ITR-SENNAYA-2026-09-17-01-VERIFIED",
+      "timestamp": "2026-09-17T13:30:14.238Z",
       "status": "verified",
       "action": "verified",
-      "decisionId": "DEC-GOVERNANCE-HISTORY-V2-2026-08-05-01",
-      "changeSetId": "CHG-GOVERNANCE-HISTORY-V2-2026-08-05-01",
-      "summary": "Проверены append-only hash chain, точные исторические теги, generated context и 36 тестов Governance History v2; бизнес-содержание не изменялось."
+      "decisionId": "DEC-SENNAYA-2026-09-17-01",
+      "changeSetId": "CHG-SENNAYA-2026-09-17-01",
+      "summary": "Sennaya page verified; owner instruction authorizes implementation and staging only, not commits or production."
     },
     {
-      "id": "EVT-ITR-GOVERNANCE-HISTORY-V2-2026-08-05-01-COMMITTED",
-      "timestamp": "2026-08-05T18:34:51.000Z",
-      "status": "committed",
-      "action": "committed",
-      "decisionId": "DEC-GOVERNANCE-HISTORY-V2-2026-08-05-01",
-      "changeSetId": "CHG-GOVERNANCE-HISTORY-V2-2026-08-05-01",
-      "summary": "Governance History v2 infrastructure content commit verified and sealed without business-content changes."
+      "id": "EVT-ITR-SENNAYA-2026-09-17-01-SUPERSEDED",
+      "timestamp": "2026-09-17T19:17:12.352Z",
+      "status": "superseded",
+      "action": "superseded",
+      "decisionId": "DEC-SENNAYA-2026-09-17-01",
+      "changeSetId": "CHG-SENNAYA-2026-09-17-01",
+      "summary": "Сенная — адресное предложение инвестору superseded by Точка с залом — общий CAPEX и Сенная (ITR-SENNAYA-CAPEX-2026-09-17-02). Reason: Owner continuation expands common seated CAPEX and changes presentation; no commit authorized, preserve previous events and receipts."
     },
     {
-      "id": "EVT-ITR-CAPEX-REMAINING-PRICES-2026-08-05-01-PROPOSED",
-      "timestamp": "2026-08-05T18:18:23.000Z",
+      "id": "EVT-ITR-SENNAYA-CAPEX-2026-09-17-02-PROPOSED",
+      "timestamp": "2026-09-17T19:17:21.054Z",
       "status": "proposed",
       "action": "proposed",
-      "decisionId": "DEC-015",
-      "changeSetId": "CHG-030",
-      "summary": "Предложен точный перенос research-цен восьми существующих позиций CAPEX без интернет-исследования, новых позиций или изменения остальных цен; отдельно заданы условия алкоголя, исключение двойного учёта зонта и подписи плотности."
+      "decisionId": "DEC-SENNAYA-CAPEX-2026-09-17-02",
+      "changeSetId": "CHG-SENNAYA-CAPEX-2026-09-17-02",
+      "summary": "proposed: owner-authorized common CAPEX research and Sennaya presentation; no Git or production operations"
     },
     {
-      "id": "EVT-ITR-CAPEX-REMAINING-PRICES-2026-08-05-01-APPROVED",
-      "timestamp": "2026-08-05T18:23:17.476Z",
+      "id": "EVT-ITR-SENNAYA-CAPEX-2026-09-17-02-APPROVED",
+      "timestamp": "2026-09-17T19:17:24.400Z",
       "status": "approved",
       "action": "approved",
-      "decisionId": "DEC-015",
-      "changeSetId": "CHG-030",
-      "summary": "DEC-015 утвердил только переданные владельцем research-ориентиры, сохранение quote_required, точную номенклатуру газового гриля, 24 дозатора, alcohol_enabled и правила агрегации launch-budget; коммерческие предложения и окончательный CAPEX не утверждены."
+      "decisionId": "DEC-SENNAYA-CAPEX-2026-09-17-02",
+      "changeSetId": "CHG-SENNAYA-CAPEX-2026-09-17-02",
+      "summary": "approved: owner-authorized common CAPEX research and Sennaya presentation; no Git or production operations"
     },
     {
-      "id": "EVT-ITR-CAPEX-REMAINING-PRICES-2026-08-05-01-APPLIED",
-      "timestamp": "2026-08-05T18:38:31.763Z",
+      "id": "EVT-ITR-SENNAYA-CAPEX-2026-09-17-02-PREVIEWED",
+      "timestamp": "2026-09-17T19:17:27.785Z",
+      "status": "previewed",
+      "action": "previewed",
+      "decisionId": "DEC-SENNAYA-CAPEX-2026-09-17-02",
+      "changeSetId": "CHG-SENNAYA-CAPEX-2026-09-17-02",
+      "summary": "previewed: owner-authorized common CAPEX research and Sennaya presentation; no Git or production operations"
+    },
+    {
+      "id": "EVT-ITR-SENNAYA-CAPEX-2026-09-17-02-APPLIED",
+      "timestamp": "2026-09-17T19:17:56.951Z",
       "status": "applied",
       "action": "applied",
-      "decisionId": "DEC-015",
-      "changeSetId": "CHG-030",
-      "summary": "Approved payload применён структурно идентично: восемь строк получили min/base/scale_ready цены и quote_required, алкогольные позиции стали условными, зонт исключён только из агрегирования launch-budget, а русские подписи плотности обновлены без изменения формул."
+      "decisionId": "DEC-SENNAYA-CAPEX-2026-09-17-02",
+      "changeSetId": "CHG-SENNAYA-CAPEX-2026-09-17-02",
+      "summary": "applied: owner-authorized common CAPEX research and Sennaya presentation; no Git or production operations"
     },
     {
-      "id": "EVT-ITR-CAPEX-REMAINING-PRICES-2026-08-05-01-VERIFIED",
-      "timestamp": "2026-08-05T19:23:29.000Z",
+      "id": "EVT-ITR-SENNAYA-CAPEX-2026-09-17-02-VERIFIED",
+      "timestamp": "2026-09-17T20:53:43.114Z",
       "status": "verified",
       "action": "verified",
-      "decisionId": "DEC-015",
-      "changeSetId": "CHG-030",
-      "summary": "Проверено полное покрытие 51 из 51 закупочной позиции, точные восемь цен, 160 записей реестра, отсутствие фиктивной ссылки газового гриля, alcohol_enabled, одинарный учёт зонта, актуальный snapshot, Google readback, обе страницы и обратимый reverse preview."
+      "decisionId": "DEC-SENNAYA-CAPEX-2026-09-17-02",
+      "changeSetId": "CHG-SENNAYA-CAPEX-2026-09-17-02",
+      "summary": "verified: owner-authorized common CAPEX research and Sennaya presentation; no Git or production operations"
     }
   ]
 }

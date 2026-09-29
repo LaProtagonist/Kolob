@@ -58,6 +58,7 @@ const InvestorTerminalPage = lazy(() =>
   import("./components/InvestorTerminal").then((module) => ({ default: module.InvestorTerminalPage }))
 );
 
+const SennayaPage = lazy(() => import("./components/Sennaya").then((module) => ({ default: module.SennayaPage })));
 const PetrogradkaPage = lazy(() =>
   import("./components/Petrogradka").then((module) => ({ default: module.PetrogradkaPage }))
 );
@@ -784,6 +785,8 @@ function renderPage(path: string) {
           <InvestorTerminalPage />
         </Suspense>
       );
+    case "/sennaya":
+      return <Suspense fallback={null}><SennayaPage /></Suspense>;
     case "/petrogradka":
       return (
         <Suspense fallback={<main className="plain-page"><div className="section-inner"><p>Загружается сценарий Петроградки…</p></div></main>}>

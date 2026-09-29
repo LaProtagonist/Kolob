@@ -1,0 +1,10 @@
+schema_version: 2
+proposal_id: PROP-SENNAYA-CAPEX-2026-09-17-02
+iteration_id: ITR-SENNAYA-CAPEX-2026-09-17-02
+title: Точка с залом — общий CAPEX и Сенная
+status: approved
+proposed_by: project owner
+proposed_at: 2026-09-17T19:17:12.241Z
+summary: Implementation/research selection explicitly delegated in owner full task; not approval of final budget or technical adequacy
+approved_payload_path: docs-platform/changelog/payloads/ITR-SENNAYA-CAPEX-2026-09-17-02-approved.yaml
+approved_payload_sha256: da4966a1d73d3ecc3fffed1900b51ed629c67191696dddbaba9b88a70c326efb

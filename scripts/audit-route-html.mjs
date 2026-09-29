@@ -16,6 +16,7 @@ const checks = [
   { route: "/investor-questions", expectedStatus: 200, mustInclude: "Обсудить участие" },
   { route: "/privacy", expectedStatus: 200, mustInclude: "Политика обработки персональных данных" },
   { route: "/investor-terminal", expectedStatus: 200, mustInclude: "Финансовая модель объекта" },
+  { route: "/sennaya", expectedStatus: 200, mustInclude: "Московский, 4" },
   { route: "/petrogradka", expectedStatus: 200, mustInclude: "Оборудованная производственная база на Петроградской стороне" },
   { route: "/404", expectedStatus: 200, mustInclude: "Страница не найдена" },
   { route: "/robots.txt", expectedStatus: 200, mustInclude: "Sitemap: https://colob.spi.ski/sitemap.xml" },

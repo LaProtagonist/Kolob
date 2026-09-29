@@ -1,0 +1,1188 @@
+{
+  "areaM2": 73.5,
+  "guestAreaRangeM2": [
+    38,
+    45
+  ],
+  "targetSeatRange": [
+    24,
+    28
+  ],
+  "illustrativeGuestAreaM2": 42,
+  "illustrativeSeats": 26,
+  "targetChecksPerDay": 200,
+  "averageCheckRub": 1165.4,
+  "daysPerMonth": 30,
+  "revenueScenarios": [
+    {
+      "checksPerDay": 150,
+      "revenueMonthlyRub": 5244300
+    },
+    {
+      "checksPerDay": 200,
+      "revenueMonthlyRub": 6992400
+    },
+    {
+      "checksPerDay": 250,
+      "revenueMonthlyRub": 8740500
+    }
+  ],
+  "occupancyMonthlyRub": 500000,
+  "advertisedPowerKw": 20,
+  "hotPosts": 2,
+  "cashierPosts": 2,
+  "openingBudgetVariants": {
+    "10000": {
+      "rows": [
+        {
+          "id": "preparation",
+          "knownRub": 4042500,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "equipment",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "launch",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "inventory",
+          "knownRub": 0,
+          "included": false,
+          "partial": false
+        },
+        {
+          "id": "contingency",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        }
+      ],
+      "knownRub": 4042500,
+      "partial": true
+    },
+    "10001": {
+      "rows": [
+        {
+          "id": "preparation",
+          "knownRub": 4042500,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "equipment",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "launch",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "inventory",
+          "knownRub": 0,
+          "included": false,
+          "partial": false
+        },
+        {
+          "id": "contingency",
+          "knownRub": 404250,
+          "included": true,
+          "partial": true
+        }
+      ],
+      "knownRub": 4446750,
+      "partial": true
+    },
+    "10010": {
+      "rows": [
+        {
+          "id": "preparation",
+          "knownRub": 4042500,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "equipment",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "launch",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "inventory",
+          "knownRub": 234829.54666666663,
+          "included": true,
+          "partial": false
+        },
+        {
+          "id": "contingency",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        }
+      ],
+      "knownRub": 4277329.546666667,
+      "partial": true
+    },
+    "10011": {
+      "rows": [
+        {
+          "id": "preparation",
+          "knownRub": 4042500,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "equipment",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "launch",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "inventory",
+          "knownRub": 234829.54666666663,
+          "included": true,
+          "partial": false
+        },
+        {
+          "id": "contingency",
+          "knownRub": 404250,
+          "included": true,
+          "partial": true
+        }
+      ],
+      "knownRub": 4681579.546666667,
+      "partial": true
+    },
+    "10100": {
+      "rows": [
+        {
+          "id": "preparation",
+          "knownRub": 4042500,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "equipment",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "launch",
+          "knownRub": 807000,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "inventory",
+          "knownRub": 0,
+          "included": false,
+          "partial": false
+        },
+        {
+          "id": "contingency",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        }
+      ],
+      "knownRub": 4849500,
+      "partial": true
+    },
+    "10101": {
+      "rows": [
+        {
+          "id": "preparation",
+          "knownRub": 4042500,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "equipment",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "launch",
+          "knownRub": 807000,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "inventory",
+          "knownRub": 0,
+          "included": false,
+          "partial": false
+        },
+        {
+          "id": "contingency",
+          "knownRub": 404250,
+          "included": true,
+          "partial": true
+        }
+      ],
+      "knownRub": 5253750,
+      "partial": true
+    },
+    "10110": {
+      "rows": [
+        {
+          "id": "preparation",
+          "knownRub": 4042500,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "equipment",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "launch",
+          "knownRub": 807000,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "inventory",
+          "knownRub": 234829.54666666663,
+          "included": true,
+          "partial": false
+        },
+        {
+          "id": "contingency",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        }
+      ],
+      "knownRub": 5084329.546666667,
+      "partial": true
+    },
+    "10111": {
+      "rows": [
+        {
+          "id": "preparation",
+          "knownRub": 4042500,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "equipment",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "launch",
+          "knownRub": 807000,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "inventory",
+          "knownRub": 234829.54666666663,
+          "included": true,
+          "partial": false
+        },
+        {
+          "id": "contingency",
+          "knownRub": 404250,
+          "included": true,
+          "partial": true
+        }
+      ],
+      "knownRub": 5488579.546666667,
+      "partial": true
+    },
+    "11000": {
+      "rows": [
+        {
+          "id": "preparation",
+          "knownRub": 4042500,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "equipment",
+          "knownRub": 2490495,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "launch",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "inventory",
+          "knownRub": 0,
+          "included": false,
+          "partial": false
+        },
+        {
+          "id": "contingency",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        }
+      ],
+      "knownRub": 6532995,
+      "partial": true
+    },
+    "11001": {
+      "rows": [
+        {
+          "id": "preparation",
+          "knownRub": 4042500,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "equipment",
+          "knownRub": 2490495,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "launch",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "inventory",
+          "knownRub": 0,
+          "included": false,
+          "partial": false
+        },
+        {
+          "id": "contingency",
+          "knownRub": 686051.5,
+          "included": true,
+          "partial": true
+        }
+      ],
+      "knownRub": 7219046.5,
+      "partial": true
+    },
+    "11010": {
+      "rows": [
+        {
+          "id": "preparation",
+          "knownRub": 4042500,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "equipment",
+          "knownRub": 2490495,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "launch",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "inventory",
+          "knownRub": 234829.54666666663,
+          "included": true,
+          "partial": false
+        },
+        {
+          "id": "contingency",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        }
+      ],
+      "knownRub": 6767824.546666667,
+      "partial": true
+    },
+    "11011": {
+      "rows": [
+        {
+          "id": "preparation",
+          "knownRub": 4042500,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "equipment",
+          "knownRub": 2490495,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "launch",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "inventory",
+          "knownRub": 234829.54666666663,
+          "included": true,
+          "partial": false
+        },
+        {
+          "id": "contingency",
+          "knownRub": 686051.5,
+          "included": true,
+          "partial": true
+        }
+      ],
+      "knownRub": 7453876.046666667,
+      "partial": true
+    },
+    "11100": {
+      "rows": [
+        {
+          "id": "preparation",
+          "knownRub": 4042500,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "equipment",
+          "knownRub": 2490495,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "launch",
+          "knownRub": 807000,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "inventory",
+          "knownRub": 0,
+          "included": false,
+          "partial": false
+        },
+        {
+          "id": "contingency",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        }
+      ],
+      "knownRub": 7339995,
+      "partial": true
+    },
+    "11101": {
+      "rows": [
+        {
+          "id": "preparation",
+          "knownRub": 4042500,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "equipment",
+          "knownRub": 2490495,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "launch",
+          "knownRub": 807000,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "inventory",
+          "knownRub": 0,
+          "included": false,
+          "partial": false
+        },
+        {
+          "id": "contingency",
+          "knownRub": 686051.5,
+          "included": true,
+          "partial": true
+        }
+      ],
+      "knownRub": 8026046.5,
+      "partial": true
+    },
+    "11110": {
+      "rows": [
+        {
+          "id": "preparation",
+          "knownRub": 4042500,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "equipment",
+          "knownRub": 2490495,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "launch",
+          "knownRub": 807000,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "inventory",
+          "knownRub": 234829.54666666663,
+          "included": true,
+          "partial": false
+        },
+        {
+          "id": "contingency",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        }
+      ],
+      "knownRub": 7574824.546666667,
+      "partial": true
+    },
+    "11111": {
+      "rows": [
+        {
+          "id": "preparation",
+          "knownRub": 4042500,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "equipment",
+          "knownRub": 2490495,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "launch",
+          "knownRub": 807000,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "inventory",
+          "knownRub": 234829.54666666663,
+          "included": true,
+          "partial": false
+        },
+        {
+          "id": "contingency",
+          "knownRub": 686051.5,
+          "included": true,
+          "partial": true
+        }
+      ],
+      "knownRub": 8260876.046666667,
+      "partial": true
+    },
+    "00000": {
+      "rows": [
+        {
+          "id": "preparation",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "equipment",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "launch",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "inventory",
+          "knownRub": 0,
+          "included": false,
+          "partial": false
+        },
+        {
+          "id": "contingency",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        }
+      ],
+      "knownRub": 0,
+      "partial": false
+    },
+    "01000": {
+      "rows": [
+        {
+          "id": "preparation",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "equipment",
+          "knownRub": 2490495,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "launch",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "inventory",
+          "knownRub": 0,
+          "included": false,
+          "partial": false
+        },
+        {
+          "id": "contingency",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        }
+      ],
+      "knownRub": 2490495,
+      "partial": true
+    },
+    "00100": {
+      "rows": [
+        {
+          "id": "preparation",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "equipment",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "launch",
+          "knownRub": 807000,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "inventory",
+          "knownRub": 0,
+          "included": false,
+          "partial": false
+        },
+        {
+          "id": "contingency",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        }
+      ],
+      "knownRub": 807000,
+      "partial": true
+    },
+    "01100": {
+      "rows": [
+        {
+          "id": "preparation",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "equipment",
+          "knownRub": 2490495,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "launch",
+          "knownRub": 807000,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "inventory",
+          "knownRub": 0,
+          "included": false,
+          "partial": false
+        },
+        {
+          "id": "contingency",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        }
+      ],
+      "knownRub": 3297495,
+      "partial": true
+    },
+    "00010": {
+      "rows": [
+        {
+          "id": "preparation",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "equipment",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "launch",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "inventory",
+          "knownRub": 234829.54666666663,
+          "included": true,
+          "partial": false
+        },
+        {
+          "id": "contingency",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        }
+      ],
+      "knownRub": 234829.54666666663,
+      "partial": false
+    },
+    "01010": {
+      "rows": [
+        {
+          "id": "preparation",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "equipment",
+          "knownRub": 2490495,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "launch",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "inventory",
+          "knownRub": 234829.54666666663,
+          "included": true,
+          "partial": false
+        },
+        {
+          "id": "contingency",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        }
+      ],
+      "knownRub": 2725324.546666667,
+      "partial": true
+    },
+    "00110": {
+      "rows": [
+        {
+          "id": "preparation",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "equipment",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "launch",
+          "knownRub": 807000,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "inventory",
+          "knownRub": 234829.54666666663,
+          "included": true,
+          "partial": false
+        },
+        {
+          "id": "contingency",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        }
+      ],
+      "knownRub": 1041829.5466666666,
+      "partial": true
+    },
+    "01110": {
+      "rows": [
+        {
+          "id": "preparation",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "equipment",
+          "knownRub": 2490495,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "launch",
+          "knownRub": 807000,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "inventory",
+          "knownRub": 234829.54666666663,
+          "included": true,
+          "partial": false
+        },
+        {
+          "id": "contingency",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        }
+      ],
+      "knownRub": 3532324.546666667,
+      "partial": true
+    },
+    "00001": {
+      "rows": [
+        {
+          "id": "preparation",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "equipment",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "launch",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "inventory",
+          "knownRub": 0,
+          "included": false,
+          "partial": false
+        },
+        {
+          "id": "contingency",
+          "knownRub": 0,
+          "included": true,
+          "partial": true
+        }
+      ],
+      "knownRub": 0,
+      "partial": true
+    },
+    "01001": {
+      "rows": [
+        {
+          "id": "preparation",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "equipment",
+          "knownRub": 2490495,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "launch",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "inventory",
+          "knownRub": 0,
+          "included": false,
+          "partial": false
+        },
+        {
+          "id": "contingency",
+          "knownRub": 281801.5,
+          "included": true,
+          "partial": true
+        }
+      ],
+      "knownRub": 2772296.5,
+      "partial": true
+    },
+    "00101": {
+      "rows": [
+        {
+          "id": "preparation",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "equipment",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "launch",
+          "knownRub": 807000,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "inventory",
+          "knownRub": 0,
+          "included": false,
+          "partial": false
+        },
+        {
+          "id": "contingency",
+          "knownRub": 0,
+          "included": true,
+          "partial": true
+        }
+      ],
+      "knownRub": 807000,
+      "partial": true
+    },
+    "01101": {
+      "rows": [
+        {
+          "id": "preparation",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "equipment",
+          "knownRub": 2490495,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "launch",
+          "knownRub": 807000,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "inventory",
+          "knownRub": 0,
+          "included": false,
+          "partial": false
+        },
+        {
+          "id": "contingency",
+          "knownRub": 281801.5,
+          "included": true,
+          "partial": true
+        }
+      ],
+      "knownRub": 3579296.5,
+      "partial": true
+    },
+    "00011": {
+      "rows": [
+        {
+          "id": "preparation",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "equipment",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "launch",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "inventory",
+          "knownRub": 234829.54666666663,
+          "included": true,
+          "partial": false
+        },
+        {
+          "id": "contingency",
+          "knownRub": 0,
+          "included": true,
+          "partial": true
+        }
+      ],
+      "knownRub": 234829.54666666663,
+      "partial": true
+    },
+    "01011": {
+      "rows": [
+        {
+          "id": "preparation",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "equipment",
+          "knownRub": 2490495,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "launch",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "inventory",
+          "knownRub": 234829.54666666663,
+          "included": true,
+          "partial": false
+        },
+        {
+          "id": "contingency",
+          "knownRub": 281801.5,
+          "included": true,
+          "partial": true
+        }
+      ],
+      "knownRub": 3007126.046666667,
+      "partial": true
+    },
+    "00111": {
+      "rows": [
+        {
+          "id": "preparation",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "equipment",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "launch",
+          "knownRub": 807000,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "inventory",
+          "knownRub": 234829.54666666663,
+          "included": true,
+          "partial": false
+        },
+        {
+          "id": "contingency",
+          "knownRub": 0,
+          "included": true,
+          "partial": true
+        }
+      ],
+      "knownRub": 1041829.5466666666,
+      "partial": true
+    },
+    "01111": {
+      "rows": [
+        {
+          "id": "preparation",
+          "knownRub": 0,
+          "included": false,
+          "partial": true
+        },
+        {
+          "id": "equipment",
+          "knownRub": 2490495,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "launch",
+          "knownRub": 807000,
+          "included": true,
+          "partial": true
+        },
+        {
+          "id": "inventory",
+          "knownRub": 234829.54666666663,
+          "included": true,
+          "partial": false
+        },
+        {
+          "id": "contingency",
+          "knownRub": 281801.5,
+          "included": true,
+          "partial": true
+        }
+      ],
+      "knownRub": 3814126.046666667,
+      "partial": true
+    }
+  }
+}

@@ -7,23 +7,23 @@ document:
   version: "0.1"
   status: research
   document_type: Working structured CAPEX equipment register
-  decision_id: DEC-015
-  iteration_id: ITR-CAPEX-REMAINING-PRICES-2026-08-05-01
-  proposal_id: PROP-CAPEX-REMAINING-PRICES-2026-08-05-01
+  decision_id: DEC-SENNAYA-CAPEX-2026-09-17-02
+  iteration_id: ITR-SENNAYA-CAPEX-2026-09-17-02
+  proposal_id: PROP-SENNAYA-CAPEX-2026-09-17-02
   source_document_id: DOC-CAPEX-EQUIPMENT-SPECIFICATION
   source_path: docs-platform/working/capex-equipment-specification.md
   source_sha256: 2157364e09699173fecfbfe861edf4e6fac85a0437e23aebe100caebeab599d6
   source_record_count: 124
   mapped_record_count: 124
-  added_research_record_count: 36
-  equipment_record_count: 160
+  added_research_record_count: 55
+  equipment_record_count: 179
   unmapped_record_count: 0
   csv_generated_from_yaml: true
   warning: Первичная ценовая оценка пищевого оснащения имеет статус research и не является коммерческим предложением или утверждённым CAPEX. Число записей реестра не равно числу самостоятельных закупочных единиц.
   price_research_path: docs-platform/working/capex-price-research.yaml
-  price_research_date: 2026-08-05
-  priced_record_count: 51
-  unpriced_procurement_record_count: 0
+  price_research_date: 2026-09-17
+  priced_record_count: 63
+  unpriced_procurement_record_count: 7
 modules:
   - module_id: CAPEX-01
     module_name: Заготовочный цех
@@ -32,7 +32,7 @@ modules:
   - module_id: CAPEX-02
     module_name: Торговая кухня, бар и зона выдачи
     source_record_count: 55
-    record_count: 57
+    record_count: 63
   - module_id: CAPEX-03
     module_name: Модуль выращивания зелени и микрозелени
     source_record_count: 19
@@ -40,15 +40,15 @@ modules:
   - module_id: CAPEX-04
     module_name: Касса, учёт и управление заказами
     source_record_count: 3
-    record_count: 3
+    record_count: 12
   - module_id: CAPEX-05
     module_name: Гостевая зона и обслуживание
     source_record_count: 0
-    record_count: 27
+    record_count: 30
   - module_id: CAPEX-08
     module_name: Посудомоечное оборудование
     source_record_count: 0
-    record_count: 6
+    record_count: 7
 equipment:
   - item_id: CAPEX-01-001
     module_id: CAPEX-01
@@ -7113,6 +7113,10 @@ equipment:
     source_record_sha256: 693a27a9ed3d75535432c45dabe5169b60755f67d64f9b4938f4e1671326e53e
     checked_at: 2026-08-05T18:14:24.000Z
     price_source_type: supplier_product_card
+    cash_reserve_rub:
+      minimum: 28160
+      base: 28160
+      scale_ready: 28160
   - item_id: CAPEX-02-057
     module_id: CAPEX-02
     module_name: Торговая кухня, бар и зона выдачи
@@ -7168,6 +7172,10 @@ equipment:
     source_record_sha256: 9f15c93224ed4370eaa4e8f24972fccf48285094977651a4956b3be4cbf6f3d8
     checked_at: 2026-08-05T18:14:24.000Z
     price_source_type: supplier_product_card
+    cash_reserve_rub:
+      minimum: 11160
+      base: 11160
+      scale_ready: 11160
   - item_id: CAPEX-08-001
     module_id: CAPEX-08
     module_name: Посудомоечное оборудование
@@ -7488,6 +7496,1089 @@ equipment:
     source_section: CAPEX-08 / Профессиональная посудомоечная зона
     source_item_number: 6
     source_record_sha256: 318c40f153caeadb2f7390ac471a257c6826e32f0f8cc06fe1ed3f647fc86fb5
+  - item_id: CAPEX-02-058
+    module_id: CAPEX-02
+    module_name: Торговая кухня, бар и зона выдачи
+    category: Торговая точка с залом
+    subcategory: point-retail-equipment
+    name: Холодильный шкаф торговой кухни
+    record_type: equipment
+    parent_item_id: null
+    inclusion_status: standalone
+    requirement: required
+    lifecycle_status: research
+    quantity_min: 2
+    quantity_base: 2
+    quantity_scale_ready: 2
+    unit: шт.
+    source_quantity: 2; рабочее количество
+    specification: 700 л номинально; 0…+6 °C; 697×925×1960 мм. Цена для центрального региона; перевозка в СПб, разгрузка и подключение не включены. Полезный объём и размещение дневного запаса ещё не проверены.
+    open_parameters: Геометрия, состав поставки, совместимость и коммерческое предложение
+    premises_dependency: Проверить после обследования
+    procurement_mode: tbd
+    existing_condition: не приобретено
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: 77493
+    price_base: 77493
+    price_max: 77493
+    currency: RUB
+    price_date: 2026-09-17
+    supplier: Polair Shop
+    source_id: SRC-PRICE-20260917-02-058
+    quote_status: quote_required
+    notes: 700 л номинально; 0…+6 °C; 697×925×1960 мм. Цена для центрального региона; перевозка в СПб, разгрузка и подключение не включены. Полезный объём и размещение дневного запаса ещё не проверены.
+    source_section: Расширение общего формата FMT-RESTAURANT-SEATING
+    source_item_number: 58
+    source_record_sha256: 488e64f73b07315e3c86bd5629868efde997b1955d6c8b0174ee2a9de2e8d7a1
+    content_source_id: SRC-SEATED-RETAIL-BRIEF-20260917
+    price_notes: 700 л номинально; 0…+6 °C; 697×925×1960 мм. Цена для центрального региона; перевозка в СПб, разгрузка и подключение не включены. Полезный объём и размещение дневного запаса ещё не проверены.
+    checked_at: 2026-09-17T18:00:00.000Z
+    supplier_name: Polair Shop
+    product_name: Polair CM107-S / 1001170d
+    source_url: https://www.polair-shop.ru/catalog/kholodilnye-shkafy/holodilnie_shkafi_s_metallicheskimi_dvermi/hs_standard2/cm107-s/
+    price_min_source_id: SRC-PRICE-20260917-02-058
+    price_base_source_id: SRC-PRICE-20260917-02-058
+    price_max_source_id: SRC-PRICE-20260917-02-058
+    availability_status: research; verify quotation before purchase
+    price_includes_vat: true
+    delivery_included: false
+    confidence: medium
+    price_source_type: supplier_product_card
+    cost_kind: equipment
+    composition_profile: retail_complete
+  - item_id: CAPEX-02-059
+    module_id: CAPEX-02
+    module_name: Торговая кухня, бар и зона выдачи
+    category: Торговая точка с залом
+    subcategory: point-retail-equipment
+    name: Морозильный ларь торговой кухни
+    record_type: equipment
+    parent_item_id: null
+    inclusion_status: standalone
+    requirement: required
+    lifecycle_status: research
+    quantity_min: 1
+    quantity_base: 1
+    quantity_scale_ready: 1
+    unit: шт.
+    source_quantity: 1; рабочее количество
+    specification: 380 л охлаждаемого объёма; −18…−22 °C; 1200×600×840 мм; 230 В, 140 Вт; две корзины. Цена акции; доставка в СПб и подключение не включены. Полезная загрузка требует проверки.
+    open_parameters: Геометрия, состав поставки, совместимость и коммерческое предложение
+    premises_dependency: Проверить после обследования
+    procurement_mode: tbd
+    existing_condition: не приобретено
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: 46296
+    price_base: 46296
+    price_max: 46296
+    currency: RUB
+    price_date: 2026-09-17
+    supplier: Frostor
+    source_id: SRC-PRICE-20260917-02-059
+    quote_status: quote_required
+    notes: 380 л охлаждаемого объёма; −18…−22 °C; 1200×600×840 мм; 230 В, 140 Вт; две корзины. Цена акции; доставка в СПб и подключение не включены. Полезная загрузка требует проверки.
+    source_section: Расширение общего формата FMT-RESTAURANT-SEATING
+    source_item_number: 59
+    source_record_sha256: 5bddcf768e7c284de4452025ed11107652a5232f5abade7274afc6b67230f1d8
+    content_source_id: SRC-SEATED-RETAIL-BRIEF-20260917
+    price_notes: 380 л охлаждаемого объёма; −18…−22 °C; 1200×600×840 мм; 230 В, 140 Вт; две корзины. Цена акции; доставка в СПб и подключение не включены. Полезная загрузка требует проверки.
+    checked_at: 2026-09-17T18:00:00.000Z
+    supplier_name: Frostor
+    product_name: Frostor F400S
+    source_url: https://frostor.ru/catalog/morozilnye_lari/f-400-s/
+    price_min_source_id: SRC-PRICE-20260917-02-059
+    price_base_source_id: SRC-PRICE-20260917-02-059
+    price_max_source_id: SRC-PRICE-20260917-02-059
+    availability_status: research; verify quotation before purchase
+    price_includes_vat: null
+    delivery_included: false
+    confidence: medium
+    price_source_type: supplier_product_card
+    cost_kind: equipment
+    composition_profile: retail_complete
+  - item_id: CAPEX-04-004
+    module_id: CAPEX-04
+    module_name: Касса, учёт и управление заказами
+    category: Торговая точка с залом
+    subcategory: point-pos-kds
+    name: Фискальный регистратор с накопителем и чековым принтером
+    record_type: equipment
+    parent_item_id: null
+    inclusion_status: standalone
+    requirement: required
+    lifecycle_status: research
+    quantity_min: 2
+    quantity_base: 2
+    quantity_scale_ready: 2
+    unit: шт.
+    source_quantity: 2; рабочее количество
+    specification: ФН и встроенный чековый принтер включены; USB, 44–58 мм, 75 мм/с; БП и USB-кабель включены. Регистрация, ОФД и внедрение отдельно. Применимость срока ФН уточнить после выбора налогового режима.
+    open_parameters: Геометрия, состав поставки, совместимость и коммерческое предложение
+    premises_dependency: Проверить после обследования
+    procurement_mode: tbd
+    existing_condition: не приобретено
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: 50600
+    price_base: 50600
+    price_max: 50600
+    currency: RUB
+    price_date: 2026-09-17
+    supplier: Гексагон
+    source_id: SRC-PRICE-20260917-04-004
+    quote_status: quote_required
+    notes: ФН и встроенный чековый принтер включены; USB, 44–58 мм, 75 мм/с; БП и USB-кабель включены. Регистрация, ОФД и внедрение отдельно. Применимость срока ФН уточнить после выбора налогового режима.
+    source_section: Расширение общего формата FMT-RESTAURANT-SEATING
+    source_item_number: 4
+    source_record_sha256: c1467ff084b37f2cb3b0581ff36f8dfb8935f588b05814443293995ccdfe4c86
+    content_source_id: SRC-SEATED-RETAIL-BRIEF-20260917
+    price_notes: ФН и встроенный чековый принтер включены; USB, 44–58 мм, 75 мм/с; БП и USB-кабель включены. Регистрация, ОФД и внедрение отдельно. Применимость срока ФН уточнить после выбора налогового режима.
+    checked_at: 2026-09-17T18:00:00.000Z
+    supplier_name: Гексагон
+    product_name: АТОЛ 30Ф, ФН 1.2 36 месяцев / 58205
+    source_url: https://geksagon.ru/ru/product/atol-30f/
+    price_min_source_id: SRC-PRICE-20260917-04-004
+    price_base_source_id: SRC-PRICE-20260917-04-004
+    price_max_source_id: SRC-PRICE-20260917-04-004
+    availability_status: research; verify quotation before purchase
+    price_includes_vat: null
+    delivery_included: false
+    confidence: medium
+    price_source_type: supplier_product_card
+    cost_kind: equipment
+    composition_profile: retail_complete
+  - item_id: CAPEX-04-005
+    module_id: CAPEX-04
+    module_name: Касса, учёт и управление заказами
+    category: Торговая точка с залом
+    subcategory: point-pos-kds
+    name: Маршрутизатор точки
+    record_type: equipment
+    parent_item_id: null
+    inclusion_status: standalone
+    requirement: required
+    lifecycle_status: research
+    quantity_min: 1
+    quantity_base: 1
+    quantity_scale_ready: 1
+    unit: шт.
+    source_quantity: 1; рабочее количество
+    specification: Гигабитный маршрутизатор; резервирование WAN при подключении второго канала. Под заказ; второй канал, кабели и настройка не включены.
+    open_parameters: Геометрия, состав поставки, совместимость и коммерческое предложение
+    premises_dependency: Проверить после обследования
+    procurement_mode: tbd
+    existing_condition: не приобретено
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: 5990
+    price_base: 5990
+    price_max: 5990
+    currency: RUB
+    price_date: 2026-09-17
+    supplier: TP-Link.ru
+    source_id: SRC-PRICE-20260917-04-005
+    quote_status: quote_required
+    notes: Гигабитный маршрутизатор; резервирование WAN при подключении второго канала. Под заказ; второй канал, кабели и настройка не включены.
+    source_section: Расширение общего формата FMT-RESTAURANT-SEATING
+    source_item_number: 5
+    source_record_sha256: e9e18929e58d17aab98b360adf168387a811423f5d63ba5197e53e5840a9f01e
+    content_source_id: SRC-SEATED-RETAIL-BRIEF-20260917
+    price_notes: Гигабитный маршрутизатор; резервирование WAN при подключении второго канала. Под заказ; второй канал, кабели и настройка не включены.
+    checked_at: 2026-09-17T18:00:00.000Z
+    supplier_name: TP-Link.ru
+    product_name: TP-Link ER605
+    source_url: https://tp-link.ru/catalog/marshrutizatory/er605-tl-r605/
+    price_min_source_id: SRC-PRICE-20260917-04-005
+    price_base_source_id: SRC-PRICE-20260917-04-005
+    price_max_source_id: SRC-PRICE-20260917-04-005
+    availability_status: research; verify quotation before purchase
+    price_includes_vat: null
+    delivery_included: false
+    confidence: medium
+    price_source_type: supplier_product_card
+    cost_kind: equipment
+    composition_profile: retail_complete
+  - item_id: CAPEX-04-006
+    module_id: CAPEX-04
+    module_name: Касса, учёт и управление заказами
+    category: Торговая точка с залом
+    subcategory: point-pos-kds
+    name: Точка доступа Wi-Fi
+    record_type: equipment
+    parent_item_id: null
+    inclusion_status: standalone
+    requirement: required
+    lifecycle_status: research
+    quantity_min: 1
+    quantity_base: 1
+    quantity_scale_ready: 1
+    unit: шт.
+    source_quantity: 1; рабочее количество
+    specification: AC1350; PoE. Покрытие, состав инжектора питания и монтаж проверить в проекте сети.
+    open_parameters: Геометрия, состав поставки, совместимость и коммерческое предложение
+    premises_dependency: Проверить после обследования
+    procurement_mode: tbd
+    existing_condition: не приобретено
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: 7390
+    price_base: 7390
+    price_max: 7390
+    currency: RUB
+    price_date: 2026-09-17
+    supplier: TP-Link.ru
+    source_id: SRC-PRICE-20260917-04-006
+    quote_status: quote_required
+    notes: AC1350; PoE. Покрытие, состав инжектора питания и монтаж проверить в проекте сети.
+    source_section: Расширение общего формата FMT-RESTAURANT-SEATING
+    source_item_number: 6
+    source_record_sha256: 4d360a4318a30b569924cb7de4de9893137eb33fe46bfb02a9d1cef27cbb8977
+    content_source_id: SRC-SEATED-RETAIL-BRIEF-20260917
+    price_notes: AC1350; PoE. Покрытие, состав инжектора питания и монтаж проверить в проекте сети.
+    checked_at: 2026-09-17T18:00:00.000Z
+    supplier_name: TP-Link.ru
+    product_name: TP-Link EAP225
+    source_url: https://tp-link.ru/catalog/rasshirenie-seti-wi-fi/tochki-dostupa/eap225/
+    price_min_source_id: SRC-PRICE-20260917-04-006
+    price_base_source_id: SRC-PRICE-20260917-04-006
+    price_max_source_id: SRC-PRICE-20260917-04-006
+    availability_status: research; verify quotation before purchase
+    price_includes_vat: null
+    delivery_included: false
+    confidence: medium
+    price_source_type: supplier_product_card
+    cost_kind: equipment
+    composition_profile: retail_complete
+  - item_id: CAPEX-04-007
+    module_id: CAPEX-04
+    module_name: Касса, учёт и управление заказами
+    category: Торговая точка с залом
+    subcategory: point-pos-kds
+    name: Сетевой коммутатор
+    record_type: equipment
+    parent_item_id: null
+    inclusion_status: standalone
+    requirement: required
+    lifecycle_status: research
+    quantity_min: 1
+    quantity_base: 1
+    quantity_scale_ready: 1
+    unit: шт.
+    source_quantity: 1; рабочее количество
+    specification: 8 гигабитных портов, VLAN, без PoE. Под заказ; окончательный портовый баланс с видеонаблюдением и питание точки доступа требуют проверки.
+    open_parameters: Геометрия, состав поставки, совместимость и коммерческое предложение
+    premises_dependency: Проверить после обследования
+    procurement_mode: tbd
+    existing_condition: не приобретено
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: 3890
+    price_base: 3890
+    price_max: 3890
+    currency: RUB
+    price_date: 2026-09-17
+    supplier: TP-Link.ru
+    source_id: SRC-PRICE-20260917-04-007
+    quote_status: quote_required
+    notes: 8 гигабитных портов, VLAN, без PoE. Под заказ; окончательный портовый баланс с видеонаблюдением и питание точки доступа требуют проверки.
+    source_section: Расширение общего формата FMT-RESTAURANT-SEATING
+    source_item_number: 7
+    source_record_sha256: 342a7e2b88232eb9b768a1eb19e0a29cede029b43db72b14595027ff7de29c30
+    content_source_id: SRC-SEATED-RETAIL-BRIEF-20260917
+    price_notes: 8 гигабитных портов, VLAN, без PoE. Под заказ; окончательный портовый баланс с видеонаблюдением и питание точки доступа требуют проверки.
+    checked_at: 2026-09-17T18:00:00.000Z
+    supplier_name: TP-Link.ru
+    product_name: TP-Link TL-SG108E
+    source_url: https://tp-link.ru/catalog/kommutatory/smart/tl-sg108e/
+    price_min_source_id: SRC-PRICE-20260917-04-007
+    price_base_source_id: SRC-PRICE-20260917-04-007
+    price_max_source_id: SRC-PRICE-20260917-04-007
+    availability_status: research; verify quotation before purchase
+    price_includes_vat: null
+    delivery_included: false
+    confidence: medium
+    price_source_type: supplier_product_card
+    cost_kind: equipment
+    composition_profile: retail_complete
+  - item_id: CAPEX-04-008
+    module_id: CAPEX-04
+    module_name: Касса, учёт и управление заказами
+    category: Торговая точка с залом
+    subcategory: point-pos-kds
+    name: Источник бесперебойного питания
+    record_type: equipment
+    parent_item_id: null
+    inclusion_status: standalone
+    requirement: required
+    lifecycle_status: research
+    quantity_min: 3
+    quantity_base: 3
+    quantity_scale_ready: 3
+    unit: шт.
+    source_quantity: 3; рабочее количество
+    specification: "850 ВА / 480 Вт; рабочее количество: два кассовых поста и сеть. IEC-подключения; кабели/адаптеры и автономность по нагрузке требуют проверки."
+    open_parameters: Геометрия, состав поставки, совместимость и коммерческое предложение
+    premises_dependency: Проверить после обследования
+    procurement_mode: tbd
+    existing_condition: не приобретено
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: 6490
+    price_base: 6490
+    price_max: 6490
+    currency: RUB
+    price_date: 2026-09-17
+    supplier: IPPON Russia
+    source_id: SRC-PRICE-20260917-04-008
+    quote_status: quote_required
+    notes: "850 ВА / 480 Вт; рабочее количество: два кассовых поста и сеть. IEC-подключения; кабели/адаптеры и автономность по нагрузке требуют проверки."
+    source_section: Расширение общего формата FMT-RESTAURANT-SEATING
+    source_item_number: 8
+    source_record_sha256: beb4b67a0cc2832ad2d1a9822c60e0c44e2788d6263fa53118f57a772545161d
+    content_source_id: SRC-SEATED-RETAIL-BRIEF-20260917
+    price_notes: "850 ВА / 480 Вт; рабочее количество: два кассовых поста и сеть. IEC-подключения; кабели/адаптеры и автономность по нагрузке требуют проверки."
+    checked_at: 2026-09-17T18:00:00.000Z
+    supplier_name: IPPON Russia
+    product_name: IPPON Back Basic 850 / 403406
+    source_url: https://ippon-russia.ru/istochnik-besperebojnogo-pitanija-ippon-back-basic-850
+    price_min_source_id: SRC-PRICE-20260917-04-008
+    price_base_source_id: SRC-PRICE-20260917-04-008
+    price_max_source_id: SRC-PRICE-20260917-04-008
+    availability_status: research; verify quotation before purchase
+    price_includes_vat: null
+    delivery_included: false
+    confidence: medium
+    price_source_type: supplier_product_card
+    cost_kind: equipment
+    composition_profile: retail_complete
+  - item_id: CAPEX-04-009
+    module_id: CAPEX-04
+    module_name: Касса, учёт и управление заказами
+    category: Торговая точка с залом
+    subcategory: point-pos-kds
+    name: Кабельная инфраструктура и питание сети
+    record_type: equipment
+    parent_item_id: null
+    inclusion_status: standalone
+    requirement: required
+    lifecycle_status: research
+    quantity_min: 1
+    quantity_base: 1
+    quantity_scale_ready: 1
+    unit: шт.
+    source_quantity: 1; рабочее количество
+    specification: Патч-корды, линии, розетки, монтажные материалы, питание Wi-Fi и адаптеры UPS. Сначала сверка с электромонтажом подготовки; цена отсутствует.
+    open_parameters: Геометрия, состав поставки, совместимость и коммерческое предложение
+    premises_dependency: Проверить после обследования
+    procurement_mode: tbd
+    existing_condition: не приобретено
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: null
+    price_base: null
+    price_max: null
+    currency: null
+    price_date: null
+    supplier: null
+    source_id: SRC-SEATED-RETAIL-BRIEF-20260917
+    quote_status: quote_required
+    notes: Патч-корды, линии, розетки, монтажные материалы, питание Wi-Fi и адаптеры UPS. Сначала сверка с электромонтажом подготовки; цена отсутствует.
+    source_section: Расширение общего формата FMT-RESTAURANT-SEATING
+    source_item_number: 9
+    source_record_sha256: 89595967b927ddfe3aaf18d3fccfa78e5b952a80ba5cdf7465674dd6b2f56d69
+    content_source_id: SRC-SEATED-RETAIL-BRIEF-20260917
+    price_notes: Патч-корды, линии, розетки, монтажные материалы, питание Wi-Fi и адаптеры UPS. Сначала сверка с электромонтажом подготовки; цена отсутствует.
+    checked_at: null
+    supplier_name: null
+    product_name: null
+    source_url: null
+    price_min_source_id: null
+    price_base_source_id: null
+    price_max_source_id: null
+    availability_status: research; verify quotation before purchase
+    price_includes_vat: null
+    delivery_included: false
+    confidence: medium
+    price_source_type: null
+    cost_kind: equipment
+    composition_profile: retail_complete
+  - item_id: CAPEX-04-010
+    module_id: CAPEX-04
+    module_name: Касса, учёт и управление заказами
+    category: Торговая точка с залом
+    subcategory: point-installation
+    name: Настройка и внедрение локальной сети
+    record_type: equipment
+    parent_item_id: null
+    inclusion_status: standalone
+    requirement: required
+    lifecycle_status: research
+    quantity_min: 1
+    quantity_base: 1
+    quantity_scale_ready: 1
+    unit: шт.
+    source_quantity: 1; рабочее количество
+    specification: Настройка VLAN, Wi-Fi, резервного канала, UPS и тестирование. Не входит в цены устройств.
+    open_parameters: Геометрия, состав поставки, совместимость и коммерческое предложение
+    premises_dependency: Проверить после обследования
+    procurement_mode: tbd
+    existing_condition: не приобретено
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: null
+    price_base: null
+    price_max: null
+    currency: null
+    price_date: null
+    supplier: null
+    source_id: SRC-SEATED-RETAIL-BRIEF-20260917
+    quote_status: quote_required
+    notes: Настройка VLAN, Wi-Fi, резервного канала, UPS и тестирование. Не входит в цены устройств.
+    source_section: Расширение общего формата FMT-RESTAURANT-SEATING
+    source_item_number: 10
+    source_record_sha256: 55ef777dfa226fed95c65bc3de730bd0014ed30eb3b086762b6fbad9f88eedde
+    content_source_id: SRC-SEATED-RETAIL-BRIEF-20260917
+    price_notes: Настройка VLAN, Wi-Fi, резервного канала, UPS и тестирование. Не входит в цены устройств.
+    checked_at: null
+    supplier_name: null
+    product_name: null
+    source_url: null
+    price_min_source_id: null
+    price_base_source_id: null
+    price_max_source_id: null
+    availability_status: research; verify quotation before purchase
+    price_includes_vat: null
+    delivery_included: false
+    confidence: medium
+    price_source_type: null
+    cost_kind: service
+    composition_profile: retail_complete
+  - item_id: CAPEX-04-011
+    module_id: CAPEX-04
+    module_name: Касса, учёт и управление заказами
+    category: Торговая точка с залом
+    subcategory: point-installation
+    name: Подключение кассы с вводным обучением
+    record_type: equipment
+    parent_item_id: null
+    inclusion_status: standalone
+    requirement: required
+    lifecycle_status: research
+    quantity_min: 2
+    quantity_base: 2
+    quantity_scale_ready: 2
+    unit: шт.
+    source_quantity: 2; рабочее количество
+    specification: Цена за кассу включает вводное обучение. Не прибавлять отдельно аналогичную настройку за 2000 ₽; состав регистрации ФНС, загрузки номенклатуры и интеграции с учётом уточнить.
+    open_parameters: Геометрия, состав поставки, совместимость и коммерческое предложение
+    premises_dependency: Проверить после обследования
+    procurement_mode: tbd
+    existing_condition: не приобретено
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: 3000
+    price_base: 3000
+    price_max: 3000
+    currency: RUB
+    price_date: 2026-09-17
+    supplier: КИФ / Эвотор СПб
+    source_id: SRC-PRICE-20260917-04-011
+    quote_status: quote_required
+    notes: Цена за кассу включает вводное обучение. Не прибавлять отдельно аналогичную настройку за 2000 ₽; состав регистрации ФНС, загрузки номенклатуры и интеграции с учётом уточнить.
+    source_section: Расширение общего формата FMT-RESTAURANT-SEATING
+    source_item_number: 11
+    source_record_sha256: e8ce1593c5bbff3f3813d41e1556af058ee165ef29daf3faa58678a84ea298b3
+    content_source_id: SRC-SEATED-RETAIL-BRIEF-20260917
+    price_notes: Цена за кассу включает вводное обучение. Не прибавлять отдельно аналогичную настройку за 2000 ₽; состав регистрации ФНС, загрузки номенклатуры и интеграции с учётом уточнить.
+    checked_at: 2026-09-17T18:00:00.000Z
+    supplier_name: КИФ / Эвотор СПб
+    product_name: Выездное подключение кассы в Санкт-Петербурге
+    source_url: https://evotor.spb.ru/product/podklucheniye-k-ofd/
+    price_min_source_id: SRC-PRICE-20260917-04-011
+    price_base_source_id: SRC-PRICE-20260917-04-011
+    price_max_source_id: SRC-PRICE-20260917-04-011
+    availability_status: research; verify quotation before purchase
+    price_includes_vat: null
+    delivery_included: false
+    confidence: medium
+    price_source_type: supplier_product_card
+    cost_kind: service
+    composition_profile: retail_complete
+  - item_id: CAPEX-04-012
+    module_id: CAPEX-04
+    module_name: Касса, учёт и управление заказами
+    category: Торговая точка с залом
+    subcategory: point-prepaid
+    name: Стартовый ОФД на один год
+    record_type: equipment
+    parent_item_id: null
+    inclusion_status: standalone
+    requirement: required
+    lifecycle_status: research
+    quantity_min: 2
+    quantity_base: 2
+    quantity_scale_ready: 2
+    unit: шт.
+    source_quantity: 2; рабочее количество
+    specification: Годовая предоплата сервиса на кассу; не физическое оборудование. Продление — регулярный OPEX.
+    open_parameters: Геометрия, состав поставки, совместимость и коммерческое предложение
+    premises_dependency: Проверить после обследования
+    procurement_mode: tbd
+    existing_condition: не приобретено
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: 2500
+    price_base: 2500
+    price_max: 2500
+    currency: RUB
+    price_date: 2026-09-17
+    supplier: КИФ / Эвотор СПб
+    source_id: SRC-PRICE-20260917-04-012
+    quote_status: quote_required
+    notes: Годовая предоплата сервиса на кассу; не физическое оборудование. Продление — регулярный OPEX.
+    source_section: Расширение общего формата FMT-RESTAURANT-SEATING
+    source_item_number: 12
+    source_record_sha256: e72dcb416a9bb15226d1061245d3d8ec18e0bdba88d583db88b860c585019fe8
+    content_source_id: SRC-SEATED-RETAIL-BRIEF-20260917
+    price_notes: Годовая предоплата сервиса на кассу; не физическое оборудование. Продление — регулярный OPEX.
+    checked_at: 2026-09-17T18:00:00.000Z
+    supplier_name: КИФ / Эвотор СПб
+    product_name: Подключение ОФД на один год
+    source_url: https://evotor.spb.ru/product/podklucheniye-k-ofd/
+    price_min_source_id: SRC-PRICE-20260917-04-012
+    price_base_source_id: SRC-PRICE-20260917-04-012
+    price_max_source_id: SRC-PRICE-20260917-04-012
+    availability_status: research; verify quotation before purchase
+    price_includes_vat: null
+    delivery_included: false
+    confidence: medium
+    price_source_type: supplier_product_card
+    cost_kind: prepaid
+    composition_profile: retail_complete
+  - item_id: CAPEX-05-028
+    module_id: CAPEX-05
+    module_name: Гостевая зона и обслуживание
+    category: Торговая точка с залом
+    subcategory: point-guest-accessories
+    name: Гостевой поднос
+    record_type: equipment
+    parent_item_id: null
+    inclusion_status: standalone
+    requirement: required
+    lifecycle_status: research
+    quantity_min: 26
+    quantity_base: 26
+    quantity_scale_ready: 26
+    unit: шт.
+    source_quantity: 26; рабочее количество
+    specification: Полипропилен, 460 мм. Цена индексируемого каталога; прямое чтение карточки недоступно, подтвердить КП. Рабочий запас — один поднос на место; оборачиваемость требует проверки.
+    open_parameters: Геометрия, состав поставки, совместимость и коммерческое предложение
+    premises_dependency: Проверить после обследования
+    procurement_mode: tbd
+    existing_condition: не приобретено
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: 490
+    price_base: 490
+    price_max: 490
+    currency: RUB
+    price_date: 2026-09-17
+    supplier: Horeca.ru
+    source_id: SRC-PRICE-20260917-05-028
+    quote_status: quote_required
+    notes: Полипропилен, 460 мм. Цена индексируемого каталога; прямое чтение карточки недоступно, подтвердить КП. Рабочий запас — один поднос на место; оборачиваемость требует проверки.
+    source_section: Расширение общего формата FMT-RESTAURANT-SEATING
+    source_item_number: 28
+    source_record_sha256: 2a62b6da1a138e91015bd581844184a074d0c4fcf5d84da2faa4e91892d2c994
+    content_source_id: SRC-SEATED-RETAIL-BRIEF-20260917
+    price_notes: Полипропилен, 460 мм. Цена индексируемого каталога; прямое чтение карточки недоступно, подтвердить КП. Рабочий запас — один поднос на место; оборачиваемость требует проверки.
+    checked_at: 2026-09-17T18:00:00.000Z
+    supplier_name: Horeca.ru
+    product_name: Cambro 1418FF, тёмно-синий
+    source_url: https://horeca.ru/catalog/item/49331/
+    price_min_source_id: SRC-PRICE-20260917-05-028
+    price_base_source_id: SRC-PRICE-20260917-05-028
+    price_max_source_id: SRC-PRICE-20260917-05-028
+    availability_status: research; verify quotation before purchase
+    price_includes_vat: null
+    delivery_included: false
+    confidence: medium
+    price_source_type: supplier_product_card
+    cost_kind: equipment
+    composition_profile: retail_complete
+  - item_id: CAPEX-05-029
+    module_id: CAPEX-05
+    module_name: Гостевая зона и обслуживание
+    category: Торговая точка с залом
+    subcategory: point-guest-accessories
+    name: Гостевая урна с педалью
+    record_type: equipment
+    parent_item_id: null
+    inclusion_status: standalone
+    requirement: required
+    lifecycle_status: research
+    quantity_min: 2
+    quantity_base: 2
+    quantity_scale_ready: 2
+    unit: шт.
+    source_quantity: 2; рабочее количество
+    specification: Нержавеющая сталь, внутреннее ведро. Две урны — рабочий ориентир, не санитарный проект.
+    open_parameters: Геометрия, состав поставки, совместимость и коммерческое предложение
+    premises_dependency: Проверить после обследования
+    procurement_mode: tbd
+    existing_condition: не приобретено
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: 4150
+    price_base: 4150
+    price_max: 4150
+    currency: RUB
+    price_date: 2026-09-17
+    supplier: ВсеИнструменты
+    source_id: SRC-PRICE-20260917-05-029
+    quote_status: quote_required
+    notes: Нержавеющая сталь, внутреннее ведро. Две урны — рабочий ориентир, не санитарный проект.
+    source_section: Расширение общего формата FMT-RESTAURANT-SEATING
+    source_item_number: 29
+    source_record_sha256: df11dab71486dc6a94e9a6fd80639b2c0464a402d009ef89d2167abb38145d06
+    content_source_id: SRC-SEATED-RETAIL-BRIEF-20260917
+    price_notes: Нержавеющая сталь, внутреннее ведро. Две урны — рабочий ориентир, не санитарный проект.
+    checked_at: 2026-09-17T18:00:00.000Z
+    supplier_name: ВсеИнструменты
+    product_name: NV-BIN30L, 30 л
+    source_url: https://www.vseinstrumenti.ru/product/urna-dlya-musora-s-pedalyu-nv-30-l-nv-bin30l-13011521/
+    price_min_source_id: SRC-PRICE-20260917-05-029
+    price_base_source_id: SRC-PRICE-20260917-05-029
+    price_max_source_id: SRC-PRICE-20260917-05-029
+    availability_status: research; verify quotation before purchase
+    price_includes_vat: null
+    delivery_included: false
+    confidence: medium
+    price_source_type: supplier_product_card
+    cost_kind: equipment
+    composition_profile: retail_complete
+  - item_id: CAPEX-05-030
+    module_id: CAPEX-05
+    module_name: Гостевая зона и обслуживание
+    category: Торговая точка с залом
+    subcategory: point-guest-accessories
+    name: Дополнительные принадлежности гостевой зоны
+    record_type: equipment
+    parent_item_id: null
+    inclusion_status: standalone
+    requirement: required
+    lifecycle_status: research
+    quantity_min: 1
+    quantity_base: 1
+    quantity_scale_ready: 1
+    unit: шт.
+    source_quantity: 1; рабочее количество
+    specification: Держатели подносов и гостевых расходников, элементы ожидания. Номенклатура после планировки; столы, стулья и встроенные стойки сюда повторно не включаются.
+    open_parameters: Геометрия, состав поставки, совместимость и коммерческое предложение
+    premises_dependency: Проверить после обследования
+    procurement_mode: tbd
+    existing_condition: не приобретено
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: null
+    price_base: null
+    price_max: null
+    currency: null
+    price_date: null
+    supplier: null
+    source_id: SRC-SEATED-RETAIL-BRIEF-20260917
+    quote_status: quote_required
+    notes: Держатели подносов и гостевых расходников, элементы ожидания. Номенклатура после планировки; столы, стулья и встроенные стойки сюда повторно не включаются.
+    source_section: Расширение общего формата FMT-RESTAURANT-SEATING
+    source_item_number: 30
+    source_record_sha256: 6798784ecc2d152095479d5bed144c3695b0998f6cc962cca72e540d7b471f90
+    content_source_id: SRC-SEATED-RETAIL-BRIEF-20260917
+    price_notes: Держатели подносов и гостевых расходников, элементы ожидания. Номенклатура после планировки; столы, стулья и встроенные стойки сюда повторно не включаются.
+    checked_at: null
+    supplier_name: null
+    product_name: null
+    source_url: null
+    price_min_source_id: null
+    price_base_source_id: null
+    price_max_source_id: null
+    availability_status: research; verify quotation before purchase
+    price_includes_vat: null
+    delivery_included: false
+    confidence: medium
+    price_source_type: null
+    cost_kind: equipment
+    composition_profile: retail_complete
+  - item_id: CAPEX-02-060
+    module_id: CAPEX-02
+    module_name: Торговая кухня, бар и зона выдачи
+    category: Торговая точка с залом
+    subcategory: point-installation
+    name: Доставка оборудования до объекта
+    record_type: equipment
+    parent_item_id: null
+    inclusion_status: standalone
+    requirement: required
+    lifecycle_status: research
+    quantity_min: 1
+    quantity_base: 1
+    quantity_scale_ready: 1
+    unit: шт.
+    source_quantity: 1; рабочее количество
+    specification: Консолидированная доставка в СПб по фактической ведомости; бесплатная доставка до терминала не означает доставку до объекта.
+    open_parameters: Геометрия, состав поставки, совместимость и коммерческое предложение
+    premises_dependency: Проверить после обследования
+    procurement_mode: tbd
+    existing_condition: не приобретено
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: null
+    price_base: null
+    price_max: null
+    currency: null
+    price_date: null
+    supplier: null
+    source_id: SRC-SEATED-RETAIL-BRIEF-20260917
+    quote_status: quote_required
+    notes: Консолидированная доставка в СПб по фактической ведомости; бесплатная доставка до терминала не означает доставку до объекта.
+    source_section: Расширение общего формата FMT-RESTAURANT-SEATING
+    source_item_number: 60
+    source_record_sha256: c7f99376700dfefac5264521619bcfde40f61e0947b387ccca708a8310775f50
+    content_source_id: SRC-SEATED-RETAIL-BRIEF-20260917
+    price_notes: Консолидированная доставка в СПб по фактической ведомости; бесплатная доставка до терминала не означает доставку до объекта.
+    checked_at: null
+    supplier_name: null
+    product_name: null
+    source_url: null
+    price_min_source_id: null
+    price_base_source_id: null
+    price_max_source_id: null
+    availability_status: research; verify quotation before purchase
+    price_includes_vat: null
+    delivery_included: false
+    confidence: medium
+    price_source_type: null
+    cost_kind: service
+    composition_profile: retail_complete
+  - item_id: CAPEX-02-061
+    module_id: CAPEX-02
+    module_name: Торговая кухня, бар и зона выдачи
+    category: Торговая точка с залом
+    subcategory: point-installation
+    name: Разгрузка и подъём оборудования
+    record_type: equipment
+    parent_item_id: null
+    inclusion_status: standalone
+    requirement: required
+    lifecycle_status: research
+    quantity_min: 1
+    quantity_base: 1
+    quantity_scale_ready: 1
+    unit: шт.
+    source_quantity: 1; рабочее количество
+    specification: Габариты входов, этаж, способ разгрузки и сборка на месте пока неизвестны.
+    open_parameters: Геометрия, состав поставки, совместимость и коммерческое предложение
+    premises_dependency: Проверить после обследования
+    procurement_mode: tbd
+    existing_condition: не приобретено
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: null
+    price_base: null
+    price_max: null
+    currency: null
+    price_date: null
+    supplier: null
+    source_id: SRC-SEATED-RETAIL-BRIEF-20260917
+    quote_status: quote_required
+    notes: Габариты входов, этаж, способ разгрузки и сборка на месте пока неизвестны.
+    source_section: Расширение общего формата FMT-RESTAURANT-SEATING
+    source_item_number: 61
+    source_record_sha256: e0e07fe691cbd3ce47dd8260507368f61763ca4fb613ef3beec79a5e0843a3d2
+    content_source_id: SRC-SEATED-RETAIL-BRIEF-20260917
+    price_notes: Габариты входов, этаж, способ разгрузки и сборка на месте пока неизвестны.
+    checked_at: null
+    supplier_name: null
+    product_name: null
+    source_url: null
+    price_min_source_id: null
+    price_base_source_id: null
+    price_max_source_id: null
+    availability_status: research; verify quotation before purchase
+    price_includes_vat: null
+    delivery_included: false
+    confidence: medium
+    price_source_type: null
+    cost_kind: service
+    composition_profile: retail_complete
+  - item_id: CAPEX-02-062
+    module_id: CAPEX-02
+    module_name: Торговая кухня, бар и зона выдачи
+    category: Торговая точка с залом
+    subcategory: point-installation
+    name: Монтаж, подключение и пусконаладка оборудования
+    record_type: equipment
+    parent_item_id: null
+    inclusion_status: standalone
+    requirement: required
+    lifecycle_status: research
+    quantity_min: 1
+    quantity_base: 1
+    quantity_scale_ready: 1
+    unit: шт.
+    source_quantity: 1; рабочее количество
+    specification: Только работы по оборудованию, не вентиляция/электрика/встроенные конструкции из подготовки. Требуется коммерческое предложение.
+    open_parameters: Геометрия, состав поставки, совместимость и коммерческое предложение
+    premises_dependency: Проверить после обследования
+    procurement_mode: tbd
+    existing_condition: не приобретено
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: null
+    price_base: null
+    price_max: null
+    currency: null
+    price_date: null
+    supplier: null
+    source_id: SRC-SEATED-RETAIL-BRIEF-20260917
+    quote_status: quote_required
+    notes: Только работы по оборудованию, не вентиляция/электрика/встроенные конструкции из подготовки. Требуется коммерческое предложение.
+    source_section: Расширение общего формата FMT-RESTAURANT-SEATING
+    source_item_number: 62
+    source_record_sha256: a28f99fcae177b8cfcda1772e162215f38e54757bb69691540d35d8eab90bdb6
+    content_source_id: SRC-SEATED-RETAIL-BRIEF-20260917
+    price_notes: Только работы по оборудованию, не вентиляция/электрика/встроенные конструкции из подготовки. Требуется коммерческое предложение.
+    checked_at: null
+    supplier_name: null
+    product_name: null
+    source_url: null
+    price_min_source_id: null
+    price_base_source_id: null
+    price_max_source_id: null
+    availability_status: research; verify quotation before purchase
+    price_includes_vat: null
+    delivery_included: false
+    confidence: medium
+    price_source_type: null
+    cost_kind: service
+    composition_profile: retail_complete
+  - item_id: CAPEX-02-063
+    module_id: CAPEX-02
+    module_name: Торговая кухня, бар и зона выдачи
+    category: Торговая точка с залом
+    subcategory: point-opening-supplies
+    name: Первоначальные санитарные и гостевые расходники
+    record_type: equipment
+    parent_item_id: null
+    inclusion_status: standalone
+    requirement: required
+    lifecycle_status: research
+    quantity_min: 1
+    quantity_base: 1
+    quantity_scale_ready: 1
+    unit: шт.
+    source_quantity: 1; рабочее количество
+    specification: Мыло, полотенца, моющие средства и гостевые расходники. Не дублировать товарный запас и упаковку заказов. Состав и цена отсутствуют.
+    open_parameters: Геометрия, состав поставки, совместимость и коммерческое предложение
+    premises_dependency: Проверить после обследования
+    procurement_mode: tbd
+    existing_condition: не приобретено
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: null
+    price_base: null
+    price_max: null
+    currency: null
+    price_date: null
+    supplier: null
+    source_id: SRC-SEATED-RETAIL-BRIEF-20260917
+    quote_status: quote_required
+    notes: Мыло, полотенца, моющие средства и гостевые расходники. Не дублировать товарный запас и упаковку заказов. Состав и цена отсутствуют.
+    source_section: Расширение общего формата FMT-RESTAURANT-SEATING
+    source_item_number: 63
+    source_record_sha256: a226ff2aaa1011970784ee6fc8a25fdd796572016adde73a900dd9136842b2a7
+    content_source_id: SRC-SEATED-RETAIL-BRIEF-20260917
+    price_notes: Мыло, полотенца, моющие средства и гостевые расходники. Не дублировать товарный запас и упаковку заказов. Состав и цена отсутствуют.
+    checked_at: null
+    supplier_name: null
+    product_name: null
+    source_url: null
+    price_min_source_id: null
+    price_base_source_id: null
+    price_max_source_id: null
+    availability_status: research; verify quotation before purchase
+    price_includes_vat: null
+    delivery_included: false
+    confidence: medium
+    price_source_type: null
+    cost_kind: startup
+    composition_profile: retail_complete
+  - item_id: CAPEX-08-007
+    module_id: CAPEX-08
+    module_name: Посудомоечное оборудование
+    category: Торговая точка с залом
+    subcategory: point-wash
+    name: Компактная фронтальная посудомоечная машина
+    record_type: equipment
+    parent_item_id: null
+    inclusion_status: standalone
+    requirement: optional
+    lifecycle_status: research
+    quantity_min: 1
+    quantity_base: 1
+    quantity_scale_ready: 1
+    unit: шт.
+    source_quantity: 1; рабочее количество
+    specification: 595×660×875 мм; кассета 500×500; 380 В / 6,8 кВт; насос слива, дозаторы. Отдельная опция; вода, фильтрация, подключение и расходники не оценены. Цена каталога; подтвердить КП.
+    open_parameters: Геометрия, состав поставки, совместимость и коммерческое предложение
+    premises_dependency: Проверить после обследования
+    procurement_mode: tbd
+    existing_condition: не приобретено
+    power_kw: null
+    voltage: null
+    water_required: null
+    drainage_required: null
+    gas_required: null
+    extraction_required: null
+    dimensions: null
+    service_clearance: null
+    price_min: 179466
+    price_base: 179466
+    price_max: 179466
+    currency: RUB
+    price_date: 2026-09-17
+    supplier: Abat.shop
+    source_id: SRC-PRICE-20260917-08-007
+    quote_status: quote_required
+    notes: 595×660×875 мм; кассета 500×500; 380 В / 6,8 кВт; насос слива, дозаторы. Отдельная опция; вода, фильтрация, подключение и расходники не оценены. Цена каталога; подтвердить КП.
+    source_section: Расширение общего формата FMT-RESTAURANT-SEATING
+    source_item_number: 7
+    source_record_sha256: 736db6c2d6c0f12e93f017037467164d9091f455e784f940293996ce77e838d5
+    content_source_id: SRC-SEATED-RETAIL-BRIEF-20260917
+    price_notes: 595×660×875 мм; кассета 500×500; 380 В / 6,8 кВт; насос слива, дозаторы. Отдельная опция; вода, фильтрация, подключение и расходники не оценены. Цена каталога; подтвердить КП.
+    checked_at: 2026-09-17T18:00:00.000Z
+    supplier_name: Abat.shop
+    product_name: ABAT МПК-500Ф-01-GN1/1 / 15000001002
+    source_url: https://abat.shop/shop/product/frontalnaia-posudomoechnaia-mashina-abat-mpk-500f-01-moika-gn1-1
+    price_min_source_id: SRC-PRICE-20260917-08-007
+    price_base_source_id: SRC-PRICE-20260917-08-007
+    price_max_source_id: SRC-PRICE-20260917-08-007
+    availability_status: research; verify quotation before purchase
+    price_includes_vat: null
+    delivery_included: false
+    confidence: medium
+    price_source_type: supplier_product_card
+    cost_kind: equipment
+    composition_profile: retail_complete
 open_parameters:
   - parameter_id: OP-CAPEX-01-001-01
     item_id: CAPEX-01-001

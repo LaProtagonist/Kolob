@@ -21,7 +21,7 @@
         },
         {
           "path": "docs-platform/app/src/financial/financial-model.ts",
-          "sha256": "9583ee44a7dac6061b4096f824888747d5e69c3f2d134e54073886abdef7dbf7"
+          "sha256": "6895acd3c5dc05b734415d76f2725579bab72c64deba07475a377cd43948879d"
         },
         {
           "path": "docs-platform/app/src/financial/google-sheet.ts",
@@ -45,11 +45,11 @@
         },
         {
           "path": "src/content/capex-configurator-data.json",
-          "sha256": "7e578f410623f1ef49d29ffc8b0c5a301b484d327c0c893c0602d11d0f0684b4"
+          "sha256": "da92644fbd9ea05cce8c45c98e0dd0e43ab1ae09a0b78e2b1e0882a51ffcafbd"
         },
         {
           "path": "src/lib/capex-runtime.ts",
-          "sha256": "69109c7cc1e45cdc32937e99620f4dd5cd48ec861fbe209a1b1196c2c3626a8a"
+          "sha256": "4dc07db5a00b641d6145a6e31c49d9040568c7bb19621555f5d848b93a506869"
         },
         {
           "path": "src/lib/financial-assets.ts",
@@ -58,12 +58,20 @@
         {
           "path": "src/lib/launch-budget.ts",
           "sha256": "0093114173e76f343f4379162cd9958c26308ccf0e5ad9c539a56d019ba8c535"
+        },
+        {
+          "path": "docs-platform/app/src/capex/import-compatibility.ts",
+          "sha256": "faffd9d2b2e668639b32bcd112bbd4feac12da3a50be782696902e4117880a81"
+        },
+        {
+          "path": "docs-platform/working/capex-financial-import-pin.json",
+          "sha256": "05ef9f5a3936961fb3ce8cdf2b042cea0980eb6508cb8fa97d4b105002971c26"
         }
       ],
-      "content_state_sha256": "cceb60a13c4ee09c1e7e5403fa90dbedbaa6dec1afed2d26c53a633c1b706ffb"
+      "content_state_sha256": "6aee03fe338d79dba1e38fc4a419e9470d4622849c7c6c341d20ba89a59e7930"
     },
     "imported_revenue_content_state_sha256": "90727a6c51f959b617d6c972b898593a1b6dba6742d51b30bb75230f3f606c38",
-    "imported_capex_content_state_sha256": "a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239",
+    "imported_capex_content_state_sha256": "836a08cb0e65d837b350704efb9fd28da800bdd0bdd2837f9eadb94b7d1c611c",
     "imported_investor_start_model_sha256": "b81a6c4e8988a4532c9ba2749d492b3f96e37d83af822396afc82930244b2985",
     "imported_equipment_bom_sha256": "d001d531247e1c64820a6bd00df1db755908d483358f5f677b3ca6acb6d8fa4a"
   },

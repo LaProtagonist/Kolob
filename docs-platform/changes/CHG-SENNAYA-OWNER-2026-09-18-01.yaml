@@ -1,0 +1,38 @@
+change_id: CHG-SENNAYA-OWNER-2026-09-18-01
+title: Сенная — недвижимость и сценарий использования
+status: approved
+created_at: 2026-09-18
+decision_id: DEC-001
+iteration_id: ITR-SENNAYA-OWNER-2026-09-18-01
+proposal_id: PROP-SENNAYA-OWNER-2026-09-18-01
+approved_payload_path: docs-platform/changelog/payloads/ITR-SENNAYA-OWNER-2026-09-18-01-approved.yaml
+approved_payload_sha256: be9cba99929a3a3f44d9f17c0012131145aaa61189e8b98db13364f03908cbcf
+operations:
+  - type: add
+    entity: sources
+    value:
+      id: SRC-SENNAYA-OWNER-BRIEF-20260918
+      title: "Сенная: сценарий использования коммерческой недвижимости"
+      type: instruction
+      location: Owner chat request, 2026-09-18
+      publisher: project owner
+      publication_date: 2026-09-18
+      accessed_at: 2026-09-18
+      reliability: primary
+      notes: Owner-provided final copy and five independent scope switches. Exclude operating reserve, deposits and rent entry from public budget; no payer allocation. No Git mutations, seal or publication.
+  - type: add
+    entity: decisions
+    value:
+      id: DEC-SENNAYA-OWNER-2026-09-18-01
+      title: Сенная для покупателя недвижимости
+      status: approved
+      decision: Применить тексты владельца, пять переключателей состава работ с каноническим пересчётом резерва, исключить публичный операционный резерв и распределение плательщиков. Сохранить общую комплектацию и цены. Проверить ОФД как источник 5000 рублей.
+      rationale: Прямое разрешение владельца на изменение кода и governance; значения остаются исследовательскими, обязательств финансирования не возникает.
+      affected_documents:
+        - DOC-SENNAYA-FLAGSHIP
+      approved_by: project owner
+      approved_at: 2026-09-18
+      supersedes: null
+      source_ids:
+        - SRC-SENNAYA-OWNER-BRIEF-20260918
+      updated_at: 2026-09-18

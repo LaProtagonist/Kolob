@@ -17,8 +17,23 @@ import {
 } from "../src/google/capex-register-publisher.js";
 
 const platform = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
-const register = readRegister();
-const sources = readModularSources();
+const currentRegister = readRegister();
+const currentSources = readModularSources();
+// The publisher intentionally remains bound to the historical pilot contract.
+// Exercise that contract without granting publication of the new opt-in profile.
+const register = structuredClone(currentRegister);
+register.equipment = register.equipment.filter(item => !item.composition_profile);
+register.document.equipment_record_count = register.equipment.length;
+register.document.added_research_record_count = register.equipment.length - register.document.source_record_count;
+const sources = structuredClone(currentSources);
+sources.module_items.links = sources.module_items.links.filter(link => !link.condition?.startsWith("retail_complete"));
+sources.configurations.configurations = sources.configurations.configurations.filter(configuration => !configuration.composition_profile);
+
+// A successful historical fixture alone would not detect an accidentally relaxed
+// publication boundary. This assertion must stay local and must not call Google.
+test("new seated-retail register is rejected by the historical Google publisher", () => {
+  assert.throws(() => sheetDatasets(currentRegister, currentSources, "2026-09-17T00:00:00.000Z"), /requires exactly 160 equipment records/);
+});
 
 test("Google Sheet contract has the exact eleven localized tabs in stable order", () => {
   assert.equal(CAPEX_REGISTER_GOOGLE_TITLE, "03 — CAPEX — Реестр оснащения пилотного объекта");

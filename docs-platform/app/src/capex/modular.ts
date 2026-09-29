@@ -1,7 +1,9 @@
+import { capexConditionSatisfied, compositionAllowsItem, type CapexComposition } from "../../../../src/lib/capex-composition.js";
 import fs from "node:fs";
 import path from "node:path";
 import { Ajv2020 } from "ajv/dist/2020.js";
 import YAML from "yaml";
+import { readPriceResearch } from "./price-research.js";
 import { platformRoot } from "../google/config.js";
 import {
   CAPEX_REGISTER_DECISION_ID,
@@ -62,6 +64,7 @@ export type ModuleItemLink = {
 };
 
 export type PointFormat = {
+  composition?: CapexComposition;
   format_id: FormatId;
   name: string;
   purpose: string;
@@ -76,6 +79,8 @@ export type PointFormat = {
 };
 
 export type CapexConfiguration = {
+  composition_profile?: "retail_complete";
+  wash_mode?: "manual" | "machine";
   configuration_id: string;
   name: string;
   format_id: FormatId;
@@ -345,7 +350,7 @@ export function validateModularSources(register: CapexRegister, sources: Modular
   for (const [label, ids] of [["item_id", [...itemIds]], ["module_id", moduleIds], ["format_id", formatIds], ["configuration_id", configurationIds]] as const) {
     if (new Set(ids).size !== ids.length) errors.push(`Duplicate ${label}.`);
   }
-  if (register.equipment.length !== EQUIPMENT_RECORD_COUNT) errors.push(`Equipment Register must contain exactly ${EQUIPMENT_RECORD_COUNT} records.`);
+  if (register.equipment.length !== register.document.equipment_record_count) errors.push(`Equipment Register must contain exactly ${EQUIPMENT_RECORD_COUNT} records.`);
   if (formatIds.length !== 7) errors.push("Point format library must contain exactly seven formats.");
   const moduleSet = new Set(moduleIds);
   const formatSet = new Set(formatIds);
@@ -356,6 +361,14 @@ export function validateModularSources(register: CapexRegister, sources: Modular
   const mappedItems = new Set(sources.module_items.links.map(link => link.item_id));
   for (const itemId of itemIds) if (!mappedItems.has(itemId)) errors.push(`${itemId}: equipment record is not mapped to a functional module.`);
   for (const format of sources.point_formats.formats) for (const moduleId of [...format.required_modules, ...format.optional_modules, ...format.conditional_modules, ...format.excluded_modules]) if (!moduleSet.has(moduleId)) errors.push(`${format.format_id}: missing module ${moduleId}.`);
+  for (const format of sources.point_formats.formats) {
+    if (!format.composition) continue;
+    const ids = format.composition.groups.flatMap(group => group.item_ids);
+    if (new Set(ids).size !== ids.length) errors.push(`${format.format_id}: composition double-counts an item across groups.`);
+    for (const id of ids) if (!itemIds.has(id)) errors.push(`${format.format_id}: unknown composition item ${id}.`);
+    for (const id of Object.keys(format.composition.quantity_overrides)) if (!ids.includes(id)) errors.push(`${format.format_id}: quantity override outside composition: ${id}.`);
+    for (const fn of format.composition.functions) for (const id of fn.item_ids) if (!ids.includes(id)) errors.push(`${format.format_id}: function ${fn.id} references missing composition item ${id}.`);
+  }
   for (const configuration of sources.configurations.configurations) {
     if (!formatSet.has(configuration.format_id)) errors.push(`${configuration.configuration_id}: missing format ${configuration.format_id}.`);
     for (const moduleId of [...configuration.selected_modules, ...configuration.excluded_modules]) if (!moduleSet.has(moduleId)) errors.push(`${configuration.configuration_id}: missing module ${moduleId}.`);
@@ -423,9 +436,7 @@ function aggregateQuantities(entries: InclusionSource[], configuration: CapexCon
 }
 
 function linkConditionSatisfied(condition: string | null, configuration: CapexConfiguration) {
-  if (!condition) return true;
-  if (condition.trim() === "alcohol_enabled == true") return configuration.alcohol_enabled === true;
-  return true;
+  return capexConditionSatisfied(condition, { alcoholEnabled: configuration.alcohol_enabled === true, compositionProfile: configuration.composition_profile, washMode: configuration.wash_mode });
 }
 
 export type BomRecord = {
@@ -471,9 +482,13 @@ export function buildEquipmentBom(configurationId: string, register = readRegist
   if (!configuration) throw new Error(`Unknown configuration ${configurationId}.`);
   const format = sources.point_formats.formats.find(item => item.format_id === configuration.format_id)!;
   const activeModules = selectedModules(configuration, format);
+  const composition = configuration.composition_profile ? format.composition : undefined;
+  if (configuration.composition_profile && composition?.id !== configuration.composition_profile) throw new Error("Unknown composition profile");
+  const researchedQuantities = composition ? new Map(readPriceResearch().items.map(item => [item.item_id, item.scenarios.base?.quantity ?? null])) : null;
   const inclusion = new Map<string, InclusionSource[]>();
   for (const link of sources.module_items.links) {
-    const source = activeModules.get(link.module_id);
+    if (composition && !compositionAllowsItem(composition, { barEnabled: configuration.bar_enabled === true, washMode: configuration.wash_mode ?? "manual" }, link.item_id)) continue;
+    const source = composition ? "format_composition" : activeModules.get(link.module_id);
     if (!source || !linkConditionSatisfied(link.condition, configuration)) continue;
     const list = inclusion.get(link.item_id) ?? [];
     list.push({ module_id: link.module_id, source, link });
@@ -486,7 +501,10 @@ export function buildEquipmentBom(configurationId: string, register = readRegist
     const entries = inclusion.get(item.item_id);
     const override = overrideByItem.get(item.item_id);
     if (!entries || override?.action === "exclude") continue;
+    if (composition && (["component", "engineering_connection", "open_question"].includes(item.record_type) || item.inclusion_status === "included_in_parent")) continue;
     let quantity = aggregateQuantities(entries, configuration);
+    if (composition && quantity === null) quantity = researchedQuantities?.get(item.item_id) ?? null;
+    if (composition && composition.quantity_overrides[item.item_id] !== undefined) quantity = composition.quantity_overrides[item.item_id];
     if (override?.action === "change_quantity") quantity = override.quantity_override;
     const specification = override && ["replace", "change_specification"].includes(override.action) ? override.specification_override : item.specification;
     const rules = [...new Set(entries.map(entry => entry.link.quantity_rule_type))];

@@ -7,9 +7,9 @@ document:
   version: "0.1"
   status: research
   document_type: Generated module-to-equipment mapping
-  decision_id: DEC-015
-  iteration_id: ITR-CAPEX-REMAINING-PRICES-2026-08-05-01
-  proposal_id: PROP-CAPEX-REMAINING-PRICES-2026-08-05-01
+  decision_id: DEC-SENNAYA-CAPEX-2026-09-17-02
+  iteration_id: ITR-SENNAYA-CAPEX-2026-09-17-02
+  proposal_id: PROP-SENNAYA-CAPEX-2026-09-17-02
   generated_from:
     - docs-platform/working/capex-modules.yaml
     - docs-platform/working/capex-equipment-register.yaml
@@ -1472,3 +1472,174 @@ links:
     aggregation_rule: once
     condition: null
     notes: Фиксированное research-количество по DEC-011; одинаковый item_id учитывается один раз.
+  - module_id: MOD-RETAIL-HOT
+    item_id: CAPEX-02-058
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 2
+    minimum_quantity: null
+    aggregation_rule: once
+    condition: retail_complete
+    notes: Общий профиль торговой точки с залом; старые конфигурации используют прежнюю версию.
+  - module_id: MOD-RETAIL-HOT
+    item_id: CAPEX-02-059
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 1
+    minimum_quantity: null
+    aggregation_rule: once
+    condition: retail_complete
+    notes: Общий профиль торговой точки с залом; старые конфигурации используют прежнюю версию.
+  - module_id: MOD-POS
+    item_id: CAPEX-04-004
+    default_requirement: required
+    quantity_rule_type: per_cashier_post
+    quantity_rule_value: 1
+    minimum_quantity: null
+    aggregation_rule: once
+    condition: retail_complete
+    notes: Общий профиль торговой точки с залом; старые конфигурации используют прежнюю версию.
+  - module_id: MOD-POS
+    item_id: CAPEX-04-005
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 1
+    minimum_quantity: null
+    aggregation_rule: once
+    condition: retail_complete
+    notes: Общий профиль торговой точки с залом; старые конфигурации используют прежнюю версию.
+  - module_id: MOD-POS
+    item_id: CAPEX-04-006
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 1
+    minimum_quantity: null
+    aggregation_rule: once
+    condition: retail_complete
+    notes: Общий профиль торговой точки с залом; старые конфигурации используют прежнюю версию.
+  - module_id: MOD-POS
+    item_id: CAPEX-04-007
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 1
+    minimum_quantity: null
+    aggregation_rule: once
+    condition: retail_complete
+    notes: Общий профиль торговой точки с залом; старые конфигурации используют прежнюю версию.
+  - module_id: MOD-POS
+    item_id: CAPEX-04-008
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 3
+    minimum_quantity: null
+    aggregation_rule: once
+    condition: retail_complete
+    notes: Общий профиль торговой точки с залом; старые конфигурации используют прежнюю версию.
+  - module_id: MOD-POS
+    item_id: CAPEX-04-009
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 1
+    minimum_quantity: null
+    aggregation_rule: once
+    condition: retail_complete
+    notes: Общий профиль торговой точки с залом; старые конфигурации используют прежнюю версию.
+  - module_id: MOD-POS
+    item_id: CAPEX-04-010
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 1
+    minimum_quantity: null
+    aggregation_rule: once
+    condition: retail_complete
+    notes: Общий профиль торговой точки с залом; старые конфигурации используют прежнюю версию.
+  - module_id: MOD-POS
+    item_id: CAPEX-04-011
+    default_requirement: required
+    quantity_rule_type: per_cashier_post
+    quantity_rule_value: 1
+    minimum_quantity: null
+    aggregation_rule: once
+    condition: retail_complete
+    notes: Общий профиль торговой точки с залом; старые конфигурации используют прежнюю версию.
+  - module_id: MOD-POS
+    item_id: CAPEX-04-012
+    default_requirement: required
+    quantity_rule_type: per_cashier_post
+    quantity_rule_value: 1
+    minimum_quantity: null
+    aggregation_rule: once
+    condition: retail_complete
+    notes: Общий профиль торговой точки с залом; старые конфигурации используют прежнюю версию.
+  - module_id: MOD-GUEST
+    item_id: CAPEX-05-028
+    default_requirement: required
+    quantity_rule_type: per_seat
+    quantity_rule_value: 1
+    minimum_quantity: null
+    aggregation_rule: once
+    condition: retail_complete
+    notes: Общий профиль торговой точки с залом; старые конфигурации используют прежнюю версию.
+  - module_id: MOD-GUEST
+    item_id: CAPEX-05-029
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 2
+    minimum_quantity: null
+    aggregation_rule: once
+    condition: retail_complete
+    notes: Общий профиль торговой точки с залом; старые конфигурации используют прежнюю версию.
+  - module_id: MOD-GUEST
+    item_id: CAPEX-05-030
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 1
+    minimum_quantity: null
+    aggregation_rule: once
+    condition: retail_complete
+    notes: Общий профиль торговой точки с залом; старые конфигурации используют прежнюю версию.
+  - module_id: MOD-RETAIL-HOT
+    item_id: CAPEX-02-060
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 1
+    minimum_quantity: null
+    aggregation_rule: once
+    condition: retail_complete
+    notes: Общий профиль торговой точки с залом; старые конфигурации используют прежнюю версию.
+  - module_id: MOD-RETAIL-HOT
+    item_id: CAPEX-02-061
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 1
+    minimum_quantity: null
+    aggregation_rule: once
+    condition: retail_complete
+    notes: Общий профиль торговой точки с залом; старые конфигурации используют прежнюю версию.
+  - module_id: MOD-RETAIL-HOT
+    item_id: CAPEX-02-062
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 1
+    minimum_quantity: null
+    aggregation_rule: once
+    condition: retail_complete
+    notes: Общий профиль торговой точки с залом; старые конфигурации используют прежнюю версию.
+  - module_id: MOD-WASH
+    item_id: CAPEX-02-063
+    default_requirement: required
+    quantity_rule_type: fixed
+    quantity_rule_value: 1
+    minimum_quantity: null
+    aggregation_rule: once
+    condition: retail_complete
+    notes: Общий профиль торговой точки с залом; старые конфигурации используют прежнюю версию.
+  - module_id: MOD-WASH
+    item_id: CAPEX-08-007
+    default_requirement: optional
+    quantity_rule_type: fixed
+    quantity_rule_value: 1
+    minimum_quantity: null
+    aggregation_rule: once
+    condition: retail_complete && machine_wash
+    notes: Общий профиль торговой точки с залом; старые конфигурации используют прежнюю версию.

@@ -52,6 +52,9 @@ export type OpeningWave = {
 
 /** Runtime-only planning inputs for one independently scalable trading-point cohort. */
 export type TradingPointCohort = {
+  /** Absent means the historical version; existing saved scenarios never migrate implicitly. */
+  capexCompositionProfile?: "retail_complete";
+  washMode?: "manual" | "machine";
   id: string;
   format: TradingPointFormat;
   realEstateMode: PremisesScenario;
@@ -255,6 +258,7 @@ export function createTradingPointCohort(
   const legacyPreparationRub = finiteOrNull(valueOrDefault(overrides, "preparationRub", null));
   const preparationManualRub = finiteOrNull(valueOrDefault(overrides, "preparationManualRub", legacyPreparationRub));
   return {
+    ...(overrides.capexCompositionProfile === "retail_complete" ? { capexCompositionProfile: overrides.capexCompositionProfile, washMode: overrides.washMode === "machine" ? "machine" as const : "manual" as const } : {}),
     id: typeof overrides.id === "string" && overrides.id.trim() ? overrides.id : "cohort-1",
     format,
     realEstateMode: overrides.realEstateMode === "purchase" || overrides.realEstateMode === "rent"

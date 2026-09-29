@@ -7,9 +7,9 @@ document:
   version: "0.1"
   status: research
   document_type: Working CAPEX point format profiles
-  decision_id: DEC-008
-  iteration_id: ITR-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01
-  proposal_id: PROP-CAPEX-MODULAR-CONFIGURATOR-2026-08-01-01
+  decision_id: DEC-SENNAYA-CAPEX-2026-09-17-02
+  iteration_id: ITR-SENNAYA-CAPEX-2026-09-17-02
+  proposal_id: PROP-SENNAYA-CAPEX-2026-09-17-02
 formats:
   - format_id: FMT-PREP-CENTER
     name: Заготовочный цех
@@ -77,6 +77,232 @@ formats:
     excluded_modules: []
     exclusion_mode: none
     notes: null
+    composition:
+      id: retail_complete
+      version: 1
+      label: Точка с залом — полная функциональная проверка
+      groups:
+        - id: point-retail-equipment
+          name: Кухня и холодильное хранение
+          kind: equipment
+          item_ids:
+            - CAPEX-02-001
+            - CAPEX-02-002
+            - CAPEX-02-003
+            - CAPEX-02-004
+            - CAPEX-02-005
+            - CAPEX-02-006
+            - CAPEX-02-007
+            - CAPEX-02-008
+            - CAPEX-02-009
+            - CAPEX-02-056
+            - CAPEX-01-025
+            - CAPEX-02-058
+            - CAPEX-02-059
+        - id: point-bar
+          name: Напиточная зона
+          kind: equipment
+          item_ids:
+            - CAPEX-02-010
+            - CAPEX-02-011
+            - CAPEX-02-012
+            - CAPEX-02-013
+            - CAPEX-02-057
+        - id: point-pos-kds
+          name: Кассы и цифровой контур
+          kind: equipment
+          item_ids:
+            - CAPEX-04-001
+            - CAPEX-04-003
+            - CAPEX-04-004
+            - CAPEX-04-005
+            - CAPEX-04-006
+            - CAPEX-04-007
+            - CAPEX-04-008
+            - CAPEX-04-009
+        - id: point-wash
+          name: Мойка и санитария
+          kind: equipment
+          item_ids:
+            - CAPEX-01-019
+            - CAPEX-01-020
+            - CAPEX-01-021
+            - CAPEX-01-006
+            - CAPEX-01-007
+            - CAPEX-08-007
+        - id: point-guest-accessories
+          name: Принадлежности зала
+          kind: equipment
+          item_ids:
+            - CAPEX-05-028
+            - CAPEX-05-029
+            - CAPEX-05-030
+        - id: point-installation
+          name: Доставка, монтаж и пусконаладка
+          kind: service
+          item_ids:
+            - CAPEX-04-010
+            - CAPEX-04-011
+            - CAPEX-02-060
+            - CAPEX-02-061
+            - CAPEX-02-062
+        - id: point-prepaid
+          name: Предоплата цифровых сервисов
+          kind: prepaid
+          item_ids:
+            - CAPEX-04-012
+        - id: point-opening-supplies
+          name: Первоначальные санитарные и гостевые расходники
+          kind: startup
+          item_ids:
+            - CAPEX-02-063
+      quantity_overrides:
+        CAPEX-02-001: 2
+        CAPEX-02-002: 3
+        CAPEX-02-003: 24
+        CAPEX-02-004: 1
+        CAPEX-02-013: 1
+        CAPEX-01-025: 4
+        CAPEX-01-019: 1
+        CAPEX-01-020: 1
+        CAPEX-01-021: 1
+        CAPEX-01-006: 1
+        CAPEX-01-007: 1
+      functions:
+        - id: receiving
+          name: Приём дневного запаса
+          item_ids:
+            - CAPEX-02-009
+          gaps:
+            - График поставок, тара и зона приёмки не определены
+        - id: chilled
+          name: Среднетемпературное хранение
+          item_ids:
+            - CAPEX-02-058
+            - CAPEX-02-004
+          gaps:
+            - Полезные объёмы, разделение продуктов и масса дневного запаса не подтверждены
+        - id: frozen
+          name: Морозильное хранение
+          item_ids:
+            - CAPEX-02-059
+          gaps:
+            - График поставок и полезная загрузка не подтверждены
+        - id: temperature
+          name: Контроль температур
+          item_ids:
+            - CAPEX-01-025
+          gaps:
+            - Проверить размещение четырёх приборов и процедуру контроля
+        - id: hot
+          name: Финальная готовка
+          item_ids:
+            - CAPEX-02-001
+            - CAPEX-02-002
+            - CAPEX-02-006
+          gaps:
+            - Газ, мощность, вытяжка, теплозащита и пожарные решения — технический проект в подготовке
+        - id: assembly
+          name: Холодная сборка
+          item_ids:
+            - CAPEX-02-004
+            - CAPEX-02-007
+          gaps: []
+        - id: dosing
+          name: Дозирование начинок
+          item_ids:
+            - CAPEX-02-003
+            - CAPEX-02-005
+          gaps:
+            - "24 дозатора: 16 рабочих и 8 запасных; пересечение GN с комплектом требует спецификации поставщика"
+        - id: packing
+          name: Комплектация заказа
+          item_ids:
+            - CAPEX-02-056
+          gaps:
+            - Кухонные подносы не являются гостевыми; состав комплектов сверить с закупочной спецификацией
+        - id: drinks
+          name: Напиточная зона без кофе
+          item_ids:
+            - CAPEX-02-010
+            - CAPEX-02-011
+            - CAPEX-02-012
+            - CAPEX-02-013
+            - CAPEX-02-057
+          gaps:
+            - "Post-mix: подтвердить охладитель, газовый баллон, водоподготовку и подключение; отдельный барный холод пока не обоснован меню"
+        - id: issuing
+          name: Выдача
+          item_ids:
+            - CAPEX-02-008
+          gaps: []
+        - id: wash
+          name: Мойка рабочего инвентаря
+          item_ids:
+            - CAPEX-01-019
+            - CAPEX-01-007
+          gaps:
+            - Горячая вода, фильтрация и необходимость жироуловителя — после обследования
+        - id: sanitation
+          name: Санитарное оснащение
+          item_ids:
+            - CAPEX-01-020
+            - CAPEX-01-021
+            - CAPEX-02-063
+          gaps:
+            - Не оценён первоначальный комплект санитарных расходников
+        - id: fiscal
+          name: Кассы и фискализация
+          item_ids:
+            - CAPEX-04-001
+            - CAPEX-04-004
+            - CAPEX-04-011
+            - CAPEX-04-012
+          gaps:
+            - Договор эквайринга, регистрация и интеграция учёта требуют уточнения; отдельный чековый принтер не нужен
+        - id: kds
+          name: Экраны заказов
+          item_ids:
+            - CAPEX-04-003
+          gaps:
+            - Кухонный принтер не добавляется при KDS; резервный процесс выдачи уточнить
+        - id: network
+          name: Сеть и резервное питание
+          item_ids:
+            - CAPEX-04-005
+            - CAPEX-04-006
+            - CAPEX-04-007
+            - CAPEX-04-008
+            - CAPEX-04-009
+            - CAPEX-04-010
+          gaps:
+            - Покрытие, порты, PoE, кабели, автономность и резервный интернет ещё не закрыты; интернет — регулярный расход
+        - id: hall
+          name: Зал и гостевой поток
+          item_ids:
+            - CAPEX-05-028
+            - CAPEX-05-029
+            - CAPEX-05-030
+          gaps:
+            - Мебель по нормативу на место, не утверждённая ведомость столов и стульев; навигация и встроенные стойки — в подготовке
+        - id: safety
+          name: Безопасность
+          item_ids: []
+          gaps:
+            - Видеонаблюдение и охрана — отдельный существующий норматив; пожарная безопасность и газ — технический проект
+        - id: installation
+          name: Доставка и запуск оборудования
+          item_ids:
+            - CAPEX-02-060
+            - CAPEX-02-061
+            - CAPEX-02-062
+          gaps:
+            - Требуются смета поставщиков, схема подключения и условия разгрузки
+      external_groups:
+        - furniture
+        - security
+        - point-preparation
+      notes: Общий профиль; старые сохранённые конфигурации явно продолжают прежний состав. Полнота требует закрытия всех функций, не только наличия цены. Кофе и центральное производство исключены.
   - format_id: FMT-FOOD-COURT
     name: Точка на фудкорте
     lifecycle_status: research

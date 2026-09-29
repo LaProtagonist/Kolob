@@ -4,10 +4,10 @@
 
 ## 1. Current state
 
-- Events: 373.
-- Timeline head event: `EVT-ITR-FRANCHISE-MODEL-V02-2026-09-13-01-COMMITTED`.
-- Timeline head SHA-256: `5f5b08b8e6fe9c8d70c815e795dee4cd6d756eb475042443d4078ddd42a1582b`.
-- Latest recorded iteration: `ITR-FRANCHISE-MODEL-V02-2026-09-13-01`.
+- Events: 390.
+- Timeline head event: `EVT-ITR-SENNAYA-OWNER-2026-09-18-01-VERIFIED`.
+- Timeline head SHA-256: `1aab52d4d65432f8fc3e966cbd9a154045682f502fc12bf78ec038225bcc5120`.
+- Latest recorded iteration: `ITR-SENNAYA-OWNER-2026-09-18-01`.
 
 ## 2. Modern governed iterations
 
@@ -81,6 +81,9 @@
 | 2026-09-11T21:21:32.000Z | deployed | Introduce protected Control workspace | ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01 | DEC-ROUTES-CONTROL-WORKSPACE-2026-09-12-01 | CHG-ROUTES-CONTROL-WORKSPACE-2026-09-12-01 | deef5e6c845d3bd233fcfa02495a510a35a61e77 | iteration/ITR-ROUTES-CONTROL-WORKSPACE-2026-09-12-01 | — | docs-platform/changelog/deployments/deploy-routes-control-20260912-01.yaml | — | Sealed content state a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239 deployed to https://colob.spi.ski; smoke test passed. |
 | 2026-09-13T17:06:59.000Z | committed | Модель сети и франшизы v0.1 — защищённый рабочий стенд | ITR-FRANCHISE-MODEL-V01-2026-09-13-01 | DEC-FRANCHISE-MODEL-V01-2026-09-13-01 | CHG-FRANCHISE-MODEL-V01-2026-09-13-01 | 07bbb9ba9ab1093e49ef80d8b57c95314ebe4c8e | iteration/ITR-FRANCHISE-MODEL-V01-2026-09-13-01 | — | — | — | Модель сети и франшизы v0.1 — защищённый рабочий стенд: content commit verified and linked to the governed lifecycle before sealing. |
 | 2026-09-13T17:51:23.000Z | committed | Модель сети и франшизы v0.2 — данные и читаемость | ITR-FRANCHISE-MODEL-V02-2026-09-13-01 | DEC-FRANCHISE-MODEL-V02-2026-09-13-01 | CHG-FRANCHISE-MODEL-V02-2026-09-13-01 | d9c33049ac797e09bb38bac15e226bacbba78f79 | iteration/ITR-FRANCHISE-MODEL-V02-2026-09-13-01 | — | — | — | Модель сети и франшизы v0.2 — данные и читаемость: content commit verified and linked to the governed lifecycle before sealing. |
+| 2026-09-17T19:17:12.352Z | superseded | Сенная — адресное предложение инвестору | ITR-SENNAYA-2026-09-17-01 | DEC-SENNAYA-2026-09-17-01 | CHG-SENNAYA-2026-09-17-01 | — | — | — | — | — | Сенная — адресное предложение инвестору superseded by Точка с залом — общий CAPEX и Сенная (ITR-SENNAYA-CAPEX-2026-09-17-02). Reason: Owner continuation expands common seated CAPEX and changes presentation; no commit authorized, preserve previous events and receipts. |
+| 2026-09-18T11:52:05.414Z | superseded | Точка с залом — общий CAPEX и Сенная | ITR-SENNAYA-CAPEX-2026-09-17-02 | DEC-SENNAYA-CAPEX-2026-09-17-02 | CHG-SENNAYA-CAPEX-2026-09-17-02 | — | — | — | — | — | Точка с залом — общий CAPEX и Сенная superseded by Сенная — недвижимость и сценарий использования (ITR-SENNAYA-OWNER-2026-09-18-01). Reason: Owner redirects the standalone page to property owners and removes public operating reserve. Preserve prior uncommitted implementation and every historical event; no Git operations. |
+| 2026-09-18T12:16:26.147Z | verified | Сенная — недвижимость и сценарий использования | ITR-SENNAYA-OWNER-2026-09-18-01 | DEC-SENNAYA-OWNER-2026-09-18-01 | CHG-SENNAYA-OWNER-2026-09-18-01 | — | — | — | — | — | verified: owner-authorized Sennaya property presentation; no Git or production operations |
 
 ## 3. Legacy imported history
 

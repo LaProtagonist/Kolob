@@ -8,19 +8,19 @@
       "network_expansion",
       "consolidated_network"
     ],
-    "financial_model_content_state_sha256": "cceb60a13c4ee09c1e7e5403fa90dbedbaa6dec1afed2d26c53a633c1b706ffb",
+    "financial_model_content_state_sha256": "6aee03fe338d79dba1e38fc4a419e9470d4622849c7c6c341d20ba89a59e7930",
     "source_files": [
       {
         "path": "docs-platform/generated/financial-model-projection.json",
-        "sha256": "f65b092c0909ff8e45f3ee9e819b82d9bb559ecf64cf7194ce3e2f62f5986e42"
+        "sha256": "0f460bc37b34c7363599e8a71bffebf761a3c8d024f9d71461340b013d2701d1"
       },
       {
         "path": "docs-platform/registry/sources.yaml",
-        "sha256": "bf94e075167222b5dfa60062d9e33ac246bb47a80f4cf0c1e1051bfa20a30336"
+        "sha256": "6f4891f9ee5e96a96eef03d6971dee419cf15e470ae20a702ffc8aba15f83619"
       },
       {
         "path": "docs-platform/working/capex-equipment-register.yaml",
-        "sha256": "c8853fe61ad8407ab96d0fbafb79702853842f970cbf699b6c2138b23f32c7aa"
+        "sha256": "23203cdb0843c3d5d29cc5ef3755ce8f4d67161cbbfe4251e7f325ec0e79cecb"
       },
       {
         "path": "docs-platform/working/network-planning-assumptions.yaml",
@@ -32,11 +32,11 @@
       },
       {
         "path": "src/content/capex-configurator-data.json",
-        "sha256": "862e67c73159833740c9d626f8262143cec767d18a76ad1f18ce81a79fdafe7c"
+        "sha256": "b89d2d5b6a506e0e4bf0efa2d26d9a329261d3a3aed12fbe11e373c3f6f71ff7"
       },
       {
         "path": "src/content/network-planning-data.json",
-        "sha256": "e8f8854cba928f3d79100977717e08e327ef917d6df8e1360b92794feed5545d"
+        "sha256": "1545974197e91c2efe6211a7ec35d0db1724c6173dc932e7eed43f8a6d4d7ece"
       },
       {
         "path": "src/lib/configured-economics.ts",
@@ -72,7 +72,7 @@
       },
       {
         "path": "src/lib/network-scaling.ts",
-        "sha256": "49839fe3cbf2300ac466d934ba1a1787fd0c76a2469d73d7d4add385753a6324"
+        "sha256": "0475b95c85ca8ca4499c21063e386d11f71cabe097a11fddf8724761c522c6fd"
       },
       {
         "path": "src/lib/network-temporal.ts",
@@ -478,7 +478,7 @@
   "current_base": {
     "provenance": {
       "context": "current_base_object",
-      "financial_model_content_state_sha256": "cceb60a13c4ee09c1e7e5403fa90dbedbaa6dec1afed2d26c53a633c1b706ffb"
+      "financial_model_content_state_sha256": "6aee03fe338d79dba1e38fc4a419e9470d4622849c7c6c341d20ba89a59e7930"
     },
     "launch": {
       "investment_rub": 40019924.66,
@@ -1722,7 +1722,7 @@
   "historical_integrated_pilot": {
     "provenance": {
       "context": "historical_integrated_pilot",
-      "financial_model_content_state_sha256": "cceb60a13c4ee09c1e7e5403fa90dbedbaa6dec1afed2d26c53a633c1b706ffb"
+      "financial_model_content_state_sha256": "6aee03fe338d79dba1e38fc4a419e9470d4622849c7c6c341d20ba89a59e7930"
     },
     "launch": {
       "investment_rub": 45370380.74,

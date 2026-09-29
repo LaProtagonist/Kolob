@@ -1,0 +1,10 @@
+schema_version: 2
+proposal_id: PROP-SENNAYA-2026-09-17-01
+iteration_id: ITR-SENNAYA-2026-09-17-01
+title: Сенная — адресное предложение инвестору
+status: approved
+proposed_by: project owner
+proposed_at: 2026-09-17T13:09:40.137Z
+summary: Short Russian property proposal matching Petrogradka components and page rhythm; light surface, mobile-safe scenario table; Separate selected retail BOM and revenue snapshots using existing engines; preserve sources and financial cores; 500k monthly occupancy remains in operator calculations even investor-owned; property purchase excluded from operating launch capital; Noindex/share-only canonical /sennaya with requested /investor/franchise-platform/sennaya alias; reciprocal Petrogradka link and existing contact CTA; Production build, targeted and existing release checks, full-page desktop/mobile screenshots, staging only
+approved_payload_path: docs-platform/changelog/payloads/ITR-SENNAYA-2026-09-17-01-approved.yaml
+approved_payload_sha256: b4fa08eea11f9dc8925a1517bcb6fe99f2091db5ca169d31776867c55e08d8d1

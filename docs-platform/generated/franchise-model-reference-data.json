@@ -18,7 +18,7 @@
       "id": "register",
       "title": "Реестр оборудования",
       "path": "docs-platform/working/capex-equipment-register.yaml",
-      "sha256": "c8853fe61ad8407ab96d0fbafb79702853842f970cbf699b6c2138b23f32c7aa"
+      "sha256": "23203cdb0843c3d5d29cc5ef3755ce8f4d67161cbbfe4251e7f325ec0e79cecb"
     },
     {
       "id": "specification",
@@ -66,7 +66,7 @@
       "id": "projection",
       "title": "Расчёт старой финансовой модели",
       "path": "docs-platform/generated/financial-model-projection.json",
-      "sha256": "f65b092c0909ff8e45f3ee9e819b82d9bb559ecf64cf7194ce3e2f62f5986e42"
+      "sha256": "0f460bc37b34c7363599e8a71bffebf761a3c8d024f9d71461340b013d2701d1"
     },
     {
       "id": "assumptions",

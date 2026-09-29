@@ -1,0 +1,40 @@
+receipt_version: 1
+iteration_id: ITR-SENNAYA-CAPEX-2026-09-17-02
+decision_id: DEC-SENNAYA-CAPEX-2026-09-17-02
+change_set_id: CHG-SENNAYA-CAPEX-2026-09-17-02
+result: passed
+verified_at: 2026-09-17T20:53:43.106Z
+approved_payload_sha256: da4966a1d73d3ecc3fffed1900b51ed629c67191696dddbaba9b88a70c326efb
+before_state_sha256: 1e243e861426355490bff41e1f2043198612c74692015e3a8b1990d7d80599d2
+after_state_sha256: 389397bce11a356a690db303fcf6815a2f4c0fa083c21a0b5ec9a210133bf939
+additional_source_hashes:
+  docs-platform/app/src/capex/content-state.ts: df622f36da7c65bc3b3965492b3b00798602bed3308fa9258b2fecb57132f600
+  docs-platform/app/src/capex/import-compatibility.ts: faffd9d2b2e668639b32bcd112bbd4feac12da3a50be782696902e4117880a81
+  docs-platform/app/src/financial/financial-model.ts: 6895acd3c5dc05b734415d76f2725579bab72c64deba07475a377cd43948879d
+  docs-platform/working/capex-financial-import-pin.json: 36b894000b6b4b4eafa42b4135aba7bd415073dfe0abd6d7a0b4a68d0a7889af
+  docs-platform/working/investor-financial-summary.yaml: a8f740280cc04e710a7455b30103982ec9cccc8f4a2b114a979fe4156b6182fe
+  docs-platform/generated/financial-model-projection.json: 16fc55771787ccdd413b4070336b763038a440fec8d6a5c930b1426b016bc654
+  docs-platform/generated/investor-financial-summary.json: 374d28d52777aab295cb92d28626d21aa0116093d79207c4f802ee7b1d100ae6
+  docs-platform/generated/financial-google-sheets-payload.json: 031de254b6634907b1a6ec76805f0682e4c2b3ccf56cccfd0338262a7ca0777e
+  docs-platform/generated/investor-financial-summary-google-sheets-payload.json: bb31e484b52006f78388256dfa128c8a641217647b3254954e9dbf9cde7c71b4
+  docs-platform/generated/franchise-model-reference-data.json: f589e25bec1ffe3cf3a915f71bf21912cdc9f706277e90ffdc3a117dff38d08c
+  scripts/generate-investor-terminal-capex-data.mjs: 757bb4c7f5f8933ed81d260a0a5e3cf526e678fcf08356593649a7047ef18a8b
+  scripts/test-franchise-model.test.ts: b198faef1df32a4033e6bf45d5a505a26b185dae784a947af1bcd2f3f00eeb27
+  docs-platform/app/test/capex-equipment-register.test.ts: 94cae0cada88b0ee8219f521b70a918e5b53420adfad8dd570c136c45e0d4bb5
+  docs-platform/app/test/capex-modular-configurator.test.ts: e7192eaaa5fc031bc0dce9cb33b6f826369737e89705fe0a196d4a964a005783
+  docs-platform/app/test/capex-price-research.test.ts: 5ae919419029a1c088c9761db23947bce0e62b636e68f36fb0ee29ead19b390f
+  docs-platform/app/test/capex-remaining-prices.test.ts: 96a28985962e36cc71912112505b32ed2bb299e69b6f7a80795eadd89ba27fb3
+  docs-platform/app/test/capex-web-configurator.test.ts: 4abc76da9121c79d8618788acc99da74213571939e5a36d85da312bf7599a9ab
+  scripts/verification/visual.mjs: d80872786578cf97a33d51b27af1f5871578f4d336399bca06938abcceb811ed
+  verification/VISUAL_QA.md: 7668157daa5ba5ebc45fb2d0b7d3ed2d6c816e98719adc333321162d4f09762c
+  docs-platform/app/test/capex-sheet-publisher.test.ts: 0ba771f35e4e95181853ccd73c708970a5d56ef572da78d742a7c74981231a61
+  docs-platform/app/test/investor-start-model.test.ts: 50a8e4c502f082285e6f4a42850dda6fc551ce4b595e034f2f3f847a18f1d312
+owner_confirmation: "Explicit chat confirmation 2026-09-17: code, registry, schema and tests; no commit, push, production. Budget controls and staffing reserve included."
+checks:
+  - Common composition/BOM and 18-function coverage
+  - Legacy scenario, Petrogradka and Current Base immutability
+  - Release, production build, deterministic responsive browser and link checks
+production_deployment: not_performed
+google: not_performed
+git_commit: not_authorized
+screenshots_directory: analysis/screenshots/sennaya-complete-2026-09-17

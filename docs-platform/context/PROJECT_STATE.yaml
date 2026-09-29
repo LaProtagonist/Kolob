@@ -1,13 +1,13 @@
 schema_version: 2
-generated_at: 2026-09-13T17:52:01.890Z
+generated_at: 2026-09-18T12:16:26.147Z
 project: Колобочная
-branch: master
-latest_timeline_event_id: EVT-ITR-FRANCHISE-MODEL-V02-2026-09-13-01-COMMITTED
-latest_timeline_event_hash: 5f5b08b8e6fe9c8d70c815e795dee4cd6d756eb475042443d4078ddd42a1582b
+branch: feature/sennaya-investor-page
+latest_timeline_event_id: EVT-ITR-SENNAYA-OWNER-2026-09-18-01-VERIFIED
+latest_timeline_event_hash: 1aab52d4d65432f8fc3e966cbd9a154045682f502fc12bf78ec038225bcc5120
 latest_closed_iteration_id: ITR-FRANCHISE-MODEL-V02-2026-09-13-01
 latest_iteration_tag: iteration/ITR-FRANCHISE-MODEL-V02-2026-09-13-01
 latest_content_commit_hash: d9c33049ac797e09bb38bac15e226bacbba78f79
-registry_hash: 672cbb4e52ddb3ae9b6de9e2810ed664bd933656e0677c9503e07111c9499505
+registry_hash: b9eb7903d6cab4997b07f64336aa8ea2dd52760f23beaa737a5767a1d33300db
 canonical_document_hashes:
   - document_id: DOC-AGENTS
     local_path: docs-platform/AGENTS.md
@@ -27,11 +27,11 @@ canonical_document_hashes:
     status: approved
   - document_id: DOC-CAPEX-CONFIGURATIONS
     local_path: docs-platform/working/capex-configurations.yaml
-    sha256: 3810fa84efa969d8d95e2f0b0b49ede044b854d9be21ac92f5787d9ff8369f3c
+    sha256: 439a4d7111ba9cceea8296bd1d1d38fd2da74443395ae078f5c37ca7cee8ab16
     status: research
   - document_id: DOC-CAPEX-EQUIPMENT-REGISTER
     local_path: docs-platform/working/capex-equipment-register.yaml
-    sha256: c8853fe61ad8407ab96d0fbafb79702853842f970cbf699b6c2138b23f32c7aa
+    sha256: 23203cdb0843c3d5d29cc5ef3755ce8f4d67161cbbfe4251e7f325ec0e79cecb
     status: research
   - document_id: DOC-CAPEX-EQUIPMENT-SPECIFICATION
     local_path: docs-platform/working/capex-equipment-specification.md
@@ -47,11 +47,11 @@ canonical_document_hashes:
     status: research
   - document_id: DOC-CAPEX-POINT-FORMATS
     local_path: docs-platform/working/capex-point-formats.yaml
-    sha256: 4b6d5a8806f696f499dbbab8fa061020c7ba77b670eb2a1f7d3ccdcc78b2e523
+    sha256: 02d982469566c4a96a09772b9a7dfeaa04faad8ed667ecc27134a3523acc326b
     status: research
   - document_id: DOC-CAPEX-PRICE-RESEARCH
     local_path: docs-platform/working/capex-price-research.yaml
-    sha256: b2b752f1822db8b529d58d822b83b32d44bcba9a0110ae35062d3b561f08249d
+    sha256: a168884b433f766197a230042d6abcd73de4e9773adda0504b480ca6c75edea4
     status: research
   - document_id: DOC-FINANCIAL-MODEL
     local_path: docs-platform/working/financial-model.yaml
@@ -87,7 +87,7 @@ canonical_document_hashes:
     status: proposed
   - document_id: DOC-INVESTOR-FINANCIAL-SUMMARY
     local_path: docs-platform/working/investor-financial-summary.yaml
-    sha256: 790d4c84513d666157088c0afeb8ece09ed80080b33db54117ad1dde64a92a40
+    sha256: cd04b899c8ac9e508088f1037cd69801ecbc7e391dd5e154fc102cbec432be31
     status: research
   - document_id: DOC-INVESTOR-START-MODEL
     local_path: docs-platform/working/investor-start-model.yaml
@@ -116,6 +116,10 @@ canonical_document_hashes:
   - document_id: DOC-SCENARIO-PETROGRADKA-READY-PRODUCTION-BASE
     local_path: docs-platform/scenarios/petrogradka-ready-production-base.yaml
     sha256: e138dee3e1593df5dc2ff3faccd551a0c286502f07780dfc288106b29c43d0f7
+    status: research
+  - document_id: DOC-SENNAYA-FLAGSHIP
+    local_path: docs-platform/scenarios/sennaya-flagship.json
+    sha256: ba1d916f64465a477ee1d9f43458fca745d3983e76e018c843a398d180e44862
     status: research
 open_decisions: []
 open_change_sets:

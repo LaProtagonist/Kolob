@@ -13,6 +13,7 @@ const cookieName = "kolob_leads_auth";
 const maxBodyBytes = 64 * 1024;
 const controlStaticRoot = path.resolve(process.env.CONTROL_STATIC_ROOT || path.resolve(process.cwd(), "control-dist"));
 const legacyRedirects = new Map([
+  ["/investor/franchise-platform/sennaya", "/sennaya"],
   ["/investor/franchise-platform/petrogradka", "/petrogradka"],
   ["/investor/franchise-platform", "/control/franchise-platform"],
   ["/capex-configurator", "/control/capex"],

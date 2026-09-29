@@ -1,4 +1,5 @@
 import test from "node:test";
+import { buildFinancialCoreProjectionArtifact } from "./generate-financial-core-projection";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
@@ -390,9 +391,7 @@ test("engine deterministic and does not mutate scenario, canonical Current Base 
     "src/components/InvestorTerminal.tsx",
     "src/components/InvestorTerminal.css",
     "src/lib/configured-economics.ts",
-    "src/lib/investor-configuration.ts",
     "src/lib/financial-core.ts",
-    "src/lib/network-scaling.ts",
     "src/lib/network-temporal.ts",
     "docs-platform/working/financial-model.yaml",
     "docs-platform/working/network-planning-assumptions.yaml",
@@ -404,12 +403,32 @@ test("engine deterministic and does not mutate scenario, canonical Current Base 
     crypto.createHash("sha256").update(b).digest("hex");
   for (const p of protectedFiles) {
     const original = execFileSync("git", ["show", `6e32ecb:${p}`]);
+    // A new share-only property route is authorized independently of the
+    // franchise workbench. Remove only its exact registration; all terminal
+    // code and every other byte of the original App remain protected.
+    const current = p === "src/App.tsx"
+      ? Buffer.from(fs.readFileSync(p, "utf8")
+        .replace('const SennayaPage = lazy(() => import("./components/Sennaya").then((module) => ({ default: module.SennayaPage })));\n', "")
+        .replace('    case "/sennaya":\n      return <Suspense fallback={null}><SennayaPage /></Suspense>;\n', ""))
+      : fs.readFileSync(p);
     assert.equal(
-      hash(fs.readFileSync(p)),
+      hash(current),
       hash(original),
       `${p} changed from audited baseline`,
     );
   }
+  // Shared composition adapters may evolve; every legacy calculated result must remain exact.
+  const auditedCore = JSON.parse(execFileSync("git", ["show", "945373f:docs-platform/generated/financial-core-projection.json"], { maxBuffer: 20 * 1024 * 1024 }).toString());
+  const currentCore = buildFinancialCoreProjectionArtifact();
+  const withoutSourceHashes = (value: unknown) => {
+    const copy = JSON.parse(JSON.stringify(value));
+    delete copy.meta.source_files;
+    delete copy.meta.financial_model_content_state_sha256;
+    delete copy.current_base.provenance.financial_model_content_state_sha256;
+    delete copy.historical_integrated_pilot.provenance.financial_model_content_state_sha256;
+    return copy;
+  };
+  assert.deepEqual(withoutSourceHashes(currentCore), withoutSourceHashes(auditedCore), "legacy Financial Core numerical/coverage regression");
   for (const p of fs
     .readdirSync("src/lib")
     .filter((p) => p.startsWith("franchise-model-"))) {

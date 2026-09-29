@@ -95,6 +95,15 @@ export const pages: PageMeta[] = [
     noindex: true
   },
   {
+    id: "franchisePlatformSennaya",
+    path: "/sennaya",
+    label: "Сенная",
+    title: "Московский, 4 — помещение с готовым сценарием использования",
+    description: "Коммерческое помещение 73,5 м² у Сенного рынка: сценарий использования под «Колобочную», оценённая часть подготовки и открытия, расчётная выручка и плановый платёж собственнику.",
+    ogImage: "/media/hero-kolobok-1200.webp",
+    noindex: true
+  },
+  {
     id: "franchisePlatformPetrogradka",
     path: "/petrogradka",
     label: "Петроградка",

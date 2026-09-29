@@ -1,4 +1,10 @@
 import { buildCapexRows, capexData, emptyCapexParameters, type ComputedCapexRow } from "./capex-runtime";
+// The full research registry is supplied only by internal/build-time callers.
+// Public Investor Terminal keeps its existing reduced CAPEX adapter and data.
+export type NetworkCapexCompositionProvider = {
+  buildRows: typeof import("./capex-runtime").buildFormatCapexRows;
+  summarize: typeof import("./capex-runtime").formatCompositionSummary;
+};
 import { configuredFinancialPolicy, type ConfiguredEconomicsScenario } from "./configured-economics";
 import {
   buildNetworkSteadyState,
@@ -537,8 +543,8 @@ function pointFitoutItem(cohort: TradingPointCohort): NetworkScalingItem | null 
   };
 }
 
-function pointContingencyItem(configuration: InvestorConfiguration, items: NetworkScalingItem[]): NetworkScalingItem {
-  const applicable = items.filter((item) => ["point-preparation", "point-retail-equipment", "point-pos-kds", "point-bar", "point-wash", "furniture"].some((id) => item.id.endsWith(id)));
+export function pointContingencyItem(configuration: InvestorConfiguration, items: NetworkScalingItem[]): NetworkScalingItem {
+  const applicable = items.filter((item) => ["point-preparation", "point-retail-equipment", "point-pos-kds", "point-bar", "point-wash", "furniture", "point-guest-accessories", "point-bundle-reserve"].some((id) => item.id.endsWith(id)));
   const baseRub = applicable.some((item) => item.amountRub === null) ? null : applicable.reduce((total, item) => total + (item.amountRub ?? 0), 0);
   const amountRub = baseRub === null ? null : Math.round(baseRub * configuration.launchBudget.contingencyPercent) / 100;
   return {
@@ -842,9 +848,14 @@ function networkPlanningLaunchSummary(
   };
 }
 
-function pointCohortProjection(configuration: InvestorConfiguration, cohort: TradingPointCohort): NetworkPointCohortProjection {
+function pointCohortProjection(configuration: InvestorConfiguration, cohort: TradingPointCohort, provider?: NetworkCapexCompositionProvider): NetworkPointCohortProjection {
   const format = activeFormat(cohort.format);
   const { parameters, seatCount } = equipmentParameters(configuration, cohort);
+  const compositionOptions = { barEnabled: cohort.barEnabled, washMode: cohort.washMode ?? "manual" } as const;
+  const scenario = configuration.launchBudget.equipmentScenarioId.toLowerCase() as "minimum" | "base" | "scale_ready";
+  if (cohort.capexCompositionProfile && !provider) throw new Error("The selected composition requires the full CAPEX provider.");
+  const completeRows = cohort.capexCompositionProfile ? provider!.buildRows(format.id, scenario, parameters, compositionOptions) : null;
+  const composition = completeRows ? provider!.summarize(format.id, scenario, completeRows, compositionOptions) : null;
   const rows = buildCapexRows(
     activePointModuleIds(cohort),
     configuration.launchBudget.equipmentScenarioId.toLowerCase() as "minimum" | "base" | "scale_ready",
@@ -857,13 +868,21 @@ function pointCohortProjection(configuration: InvestorConfiguration, cohort: Tra
   const barRows = pointRows.filter((row) => row.moduleIds.includes("MOD-BAR"));
   const operational = pointOperationalProjection(configuration, cohort);
   const baseEquipmentServiceAssetBasisRub = calculateLaunchBudget(configuration.launchBudget).equipment.total;
+  const completeGroups: NetworkScalingItem[] = composition ? composition.groups.map(group => ({
+    id: group.id === "point-wash" ? `${cohort.id}:point-wash` : group.id, canonicalItem: format.id, name: group.name, ownership: "point", multiplier: "per_point",
+    amountRub: group.rows.length && group.rows.every(row => row.lineTotal === null) ? null : group.knownRub, included: true, partial: group.missingCount > 0, source: "Generated format BOM → CAPEX register", reason: "Известная часть; открытые статьи не считаются нулём.",
+    detail: group.rows.map(row => ({ id: row.item.id, name: row.item.name, amountRub: row.lineTotal, quantity: row.quantity, moduleIds: row.moduleIds })),
+  })) : [];
+  if (composition) completeGroups.push({ id: "point-bundle-reserve", canonicalItem: "register cash_reserve_rub", name: "Резерв внутри комплектов", ownership: "point", multiplier: "per_point", amountRub: composition.reserveRub, included: true, source: "Research inventory bundles", reason: "Перенесён из физического оснащения; финансирование сохранено." });
   const pointItems = [
     pointPremisesItem(configuration, cohort),
     pointPreparationItem(cohort),
+    ...(composition ? completeGroups : [
     groupEquipment("point-retail-equipment", "Торговая кухня и выдача", "point", retailRows, "CAPEX: торговые модули", "Оборудование относится к повторяемой торговой точке."),
     groupEquipment("point-pos-kds", "Касса и экран заказов", "point", posRows, "CAPEX-04-001 / CAPEX-04-003", "Касса и экран заказов относятся к торговой точке."),
     groupEquipment("point-bar", "Бар и напитки", "point", barRows, "CAPEX: MOD-BAR", "Бар включён только для этой группы точек."),
     pointWashPackageItem(configuration, cohort),
+    ]),
     furnitureItem(configuration, cohort, seatCount),
     pointSecurityItem(cohort),
     pointUniformItem(cohort, operational),
@@ -893,7 +912,7 @@ function pointCohortProjection(configuration: InvestorConfiguration, cohort: Tra
   };
 }
 
-export function networkScalingProjection(configuration: InvestorConfiguration): NetworkScalingProjection {
+export function networkScalingProjection(configuration: InvestorConfiguration, provider?: NetworkCapexCompositionProvider): NetworkScalingProjection {
   const productionRows = buildCapexRows(
     activeProductionModuleIds(configuration),
     configuration.launchBudget.equipmentScenarioId.toLowerCase() as "minimum" | "base" | "scale_ready",
@@ -913,7 +932,7 @@ export function networkScalingProjection(configuration: InvestorConfiguration): 
     groupEquipment("production-equipment", "Производственное оборудование", "production", productionRows.filter((row) => !row.moduleIds.includes("MOD-GROW")), "CAPEX: MOD-PREP", "Оборудование общей производственной базы создаётся один раз."),
     groupEquipment("grow-module", "Модуль выращивания", "production", productionRows.filter((row) => row.moduleIds.includes("MOD-GROW")), "CAPEX: MOD-GROW", "Модуль выращивания относится к производству и создаётся один раз."),
   ].filter((item): item is NetworkScalingItem => item !== null);
-  const cohorts = configuration.networkScaling.cohorts.map((cohort) => pointCohortProjection(configuration, cohort));
+  const cohorts = configuration.networkScaling.cohorts.map((cohort) => pointCohortProjection(configuration, cohort, provider));
   // The first cohort is the Current Base Object and is calculated by its own
   // projection. Expansion coverage must be driven only by additional point
   // cohorts, otherwise missing Base-only presentation inputs would silently
@@ -986,6 +1005,32 @@ export function networkScalingProjection(configuration: InvestorConfiguration): 
     operating,
     planningLaunch: networkPlanningLaunchSummary(cohorts, operating),
   };
+}
+
+/** Presentation groups for any seated point; no location-specific prices or formulas. */
+export function pointOpeningBudget(point: NetworkPointCohortProjection, reserve: { totalReserveRub: number | null; months: number }) {
+  const collect = (ids: string[]) => point.pointItems.filter(item => ids.some(id => item.id === id || item.id.endsWith(`:${id}`)));
+  const group = (id: string, label: string, ids: string[], note: string) => {
+    const items = collect(ids);
+    const known = items.filter(item => item.amountRub !== null);
+    return { id, label, amountRub: known.length ? known.reduce((sum, item) => sum + item.amountRub!, 0) : null,
+      partial: !items.length || items.some(item => item.amountRub === null || item.partial), note };
+  };
+  return [
+    group("preparation", "Подготовка помещения", ["point-preparation"], "Предварительная оценка по площади: отделка, инженерия, свет, встроенные элементы и проектирование; точная смета после обследования."),
+    group("kitchen", "Кухня и холодильное хранение", ["point-retail-equipment"], "Горячая линия, сборка, холод, рабочие столы и инвентарь. Без заготовочного цеха."),
+    group("drinks", "Напиточная зона", ["point-bar"], "Лимонады, горячие напитки и лёд. Без кофе."),
+    group("digital", "Кассы, цифровой контур и безопасность", ["point-pos-kds", "security", "point-prepaid"], "Два кассовых поста, три экрана заказов, сеть, резервное питание, видеонаблюдение и охрана. Стартовый ОФД — предоплата сервиса; кабельная часть уточняется."),
+    group("wash", "Мойка и санитария", ["point-wash"], "Двухсекционная мойка и отдельный рукомойник. Одноразовая гостевая подача."),
+    group("hall", "Зал и мебель", ["furniture", "point-guest-accessories"], "Мебель по нормативу на место, подносы и урны. Расстановка и дополнительные принадлежности уточняются."),
+    group("installation", "Доставка, монтаж и пусконаладка", ["point-installation"], "Оценена только часть подключения касс. Доставка, разгрузка, подключение оборудования и настройка сети требуют предложений поставщиков."),
+    { id: "marketing", label: "Маркетинг открытия", amountRub: networkPlanningLaunchConstants().launchMarketingRub, partial: false, note: "Рабочий ориентир действующей модели запуска." },
+    { ...group("team", "Форма персонала и стартовые расходники", ["uniform", "point-opening-supplies"], "Оценена только форма. Подбор, обучение и зарплата до открытия не включены и требуют отдельной сметы."), partial: true },
+    group("inventory", "Первоначальный товарный запас", ["initial-inventory"], "Сырьё, списания и упаковка на первые дни работы; не оборудование."),
+    group("contingency", "Резерв на оснащение", ["point-contingency", "point-bundle-reserve"], "Резерв по оценённой комплектации и подготовке помещения. Уточняется вместе со сметой."),
+    { id: "operating-reserve", label: "Операционный резерв", amountRub: reserve.totalReserveRub, partial: reserve.totalReserveRub === null, note: `По действующей методологии — ${reserve.months} месяцев; отдельно от CAPEX. Требуются условия предоплаты аренды и полные расходы.` },
+    { id: "property", label: "Недвижимость — отдельный контур", amountRub: null, partial: true, note: "Цена приобретения, депозит и предоплата определяются отдельно; регулярный платёж за пользование не включён в оснащение." },
+  ];
 }
 
 function stableMonthlyPayback(investmentRub: number | null, cashFlowRub: number | null) {

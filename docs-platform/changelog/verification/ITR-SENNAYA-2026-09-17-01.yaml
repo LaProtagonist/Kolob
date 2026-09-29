@@ -1,0 +1,24 @@
+receipt_version: 1
+iteration_id: ITR-SENNAYA-2026-09-17-01
+decision_id: DEC-SENNAYA-2026-09-17-01
+change_set_id: CHG-SENNAYA-2026-09-17-01
+result: passed
+verified_at: 2026-09-17T13:30:14.236Z
+approved_payload_sha256: b4fa08eea11f9dc8925a1517bcb6fe99f2091db5ca169d31776867c55e08d8d1
+before_state_sha256: 8e7c18ed7c91d5077711fc31383737a168388b74fa4c6a0f34886c5acf099086
+after_state_sha256: 623da7f0a11f4634bb8956bb2c79d4d9d90045f2978df43adbcb7dd2341c9a87
+checks:
+  - Canonical snapshot parity, retail physical allocation, occupancy and immutable financial sources
+  - Production build and release verification
+  - Desktop/mobile deterministic DOM, links, noindex, overflow and full-page review screenshots
+protected_path_count: 763
+additional_authorized_integration_paths:
+  - src/types.ts
+  - scripts/test-franchise-model.test.ts
+  - docs-platform/generated/financial-core-projection.json
+  - src/content/network-planning-data.json
+baseline_commit: 945373fa2f3f50b32dac7b48af1979f4e2005177
+production_deployment: not_performed
+google: not_performed
+git_commit: not_authorized
+screenshots_directory: analysis/screenshots/sennaya-2026-09-17

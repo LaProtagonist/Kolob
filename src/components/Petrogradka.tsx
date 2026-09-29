@@ -1,10 +1,7 @@
 import { Breadcrumbs } from "./ui";
 import { petrogradkaContent } from "../content/franchise-platform";
+import { PropertySectionHeading as SectionHeading } from "./PropertyProposal";
 import "./FranchisePlatform.css";
-
-function SectionHeading({ number, title, text }: { number: string; title: string; text?: string }) {
-  return <header className="franchise-section-heading"><span>{number}</span><div><h2>{title}</h2>{text ? <p>{text}</p> : null}</div></header>;
-}
 
 /**
  * A direct, share-only presentation of a concrete property. This module is
@@ -84,6 +81,7 @@ export function PetrogradkaPage() {
             <div className="petrogradka-narrative-grid" id="petrogradka-network-role-title">
               {content.networkRole.map((item) => <article key={item.title}><h3>{item.title}</h3><p>{item.text}</p></article>)}
             </div>
+            <a className="franchise-link" href="/sennaya">Сенная — флагманская точка продаж в связке с производственной базой →</a>
           </section>
 
           <section className="franchise-section petrogradka-interaction" aria-labelledby="petrogradka-interaction-title">

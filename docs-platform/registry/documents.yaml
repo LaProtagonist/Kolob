@@ -473,3 +473,18 @@ documents:
     local_path: docs-platform/working/franchise-model-v0.2.json
     version: "0.2"
     updated_at: 2026-09-13
+  - id: DOC-SENNAYA-FLAGSHIP
+    title: Сенная — рабочая конфигурация флагманской торговой точки
+    type: scenario
+    status: research
+    google_file_id: null
+    template: null
+    sections:
+      - property
+      - equipment
+      - sales
+      - occupancy
+      - source_conflicts
+    local_path: docs-platform/scenarios/sennaya-flagship.json
+    version: "0.1"
+    updated_at: 2026-09-17

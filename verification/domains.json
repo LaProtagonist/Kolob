@@ -25,355 +25,1048 @@
     "scripts/verification/**/*.mjs"
   ],
   "checks": {
-
-    "franchise-model:unit": {"cost": "targeted", "command": ["node", "docs-platform/app/node_modules/tsx/dist/cli.mjs", "--test", "scripts/test-franchise-model.test.ts", "scripts/test-franchise-model-v02.test.ts"]},
-    "franchise-model:build": {"cost": "integration", "command": ["npm", "run", "build:control", "--silent"]},
-    "franchise-model:browser": {"cost": "integration", "command": ["node", "scripts/test-franchise-model.cjs"]},
+    "sennaya:unit": {
+      "cost": "targeted",
+      "command": [
+        "node",
+        "docs-platform/app/node_modules/tsx/dist/cli.mjs",
+        "--test",
+        "scripts/test-sennaya.test.ts",
+        "scripts/test-capex-composition.test.ts"
+      ]
+    },
+    "sennaya:browser": {
+      "cost": "integration",
+      "command": [
+        "node",
+        "scripts/test-sennaya.cjs"
+      ]
+    },
+    "franchise-model:unit": {
+      "cost": "targeted",
+      "command": [
+        "node",
+        "docs-platform/app/node_modules/tsx/dist/cli.mjs",
+        "--test",
+        "scripts/test-franchise-model.test.ts",
+        "scripts/test-franchise-model-v02.test.ts"
+      ]
+    },
+    "franchise-model:build": {
+      "cost": "integration",
+      "command": [
+        "npm",
+        "run",
+        "build:control",
+        "--silent"
+      ]
+    },
+    "franchise-model:browser": {
+      "cost": "integration",
+      "command": [
+        "node",
+        "scripts/test-franchise-model.cjs"
+      ]
+    },
     "diff:check": {
       "cost": "fast",
-      "command": ["node", "scripts/verification/static.mjs", "diff"]
+      "command": [
+        "node",
+        "scripts/verification/static.mjs",
+        "diff"
+      ]
     },
     "documentation:static": {
       "cost": "fast",
-      "command": ["node", "scripts/verification/static.mjs", "documentation"]
+      "command": [
+        "node",
+        "scripts/verification/static.mjs",
+        "documentation"
+      ]
     },
     "verification:config": {
       "cost": "fast",
-      "command": ["node", "scripts/verification/static.mjs", "config"]
+      "command": [
+        "node",
+        "scripts/verification/static.mjs",
+        "config"
+      ]
     },
     "verification:unit": {
       "cost": "targeted",
-      "command": ["node", "--test", "scripts/verification/test/orchestrator.test.mjs"]
+      "command": [
+        "node",
+        "--test",
+        "scripts/verification/test/orchestrator.test.mjs"
+      ]
     },
     "typescript:site": {
       "cost": "targeted",
-      "command": ["node", "node_modules/typescript/bin/tsc", "-b", "--pretty", "false"]
+      "command": [
+        "node",
+        "node_modules/typescript/bin/tsc",
+        "-b",
+        "--pretty",
+        "false"
+      ]
     },
     "typescript:platform": {
       "cost": "targeted",
-      "command": ["node", "docs-platform/app/node_modules/typescript/bin/tsc", "--noEmit", "-p", "verification/tsconfig.platform.json", "--pretty", "false"]
+      "command": [
+        "node",
+        "docs-platform/app/node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "verification/tsconfig.platform.json",
+        "--pretty",
+        "false"
+      ]
     },
     "financial:schema": {
       "cost": "fast",
-      "command": ["npm", "run", "financial:model:validate", "--silent"]
+      "command": [
+        "npm",
+        "run",
+        "financial:model:validate",
+        "--silent"
+      ]
     },
     "financial:projection": {
       "cost": "targeted",
-      "command": ["npm", "run", "financial:model:check", "--silent"]
+      "command": [
+        "npm",
+        "run",
+        "financial:model:check",
+        "--silent"
+      ]
     },
     "financial:unit": {
       "cost": "targeted",
-      "command": ["node", "docs-platform/app/node_modules/tsx/dist/cli.mjs", "--test", "docs-platform/app/test/financial-model.test.ts"]
+      "command": [
+        "node",
+        "docs-platform/app/node_modules/tsx/dist/cli.mjs",
+        "--test",
+        "docs-platform/app/test/financial-model.test.ts"
+      ]
     },
     "financial-core:projection": {
       "cost": "targeted",
-      "command": ["npm", "run", "financial:core:check", "--silent"]
+      "command": [
+        "npm",
+        "run",
+        "financial:core:check",
+        "--silent"
+      ]
     },
     "investor:schema": {
       "cost": "fast",
-      "command": ["npm", "run", "investor:summary:validate", "--silent"]
+      "command": [
+        "npm",
+        "run",
+        "investor:summary:validate",
+        "--silent"
+      ]
     },
     "investor:projection": {
       "cost": "targeted",
-      "command": ["npm", "run", "investor:summary:check", "--silent"]
+      "command": [
+        "npm",
+        "run",
+        "investor:summary:check",
+        "--silent"
+      ]
     },
     "investor:unit": {
       "cost": "targeted",
-      "command": ["node", "docs-platform/app/node_modules/tsx/dist/cli.mjs", "--test", "docs-platform/app/test/investor-financial-summary.test.ts"]
+      "command": [
+        "node",
+        "docs-platform/app/node_modules/tsx/dist/cli.mjs",
+        "--test",
+        "docs-platform/app/test/investor-financial-summary.test.ts"
+      ]
     },
     "capex:snapshot": {
       "cost": "fast",
-      "command": ["npm", "run", "capex:web:check", "--silent"]
+      "command": [
+        "npm",
+        "run",
+        "capex:web:check",
+        "--silent"
+      ]
     },
     "capex:unit": {
       "cost": "targeted",
-      "command": ["node", "docs-platform/app/node_modules/tsx/dist/cli.mjs", "--test", "docs-platform/app/test/capex-equipment-register.test.ts", "docs-platform/app/test/capex-modular-configurator.test.ts", "docs-platform/app/test/capex-price-research.test.ts", "docs-platform/app/test/capex-remaining-prices.test.ts", "docs-platform/app/test/capex-web-configurator.test.ts"]
+      "command": [
+        "node",
+        "docs-platform/app/node_modules/tsx/dist/cli.mjs",
+        "--test",
+        "docs-platform/app/test/capex-equipment-register.test.ts",
+        "docs-platform/app/test/capex-modular-configurator.test.ts",
+        "docs-platform/app/test/capex-price-research.test.ts",
+        "docs-platform/app/test/capex-remaining-prices.test.ts",
+        "docs-platform/app/test/capex-web-configurator.test.ts"
+      ]
     },
     "revenue:schema": {
       "cost": "fast",
-      "command": ["npm", "run", "revenue:model:validate", "--silent"]
+      "command": [
+        "npm",
+        "run",
+        "revenue:model:validate",
+        "--silent"
+      ]
     },
     "revenue:unit": {
       "cost": "targeted",
-      "command": ["node", "docs-platform/app/node_modules/tsx/dist/cli.mjs", "--test", "docs-platform/app/test/revenue-model.test.ts"]
+      "command": [
+        "node",
+        "docs-platform/app/node_modules/tsx/dist/cli.mjs",
+        "--test",
+        "docs-platform/app/test/revenue-model.test.ts"
+      ]
     },
     "revenue:web": {
       "cost": "targeted",
-      "command": ["npm", "run", "revenue:web:check", "--silent"]
+      "command": [
+        "npm",
+        "run",
+        "revenue:web:check",
+        "--silent"
+      ]
     },
     "launch:schema": {
       "cost": "fast",
-      "command": ["npm", "run", "investor:start:validate", "--silent"]
+      "command": [
+        "npm",
+        "run",
+        "investor:start:validate",
+        "--silent"
+      ]
     },
     "launch:unit": {
       "cost": "targeted",
-      "command": ["node", "docs-platform/app/node_modules/tsx/dist/cli.mjs", "--test", "scripts/test-launch-budget-financials.test.ts"]
+      "command": [
+        "node",
+        "docs-platform/app/node_modules/tsx/dist/cli.mjs",
+        "--test",
+        "scripts/test-launch-budget-financials.test.ts"
+      ]
     },
     "launch:model": {
       "cost": "integration",
-      "command": ["node", "docs-platform/app/node_modules/tsx/dist/cli.mjs", "--test", "docs-platform/app/test/investor-start-model.test.ts"]
+      "command": [
+        "node",
+        "docs-platform/app/node_modules/tsx/dist/cli.mjs",
+        "--test",
+        "docs-platform/app/test/investor-start-model.test.ts"
+      ]
     },
     "economics:data": {
       "cost": "targeted",
-      "command": ["node", "docs-platform/app/node_modules/tsx/dist/cli.mjs", "--test", "scripts/test-economics-data.test.ts"]
+      "command": [
+        "node",
+        "docs-platform/app/node_modules/tsx/dist/cli.mjs",
+        "--test",
+        "scripts/test-economics-data.test.ts"
+      ]
     },
     "investor-journey:unit": {
       "cost": "targeted",
-      "command": ["node", "docs-platform/app/node_modules/tsx/dist/cli.mjs", "--test", "scripts/test-financial-core.test.ts", "scripts/test-physical-allocation-map.test.ts", "scripts/test-investor-journey.test.ts"]
+      "command": [
+        "node",
+        "docs-platform/app/node_modules/tsx/dist/cli.mjs",
+        "--test",
+        "scripts/test-financial-core.test.ts",
+        "scripts/test-physical-allocation-map.test.ts",
+        "scripts/test-investor-journey.test.ts"
+      ]
     },
     "investor-terminal:browser": {
       "cost": "integration",
-      "command": ["node", "scripts/test-investor-terminal.cjs"]
+      "command": [
+        "node",
+        "scripts/test-investor-terminal.cjs"
+      ]
     },
     "franchise-platform:unit": {
       "cost": "targeted",
-      "command": ["node", "docs-platform/app/node_modules/tsx/dist/cli.mjs", "--test", "scripts/test-franchise-platform.test.ts", "docs-platform/app/test/franchise-platform.test.ts"]
+      "command": [
+        "node",
+        "docs-platform/app/node_modules/tsx/dist/cli.mjs",
+        "--test",
+        "scripts/test-franchise-platform.test.ts",
+        "docs-platform/app/test/franchise-platform.test.ts"
+      ]
     },
     "franchise-platform:browser": {
       "cost": "integration",
-      "command": ["node", "scripts/test-franchise-platform.cjs"]
+      "command": [
+        "node",
+        "scripts/test-franchise-platform.cjs"
+      ]
     },
     "control:routing": {
       "cost": "targeted",
-      "command": ["node", "scripts/test-control-routing.cjs"]
+      "command": [
+        "node",
+        "scripts/test-control-routing.cjs"
+      ]
     },
     "governance:registry": {
       "cost": "fast",
-      "command": ["npm", "run", "registry:validate", "--silent"]
+      "command": [
+        "npm",
+        "run",
+        "registry:validate",
+        "--silent"
+      ]
     },
     "governance:timeline": {
       "cost": "fast",
-      "command": ["npm", "run", "timeline:validate", "--silent"]
+      "command": [
+        "npm",
+        "run",
+        "timeline:validate",
+        "--silent"
+      ]
     },
     "governance:context": {
       "cost": "fast",
-      "command": ["npm", "run", "context:validate", "--silent"]
+      "command": [
+        "npm",
+        "run",
+        "context:validate",
+        "--silent"
+      ]
     },
     "governance:consistency": {
       "cost": "targeted",
-      "command": ["npm", "run", "governance:validate", "--silent"]
+      "command": [
+        "npm",
+        "run",
+        "governance:validate",
+        "--silent"
+      ]
     },
     "governance:unit": {
       "cost": "integration",
-      "command": ["node", "docs-platform/app/node_modules/tsx/dist/cli.mjs", "--test", "docs-platform/app/test/governance-timeline.test.ts", "docs-platform/app/test/governance-history-v2.test.ts", "docs-platform/app/test/governance-rollback.test.ts", "docs-platform/app/test/governance-supersede.test.ts", "docs-platform/app/test/registry.test.ts"]
+      "command": [
+        "node",
+        "docs-platform/app/node_modules/tsx/dist/cli.mjs",
+        "--test",
+        "docs-platform/app/test/governance-timeline.test.ts",
+        "docs-platform/app/test/governance-history-v2.test.ts",
+        "docs-platform/app/test/governance-rollback.test.ts",
+        "docs-platform/app/test/governance-supersede.test.ts",
+        "docs-platform/app/test/registry.test.ts"
+      ]
     },
     "google:unit": {
       "cost": "targeted",
       "localOnly": true,
-      "command": ["node", "docs-platform/app/node_modules/tsx/dist/cli.mjs", "--test", "docs-platform/app/test/google.test.ts", "docs-platform/app/test/google-publisher.test.ts", "docs-platform/app/test/capex-sheet-publisher.test.ts", "docs-platform/app/test/financial-sheet-publisher.test.ts", "docs-platform/app/test/investor-financial-summary-publisher.test.ts"]
+      "command": [
+        "node",
+        "docs-platform/app/node_modules/tsx/dist/cli.mjs",
+        "--test",
+        "docs-platform/app/test/google.test.ts",
+        "docs-platform/app/test/google-publisher.test.ts",
+        "docs-platform/app/test/capex-sheet-publisher.test.ts",
+        "docs-platform/app/test/financial-sheet-publisher.test.ts",
+        "docs-platform/app/test/investor-financial-summary-publisher.test.ts"
+      ]
     },
     "deployment:unit": {
       "cost": "targeted",
       "localOnly": true,
-      "command": ["node", "docs-platform/app/node_modules/tsx/dist/cli.mjs", "--test", "docs-platform/app/test/deployment-state.test.ts"]
+      "command": [
+        "node",
+        "docs-platform/app/node_modules/tsx/dist/cli.mjs",
+        "--test",
+        "docs-platform/app/test/deployment-state.test.ts"
+      ]
     },
     "build:production": {
       "cost": "release",
-      "command": ["npm", "run", "build", "--silent"]
+      "command": [
+        "npm",
+        "run",
+        "build",
+        "--silent"
+      ]
     },
     "build:sealed-reproducibility": {
       "cost": "release",
       "sealedOnly": true,
-      "command": ["npm", "run", "build:reproduce:sealed", "--silent"]
+      "command": [
+        "npm",
+        "run",
+        "build:reproduce:sealed",
+        "--silent"
+      ]
     }
   },
   "domains": {
-    "franchise-model": {"patterns": ["src/lib/franchise-model-*.ts", "src/components/FranchiseModel.tsx", "src/components/FranchiseModel.css", "src/components/franchise-model-language.ts", "docs-platform/working/franchise-model-v0.1.*", "docs-platform/working/franchise-model-v0.2.*", "src/components/FranchiseModelData.tsx", "src/lib/control-format.ts", "docs-platform/generated/franchise-model-reference-data.json", "scripts/franchise-model-references.cjs", "scripts/test-franchise-model*"], "upstream": [], "downstream": [], "testInputs": ["scripts/test-franchise-model.test.ts", "scripts/test-franchise-model-v02.test.ts", "scripts/test-franchise-model.cjs"], "fast": [], "targeted": ["typescript:site", "franchise-model:unit", "franchise-model:build", "franchise-model:browser"], "integration": [], "dependency": ["franchise-model:unit"], "visual": {"defaultImpact": "none"}, "releaseRequired": true},
-    "financial": {
-      "patterns": ["docs-platform/working/financial-model.yaml", "docs-platform/generated/financial-model-projection.json", "docs-platform/app/src/financial/financial-model.ts", "docs-platform/app/src/financial/google-sheet.ts", "docs-platform/schemas/financial-*.json", "docs-platform/app/test/financial-model.test.ts"],
-      "upstream": ["capex", "revenue-model"],
-      "downstream": ["investor-summary", "economics-ui", "launch-budget"],
-      "testInputs": ["docs-platform/app/test/financial-model.test.ts"],
-      "fast": ["financial:schema"],
-      "targeted": ["financial:projection", "financial:unit"],
+    "franchise-model": {
+      "patterns": [
+        "src/lib/franchise-model-*.ts",
+        "src/components/FranchiseModel.tsx",
+        "src/components/FranchiseModel.css",
+        "src/components/franchise-model-language.ts",
+        "docs-platform/working/franchise-model-v0.1.*",
+        "docs-platform/working/franchise-model-v0.2.*",
+        "src/components/FranchiseModelData.tsx",
+        "src/lib/control-format.ts",
+        "docs-platform/generated/franchise-model-reference-data.json",
+        "scripts/franchise-model-references.cjs",
+        "scripts/test-franchise-model*"
+      ],
+      "upstream": [],
+      "downstream": [],
+      "testInputs": [
+        "scripts/test-franchise-model.test.ts",
+        "scripts/test-franchise-model-v02.test.ts",
+        "scripts/test-franchise-model.cjs"
+      ],
+      "fast": [],
+      "targeted": [
+        "typescript:site",
+        "franchise-model:unit",
+        "franchise-model:build",
+        "franchise-model:browser"
+      ],
       "integration": [],
-      "dependency": ["financial:schema", "financial:projection", "financial:unit"],
-      "visual": {"defaultImpact": "none"},
+      "dependency": [
+        "franchise-model:unit"
+      ],
+      "visual": {
+        "defaultImpact": "none"
+      },
+      "releaseRequired": true
+    },
+    "financial": {
+      "patterns": [
+        "docs-platform/working/financial-model.yaml",
+        "docs-platform/generated/financial-model-projection.json",
+        "docs-platform/app/src/financial/financial-model.ts",
+        "docs-platform/app/src/financial/google-sheet.ts",
+        "docs-platform/schemas/financial-*.json",
+        "docs-platform/app/test/financial-model.test.ts"
+      ],
+      "upstream": [
+        "capex",
+        "revenue-model"
+      ],
+      "downstream": [
+        "investor-summary",
+        "economics-ui",
+        "launch-budget"
+      ],
+      "testInputs": [
+        "docs-platform/app/test/financial-model.test.ts"
+      ],
+      "fast": [
+        "financial:schema"
+      ],
+      "targeted": [
+        "financial:projection",
+        "financial:unit"
+      ],
+      "integration": [],
+      "dependency": [
+        "financial:schema",
+        "financial:projection",
+        "financial:unit"
+      ],
+      "visual": {
+        "defaultImpact": "none"
+      },
       "releaseRequired": true
     },
     "investor-summary": {
-      "patterns": ["docs-platform/working/investor-financial-summary.yaml", "docs-platform/generated/investor-financial-summary*.json", "docs-platform/app/src/financial/investor-summary*.ts", "docs-platform/schemas/investor-financial-summary*.json", "docs-platform/app/test/investor-financial-summary*.test.ts"],
-      "upstream": ["financial"],
-      "downstream": ["economics-ui", "launch-budget"],
-      "testInputs": ["docs-platform/app/test/investor-financial-summary.test.ts"],
-      "fast": ["investor:schema"],
-      "targeted": ["investor:projection", "investor:unit"],
+      "patterns": [
+        "docs-platform/working/investor-financial-summary.yaml",
+        "docs-platform/generated/investor-financial-summary*.json",
+        "docs-platform/app/src/financial/investor-summary*.ts",
+        "docs-platform/schemas/investor-financial-summary*.json",
+        "docs-platform/app/test/investor-financial-summary*.test.ts"
+      ],
+      "upstream": [
+        "financial"
+      ],
+      "downstream": [
+        "economics-ui",
+        "launch-budget"
+      ],
+      "testInputs": [
+        "docs-platform/app/test/investor-financial-summary.test.ts"
+      ],
+      "fast": [
+        "investor:schema"
+      ],
+      "targeted": [
+        "investor:projection",
+        "investor:unit"
+      ],
       "integration": [],
-      "dependency": ["investor:schema", "investor:projection", "investor:unit"],
-      "visual": {"defaultImpact": "none"},
+      "dependency": [
+        "investor:schema",
+        "investor:projection",
+        "investor:unit"
+      ],
+      "visual": {
+        "defaultImpact": "none"
+      },
       "releaseRequired": true
     },
     "capex": {
-      "patterns": ["docs-platform/working/capex-*", "docs-platform/working/configurations/**", "docs-platform/generated/capex-*.json", "docs-platform/app/src/capex/**", "docs-platform/schemas/capex-*.json", "docs-platform/app/test/capex-*.test.ts", "src/content/capex-configurator-data.json", "src/lib/capex-runtime.ts", "src/components/CapexConfigurator.*"],
+      "patterns": [
+        "docs-platform/working/capex-*",
+        "docs-platform/working/configurations/**",
+        "docs-platform/generated/capex-*.json",
+        "docs-platform/app/src/capex/**",
+        "docs-platform/schemas/capex-*.json",
+        "docs-platform/app/test/capex-*.test.ts",
+        "src/content/capex-configurator-data.json",
+        "src/lib/capex-runtime.ts",
+        "src/components/CapexConfigurator.*",
+        "docs-platform/working/capex-financial-import-pin.json"
+      ],
       "upstream": [],
-      "downstream": ["financial"],
-      "testInputs": ["docs-platform/app/test/capex-*.test.ts"],
-      "fast": ["capex:snapshot"],
-      "targeted": ["capex:unit"],
+      "downstream": [
+        "financial"
+      ],
+      "testInputs": [
+        "docs-platform/app/test/capex-*.test.ts"
+      ],
+      "fast": [
+        "capex:snapshot"
+      ],
+      "targeted": [
+        "capex:unit",
+        "franchise-model:build"
+      ],
       "integration": [],
-      "dependency": ["capex:snapshot", "capex:unit"],
-      "visual": {"route": "/capex-configurator", "requiredSelectors": [".capex-page", "#capex-title"], "defaultImpact": "none"},
+      "dependency": [
+        "capex:snapshot",
+        "capex:unit"
+      ],
+      "visual": {
+        "route": "/control/capex",
+        "requiredSelectors": [
+          ".capex-page",
+          "#capex-title"
+        ],
+        "defaultImpact": "none",
+        "clickSelectors": [
+          "button[data-format-id=\"FMT-RESTAURANT-SEATING\"]"
+        ]
+      },
       "releaseRequired": true
     },
     "revenue-model": {
-      "patterns": ["docs-platform/working/revenue-model.yaml", "docs-platform/app/src/investor/revenue-model.ts", "docs-platform/schemas/revenue-model.schema.json", "docs-platform/app/test/revenue-model.test.ts", "src/content/revenue-model-data.json", "src/lib/revenue-model.ts"],
+      "patterns": [
+        "docs-platform/working/revenue-model.yaml",
+        "docs-platform/app/src/investor/revenue-model.ts",
+        "docs-platform/schemas/revenue-model.schema.json",
+        "docs-platform/app/test/revenue-model.test.ts",
+        "src/content/revenue-model-data.json",
+        "src/lib/revenue-model.ts"
+      ],
       "upstream": [],
-      "downstream": ["revenue-ui", "financial"],
-      "testInputs": ["docs-platform/app/test/revenue-model.test.ts"],
-      "fast": ["revenue:schema"],
-      "targeted": ["revenue:unit"],
+      "downstream": [
+        "revenue-ui",
+        "financial"
+      ],
+      "testInputs": [
+        "docs-platform/app/test/revenue-model.test.ts"
+      ],
+      "fast": [
+        "revenue:schema"
+      ],
+      "targeted": [
+        "revenue:unit"
+      ],
       "integration": [],
-      "dependency": ["revenue:schema", "revenue:unit"],
-      "visual": {"defaultImpact": "none"},
+      "dependency": [
+        "revenue:schema",
+        "revenue:unit"
+      ],
+      "visual": {
+        "defaultImpact": "none"
+      },
       "releaseRequired": true
     },
     "revenue-ui": {
-      "patterns": ["src/components/RevenueModel.*", "src/content/revenue-model-data.json", "src/lib/revenue-model.ts"],
-      "upstream": ["revenue-model"],
+      "patterns": [
+        "src/components/RevenueModel.*",
+        "src/content/revenue-model-data.json",
+        "src/lib/revenue-model.ts"
+      ],
+      "upstream": [
+        "revenue-model"
+      ],
       "downstream": [],
-      "testInputs": ["scripts/test-site.cjs"],
+      "testInputs": [
+        "scripts/test-site.cjs"
+      ],
       "fast": [],
-      "targeted": ["typescript:site", "revenue:web"],
+      "targeted": [
+        "typescript:site",
+        "revenue:web"
+      ],
       "integration": [],
-      "dependency": ["revenue:web"],
-      "visual": {"defaultImpact": "none"},
+      "dependency": [
+        "revenue:web"
+      ],
+      "visual": {
+        "defaultImpact": "none"
+      },
       "releaseRequired": true
     },
     "launch-budget": {
-      "patterns": ["docs-platform/working/investor-start-model.yaml", "docs-platform/app/src/investor/start-model.ts", "docs-platform/schemas/investor-start-model.schema.json", "docs-platform/app/test/investor-start-model.test.ts", "src/components/LaunchBudget.*", "src/lib/launch-budget.ts", "src/lib/launch-financials.ts", "scripts/test-launch-budget-financials.test.ts"],
-      "upstream": ["financial", "capex"],
+      "patterns": [
+        "docs-platform/working/investor-start-model.yaml",
+        "docs-platform/app/src/investor/start-model.ts",
+        "docs-platform/schemas/investor-start-model.schema.json",
+        "docs-platform/app/test/investor-start-model.test.ts",
+        "src/components/LaunchBudget.*",
+        "src/lib/launch-budget.ts",
+        "src/lib/launch-financials.ts",
+        "scripts/test-launch-budget-financials.test.ts"
+      ],
+      "upstream": [
+        "financial",
+        "capex"
+      ],
       "downstream": [],
-      "testInputs": ["scripts/test-launch-budget-financials.test.ts", "docs-platform/app/test/investor-start-model.test.ts"],
-      "fast": ["launch:schema"],
-      "targeted": ["typescript:site", "launch:unit"],
-      "integration": ["launch:model"],
-      "dependency": ["launch:unit"],
-      "visual": {"defaultImpact": "none"},
+      "testInputs": [
+        "scripts/test-launch-budget-financials.test.ts",
+        "docs-platform/app/test/investor-start-model.test.ts"
+      ],
+      "fast": [
+        "launch:schema"
+      ],
+      "targeted": [
+        "typescript:site",
+        "launch:unit"
+      ],
+      "integration": [
+        "launch:model"
+      ],
+      "dependency": [
+        "launch:unit"
+      ],
+      "visual": {
+        "defaultImpact": "none"
+      },
       "releaseRequired": true
     },
     "economics-ui": {
-      "patterns": ["src/components/Economics.*", "src/content/economics.*", "src/lib/economics.ts", "scripts/test-economics-data.test.ts", "scripts/test-economics-route.cjs"],
-      "upstream": ["financial", "investor-summary"],
+      "patterns": [
+        "src/components/Economics.*",
+        "src/content/economics.*",
+        "src/lib/economics.ts",
+        "scripts/test-economics-data.test.ts",
+        "scripts/test-economics-route.cjs"
+      ],
+      "upstream": [
+        "financial",
+        "investor-summary"
+      ],
       "downstream": [],
-      "testInputs": ["scripts/test-economics-data.test.ts", "scripts/test-economics-route.cjs"],
+      "testInputs": [
+        "scripts/test-economics-data.test.ts",
+        "scripts/test-economics-route.cjs"
+      ],
       "fast": [],
-      "targeted": ["typescript:site", "economics:data"],
+      "targeted": [
+        "typescript:site",
+        "economics:data"
+      ],
       "integration": [],
-      "dependency": ["economics:data"],
-      "visual": {"defaultImpact": "none"},
+      "dependency": [
+        "economics:data"
+      ],
+      "visual": {
+        "defaultImpact": "none"
+      },
       "releaseRequired": true
     },
     "investor-journey": {
-      "patterns": ["src/components/InvestorConfigurationProvider.tsx", "src/components/InvestorTerminal.*", "src/components/NetworkScalingPanel.*", "src/lib/investor-configuration.ts", "src/lib/configured-economics.ts", "src/lib/financial-assets.ts", "src/lib/financial-core.ts", "src/lib/network-financial-core.ts", "src/lib/network-financial-projection.ts", "src/lib/network-scaling.ts", "src/lib/network-temporal.ts", "src/lib/physical-allocation.ts", "scripts/generate-financial-core-projection.ts", "docs-platform/generated/financial-core-projection.json", "scripts/test-financial-core.test.ts", "scripts/test-physical-allocation-map.test.ts", "scripts/test-investor-journey.test.ts", "scripts/test-investor-terminal.cjs"],
-      "upstream": ["financial", "investor-summary", "launch-budget", "economics-ui", "revenue-ui"],
+      "patterns": [
+        "src/components/InvestorConfigurationProvider.tsx",
+        "src/components/InvestorTerminal.*",
+        "src/components/NetworkScalingPanel.*",
+        "src/lib/investor-configuration.ts",
+        "src/lib/configured-economics.ts",
+        "src/lib/financial-assets.ts",
+        "src/lib/financial-core.ts",
+        "src/lib/network-financial-core.ts",
+        "src/lib/network-financial-projection.ts",
+        "src/lib/network-scaling.ts",
+        "src/lib/network-temporal.ts",
+        "src/lib/physical-allocation.ts",
+        "scripts/generate-financial-core-projection.ts",
+        "docs-platform/generated/financial-core-projection.json",
+        "scripts/test-financial-core.test.ts",
+        "scripts/test-physical-allocation-map.test.ts",
+        "scripts/test-investor-journey.test.ts",
+        "scripts/test-investor-terminal.cjs"
+      ],
+      "upstream": [
+        "financial",
+        "investor-summary",
+        "launch-budget",
+        "economics-ui",
+        "revenue-ui"
+      ],
       "downstream": [],
-      "testInputs": ["scripts/test-financial-core.test.ts", "scripts/test-physical-allocation-map.test.ts", "scripts/test-investor-journey.test.ts", "scripts/test-investor-terminal.cjs"],
+      "testInputs": [
+        "scripts/test-financial-core.test.ts",
+        "scripts/test-physical-allocation-map.test.ts",
+        "scripts/test-investor-journey.test.ts",
+        "scripts/test-investor-terminal.cjs"
+      ],
       "fast": [],
-      "targeted": ["typescript:site", "financial-core:projection", "investor-journey:unit", "investor-terminal:browser"],
+      "targeted": [
+        "typescript:site",
+        "financial-core:projection",
+        "investor-journey:unit",
+        "investor-terminal:browser"
+      ],
       "integration": [],
-      "dependency": ["investor-journey:unit"],
-      "visual": {"defaultImpact": "none"},
+      "dependency": [
+        "investor-journey:unit"
+      ],
+      "visual": {
+        "defaultImpact": "none"
+      },
       "releaseRequired": true
     },
     "franchise-platform": {
-      "patterns": ["docs-platform/02-franchise-platform-strategy.md", "docs-platform/03-petrogradka-landlord-proposition.md", "docs-platform/scenarios/petrogradka-ready-production-base.yaml", "docs-platform/working/franchise-platform-parameters.yaml", "docs-platform/checklists/franchise-platform-missing-inputs.md", "docs-platform/research/banking-settlement-architecture.md", "src/components/FranchisePlatform.*", "src/components/Petrogradka.*", "src/content/franchise-platform.ts", "src/lib/franchise-platform.ts", "scripts/test-franchise-platform.*", "docs-platform/app/test/franchise-platform.test.ts"],
+      "patterns": [
+        "docs-platform/02-franchise-platform-strategy.md",
+        "docs-platform/03-petrogradka-landlord-proposition.md",
+        "docs-platform/scenarios/petrogradka-ready-production-base.yaml",
+        "docs-platform/working/franchise-platform-parameters.yaml",
+        "docs-platform/checklists/franchise-platform-missing-inputs.md",
+        "docs-platform/research/banking-settlement-architecture.md",
+        "src/components/FranchisePlatform.*",
+        "src/components/Petrogradka.*",
+        "src/content/franchise-platform.ts",
+        "src/lib/franchise-platform.ts",
+        "scripts/test-franchise-platform.*",
+        "docs-platform/app/test/franchise-platform.test.ts"
+      ],
       "upstream": [],
       "downstream": [],
-      "testInputs": ["scripts/test-franchise-platform.test.ts", "scripts/test-franchise-platform.cjs", "docs-platform/app/test/franchise-platform.test.ts"],
+      "testInputs": [
+        "scripts/test-franchise-platform.test.ts",
+        "scripts/test-franchise-platform.cjs",
+        "docs-platform/app/test/franchise-platform.test.ts"
+      ],
       "fast": [],
-      "targeted": ["typescript:site", "franchise-platform:unit", "franchise-platform:browser"],
+      "targeted": [
+        "typescript:site",
+        "franchise-platform:unit",
+        "franchise-platform:browser"
+      ],
       "integration": [],
-      "dependency": ["franchise-platform:unit"],
-      "visual": {"defaultImpact": "none"},
+      "dependency": [
+        "franchise-platform:unit"
+      ],
+      "visual": {
+        "defaultImpact": "none"
+      },
       "releaseRequired": true
     },
     "control": {
-      "patterns": ["control.html", "vite.control.config.ts", "src/control-main.tsx", "src/ControlApp.tsx", "src/Control.css", "src/content/investor-terminal-capex-data.json", "src/lib/investor-terminal-capex-runtime.ts", "scripts/generate-investor-terminal-capex-data.mjs", "scripts/test-control-routing.cjs", "server/contact-server.mjs", "server/contact_server.py", "scripts/activate-colob-caddy-route.remote.sh", "scripts/setup-colob-contact-server.remote.sh", "scripts/deploy-colob-control-workspace.remote.sh", "synch_to_server.sh", "vite.config.ts"],
-      "upstream": ["capex", "revenue-model", "financial", "investor-summary"],
+      "patterns": [
+        "control.html",
+        "vite.control.config.ts",
+        "src/control-main.tsx",
+        "src/ControlApp.tsx",
+        "src/Control.css",
+        "src/content/investor-terminal-capex-data.json",
+        "src/lib/investor-terminal-capex-runtime.ts",
+        "scripts/generate-investor-terminal-capex-data.mjs",
+        "scripts/test-control-routing.cjs",
+        "server/contact-server.mjs",
+        "server/contact_server.py",
+        "scripts/activate-colob-caddy-route.remote.sh",
+        "scripts/setup-colob-contact-server.remote.sh",
+        "scripts/deploy-colob-control-workspace.remote.sh",
+        "synch_to_server.sh",
+        "vite.config.ts"
+      ],
+      "upstream": [
+        "capex",
+        "revenue-model",
+        "financial",
+        "investor-summary"
+      ],
       "downstream": [],
-      "testInputs": ["scripts/test-control-routing.cjs"],
+      "testInputs": [
+        "scripts/test-control-routing.cjs"
+      ],
       "fast": [],
-      "targeted": ["typescript:site", "control:routing"],
+      "targeted": [
+        "typescript:site",
+        "control:routing"
+      ],
       "integration": [],
-      "dependency": ["control:routing"],
-      "visual": {"defaultImpact": "none"},
+      "dependency": [
+        "control:routing"
+      ],
+      "visual": {
+        "defaultImpact": "none"
+      },
+      "releaseRequired": true
+    },
+    "sennaya": {
+      "patterns": [
+        "src/components/Sennaya.*",
+        "src/components/PropertyProposal.tsx",
+        "src/content/sennaya*",
+        "scripts/*sennaya*",
+        "docs-platform/scenarios/sennaya-flagship.json",
+        "docs-platform/working/sennaya-investor-page.md",
+        "src/lib/property-funding.ts",
+        "scripts/test-capex-composition.test.ts"
+      ],
+      "upstream": [
+        "capex",
+        "revenue-model",
+        "launch-budget",
+        "investor-journey"
+      ],
+      "downstream": [],
+      "testInputs": [
+        "scripts/test-sennaya.test.ts",
+        "scripts/test-capex-composition.test.ts",
+        "scripts/test-sennaya.cjs",
+        "docs-platform/working/capex-financial-import-pin.json",
+        "docs-platform/app/src/capex/import-compatibility.ts"
+      ],
+      "fast": [],
+      "targeted": [
+        "typescript:site",
+        "sennaya:unit"
+      ],
+      "integration": [
+        "sennaya:browser"
+      ],
+      "dependency": [
+        "sennaya:unit"
+      ],
+      "visual": {
+        "defaultImpact": "none"
+      },
       "releaseRequired": true
     },
     "site-core": {
-      "patterns": ["src/App.tsx", "src/main.tsx", "src/styles.css", "src/components/ui.tsx", "src/content/approved-copy.ts", "src/content/concept.ts", "src/content/history.ts", "src/content/home.ts", "src/content/investment.ts", "src/content/investorQuestions.ts", "src/content/materials.ts", "src/content/media-map.ts", "src/content/navigation.ts", "src/content/production-route.ts", "src/content/quality.ts", "src/content/site.ts", "src/types.ts", "vite.config.ts", "index.html", "scripts/audit-*.mjs", "scripts/test-site.cjs", "scripts/verify-site.cjs"],
+      "patterns": [
+        "src/App.tsx",
+        "src/main.tsx",
+        "src/styles.css",
+        "src/components/ui.tsx",
+        "src/content/approved-copy.ts",
+        "src/content/concept.ts",
+        "src/content/history.ts",
+        "src/content/home.ts",
+        "src/content/investment.ts",
+        "src/content/investorQuestions.ts",
+        "src/content/materials.ts",
+        "src/content/media-map.ts",
+        "src/content/navigation.ts",
+        "src/content/production-route.ts",
+        "src/content/quality.ts",
+        "src/content/site.ts",
+        "src/types.ts",
+        "vite.config.ts",
+        "index.html",
+        "scripts/audit-*.mjs",
+        "scripts/test-site.cjs",
+        "scripts/verify-site.cjs"
+      ],
       "upstream": [],
       "downstream": [],
-      "testInputs": ["scripts/test-site.cjs"],
+      "testInputs": [
+        "scripts/test-site.cjs"
+      ],
       "fast": [],
-      "targeted": ["typescript:site"],
+      "targeted": [
+        "typescript:site"
+      ],
       "integration": [],
-      "dependency": ["typescript:site"],
-      "visual": {"defaultImpact": "none"},
+      "dependency": [
+        "typescript:site"
+      ],
+      "visual": {
+        "defaultImpact": "none"
+      },
       "releaseRequired": true
     },
     "governance": {
-      "patterns": ["docs-platform/app/src/governance/**", "docs-platform/registry/**", "docs-platform/changes/**", "docs-platform/changelog/**", "docs-platform/context/**", "docs-platform/schemas/artifact-*.json", "docs-platform/schemas/deployment-*.json", "docs-platform/schemas/project-state.schema.json", "docs-platform/schemas/snapshot-*.json", "docs-platform/schemas/timeline-*.json", "docs-platform/app/test/governance-*.test.ts", "docs-platform/app/test/registry.test.ts"],
+      "patterns": [
+        "docs-platform/app/src/governance/**",
+        "docs-platform/registry/**",
+        "docs-platform/changes/**",
+        "docs-platform/changelog/**",
+        "docs-platform/context/**",
+        "docs-platform/schemas/artifact-*.json",
+        "docs-platform/schemas/deployment-*.json",
+        "docs-platform/schemas/project-state.schema.json",
+        "docs-platform/schemas/snapshot-*.json",
+        "docs-platform/schemas/timeline-*.json",
+        "docs-platform/app/test/governance-*.test.ts",
+        "docs-platform/app/test/registry.test.ts"
+      ],
       "upstream": [],
       "downstream": [],
-      "testInputs": ["docs-platform/app/test/governance-*.test.ts", "docs-platform/app/test/registry.test.ts"],
-      "fast": ["governance:registry", "governance:timeline", "governance:context"],
-      "targeted": ["governance:consistency"],
-      "integration": ["governance:unit"],
-      "dependency": ["governance:registry", "governance:timeline", "governance:context"],
-      "visual": {"defaultImpact": "none"},
+      "testInputs": [
+        "docs-platform/app/test/governance-*.test.ts",
+        "docs-platform/app/test/registry.test.ts"
+      ],
+      "fast": [
+        "governance:registry",
+        "governance:timeline",
+        "governance:context"
+      ],
+      "targeted": [
+        "governance:consistency"
+      ],
+      "integration": [
+        "governance:unit"
+      ],
+      "dependency": [
+        "governance:registry",
+        "governance:timeline",
+        "governance:context"
+      ],
+      "visual": {
+        "defaultImpact": "none"
+      },
       "releaseRequired": true
     },
     "google-publisher": {
-      "patterns": ["docs-platform/app/src/google/**", "docs-platform/mcp/**", "docs-platform/app/test/google*.test.ts", "docs-platform/app/test/*-publisher.test.ts", "docs-platform/schemas/google-*.json"],
+      "patterns": [
+        "docs-platform/app/src/google/**",
+        "docs-platform/mcp/**",
+        "docs-platform/app/test/google*.test.ts",
+        "docs-platform/app/test/*-publisher.test.ts",
+        "docs-platform/schemas/google-*.json"
+      ],
       "upstream": [],
       "downstream": [],
-      "testInputs": ["docs-platform/app/test/google*.test.ts", "docs-platform/app/test/*-publisher.test.ts"],
+      "testInputs": [
+        "docs-platform/app/test/google*.test.ts",
+        "docs-platform/app/test/*-publisher.test.ts"
+      ],
       "fast": [],
-      "targeted": ["typescript:platform", "google:unit"],
+      "targeted": [
+        "typescript:platform",
+        "google:unit"
+      ],
       "integration": [],
       "dependency": [],
-      "visual": {"defaultImpact": "none"},
+      "visual": {
+        "defaultImpact": "none"
+      },
       "releaseRequired": false,
       "externalByExplicitWorkflowOnly": true
     },
     "deployment": {
-      "patterns": ["scripts/prerender-dist.cjs", "scripts/serve-dist.cjs", "scripts/check-sealed-build.mjs", "scripts/install-playwright-browser.cjs", "docs-platform/app/src/governance/deployment.ts", "docs-platform/app/test/deployment-state.test.ts", "docs-platform/schemas/deployment-receipt.schema.json", "vite.config.ts"],
-      "upstream": ["site-core"],
+      "patterns": [
+        "scripts/prerender-dist.cjs",
+        "scripts/serve-dist.cjs",
+        "scripts/check-sealed-build.mjs",
+        "scripts/install-playwright-browser.cjs",
+        "docs-platform/app/src/governance/deployment.ts",
+        "docs-platform/app/test/deployment-state.test.ts",
+        "docs-platform/schemas/deployment-receipt.schema.json",
+        "vite.config.ts"
+      ],
+      "upstream": [
+        "site-core"
+      ],
       "downstream": [],
-      "testInputs": ["docs-platform/app/test/deployment-state.test.ts"],
+      "testInputs": [
+        "docs-platform/app/test/deployment-state.test.ts"
+      ],
       "fast": [],
-      "targeted": ["deployment:unit"],
+      "targeted": [
+        "deployment:unit"
+      ],
       "integration": [],
-      "dependency": ["deployment:unit"],
-      "visual": {"defaultImpact": "none"},
+      "dependency": [
+        "deployment:unit"
+      ],
+      "visual": {
+        "defaultImpact": "none"
+      },
       "releaseRequired": true
     },
     "documentation": {
-      "patterns": ["*.md", "verification/**/*.md", "docs-platform/**/*.md"],
+      "patterns": [
+        "*.md",
+        "verification/**/*.md",
+        "docs-platform/**/*.md"
+      ],
       "upstream": [],
       "downstream": [],
       "testInputs": [],
-      "fast": ["diff:check", "documentation:static"],
+      "fast": [
+        "diff:check",
+        "documentation:static"
+      ],
       "targeted": [],
       "integration": [],
       "dependency": [],
-      "visual": {"defaultImpact": "none"},
+      "visual": {
+        "defaultImpact": "none"
+      },
       "releaseRequired": true
     },
     "verification": {
-      "patterns": ["verification/**", "scripts/verification/**", "package.json", ".gitignore", "AGENTS.md", "docs-platform/AGENTS.md"],
+      "patterns": [
+        "verification/**",
+        "scripts/verification/**",
+        "package.json",
+        ".gitignore",
+        "AGENTS.md",
+        "docs-platform/AGENTS.md"
+      ],
       "upstream": [],
       "downstream": [],
-      "testInputs": ["scripts/verification/test/*.test.mjs"],
-      "fast": ["diff:check", "verification:config"],
-      "targeted": ["verification:unit"],
+      "testInputs": [
+        "scripts/verification/test/*.test.mjs"
+      ],
+      "fast": [
+        "diff:check",
+        "verification:config"
+      ],
+      "targeted": [
+        "verification:unit"
+      ],
       "integration": [],
       "dependency": [],
-      "visual": {"defaultImpact": "none"},
+      "visual": {
+        "defaultImpact": "none"
+      },
       "releaseRequired": true
     }
   },
   "release": {
-    "alwaysRun": ["diff:check", "governance:registry", "governance:timeline", "governance:context", "governance:consistency", "typescript:site", "build:production", "build:sealed-reproducibility"]
+    "alwaysRun": [
+      "diff:check",
+      "governance:registry",
+      "governance:timeline",
+      "governance:context",
+      "governance:consistency",
+      "typescript:site",
+      "build:production",
+      "build:sealed-reproducibility"
+    ]
   }
 }

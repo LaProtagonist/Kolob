@@ -20,6 +20,7 @@ const controlRoutes = [
   ["/control/economics", "Экономика объекта"],
 ];
 const legacyRedirects = new Map([
+  ["/investor/franchise-platform/sennaya", "/sennaya"],
   ["/investor/franchise-platform/petrogradka", "/petrogradka"],
   ["/investor/franchise-platform", "/control/franchise-platform"],
   ["/capex-configurator", "/control/capex"],

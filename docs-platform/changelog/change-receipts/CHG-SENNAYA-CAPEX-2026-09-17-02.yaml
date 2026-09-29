@@ -1,0 +1,341 @@
+receipt_version: 2
+change_id: CHG-SENNAYA-CAPEX-2026-09-17-02
+iteration_id: ITR-SENNAYA-CAPEX-2026-09-17-02
+proposal_id: PROP-SENNAYA-CAPEX-2026-09-17-02
+decision_id: DEC-001
+source_change_set: docs-platform/changes/CHG-SENNAYA-CAPEX-2026-09-17-02.yaml
+status: applied
+applied_at: 2026-09-17T19:17:56.709Z
+actor: Codex
+tool: docs-platform change:apply
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-SENNAYA-CAPEX-2026-09-17-02-approved.yaml
+  sha256: da4966a1d73d3ecc3fffed1900b51ed629c67191696dddbaba9b88a70c326efb
+before_hash: 9fe437b249db31b200ee959aeacb2e7320021863a069ee3865ab230bf23555d6
+after_hash: 542e7ed87bdbb2464c25631c64030b901b925649ab5466a894c4fa4d68c6bbb1
+touched_registry_files:
+  - path: docs-platform/registry/sources.yaml
+    backup_path: docs-platform/changelog/backups/2026-09-17T19-17-56-709Z-CHG-SENNAYA-CAPEX-2026-09-17-02/sources.yaml
+  - path: docs-platform/registry/decisions.yaml
+    backup_path: docs-platform/changelog/backups/2026-09-17T19-17-56-709Z-CHG-SENNAYA-CAPEX-2026-09-17-02/decisions.yaml
+operations:
+  - type: add
+    entity: sources
+    id: SRC-SEATED-RETAIL-BRIEF-20260917
+    before: null
+    after:
+      id: SRC-SEATED-RETAIL-BRIEF-20260917
+      title: "Задание владельца: общий формат точки с залом и страница Сенной"
+      type: instruction
+      location: Owner pasted full task, 2026-09-17
+      publisher: project owner
+      publication_date: 2026-09-17
+      accessed_at: 2026-09-17
+      reliability: primary
+      notes: Authorizes common research additions and price research, 3 UFO, no coffee, 2 vertical refrigerators, chest, staged review only. No Git mutation or production publication.
+    before_index: null
+    after_index: 184
+    before_sha256: null
+    after_sha256: 51ceac081d44f88a069a1a0e679b8d62044420a9faa4471891318dfecf8fd368
+    reverse_operation:
+      type: remove
+      entity: sources
+      id: SRC-SEATED-RETAIL-BRIEF-20260917
+  - type: add
+    entity: sources
+    id: SRC-PRICE-20260917-02-058
+    before: null
+    after:
+      id: SRC-PRICE-20260917-02-058
+      title: "Polair CM107-S / 1001170d: исследовательская цена 77493 ₽"
+      type: web
+      location: https://www.polair-shop.ru/catalog/kholodilnye-shkafy/holodilnie_shkafi_s_metallicheskimi_dvermi/hs_standard2/cm107-s/
+      publisher: Polair Shop
+      publication_date: null
+      accessed_at: 2026-09-17
+      reliability: primary
+      notes: "НДС: включён. 700 л номинально; 0…+6 °C; 697×925×1960 мм. Цена для центрального региона; перевозка в СПб, разгрузка и подключение не включены. Полезный объём и размещение дневного запаса ещё не проверены. Цена не является утверждённой сметой."
+    before_index: null
+    after_index: 185
+    before_sha256: null
+    after_sha256: 2cc5acdd6f3cc5c0158af33218385fd144a1c9827abbbad5994d17c866dd16ba
+    reverse_operation:
+      type: remove
+      entity: sources
+      id: SRC-PRICE-20260917-02-058
+  - type: add
+    entity: sources
+    id: SRC-PRICE-20260917-02-059
+    before: null
+    after:
+      id: SRC-PRICE-20260917-02-059
+      title: "Frostor F400S: исследовательская цена 46296 ₽"
+      type: web
+      location: https://frostor.ru/catalog/morozilnye_lari/f-400-s/
+      publisher: Frostor
+      publication_date: null
+      accessed_at: 2026-09-17
+      reliability: primary
+      notes: "НДС: не указан. 380 л охлаждаемого объёма; −18…−22 °C; 1200×600×840 мм; 230 В, 140 Вт; две корзины. Цена акции; доставка в СПб и подключение не включены. Полезная загрузка требует проверки. Цена не является утверждённой сметой."
+    before_index: null
+    after_index: 186
+    before_sha256: null
+    after_sha256: 82f33d4d1f76da20e715962e90d062d6dbb0210a2454c814026f056f9f3ec542
+    reverse_operation:
+      type: remove
+      entity: sources
+      id: SRC-PRICE-20260917-02-059
+  - type: add
+    entity: sources
+    id: SRC-PRICE-20260917-04-004
+    before: null
+    after:
+      id: SRC-PRICE-20260917-04-004
+      title: "АТОЛ 30Ф, ФН 1.2 36 месяцев / 58205: исследовательская цена 50600 ₽"
+      type: web
+      location: https://geksagon.ru/ru/product/atol-30f/
+      publisher: Гексагон
+      publication_date: null
+      accessed_at: 2026-09-17
+      reliability: primary
+      notes: "НДС: не указан. ФН и встроенный чековый принтер включены; USB, 44–58 мм, 75 мм/с; БП и USB-кабель включены. Регистрация, ОФД и внедрение отдельно. Применимость срока ФН уточнить после выбора налогового режима. Цена не является утверждённой сметой."
+    before_index: null
+    after_index: 187
+    before_sha256: null
+    after_sha256: 41d3c07c76f8803c514735e722e3e6d0e8d79093b932d7f56b75db690478a470
+    reverse_operation:
+      type: remove
+      entity: sources
+      id: SRC-PRICE-20260917-04-004
+  - type: add
+    entity: sources
+    id: SRC-PRICE-20260917-04-005
+    before: null
+    after:
+      id: SRC-PRICE-20260917-04-005
+      title: "TP-Link ER605: исследовательская цена 5990 ₽"
+      type: web
+      location: https://tp-link.ru/catalog/marshrutizatory/er605-tl-r605/
+      publisher: TP-Link.ru
+      publication_date: null
+      accessed_at: 2026-09-17
+      reliability: primary
+      notes: "НДС: не указан. Гигабитный маршрутизатор; резервирование WAN при подключении второго канала. Под заказ; второй канал, кабели и настройка не включены. Цена не является утверждённой сметой."
+    before_index: null
+    after_index: 188
+    before_sha256: null
+    after_sha256: 459c06539b38411c4356c549db505513ed46bcf7dd7b772f551328e6eb5fefc5
+    reverse_operation:
+      type: remove
+      entity: sources
+      id: SRC-PRICE-20260917-04-005
+  - type: add
+    entity: sources
+    id: SRC-PRICE-20260917-04-006
+    before: null
+    after:
+      id: SRC-PRICE-20260917-04-006
+      title: "TP-Link EAP225: исследовательская цена 7390 ₽"
+      type: web
+      location: https://tp-link.ru/catalog/rasshirenie-seti-wi-fi/tochki-dostupa/eap225/
+      publisher: TP-Link.ru
+      publication_date: null
+      accessed_at: 2026-09-17
+      reliability: primary
+      notes: "НДС: не указан. AC1350; PoE. Покрытие, состав инжектора питания и монтаж проверить в проекте сети. Цена не является утверждённой сметой."
+    before_index: null
+    after_index: 189
+    before_sha256: null
+    after_sha256: 87b8bc194104243251d28e461695be858364710b0c8276bd7095aa80bb81cffa
+    reverse_operation:
+      type: remove
+      entity: sources
+      id: SRC-PRICE-20260917-04-006
+  - type: add
+    entity: sources
+    id: SRC-PRICE-20260917-04-007
+    before: null
+    after:
+      id: SRC-PRICE-20260917-04-007
+      title: "TP-Link TL-SG108E: исследовательская цена 3890 ₽"
+      type: web
+      location: https://tp-link.ru/catalog/kommutatory/smart/tl-sg108e/
+      publisher: TP-Link.ru
+      publication_date: null
+      accessed_at: 2026-09-17
+      reliability: primary
+      notes: "НДС: не указан. 8 гигабитных портов, VLAN, без PoE. Под заказ; окончательный портовый баланс с видеонаблюдением и питание точки доступа требуют проверки. Цена не является утверждённой сметой."
+    before_index: null
+    after_index: 190
+    before_sha256: null
+    after_sha256: bf4388628080b6a0c7a4baef5f22b402c688be5bfa4cc70e3884f19a8c98c445
+    reverse_operation:
+      type: remove
+      entity: sources
+      id: SRC-PRICE-20260917-04-007
+  - type: add
+    entity: sources
+    id: SRC-PRICE-20260917-04-008
+    before: null
+    after:
+      id: SRC-PRICE-20260917-04-008
+      title: "IPPON Back Basic 850 / 403406: исследовательская цена 6490 ₽"
+      type: web
+      location: https://ippon-russia.ru/istochnik-besperebojnogo-pitanija-ippon-back-basic-850
+      publisher: IPPON Russia
+      publication_date: null
+      accessed_at: 2026-09-17
+      reliability: primary
+      notes: "НДС: не указан. 850 ВА / 480 Вт; рабочее количество: два кассовых поста и сеть. IEC-подключения; кабели/адаптеры и автономность по нагрузке требуют проверки. Цена не является утверждённой сметой."
+    before_index: null
+    after_index: 191
+    before_sha256: null
+    after_sha256: 987c24ab98f56f62f6bba06fae1b343303e8126edaa54498dbb6184ff29700e8
+    reverse_operation:
+      type: remove
+      entity: sources
+      id: SRC-PRICE-20260917-04-008
+  - type: add
+    entity: sources
+    id: SRC-PRICE-20260917-04-011
+    before: null
+    after:
+      id: SRC-PRICE-20260917-04-011
+      title: "Выездное подключение кассы в Санкт-Петербурге: исследовательская цена 3000 ₽"
+      type: web
+      location: https://evotor.spb.ru/product/podklucheniye-k-ofd/
+      publisher: КИФ / Эвотор СПб
+      publication_date: null
+      accessed_at: 2026-09-17
+      reliability: primary
+      notes: "НДС: не указан. Цена за кассу включает вводное обучение. Не прибавлять отдельно аналогичную настройку за 2000 ₽; состав регистрации ФНС, загрузки номенклатуры и интеграции с учётом уточнить. Цена не является утверждённой сметой."
+    before_index: null
+    after_index: 192
+    before_sha256: null
+    after_sha256: 4a75814039894dc0055fe8012892b3f46f60ead81404f975c089029b395762a7
+    reverse_operation:
+      type: remove
+      entity: sources
+      id: SRC-PRICE-20260917-04-011
+  - type: add
+    entity: sources
+    id: SRC-PRICE-20260917-04-012
+    before: null
+    after:
+      id: SRC-PRICE-20260917-04-012
+      title: "Подключение ОФД на один год: исследовательская цена 2500 ₽"
+      type: web
+      location: https://evotor.spb.ru/product/podklucheniye-k-ofd/
+      publisher: КИФ / Эвотор СПб
+      publication_date: null
+      accessed_at: 2026-09-17
+      reliability: primary
+      notes: "НДС: не указан. Годовая предоплата сервиса на кассу; не физическое оборудование. Продление — регулярный OPEX. Цена не является утверждённой сметой."
+    before_index: null
+    after_index: 193
+    before_sha256: null
+    after_sha256: 23eef4ac4a722c979ac0042f9135b97bdc66f427016c60fb74347c7fae6ec85d
+    reverse_operation:
+      type: remove
+      entity: sources
+      id: SRC-PRICE-20260917-04-012
+  - type: add
+    entity: sources
+    id: SRC-PRICE-20260917-05-028
+    before: null
+    after:
+      id: SRC-PRICE-20260917-05-028
+      title: "Cambro 1418FF, тёмно-синий: исследовательская цена 490 ₽"
+      type: web
+      location: https://horeca.ru/catalog/item/49331/
+      publisher: Horeca.ru
+      publication_date: null
+      accessed_at: 2026-09-17
+      reliability: primary
+      notes: "НДС: не указан. Полипропилен, 460 мм. Цена индексируемого каталога; прямое чтение карточки недоступно, подтвердить КП. Рабочий запас — один поднос на место; оборачиваемость требует проверки. Цена не является утверждённой сметой."
+    before_index: null
+    after_index: 194
+    before_sha256: null
+    after_sha256: 5f4664180140fb1b791f51635ff1285517afb38797ebf7b28790412ff98370de
+    reverse_operation:
+      type: remove
+      entity: sources
+      id: SRC-PRICE-20260917-05-028
+  - type: add
+    entity: sources
+    id: SRC-PRICE-20260917-05-029
+    before: null
+    after:
+      id: SRC-PRICE-20260917-05-029
+      title: "NV-BIN30L, 30 л: исследовательская цена 4150 ₽"
+      type: web
+      location: https://www.vseinstrumenti.ru/product/urna-dlya-musora-s-pedalyu-nv-30-l-nv-bin30l-13011521/
+      publisher: ВсеИнструменты
+      publication_date: null
+      accessed_at: 2026-09-17
+      reliability: primary
+      notes: "НДС: не указан. Нержавеющая сталь, внутреннее ведро. Две урны — рабочий ориентир, не санитарный проект. Цена не является утверждённой сметой."
+    before_index: null
+    after_index: 195
+    before_sha256: null
+    after_sha256: 0e0011ce7c3259442d20b55809a40588fb5294c8c53178ab52e34e3909e39b94
+    reverse_operation:
+      type: remove
+      entity: sources
+      id: SRC-PRICE-20260917-05-029
+  - type: add
+    entity: sources
+    id: SRC-PRICE-20260917-08-007
+    before: null
+    after:
+      id: SRC-PRICE-20260917-08-007
+      title: "ABAT МПК-500Ф-01-GN1/1 / 15000001002: исследовательская цена 179466 ₽"
+      type: web
+      location: https://abat.shop/shop/product/frontalnaia-posudomoechnaia-mashina-abat-mpk-500f-01-moika-gn1-1
+      publisher: Abat.shop
+      publication_date: null
+      accessed_at: 2026-09-17
+      reliability: primary
+      notes: "НДС: не указан. 595×660×875 мм; кассета 500×500; 380 В / 6,8 кВт; насос слива, дозаторы. Отдельная опция; вода, фильтрация, подключение и расходники не оценены. Цена каталога; подтвердить КП. Цена не является утверждённой сметой."
+    before_index: null
+    after_index: 196
+    before_sha256: null
+    after_sha256: 913c64c31afd9335fe55a3b269c78ed5503bca17efddf89b0cd3aa3452846b1e
+    reverse_operation:
+      type: remove
+      entity: sources
+      id: SRC-PRICE-20260917-08-007
+  - type: add
+    entity: decisions
+    id: DEC-SENNAYA-CAPEX-2026-09-17-02
+    before: null
+    after:
+      id: DEC-SENNAYA-CAPEX-2026-09-17-02
+      title: Общий профиль торговой точки с залом и Сенная для staging
+      status: approved
+      decision: "Выполнить явное задание владельца: расширить общий CAPEX research layer, сохранить старые конфигурации, включить три UFO, два холодильника и ларь без кофе; разделить резерв, услуги и физическое оборудование; обновить отдельную страницу и проверить staging."
+      rationale: Владелец разрешил исследование и подбор недостающих цен. Утверждение относится к объёму работ; цены, количества сверх явного задания, техническая применимость и бюджет остаются research.
+      affected_documents:
+        - DOC-SENNAYA-FLAGSHIP
+        - DOC-CAPEX-EQUIPMENT-REGISTER
+        - DOC-CAPEX-POINT-FORMATS
+      approved_by: project owner
+      approved_at: 2026-09-17
+      supersedes: null
+      source_ids:
+        - SRC-SEATED-RETAIL-BRIEF-20260917
+      updated_at: 2026-09-17
+    before_index: null
+    after_index: 34
+    before_sha256: null
+    after_sha256: 2cca4d5dd836781e462b5f20fabc4129a9af083bda0418900aa98ce57fbb92b2
+    reverse_operation:
+      type: remove
+      entity: decisions
+      id: DEC-SENNAYA-CAPEX-2026-09-17-02
+validation_result: passed
+git_commit_hash: null
+rollback:
+  source_receipt: docs-platform/changelog/change-receipts/CHG-SENNAYA-CAPEX-2026-09-17-02.yaml
+  command: npm run change:reverse:preview -- ../changelog/change-receipts/CHG-SENNAYA-CAPEX-2026-09-17-02.yaml --change-id CHG-ROLLBACK-XXX --decision DEC-ROLLBACK-XXX
+  rollback_of: CHG-SENNAYA-CAPEX-2026-09-17-02

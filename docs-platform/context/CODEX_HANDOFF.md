@@ -8,7 +8,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 2. Текущая ветка и governed iteration
 
-- Branch: `master`.
+- Branch: `feature/sennaya-investor-page`.
 - Latest closed iteration: `ITR-FRANCHISE-MODEL-V02-2026-09-13-01`.
 - Latest iteration tag: `iteration/ITR-FRANCHISE-MODEL-V02-2026-09-13-01`.
 - Latest content commit: `d9c33049ac797e09bb38bac15e226bacbba78f79`.
@@ -16,9 +16,9 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 
 ## 3. Timeline head
 
-- Event: `EVT-ITR-FRANCHISE-MODEL-V02-2026-09-13-01-COMMITTED`.
-- Hash: `5f5b08b8e6fe9c8d70c815e795dee4cd6d756eb475042443d4078ddd42a1582b`.
-- generated_from_event_hash: `5f5b08b8e6fe9c8d70c815e795dee4cd6d756eb475042443d4078ddd42a1582b`.
+- Event: `EVT-ITR-SENNAYA-OWNER-2026-09-18-01-VERIFIED`.
+- Hash: `1aab52d4d65432f8fc3e966cbd9a154045682f502fc12bf78ec038225bcc5120`.
+- generated_from_event_hash: `1aab52d4d65432f8fc3e966cbd9a154045682f502fc12bf78ec038225bcc5120`.
 
 ## 4. Канонические документы
 
@@ -28,13 +28,13 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 | DOC-AUDIT | approved | `docs-platform/AUDIT.md` | `f43cb183f4c025ba74d4f77c2a498cb0ad07e7b0622e47f38afd6212173689e7` |
 | DOC-BANKING-SETTLEMENT-ARCHITECTURE | research | `docs-platform/research/banking-settlement-architecture.md` | `7587b405b4d982b4eab11276f927c2188d8011fa26a13de7ecb4bb9f822e7fa1` |
 | DOC-BUSINESS-MODEL-ARCHITECTURE | approved | `docs-platform/01-business-model-architecture.md` | `1584d836a159f6e3c5859ccf539830248b2cd782ed2c7005c5963ac8730c556b` |
-| DOC-CAPEX-CONFIGURATIONS | research | `docs-platform/working/capex-configurations.yaml` | `3810fa84efa969d8d95e2f0b0b49ede044b854d9be21ac92f5787d9ff8369f3c` |
-| DOC-CAPEX-EQUIPMENT-REGISTER | research | `docs-platform/working/capex-equipment-register.yaml` | `c8853fe61ad8407ab96d0fbafb79702853842f970cbf699b6c2138b23f32c7aa` |
+| DOC-CAPEX-CONFIGURATIONS | research | `docs-platform/working/capex-configurations.yaml` | `439a4d7111ba9cceea8296bd1d1d38fd2da74443395ae078f5c37ca7cee8ab16` |
+| DOC-CAPEX-EQUIPMENT-REGISTER | research | `docs-platform/working/capex-equipment-register.yaml` | `23203cdb0843c3d5d29cc5ef3755ce8f4d67161cbbfe4251e7f325ec0e79cecb` |
 | DOC-CAPEX-EQUIPMENT-SPECIFICATION | research | `docs-platform/working/capex-equipment-specification.md` | `2157364e09699173fecfbfe861edf4e6fac85a0437e23aebe100caebeab599d6` |
 | DOC-CAPEX-GENERATED-EQUIPMENT-BOM | research | `docs-platform/working/configurations/CFG-PILOT-001/equipment-bom.yaml` | `d001d531247e1c64820a6bd00df1db755908d483358f5f677b3ca6acb6d8fa4a` |
 | DOC-CAPEX-MODULES | research | `docs-platform/working/capex-modules.yaml` | `2fb31d90b852a5aaae6500d99412c7fabba0bbe9187f08106e3f37c7a52ae33a` |
-| DOC-CAPEX-POINT-FORMATS | research | `docs-platform/working/capex-point-formats.yaml` | `4b6d5a8806f696f499dbbab8fa061020c7ba77b670eb2a1f7d3ccdcc78b2e523` |
-| DOC-CAPEX-PRICE-RESEARCH | research | `docs-platform/working/capex-price-research.yaml` | `b2b752f1822db8b529d58d822b83b32d44bcba9a0110ae35062d3b561f08249d` |
+| DOC-CAPEX-POINT-FORMATS | research | `docs-platform/working/capex-point-formats.yaml` | `02d982469566c4a96a09772b9a7dfeaa04faad8ed667ecc27134a3523acc326b` |
+| DOC-CAPEX-PRICE-RESEARCH | research | `docs-platform/working/capex-price-research.yaml` | `a168884b433f766197a230042d6abcd73de4e9773adda0504b480ca6c75edea4` |
 | DOC-FINANCIAL-MODEL | research | `docs-platform/working/financial-model.yaml` | `6a76990d3635e62ac633610754415d401edba989f1a49a463091e2cece1e329b` |
 | DOC-FOUNDATION | approved | `docs-platform/00-foundation.md` | `5b4d457184c055ba11f8c4d05cc263139d2eb4f623981bcdc198c0114a50c0bb` |
 | DOC-FRANCHISE-MODEL-V01 | research | `docs-platform/working/franchise-model-v0.1.json` | `e5d6cbdeb8266729835a942973bfa60b8e94b2ceeb57be88892cb0448264f0a5` |
@@ -43,7 +43,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 | DOC-FRANCHISE-PLATFORM-PARAMETERS | research | `docs-platform/working/franchise-platform-parameters.yaml` | `4c7a77b2cb3bc4a72a5c614ffcb3113f2698329b24db7363e1254056c87b2973` |
 | DOC-FRANCHISE-PLATFORM-STRATEGY | proposed | `docs-platform/02-franchise-platform-strategy.md` | `a75d51abbe4eb08e40aa6c1657765545e91025f091957cb7528528d3e9399cb3` |
 | DOC-INVESTMENT-MEMO | proposed | `docs-platform/templates/investment-memorandum.md` | `464e46d307aaa98e57cab3a098cd639e212d32b51f82a06688de228f0e7fb4cd` |
-| DOC-INVESTOR-FINANCIAL-SUMMARY | research | `docs-platform/working/investor-financial-summary.yaml` | `790d4c84513d666157088c0afeb8ece09ed80080b33db54117ad1dde64a92a40` |
+| DOC-INVESTOR-FINANCIAL-SUMMARY | research | `docs-platform/working/investor-financial-summary.yaml` | `cd04b899c8ac9e508088f1037cd69801ecbc7e391dd5e154fc102cbec432be31` |
 | DOC-INVESTOR-START-MODEL | research | `docs-platform/working/investor-start-model.yaml` | `b81a6c4e8988a4532c9ba2749d492b3f96e37d83af822396afc82930244b2985` |
 | DOC-NETWORK-PLANNING-ASSUMPTIONS | approved | `docs-platform/working/network-planning-assumptions.yaml` | `1136e30e205cf03abef7232fb1618b624f2f4d1744d14de966089908d4c2022b` |
 | DOC-PETROGRADKA-LANDLORD-PROPOSITION | proposed | `docs-platform/03-petrogradka-landlord-proposition.md` | `7d4cfbf0c95b317218bf9e3cf2d75ef31e366b50cdb3d19ab9ce622bdd782d0f` |
@@ -51,6 +51,7 @@ AUTO-GENERATED — DO NOT EDIT MANUALLY
 | DOC-README | approved | `docs-platform/README.md` | `04e947f296a158a1c37ceb8d4c959d1f4e31cf609d16c99bee2d3c3b79b824ab` |
 | DOC-REVENUE-MODEL | research | `docs-platform/working/revenue-model.yaml` | `ab68399813d62d861522752c8e94df9cfc5d5a48e9b7723c60f2c968c4cba721` |
 | DOC-SCENARIO-PETROGRADKA-READY-PRODUCTION-BASE | research | `docs-platform/scenarios/petrogradka-ready-production-base.yaml` | `e138dee3e1593df5dc2ff3faccd551a0c286502f07780dfc288106b29c43d0f7` |
+| DOC-SENNAYA-FLAGSHIP | research | `docs-platform/scenarios/sennaya-flagship.json` | `ba1d916f64465a477ee1d9f43458fca745d3983e76e018c843a398d180e44862` |
 
 ## 5. Текущая рабочая тема
 

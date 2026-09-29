@@ -6,9 +6,9 @@ import { platformRoot } from "../google/config.js";
 import { effectiveOccurredAt, effectiveType, isV2, readTimelineEvents } from "../governance/timeline.js";
 import { buildContentStateManifest, changedContentSources, sourceHashMap, type ContentStateManifest } from "./content-state.js";
 import { capexGovernanceProjectionIsCurrent } from "./governance-projection.js";
-import { readModularSources } from "./modular.js";
+import { buildEquipmentBom, readModularSources } from "./modular.js";
 import { readRegister, sha256 } from "./register.js";
-import { PRICE_SCENARIOS, readPriceResearch } from "./price-research.js";
+import { PRICE_SCENARIOS, readPriceResearch, recalculatePriceSummary } from "./price-research.js";
 
 const projectRoot = path.resolve(platformRoot, "..");
 export const WEB_SNAPSHOT_PATH = path.join(projectRoot, "src", "content", "capex-configurator-data.json");
@@ -40,6 +40,10 @@ export function buildWebSnapshot() {
   const currentEvent = [...contentEvents].reverse().find(event => event.decision_id === register.document.decision_id && effectiveType(event) === "verified") ?? null;
   const generatedAt = currentEvent ? effectiveOccurredAt(currentEvent) : research.document.checked_at;
   const researchByItem = new Map(research.items.map(item => [item.item_id, item]));
+  // Preserve the existing scenario-total contract. Profile-specific additions
+  // are priced in their generated BOM, not implicitly in the legacy scenarios.
+  const legacyItemIds = new Set(register.equipment.filter(item => !item.composition_profile).map(item => item.item_id));
+  const legacyScenarioTotals = recalculatePriceSummary(research.items.filter(item => legacyItemIds.has(item.item_id))).totals_rub;
   const linksByItem = new Map<string, typeof modular.module_items.links>();
   for (const link of modular.module_items.links) linksByItem.set(link.item_id, [...(linksByItem.get(link.item_id) ?? []), link]);
   const childrenByParent = new Map<string, string[]>();
@@ -105,7 +109,7 @@ export function buildWebSnapshot() {
         modules: modular.modules.modules.length,
         formats: modular.point_formats.formats.length,
       },
-      scenarioTotalsRub: research.summary.totals_rub,
+      scenarioTotalsRub: legacyScenarioTotals,
     },
     scenarios: [
       { id: "minimum", label: "Минимальная комплектация", description: "Исторический исследовательский сценарий; для запуска пилота не используется.", availableInSelector: false },
@@ -118,6 +122,8 @@ export function buildWebSnapshot() {
       id: format.format_id,
       name: format.format_id === "FMT-CUSTOM" ? "Собрать вручную" : format.name,
       canonicalName: format.name,
+      defaultConfiguration: format.composition ? modular.configurations.configurations.find(configuration => configuration.format_id === format.format_id && configuration.composition_profile === format.composition!.id) ?? null : null,
+      composition: format.composition ? { ...format.composition, bom: buildEquipmentBom(modular.configurations.configurations.find(configuration => configuration.format_id === format.format_id && configuration.composition_profile === format.composition!.id)!.configuration_id, register, modular) } : null,
       purpose: format.purpose,
       status: format.lifecycle_status,
       manualSelection: format.manual_selection,
@@ -168,6 +174,9 @@ export function buildWebSnapshot() {
       }));
       return {
         id: item.item_id,
+        costKind: item.cost_kind ?? "equipment",
+        cashReserveRub: item.cash_reserve_rub ?? null,
+        compositionProfile: item.composition_profile ?? null,
         sourceModuleId: item.module_id,
         linkedModuleIds: (linksByItem.get(item.item_id) ?? []).map(link => link.module_id),
         name: item.name,

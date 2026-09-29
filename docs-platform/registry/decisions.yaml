@@ -474,3 +474,44 @@ decisions:
     source_ids:
       - SRC-FRANCHISE-MODEL-V01-BRIEF-2026-09-13
     updated_at: 2026-09-13
+  - id: DEC-SENNAYA-2026-09-17-01
+    title: Создать короткую инвесторскую страницу Сенной для staging
+    status: approved
+    decision: Реализовать share-only страницу Сенной на компонентах Петроградки; использовать существующие канонические расчёты, явно показать пробелы данных и отдельную стоимость пользования недвижимостью; проверить и показать staging. Финансовые гипотезы остаются research.
+    rationale: Прямое задание владельца. Канонические значения приоритетны при расхождениях; неподтверждённую прибыль разрешено не публиковать.
+    affected_documents:
+      - DOC-SENNAYA-FLAGSHIP
+    approved_by: project owner
+    approved_at: 2026-09-17
+    supersedes: null
+    source_ids:
+      - SRC-SENNAYA-BRIEF-2026-09-17
+    updated_at: 2026-09-17
+  - id: DEC-SENNAYA-CAPEX-2026-09-17-02
+    title: Общий профиль торговой точки с залом и Сенная для staging
+    status: approved
+    decision: "Выполнить явное задание владельца: расширить общий CAPEX research layer, сохранить старые конфигурации, включить три UFO, два холодильника и ларь без кофе; разделить резерв, услуги и физическое оборудование; обновить отдельную страницу и проверить staging."
+    rationale: Владелец разрешил исследование и подбор недостающих цен. Утверждение относится к объёму работ; цены, количества сверх явного задания, техническая применимость и бюджет остаются research.
+    affected_documents:
+      - DOC-SENNAYA-FLAGSHIP
+      - DOC-CAPEX-EQUIPMENT-REGISTER
+      - DOC-CAPEX-POINT-FORMATS
+    approved_by: project owner
+    approved_at: 2026-09-17
+    supersedes: null
+    source_ids:
+      - SRC-SEATED-RETAIL-BRIEF-20260917
+    updated_at: 2026-09-17
+  - id: DEC-SENNAYA-OWNER-2026-09-18-01
+    title: Сенная для покупателя недвижимости
+    status: approved
+    decision: Применить тексты владельца, пять переключателей состава работ с каноническим пересчётом резерва, исключить публичный операционный резерв и распределение плательщиков. Сохранить общую комплектацию и цены. Проверить ОФД как источник 5000 рублей.
+    rationale: Прямое разрешение владельца на изменение кода и governance; значения остаются исследовательскими, обязательств финансирования не возникает.
+    affected_documents:
+      - DOC-SENNAYA-FLAGSHIP
+    approved_by: project owner
+    approved_at: 2026-09-18
+    supersedes: null
+    source_ids:
+      - SRC-SENNAYA-OWNER-BRIEF-20260918
+    updated_at: 2026-09-18

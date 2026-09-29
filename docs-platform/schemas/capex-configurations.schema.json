@@ -1,41 +1,172 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
-  "required": ["schema_version", "document", "configurations"],
+  "required": [
+    "schema_version",
+    "document",
+    "configurations"
+  ],
   "properties": {
-    "schema_version": { "const": 1 },
-    "document": { "type": "object" },
+    "schema_version": {
+      "const": 1
+    },
+    "document": {
+      "type": "object"
+    },
     "configurations": {
-      "type": "array", "minItems": 1,
+      "type": "array",
+      "minItems": 1,
       "items": {
         "type": "object",
-        "required": ["configuration_id", "name", "format_id", "lifecycle_status", "total_area_m2", "guest_area_m2", "hall_count", "seat_count", "cashier_post_count", "hot_kitchen_post_count", "filling_count", "service_station_count", "peak_orders_per_hour", "daily_orders", "bar_enabled", "alcohol_enabled", "prep_enabled", "grow_enabled", "central_supply_enabled", "self_service_enabled", "reusable_tableware_enabled", "shared_seating", "mobile_format", "selected_modules", "excluded_modules", "notes"],
+        "required": [
+          "configuration_id",
+          "name",
+          "format_id",
+          "lifecycle_status",
+          "total_area_m2",
+          "guest_area_m2",
+          "hall_count",
+          "seat_count",
+          "cashier_post_count",
+          "hot_kitchen_post_count",
+          "filling_count",
+          "service_station_count",
+          "peak_orders_per_hour",
+          "daily_orders",
+          "bar_enabled",
+          "alcohol_enabled",
+          "prep_enabled",
+          "grow_enabled",
+          "central_supply_enabled",
+          "self_service_enabled",
+          "reusable_tableware_enabled",
+          "shared_seating",
+          "mobile_format",
+          "selected_modules",
+          "excluded_modules",
+          "notes"
+        ],
         "properties": {
-          "configuration_id": { "type": "string", "pattern": "^CFG-[A-Z0-9-]+$" },
-          "name": { "type": "string", "minLength": 1 },
-          "format_id": { "type": "string", "pattern": "^FMT-[A-Z-]+$" },
-          "lifecycle_status": { "const": "research" },
-          "total_area_m2": { "$ref": "#/$defs/nullableNumber" }, "guest_area_m2": { "$ref": "#/$defs/nullableNumber" },
-          "hall_count": { "$ref": "#/$defs/nullableNumber" }, "seat_count": { "$ref": "#/$defs/nullableNumber" },
-          "cashier_post_count": { "$ref": "#/$defs/nullableNumber" }, "hot_kitchen_post_count": { "$ref": "#/$defs/nullableNumber" },
-          "filling_count": { "$ref": "#/$defs/nullableNumber" }, "service_station_count": { "$ref": "#/$defs/nullableNumber" },
-          "peak_orders_per_hour": { "$ref": "#/$defs/nullableNumber" }, "daily_orders": { "$ref": "#/$defs/nullableNumber" },
-          "bar_enabled": { "$ref": "#/$defs/nullableBoolean" }, "alcohol_enabled": { "$ref": "#/$defs/nullableBoolean" },
-          "prep_enabled": { "$ref": "#/$defs/nullableBoolean" }, "grow_enabled": { "$ref": "#/$defs/nullableBoolean" },
-          "central_supply_enabled": { "$ref": "#/$defs/nullableBoolean" }, "self_service_enabled": { "$ref": "#/$defs/nullableBoolean" },
-          "reusable_tableware_enabled": { "$ref": "#/$defs/nullableBoolean" }, "shared_seating": { "$ref": "#/$defs/nullableBoolean" },
-          "mobile_format": { "$ref": "#/$defs/nullableBoolean" },
-          "selected_modules": { "$ref": "#/$defs/modules" }, "excluded_modules": { "$ref": "#/$defs/modules" },
-          "notes": { "type": ["string", "null"] }
+          "configuration_id": {
+            "type": "string",
+            "pattern": "^CFG-[A-Z0-9-]+$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "format_id": {
+            "type": "string",
+            "pattern": "^FMT-[A-Z-]+$"
+          },
+          "lifecycle_status": {
+            "const": "research"
+          },
+          "total_area_m2": {
+            "$ref": "#/$defs/nullableNumber"
+          },
+          "guest_area_m2": {
+            "$ref": "#/$defs/nullableNumber"
+          },
+          "hall_count": {
+            "$ref": "#/$defs/nullableNumber"
+          },
+          "seat_count": {
+            "$ref": "#/$defs/nullableNumber"
+          },
+          "cashier_post_count": {
+            "$ref": "#/$defs/nullableNumber"
+          },
+          "hot_kitchen_post_count": {
+            "$ref": "#/$defs/nullableNumber"
+          },
+          "filling_count": {
+            "$ref": "#/$defs/nullableNumber"
+          },
+          "service_station_count": {
+            "$ref": "#/$defs/nullableNumber"
+          },
+          "peak_orders_per_hour": {
+            "$ref": "#/$defs/nullableNumber"
+          },
+          "daily_orders": {
+            "$ref": "#/$defs/nullableNumber"
+          },
+          "bar_enabled": {
+            "$ref": "#/$defs/nullableBoolean"
+          },
+          "alcohol_enabled": {
+            "$ref": "#/$defs/nullableBoolean"
+          },
+          "prep_enabled": {
+            "$ref": "#/$defs/nullableBoolean"
+          },
+          "grow_enabled": {
+            "$ref": "#/$defs/nullableBoolean"
+          },
+          "central_supply_enabled": {
+            "$ref": "#/$defs/nullableBoolean"
+          },
+          "self_service_enabled": {
+            "$ref": "#/$defs/nullableBoolean"
+          },
+          "reusable_tableware_enabled": {
+            "$ref": "#/$defs/nullableBoolean"
+          },
+          "shared_seating": {
+            "$ref": "#/$defs/nullableBoolean"
+          },
+          "mobile_format": {
+            "$ref": "#/$defs/nullableBoolean"
+          },
+          "selected_modules": {
+            "$ref": "#/$defs/modules"
+          },
+          "excluded_modules": {
+            "$ref": "#/$defs/modules"
+          },
+          "notes": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "composition_profile": {
+            "const": "retail_complete"
+          },
+          "wash_mode": {
+            "enum": [
+              "manual",
+              "machine"
+            ]
+          }
         },
         "additionalProperties": false
       }
     }
   },
   "$defs": {
-    "nullableNumber": { "type": ["number", "null"], "minimum": 0 },
-    "nullableBoolean": { "type": ["boolean", "null"] },
-    "modules": { "type": "array", "items": { "type": "string", "pattern": "^MOD-[A-Z-]+$" }, "uniqueItems": true }
+    "nullableNumber": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "nullableBoolean": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "modules": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^MOD-[A-Z-]+$"
+      },
+      "uniqueItems": true
+    }
   },
   "additionalProperties": false
 }

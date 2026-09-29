@@ -20,6 +20,7 @@ const routes = [
   { name: "investor-questions", label: "Investor questions", path: "/investor-questions" },
   { name: "privacy", label: "Privacy", path: "/privacy" },
   { name: "investor-terminal", label: "Investor Terminal", path: "/investor-terminal" },
+  { name: "sennaya", label: "Sennaya", path: "/sennaya" },
   { name: "petrogradka", label: "Petrogradka", path: "/petrogradka" },
   { name: "not-found", label: "Not found", path: "/404" }
 ];

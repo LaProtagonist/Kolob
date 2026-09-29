@@ -1,0 +1,30 @@
+receipt_version: 1
+iteration_id: ITR-SENNAYA-OWNER-2026-09-18-01
+decision_id: DEC-SENNAYA-OWNER-2026-09-18-01
+change_set_id: CHG-SENNAYA-OWNER-2026-09-18-01
+result: passed
+verified_at: 2026-09-18T12:16:26.143Z
+approved_payload_sha256: be9cba99929a3a3f44d9f17c0012131145aaa61189e8b98db13364f03908cbcf
+before_state_sha256: 5054c1d566f2eb7752ee9127e9979253d6fef9e954deeffc4cac5f200c1dff6b
+after_state_sha256: cda8cc4b14a8227ceb8a80d7f276bae0034959594aa1c55bba147d3adb9854fb
+additional_source_hashes:
+  verification/domains.json: bd8d1135e5dab27decd271b3f3c804768000a12e89285573b00982dff68c11f6
+  src/content/capex-configurator-data.json: b89d2d5b6a506e0e4bf0efa2d26d9a329261d3a3aed12fbe11e373c3f6f71ff7
+  docs-platform/generated/financial-model-projection.json: 0f460bc37b34c7363599e8a71bffebf761a3c8d024f9d71461340b013d2701d1
+  docs-platform/generated/investor-financial-summary.json: 550d16b5868f17681e2120c9ed918e98a89663d09248abcafad9d21eb3e06fab
+  docs-platform/generated/financial-google-sheets-payload.json: 11b8f60be6ca93a38a936fc43299f0ca27acc02c3ba412cab13a33473668e1a5
+  docs-platform/generated/investor-financial-summary-google-sheets-payload.json: 9aa8efec97cab4c6b5caf2cd86a372243ae3d9e0c1043e516d0f6a949a499370
+  docs-platform/generated/franchise-model-reference-data.json: db469772467810a4a307aeee100384906e1bd1d3ceb402a01df4980eaf98db35
+  docs-platform/working/investor-financial-summary.yaml: cd04b899c8ac9e508088f1037cd69801ecbc7e391dd5e154fc102cbec432be31
+provenance_only_updates: CAPEX metadata/history and dependent content hashes; equipment, numerical values and formulas unchanged
+owner_confirmation: "Explicit owner request 2026-09-18: no Git mutation, seal or publication."
+checks:
+  - 32 scope combinations and canonical contingency; no public operating reserve
+  - Property-owner copy and no payer obligation
+  - Site/platform unit suites and release verification
+  - 1440/1024/768/390 browser; mouse/keyboard; full desktop/mobile capture
+  - Petrogradka, Current Base, Investor Terminal and equipment sources unchanged
+production_deployment: not_performed
+google: not_performed
+git_commit: not_authorized
+screenshots_directory: analysis/screenshots/sennaya-owner-2026-09-18

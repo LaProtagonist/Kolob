@@ -1,4 +1,5 @@
 import rawCapexData from "../content/capex-configurator-data.json" with { type: "json" };
+import { capexConditionSatisfied, compositionGroups, type CapexComposition, type CompositionOptions } from "./capex-composition.js";
 
 export type ScenarioId = "minimum" | "base" | "scale_ready";
 export type CapexData = typeof rawCapexData;
@@ -13,6 +14,8 @@ export type CapexParameters = Record<NumericParameterKey, number | null> & {
   reusableTableware: boolean;
   centralSupply: boolean;
   mobileFormat: boolean;
+  compositionProfile?: "retail_complete";
+  washMode?: "manual" | "machine";
 };
 
 export type ComputedCapexRow = {
@@ -72,9 +75,7 @@ function computedFromLinks(links: ModuleLink[], parameters: CapexParameters) {
 }
 
 function linkConditionSatisfied(condition: string | null, parameters: CapexParameters) {
-  if (!condition) return true;
-  if (condition.trim() === "alcohol_enabled == true") return parameters.alcoholEnabled;
-  return true;
+  return capexConditionSatisfied(condition, parameters);
 }
 
 /**
@@ -143,6 +144,52 @@ export function summarizeEquipment(rows: ComputedCapexRow[], excludedItemPrefixe
     coverageCount: coverage.length,
     rows: includedRows,
   };
+}
+
+/** Prices remain in the register. Applicability comes from the generated format BOM. */
+export function buildFormatCapexRows(formatId: string, scenario: ScenarioId, parameters: CapexParameters, options: CompositionOptions): ComputedCapexRow[] {
+  const format = capexData.formats.find(format => format.id === formatId);
+  if (!format?.composition) throw new Error(`No current composition for ${formatId}`);
+  const profile = format.composition as CapexComposition & { bom: { equipment: Array<{ item_id: string }> } };
+  const groups = compositionGroups(profile, options);
+  const allowed = new Set(profile.bom.equipment.map(row => row.item_id));
+  // The optional machine is already a governed module link; the manual BOM omits it.
+  if (options.washMode === "machine") for (const link of capexData.moduleItems) {
+    if (link.condition === "retail_complete && machine_wash") allowed.add(link.itemId);
+  }
+  const allModules = new Set(capexData.modules.map(module => module.id));
+  return buildCapexRows(allModules, scenario, { ...parameters, compositionProfile: profile.id, washMode: options.washMode }, profile.quantity_overrides)
+    .filter(row => allowed.has(row.item.id) && row.independentProcurement && groups.some(group => group.item_ids.includes(row.item.id)))
+    .map(row => {
+      const group = groups.find(group => group.item_ids.includes(row.item.id))!;
+      const reserve = row.item.cashReserveRub?.[scenario] ?? 0;
+      const unitPrice = row.unitPrice === null ? null : row.unitPrice - reserve;
+      if (unitPrice !== null && unitPrice < 0) throw new Error(`Cash reserve exceeds price: ${row.item.id}`);
+      return { ...row, unitPrice, lineTotal: unitPrice === null || row.quantity === null ? null : Math.round(unitPrice * row.quantity * 100) / 100,
+        // A reused wash component belongs to the point in this BOM, not to production.
+        primaryModuleId: group.id === "point-wash" ? "MOD-WASH" : row.primaryModuleId,
+        moduleIds: group.id === "point-wash" ? ["MOD-WASH"] : row.moduleIds.filter(id => id !== "MOD-PREP" && id !== "MOD-GROW"),
+      };
+    });
+}
+
+export function formatCompositionSummary(formatId: string, scenario: ScenarioId, rows: ComputedCapexRow[], options: CompositionOptions) {
+  const profile = capexData.formats.find(format => format.id === formatId)?.composition as CapexComposition | null;
+  if (!profile) throw new Error(`No composition for ${formatId}`);
+  const groups = compositionGroups(profile, options).map(group => {
+    const selected = rows.filter(row => group.item_ids.includes(row.item.id));
+    const known = selected.filter(row => row.lineTotal !== null);
+    return { ...group, rows: selected, knownRub: known.reduce((sum, row) => sum + row.lineTotal!, 0), missingCount: selected.length - known.length };
+  });
+  const reserveRub = rows.reduce((sum, row) => sum + (row.item.cashReserveRub?.[scenario] ?? 0) * (row.quantity ?? 0), 0);
+  const functions = profile.functions.map(fn => {
+    const needed = rows.filter(row => fn.item_ids.includes(row.item.id));
+    const missingPrices = needed.filter(row => row.lineTotal === null).map(row => row.item.name);
+    const missingItems = fn.item_ids.filter(id => !rows.some(row => row.item.id === id));
+    const notApplicable = fn.id === "drinks" && !options.barEnabled;
+    return { ...fn, missingPrices, missingItems, status: notApplicable ? "not_applicable" : fn.gaps.length || missingPrices.length || missingItems.length ? "open" : "covered" };
+  });
+  return { groups, reserveRub, functions, complete: functions.every(fn => fn.status !== "open") };
 }
 
 export function emptyCapexParameters(overrides: Partial<CapexParameters> = {}): CapexParameters {

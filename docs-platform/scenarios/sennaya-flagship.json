@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "id": "SCN-SENNAYA-FLAGSHIP-001",
+  "status": "research",
+  "decisionId": "DEC-SENNAYA-CAPEX-2026-09-17-02",
+  "sourceId": "SRC-SEATED-RETAIL-BRIEF-20260917",
+  "address": "Санкт-Петербург, Московский проспект, 4",
+  "areaM2": 73.5,
+  "guestAreaRangeM2": [
+    38,
+    45
+  ],
+  "illustrativeGuestAreaM2": 42,
+  "targetSeatRange": [
+    24,
+    28
+  ],
+  "targetChecksPerDay": 200,
+  "checksScenarios": [
+    150,
+    200,
+    250
+  ],
+  "occupancyMonthlyRub": 500000,
+  "advertisedPowerKw": 20,
+  "barEnabled": true,
+  "layoutStatus": "missing",
+  "notes": "Research object parameters only. Three UFO, no coffee. Plan not supplied; 42 m² guest area produces 26 illustrative seats. Engineering-specific amounts and their overlap with area preparation remain unresolved; payer selection never removes cost.",
+  "formatId": "FMT-RESTAURANT-SEATING",
+  "capexConfigurationId": "CFG-RETAIL-SEATING-001",
+  "capexCompositionProfile": "retail_complete",
+  "washMode": "manual",
+  "averageCheckSource": "Revenue Model realistic scenario",
+  "workingDaysSource": "Financial Model",
+  "engineeringResponsibilities": [
+    {
+      "id": "power",
+      "label": "Увеличение выделенной электрической мощности",
+      "payer": "operator",
+      "amountRub": null,
+      "includedInPreparation": false
+    },
+    {
+      "id": "exhaust",
+      "label": "Отдельный вытяжной канал",
+      "payer": "operator",
+      "amountRub": null,
+      "includedInPreparation": false
+    },
+    {
+      "id": "inputs",
+      "label": "Неотделимые инженерные вводы и согласования",
+      "payer": "operator",
+      "amountRub": null,
+      "includedInPreparation": false
+    }
+  ]
+}

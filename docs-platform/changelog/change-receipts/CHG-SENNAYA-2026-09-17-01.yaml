@@ -1,0 +1,105 @@
+receipt_version: 2
+change_id: CHG-SENNAYA-2026-09-17-01
+iteration_id: ITR-SENNAYA-2026-09-17-01
+proposal_id: PROP-SENNAYA-2026-09-17-01
+decision_id: DEC-001
+source_change_set: docs-platform/changes/CHG-SENNAYA-2026-09-17-01.yaml
+status: applied
+applied_at: 2026-09-17T13:14:08.572Z
+actor: Codex
+tool: docs-platform change:apply
+approved_payload:
+  path: docs-platform/changelog/payloads/ITR-SENNAYA-2026-09-17-01-approved.yaml
+  sha256: b4fa08eea11f9dc8925a1517bcb6fe99f2091db5ca169d31776867c55e08d8d1
+before_hash: 936e8ba2fb3276b886a21670b056e434ddab3b9c9376969b0c1036cdb816da44
+after_hash: 9fe437b249db31b200ee959aeacb2e7320021863a069ee3865ab230bf23555d6
+touched_registry_files:
+  - path: docs-platform/registry/sources.yaml
+    backup_path: docs-platform/changelog/backups/2026-09-17T13-14-08-572Z-CHG-SENNAYA-2026-09-17-01/sources.yaml
+  - path: docs-platform/registry/documents.yaml
+    backup_path: docs-platform/changelog/backups/2026-09-17T13-14-08-572Z-CHG-SENNAYA-2026-09-17-01/documents.yaml
+  - path: docs-platform/registry/decisions.yaml
+    backup_path: docs-platform/changelog/backups/2026-09-17T13-14-08-572Z-CHG-SENNAYA-2026-09-17-01/decisions.yaml
+operations:
+  - type: add
+    entity: sources
+    id: SRC-SENNAYA-BRIEF-2026-09-17
+    before: null
+    after:
+      id: SRC-SENNAYA-BRIEF-2026-09-17
+      title: "Задание владельца: инвесторская страница Московский, 4"
+      type: instruction
+      location: User instruction, 2026-09-17
+      publisher: project owner
+      publication_date: 2026-09-17
+      accessed_at: 2026-09-17
+      reliability: primary
+      notes: Working property description and targets; not verified listing evidence. Authorizes feature branch, page and staging. No production publication or Git commit authorization.
+    before_index: null
+    after_index: 183
+    before_sha256: null
+    after_sha256: 47ffa8cd9792562865823f1ab92f6d0cef6a42c7cb4d99883102abc795e0fe24
+    reverse_operation:
+      type: remove
+      entity: sources
+      id: SRC-SENNAYA-BRIEF-2026-09-17
+  - type: add
+    entity: documents
+    id: DOC-SENNAYA-FLAGSHIP
+    before: null
+    after:
+      id: DOC-SENNAYA-FLAGSHIP
+      title: Сенная — рабочая конфигурация флагманской торговой точки
+      type: scenario
+      status: research
+      google_file_id: null
+      template: null
+      sections:
+        - property
+        - equipment
+        - sales
+        - occupancy
+        - source_conflicts
+      local_path: docs-platform/scenarios/sennaya-flagship.json
+      version: "0.1"
+      updated_at: 2026-09-17
+    before_index: null
+    after_index: 29
+    before_sha256: null
+    after_sha256: 60bfb520a579ab222a456635b6681e272b4622eee8501e0c93a1696fd82030fd
+    reverse_operation:
+      type: remove
+      entity: documents
+      id: DOC-SENNAYA-FLAGSHIP
+  - type: add
+    entity: decisions
+    id: DEC-SENNAYA-2026-09-17-01
+    before: null
+    after:
+      id: DEC-SENNAYA-2026-09-17-01
+      title: Создать короткую инвесторскую страницу Сенной для staging
+      status: approved
+      decision: Реализовать share-only страницу Сенной на компонентах Петроградки; использовать существующие канонические расчёты, явно показать пробелы данных и отдельную стоимость пользования недвижимостью; проверить и показать staging. Финансовые гипотезы остаются research.
+      rationale: Прямое задание владельца. Канонические значения приоритетны при расхождениях; неподтверждённую прибыль разрешено не публиковать.
+      affected_documents:
+        - DOC-SENNAYA-FLAGSHIP
+      approved_by: project owner
+      approved_at: 2026-09-17
+      supersedes: null
+      source_ids:
+        - SRC-SENNAYA-BRIEF-2026-09-17
+      updated_at: 2026-09-17
+    before_index: null
+    after_index: 33
+    before_sha256: null
+    after_sha256: ca5c3d4306ecbab4a251ef8c746fdf5e6bd5ac29b6540a0e18ed3d5a41dbf60d
+    reverse_operation:
+      type: remove
+      entity: decisions
+      id: DEC-SENNAYA-2026-09-17-01
+validation_result: passed
+git_commit_hash: null
+rollback:
+  source_receipt: docs-platform/changelog/change-receipts/CHG-SENNAYA-2026-09-17-01.yaml
+  command: npm run change:reverse:preview -- ../changelog/change-receipts/CHG-SENNAYA-2026-09-17-01.yaml --change-id CHG-ROLLBACK-XXX --decision DEC-ROLLBACK-XXX
+  rollback_of: CHG-SENNAYA-2026-09-17-01

@@ -2,7 +2,7 @@
   "meta": {
     "schemaVersion": 1,
     "dataVersion": "1.7",
-    "contentStateSha256": "9202ab2e670703f3066de14379bf4f4e4faffdd1caf3b3c22d4f73173fedd4ac",
+    "contentStateSha256": "f1c317436f50500814089aef93fd1c3ebf5a9a1cca1877a7b642bf3ab1b563b8",
     "sourceFiles": [
       {
         "path": "docs-platform/working/network-planning-assumptions.yaml",
@@ -22,15 +22,15 @@
       },
       {
         "path": "docs-platform/registry/sources.yaml",
-        "sha256": "89c408270c9a04c4f315db68517b17af0614e6a2e95c8c9ecdca5053d4133ef8"
+        "sha256": "9bd3cbad9b19524c9f4539d8c1f8cf6cbb8a1ec1ea24ea688abd7271f18fadaf"
       },
       {
         "path": "docs-platform/working/capex-equipment-register.yaml",
-        "sha256": "f095aaaf5ba6500636d5982966a95f3f675319912d6b8523d4a93cbfbf7c908b"
+        "sha256": "3d82ff1803525ff21ecb367e465410102de420b14e309f90e5f069ee8c984fb3"
       },
       {
         "path": "src/content/capex-configurator-data.json",
-        "sha256": "7e578f410623f1ef49d29ffc8b0c5a301b484d327c0c893c0602d11d0f0684b4"
+        "sha256": "da92644fbd9ea05cce8c45c98e0dd0e43ab1ae09a0b78e2b1e0882a51ffcafbd"
       },
       {
         "path": "src/lib/physical-allocation.ts",

@@ -11,6 +11,7 @@ export type RouteId =
   | "investorTerminal"
   | "franchisePlatform"
   | "franchisePlatformPetrogradka"
+  | "franchisePlatformSennaya"
   | "launchBudget"
   | "revenueModel"
   | "economics"

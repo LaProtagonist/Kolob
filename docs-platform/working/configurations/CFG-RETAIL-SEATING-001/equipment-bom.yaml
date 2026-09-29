@@ -1,0 +1,643 @@
+schema_version: 1
+document:
+  project: Колобочная
+  title: Generated Equipment BOM
+  russian_title: Сформированная комплектация объекта
+  version: "0.1"
+  status: research
+  configuration_id: CFG-RETAIL-SEATING-001
+  format_id: FMT-RESTAURANT-SEATING
+  warning: Цены и итоговый CAPEX не определены. Пустые количества требуют уточнения и не заменяются нулём.
+active_modules:
+  - module_id: MOD-RETAIL-HOT
+    source: format_required
+  - module_id: MOD-POS
+    source: format_required
+  - module_id: MOD-KDS
+    source: format_required
+  - module_id: MOD-GUEST
+    source: format_required
+  - module_id: MOD-TAKEAWAY
+    source: format_required
+  - module_id: MOD-WASH
+    source: format_required
+  - module_id: MOD-ENGINEERING
+    source: format_required
+  - module_id: MOD-BAR
+    source: bar_enabled
+equipment:
+  - item_id: CAPEX-01-006
+    name: Стеллажи и подтоварники из нержавеющей стали
+    modules: MOD-PREP
+    inclusion_source: format_composition
+    requirement: tbd
+    calculated_quantity: 1
+    unit: tbd
+    quantity_rule: tbd
+    calculation_status: Рассчитано
+    override: null
+    inclusion_status: standalone
+    independent_procurement: true
+    open_parameters: количество и размеры
+    specification: нержавеющая сталь
+    notes: null
+  - item_id: CAPEX-01-007
+    name: Стеллаж или шкаф для сушки и хранения чистого инвентаря
+    modules: MOD-PREP
+    inclusion_source: format_composition
+    requirement: tbd
+    calculated_quantity: 1
+    unit: tbd
+    quantity_rule: tbd
+    calculation_status: Рассчитано
+    override: null
+    inclusion_status: standalone
+    independent_procurement: true
+    open_parameters: тип, количество и размеры
+    specification: сушка и хранение чистого инвентаря
+    notes: null
+  - item_id: CAPEX-01-019
+    name: Двухсекционная производственная мойка
+    modules: MOD-PREP
+    inclusion_source: format_composition
+    requirement: tbd
+    calculated_quantity: 1
+    unit: шт.
+    quantity_rule: fixed
+    calculation_status: Рассчитано
+    override: null
+    inclusion_status: standalone
+    independent_procurement: true
+    open_parameters: размеры и подключение
+    specification: двухсекционная производственная конструкция
+    notes: null
+  - item_id: CAPEX-01-020
+    name: Отдельная раковина для мытья рук персонала
+    modules: MOD-PREP
+    inclusion_source: format_composition
+    requirement: tbd
+    calculated_quantity: 1
+    unit: шт.
+    quantity_rule: fixed
+    calculation_status: Рассчитано
+    override: null
+    inclusion_status: standalone
+    independent_procurement: true
+    open_parameters: размещение и подключение
+    specification: отдельная раковина для рук персонала
+    notes: null
+  - item_id: CAPEX-01-021
+    name: Дозаторы моечной зоны
+    modules: MOD-PREP
+    inclusion_source: format_composition
+    requirement: tbd
+    calculated_quantity: 1
+    unit: tbd
+    quantity_rule: tbd
+    calculation_status: Рассчитано
+    override: null
+    inclusion_status: standalone
+    independent_procurement: true
+    open_parameters: количество
+    specification: дозаторы для жидкого мыла, антисептика и бумажных полотенец
+    notes: null
+  - item_id: CAPEX-01-025
+    name: Термометры для холодильной и морозильной камер
+    modules: MOD-PREP
+    inclusion_source: format_composition
+    requirement: tbd
+    calculated_quantity: 4
+    unit: tbd
+    quantity_rule: tbd
+    calculation_status: Рассчитано
+    override: null
+    inclusion_status: standalone
+    independent_procurement: true
+    open_parameters: null
+    specification: Количество и характеристики — tbd; зависят от конфигурации камер.
+    notes: null
+  - item_id: CAPEX-02-001
+    name: Газовый гриль для колобков
+    modules: MOD-RETAIL-HOT
+    inclusion_source: format_composition
+    requirement: tbd
+    calculated_quantity: 2
+    unit: шт.
+    quantity_rule: fixed
+    calculation_status: Рассчитано
+    override: null
+    inclusion_status: standalone
+    independent_procurement: true
+    open_parameters: количество ячеек, диаметр формы, мощность и способ газоснабжения
+    specification: Профессиональный газовый гриль с полусферическими ячейками по геометрии takoyaki; продукт и рабочее название — колобки. Две независимые установки по исходной рабочей спецификации.
+    notes: Надёжная российская карточка профессионального газового аппарата нужной геометрии не найдена; требуется технический подбор, сертификация газовой схемы и КП.
+  - item_id: CAPEX-02-002
+    name: Гриль для Манчеса
+    modules: MOD-RETAIL-HOT
+    inclusion_source: format_composition
+    requirement: tbd
+    calculated_quantity: 3
+    unit: шт.
+    quantity_rule: fixed
+    calculation_status: Рассчитано
+    override: null
+    inclusion_status: standalone
+    independent_procurement: true
+    open_parameters: технические характеристики
+    specification: Профессиональный гриль для приготовления продукта «Манчес»; точная конструкция, мощность и производительность требуют спецификации.
+    notes: Рабочее название приведено к продукту сайта; исходная спецификация использовала термин UFO-гриль.
+  - item_id: CAPEX-02-003
+    name: Профессиональные ручные шприцы или пистолеты-дозаторы
+    modules: MOD-RETAIL-HOT
+    inclusion_source: format_composition
+    requirement: tbd
+    calculated_quantity: 24
+    unit: шт.
+    quantity_rule: fixed
+    calculation_status: Рассчитано
+    override: null
+    inclusion_status: standalone
+    independent_procurement: true
+    open_parameters: конкретная конструкция
+    specification: минимум 8 видов начинок; 8 шт. — первый рабочий комплект; 8 шт. — второй рабочий комплект для параллельной работы; 8 шт. — резервный комплект; закрепление каждого дозатора за конкретной начинкой; работа с густыми, рублеными и неоднородными начинками; пищевая нержавейка; сменные насадки; быстрая разборка и санитарная мойка
+    notes: конструкция выбирается после изучения референсов; конкретная модель не выбрана
+  - item_id: CAPEX-02-004
+    name: Холодильный стол-саладетта
+    modules: MOD-RETAIL-HOT
+    inclusion_source: format_composition
+    requirement: tbd
+    calculated_quantity: 1
+    unit: шт.
+    quantity_rule: fixed
+    calculation_status: Рассчитано
+    override: null
+    inclusion_status: standalone
+    independent_procurement: true
+    open_parameters: размер и количество секций
+    specification: охлаждаемая нижняя часть; верхняя зона минимум под 8 начинок и дополнительные топпинги; допускается общая подъёмная крышка
+    notes: null
+  - item_id: CAPEX-02-005
+    name: Пластиковые гастроёмкости и контейнеры с плотными крышками
+    modules: MOD-RETAIL-HOT
+    inclusion_source: format_composition
+    requirement: tbd
+    calculated_quantity: 16
+    unit: tbd
+    quantity_rule: tbd
+    calculation_status: Рассчитано
+    override: null
+    inclusion_status: purchased_separately
+    independent_procurement: true
+    open_parameters: количество, размеры и объёмы
+    specification: профессиональный пищевой пластик; для начинок, топпингов и оперативного запаса; пригодность для холодильного хранения; возможность штабелирования
+    notes: учитываются отдельно от саладетты
+  - item_id: CAPEX-02-006
+    name: Столы под горячее оборудование
+    modules: MOD-RETAIL-HOT
+    inclusion_source: format_composition
+    requirement: tbd
+    calculated_quantity: 2
+    unit: шт.
+    quantity_rule: fixed
+    calculation_status: Рассчитано
+    override: null
+    inclusion_status: standalone
+    independent_procurement: true
+    open_parameters: окончательное количество и размеры
+    specification: усиленная пищевая нержавеющая сталь; размещение газовых грилей и UFO-грилей
+    notes: null
+  - item_id: CAPEX-02-007
+    name: Стол для сортировки и сборки заказов
+    modules: MOD-RETAIL-HOT, MOD-TAKEAWAY
+    inclusion_source: format_composition
+    requirement: tbd
+    calculated_quantity: 1
+    unit: шт.
+    quantity_rule: fixed
+    calculation_status: Рассчитано
+    override: null
+    inclusion_status: standalone
+    independent_procurement: true
+    open_parameters: размеры
+    specification: пищевая нержавейка; желательно с нижней полкой
+    notes: null
+  - item_id: CAPEX-02-008
+    name: Стол для сервировки и выдачи
+    modules: MOD-RETAIL-HOT, MOD-TAKEAWAY
+    inclusion_source: format_composition
+    requirement: tbd
+    calculated_quantity: 1
+    unit: шт.
+    quantity_rule: fixed
+    calculation_status: Рассчитано
+    override: null
+    inclusion_status: standalone
+    independent_procurement: true
+    open_parameters: размеры и организация хранения
+    specification: окончательное оформление продукта; комплектация заказа; размещение упаковки, салфеток и приборов; желательно с нижней полкой
+    notes: null
+  - item_id: CAPEX-02-009
+    name: Стеллажи для хранения чистой посуды и рабочего инвентаря
+    modules: MOD-RETAIL-HOT
+    inclusion_source: format_composition
+    requirement: tbd
+    calculated_quantity: 2
+    unit: tbd
+    quantity_rule: tbd
+    calculation_status: Рассчитано
+    override: null
+    inclusion_status: standalone
+    independent_procurement: true
+    open_parameters: количество и размеры
+    specification: предпочтительно нержавеющая сталь
+    notes: null
+  - item_id: CAPEX-02-010
+    name: Профессиональная post-mix система для лимонадов
+    modules: MOD-BAR
+    inclusion_source: format_composition
+    requirement: tbd
+    calculated_quantity: 1
+    unit: tbd
+    quantity_rule: tbd
+    calculation_status: Рассчитано
+    override: null
+    inclusion_status: standalone
+    independent_procurement: true
+    open_parameters: конфигурация, количество вкусов и производительность
+    specification: охладитель; карбонизатор для приготовления содовой; баллон CO₂; редуктор давления; насосы подачи сиропов; ручной post-mix пистолет либо отдельные краны; пищевые шланги; фитинги; поддон-каплесборник; фильтрация воды
+    notes: null
+  - item_id: CAPEX-02-011
+    name: Кеги для собственных сиропов
+    modules: MOD-BAR
+    inclusion_source: format_composition
+    requirement: tbd
+    calculated_quantity: 8
+    unit: tbd
+    quantity_rule: tbd
+    calculation_status: Рассчитано
+    override: null
+    inclusion_status: standalone
+    independent_procurement: true
+    open_parameters: количество и объём кег
+    specification: пищевая нержавеющая сталь; стандартные взаимозаменяемые фитинги; возможность полноценной санитарной мойки
+    notes: null
+  - item_id: CAPEX-02-012
+    name: Профессиональные энергоэффективные термопоты
+    modules: MOD-BAR
+    inclusion_source: format_composition
+    requirement: tbd
+    calculated_quantity: 2
+    unit: шт.
+    quantity_rule: fixed
+    calculation_status: Рассчитано
+    override: null
+    inclusion_status: standalone
+    independent_procurement: true
+    open_parameters: объём и технические характеристики
+    specification: теплоизолированный корпус; регулируемая температура; внутренняя ёмкость из пищевой нержавейки; возможность полной мойки
+    notes: один термопот может использоваться для приготовления и поддержания готового пуэра
+  - item_id: CAPEX-02-013
+    name: Компактный профессиональный льдогенератор отдельной торговой точки
+    modules: MOD-BAR
+    inclusion_source: format_composition
+    requirement: conditional
+    calculated_quantity: 1
+    unit: tbd
+    quantity_rule: tbd
+    calculation_status: Рассчитано
+    override: null
+    inclusion_status: standalone
+    independent_procurement: true
+    open_parameters: производительность и конфигурация
+    specification: меньшая производительность; обеспечение лимонадов, холодных напитков и коктейлей; без расчёта на охлаждение крупных партий после су-вида
+    notes: предусматривается для торговой точки без заготовочного цеха
+  - item_id: CAPEX-04-001
+    name: Кассовые POS-терминалы
+    modules: MOD-POS
+    inclusion_source: format_composition
+    requirement: tbd
+    calculated_quantity: 2
+    unit: шт.
+    quantity_rule: fixed
+    calculation_status: Рассчитано
+    override: null
+    inclusion_status: standalone
+    independent_procurement: true
+    open_parameters: аппаратная конфигурация, интеграции и программное обеспечение
+    specification: два кассовых поста; приём и оплата заказов; формирование состава заказа; распределение позиций по рабочим зонам; интеграция с эквайрингом, фискализацией и системой учёта
+    notes: конкретные модели и лицензии не выбраны
+  - item_id: CAPEX-04-003
+    name: KDS-экраны или закреплённые планшеты
+    modules: MOD-KDS
+    inclusion_source: format_composition
+    requirement: tbd
+    calculated_quantity: 3
+    unit: шт.
+    quantity_rule: fixed
+    calculation_status: Рассчитано
+    override: null
+    inclusion_status: standalone
+    independent_procurement: true
+    open_parameters: тип устройств, размеры экранов, крепления, программное обеспечение и интеграции
+    specification: отдельные рабочие зоны для бара и напитков; газовых грилей, приготовления и наполнения колобков; UFO-грилей и дополнительной горячей кухни; получение относящихся к зоне позиций; показ заказов в реальном времени; отображение порядка и времени ожидания; статусы принят, готовится, готов; синхронизация готовности общего заказа
+    notes: конкретные модели не выбраны
+  - item_id: CAPEX-02-056
+    name: Комплект мелкого инвентаря торговой кухни
+    modules: MOD-RETAIL-HOT
+    inclusion_source: format_composition
+    requirement: required
+    calculated_quantity: 1
+    unit: комплект
+    quantity_rule: fixed
+    calculation_status: Рассчитано
+    override: null
+    inclusion_status: standalone
+    independent_procurement: true
+    open_parameters: Точный cart по брендам, размерам, материалам и количеству рабочих постов подтверждается после меню, техкарт и планировки.
+    specification: "Расчётный комплект: 18 групп инвентаря; сумма строк 281600 ₽ + 10% резерв на дубли, бой и замену 28160 ₽ = 309760 ₽."
+    notes: Добавлено решением DEC-011 как research-позиция; не является утверждённой закупкой или финальным CAPEX.
+  - item_id: CAPEX-02-057
+    name: Комплект базового барного инвентаря
+    modules: MOD-BAR
+    inclusion_source: format_composition
+    requirement: required
+    calculated_quantity: 1
+    unit: комплект
+    quantity_rule: fixed
+    calculation_status: Рассчитано
+    override: null
+    inclusion_status: standalone
+    independent_procurement: true
+    open_parameters: Точный cart по брендам, размерам, материалам и количеству рабочих постов подтверждается после меню, техкарт и планировки.
+    specification: "Расчётный комплект: 11 групп инвентаря; сумма строк 111600 ₽ + 10% резерв на дубли, бой и замену 11160 ₽ = 122760 ₽."
+    notes: Добавлено решением DEC-011 как research-позиция; не является утверждённой закупкой или финальным CAPEX.
+  - item_id: CAPEX-02-058
+    name: Холодильный шкаф торговой кухни
+    modules: MOD-RETAIL-HOT
+    inclusion_source: format_composition
+    requirement: required
+    calculated_quantity: 2
+    unit: шт.
+    quantity_rule: fixed
+    calculation_status: Рассчитано
+    override: null
+    inclusion_status: standalone
+    independent_procurement: true
+    open_parameters: Геометрия, состав поставки, совместимость и коммерческое предложение
+    specification: 700 л номинально; 0…+6 °C; 697×925×1960 мм. Цена для центрального региона; перевозка в СПб, разгрузка и подключение не включены. Полезный объём и размещение дневного запаса ещё не проверены.
+    notes: 700 л номинально; 0…+6 °C; 697×925×1960 мм. Цена для центрального региона; перевозка в СПб, разгрузка и подключение не включены. Полезный объём и размещение дневного запаса ещё не проверены.
+  - item_id: CAPEX-02-059
+    name: Морозильный ларь торговой кухни
+    modules: MOD-RETAIL-HOT
+    inclusion_source: format_composition
+    requirement: required
+    calculated_quantity: 1
+    unit: шт.
+    quantity_rule: fixed
+    calculation_status: Рассчитано
+    override: null
+    inclusion_status: standalone
+    independent_procurement: true
+    open_parameters: Геометрия, состав поставки, совместимость и коммерческое предложение
+    specification: 380 л охлаждаемого объёма; −18…−22 °C; 1200×600×840 мм; 230 В, 140 Вт; две корзины. Цена акции; доставка в СПб и подключение не включены. Полезная загрузка требует проверки.
+    notes: 380 л охлаждаемого объёма; −18…−22 °C; 1200×600×840 мм; 230 В, 140 Вт; две корзины. Цена акции; доставка в СПб и подключение не включены. Полезная загрузка требует проверки.
+  - item_id: CAPEX-04-004
+    name: Фискальный регистратор с накопителем и чековым принтером
+    modules: MOD-POS
+    inclusion_source: format_composition
+    requirement: required
+    calculated_quantity: 2
+    unit: шт.
+    quantity_rule: per_cashier_post
+    calculation_status: Рассчитано
+    override: null
+    inclusion_status: standalone
+    independent_procurement: true
+    open_parameters: Геометрия, состав поставки, совместимость и коммерческое предложение
+    specification: ФН и встроенный чековый принтер включены; USB, 44–58 мм, 75 мм/с; БП и USB-кабель включены. Регистрация, ОФД и внедрение отдельно. Применимость срока ФН уточнить после выбора налогового режима.
+    notes: ФН и встроенный чековый принтер включены; USB, 44–58 мм, 75 мм/с; БП и USB-кабель включены. Регистрация, ОФД и внедрение отдельно. Применимость срока ФН уточнить после выбора налогового режима.
+  - item_id: CAPEX-04-005
+    name: Маршрутизатор точки
+    modules: MOD-POS
+    inclusion_source: format_composition
+    requirement: required
+    calculated_quantity: 1
+    unit: шт.
+    quantity_rule: fixed
+    calculation_status: Рассчитано
+    override: null
+    inclusion_status: standalone
+    independent_procurement: true
+    open_parameters: Геометрия, состав поставки, совместимость и коммерческое предложение
+    specification: Гигабитный маршрутизатор; резервирование WAN при подключении второго канала. Под заказ; второй канал, кабели и настройка не включены.
+    notes: Гигабитный маршрутизатор; резервирование WAN при подключении второго канала. Под заказ; второй канал, кабели и настройка не включены.
+  - item_id: CAPEX-04-006
+    name: Точка доступа Wi-Fi
+    modules: MOD-POS
+    inclusion_source: format_composition
+    requirement: required
+    calculated_quantity: 1
+    unit: шт.
+    quantity_rule: fixed
+    calculation_status: Рассчитано
+    override: null
+    inclusion_status: standalone
+    independent_procurement: true
+    open_parameters: Геометрия, состав поставки, совместимость и коммерческое предложение
+    specification: AC1350; PoE. Покрытие, состав инжектора питания и монтаж проверить в проекте сети.
+    notes: AC1350; PoE. Покрытие, состав инжектора питания и монтаж проверить в проекте сети.
+  - item_id: CAPEX-04-007
+    name: Сетевой коммутатор
+    modules: MOD-POS
+    inclusion_source: format_composition
+    requirement: required
+    calculated_quantity: 1
+    unit: шт.
+    quantity_rule: fixed
+    calculation_status: Рассчитано
+    override: null
+    inclusion_status: standalone
+    independent_procurement: true
+    open_parameters: Геометрия, состав поставки, совместимость и коммерческое предложение
+    specification: 8 гигабитных портов, VLAN, без PoE. Под заказ; окончательный портовый баланс с видеонаблюдением и питание точки доступа требуют проверки.
+    notes: 8 гигабитных портов, VLAN, без PoE. Под заказ; окончательный портовый баланс с видеонаблюдением и питание точки доступа требуют проверки.
+  - item_id: CAPEX-04-008
+    name: Источник бесперебойного питания
+    modules: MOD-POS
+    inclusion_source: format_composition
+    requirement: required
+    calculated_quantity: 3
+    unit: шт.
+    quantity_rule: fixed
+    calculation_status: Рассчитано
+    override: null
+    inclusion_status: standalone
+    independent_procurement: true
+    open_parameters: Геометрия, состав поставки, совместимость и коммерческое предложение
+    specification: "850 ВА / 480 Вт; рабочее количество: два кассовых поста и сеть. IEC-подключения; кабели/адаптеры и автономность по нагрузке требуют проверки."
+    notes: "850 ВА / 480 Вт; рабочее количество: два кассовых поста и сеть. IEC-подключения; кабели/адаптеры и автономность по нагрузке требуют проверки."
+  - item_id: CAPEX-04-009
+    name: Кабельная инфраструктура и питание сети
+    modules: MOD-POS
+    inclusion_source: format_composition
+    requirement: required
+    calculated_quantity: 1
+    unit: шт.
+    quantity_rule: fixed
+    calculation_status: Рассчитано
+    override: null
+    inclusion_status: standalone
+    independent_procurement: true
+    open_parameters: Геометрия, состав поставки, совместимость и коммерческое предложение
+    specification: Патч-корды, линии, розетки, монтажные материалы, питание Wi-Fi и адаптеры UPS. Сначала сверка с электромонтажом подготовки; цена отсутствует.
+    notes: Патч-корды, линии, розетки, монтажные материалы, питание Wi-Fi и адаптеры UPS. Сначала сверка с электромонтажом подготовки; цена отсутствует.
+  - item_id: CAPEX-04-010
+    name: Настройка и внедрение локальной сети
+    modules: MOD-POS
+    inclusion_source: format_composition
+    requirement: required
+    calculated_quantity: 1
+    unit: шт.
+    quantity_rule: fixed
+    calculation_status: Рассчитано
+    override: null
+    inclusion_status: standalone
+    independent_procurement: true
+    open_parameters: Геометрия, состав поставки, совместимость и коммерческое предложение
+    specification: Настройка VLAN, Wi-Fi, резервного канала, UPS и тестирование. Не входит в цены устройств.
+    notes: Настройка VLAN, Wi-Fi, резервного канала, UPS и тестирование. Не входит в цены устройств.
+  - item_id: CAPEX-04-011
+    name: Подключение кассы с вводным обучением
+    modules: MOD-POS
+    inclusion_source: format_composition
+    requirement: required
+    calculated_quantity: 2
+    unit: шт.
+    quantity_rule: per_cashier_post
+    calculation_status: Рассчитано
+    override: null
+    inclusion_status: standalone
+    independent_procurement: true
+    open_parameters: Геометрия, состав поставки, совместимость и коммерческое предложение
+    specification: Цена за кассу включает вводное обучение. Не прибавлять отдельно аналогичную настройку за 2000 ₽; состав регистрации ФНС, загрузки номенклатуры и интеграции с учётом уточнить.
+    notes: Цена за кассу включает вводное обучение. Не прибавлять отдельно аналогичную настройку за 2000 ₽; состав регистрации ФНС, загрузки номенклатуры и интеграции с учётом уточнить.
+  - item_id: CAPEX-04-012
+    name: Стартовый ОФД на один год
+    modules: MOD-POS
+    inclusion_source: format_composition
+    requirement: required
+    calculated_quantity: 2
+    unit: шт.
+    quantity_rule: per_cashier_post
+    calculation_status: Рассчитано
+    override: null
+    inclusion_status: standalone
+    independent_procurement: true
+    open_parameters: Геометрия, состав поставки, совместимость и коммерческое предложение
+    specification: Годовая предоплата сервиса на кассу; не физическое оборудование. Продление — регулярный OPEX.
+    notes: Годовая предоплата сервиса на кассу; не физическое оборудование. Продление — регулярный OPEX.
+  - item_id: CAPEX-05-028
+    name: Гостевой поднос
+    modules: MOD-GUEST
+    inclusion_source: format_composition
+    requirement: required
+    calculated_quantity: 26
+    unit: шт.
+    quantity_rule: per_seat
+    calculation_status: Рассчитано
+    override: null
+    inclusion_status: standalone
+    independent_procurement: true
+    open_parameters: Геометрия, состав поставки, совместимость и коммерческое предложение
+    specification: Полипропилен, 460 мм. Цена индексируемого каталога; прямое чтение карточки недоступно, подтвердить КП. Рабочий запас — один поднос на место; оборачиваемость требует проверки.
+    notes: Полипропилен, 460 мм. Цена индексируемого каталога; прямое чтение карточки недоступно, подтвердить КП. Рабочий запас — один поднос на место; оборачиваемость требует проверки.
+  - item_id: CAPEX-05-029
+    name: Гостевая урна с педалью
+    modules: MOD-GUEST
+    inclusion_source: format_composition
+    requirement: required
+    calculated_quantity: 2
+    unit: шт.
+    quantity_rule: fixed
+    calculation_status: Рассчитано
+    override: null
+    inclusion_status: standalone
+    independent_procurement: true
+    open_parameters: Геометрия, состав поставки, совместимость и коммерческое предложение
+    specification: Нержавеющая сталь, внутреннее ведро. Две урны — рабочий ориентир, не санитарный проект.
+    notes: Нержавеющая сталь, внутреннее ведро. Две урны — рабочий ориентир, не санитарный проект.
+  - item_id: CAPEX-05-030
+    name: Дополнительные принадлежности гостевой зоны
+    modules: MOD-GUEST
+    inclusion_source: format_composition
+    requirement: required
+    calculated_quantity: 1
+    unit: шт.
+    quantity_rule: fixed
+    calculation_status: Рассчитано
+    override: null
+    inclusion_status: standalone
+    independent_procurement: true
+    open_parameters: Геометрия, состав поставки, совместимость и коммерческое предложение
+    specification: Держатели подносов и гостевых расходников, элементы ожидания. Номенклатура после планировки; столы, стулья и встроенные стойки сюда повторно не включаются.
+    notes: Держатели подносов и гостевых расходников, элементы ожидания. Номенклатура после планировки; столы, стулья и встроенные стойки сюда повторно не включаются.
+  - item_id: CAPEX-02-060
+    name: Доставка оборудования до объекта
+    modules: MOD-RETAIL-HOT
+    inclusion_source: format_composition
+    requirement: required
+    calculated_quantity: 1
+    unit: шт.
+    quantity_rule: fixed
+    calculation_status: Рассчитано
+    override: null
+    inclusion_status: standalone
+    independent_procurement: true
+    open_parameters: Геометрия, состав поставки, совместимость и коммерческое предложение
+    specification: Консолидированная доставка в СПб по фактической ведомости; бесплатная доставка до терминала не означает доставку до объекта.
+    notes: Консолидированная доставка в СПб по фактической ведомости; бесплатная доставка до терминала не означает доставку до объекта.
+  - item_id: CAPEX-02-061
+    name: Разгрузка и подъём оборудования
+    modules: MOD-RETAIL-HOT
+    inclusion_source: format_composition
+    requirement: required
+    calculated_quantity: 1
+    unit: шт.
+    quantity_rule: fixed
+    calculation_status: Рассчитано
+    override: null
+    inclusion_status: standalone
+    independent_procurement: true
+    open_parameters: Геометрия, состав поставки, совместимость и коммерческое предложение
+    specification: Габариты входов, этаж, способ разгрузки и сборка на месте пока неизвестны.
+    notes: Габариты входов, этаж, способ разгрузки и сборка на месте пока неизвестны.
+  - item_id: CAPEX-02-062
+    name: Монтаж, подключение и пусконаладка оборудования
+    modules: MOD-RETAIL-HOT
+    inclusion_source: format_composition
+    requirement: required
+    calculated_quantity: 1
+    unit: шт.
+    quantity_rule: fixed
+    calculation_status: Рассчитано
+    override: null
+    inclusion_status: standalone
+    independent_procurement: true
+    open_parameters: Геометрия, состав поставки, совместимость и коммерческое предложение
+    specification: Только работы по оборудованию, не вентиляция/электрика/встроенные конструкции из подготовки. Требуется коммерческое предложение.
+    notes: Только работы по оборудованию, не вентиляция/электрика/встроенные конструкции из подготовки. Требуется коммерческое предложение.
+  - item_id: CAPEX-02-063
+    name: Первоначальные санитарные и гостевые расходники
+    modules: MOD-WASH
+    inclusion_source: format_composition
+    requirement: required
+    calculated_quantity: 1
+    unit: шт.
+    quantity_rule: fixed
+    calculation_status: Рассчитано
+    override: null
+    inclusion_status: standalone
+    independent_procurement: true
+    open_parameters: Геометрия, состав поставки, совместимость и коммерческое предложение
+    specification: Мыло, полотенца, моющие средства и гостевые расходники. Не дублировать товарный запас и упаковку заказов. Состав и цена отсутствуют.
+    notes: Мыло, полотенца, моющие средства и гостевые расходники. Не дублировать товарный запас и упаковку заказов. Состав и цена отсутствуют.

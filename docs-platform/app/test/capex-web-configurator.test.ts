@@ -14,7 +14,7 @@ import {
 } from "../src/capex/pilot-expansion-workflow.js";
 import { buildEquipmentBom, readModularSources } from "../src/capex/modular.js";
 import { buildContentStateManifest, sourceHashMap } from "../src/capex/content-state.js";
-import { PRICE_SCENARIOS, readPriceResearch } from "../src/capex/price-research.js";
+import { PRICE_SCENARIOS, readPriceResearch, recalculatePriceSummary } from "../src/capex/price-research.js";
 import { REMAINING_PRICE_DECISION_ID } from "../src/capex/remaining-price-workflow.js";
 import { CAPEX_REGISTER_SOURCE_SHA256, readRegister, sha256 } from "../src/capex/register.js";
 import { buildWebSnapshot, checkWebSnapshot, WEB_SNAPSHOT_PATH } from "../src/capex/web-snapshot.js";
@@ -40,7 +40,7 @@ test("CAPEX-01-009 is one unit in the register, MOD-PREP rule and every research
   const oven = register.equipment.find(item => item.item_id === "CAPEX-01-009")!;
   const link = modular.module_items.links.find(item => item.module_id === "MOD-PREP" && item.item_id === oven.item_id)!;
   const price = research.items.find(item => item.item_id === oven.item_id)!;
-  assert.equal(register.document.decision_id, REMAINING_PRICE_DECISION_ID);
+  assert.equal(register.document.decision_id, "DEC-SENNAYA-CAPEX-2026-09-17-02");
   assert.deepEqual([oven.quantity_min, oven.quantity_base, oven.quantity_scale_ready], [1, 1, 1]);
   assert.deepEqual([link.quantity_rule_type, link.quantity_rule_value, link.aggregation_rule], ["fixed", 1, "once"]);
   assert.deepEqual(PRICE_SCENARIOS.map(scenario => price.scenarios[scenario]?.quantity), [1, 1, 1]);
@@ -66,10 +66,10 @@ test("scenario totals are recalculated from line items and all eligible records 
     const calculated = research.items.reduce((sum, item) => sum + (item.scenarios[scenario]?.line_total_rub ?? 0), 0);
     assert.equal(Math.round(calculated * 100) / 100, research.summary.totals_rub[scenario]);
   }
-  assert.deepEqual(research.summary.totals_rub, { minimum: 4085990.33, base: 5488047.33, scale_ready: 6915980.79 });
+  assert.deepEqual(recalculatePriceSummary(research.items.filter(item => !register.equipment.find(row => row.item_id === item.item_id)?.composition_profile)).totals_rub, { minimum: 4085990.33, base: 5488047.33, scale_ready: 6915980.79 });
   const unpriced = research.items.filter(item => item.valuation_status !== "priced");
   assert.equal(unpriced.length, research.summary.unpriced_record_count);
-  assert.equal(unpriced.length, 0);
+  assert.equal(unpriced.length, 7);
   assert.equal(unpriced.every(item => PRICE_SCENARIOS.every(scenario => item.scenarios[scenario] === null)), true);
   assert.equal(register.equipment.filter(item => item.inclusion_status === "included_in_parent").every(item => item.price_base === null), true);
 });
@@ -78,11 +78,11 @@ test("the web snapshot is deterministic, current and derived from canonical sour
   const built = buildWebSnapshot();
   const stored = JSON.parse(fs.readFileSync(WEB_SNAPSHOT_PATH, "utf8"));
   assert.deepEqual(stored, built);
-  assert.equal(built.meta.counts.equipmentRecords, 160);
+  assert.equal(built.meta.counts.equipmentRecords, 179);
   assert.equal(built.meta.counts.formats, 7);
   assert.equal(built.meta.counts.pricedRecords, research.summary.priced_record_count);
   assert.equal(built.meta.counts.foodPriceScopeRecords, research.summary.eligible_procurement_record_count);
-  assert.equal(built.meta.decisionId, REMAINING_PRICE_DECISION_ID);
+  assert.equal(built.meta.decisionId, "DEC-SENNAYA-CAPEX-2026-09-17-02");
   assert.equal(built.items.find(item => item.id === "CAPEX-01-009")?.scenarios.base?.quantity, 1);
   assert.equal(built.scenarios.find(item => item.id === "minimum")?.availableInSelector, false);
   assert.equal(built.pilotConfiguration?.configuration_id, "CFG-PILOT-001");

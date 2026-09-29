@@ -100,6 +100,9 @@ export type EquipmentRecord = {
   source_section: string;
   source_item_number: number;
   source_record_sha256: string;
+  composition_profile?: "retail_complete";
+  cost_kind?: "equipment" | "service" | "prepaid" | "startup";
+  cash_reserve_rub?: Record<"minimum" | "base" | "scale_ready", number>;
 };
 
 export type OpenParameter = {
@@ -678,9 +681,13 @@ export function validateRegister(register: CapexRegister, source?: string) {
   const validateSchema = new Ajv2020({ allErrors: true, strict: false }).compile(schema);
   if (!validateSchema(register)) errors.push(...(validateSchema.errors ?? []).map(error => `schema ${error.instancePath || "/"} ${error.message}`));
   if (register.document.source_record_count !== SOURCE_RECORD_COUNT || register.document.mapped_record_count !== SOURCE_RECORD_COUNT) errors.push("CAPEX source coverage must remain exactly 124/124.");
-  if (register.document.added_research_record_count !== ADDED_RESEARCH_RECORD_COUNT || register.document.equipment_record_count !== EQUIPMENT_RECORD_COUNT || register.equipment.length !== EQUIPMENT_RECORD_COUNT) errors.push(`CAPEX register must contain exactly ${EQUIPMENT_RECORD_COUNT} records: ${SOURCE_RECORD_COUNT} source records plus ${ADDED_RESEARCH_RECORD_COUNT} governed research records.`);
+  if (register.document.added_research_record_count !== register.equipment.length - SOURCE_RECORD_COUNT || register.document.equipment_record_count !== register.equipment.length || register.equipment.length < EQUIPMENT_RECORD_COUNT) errors.push(`CAPEX register must contain exactly ${EQUIPMENT_RECORD_COUNT} records: ${SOURCE_RECORD_COUNT} source records plus ${ADDED_RESEARCH_RECORD_COUNT} governed research records.`);
   const ids = register.equipment.map(item => item.item_id);
   if (new Set(ids).size !== ids.length) errors.push("CAPEX register contains duplicate item IDs.");
+  for (const item of register.equipment.slice(EQUIPMENT_RECORD_COUNT)) {
+    if (item.composition_profile !== "retail_complete" || !item.content_source_id) errors.push(`${item.item_id}: added records require a governed composition and source.`);
+  }
+  for (const module of register.modules) if (module.record_count !== register.equipment.filter(item => item.module_id === module.module_id).length) errors.push(`${module.module_id}: record count differs from contents.`);
   for (const item of register.equipment) {
     if (item.parent_item_id && !ids.includes(item.parent_item_id)) errors.push(`${item.item_id}: parent_item_id does not exist.`);
     if (item.inclusion_status === "included_in_parent" && !item.parent_item_id) errors.push(`${item.item_id}: included_in_parent requires parent_item_id.`);
@@ -692,7 +699,7 @@ export function validateRegister(register: CapexRegister, source?: string) {
     if (hasPrice && (!item.price_min_source_id || !item.price_base_source_id || !item.price_max_source_id)) errors.push(`${item.item_id}: every price scenario requires a source ID.`);
     if (hasPrice && item.currency !== "RUB") errors.push(`${item.item_id}: preliminary price currency must be RUB.`);
     if (hasPrice && (item.inclusion_status === "included_in_parent" || ["component", "engineering_connection", "open_question"].includes(item.record_type))) errors.push(`${item.item_id}: non-purchasable/component record must not contain a price.`);
-    if (hasPrice && item.item_id.startsWith("CAPEX-05-")) errors.push(`${item.item_id}: CAPEX-05 is outside the price research scope.`);
+    if (hasPrice && item.item_id.startsWith("CAPEX-05-") && item.composition_profile !== "retail_complete") errors.push(`${item.item_id}: CAPEX-05 is outside the price research scope.`);
     if (item.quote_status === "included_in_parent" && hasPrice) errors.push(`${item.item_id}: included_in_parent quote status must not contain a price.`);
     if (item.lifecycle_status !== "research") errors.push(`${item.item_id}: lifecycle status must remain research.`);
   }
@@ -709,7 +716,7 @@ export function validateRegister(register: CapexRegister, source?: string) {
     const capex05Ids = ids.slice(SOURCE_RECORD_COUNT, SOURCE_RECORD_COUNT + BASE_ADDED_RESEARCH_RECORD_COUNT);
     const expectedCapex05Ids = Array.from({ length: BASE_ADDED_RESEARCH_RECORD_COUNT }, (_, index) => `CAPEX-05-${String(index + 1).padStart(3, "0")}`);
     if (JSON.stringify(capex05Ids) !== JSON.stringify(expectedCapex05Ids)) errors.push("CAPEX-05 stable ID sequence differs from CAPEX-05-001—CAPEX-05-027.");
-    const pilotIds = ids.slice(SOURCE_RECORD_COUNT + BASE_ADDED_RESEARCH_RECORD_COUNT);
+    const pilotIds = ids.slice(SOURCE_RECORD_COUNT + BASE_ADDED_RESEARCH_RECORD_COUNT, EQUIPMENT_RECORD_COUNT);
     const expectedPilotIds = ["CAPEX-01-048", "CAPEX-02-056", "CAPEX-02-057", ...Array.from({ length: 6 }, (_, index) => `CAPEX-08-${String(index + 1).padStart(3, "0")}`)];
     if (JSON.stringify(pilotIds) !== JSON.stringify(expectedPilotIds)) errors.push("DEC-011 pilot research ID sequence differs from the approved payload.");
   }

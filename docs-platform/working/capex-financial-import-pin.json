@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "decisionId": "DEC-SENNAYA-CAPEX-2026-09-17-02",
+  "sourceCommit": "945373fa2f3f50b32dac7b48af1979f4e2005177",
+  "sourcePath": "src/content/capex-configurator-data.json",
+  "importedContentStateSha256": "a04b5791b92854b1b6187af24ad674838fb0d6c1de01cf9265c1d1896eff2239",
+  "dependenciesSha256": "73774236e2ccbe9654bf0219b468b51acd3421c37b7df238da71effc40837b9f",
+  "boundary": "Historical Financial Model import only. New opt-in seated-retail additions do not migrate the legacy dependency set. Full live snapshot/schema/BOM validation still applies."
+}
