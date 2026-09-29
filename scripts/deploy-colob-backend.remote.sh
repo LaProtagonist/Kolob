@@ -4,6 +4,8 @@ set -eu
 
 STAGE_DIR="$KOLOB_DEPLOY_STAGE"
 APP_DIR="/opt/kolob-contact"
+CONTROL_ROOT="/srv/kolob-control"
+ENV_FILE="/etc/kolob-contact.env"
 CONTACT_CONTAINER="kolob-contact"
 CADDY_CONTAINER="land-static-caddy"
 
@@ -45,14 +47,42 @@ healthy() {
   docker exec "$CADDY_CONTAINER" sh -lc "wget -qO- --timeout=5 http://$CONTACT_CONTAINER:8787/health" >/dev/null 2>&1
 }
 
-docker restart "$CONTACT_CONTAINER" >/dev/null
-sleep 2
+CONTACT_IMAGE="$(docker inspect "$CONTACT_CONTAINER" --format '{{.Config.Image}}')"
+CADDY_NETWORK="$(docker inspect "$CADDY_CONTAINER" --format '{{range $name, $_ := .NetworkSettings.Networks}}{{$name}}{{end}}')"
+if [ -z "$CONTACT_IMAGE" ] || [ -z "$CADDY_NETWORK" ] || [ ! -f "$ENV_FILE" ]; then
+  echo "Could not resolve contact image, Caddy network or env file." >&2
+  exit 1
+fi
+
+# Leads, the sheet bridge address and the sign-in key live in /srv/kolob-data on the host.
+# The backend reads CONTACT_DATA_DIR, so the host folder is mounted at exactly that path.
+DATA_MOUNT="$(sed -n 's/^CONTACT_DATA_DIR=//p' "$ENV_FILE" | tail -n 1)"
+case "$DATA_MOUNT" in
+  /*) ;;
+  *) DATA_MOUNT="/data" ;;
+esac
+
+start_backend() {
+  docker rm -f "$CONTACT_CONTAINER" >/dev/null 2>&1 || true
+  docker run -d \
+    --name "$CONTACT_CONTAINER" \
+    --restart unless-stopped \
+    --network "$CADDY_NETWORK" \
+    --env-file "$ENV_FILE" \
+    -v "$APP_DIR:/app:ro" \
+    -v "/srv/kolob-data:$DATA_MOUNT" \
+    -v "$CONTROL_ROOT:/control:ro" \
+    "$CONTACT_IMAGE" \
+    python3 /app/contact_server.py >/dev/null
+  sleep 2
+}
+
+start_backend
 if ! healthy; then
   echo "New backend did not start. Restoring the previous version." >&2
   if [ -f "$PREVIOUS" ]; then
     cp "$PREVIOUS" "$APP_DIR/contact_server.py"
-    docker restart "$CONTACT_CONTAINER" >/dev/null
-    sleep 2
+    start_backend
     healthy && echo "Previous backend restored." >&2
   fi
   exit 1

@@ -95,6 +95,14 @@ printf '%s\n' 'CONTROL_STATIC_ROOT=/control' >> "$ENV_NEXT"
 chmod 600 "$ENV_NEXT"
 mv "$ENV_NEXT" "$ENV_FILE"
 
+# Leads, the sheet bridge address and the sign-in key live in /srv/kolob-data on the host.
+# The backend reads CONTACT_DATA_DIR, so the host folder is mounted at exactly that path.
+DATA_MOUNT="$(sed -n 's/^CONTACT_DATA_DIR=//p' "$ENV_FILE" | tail -n 1)"
+case "$DATA_MOUNT" in
+  /*) ;;
+  *) DATA_MOUNT="/data" ;;
+esac
+
 docker rm -f "$CONTACT_CONTAINER" >/dev/null
 docker run -d \
   --name "$CONTACT_CONTAINER" \
@@ -102,7 +110,7 @@ docker run -d \
   --network "$CADDY_NETWORK" \
   --env-file "$ENV_FILE" \
   -v "$APP_DIR:/app:ro" \
-  -v /srv/kolob-data:/data \
+  -v "/srv/kolob-data:$DATA_MOUNT" \
   -v "$CONTROL_ROOT:/control:ro" \
   "$CONTACT_IMAGE" \
   python3 /app/contact_server.py >/dev/null
