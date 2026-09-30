@@ -1,34 +1,59 @@
-# Project agent rules
+# Правила работы с проектом «Колобочная»
 
-## Onboarding
+Правила для любого агента (Codex, Claude) и для человека. Действуют с 30.09.2026 в ветке `feature/sheet-control` и во всех ветках, которые от неё отходят.
 
-At the beginning of every new Codex chat, the first project command is:
+## Что это за проект
+
+Сайт https://colob.spi.ski: общие страницы, калькулятор инвестора (`/investor-terminal`), адресные страницы (`/sennaya`, `/petrogradka`) и закрытая зона (`/control`, `/leads`). Расчёты выполняются в браузере кодом из `src/lib/`. Серверная часть — один файл `server/contact_server.py`.
+
+## Где лежат цифры
+
+- **Вводные калькулятора** — лист «Вводные» Google Таблицы владельца. Их меняют в таблице или на странице `/control/inputs`; код для этого трогать не нужно. Список параметров и допустимые пределы: `server/inputs-schema.json`. Устройство связки: `docs-platform/SHEET_CONTROL.md`.
+- **Остальные допущения и цены** — файлы в `docs-platform/working/`. После их правки запускаются команды `*:sync` из `package.json`, которые пересобирают снимки данных.
+- Вводные из таблицы меняют только значения по умолчанию у посетителя. Базовые объекты расчёта в `src/lib/investor-configuration.ts` (`baseObjectLaunchBudgetState`, `currentBaseObjectInvestorConfiguration`) от таблицы не зависят и не должны зависеть.
+
+## Как вносить изменения
+
+1. Работать в отдельной ветке. В `master` и чужие ветки не коммитить.
+2. Коммиты обычные: одно изменение — один коммит с понятным описанием. Оформление итераций (предложение, решение, квитанция, «печать») больше не требуется.
+3. `git push`, выкладка на сервер, правка настроек сервера и удаление данных выполняются только по прямой команде владельца.
+4. Перед коммитом посмотреть `git status`: в рабочей копии могут быть правки другого чата. Чужие файлы не трогать и не «чистить».
+5. Секреты в репозиторий не попадают. Пароли и ключи лежат на сервере и в папке `secrets/` рядом с репозиторием.
+
+## Проверки
+
+Обязательный минимум перед коммитом, меняющим код:
 
 ```bash
-npm run project:onboard
+npx tsc -b
+npm run theme:check
+npm run verify:affected
 ```
 
-If onboarding reports a stale handoff, registry drift, timeline failure, or a missing required tag, stop content work and repair governance through a new append-only event. On a new computer, run `git fetch --all --tags` before onboarding.
+- `verify:affected` запускает проверки только затронутых областей.
+- После правки серверной части или связки с таблицей: `npm run test:sheet`.
+- Перед выкладкой: `npm run build` и браузерные сценарии затронутых страниц (`scripts/test-*.cjs`).
+- Снимки данных сверяются по значениям, а не побайтно: расхождение в последних знаках числа ошибкой не считается.
+- Если проверка сообщает, что снимок устарел, — запустить соответствующую команду `*:sync`. Код расчётов входит в контрольную сумму снимков, поэтому после его правки снимки пересобираются.
 
-## Git ownership
+## Оформление страниц
 
-The project owner manages Git decisions. Do not stage, unstage, commit, push, pull, merge, rebase, stash, switch or create branches, reset, restore, or revert unless the owner explicitly requests that exact operation in the current task. Read-only Git commands are allowed.
+- Цвета в стилях идут через переменные. Новый цвет, записанный числом, подхватывает `npm run theme:tones`; файл `src/theme-tones.css` руками не правится.
+- Любая страница должна читаться в светлой и тёмной теме и не иметь горизонтальной прокрутки на ширине 390 px.
+- Браузер для сборки и проверок берётся из общего кэша Playwright; в папку проекта он не скачивается.
+- Правила по текстам, типографике и медиа — в `rules-project.md`.
 
-For explicitly authorized governed iterations:
+## Выкладка
 
-- one iteration must not mix unrelated edits;
-- a content commit must contain all mandatory governance trailers;
-- an iteration is complete only after `npm run iteration:seal` creates its append-only committed event, annotated iteration tag, generated context, and separate seal commit;
-- push is never automatic, and iteration tags must be pushed together with their commits when the owner later authorizes a push;
-- force-push and rebase are forbidden for sealed history;
-- tags are never replaced with force;
-- Git notes are not a canonical or sole link;
-- old events and receipts are never edited; corrections are new append-only events;
-- no content rollback uses `git reset`: latest reversals use suffix-only governed rollback, and historical reversals use a compensating change.
+```bash
+bash ./synch_to_server.sh -deploy   # собрать и выложить сайт и серверную часть
+npm run backend:deploy              # только серверная часть, без сборки страниц
+npm run sheet:connect -- "<адрес моста>" "<ссылка на таблицу>"
+npm run admin:link                  # новая ссылка для входа в закрытую зону
+```
 
-After editing files, leave changes unstaged unless the current task explicitly authorizes the exact content/seal commits. Report changed files and final status.
+После выкладки открыть главную, калькулятор и `/control/inputs` и убедиться, что они отвечают.
 
-## Testing and verification
+## Журнал решений
 
-Testing and verification MUST follow `verification/README.md` and `verification/TESTING_POLICY.md`.
-Use `npm run verify:affected` by default. Use `npm run verify:release` only at lifecycle or release boundaries.
+`docs-platform/changelog/` и `docs-platform/changes/` — архив решений до 18.09.2026. Он сохраняется для истории: старые записи не правятся и не удаляются. Новые записи необязательны. Команды `project:onboard`, `iteration:*`, `governance:validate` остались в проекте, но условием работы не являются; после обычных коммитов они могут сообщать о расхождениях с журналом — это ожидаемо.

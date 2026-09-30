@@ -184,7 +184,6 @@ async function run() {
     assert.equal((await request("/api/leads")).status, 401, "unauthorized leads API remains protected");
     assert.equal((await request("/api/leads.csv", { headers: { Cookie: cookie } })).status, 200, "CSV export keeps working with the shared session");
 
-    process.env.PLAYWRIGHT_BROWSERS_PATH = path.join(projectRoot, ".playwright-browsers");
     const { chromium } = require("playwright");
     const browser = await chromium.launch({ headless: true });
     const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });

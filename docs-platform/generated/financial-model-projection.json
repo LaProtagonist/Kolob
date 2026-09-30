@@ -21,11 +21,11 @@
         },
         {
           "path": "docs-platform/app/src/financial/financial-model.ts",
-          "sha256": "6895acd3c5dc05b734415d76f2725579bab72c64deba07475a377cd43948879d"
+          "sha256": "01cc4a22a9d4bf1bfa32359c297dcdc2a52fe27b1e1ea87bced649e59e9dced6"
         },
         {
           "path": "docs-platform/app/src/financial/google-sheet.ts",
-          "sha256": "491c436f32637192e9baac7a4599b1b20c738331133f1456505f15b873a1a625"
+          "sha256": "d116dd01d708a3715b0ecc3b244f1c2d1bffb4cd869740985334004f13657e38"
         },
         {
           "path": "docs-platform/schemas/financial-google-sheets-payload.schema.json",
@@ -68,7 +68,7 @@
           "sha256": "05ef9f5a3936961fb3ce8cdf2b042cea0980eb6508cb8fa97d4b105002971c26"
         }
       ],
-      "content_state_sha256": "6aee03fe338d79dba1e38fc4a419e9470d4622849c7c6c341d20ba89a59e7930"
+      "content_state_sha256": "7561a9999f09ac40eee3fd1519d110bfd1e4047769adecac922c2f591d62e217"
     },
     "imported_revenue_content_state_sha256": "90727a6c51f959b617d6c972b898593a1b6dba6742d51b30bb75230f3f606c38",
     "imported_capex_content_state_sha256": "836a08cb0e65d837b350704efb9fd28da800bdd0bdd2837f9eadb94b7d1c611c",
@@ -15633,7 +15633,7 @@
         "real_estate_return": 0,
         "real_estate_irr_annual": 0,
         "combined_payback_month": 31,
-        "combined_irr_annual": 0.4393689912688634,
+        "combined_irr_annual": 0.4393689912688632,
         "combined_npv_rub": 64557493.11,
         "restaurant_cash_flows": [
           -44724292.36,

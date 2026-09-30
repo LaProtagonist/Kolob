@@ -3,7 +3,6 @@ const http = require("http");
 const path = require("path");
 
 const projectRoot = path.resolve(__dirname, "..");
-process.env.PLAYWRIGHT_BROWSERS_PATH = path.join(projectRoot, ".playwright-browsers");
 
 const { chromium } = require("playwright");
 

@@ -6,7 +6,6 @@ const path = require("node:path");
 const os = require("node:os");
 const { spawn } = require("node:child_process");
 const root = path.resolve(__dirname, "..");
-process.env.PLAYWRIGHT_BROWSERS_PATH = path.join(root, ".playwright-browsers");
 const { chromium } = require("playwright");
 const key = "kolobochnaya.control.franchise-model.v1";
 const route = "/control/franchise-model";

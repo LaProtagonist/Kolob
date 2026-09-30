@@ -50,7 +50,6 @@ async function startServer() {
 }
 
 async function run() {
-  process.env.PLAYWRIGHT_BROWSERS_PATH = path.join(projectRoot, ".playwright-browsers");
   const { chromium } = require("playwright");
   const server = await startServer();
   const before = sourceHashes();

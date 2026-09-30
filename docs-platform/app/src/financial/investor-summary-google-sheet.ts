@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { Ajv2020 } from "ajv/dist/2020.js";
 import { platformRoot } from "../google/config.js";
-import { sha256 } from "../governance/util.js";
+import { sha256, sameGenerated } from "../governance/util.js";
 import {
   INVESTOR_SUMMARY_GOOGLE_PAYLOAD_SCHEMA_PATH,
   INVESTOR_SUMMARY_PROJECTION_PATH,
@@ -417,6 +417,6 @@ export function checkInvestorSummaryGooglePayload(root = projectRoot) {
   const errors = validateInvestorSummaryGooglePayload(parsed, root);
   if (errors.length) throw new Error(errors.join("\n"));
   const expected = serializedPayload(root);
-  if (actual !== expected) throw new Error("Investor Summary Google payload is stale or non-deterministic.");
+  if (!sameGenerated(actual, expected)) throw new Error("Investor Summary Google payload is stale or non-deterministic.");
   return { validation: "OK", path: INVESTOR_SUMMARY_GOOGLE_PAYLOAD_PATH, sha256: sha256(actual), sheet_count: parsed.sheets.length };
 }

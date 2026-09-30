@@ -7,7 +7,7 @@ import YAML from "yaml";
 import { buildContentStateManifest } from "../capex/content-state.js";
 import { checkWebSnapshot } from "../capex/web-snapshot.js";
 import { platformRoot } from "../google/config.js";
-import { canonical, sha256 } from "../governance/util.js";
+import { canonical, sha256, sameGenerated } from "../governance/util.js";
 import { buildRevenueContentState, readRevenueModel } from "../investor/revenue-model.js";
 import { calculateLaunchBudget, defaultLaunchBudgetState, launchModel } from "../../../../src/lib/launch-budget.js";
 import { buildCapexRows, capexData, emptyCapexParameters, summarizeEquipment } from "../../../../src/lib/capex-runtime.js";
@@ -829,6 +829,6 @@ export function checkFinancialProjection(root = projectRoot) {
   const errors = projectionSchemaErrors(parsed, root);
   if (errors.length) throw new Error(errors.join("\n"));
   const expected = serializedProjection(root);
-  if (actual !== expected) throw new Error("Financial projection is stale or non-deterministic. Run financial:model:sync.");
+  if (!sameGenerated(actual, expected)) throw new Error("Financial projection is stale or non-deterministic. Run financial:model:sync.");
   return { validation: "OK", path: FINANCIAL_PROJECTION_PATH, sha256: sha256(actual), content_state_sha256: parsed.meta.content_state.content_state_sha256 };
 }

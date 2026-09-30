@@ -3,7 +3,6 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { spawn } = require("node:child_process");
 const root = path.resolve(__dirname, "..");
-process.env.PLAYWRIGHT_BROWSERS_PATH = path.join(root, ".playwright-browsers");
 const { chromium } = require("playwright");
 const port = 19500 + process.pid % 400;
 const origin = process.env.SENNAYA_TEST_URL || `http://127.0.0.1:${port}`;

@@ -158,7 +158,6 @@ export async function runVisualVerification({ selections, config = readConfig(),
   const hasPublic = selections.some(item => !config.domains[item.domain]?.visual?.route?.startsWith("/control/"));
   const server = hasPublic ? await acquireServer(baseUrl, root) : null;
   const controlServer = hasControl ? await acquireControlServer(root) : null;
-  process.env.PLAYWRIGHT_BROWSERS_PATH = path.join(root, ".playwright-browsers");
   const { chromium } = await import("playwright");
   const browser = await chromium.launch({ headless: true });
   const results = [];

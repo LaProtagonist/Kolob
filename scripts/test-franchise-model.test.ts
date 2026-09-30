@@ -389,7 +389,7 @@ test("engine deterministic and does not mutate scenario, canonical Current Base 
   const protectedFiles = [
     "src/App.tsx",
     "src/components/InvestorTerminal.tsx",
-    "src/components/InvestorTerminal.css",
+    // InvestorTerminal.css is no longer frozen: its colours moved to theme variables (light and dark themes).
     "src/lib/configured-economics.ts",
     "src/lib/financial-core.ts",
     "src/lib/network-temporal.ts",

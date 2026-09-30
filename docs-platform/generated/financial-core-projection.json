@@ -8,11 +8,11 @@
       "network_expansion",
       "consolidated_network"
     ],
-    "financial_model_content_state_sha256": "6aee03fe338d79dba1e38fc4a419e9470d4622849c7c6c341d20ba89a59e7930",
+    "financial_model_content_state_sha256": "7561a9999f09ac40eee3fd1519d110bfd1e4047769adecac922c2f591d62e217",
     "source_files": [
       {
         "path": "docs-platform/generated/financial-model-projection.json",
-        "sha256": "0f460bc37b34c7363599e8a71bffebf761a3c8d024f9d71461340b013d2701d1"
+        "sha256": "8969308e78da630df9d9909cdfc21a33e17927901eacc54fe3423503d4656863"
       },
       {
         "path": "docs-platform/registry/sources.yaml",
@@ -28,7 +28,7 @@
       },
       {
         "path": "docs-platform/app/src/investor/network-planning.ts",
-        "sha256": "36a40753539ddc96f6322f1bfc5c094cfaebe52a00725f961f9e66d983fc6d41"
+        "sha256": "18391aeda4e8fe02d2ce408e289b3036494e1bceec93372ff71d9366c275c1ad"
       },
       {
         "path": "src/content/capex-configurator-data.json",
@@ -36,7 +36,7 @@
       },
       {
         "path": "src/content/network-planning-data.json",
-        "sha256": "1545974197e91c2efe6211a7ec35d0db1724c6173dc932e7eed43f8a6d4d7ece"
+        "sha256": "f1c0887654283510bf3b4303d030297a434bfc3c07839c9ebffae3c36717951a"
       },
       {
         "path": "src/lib/configured-economics.ts",
@@ -478,7 +478,7 @@
   "current_base": {
     "provenance": {
       "context": "current_base_object",
-      "financial_model_content_state_sha256": "6aee03fe338d79dba1e38fc4a419e9470d4622849c7c6c341d20ba89a59e7930"
+      "financial_model_content_state_sha256": "7561a9999f09ac40eee3fd1519d110bfd1e4047769adecac922c2f591d62e217"
     },
     "launch": {
       "investment_rub": 40019924.66,
@@ -1722,7 +1722,7 @@
   "historical_integrated_pilot": {
     "provenance": {
       "context": "historical_integrated_pilot",
-      "financial_model_content_state_sha256": "6aee03fe338d79dba1e38fc4a419e9470d4622849c7c6c341d20ba89a59e7930"
+      "financial_model_content_state_sha256": "7561a9999f09ac40eee3fd1519d110bfd1e4047769adecac922c2f591d62e217"
     },
     "launch": {
       "investment_rub": 45370380.74,

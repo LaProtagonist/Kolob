@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { Ajv2020 } from "ajv/dist/2020.js";
 import { platformRoot } from "../google/config.js";
-import { sha256 } from "../governance/util.js";
+import { sha256, sameGenerated } from "../governance/util.js";
 import { readRevenueModel } from "../investor/revenue-model.js";
 import { buildFinancialContentState, buildSensitivity, calculateFinancialScenario, importedLaunchCapital, readFinancialModel } from "./financial-model.js";
 
@@ -518,6 +518,6 @@ export function checkFinancialGoogleSheetsPayload() {
   const errors = schemaErrors(parsed);
   if (errors.length) throw new Error(errors.join("\n"));
   const expected = serializedPayload();
-  if (actual !== expected) throw new Error("Financial Google Sheets payload is stale or non-deterministic.");
+  if (!sameGenerated(actual, expected)) throw new Error("Financial Google Sheets payload is stale or non-deterministic.");
   return { validation: "OK", path: FINANCIAL_SHEET_PAYLOAD_PATH, sha256: sha256(actual), content_state_sha256: parsed.meta.content_state_sha256, sheet_count: parsed.sheets.length };
 }

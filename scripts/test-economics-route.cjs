@@ -3,7 +3,6 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const projectRoot = path.resolve(__dirname, "..");
-process.env.PLAYWRIGHT_BROWSERS_PATH = path.join(projectRoot, ".playwright-browsers");
 const { chromium } = require("playwright");
 
 const baseUrl = (process.argv[2] || "http://127.0.0.1:5173").replace(/\/$/, "");

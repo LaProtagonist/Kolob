@@ -4,7 +4,7 @@ import path from "node:path";
 import { Ajv2020 } from "ajv/dist/2020.js";
 import YAML from "yaml";
 import { platformRoot } from "../google/config.js";
-import { canonical, sha256 } from "../governance/util.js";
+import { canonical, sha256, sameGenerated } from "../governance/util.js";
 import { readFinancialModel } from "../financial/financial-model.js";
 import { readRevenueModel } from "./revenue-model.js";
 
@@ -278,6 +278,6 @@ export function checkNetworkPlanningSnapshot() {
   if (!fs.existsSync(destination)) throw new Error("Network planning snapshot is missing. Run npm run network:planning:sync.");
   const actual = fs.readFileSync(destination, "utf8");
   const expected = serializedSnapshot();
-  if (actual !== expected) throw new Error("Network planning snapshot is stale or non-deterministic. Run npm run network:planning:sync.");
+  if (!sameGenerated(actual, expected)) throw new Error("Network planning snapshot is stale or non-deterministic. Run npm run network:planning:sync.");
   return { validation: "OK", path: NETWORK_PLANNING_SNAPSHOT_PATH, sha256: crypto.createHash("sha256").update(actual).digest("hex") };
 }

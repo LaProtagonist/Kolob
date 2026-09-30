@@ -3,7 +3,7 @@ import path from "node:path";
 import { Ajv2020 } from "ajv/dist/2020.js";
 import YAML from "yaml";
 import { platformRoot } from "../google/config.js";
-import { canonical, sha256 } from "../governance/util.js";
+import { canonical, sha256, sameGenerated } from "../governance/util.js";
 import { readRevenueModel } from "../investor/revenue-model.js";
 import {
   FINANCIAL_PROJECTION_PATH,
@@ -409,7 +409,7 @@ export function checkInvestorFinancialSummary(root = projectRoot) {
   const errors = validateInvestorFinancialSummary(parsed, root);
   if (errors.length) throw new Error(errors.join("\n"));
   const expected = serializedInvestorFinancialSummary(root);
-  if (actual !== expected) throw new Error("Investor Financial Summary projection is stale or non-deterministic. Run investor:summary:sync.");
+  if (!sameGenerated(actual, expected)) throw new Error("Investor Financial Summary projection is stale or non-deterministic. Run investor:summary:sync.");
   return {
     validation: "OK",
     path: INVESTOR_SUMMARY_PROJECTION_PATH,

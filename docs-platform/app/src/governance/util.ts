@@ -117,3 +117,36 @@ export function addMilliseconds(timestamp: string, offset: number): string {
 export function secretShaped(value: unknown): boolean {
   return /(?:refresh[_-]?token|access[_-]?token|client[_-]?secret|authorization|private[_-]?key)/i.test(JSON.stringify(value));
 }
+
+/**
+ * Compares a generated file with a fresh rebuild. Identical text passes at once;
+ * otherwise the JSON is compared value by value and numbers may differ in the last
+ * digits: the same formula gives 0.4393689912688634 on one Node version and
+ * 0.4393689912688632 on another, which is not a stale snapshot.
+ */
+export function sameGenerated(actual: string, expected: string, relativeTolerance = 1e-9): boolean {
+  if (actual === expected) return true;
+  let left: unknown;
+  let right: unknown;
+  try {
+    left = JSON.parse(actual);
+    right = JSON.parse(expected);
+  } catch {
+    return false;
+  }
+  const same = (a: unknown, b: unknown): boolean => {
+    if (typeof a === "number" && typeof b === "number") {
+      return a === b || Math.abs(a - b) <= relativeTolerance * Math.max(Math.abs(a), Math.abs(b), 1);
+    }
+    if (Array.isArray(a) || Array.isArray(b)) {
+      return Array.isArray(a) && Array.isArray(b) && a.length === b.length && a.every((item, index) => same(item, b[index]));
+    }
+    if (a && b && typeof a === "object" && typeof b === "object") {
+      const keys = Object.keys(a as object);
+      return keys.length === Object.keys(b as object).length
+        && keys.every((key) => key in (b as object) && same((a as Record<string, unknown>)[key], (b as Record<string, unknown>)[key]));
+    }
+    return a === b;
+  };
+  return same(left, right);
+}
