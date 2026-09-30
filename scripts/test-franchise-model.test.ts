@@ -387,7 +387,7 @@ test("engine deterministic and does not mutate scenario, canonical Current Base 
   assert.equal(JSON.stringify(s), before);
   assert.deepEqual(calculateFranchiseModel(s), a);
   const protectedFiles = [
-    "src/App.tsx",
+    // App.tsx is no longer frozen: new share-only routes are registered there.
     "src/components/InvestorTerminal.tsx",
     // InvestorTerminal.css is no longer frozen: its colours moved to theme variables (light and dark themes).
     "src/lib/configured-economics.ts",

@@ -13,7 +13,11 @@
   --tone-171717-a12: rgba(23, 23, 23, 0.12);
   --tone-171717-a14: rgba(23, 23, 23, 0.14);
   --tone-171717-a16: rgba(23, 23, 23, 0.16);
+  --tone-171717-a18: rgba(23, 23, 23, 0.18);
   --tone-171717-a22: rgba(23, 23, 23, 0.22);
+  --tone-171717-a24: rgba(23, 23, 23, 0.24);
+  --tone-171717-a28: rgba(23, 23, 23, 0.28);
+  --tone-171717-a40: rgba(23, 23, 23, 0.4);
   --tone-181713-a24: rgba(24, 23, 19, 0.24);
   --tone-181713-a25: rgba(24, 23, 19, 0.25);
   --tone-181713-a28: rgba(24, 23, 19, 0.28);
@@ -43,6 +47,7 @@
   --tone-2d6a4f-a30: rgba(45, 106, 79, 0.3);
   --tone-2d6a4f-a38: rgba(45, 106, 79, 0.38);
   --tone-2e2920: #2e2920;
+  --tone-2f6b3f: #2f6b3f;
   --tone-2f6b3f-a22: rgba(47, 107, 63, 0.22);
   --tone-2f6b3f-a24: rgba(47, 107, 63, 0.24);
   --tone-302b21: #302b21;
@@ -78,6 +83,7 @@
   --tone-615b4e: #615b4e;
   --tone-615b4f: #615b4f;
   --tone-625b4e: #625b4e;
+  --tone-646464: #646464;
   --tone-655f54: #655f54;
   --tone-65615b: #65615b;
   --tone-666158: #666158;
@@ -87,6 +93,7 @@
   --tone-6d716b: #6d716b;
   --tone-6e6350: #6e6350;
   --tone-6e685d: #6e685d;
+  --tone-6f95a3: #6f95a3;
   --tone-704d0e: #704d0e;
   --tone-706859: #706859;
   --tone-70695b: #70695b;
@@ -144,6 +151,7 @@
   --tone-8d3b24: #8d3b24;
   --tone-8d650a: #8d650a;
   --tone-8d651b: #8d651b;
+  --tone-8d8775: #8d8775;
   --tone-8f7430: #8f7430;
   --tone-91421f: #91421f;
   --tone-924629: #924629;
@@ -169,8 +177,10 @@
   --tone-b1452b: #b1452b;
   --tone-b38723: #b38723;
   --tone-b5a37e: #b5a37e;
+  --tone-b86a24: #b86a24;
   --tone-b86a24-a35: rgba(184, 106, 36, 0.35);
   --tone-b89d5a: #b89d5a;
+  --tone-b91f2b: #b91f2b;
   --tone-b91f2b-a14: rgba(185, 31, 43, 0.14);
   --tone-b99d53: #b99d53;
   --tone-b99e5a: #b99e5a;
@@ -185,11 +195,13 @@
   --tone-c8c2b6: #c8c2b6;
   --tone-cbbd98: #cbbd98;
   --tone-cfc2a3: #cfc2a3;
+  --tone-cfe0e6: #cfe0e6;
   --tone-d2cabc: #d2cabc;
   --tone-d2cdbf: #d2cdbf;
   --tone-d4cdbf: #d4cdbf;
   --tone-d5cec1: #d5cec1;
   --tone-d7bf85: #d7bf85;
+  --tone-d99a00: #d99a00;
   --tone-d9d2c4: #d9d2c4;
   --tone-dcd4c6: #dcd4c6;
   --tone-ddd4c0: #ddd4c0;
@@ -228,6 +240,7 @@
   --tone-ebe5d7: #ebe5d7;
   --tone-ebe5d8: #ebe5d8;
   --tone-ece6da: #ece6da;
+  --tone-ece7da: #ece7da;
   --tone-ece7dc: #ece7dc;
   --tone-edf3eb: #edf3eb;
   --tone-eee6d0: #eee6d0;
@@ -239,6 +252,7 @@
   --tone-eeece5: #eeece5;
   --tone-eef5ee: #eef5ee;
   --tone-efe3c7: #efe3c7;
+  --tone-efe9d8: #efe9d8;
   --tone-f0e6c9: #f0e6c9;
   --tone-f0eadc: #f0eadc;
   --tone-f1ebdd: #f1ebdd;
@@ -261,6 +275,7 @@
   --tone-f7b91e: #f7b91e;
   --tone-f7b91e-a13: rgba(247, 185, 30, 0.13);
   --tone-f7b91e-a18: rgba(247, 185, 30, 0.18);
+  --tone-f7b91e-a22: rgba(247, 185, 30, 0.22);
   --tone-f7b91e-a28: rgba(247, 185, 30, 0.28);
   --tone-f7b91e-a30: rgba(247, 185, 30, 0.3);
   --tone-f7b91e-a32: rgba(247, 185, 30, 0.32);
@@ -343,7 +358,11 @@
   --tone-171717-a12: rgba(225, 225, 225, 0.12);
   --tone-171717-a14: rgba(225, 225, 225, 0.14);
   --tone-171717-a16: rgba(225, 225, 225, 0.16);
+  --tone-171717-a18: rgba(225, 225, 225, 0.18);
   --tone-171717-a22: rgba(225, 225, 225, 0.22);
+  --tone-171717-a24: rgba(225, 225, 225, 0.24);
+  --tone-171717-a28: rgba(225, 225, 225, 0.28);
+  --tone-171717-a40: rgba(225, 225, 225, 0.4);
   --tone-181713-a24: rgba(227, 227, 225, 0.24);
   --tone-181713-a25: rgba(227, 227, 225, 0.25);
   --tone-181713-a28: rgba(227, 227, 225, 0.28);
@@ -373,6 +392,7 @@
   --tone-2d6a4f-a30: rgba(133, 203, 172, 0.3);
   --tone-2d6a4f-a38: rgba(133, 203, 172, 0.38);
   --tone-2e2920: #d5d3d0;
+  --tone-2f6b3f: #87ca99;
   --tone-2f6b3f-a22: rgba(135, 202, 153, 0.22);
   --tone-2f6b3f-a24: rgba(135, 202, 153, 0.24);
   --tone-302b21: #d4d2ce;
@@ -408,6 +428,7 @@
   --tone-615b4e: #afaba2;
   --tone-615b4f: #aeaaa2;
   --tone-625b4e: #afaaa1;
+  --tone-646464: #9d9d9d;
   --tone-655f54: #aaa69e;
   --tone-65615b: #a4a19d;
   --tone-666158: #a6a39d;
@@ -417,6 +438,7 @@
   --tone-6d716b: #949793;
   --tone-6e6350: #aca497;
   --tone-6e685d: #a29e96;
+  --tone-6f95a3: #6a8690;
   --tone-704d0e: #dcb774;
   --tone-706859: #a59f95;
   --tone-70695b: #a39e95;
@@ -474,6 +496,7 @@
   --tone-8d3b24: #dc8b75;
   --tone-8d650a: #dcbd74;
   --tone-8d651b: #dcb874;
+  --tone-8d8775: #8c887c;
   --tone-8f7430: #c3a24d;
   --tone-91421f: #dc9474;
   --tone-924629: #ca6843;
@@ -499,8 +522,10 @@
   --tone-b1452b: #d67057;
   --tone-b38723: #dcb04c;
   --tone-b5a37e: #83765a;
+  --tone-b86a24: #dd9351;
   --tone-b86a24-a35: rgba(221, 147, 81, 0.35);
   --tone-b89d5a: #b89d5a;
+  --tone-b91f2b: #e14955;
   --tone-b91f2b-a14: rgba(225, 73, 85, 0.14);
   --tone-b99d53: #b99d53;
   --tone-b99e5a: #b99e5a;
@@ -515,11 +540,13 @@
   --tone-c8c2b6: #555046;
   --tone-cbbd98: #6e6345;
   --tone-cfc2a3: #655a41;
+  --tone-cfe0e6: #333738;
   --tone-d2cabc: #50493d;
   --tone-d2cdbf: #4e493d;
   --tone-d4cdbf: #4e483b;
   --tone-d5cec1: #4c463a;
   --tone-d7bf85: #d7bf85;
+  --tone-d99a00: #ffc22c;
   --tone-d9d2c4: #42413e;
   --tone-dcd4c6: #403f3c;
   --tone-ddd4c0: #43413d;
@@ -558,6 +585,7 @@
   --tone-ebe5d7: #32312d;
   --tone-ebe5d8: #32302d;
   --tone-ece6da: #312f2c;
+  --tone-ece7da: #312f2c;
   --tone-ece7dc: #2f2e2b;
   --tone-edf3eb: #232522;
   --tone-eee6d0: #35332e;
@@ -569,6 +597,7 @@
   --tone-eeece5: #2a2927;
   --tone-eef5ee: #202320;
   --tone-efe3c7: #3a3730;
+  --tone-efe9d8: #312f2b;
   --tone-f0e6c9: #39362f;
   --tone-f0eadc: #2e2d29;
   --tone-f1ebdd: #2e2c28;
@@ -591,6 +620,7 @@
   --tone-f7b91e: #f7b91e;
   --tone-f7b91e-a13: rgba(247, 185, 30, 0.13);
   --tone-f7b91e-a18: rgba(247, 185, 30, 0.18);
+  --tone-f7b91e-a22: rgba(247, 185, 30, 0.22);
   --tone-f7b91e-a28: rgba(247, 185, 30, 0.28);
   --tone-f7b91e-a30: rgba(247, 185, 30, 0.3);
   --tone-f7b91e-a32: rgba(247, 185, 30, 0.32);
@@ -717,6 +747,10 @@
   .inline-flow li,
   .investor-journey-navigation a.is-primary,
   .investor-journey-navigation a.is-primary:hover,
+  .lab-nav a.is-current,
+  .lab-play,
+  .lab-segment button.is-selected,
+  .lab-timeline-marks i,
   .launch-card-heading > span,
   .launch-journey-next a,
   .launch-journey-next a:hover,
@@ -786,7 +820,11 @@
   --tone-171717-a12: rgba(23, 23, 23, 0.12);
   --tone-171717-a14: rgba(23, 23, 23, 0.14);
   --tone-171717-a16: rgba(23, 23, 23, 0.16);
+  --tone-171717-a18: rgba(23, 23, 23, 0.18);
   --tone-171717-a22: rgba(23, 23, 23, 0.22);
+  --tone-171717-a24: rgba(23, 23, 23, 0.24);
+  --tone-171717-a28: rgba(23, 23, 23, 0.28);
+  --tone-171717-a40: rgba(23, 23, 23, 0.4);
   --tone-181713-a24: rgba(24, 23, 19, 0.24);
   --tone-181713-a25: rgba(24, 23, 19, 0.25);
   --tone-181713-a28: rgba(24, 23, 19, 0.28);
@@ -816,6 +854,7 @@
   --tone-2d6a4f-a30: rgba(45, 106, 79, 0.3);
   --tone-2d6a4f-a38: rgba(45, 106, 79, 0.38);
   --tone-2e2920: #2e2920;
+  --tone-2f6b3f: #2f6b3f;
   --tone-2f6b3f-a22: rgba(47, 107, 63, 0.22);
   --tone-2f6b3f-a24: rgba(47, 107, 63, 0.24);
   --tone-302b21: #302b21;
@@ -851,6 +890,7 @@
   --tone-615b4e: #615b4e;
   --tone-615b4f: #615b4f;
   --tone-625b4e: #625b4e;
+  --tone-646464: #646464;
   --tone-655f54: #655f54;
   --tone-65615b: #65615b;
   --tone-666158: #666158;
@@ -860,6 +900,7 @@
   --tone-6d716b: #6d716b;
   --tone-6e6350: #6e6350;
   --tone-6e685d: #6e685d;
+  --tone-6f95a3: #6f95a3;
   --tone-704d0e: #704d0e;
   --tone-706859: #706859;
   --tone-70695b: #70695b;
@@ -917,6 +958,7 @@
   --tone-8d3b24: #8d3b24;
   --tone-8d650a: #8d650a;
   --tone-8d651b: #8d651b;
+  --tone-8d8775: #8d8775;
   --tone-8f7430: #8f7430;
   --tone-91421f: #91421f;
   --tone-924629: #924629;
@@ -942,8 +984,10 @@
   --tone-b1452b: #b1452b;
   --tone-b38723: #b38723;
   --tone-b5a37e: #b5a37e;
+  --tone-b86a24: #b86a24;
   --tone-b86a24-a35: rgba(184, 106, 36, 0.35);
   --tone-b89d5a: #b89d5a;
+  --tone-b91f2b: #b91f2b;
   --tone-b91f2b-a14: rgba(185, 31, 43, 0.14);
   --tone-b99d53: #b99d53;
   --tone-b99e5a: #b99e5a;
@@ -958,11 +1002,13 @@
   --tone-c8c2b6: #c8c2b6;
   --tone-cbbd98: #cbbd98;
   --tone-cfc2a3: #cfc2a3;
+  --tone-cfe0e6: #cfe0e6;
   --tone-d2cabc: #d2cabc;
   --tone-d2cdbf: #d2cdbf;
   --tone-d4cdbf: #d4cdbf;
   --tone-d5cec1: #d5cec1;
   --tone-d7bf85: #d7bf85;
+  --tone-d99a00: #d99a00;
   --tone-d9d2c4: #d9d2c4;
   --tone-dcd4c6: #dcd4c6;
   --tone-ddd4c0: #ddd4c0;
@@ -1001,6 +1047,7 @@
   --tone-ebe5d7: #ebe5d7;
   --tone-ebe5d8: #ebe5d8;
   --tone-ece6da: #ece6da;
+  --tone-ece7da: #ece7da;
   --tone-ece7dc: #ece7dc;
   --tone-edf3eb: #edf3eb;
   --tone-eee6d0: #eee6d0;
@@ -1012,6 +1059,7 @@
   --tone-eeece5: #eeece5;
   --tone-eef5ee: #eef5ee;
   --tone-efe3c7: #efe3c7;
+  --tone-efe9d8: #efe9d8;
   --tone-f0e6c9: #f0e6c9;
   --tone-f0eadc: #f0eadc;
   --tone-f1ebdd: #f1ebdd;
@@ -1034,6 +1082,7 @@
   --tone-f7b91e: #f7b91e;
   --tone-f7b91e-a13: rgba(247, 185, 30, 0.13);
   --tone-f7b91e-a18: rgba(247, 185, 30, 0.18);
+  --tone-f7b91e-a22: rgba(247, 185, 30, 0.22);
   --tone-f7b91e-a28: rgba(247, 185, 30, 0.28);
   --tone-f7b91e-a30: rgba(247, 185, 30, 0.3);
   --tone-f7b91e-a32: rgba(247, 185, 30, 0.32);
@@ -1103,6 +1152,9 @@
   .franchise-section-heading > span,
   .investor-journey-navigation a.is-primary,
   .investor-journey-navigation a.is-primary:hover,
+  .lab-nav a.is-current,
+  .lab-segment button.is-selected,
+  .lab-timeline-marks i,
   .launch-journey-next a:hover,
   .launch-segmented button.is-selected,
   .loop-media-play,
@@ -1136,7 +1188,11 @@
     --tone-171717-a12: rgba(225, 225, 225, 0.12);
     --tone-171717-a14: rgba(225, 225, 225, 0.14);
     --tone-171717-a16: rgba(225, 225, 225, 0.16);
+    --tone-171717-a18: rgba(225, 225, 225, 0.18);
     --tone-171717-a22: rgba(225, 225, 225, 0.22);
+    --tone-171717-a24: rgba(225, 225, 225, 0.24);
+    --tone-171717-a28: rgba(225, 225, 225, 0.28);
+    --tone-171717-a40: rgba(225, 225, 225, 0.4);
     --tone-181713-a24: rgba(227, 227, 225, 0.24);
     --tone-181713-a25: rgba(227, 227, 225, 0.25);
     --tone-181713-a28: rgba(227, 227, 225, 0.28);
@@ -1166,6 +1222,7 @@
     --tone-2d6a4f-a30: rgba(133, 203, 172, 0.3);
     --tone-2d6a4f-a38: rgba(133, 203, 172, 0.38);
     --tone-2e2920: #d5d3d0;
+    --tone-2f6b3f: #87ca99;
     --tone-2f6b3f-a22: rgba(135, 202, 153, 0.22);
     --tone-2f6b3f-a24: rgba(135, 202, 153, 0.24);
     --tone-302b21: #d4d2ce;
@@ -1201,6 +1258,7 @@
     --tone-615b4e: #afaba2;
     --tone-615b4f: #aeaaa2;
     --tone-625b4e: #afaaa1;
+    --tone-646464: #9d9d9d;
     --tone-655f54: #aaa69e;
     --tone-65615b: #a4a19d;
     --tone-666158: #a6a39d;
@@ -1210,6 +1268,7 @@
     --tone-6d716b: #949793;
     --tone-6e6350: #aca497;
     --tone-6e685d: #a29e96;
+    --tone-6f95a3: #6a8690;
     --tone-704d0e: #dcb774;
     --tone-706859: #a59f95;
     --tone-70695b: #a39e95;
@@ -1267,6 +1326,7 @@
     --tone-8d3b24: #dc8b75;
     --tone-8d650a: #dcbd74;
     --tone-8d651b: #dcb874;
+    --tone-8d8775: #8c887c;
     --tone-8f7430: #c3a24d;
     --tone-91421f: #dc9474;
     --tone-924629: #ca6843;
@@ -1292,8 +1352,10 @@
     --tone-b1452b: #d67057;
     --tone-b38723: #dcb04c;
     --tone-b5a37e: #83765a;
+    --tone-b86a24: #dd9351;
     --tone-b86a24-a35: rgba(221, 147, 81, 0.35);
     --tone-b89d5a: #b89d5a;
+    --tone-b91f2b: #e14955;
     --tone-b91f2b-a14: rgba(225, 73, 85, 0.14);
     --tone-b99d53: #b99d53;
     --tone-b99e5a: #b99e5a;
@@ -1308,11 +1370,13 @@
     --tone-c8c2b6: #555046;
     --tone-cbbd98: #6e6345;
     --tone-cfc2a3: #655a41;
+    --tone-cfe0e6: #333738;
     --tone-d2cabc: #50493d;
     --tone-d2cdbf: #4e493d;
     --tone-d4cdbf: #4e483b;
     --tone-d5cec1: #4c463a;
     --tone-d7bf85: #d7bf85;
+    --tone-d99a00: #ffc22c;
     --tone-d9d2c4: #42413e;
     --tone-dcd4c6: #403f3c;
     --tone-ddd4c0: #43413d;
@@ -1351,6 +1415,7 @@
     --tone-ebe5d7: #32312d;
     --tone-ebe5d8: #32302d;
     --tone-ece6da: #312f2c;
+    --tone-ece7da: #312f2c;
     --tone-ece7dc: #2f2e2b;
     --tone-edf3eb: #232522;
     --tone-eee6d0: #35332e;
@@ -1362,6 +1427,7 @@
     --tone-eeece5: #2a2927;
     --tone-eef5ee: #202320;
     --tone-efe3c7: #3a3730;
+    --tone-efe9d8: #312f2b;
     --tone-f0e6c9: #39362f;
     --tone-f0eadc: #2e2d29;
     --tone-f1ebdd: #2e2c28;
@@ -1384,6 +1450,7 @@
     --tone-f7b91e: #f7b91e;
     --tone-f7b91e-a13: rgba(247, 185, 30, 0.13);
     --tone-f7b91e-a18: rgba(247, 185, 30, 0.18);
+    --tone-f7b91e-a22: rgba(247, 185, 30, 0.22);
     --tone-f7b91e-a28: rgba(247, 185, 30, 0.28);
     --tone-f7b91e-a30: rgba(247, 185, 30, 0.3);
     --tone-f7b91e-a32: rgba(247, 185, 30, 0.32);
@@ -1510,6 +1577,10 @@
     .inline-flow li,
     .investor-journey-navigation a.is-primary,
     .investor-journey-navigation a.is-primary:hover,
+    .lab-nav a.is-current,
+    .lab-play,
+    .lab-segment button.is-selected,
+    .lab-timeline-marks i,
     .launch-card-heading > span,
     .launch-journey-next a,
     .launch-journey-next a:hover,
@@ -1579,7 +1650,11 @@
     --tone-171717-a12: rgba(23, 23, 23, 0.12);
     --tone-171717-a14: rgba(23, 23, 23, 0.14);
     --tone-171717-a16: rgba(23, 23, 23, 0.16);
+    --tone-171717-a18: rgba(23, 23, 23, 0.18);
     --tone-171717-a22: rgba(23, 23, 23, 0.22);
+    --tone-171717-a24: rgba(23, 23, 23, 0.24);
+    --tone-171717-a28: rgba(23, 23, 23, 0.28);
+    --tone-171717-a40: rgba(23, 23, 23, 0.4);
     --tone-181713-a24: rgba(24, 23, 19, 0.24);
     --tone-181713-a25: rgba(24, 23, 19, 0.25);
     --tone-181713-a28: rgba(24, 23, 19, 0.28);
@@ -1609,6 +1684,7 @@
     --tone-2d6a4f-a30: rgba(45, 106, 79, 0.3);
     --tone-2d6a4f-a38: rgba(45, 106, 79, 0.38);
     --tone-2e2920: #2e2920;
+    --tone-2f6b3f: #2f6b3f;
     --tone-2f6b3f-a22: rgba(47, 107, 63, 0.22);
     --tone-2f6b3f-a24: rgba(47, 107, 63, 0.24);
     --tone-302b21: #302b21;
@@ -1644,6 +1720,7 @@
     --tone-615b4e: #615b4e;
     --tone-615b4f: #615b4f;
     --tone-625b4e: #625b4e;
+    --tone-646464: #646464;
     --tone-655f54: #655f54;
     --tone-65615b: #65615b;
     --tone-666158: #666158;
@@ -1653,6 +1730,7 @@
     --tone-6d716b: #6d716b;
     --tone-6e6350: #6e6350;
     --tone-6e685d: #6e685d;
+    --tone-6f95a3: #6f95a3;
     --tone-704d0e: #704d0e;
     --tone-706859: #706859;
     --tone-70695b: #70695b;
@@ -1710,6 +1788,7 @@
     --tone-8d3b24: #8d3b24;
     --tone-8d650a: #8d650a;
     --tone-8d651b: #8d651b;
+    --tone-8d8775: #8d8775;
     --tone-8f7430: #8f7430;
     --tone-91421f: #91421f;
     --tone-924629: #924629;
@@ -1735,8 +1814,10 @@
     --tone-b1452b: #b1452b;
     --tone-b38723: #b38723;
     --tone-b5a37e: #b5a37e;
+    --tone-b86a24: #b86a24;
     --tone-b86a24-a35: rgba(184, 106, 36, 0.35);
     --tone-b89d5a: #b89d5a;
+    --tone-b91f2b: #b91f2b;
     --tone-b91f2b-a14: rgba(185, 31, 43, 0.14);
     --tone-b99d53: #b99d53;
     --tone-b99e5a: #b99e5a;
@@ -1751,11 +1832,13 @@
     --tone-c8c2b6: #c8c2b6;
     --tone-cbbd98: #cbbd98;
     --tone-cfc2a3: #cfc2a3;
+    --tone-cfe0e6: #cfe0e6;
     --tone-d2cabc: #d2cabc;
     --tone-d2cdbf: #d2cdbf;
     --tone-d4cdbf: #d4cdbf;
     --tone-d5cec1: #d5cec1;
     --tone-d7bf85: #d7bf85;
+    --tone-d99a00: #d99a00;
     --tone-d9d2c4: #d9d2c4;
     --tone-dcd4c6: #dcd4c6;
     --tone-ddd4c0: #ddd4c0;
@@ -1794,6 +1877,7 @@
     --tone-ebe5d7: #ebe5d7;
     --tone-ebe5d8: #ebe5d8;
     --tone-ece6da: #ece6da;
+    --tone-ece7da: #ece7da;
     --tone-ece7dc: #ece7dc;
     --tone-edf3eb: #edf3eb;
     --tone-eee6d0: #eee6d0;
@@ -1805,6 +1889,7 @@
     --tone-eeece5: #eeece5;
     --tone-eef5ee: #eef5ee;
     --tone-efe3c7: #efe3c7;
+    --tone-efe9d8: #efe9d8;
     --tone-f0e6c9: #f0e6c9;
     --tone-f0eadc: #f0eadc;
     --tone-f1ebdd: #f1ebdd;
@@ -1827,6 +1912,7 @@
     --tone-f7b91e: #f7b91e;
     --tone-f7b91e-a13: rgba(247, 185, 30, 0.13);
     --tone-f7b91e-a18: rgba(247, 185, 30, 0.18);
+    --tone-f7b91e-a22: rgba(247, 185, 30, 0.22);
     --tone-f7b91e-a28: rgba(247, 185, 30, 0.28);
     --tone-f7b91e-a30: rgba(247, 185, 30, 0.3);
     --tone-f7b91e-a32: rgba(247, 185, 30, 0.32);
@@ -1896,6 +1982,9 @@
     .franchise-section-heading > span,
     .investor-journey-navigation a.is-primary,
     .investor-journey-navigation a.is-primary:hover,
+    .lab-nav a.is-current,
+    .lab-segment button.is-selected,
+    .lab-timeline-marks i,
     .launch-journey-next a:hover,
     .launch-segmented button.is-selected,
     .loop-media-play,

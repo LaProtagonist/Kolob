@@ -1,8 +1,10 @@
-import { economicsData } from "./economics";
-import { investorScenarioIds, type SheetInputs } from "./investor-configuration";
+import type { SheetInputs } from "./investor-configuration";
 
 const inputsUrl = "/api/inputs";
 const requestTimeoutMs = 6_000;
+
+// This module is part of the main bundle (the provider wraps every page), so it must not
+// import the financial data: that belongs to the calculator chunk. See sheet-traffic.ts.
 
 /**
  * Reads the «Вводные» sheet through the site backend. Any failure resolves to
@@ -27,14 +29,6 @@ export async function loadSheetInputs(): Promise<SheetInputsAnswer | null> {
   } finally {
     window.clearTimeout(timer);
   }
-}
-
-/** Traffic equal to the scenario's own value stays "by scenario", as when typed on the page. */
-export function withoutScenarioTraffic(inputs: SheetInputs): SheetInputs {
-  const scenarioId = investorScenarioIds.find((id) => id === inputs.scenario_default) ?? "realistic";
-  if (inputs.checks_per_day !== economicsData.scenariosById[scenarioId].checksPerDay) return inputs;
-  const { checks_per_day: _scenarioTraffic, ...rest } = inputs;
-  return rest;
 }
 
 export function sameSheetInputs(left: SheetInputs, right: SheetInputs) {

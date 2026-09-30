@@ -1,4 +1,5 @@
 import type { PageMeta } from "../types";
+import labVariants from "../lab/variants.json";
 import { approvedCopy } from "./approved-copy";
 
 export const site = {
@@ -114,6 +115,28 @@ export const pages: PageMeta[] = [
   }
 ];
 
+/** Лаборатория визуализаций: открывается только по прямой ссылке, в меню и карте сайта её нет. */
+export const labPages: PageMeta[] = [
+  {
+    id: "lab",
+    path: "/lab",
+    label: "Лаборатория",
+    title: "Визуализация сети — Колобочная",
+    description: "Рабочие варианты визуализации сети «Колобочной».",
+    ogImage: "/media/hero-kolobok-1200.webp",
+    noindex: true
+  },
+  ...labVariants.map((variant): PageMeta => ({
+    id: "lab",
+    path: `/lab/${variant.id}`,
+    label: variant.title,
+    title: `${variant.title} — визуализация сети — Колобочная`,
+    description: variant.summary,
+    ogImage: "/media/hero-kolobok-1200.webp",
+    noindex: true
+  }))
+];
+
 export const notFoundPage: PageMeta = {
   id: "notFound",
   path: "/404",
@@ -126,5 +149,5 @@ export const notFoundPage: PageMeta = {
 
 export function pageByPath(pathname: string) {
   const normalized = pathname === "" ? "/" : pathname.replace(/\/+$/, "") || "/";
-  return pages.find((page) => page.path === normalized) ?? notFoundPage;
+  return pages.find((page) => page.path === normalized) ?? labPages.find((page) => page.path === normalized) ?? notFoundPage;
 }

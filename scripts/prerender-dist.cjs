@@ -21,6 +21,8 @@ const routes = [
   { name: "investor-terminal", label: "Investor Terminal", path: "/investor-terminal" },
   { name: "sennaya", label: "Sennaya", path: "/sennaya" },
   { name: "petrogradka", label: "Petrogradka", path: "/petrogradka" },
+  { name: "lab", label: "Lab", path: "/lab" },
+  ...require("../src/lab/variants.json").map((variant) => ({ name: `lab-${variant.id}`, label: `Lab ${variant.id}`, path: `/lab/${variant.id}` })),
   { name: "not-found", label: "Not found", path: "/404" }
 ];
 

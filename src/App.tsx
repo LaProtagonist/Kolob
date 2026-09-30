@@ -59,6 +59,7 @@ const InvestorTerminalPage = lazy(() =>
 );
 
 const SennayaPage = lazy(() => import("./components/Sennaya").then((module) => ({ default: module.SennayaPage })));
+const LabPage = lazy(() => import("./lab/LabPage").then((module) => ({ default: module.LabPage })));
 const PetrogradkaPage = lazy(() =>
   import("./components/Petrogradka").then((module) => ({ default: module.PetrogradkaPage }))
 );
@@ -762,6 +763,7 @@ function NotFoundPage() {
 }
 
 function renderPage(path: string) {
+  if (path === "/lab" || path.startsWith("/lab/")) return <Suspense fallback={null}><LabPage path={path} /></Suspense>;
   switch (path) {
     case "/":
       return <HomePage />;

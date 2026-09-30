@@ -17,11 +17,15 @@ import postcss from "postcss";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const check = process.argv.includes("--check");
 const tonesFile = path.join(root, "src", "theme-tones.css");
-const files = [
-  "src/styles.css",
-  ...fs.readdirSync(path.join(root, "src/components")).filter((file) => file.endsWith(".css")).sort().map((file) => `src/components/${file}`),
-  "src/Control.css",
-];
+// Все стили сайта, включая вложенные папки (лаборатория визуализаций); сам файл тонов не обрабатывается.
+function cssFiles(directory) {
+  return fs.readdirSync(path.join(root, directory), { withFileTypes: true }).flatMap((entry) => {
+    const relative = `${directory}/${entry.name}`;
+    if (entry.isDirectory()) return cssFiles(relative);
+    return entry.name.endsWith(".css") && relative !== "src/theme-tones.css" ? [relative] : [];
+  });
+}
+const files = cssFiles("src").sort();
 
 // Селекторы (или их начало), для которых автоматическое решение переопределено.
 const forceKeep = [];

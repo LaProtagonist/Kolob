@@ -14,7 +14,7 @@ import {
   type SheetInputs,
 } from "../src/lib/investor-configuration";
 import { calculateLaunchBudget } from "../src/lib/launch-budget";
-import { withoutScenarioTraffic } from "../src/lib/sheet-inputs";
+import { withoutScenarioTraffic } from "../src/lib/sheet-traffic";
 
 type SchemaItem = { key: string; type: string; default: unknown; optional?: boolean };
 const schema = JSON.parse(fs.readFileSync(new URL("../server/inputs-schema.json", import.meta.url), "utf8")) as { inputs: SchemaItem[] };

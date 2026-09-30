@@ -1,0 +1,104 @@
+/* Вариант «Карта сети»: плоская схема центра города, значки точек, карточка точки. */
+.map-kpis {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.map-kpis > div {
+  display: grid;
+  gap: 2px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: var(--tone-ffffff);
+  border: 1px solid var(--tone-171717-a10);
+}
+
+.map-kpis span { color: var(--tone-646464); font-size: 0.74rem; }
+.map-kpis strong { font-size: 1.12rem; font-variant-numeric: tabular-nums; }
+.map-kpis .is-positive strong { color: var(--tone-2f6b3f); }
+.map-kpis .is-negative strong { color: var(--tone-b91f2b); }
+
+.map-stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 14px;
+  align-items: stretch;
+}
+
+.map-canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 24px;
+}
+
+.map-land { fill: var(--tone-efe9d8); }
+.map-water { fill: var(--tone-cfe0e6); }
+.map-street { fill: none; stroke: var(--tone-ffffff); stroke-width: 9; stroke-linecap: round; }
+.map-street.is-main { stroke-width: 14; }
+.map-label { fill: var(--tone-8d8775); font-size: 13px; font-weight: 700; letter-spacing: 0.04em; }
+.map-label.is-water { fill: var(--tone-6f95a3); }
+
+.map-point-shadow { fill: var(--tone-171717-a16); }
+.map-point-body { fill: var(--tone-ffffff); stroke: var(--tone-171717); stroke-width: 2.5; }
+.map-point-roof { fill: var(--tone-f7b91e); stroke: var(--tone-171717); stroke-width: 2.5; stroke-linejoin: round; }
+.map-point-chimney { fill: var(--tone-b86a24); stroke: var(--tone-171717); stroke-width: 2.5; }
+.map-point-door { fill: var(--tone-171717); }
+.map-point-logo { fill: var(--tone-f7b91e); stroke: var(--tone-171717); stroke-width: 2; }
+.map-point-staff circle { fill: var(--tone-171717); }
+.map-point-pulse { fill: var(--tone-f7b91e-a22); transform-origin: center; animation: map-pulse 2.4s ease-out infinite; }
+.map-point-title { fill: var(--tone-171717); font-size: 13px; font-weight: 800; paint-order: stroke; stroke: var(--tone-efe9d8); stroke-width: 4; }
+.map-point-when { fill: var(--tone-8d8775); font-size: 13px; font-weight: 800; }
+
+.map-point.is-planned .map-point-body,
+.map-point.is-planned .map-point-roof,
+.map-point.is-planned .map-point-chimney { fill: transparent; stroke: var(--tone-8d8775); stroke-dasharray: 5 4; }
+.map-point.is-planned .map-point-door,
+.map-point.is-planned .map-point-logo,
+.map-point.is-planned .map-point-shadow { opacity: 0; }
+
+.map-point.is-selected .map-point-body { stroke: var(--tone-b86a24); stroke-width: 4; }
+.map-point.is-fresh { animation: map-open 0.6s cubic-bezier(0.2, 1.4, 0.4, 1); }
+
+@keyframes map-pulse {
+  from { transform: scale(0.5); opacity: 1; }
+  to { transform: scale(1.25); opacity: 0; }
+}
+
+@keyframes map-open {
+  from { opacity: 0.2; }
+  to { opacity: 1; }
+}
+
+.map-card {
+  padding: 18px;
+  border-radius: 18px;
+  background: var(--tone-ffffff);
+  border: 1px solid var(--tone-171717-a10);
+}
+
+.map-card h3 { margin: 0 0 4px; font-size: 1.2rem; }
+.map-card p { margin: 0 0 12px; color: var(--tone-646464); font-size: 0.9rem; }
+.map-card dl { display: grid; gap: 8px; margin: 0 0 12px; }
+.map-card dl div { display: flex; justify-content: space-between; gap: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--tone-171717-a08); }
+.map-card dt { color: var(--tone-646464); font-size: 0.84rem; }
+.map-card dd { margin: 0; font-weight: 700; text-align: right; font-variant-numeric: tabular-nums; }
+.map-card ul { margin: 0; padding-left: 18px; color: var(--tone-646464); font-size: 0.84rem; }
+.map-note { font-size: 0.8rem; }
+
+.map-charts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .map-point-pulse, .map-point.is-fresh { animation: none; }
+}
+
+@media (max-width: 900px) {
+  .map-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .map-stage, .map-charts { grid-template-columns: 1fr; }
+}

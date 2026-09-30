@@ -13,7 +13,7 @@ import {
   type SheetInputs,
 } from "../lib/investor-configuration";
 import { launchModel, restoreLaunchBudgetState, type LaunchBudgetState } from "../lib/launch-budget";
-import { loadSheetInputs, sameSheetInputs, withoutScenarioTraffic } from "../lib/sheet-inputs";
+import { loadSheetInputs, sameSheetInputs } from "../lib/sheet-inputs";
 
 type InvestorConfigurationContextValue = {
   configuration: InvestorConfiguration;
@@ -60,7 +60,8 @@ export function InvestorConfigurationProvider({ children }: { children: ReactNod
 
   // The backend answers from its copy at once and re-reads the sheet in the background;
   // when it reports a refresh in progress, the page asks again and applies the newer values.
-  const applySheetAnswer = useCallback((answer: { inputs: SheetInputs; refreshing: boolean }, announce: boolean) => {
+  const applySheetAnswer = useCallback(async (answer: { inputs: SheetInputs; refreshing: boolean }, announce: boolean) => {
+    const { withoutScenarioTraffic } = await import("../lib/sheet-traffic");
     const inputs = withoutScenarioTraffic(answer.inputs);
     const changed = !appliedSheetInputs.current || !sameSheetInputs(appliedSheetInputs.current, inputs);
     if (changed) {
@@ -74,7 +75,7 @@ export function InvestorConfigurationProvider({ children }: { children: ReactNod
     }
     if (answer.refreshing) {
       window.setTimeout(() => {
-        void loadSheetInputs().then((next) => next && applySheetAnswer(next, true));
+        void loadSheetInputs().then((next) => { if (next) void applySheetAnswer(next, true); });
       }, 5_000);
     }
   }, []);
@@ -82,7 +83,7 @@ export function InvestorConfigurationProvider({ children }: { children: ReactNod
   const requestSheetDefaults = useCallback(() => {
     if (sheetDefaultsRequested.current) return;
     sheetDefaultsRequested.current = true;
-    void loadSheetInputs().then((answer) => answer && applySheetAnswer(answer, false));
+    void loadSheetInputs().then((answer) => { if (answer) void applySheetAnswer(answer, false); });
   }, [applySheetAnswer]);
 
   useEffect(() => {
