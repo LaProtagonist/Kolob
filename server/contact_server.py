@@ -27,7 +27,9 @@ ADMIN_LINK_KEY_FILE = Path(os.environ.get("CONTACT_ADMIN_LINK_KEY_FILE", str(DAT
 ADMIN_LINK_KEY_MIN_LENGTH = 32
 BRIDGE_FILE = Path(os.environ.get("CONTACT_BRIDGE_FILE", str(DATA_DIR / "google-bridge.json")))
 BRIDGE_URL_PREFIX = os.environ.get("CONTACT_BRIDGE_URL_PREFIX", "https://script.google.com/")
-BRIDGE_TIMEOUT_SECONDS = 8
+BRIDGE_TIMEOUT_SECONDS = 12
+# Writes wait for the sheet's own lock and a cold start of the script, so they get more time.
+BRIDGE_WRITE_TIMEOUT_SECONDS = 40
 BRIDGE_MAX_RESPONSE_BYTES = 2 * 1024 * 1024
 INPUTS_SCHEMA_FILE = Path(os.environ.get("CONTACT_INPUTS_SCHEMA_FILE", str(Path(__file__).resolve().parent / "inputs-schema.json")))
 INPUTS_CACHE_FILE = Path(os.environ.get("CONTACT_INPUTS_CACHE_FILE", str(DATA_DIR / "inputs-cache.json")))
@@ -259,7 +261,7 @@ def mark_rejected(errors):
     if INPUTS_STATE["marked"] == rejected:
         return
     try:
-        bridge_call("mark", {"rejected": [{"key": key, "message": message} for key, message in rejected]})
+        bridge_call("mark", {"rejected": [{"key": key, "message": message} for key, message in rejected]}, timeout=BRIDGE_WRITE_TIMEOUT_SECONDS)
         INPUTS_STATE["marked"] = rejected
     except Exception:
         pass
@@ -296,7 +298,7 @@ def save_inputs(form):
     result = {"saved": [], "conflicts": [], "rejected": rejected, "error": None}
     if changes:
         try:
-            answer = bridge_call("update", {"changes": changes})
+            answer = bridge_call("update", {"changes": changes}, timeout=BRIDGE_WRITE_TIMEOUT_SECONDS)
             result["saved"] = list(answer.get("saved") or [])
             result["conflicts"] = list(answer.get("conflicts") or [])
         except Exception as error:
@@ -323,7 +325,7 @@ def mirror_lead(lead=None):
             try:
                 if failed:
                     raise RuntimeError("очередь остановлена")
-                bridge_call("lead", {"lead": {key: item.get(key) for key in LEAD_MIRROR_FIELDS}})
+                bridge_call("lead", {"lead": {key: item.get(key) for key in LEAD_MIRROR_FIELDS}}, timeout=BRIDGE_WRITE_TIMEOUT_SECONDS)
             except Exception:
                 failed.append(item)
         if failed:
