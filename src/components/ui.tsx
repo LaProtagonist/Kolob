@@ -1,4 +1,6 @@
 import { FocusEvent, FormEvent, KeyboardEvent, useCallback, useEffect, useRef, useState } from "react";
+import { useTheme } from "../lib/theme";
+import { ThemeToggle } from "./ThemeToggle";
 import type {
   DocumentItem,
   HeroContent,
@@ -383,6 +385,7 @@ function isActive(activePath: string, href: string) {
 export function SiteHeader({ activePath }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { theme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 18);
@@ -398,10 +401,12 @@ export function SiteHeader({ activePath }: HeaderProps) {
   return (
     <header className={`site-header ${scrolled ? "is-scrolled" : ""}`}>
       <a className="brand-link" href="/" aria-label="Колобочная - главная">
-        <img src={scrolled ? site.logoDark : site.logoLight} alt="Колобочная" />
+        <img src={scrolled && theme === "light" ? site.logoDark : site.logoLight} alt="Колобочная" />
       </a>
 
       <DesktopNavigation activePath={activePath} />
+
+      <ThemeToggle />
 
       <a className="header-cta" href={site.ctaHref}>
         {site.ctaLabel}

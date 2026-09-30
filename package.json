@@ -83,7 +83,9 @@
     "admin:link": "bash scripts/admin-link.sh",
     "backend:deploy": "bash ./synch_to_server.sh -backend",
     "sheet:connect": "node scripts/sheet-connect.mjs",
-    "test:sheet": "node scripts/test-sheet-inputs.cjs"
+    "test:sheet": "node scripts/test-sheet-inputs.cjs",
+    "theme:tones": "node scripts/theme-tones.mjs",
+    "theme:check": "node scripts/theme-tones.mjs --check"
   },
   "dependencies": {
     "react": "^19.2.1",

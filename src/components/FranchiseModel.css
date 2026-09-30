@@ -2,7 +2,7 @@
   max-width: 1520px;
   margin: auto;
   padding: 32px clamp(16px, 3vw, 44px) 64px;
-  color: #171717;
+  color: var(--tone-171717);
   font-size: 14px;
   line-height: 1.5;
 }
@@ -36,13 +36,13 @@
   margin-bottom: 24px;
 }
 .fm-heading p:not(.fm-eyebrow) {
-  color: #65615b;
+  color: var(--tone-65615b);
 }
 .fm-eyebrow {
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.12em;
-  color: #776019;
+  color: var(--tone-776019);
 }
 .fm-validity {
   flex-shrink: 0;
@@ -58,9 +58,9 @@
   font-size: 11px;
 }
 .fm-validity-invalid {
-  background: #fbe6df;
-  border-color: #b1452b;
-  color: #8b271b;
+  background: var(--tone-fbe6df);
+  border-color: var(--tone-b1452b);
+  color: var(--tone-8b271b);
 }
 .fm-page button,
 .fm-page select,
@@ -70,29 +70,29 @@
 }
 .fm-page button {
   cursor: pointer;
-  border: 1px solid #c8c2b6;
+  border: 1px solid var(--tone-c8c2b6);
   border-radius: 7px;
-  background: #fffaf0;
+  background: var(--tone-fffaf0);
   padding: 8px 12px;
   font-weight: 650;
   min-height: 36px;
 }
 .fm-page button:hover {
-  border-color: #171717;
-  background: #fff;
+  border-color: var(--tone-171717);
+  background: var(--tone-ffffff);
 }
 .fm-page button:disabled {
   cursor: default;
   opacity: 0.5;
 }
 .fm-page :focus-visible {
-  outline: 2px solid #896000;
+  outline: 2px solid var(--tone-896000);
   outline-offset: 3px;
 }
 .fm-page input:not([type="checkbox"]),
 .fm-page select {
-  border: 1px solid #c8c2b6;
-  background: #fffdf8;
+  border: 1px solid var(--tone-c8c2b6);
+  background: var(--tone-fffdf8);
   border-radius: 6px;
   padding: 9px 10px;
   min-width: 0;
@@ -103,7 +103,7 @@
 .fm-page input[type="checkbox"] {
   width: 18px;
   height: 18px;
-  accent-color: #9d6b00;
+  accent-color: var(--tone-9d6b00);
   flex-shrink: 0;
 }
 .fm-page fieldset {
@@ -126,8 +126,8 @@
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  background: #eae5da;
-  border: 1px solid #d4cdbf;
+  background: var(--tone-eae5da);
+  border: 1px solid var(--tone-d4cdbf);
   border-radius: 12px;
   padding: 16px;
   margin-bottom: 20px;
@@ -153,7 +153,7 @@
 .fm-scenario-bar > small {
   flex-basis: 100%;
   font-size: 11px;
-  color: #65615b;
+  color: var(--tone-65615b);
 }
 .fm-dashboard {
   display: grid;
@@ -162,8 +162,8 @@
   margin-bottom: 18px;
 }
 .fm-stat {
-  border: 1px solid #d5cec1;
-  background: #fffaf0;
+  border: 1px solid var(--tone-d5cec1);
+  background: var(--tone-fffaf0);
   border-radius: 12px;
   padding: 18px;
   min-width: 0;
@@ -171,7 +171,7 @@
 .fm-stat > span {
   font-size: 11px;
   font-weight: 750;
-  color: #666158;
+  color: var(--tone-666158);
   text-transform: uppercase;
   letter-spacing: 0.045em;
 }
@@ -186,7 +186,7 @@
 }
 .fm-stat > small {
   display: block;
-  color: #777065;
+  color: var(--tone-777065);
   font-size: 11px;
 }
 .fm-dashboard .fm-stat:first-child {
@@ -202,9 +202,9 @@
   color: #f7b91e;
 }
 .fm-notice {
-  border-left: 3px solid #bc8f16;
+  border-left: 3px solid var(--tone-bc8f16);
   padding: 12px 16px;
-  background: #f0e6c9;
+  background: var(--tone-f0e6c9);
   border-radius: 0 8px 8px 0;
   margin: 18px 0;
 }
@@ -216,14 +216,14 @@
   margin: 6px 0;
 }
 .fm-notice-error {
-  background: #fbe6df;
-  border-color: #b1452b;
+  background: var(--tone-fbe6df);
+  border-color: var(--tone-b1452b);
 }
 .fm-panel {
-  border: 1px solid #d5cec1;
+  border: 1px solid var(--tone-d5cec1);
   border-radius: 12px;
   padding: 22px;
-  background: #fffaf0;
+  background: var(--tone-fffaf0);
   min-width: 0;
   margin-bottom: 16px;
 }
@@ -235,7 +235,7 @@
 .fm-panel > summary > span {
   font-size: 12px;
   font-weight: 500;
-  color: #777065;
+  color: var(--tone-777065);
   margin-left: 8px;
 }
 .fm-section-heading {
@@ -247,7 +247,7 @@
 }
 .fm-section-heading > span {
   font-size: 12px;
-  color: #777065;
+  color: var(--tone-777065);
 }
 .fm-section-heading p {
   margin: 0 0 6px;
@@ -257,23 +257,23 @@
   height: 22px;
   border-radius: 6px;
   overflow: hidden;
-  background: #ddd4c0;
+  background: var(--tone-ddd4c0);
   gap: 2px;
 }
 .fm-flow-bar > div {
   flex-basis: 0;
 }
 .fm-flow-0 {
-  background: #554e43;
+  background: var(--tone-554e43);
 }
 .fm-flow-1 {
-  background: #887c65;
+  background: var(--tone-887c65);
 }
 .fm-flow-2 {
-  background: #b5a37e;
+  background: var(--tone-b5a37e);
 }
 .fm-flow-3 {
-  background: #788865;
+  background: var(--tone-788865);
 }
 .fm-flow-4 {
   background: #f7b91e;
@@ -287,7 +287,7 @@
 .fm-flow-labels span {
   font-size: 11px;
   display: block;
-  color: #696254;
+  color: var(--tone-696254);
 }
 .fm-flow-labels strong {
   font-size: 19px;
@@ -297,7 +297,7 @@
   display: grid;
   grid-template-columns: 0.8fr 1fr 1.2fr;
   margin-top: 24px;
-  border: 1px solid #ddd4c2;
+  border: 1px solid var(--tone-ddd4c2);
   border-radius: 9px;
   overflow: hidden;
 }
@@ -306,17 +306,17 @@
   min-width: 0;
 }
 .fm-flow-bridge > div + div {
-  border-left: 1px solid #ddd4c2;
+  border-left: 1px solid var(--tone-ddd4c2);
 }
 .fm-flow-bridge > div:first-child {
-  background: #f4dfa4;
+  background: var(--tone-f4dfa4);
 }
 .fm-flow-bridge > div:first-child > strong {
   font-size: 48px;
   line-height: 1;
 }
 .fm-flow-bridge small {
-  color: #6e6350;
+  color: var(--tone-6e6350);
   font-size: 11px;
 }
 .fm-flow-bridge h3 {
@@ -327,8 +327,8 @@
 }
 .fm-legal {
   font-size: 11px;
-  color: #736b5e;
-  border-top: 1px solid #e0d8ca;
+  color: var(--tone-736b5e);
+  border-top: 1px solid var(--tone-e0d8ca);
   padding-top: 14px;
   margin-top: 20px !important;
   margin-bottom: 0 !important;
@@ -337,7 +337,7 @@
   display: flex;
   gap: 6px;
   padding: 8px;
-  background: #e7e1d4;
+  background: var(--tone-e7e1d4);
   border-radius: 10px;
   margin: 24px 0 20px;
   overflow-x: auto;
@@ -387,44 +387,44 @@
   font-size: 9px;
   font-weight: 600;
   padding: 2px 6px;
-  background: #ebe5d8;
-  color: #756748;
+  background: var(--tone-ebe5d8);
+  color: var(--tone-756748);
   border-radius: 4px;
   line-height: 1.35;
   display: inline-block;
 }
 .fm-status-reference {
-  background: #e8eced;
-  color: #506264;
+  background: var(--tone-e8eced);
+  color: var(--tone-506264);
 }
 .fm-status-missing {
-  background: #f5e1d7;
-  color: #924629;
+  background: var(--tone-f5e1d7);
+  color: var(--tone-924629);
 }
 .fm-status-working {
-  background: #f3e7c0;
-  color: #7e651d;
+  background: var(--tone-f3e7c0);
+  color: var(--tone-7e651d);
 }
 .fm-field small {
   font-size: 10px;
   line-height: 1.45;
-  color: #766e5f;
+  color: var(--tone-766e5f);
   display: block;
   margin-top: 6px;
 }
 .fm-field-invalid input {
-  border-color: #aa3822 !important;
+  border-color: var(--tone-aa3822) !important;
 }
 .fm-field-invalid small[role="alert"] {
-  color: #aa3822;
+  color: var(--tone-aa3822);
 }
 .fm-number {
   display: flex;
   min-width: 0;
   align-items: center;
-  border: 1px solid #c8c2b6;
+  border: 1px solid var(--tone-c8c2b6);
   border-radius: 6px;
-  background: #fffdf8;
+  background: var(--tone-fffdf8);
 }
 .fm-number > input {
   border: 0 !important;
@@ -436,7 +436,7 @@
 .fm-number > span {
   font-size: 10px;
   white-space: nowrap;
-  color: #827563;
+  color: var(--tone-827563);
   padding: 0 5px;
 }
 .fm-page .fm-reset {
@@ -444,7 +444,7 @@
   min-height: 34px;
   align-self: stretch;
   border: 0;
-  border-left: 1px solid #e5decd;
+  border-left: 1px solid var(--tone-e5decd);
   border-radius: 0 5px 5px 0;
   background: transparent;
   font-size: 16px;
@@ -467,8 +467,8 @@
   padding: 4px 8px;
 }
 .fm-presets button[aria-pressed="true"] {
-  background: #f3dfa2;
-  border-color: #b99d53;
+  background: var(--tone-f3dfa2);
+  border-color: var(--tone-b99d53);
 }
 .fm-lines {
   margin: 0;
@@ -479,14 +479,14 @@
   display: flex;
   justify-content: space-between;
   gap: 20px;
-  border-bottom: 1px solid #eae3d6;
+  border-bottom: 1px solid var(--tone-eae3d6);
   padding: 9px 0;
 }
 .fm-lines > div:last-child {
   border-bottom: 0;
 }
 .fm-lines dt {
-  color: #706859;
+  color: var(--tone-706859);
 }
 .fm-lines dd {
   margin: 0;
@@ -496,11 +496,11 @@
 }
 .fm-note {
   font-size: 11px;
-  color: #776d5c;
+  color: var(--tone-776d5c);
   line-height: 1.6;
 }
 .fm-negative {
-  color: #b03922 !important;
+  color: var(--tone-b03922) !important;
 }
 .fm-panel .fm-stat {
   margin-top: 14px;
@@ -521,7 +521,7 @@
 .fm-page td {
   text-align: right;
   padding: 10px 12px;
-  border-bottom: 1px solid #e5ddcd;
+  border-bottom: 1px solid var(--tone-e5ddcd);
   white-space: nowrap;
 }
 .fm-page th:first-child,
@@ -530,8 +530,8 @@
 }
 .fm-page thead th {
   font-size: 11px;
-  color: #756a57;
-  background: #f1ebde;
+  color: var(--tone-756a57);
+  background: var(--tone-f1ebde);
   white-space: normal;
   vertical-align: top;
 }
@@ -561,7 +561,7 @@
   font-weight: 600;
 }
 .fm-page tbody tr:hover {
-  background: #f7f0df;
+  background: var(--tone-f7f0df);
 }
 .fm-edit-table {
   min-width: 950px;
@@ -584,7 +584,7 @@
 }
 .fm-row-details details {
   padding: 12px;
-  border-bottom: 1px solid #e5ddcd;
+  border-bottom: 1px solid var(--tone-e5ddcd);
 }
 .fm-row-details summary {
   cursor: pointer;
@@ -597,8 +597,8 @@
   font-size: 12px;
 }
 .fm-invalid-row {
-  color: #9b3523;
-  background: #faece5;
+  color: var(--tone-9b3523);
+  background: var(--tone-faece5);
 }
 .fm-slice > label {
   display: flex;
@@ -660,7 +660,7 @@
   .fm-flow-bridge > div:last-child {
     grid-column: 1/-1;
     border-left: 0;
-    border-top: 1px solid #ddd4c2;
+    border-top: 1px solid var(--tone-ddd4c2);
   }
   .fm-heading {
     gap: 12px;
@@ -703,7 +703,7 @@
   }
   .fm-flow-bridge > div + div {
     border-left: 0;
-    border-top: 1px solid #ddd4c2;
+    border-top: 1px solid var(--tone-ddd4c2);
   }
   .fm-panel {
     padding: 16px;
@@ -787,7 +787,7 @@
   min-height: 30px;
   margin-top: 7px;
   padding: 5px 8px;
-  background: #f3e7c0;
+  background: var(--tone-f3e7c0);
 }
 
 /* v0.2: retain the Control palette; give provenance and partial data a clear hierarchy. */
@@ -804,9 +804,9 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px 18px;
-  border: 1px solid #d5cec1;
+  border: 1px solid var(--tone-d5cec1);
   border-radius: 8px;
-  background: #eee9df;
+  background: var(--tone-eee9df);
   padding: 12px 16px;
   margin: 0 0 18px;
   font-size: 12px;
@@ -817,7 +817,7 @@
 .fm-source {
   margin-top: 9px;
   font-size: 11px;
-  color: #706859;
+  color: var(--tone-706859);
 }
 .fm-source summary,
 .fm-bom-items summary,
@@ -837,8 +837,8 @@
   margin: 8px 0 4px;
 }
 .fm-na {
-  color: #6d716b;
-  background: #e8eae2;
+  color: var(--tone-6d716b);
+  background: var(--tone-e8eae2);
   border-radius: 6px;
   padding: 9px;
   font-size: 12px;
@@ -847,8 +847,8 @@
   display: block;
 }
 .fm-status-not_applicable {
-  background: #e8eae2;
-  color: #5e655a;
+  background: var(--tone-e8eae2);
+  color: var(--tone-5e655a);
 }
 .fm-bom .fm-inline {
   flex-wrap: wrap;
@@ -862,7 +862,7 @@
 }
 .fm-bom-breakdown > div {
   padding: 12px;
-  background: #f0eadc;
+  background: var(--tone-f0eadc);
   border-radius: 7px;
   font-size: 12px;
 }
@@ -878,7 +878,7 @@
     ) minmax(180px, 1.1fr) minmax(130px, 0.8fr);
   gap: 18px;
   align-items: start;
-  border-bottom: 1px solid #e0d7c7;
+  border-bottom: 1px solid var(--tone-e0d7c7);
   padding: 15px 0;
   font-size: 12px;
 }
@@ -890,7 +890,7 @@
   display: block;
 }
 .fm-bom-row small {
-  color: #756a57;
+  color: var(--tone-756a57);
   margin: 5px 0;
 }
 .fm-bom-row input[type="checkbox"] {
@@ -904,12 +904,12 @@
 }
 .fm-partial,
 .fm-shadow > strong {
-  color: #8c6411;
+  color: var(--tone-8c6411);
   font-weight: 750;
 }
 .fm-central-percent > div {
   padding: 10px 0;
-  border-bottom: 1px solid #e5ddcd;
+  border-bottom: 1px solid var(--tone-e5ddcd);
 }
 .fm-central-percent strong,
 .fm-central-percent span,
@@ -918,7 +918,7 @@
   font-size: 12px;
 }
 .fm-central-percent span {
-  color: #756a57;
+  color: var(--tone-756a57);
   font-size: 11px;
 }
 .fm-flow-bridge {
@@ -935,7 +935,7 @@
   margin: 18px 0;
 }
 .fm-milestones article {
-  border: 1px solid #ded5c5;
+  border: 1px solid var(--tone-ded5c5);
   border-radius: 8px;
   padding: 16px;
 }
@@ -947,8 +947,8 @@
 }
 .fm-investor-blocked,
 .fm-shadow {
-  background: #f6edda;
-  border-color: #d7bf85;
+  background: var(--tone-f6edda);
+  border-color: var(--tone-d7bf85);
 }
 .fm-fields > label {
   font-size: 12px;

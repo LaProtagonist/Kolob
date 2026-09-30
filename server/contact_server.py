@@ -370,32 +370,44 @@ def layout(title, body):
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="color-scheme" content="light dark">
   <title>{escape(title)}</title>
+  <script>
+    try {{
+      var theme = localStorage.getItem("kolobochnaya.theme");
+      if (theme === "dark" || theme === "light") document.documentElement.dataset.theme = theme;
+    }} catch (error) {{}}
+  </script>
   <style>
-    :root {{ font-family: Arial, sans-serif; color: #171717; background: #f7f1e6; }}
+    :root {{ --page: #f7f1e6; --ink: #171717; --soft: #65615b; --panel: #fffaf0; --cell: #ffffff; --line: rgba(23,23,23,.1); --field: rgba(23,23,23,.18); --label: #8a6a08; --shade: rgba(23,23,23,.08); color-scheme: light; }}
+    :root[data-theme="dark"] {{ --page: #232019; --ink: #e6e2d8; --soft: #a39d90; --panel: #1b1916; --cell: #161512; --line: rgba(230,226,216,.12); --field: rgba(230,226,216,.22); --label: #f7b91e; --shade: rgba(0,0,0,.4); color-scheme: dark; }}
+    @media (prefers-color-scheme: dark) {{
+      :root:not([data-theme="light"]) {{ --page: #232019; --ink: #e6e2d8; --soft: #a39d90; --panel: #1b1916; --cell: #161512; --line: rgba(230,226,216,.12); --field: rgba(230,226,216,.22); --label: #f7b91e; --shade: rgba(0,0,0,.4); color-scheme: dark; }}
+    }}
+    :root {{ font-family: Arial, sans-serif; color: var(--ink); background: var(--page); }}
     body {{ margin: 0; padding: 32px; }}
     main {{ max-width: 1180px; margin: 0 auto; }}
     h1 {{ margin: 0 0 24px; font-size: clamp(32px, 5vw, 56px); line-height: .98; }}
-    p {{ color: #65615b; line-height: 1.55; }}
+    p, small {{ color: var(--soft); line-height: 1.55; }}
     a, button {{ font: inherit; }}
-    .panel {{ padding: 28px; border-radius: 24px; background: #fffaf0; box-shadow: 0 18px 60px rgba(23, 23, 23, .08); }}
+    .panel {{ padding: 28px; border-radius: 24px; background: var(--panel); box-shadow: 0 18px 60px var(--shade); }}
     .login {{ display: grid; gap: 16px; max-width: 420px; }}
-    input {{ min-height: 48px; padding: 0 14px; border: 1px solid rgba(23,23,23,.18); border-radius: 14px; font-size: 16px; }}
+    input, select {{ min-height: 48px; padding: 0 14px; border: 1px solid var(--field); border-radius: 14px; font-size: 16px; color: var(--ink); background: var(--cell); }}
     button, .button {{ display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 18px; border: 0; border-radius: 14px; background: #f7b91e; color: #171717; font-weight: 900; text-decoration: none; cursor: pointer; }}
     .toolbar {{ display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 18px; }}
-    table {{ width: 100%; border-collapse: collapse; font-size: 14px; background: white; border-radius: 18px; overflow: hidden; }}
-    th, td {{ padding: 12px 10px; border-bottom: 1px solid rgba(23,23,23,.1); text-align: left; vertical-align: top; }}
+    table {{ width: 100%; border-collapse: collapse; font-size: 14px; background: var(--cell); border-radius: 18px; overflow: hidden; }}
+    th, td {{ padding: 12px 10px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }}
     th {{ background: #171717; color: #f7b91e; white-space: nowrap; }}
     td {{ max-width: 260px; }}
-    .empty {{ padding: 32px; border-radius: 18px; background: #fff; }}
+    .empty {{ padding: 32px; border-radius: 18px; background: var(--cell); }}
     @media (max-width: 760px) {{
       body {{ padding: 18px; }}
       .panel {{ padding: 20px; }}
       table, thead, tbody, tr, th, td {{ display: block; }}
       thead {{ display: none; }}
-      tr {{ padding: 14px 0; border-bottom: 1px solid rgba(23,23,23,.1); }}
+      tr {{ padding: 14px 0; border-bottom: 1px solid var(--line); }}
       td {{ max-width: none; border: 0; padding: 6px 0; }}
-      td::before {{ content: attr(data-label); display: block; margin-bottom: 2px; color: #8a6a08; font-size: 12px; font-weight: 900; text-transform: uppercase; }}
+      td::before {{ content: attr(data-label); display: block; margin-bottom: 2px; color: var(--label); font-size: 12px; font-weight: 900; text-transform: uppercase; }}
     }}
   </style>
 </head>

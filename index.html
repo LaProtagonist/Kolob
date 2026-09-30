@@ -27,6 +27,14 @@
     />
     <meta name="twitter:image" content="https://colob.spi.ski/media/hero-kolobok-1200.webp" />
     <meta name="theme-color" content="#171717" />
+    <meta name="color-scheme" content="light dark" />
+    <script>
+      // Тема до первой отрисовки: свой выбор посетителя, иначе настройка системы.
+      try {
+        var theme = localStorage.getItem("kolobochnaya.theme");
+        if (theme === "dark" || theme === "light") document.documentElement.dataset.theme = theme;
+      } catch (error) {}
+    </script>
     <link rel="icon" type="image/png" href="/media/favicon.png" />
     <script type="application/ld+json">
       {

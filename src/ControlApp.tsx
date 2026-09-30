@@ -1,4 +1,5 @@
 import { lazy, Suspense, useEffect, useMemo, useState } from "react";
+import { ThemeToggle } from "./components/ThemeToggle";
 import { InvestorConfigurationProvider } from "./components/InvestorConfigurationProvider";
 
 const FranchiseModelPage = lazy(() => import("./components/FranchiseModel").then((module) => ({ default: module.FranchiseModelPage })));
@@ -90,6 +91,7 @@ export default function ControlApp() {
       <div className="control-shell">
         <header className="control-header">
           <a className="control-brand" href="/control">{path === "/control/franchise-model" ? "Управление" : "Control"} <span>Колобочная</span></a>
+          <ThemeToggle />
           <details className="control-navigation" open={desktopNavigation || undefined}>
             <summary aria-label={path === "/control/franchise-model" ? "Навигация рабочего пространства" : "Навигация Control"}>Разделы</summary>
             <nav aria-label={path === "/control/franchise-model" ? "Навигация рабочего пространства" : "Навигация Control"}>

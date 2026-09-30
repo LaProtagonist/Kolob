@@ -34,7 +34,7 @@
 }
 
 .capex-page :focus-visible {
-  outline: 3px solid #2563eb;
+  outline: 3px solid var(--tone-2563eb);
   outline-offset: 3px;
 }
 
@@ -130,7 +130,7 @@
 
 .capex-provenance-line span + span {
   padding-left: 18px;
-  border-left: 1px solid rgba(255, 255, 255, 0.22);
+  border-left: 1px solid var(--tone-ffffff-a22);
 }
 
 .capex-hero aside {
@@ -145,7 +145,7 @@
 .capex-hero aside strong {
   display: block;
   margin-bottom: 12px;
-  color: var(--capex-yellow);
+  color: #f4b514;
   font-size: 0.82rem;
   text-transform: uppercase;
 }
@@ -165,8 +165,8 @@
 .capex-metrics-grid {
   display: grid;
   grid-template-columns: minmax(280px, 1.7fr) repeat(5, minmax(145px, 1fr));
-  border-right: 1px solid rgba(255, 255, 255, 0.1);
-  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  border-right: 1px solid var(--tone-ffffff-a10);
+  border-left: 1px solid var(--tone-ffffff-a10);
 }
 
 .capex-metric {
@@ -207,8 +207,8 @@
 }
 
 .capex-metric-dark {
-  background: var(--capex-yellow);
-  color: var(--capex-ink);
+  background: #f4b514;
+  color: #181713;
 }
 
 .capex-metric-dark > span,
@@ -232,7 +232,7 @@
   padding-top: 78px;
   padding-bottom: 78px;
   border-bottom: 1px solid var(--capex-line);
-  background: #f8f3e7;
+  background: var(--tone-f8f3e7);
 }
 
 .capex-pilot-facts {
@@ -257,7 +257,7 @@
 
 .capex-pilot-facts article > span {
   display: block;
-  color: #8d651b;
+  color: var(--tone-8d651b);
   font-size: 0.67rem;
   font-weight: 900;
   letter-spacing: 0.04em;
@@ -265,7 +265,7 @@
 }
 
 .capex-pilot-facts article.is-primary > span {
-  color: var(--capex-yellow);
+  color: #f4b514;
 }
 
 .capex-pilot-facts article > strong {
@@ -330,7 +330,7 @@
   margin-top: 14px !important;
   padding: 12px;
   border-left: 3px solid var(--capex-yellow);
-  background: #f1ebdd;
+  background: var(--tone-f1ebdd);
 }
 
 .capex-section-title {
@@ -339,7 +339,7 @@
 }
 
 .capex-section-title > span {
-  color: #9c6810;
+  color: var(--tone-9c6810);
   font-size: 0.75rem;
   font-weight: 900;
   letter-spacing: 0.07em;
@@ -381,7 +381,7 @@
   border: 1px solid var(--capex-line);
   border-radius: 13px;
   color: var(--capex-ink);
-  background: rgba(255, 255, 255, 0.62);
+  background: var(--tone-ffffff-a62);
   cursor: pointer;
   text-align: left;
   transition: transform 150ms ease, border-color 150ms ease, background 150ms ease;
@@ -389,19 +389,19 @@
 
 .capex-format-tabs button:hover {
   transform: translateY(-2px);
-  border-color: rgba(24, 23, 19, 0.45);
+  border-color: var(--tone-181713-a45);
 }
 
 .capex-format-tabs button.is-selected {
-  border-color: var(--capex-ink);
-  background: var(--capex-yellow);
+  border-color: #181713;
+  background: #f4b514;
   box-shadow: 5px 5px 0 var(--capex-ink);
 }
 
 .capex-format-tabs button span {
   display: block;
   margin-bottom: 8px;
-  color: #8b6218;
+  color: var(--tone-8b6218);
   font-size: 0.64rem;
   font-weight: 900;
 }
@@ -424,7 +424,7 @@
 }
 
 .capex-flow i {
-  color: #9c6810;
+  color: var(--tone-9c6810);
   font-style: normal;
 }
 
@@ -439,7 +439,7 @@
 }
 
 .capex-code {
-  color: #8d651b;
+  color: var(--tone-8d651b);
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 0.7rem;
   font-weight: 800;
@@ -477,15 +477,15 @@
   align-items: center;
   margin-top: 18px;
   padding: 17px 20px;
-  border: 1px solid #bc6b32;
+  border: 1px solid var(--tone-bc6b32);
   border-radius: 12px;
-  color: #71351f;
-  background: #fff0dc;
+  color: var(--tone-71351f);
+  background: var(--tone-fff0dc);
 }
 
 .capex-work-section {
   border-top: 1px solid var(--capex-line);
-  background: #ebe5d8;
+  background: var(--tone-ebe5d8);
 }
 
 .capex-workbench {
@@ -543,7 +543,7 @@
   margin-bottom: 11px;
   padding-bottom: 9px;
   border-bottom: 1px solid var(--capex-line);
-  color: #8d651b;
+  color: var(--tone-8d651b);
   font-size: 0.7rem;
   font-weight: 900;
   letter-spacing: 0.07em;
@@ -571,14 +571,14 @@
   overflow: hidden;
   border: 1px solid var(--capex-line);
   border-radius: 9px;
-  background: #fff;
+  background: var(--tone-ffffff);
 }
 
 .capex-stepper button {
   min-height: 36px;
   border: 0;
   color: var(--capex-ink);
-  background: #eee9dd;
+  background: var(--tone-eee9dd);
   cursor: pointer;
   font-size: 1.1rem;
 }
@@ -626,7 +626,7 @@
   width: 38px;
   height: 22px;
   border-radius: 999px;
-  background: #d2cdbf;
+  background: var(--tone-d2cdbf);
   transition: background 150ms ease;
 }
 
@@ -637,7 +637,7 @@
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background: #fff;
+  background: var(--tone-ffffff);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
   transition: transform 150ms ease;
 }
@@ -684,14 +684,14 @@
   border: 1px solid var(--capex-line);
   border-radius: 13px;
   color: var(--capex-ink);
-  background: rgba(255, 255, 255, 0.7);
+  background: var(--tone-ffffff-a70);
   cursor: pointer;
   text-align: left;
 }
 
 .capex-scenario-switch button.is-selected {
-  border-color: var(--capex-ink);
-  background: var(--capex-yellow);
+  border-color: #181713;
+  background: #f4b514;
   box-shadow: 4px 4px 0 var(--capex-ink);
 }
 
@@ -743,8 +743,8 @@
 }
 
 .capex-module-cards article.is-incomplete {
-  border-color: #c47c45;
-  background: #fff4e4;
+  border-color: var(--tone-c47c45);
+  background: var(--tone-fff4e4);
 }
 
 .capex-module-cards article > div {
@@ -787,7 +787,7 @@
   border: 1px solid var(--capex-line);
   border-radius: 999px;
   color: var(--capex-muted);
-  background: #f5f1e7;
+  background: var(--tone-f5f1e7);
   font-size: 0.61rem;
   font-weight: 900;
   line-height: 1.2;
@@ -797,18 +797,18 @@
 .status-research,
 .status-researched,
 .status-required {
-  border-color: rgba(45, 106, 79, 0.3);
-  color: #225c42;
-  background: #e8f3ea;
+  border-color: var(--tone-2d6a4f-a30);
+  color: var(--tone-225c42);
+  background: var(--tone-e8f3ea);
 }
 
 .status-not-started,
 .status-warning,
 .status-tbd,
 .status-conditional {
-  border-color: rgba(164, 71, 48, 0.3);
-  color: #7c3c2d;
-  background: #fae9df;
+  border-color: var(--tone-a44730-a30);
+  color: var(--tone-7c3c2d);
+  background: var(--tone-fae9df);
 }
 
 .capex-live-summary {
@@ -822,7 +822,7 @@
 
 .capex-live-summary > span {
   display: block;
-  color: var(--capex-yellow);
+  color: #f4b514;
   font-size: 0.7rem;
   font-weight: 900;
   letter-spacing: 0.05em;
@@ -932,7 +932,7 @@
   height: 10px;
   overflow: hidden;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--tone-ffffff-a08);
 }
 
 .capex-chart-track i {
@@ -940,7 +940,7 @@
   width: var(--bar-width);
   height: 100%;
   border-radius: inherit;
-  background: var(--capex-yellow);
+  background: #f4b514;
 }
 
 .capex-chart-track i.tone-1 { background: #62a07d; }
@@ -969,7 +969,7 @@
   gap: 12px;
   justify-content: space-between;
   padding: 9px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid var(--tone-ffffff-a08);
   font-size: 0.73rem;
 }
 
@@ -1002,7 +1002,7 @@
   align-items: baseline;
   padding: 14px;
   border-left: 3px solid var(--capex-yellow);
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--tone-ffffff-a05);
 }
 
 .capex-completeness strong {
@@ -1047,7 +1047,7 @@
   border: 1px solid var(--capex-line);
   border-radius: 8px;
   color: var(--capex-ink);
-  background: #fff;
+  background: var(--tone-ffffff);
   font-size: 0.73rem;
 }
 
@@ -1067,9 +1067,9 @@
 }
 
 .capex-infra-filters button.is-selected {
-  border-color: var(--capex-ink);
-  color: var(--capex-ink);
-  background: var(--capex-yellow);
+  border-color: #181713;
+  color: #181713;
+  background: #f4b514;
 }
 
 .capex-quick-filters {
@@ -1115,7 +1115,7 @@
 .capex-table-group > summary > span::before {
   width: 18px;
   content: "▸";
-  color: #8d651b;
+  color: var(--tone-8d651b);
   font-size: 0.9rem;
   transform: rotate(90deg);
   transition: transform 150ms ease;
@@ -1132,8 +1132,8 @@
   height: 26px;
   padding: 0 7px;
   border-radius: 999px;
-  color: var(--capex-ink);
-  background: var(--capex-yellow);
+  color: #181713;
+  background: #f4b514;
   font-size: 0.68rem;
 }
 
@@ -1167,7 +1167,7 @@
 .capex-table th,
 .capex-table td {
   padding: 14px 12px;
-  border-bottom: 1px solid var(--capex-line);
+  border-bottom: 1px solid rgba(24, 23, 19, 0.15);
   vertical-align: top;
   text-align: left;
 }
@@ -1199,7 +1199,7 @@
 }
 
 .capex-table tbody tr:hover td {
-  background: #fffaf0;
+  background: var(--tone-fffaf0);
 }
 
 .capex-table td {
@@ -1228,7 +1228,7 @@
 }
 
 .capex-table code {
-  color: #825b14;
+  color: var(--tone-825b14);
   font-size: 0.68rem;
   font-weight: 900;
 }
@@ -1238,7 +1238,7 @@
 }
 
 .capex-table summary {
-  color: #744e0b;
+  color: var(--tone-744e0b);
   cursor: pointer;
   font-size: 0.66rem;
   font-weight: 800;
@@ -1249,7 +1249,7 @@
   padding: 12px;
   border: 1px solid var(--capex-line);
   border-radius: 9px;
-  background: #f4efe3;
+  background: var(--tone-f4efe3);
 }
 
 .capex-row-details p {
@@ -1263,7 +1263,7 @@
 .capex-product-link {
   width: fit-content;
   margin-top: 8px;
-  color: #704d0e;
+  color: var(--tone-704d0e);
   font-size: 0.66rem;
   font-weight: 900;
   text-decoration: underline;
@@ -1301,9 +1301,9 @@
 .capex-missing-grid article {
   min-height: 185px;
   padding: 19px;
-  border: 1px solid rgba(255, 255, 255, 0.11);
+  border: 1px solid var(--tone-ffffff-a11);
   border-radius: 13px;
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--tone-ffffff-a04);
 }
 
 .capex-missing-grid h3 {
@@ -1356,7 +1356,7 @@
 .capex-documents-grid a,
 .capex-documents-grid article > span:last-child {
   margin-top: auto;
-  color: #79520d;
+  color: var(--tone-79520d);
   font-size: 0.75rem;
   font-weight: 900;
 }
@@ -1407,7 +1407,7 @@
 }
 
 .capex-history-grid summary {
-  color: #79520d;
+  color: var(--tone-79520d);
   cursor: pointer;
   font-size: 0.74rem;
   font-weight: 900;
@@ -1424,7 +1424,7 @@
 .capex-hash-list li {
   min-width: 0;
   padding: 8px;
-  background: #eee9dd;
+  background: var(--tone-eee9dd);
   font-size: 0.62rem;
 }
 
@@ -1462,7 +1462,7 @@
 }
 
 .capex-timeline time {
-  color: #8d651b;
+  color: var(--tone-8d651b);
   font-size: 0.68rem;
   font-weight: 900;
 }
