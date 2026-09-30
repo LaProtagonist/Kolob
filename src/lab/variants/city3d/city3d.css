@@ -1,0 +1,253 @@
+/* Вариант «Город в 3D»: объёмная сцена, подписи точек поверх неё, карточка точки. */
+.city3d-kpis {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.city3d-kpis > div {
+  display: grid;
+  gap: 2px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: var(--tone-ffffff);
+  border: 1px solid var(--tone-171717-a10);
+}
+
+.city3d-kpis span { color: var(--tone-646464); font-size: 0.74rem; }
+.city3d-kpis strong { font-size: 1.12rem; font-variant-numeric: tabular-nums; }
+.city3d-kpis .is-positive strong { color: var(--tone-2f6b3f); }
+.city3d-kpis .is-negative strong { color: var(--tone-b91f2b); }
+
+.city3d-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 14px;
+  align-items: stretch;
+}
+
+/* Краски сцены. Холст читает эти переменные, поэтому город перекрашивается вместе с темой. */
+.city3d-stage {
+  --city-land: #efe9d8;
+  --city-soil: #cfc4a8;
+  --city-water: #a9dcef;
+  --city-bank: #fbf7ec;
+  --city-road: #ffffff;
+  --city-block-1: #d9d0b9;
+  --city-block-2: #d6ccb4;
+  --city-block-3: #d0c6ac;
+  --city-tree: #86b072;
+  --city-trunk: #8a6a4a;
+  --city-hall: #f7b91e;
+  --city-takeaway: #e58f3c;
+  --city-annex: #e9c46a;
+  --city-roof: #171717;
+  --city-door: #171717;
+  --city-window: #5a3a0a;
+  --city-lot: #8d8775;
+  --city-chimney: #b86a24;
+  --city-select: #b86a24;
+  --city-person: #171717;
+  --city-pulse: #f7b91e;
+  position: relative;
+  min-height: 480px;
+  overflow: hidden;
+  border-radius: 24px;
+  border: 1px solid var(--tone-171717-a10);
+  background: linear-gradient(180deg, var(--tone-e3eef1) 0%, var(--tone-f3efe3) 100%);
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.city3d-stage:active { cursor: grabbing; }
+.city3d-stage:focus-visible { outline: 2px solid var(--tone-b86a24); outline-offset: 2px; }
+
+.city3d-canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.city3d-labels {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.city3d-label,
+.city3d-plan-label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  visibility: hidden;
+  white-space: nowrap;
+  will-change: transform;
+}
+
+.city3d-label {
+  padding: 3px 9px;
+  border: 1px solid var(--tone-171717-a18);
+  border-radius: 999px;
+  background: var(--tone-ffffff);
+  color: var(--tone-171717);
+  font: inherit;
+  font-size: 0.74rem;
+  font-weight: 800;
+  line-height: 1.3;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.city3d-label.is-planned {
+  border-style: dashed;
+  background: var(--tone-ffffff-a80);
+  color: var(--tone-646464);
+}
+
+.city3d-label.is-selected {
+  border-color: #171717;
+  background: #f7b91e;
+  color: #171717;
+}
+
+.city3d-plan-label {
+  color: var(--tone-8d8775);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.city3d-status {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: 24px;
+  color: var(--tone-646464);
+  text-align: center;
+  pointer-events: none;
+}
+
+.city3d-tools {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: grid;
+  gap: 6px;
+}
+
+.city3d-tools button {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border: 1px solid var(--tone-171717-a16);
+  border-radius: 12px;
+  background: var(--tone-ffffff);
+  color: var(--tone-171717);
+  font: inherit;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.city3d-hint {
+  position: absolute;
+  top: 12px;
+  left: 14px;
+  max-width: calc(100% - 84px);
+  margin: 0;
+  color: var(--tone-646464);
+  font-size: 0.74rem;
+  pointer-events: none;
+}
+
+.city3d-legend {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 12px;
+  max-width: calc(100% - 24px);
+  padding: 7px 11px;
+  border-radius: 12px;
+  background: var(--tone-ffffff-a84);
+  color: var(--tone-646464);
+  font-size: 0.74rem;
+  pointer-events: none;
+}
+
+.city3d-legend span { display: inline-flex; align-items: center; gap: 5px; }
+.city3d-legend i { width: 11px; height: 11px; border-radius: 3px; }
+.city3d-legend i.is-hall { background: #f7b91e; }
+.city3d-legend i.is-takeaway { background: #e58f3c; }
+.city3d-legend i.is-lot { background: var(--city-lot); opacity: 0.6; }
+.city3d-legend em { color: var(--tone-171717); font-style: normal; font-weight: 700; }
+
+.city3d-card {
+  display: flex;
+  flex-direction: column;
+  padding: 18px;
+  border-radius: 18px;
+  background: var(--tone-ffffff);
+  border: 1px solid var(--tone-171717-a10);
+}
+
+.city3d-card h3 { margin: 0 0 4px; font-size: 1.2rem; }
+.city3d-card p { margin: 0 0 12px; color: var(--tone-646464); font-size: 0.9rem; }
+.city3d-card dl { display: grid; gap: 8px; margin: 0 0 12px; }
+.city3d-card dl div { display: flex; justify-content: space-between; gap: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--tone-171717-a08); }
+.city3d-card dt { color: var(--tone-646464); font-size: 0.84rem; }
+.city3d-card dd { margin: 0; font-weight: 700; text-align: right; font-variant-numeric: tabular-nums; }
+.city3d-card ul { margin: 0 0 12px; padding-left: 18px; color: var(--tone-646464); font-size: 0.84rem; }
+.city3d-card .city3d-note { font-size: 0.8rem; }
+
+.city3d-card-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: auto;
+  color: var(--tone-646464);
+  font-size: 0.8rem;
+}
+
+.city3d-card-nav button {
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--tone-171717-a18);
+  border-radius: 12px;
+  background: transparent;
+  color: var(--tone-171717);
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.city3d-charts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+@media (max-width: 900px) {
+  .city3d-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .city3d-layout, .city3d-charts { grid-template-columns: 1fr; }
+  .city3d-stage { min-height: 0; aspect-ratio: 1 / 1; border-radius: 18px; }
+  /* На узком экране кнопки камеры стоят квадратом: столбик закрывал бы подписи у правого края. */
+  .city3d-tools { grid-template-columns: repeat(2, 38px); }
+  .city3d-hint { max-width: calc(100% - 124px); }
+}

@@ -1,0 +1,309 @@
+/* Вариант «Изометрия»: центр Петербурга из кварталов, воды и зданий сети; всё нарисовано фигурами SVG. */
+.iso-variant {
+  /* Тени одинаковы в обеих темах, поэтому заданы отдельной постоянной. */
+  --iso-shadow: rgba(18, 20, 28, 0.16);
+}
+
+.iso-kpis {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.iso-kpis > div {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: 10px;
+  align-items: center;
+  padding: 10px 14px;
+  border-radius: 16px;
+  background: var(--tone-ffffff);
+  border: 1px solid var(--tone-171717-a10);
+}
+
+.iso-kpi-icon {
+  grid-row: 1 / span 2;
+  width: 34px;
+  height: 34px;
+  padding: 7px;
+  border-radius: 50%;
+  background: #f7b91e;
+  fill: #171717;
+  stroke: #171717;
+  stroke-width: 1.2;
+  stroke-linejoin: round;
+}
+
+.iso-kpis span { color: var(--tone-646464); font-size: 0.74rem; line-height: 1.25; }
+.iso-kpis strong { font-size: 1.08rem; line-height: 1.2; font-variant-numeric: tabular-nums; }
+.iso-kpis .is-positive strong { color: var(--tone-2f6b3f); }
+.iso-kpis .is-negative strong { color: var(--tone-b91f2b); }
+
+.iso-stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 14px;
+  align-items: start;
+}
+
+.iso-board { min-width: 0; }
+
+.iso-scene {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 24px;
+  border: 1px solid var(--tone-171717-a10);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.iso-backdrop,
+.iso-house,
+.iso-tree,
+.iso-landmark,
+.iso-traffic,
+.iso-selection { pointer-events: none; }
+
+/* Земля, вода, мостовые. */
+.iso-ground { fill: var(--tone-f1ece0); }
+.iso-water { fill: var(--tone-a9d3e6); }
+.iso-wave { fill: none; stroke: var(--tone-e3f2f9); stroke-width: 1.4; stroke-linecap: round; }
+.iso-quay { fill: var(--tone-b9b2a2); }
+.iso-island { fill: var(--tone-e5d9b4); }
+.iso-lane { fill: none; stroke: var(--tone-d8d0bd); stroke-width: 1.4; stroke-dasharray: 6 8; }
+.iso-slab { fill: var(--tone-e4ddcd); }
+.iso-slab-side { fill: var(--tone-c9c1ae); }
+.iso-lawn { fill: var(--tone-c5e6a6); }
+.iso-bridge { fill: var(--tone-f6f2e8); }
+.iso-rail { fill: none; stroke: var(--tone-8d8775); stroke-width: 1.1; }
+.iso-shadow { fill: var(--iso-shadow); }
+.iso-street-name { fill: var(--tone-a39b87); font-size: 9.5px; font-weight: 800; letter-spacing: 0.06em; }
+.iso-water-name { fill: var(--tone-6f95a3); font-size: 9px; font-weight: 800; letter-spacing: 0.08em; }
+.iso-water-name.is-river { font-size: 13px; letter-spacing: 0.34em; }
+
+.iso-tree-trunk { fill: var(--tone-9a7352); }
+.iso-tree-crown { fill: var(--tone-92c48d); }
+.iso-tree-light { fill: var(--tone-abd6a6); }
+
+/* Обычные дома: пять спокойных фасадов, чтобы здания сети оставались самыми яркими. */
+.iso-f1 .iso-house-l { fill: var(--tone-e6d3ae); }
+.iso-f1 .iso-house-r { fill: var(--tone-d0bd99); }
+.iso-f1 .iso-house-t { fill: var(--tone-f1e6cd); }
+.iso-f2 .iso-house-l { fill: var(--tone-dfbdb4); }
+.iso-f2 .iso-house-r { fill: var(--tone-cba89f); }
+.iso-f2 .iso-house-t { fill: var(--tone-f3e2dc); }
+.iso-f3 .iso-house-l { fill: var(--tone-bcd8c6); }
+.iso-f3 .iso-house-r { fill: var(--tone-a3c2b0); }
+.iso-f3 .iso-house-t { fill: var(--tone-e1efe6); }
+.iso-f4 .iso-house-l { fill: var(--tone-b8ccdc); }
+.iso-f4 .iso-house-r { fill: var(--tone-9fb5c6); }
+.iso-f4 .iso-house-t { fill: var(--tone-e0e9f0); }
+.iso-f5 .iso-house-l { fill: var(--tone-d6cfc0); }
+.iso-f5 .iso-house-r { fill: var(--tone-bdb6a6); }
+.iso-f5 .iso-house-t { fill: var(--tone-eeeae0); }
+.iso-house-roof { fill: var(--tone-786446-a14); }
+.iso-win { fill: var(--tone-97aab7); }
+
+/* Знакомые здания города. */
+.iso-lm-wall-l { fill: var(--tone-efc96a); }
+.iso-lm-wall-r { fill: var(--tone-ddb455); }
+.iso-lm-roof { fill: var(--tone-9fb3a5); }
+.iso-lm-trim { fill: var(--tone-fff8e8); }
+.iso-gold { fill: var(--tone-e8b923); }
+.iso-gold-light { fill: var(--tone-ffd75e); }
+.iso-stone-l { fill: var(--tone-cfc8bb); }
+.iso-stone-r { fill: var(--tone-b5ae9f); }
+.iso-stone-t { fill: var(--tone-ddd7cc); }
+.iso-brick-l { fill: var(--tone-d47a5c); }
+.iso-brick-r { fill: var(--tone-c26447); }
+.iso-fort-yard { fill: var(--tone-d9d0a8); }
+
+.iso-tram-l { fill: var(--tone-d64545); }
+.iso-tram-r { fill: var(--tone-c63b3b); }
+.iso-tram-t { fill: var(--tone-f3ead6); }
+.iso-tram-glass { fill: var(--tone-cfe4ee); }
+.iso-car-l { fill: var(--tone-4f8fd6); }
+.iso-car-r { fill: var(--tone-3f7fc6); }
+.iso-car-t { fill: var(--tone-6aa5e6); }
+.iso-boat-hull { fill: var(--fixed-white); }
+.iso-boat-cabin-l { fill: var(--tone-d64545); }
+.iso-boat-cabin-r { fill: var(--tone-c63b3b); }
+.iso-boat-wake { fill: none; stroke: var(--tone-e3f2f9); stroke-width: 2; stroke-linecap: round; stroke-dasharray: 5 4; }
+
+.iso-tram { animation: iso-drive 34s linear infinite; }
+.iso-car { animation: iso-drive 27s linear infinite reverse; animation-delay: -9s; }
+.iso-boat { animation: iso-sail 46s ease-in-out infinite alternate; }
+
+/* Здания сети. */
+.iso-point { cursor: pointer; outline: none; }
+.iso-hit { fill: none; pointer-events: all; }
+.iso-lot { fill: var(--tone-f6e6b4); stroke: var(--tone-e3a81e); stroke-width: 0; }
+.iso-lot.is-site { fill: var(--tone-e6d9bd); }
+.iso-point:hover .iso-lot,
+.iso-point:focus-visible .iso-lot { stroke-width: 2.2; }
+
+.iso-k-wall-l { fill: var(--tone-fff6df); }
+.iso-k-wall-r { fill: var(--tone-eddcb6); }
+.iso-k-glass { fill: var(--tone-2b211a); }
+.iso-k-door { fill: var(--tone-b86a24); }
+.iso-k-roof { fill: var(--tone-f7b91e); }
+.iso-k-roof-dark { fill: var(--tone-e3a81e); }
+.iso-k-stripe { fill: var(--tone-ffffff); }
+.iso-k-brick-l,
+.iso-k-chimney-l { fill: var(--tone-d98a48); }
+.iso-k-brick-r,
+.iso-k-chimney-r { fill: var(--tone-c5763c); }
+.iso-k-band { fill: var(--tone-fff6df); }
+.iso-k-gate { fill: var(--tone-ece5d6); }
+.iso-k-gate-line { fill: none; stroke: var(--tone-b9b2a2); stroke-width: 0.9; }
+.iso-k-skylight { fill: var(--tone-c4e2ee); }
+
+.iso-logo-ball { fill: var(--tone-f7b91e); stroke: var(--tone-b86a24); stroke-width: 1.3; }
+.iso-logo-ink { fill: var(--fixed-ink); }
+.iso-logo-smile { fill: none; stroke: var(--fixed-ink); stroke-width: 1.1; stroke-linecap: round; }
+
+.iso-smoke {
+  fill: var(--tone-d9d4c8);
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: iso-smoke 3.3s ease-out infinite;
+}
+
+.iso-fig { animation: iso-bob 1.5s ease-in-out infinite; }
+.iso-fig-legs { fill: var(--tone-4a3a2c); }
+.iso-fig-body { fill: var(--tone-f7b91e); stroke: var(--tone-b86a24); stroke-width: 0.6; }
+.iso-fig-head { fill: var(--tone-e0a878); }
+.iso-fig-hat { fill: var(--fixed-white); stroke: var(--tone-b9b2a2); stroke-width: 0.5; }
+
+.iso-coin { fill: var(--tone-ffd34d); stroke: var(--tone-b86a24); stroke-width: 0.9; }
+.iso-coin-mark { fill: none; stroke: var(--tone-b86a24); stroke-width: 0.8; stroke-linecap: round; }
+.iso-coin-fly {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: iso-coin 2.8s ease-out infinite;
+}
+
+.iso-point.is-fresh .iso-point-art {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: iso-pop 0.62s cubic-bezier(0.2, 1.4, 0.4, 1);
+}
+
+/* Стройплощадка. */
+.iso-site-base-l { fill: var(--tone-d2ccbf); }
+.iso-site-base-r { fill: var(--tone-bdb6a6); }
+.iso-site-base-t { fill: var(--tone-e2ddd2); }
+.iso-site-frame { fill: none; stroke: var(--tone-8d8775); stroke-width: 1.2; stroke-dasharray: 4 3; stroke-linejoin: round; }
+.iso-site-crane { fill: none; stroke: var(--tone-e3a81e); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.iso-site-cable { fill: none; stroke: var(--tone-8d8775); stroke-width: 0.9; }
+.iso-site-load { fill: var(--tone-b86a24); }
+.iso-site-fence { fill: var(--tone-2b211a); }
+.iso-site-board { fill: var(--tone-f7b91e); stroke: var(--tone-b86a24); stroke-width: 1; stroke-linejoin: round; }
+.iso-site-month { fill: var(--fixed-ink); font-size: 10.5px; font-weight: 900; font-variant-numeric: tabular-nums; }
+
+/* Выбранная точка. */
+.iso-ring { fill: var(--tone-f7b91e-a22); stroke: var(--tone-b86a24); stroke-width: 2; stroke-dasharray: 6 4; stroke-linejoin: round; }
+.iso-pin { fill: var(--tone-f7b91e); stroke: var(--tone-b86a24); stroke-width: 1.4; stroke-linejoin: round; animation: iso-pin 1.1s ease-in-out infinite; }
+.iso-tag { fill: var(--tone-171717); }
+.iso-tag-text { fill: var(--tone-ffffff); font-size: 11px; font-weight: 800; }
+
+.iso-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  margin: 10px 2px 0;
+  color: var(--tone-646464);
+  font-size: 0.8rem;
+}
+
+.iso-legend span { display: inline-flex; align-items: center; gap: 7px; }
+.iso-legend i { flex: none; }
+.iso-legend-coin { width: 13px; height: 13px; border-radius: 50%; background: #ffd34d; border: 1.5px solid #b86a24; }
+.iso-legend-site { width: 22px; height: 13px; border-radius: 4px; background: #f7b91e; border: 1.5px solid #b86a24; }
+
+.iso-card {
+  padding: 18px;
+  border-radius: 18px;
+  background: var(--tone-ffffff);
+  border: 1px solid var(--tone-171717-a10);
+}
+
+.iso-card h3 { margin: 0 0 4px; font-size: 1.2rem; }
+.iso-card p { margin: 0 0 12px; color: var(--tone-646464); font-size: 0.9rem; }
+.iso-card dl { display: grid; gap: 8px; margin: 0 0 12px; }
+.iso-card dl div { display: flex; justify-content: space-between; gap: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--tone-171717-a08); }
+.iso-card dt { color: var(--tone-646464); font-size: 0.84rem; }
+.iso-card dd { margin: 0; font-weight: 700; text-align: right; font-variant-numeric: tabular-nums; }
+.iso-card ul { margin: 0; padding-left: 18px; color: var(--tone-646464); font-size: 0.84rem; }
+.iso-card .iso-formats { display: grid; gap: 6px; padding-left: 0; list-style: none; }
+.iso-formats li { display: flex; align-items: center; gap: 9px; }
+.iso-formats b { flex: none; width: 14px; height: 12px; }
+.iso-formats .is-works { background: #d98a48; border-radius: 2px; }
+.iso-formats .is-hall { background: #f7b91e; clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+.iso-formats .is-kiosk { height: 6px; background: #f7b91e; border-radius: 2px; }
+.iso-note { font-size: 0.8rem; }
+
+.iso-charts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+@keyframes iso-drive {
+  from { transform: translate(-320px, -160px); }
+  to { transform: translate(320px, 160px); }
+}
+
+@keyframes iso-sail {
+  from { transform: translate(-70px, -35px); }
+  to { transform: translate(130px, 65px); }
+}
+
+@keyframes iso-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-1.6px); }
+}
+
+@keyframes iso-coin {
+  0% { transform: translateY(8px) scale(0.4); opacity: 0; }
+  14% { transform: translateY(0) scale(1); opacity: 1; }
+  78% { opacity: 1; }
+  100% { transform: translateY(-30px) scale(1); opacity: 0; }
+}
+
+@keyframes iso-smoke {
+  0% { transform: translate(0, 0) scale(0.5); opacity: 0; }
+  18% { opacity: 0.85; }
+  100% { transform: translate(9px, -24px) scale(1.7); opacity: 0; }
+}
+
+@keyframes iso-pop {
+  0% { transform: scale(0.25); opacity: 0; }
+  55% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+@keyframes iso-pin {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+/* Без анимаций всё остаётся на местах: монеты сложены столбиком у здания, транспорт стоит. */
+@media (prefers-reduced-motion: reduce) {
+  .iso-tram, .iso-car, .iso-boat, .iso-fig, .iso-smoke, .iso-coin-fly, .iso-pin, .iso-point.is-fresh .iso-point-art { animation: none; }
+}
+
+@media (max-width: 900px) {
+  .iso-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .iso-stage, .iso-charts { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 720px) {
+  .iso-scene { border-radius: 18px; }
+  .iso-kpis > div { padding: 9px 10px; column-gap: 8px; }
+  .iso-kpi-icon { width: 30px; height: 30px; padding: 6px; }
+}

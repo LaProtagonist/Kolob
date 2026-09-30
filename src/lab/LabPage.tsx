@@ -21,7 +21,7 @@ export function LabPage({ path }: { path: string }) {
   const id = path.replace(/^\/lab\/?/, "");
   const current = variants.find((variant) => variant.id === id);
   return (
-    <main className="lab-page" data-testid="lab-page">
+    <div className="lab-page" data-testid="lab-page">
       <header className="lab-header">
         <p className="lab-eyebrow">Лаборатория · рабочие варианты</p>
         <h1>{current ? current.title : "Визуализация сети"}</h1>
@@ -45,6 +45,6 @@ export function LabPage({ path }: { path: string }) {
           ))}
         </div>
       )}
-    </main>
+    </div>
   );
 }

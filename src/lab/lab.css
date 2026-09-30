@@ -238,3 +238,9 @@
   .lab-timeline { grid-template-columns: auto minmax(0, 1fr); }
   .lab-timeline-now { grid-column: 1 / -1; text-align: left; display: flex; gap: 8px; }
 }
+
+@media (max-width: 480px) {
+  /* Три сценария помещаются в одну строку на телефоне. */
+  .lab-segment { max-width: 100%; }
+  .lab-segment button { padding: 0 8px; font-size: 0.78rem; }
+}
