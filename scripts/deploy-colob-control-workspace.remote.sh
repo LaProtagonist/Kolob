@@ -115,8 +115,16 @@ docker run -d \
   "$CONTACT_IMAGE" \
   python3 /app/contact_server.py >/dev/null
 
-sleep 1
-docker exec "$CADDY_CONTAINER" sh -lc "wget -qO- --timeout=5 http://$CONTACT_CONTAINER:8787/health" >/dev/null
+# The backend needs a moment to start; one early refusal must not abort the deployment.
+attempt=0
+until docker exec "$CADDY_CONTAINER" sh -lc "wget -qO- --timeout=5 http://$CONTACT_CONTAINER:8787/health" >/dev/null 2>&1; do
+  attempt=$((attempt + 1))
+  if [ "$attempt" -ge 15 ]; then
+    echo "Contact backend did not answer /health within 15 seconds." >&2
+    exit 1
+  fi
+  sleep 1
+done
 
 sh "$SCRIPTS_STAGE/activate-colob-caddy-route.remote.sh"
 

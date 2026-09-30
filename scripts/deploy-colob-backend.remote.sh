@@ -44,7 +44,12 @@ mv "$APP_DIR/inputs-schema.json.next.$STAMP" "$APP_DIR/inputs-schema.json"
 mv "$APP_DIR/contact_server.py.next.$STAMP" "$APP_DIR/contact_server.py"
 
 healthy() {
-  docker exec "$CADDY_CONTAINER" sh -lc "wget -qO- --timeout=5 http://$CONTACT_CONTAINER:8787/health" >/dev/null 2>&1
+  attempt=0
+  until docker exec "$CADDY_CONTAINER" sh -lc "wget -qO- --timeout=5 http://$CONTACT_CONTAINER:8787/health" >/dev/null 2>&1; do
+    attempt=$((attempt + 1))
+    [ "$attempt" -ge 15 ] && return 1
+    sleep 1
+  done
 }
 
 CONTACT_IMAGE="$(docker inspect "$CONTACT_CONTAINER" --format '{{.Config.Image}}')"
