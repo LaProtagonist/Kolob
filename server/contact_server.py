@@ -33,7 +33,10 @@ INPUTS_SCHEMA_FILE = Path(os.environ.get("CONTACT_INPUTS_SCHEMA_FILE", str(Path(
 INPUTS_CACHE_FILE = Path(os.environ.get("CONTACT_INPUTS_CACHE_FILE", str(DATA_DIR / "inputs-cache.json")))
 INPUTS_MAX_AGE_SECONDS = int(os.environ.get("CONTACT_INPUTS_MAX_AGE", "30"))
 INPUTS_LOCK = threading.Lock()
-INPUTS_STATE = {"payload": None, "checked_at": 0.0}
+INPUTS_STATE = {"payload": None, "checked_at": 0.0, "marked": None}
+BRIDGE_QUEUE_FILE = Path(os.environ.get("CONTACT_BRIDGE_QUEUE_FILE", str(DATA_DIR / "bridge-queue.jsonl")))
+QUEUE_LOCK = threading.Lock()
+LEAD_MIRROR_FIELDS = ("id", "createdAt", "name", "company", "role", "contact", "email", "interest", "comment", "source")
 COOKIE_NAME = "kolob_leads_auth"
 MAX_BODY_BYTES = 64 * 1024
 CONTROL_STATIC_ROOT = Path(os.environ.get("CONTROL_STATIC_ROOT", str(Path(__file__).resolve().parent / "control")))
@@ -244,10 +247,90 @@ def current_inputs(force=False):
                 values, errors = validate_inputs(result.get("inputs"), payload["inputs"])
                 payload = {"source": "google", "fetchedAt": utc_now(), "inputs": values, "errors": errors}
                 write_json(INPUTS_CACHE_FILE, payload)
+                mark_rejected(errors)
             except Exception as error:
                 payload = {**payload, "source": "cache" if payload.get("fetchedAt") else "defaults", "bridgeError": clean(error, 200)}
         INPUTS_STATE["payload"] = payload
         return payload
+
+
+def mark_rejected(errors):
+    rejected = sorted((item["key"], item["message"]) for item in errors if item.get("message") != "в таблице нет строки с этим ключом")
+    if INPUTS_STATE["marked"] == rejected:
+        return
+    try:
+        bridge_call("mark", {"rejected": [{"key": key, "message": message} for key, message in rejected]})
+        INPUTS_STATE["marked"] = rejected
+    except Exception:
+        pass
+
+
+def form_value(item, raw):
+    """Turns a form field into a sheet value; empty means null for optional inputs."""
+    text = clean(raw, 200)
+    if text == "":
+        if item.get("optional"):
+            return None
+        raise ValueError("значение пустое")
+    value = coerce_input(item, text)
+    return value
+
+
+def save_inputs(form):
+    """Writes changed cells to the sheet; the sheet refuses cells edited by someone else meanwhile."""
+    current = current_inputs()
+    changes, rejected = [], []
+    for item in inputs_schema():
+        key = item["key"]
+        if f"value__{key}" not in form:
+            continue
+        seen = current["inputs"].get(key)
+        try:
+            value = form_value(item, form[f"value__{key}"][0])
+        except ValueError as error:
+            rejected.append({"key": key, "message": str(error)})
+            continue
+        if value == seen or (value is None and seen is None):
+            continue
+        changes.append({"key": key, "expected": seen, "value": value})
+    result = {"saved": [], "conflicts": [], "rejected": rejected, "error": None}
+    if changes:
+        try:
+            answer = bridge_call("update", {"changes": changes})
+            result["saved"] = list(answer.get("saved") or [])
+            result["conflicts"] = list(answer.get("conflicts") or [])
+        except Exception as error:
+            result["error"] = clean(error, 200)
+        current_inputs(force=True)
+    return result
+
+
+def queued_leads():
+    try:
+        return [json.loads(line) for line in BRIDGE_QUEUE_FILE.read_text(encoding="utf-8").splitlines() if line.strip()]
+    except (OSError, ValueError):
+        return []
+
+
+def mirror_lead(lead=None):
+    """Appends the lead to the «Заявки» sheet; failures wait in a queue for the next attempt."""
+    if not bridge_config():
+        return
+    with QUEUE_LOCK:
+        pending = queued_leads() + ([lead] if lead else [])
+        failed = []
+        for item in pending:
+            try:
+                if failed:
+                    raise RuntimeError("очередь остановлена")
+                bridge_call("lead", {"lead": {key: item.get(key) for key in LEAD_MIRROR_FIELDS}})
+            except Exception:
+                failed.append(item)
+        if failed:
+            BRIDGE_QUEUE_FILE.parent.mkdir(parents=True, exist_ok=True)
+            BRIDGE_QUEUE_FILE.write_text("".join(json.dumps(item, ensure_ascii=False) + "\n" for item in failed), encoding="utf-8")
+        elif BRIDGE_QUEUE_FILE.exists():
+            BRIDGE_QUEUE_FILE.unlink()
 
 
 def escape(value):
@@ -384,7 +467,7 @@ def leads_page(leads):
     )
 
 
-def inputs_page(payload):
+def inputs_page(payload, message=""):
     config = bridge_config()
     errors = {item["key"]: item["message"] for item in payload.get("errors", [])}
     fetched = payload.get("fetchedAt") or ""
@@ -405,33 +488,68 @@ def inputs_page(payload):
     rows = []
     for item in inputs_schema():
         key = item["key"]
+        value = payload.get("inputs", {}).get(key)
         note = f'<br><strong>Не принято: {escape(errors[key])}. Оставлено прежнее значение.</strong>' if key in errors else ""
         rows.append(
             f"""<tr>
-  <td data-label="Название">{escape(item.get('title'))}{note}</td>
-  <td data-label="Значение">{escape(format_input_value(payload.get('inputs', {}).get(key)))}</td>
+  <td data-label="Название">{escape(item.get('title'))}{note}<br><small>{escape(item.get('comment'))}</small></td>
+  <td data-label="Значение">{input_control(item, value, editable=bool(config))}</td>
   <td data-label="Единица">{escape(item.get('unit'))}</td>
-  <td data-label="Ключ">{escape(key)}</td>
+  <td data-label="Ключ"><small>{escape(key)}</small></td>
 </tr>"""
         )
     sheet_button = f'<a class="button" href="{escape(config["sheetUrl"])}" target="_blank" rel="noreferrer">Открыть таблицу</a>' if config and config.get("sheetUrl") else ""
+    save_button = '<button type="submit" form="inputs-form">Сохранить в таблицу</button>' if config else ""
+    queue = len(queued_leads())
+    queue_note = f"<p>Заявок, ожидающих отправки в таблицу: {queue}.</p>" if queue else ""
     return layout(
         "Вводные — Колобочная",
         f"""<section class="panel">
   <h1>Вводные</h1>
   <p>{escape(status)}</p>
+  {f'<p><strong>{escape(message)}</strong></p>' if message else ''}
+  {queue_note}
   <div class="toolbar">
+    {save_button}
     {sheet_button}
     <form method="post" action="/control/inputs/refresh"><button type="submit">Обновить сейчас</button></form>
     <a class="button" href="/control">В Control</a>
     <a class="button" href="/leads">Заявки</a>
   </div>
+  <form id="inputs-form" method="post" action="/control/inputs/save">
   <table>
     <thead><tr><th>Название</th><th>Значение</th><th>Единица</th><th>Ключ</th></tr></thead>
     <tbody>{''.join(rows)}</tbody>
   </table>
+  </form>
 </section>""",
     )
+
+
+def input_control(item, value, editable):
+    """One form control per input: a list for fixed options, a field for free numbers."""
+    key = item["key"]
+    name = f"value__{key}"
+    if not editable:
+        return escape(format_input_value(value))
+    kind = item.get("type", "number")
+    if kind == "boolean":
+        options = [("да", "да"), ("нет", "нет")]
+        chosen = "да" if value else "нет"
+    elif kind == "choice":
+        options = [(choice, choice) for choice in item.get("choices", [])]
+        chosen = str(value if value is not None else "")
+    elif "allowed" in item:
+        options = [(format_input_value(allowed), format_input_value(allowed)) for allowed in item["allowed"]]
+        chosen = format_input_value(value)
+    else:
+        text = "" if value is None else (str(int(value)) if isinstance(value, (int, float)) and value == int(value) else str(value))
+        placeholder = "пусто — по составу" if item.get("optional") else ""
+        return f'<input name="{escape(name)}" value="{escape(text)}" inputmode="decimal" placeholder="{escape(placeholder)}" style="width: 150px">'
+    rendered = "".join(
+        f'<option value="{escape(option)}"{" selected" if option == chosen else ""}>{escape(label)}</option>' for option, label in options
+    )
+    return f'<select name="{escape(name)}" style="min-height: 40px; padding: 0 10px; border-radius: 12px; font-size: 15px">{rendered}</select>'
 
 
 def normalize_lead(payload, handler):
@@ -593,7 +711,8 @@ class Handler(BaseHTTPRequestHandler):
             if not is_authorized(self):
                 self.redirect("/control/login?next=/control/inputs")
                 return
-            self.send_html(200, inputs_page(current_inputs()))
+            message = parse_qs(parsed.query).get("m", [""])[0]
+            self.send_html(200, inputs_page(current_inputs(), clean(message, 600)))
             return
         if path == "/control/login":
             next_path = safe_control_next(parse_qs(parsed.query).get("next", ["/control"])[0])
@@ -673,6 +792,7 @@ class Handler(BaseHTTPRequestHandler):
             LEADS_FILE.parent.mkdir(parents=True, exist_ok=True)
             with LEADS_FILE.open("a", encoding="utf-8") as file:
                 file.write(json.dumps(lead, ensure_ascii=False) + "\n")
+            threading.Thread(target=mirror_lead, args=(lead,), daemon=True).start()
             self.send_json(200, {"ok": True})
             return
         if path == "/control/inputs/refresh":
@@ -680,7 +800,27 @@ class Handler(BaseHTTPRequestHandler):
                 self.redirect("/control/login?next=/control/inputs")
                 return
             current_inputs(force=True)
+            threading.Thread(target=mirror_lead, daemon=True).start()
             self.redirect("/control/inputs")
+            return
+        if path == "/control/inputs/save":
+            if not is_authorized(self):
+                self.redirect("/control/login?next=/control/inputs")
+                return
+            result = save_inputs(parse_qs(self.read_body().decode("utf-8")))
+            titles = {item["key"]: item.get("title") or item["key"] for item in inputs_schema()}
+            parts = []
+            if result["saved"]:
+                parts.append("Записано в таблицу: " + ", ".join(titles.get(key, key) for key in result["saved"]) + ".")
+            for conflict in result["conflicts"]:
+                parts.append(f"{titles.get(conflict.get('key'), conflict.get('key'))}: {conflict.get('reason')}, сейчас там «{format_input_value(conflict.get('current'))}».")
+            for item in result["rejected"]:
+                parts.append(f"{titles.get(item['key'], item['key'])}: {item['message']}.")
+            if result["error"]:
+                parts.append(f"Таблица не приняла запись: {result['error']}.")
+            if not parts:
+                parts.append("Изменений не было.")
+            self.redirect(f"/control/inputs?m={quote(' '.join(parts))}")
             return
         if path == "/leads/login":
             if not ADMIN_PASSWORD:

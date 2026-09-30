@@ -53,7 +53,19 @@ if (host !== "colob.spi.ski" || !remoteFile.startsWith("/srv/kolob-data/")) fail
 if (sheetUrl && !sheetUrl.startsWith("https://docs.google.com/spreadsheets/")) fail("Ссылка на таблицу должна начинаться с https://docs.google.com/spreadsheets/");
 
 const schema = JSON.parse(fs.readFileSync(schemaFile, "utf8"));
-const seed = schema.inputs.map((item) => ({ key: item.key, title: item.title, value: item.default, unit: item.unit || "", comment: item.comment || "" }));
+const seed = schema.inputs.map((item) => ({
+  key: item.key,
+  title: item.title,
+  value: item.default,
+  unit: item.unit || "",
+  comment: item.comment || "",
+  type: item.type || "number",
+  choices: item.choices,
+  allowed: item.allowed,
+  min: item.min,
+  max: item.max,
+  optional: item.optional === true,
+}));
 
 let key = "";
 const existing = await ssh(`cat '${remoteFile}' 2>/dev/null || true`);
@@ -75,7 +87,7 @@ if (key && (await bridge(url, key, "ping")).ok) {
 
 const seeded = await bridge(url, key, "seed", { inputs: seed });
 if (!seeded.ok) fail(`Заполнить лист «Вводные» не удалось: ${seeded.error}`);
-process.stdout.write(`Лист «Вводные»: добавлено строк ${seeded.added}, всего ${seeded.total}.\n`);
+process.stdout.write(`Лист «Вводные»: добавлено строк ${seeded.added}, всего ${seeded.total}; списки и цвета обновлены. Лист «Заявки»: записей ${seeded.leads ?? 0}.\n`);
 
 await ssh(`umask 077 && cat > '${remoteFile}.next' && mv '${remoteFile}.next' '${remoteFile}'`, `${JSON.stringify({ url, key, sheetUrl }, null, 2)}\n`);
 process.stdout.write("Адрес моста записан на сервер.\n");
