@@ -13,6 +13,8 @@
 
 var SHEET_INPUTS = 'Вводные';
 var SHEET_LEADS = 'Заявки';
+var SHEET_ACCESS = 'Доступ';
+var ACCESS_HEADERS = ['Что', 'Ссылка', 'Обновлено'];
 var INPUT_HEADERS = ['Ключ', 'Название', 'Значение', 'Единица', 'Пояснение'];
 var LEAD_HEADERS = ['Дата', 'Имя', 'Компания', 'Должность', 'Контакт', 'Почта', 'Интерес', 'Комментарий', 'Источник', 'Номер заявки'];
 var LEAD_FIELDS = ['createdAt', 'name', 'company', 'role', 'contact', 'email', 'interest', 'comment', 'source', 'id'];
@@ -76,12 +78,13 @@ function handle_(params, body) {
   }
 
   if (!stored || key !== stored) return { ok: false, error: 'ключ не подходит' };
-  if (action === 'ping') return { ok: true, sheet: SpreadsheetApp.getActive().getName(), version: 2 };
+  if (action === 'ping') return { ok: true, sheet: SpreadsheetApp.getActive().getName(), version: 3 };
   if (action === 'inputs') return readInputs_();
   if (action === 'seed') return seedInputs_(body.inputs || []);
   if (action === 'update') return updateInputs_(body.changes || []);
   if (action === 'mark') return markRejected_(body.rejected || []);
   if (action === 'lead') return appendLead_(body.lead || {});
+  if (action === 'access') return writeAccess_(body.entries || []);
   return { ok: false, error: 'неизвестное действие' };
 }
 
@@ -261,6 +264,24 @@ function appendLead_(lead) {
   } finally {
     lock.releaseLock();
   }
+}
+
+function writeAccess_(entries) {
+  var sheet = ensureSheet_(SpreadsheetApp.getActive(), SHEET_ACCESS, ACCESS_HEADERS);
+  styleHeader_(sheet, ACCESS_HEADERS.length);
+  var rows = sheet.getDataRange().getValues();
+  var byTitle = {};
+  for (var index = 1; index < rows.length; index++) byTitle[String(rows[index][0] || '')] = index + 1;
+  entries.forEach(function (entry) {
+    if (!entry || !entry.title) return;
+    var row = byTitle[entry.title] || sheet.getLastRow() + 1;
+    sheet.getRange(row, 1, 1, 3).setValues([[String(entry.title), String(entry.link || ''), new Date()]]);
+    byTitle[entry.title] = row;
+  });
+  sheet.setColumnWidth(1, 260);
+  sheet.setColumnWidth(2, 640);
+  sheet.setColumnWidth(3, 170);
+  return { ok: true, entries: entries.length };
 }
 
 function ensureSheet_(book, name, headers) {

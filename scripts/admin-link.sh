@@ -35,6 +35,22 @@ if [[ "$STATUS" != "303" ]]; then
   exit 1
 fi
 
+# Ссылка записывается на лист «Доступ» таблицы, если таблица подключена; ключ передаётся через stdin, а не аргументом.
+SHEET_NOTE="$(printf '%s' "$LINK" | ssh $SSH_OPTS "$SERVER" "docker exec -i kolob-contact python3 -c '
+import sys
+sys.path.insert(0, \"/app\")
+import contact_server as c
+link = sys.stdin.read().strip()
+if not c.bridge_config():
+    print(\"таблица не подключена\")
+else:
+    try:
+        c.bridge_call(\"access\", {\"entries\": [{\"title\": \"Вход в закрытую зону без пароля\", \"link\": link}]}, timeout=40)
+        print(\"записана на лист «Доступ» таблицы\")
+    except Exception as error:
+        print(\"в таблицу не записана: \" + str(error)[:120])
+'" 2>/dev/null || echo "в таблицу не записана")"
+
 if command -v pbcopy >/dev/null 2>&1; then
   printf '%s' "$LINK" | pbcopy
   COPIED=" Она уже в буфере обмена."
@@ -42,7 +58,7 @@ else
   COPIED=""
 fi
 
-echo "Ссылка для входа в закрытую зону.$COPIED"
+echo "Ссылка для входа в закрытую зону.$COPIED Ссылка $SHEET_NOTE."
 echo
 echo "$LINK"
 echo

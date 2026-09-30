@@ -35,7 +35,7 @@ INPUTS_SCHEMA_FILE = Path(os.environ.get("CONTACT_INPUTS_SCHEMA_FILE", str(Path(
 INPUTS_CACHE_FILE = Path(os.environ.get("CONTACT_INPUTS_CACHE_FILE", str(DATA_DIR / "inputs-cache.json")))
 INPUTS_MAX_AGE_SECONDS = int(os.environ.get("CONTACT_INPUTS_MAX_AGE", "30"))
 INPUTS_LOCK = threading.Lock()
-INPUTS_STATE = {"payload": None, "checked_at": 0.0, "marked": None}
+INPUTS_STATE = {"payload": None, "checked_at": 0.0, "marked": None, "refreshing": False}
 BRIDGE_QUEUE_FILE = Path(os.environ.get("CONTACT_BRIDGE_QUEUE_FILE", str(DATA_DIR / "bridge-queue.jsonl")))
 QUEUE_LOCK = threading.Lock()
 LEAD_MIRROR_FIELDS = ("id", "createdAt", "name", "company", "role", "contact", "email", "interest", "comment", "source")
@@ -233,27 +233,51 @@ def default_inputs():
     return {"source": "defaults", "fetchedAt": None, "inputs": {item["key"]: item.get("default") for item in inputs_schema()}, "errors": []}
 
 
+def loaded_inputs():
+    payload = INPUTS_STATE["payload"]
+    if payload is None:
+        cached = read_json(INPUTS_CACHE_FILE)
+        payload = {**cached, "source": "cache"} if isinstance(cached, dict) else default_inputs()
+    known = {item["key"]: item.get("default") for item in inputs_schema()}
+    payload["inputs"] = {key: payload.get("inputs", {}).get(key, default) for key, default in known.items()}
+    INPUTS_STATE["payload"] = payload
+    return payload
+
+
+def refresh_inputs():
+    """Reads the sheet and replaces the copy; on failure the copy stays and the reason is recorded."""
+    try:
+        result = bridge_call("inputs")
+        with INPUTS_LOCK:
+            previous = loaded_inputs()
+            values, errors = validate_inputs(result.get("inputs"), previous["inputs"])
+            INPUTS_STATE["payload"] = {"source": "google", "fetchedAt": utc_now(), "inputs": values, "errors": errors}
+            write_json(INPUTS_CACHE_FILE, INPUTS_STATE["payload"])
+        mark_rejected(errors)
+    except Exception as error:
+        with INPUTS_LOCK:
+            previous = loaded_inputs()
+            INPUTS_STATE["payload"] = {**previous, "source": "cache" if previous.get("fetchedAt") else "defaults", "bridgeError": clean(error, 200)}
+    finally:
+        INPUTS_STATE["refreshing"] = False
+
+
 def current_inputs(force=False):
+    """Answers at once from the copy; a stale copy is refreshed in the background, a missing one — right away."""
     with INPUTS_LOCK:
-        payload = INPUTS_STATE["payload"]
-        if payload is None:
-            cached = read_json(INPUTS_CACHE_FILE)
-            payload = {**cached, "source": "cache"} if isinstance(cached, dict) else default_inputs()
-        known = {item["key"]: item.get("default") for item in inputs_schema()}
-        payload["inputs"] = {key: payload.get("inputs", {}).get(key, default) for key, default in known.items()}
+        payload = loaded_inputs()
         due = time.time() - INPUTS_STATE["checked_at"] >= INPUTS_MAX_AGE_SECONDS
-        if bridge_config() and (force or due):
+        start = bool(bridge_config()) and (force or due) and not INPUTS_STATE["refreshing"]
+        wait_for_result = force or payload.get("fetchedAt") is None
+        if start:
             INPUTS_STATE["checked_at"] = time.time()
-            try:
-                result = bridge_call("inputs")
-                values, errors = validate_inputs(result.get("inputs"), payload["inputs"])
-                payload = {"source": "google", "fetchedAt": utc_now(), "inputs": values, "errors": errors}
-                write_json(INPUTS_CACHE_FILE, payload)
-                mark_rejected(errors)
-            except Exception as error:
-                payload = {**payload, "source": "cache" if payload.get("fetchedAt") else "defaults", "bridgeError": clean(error, 200)}
-        INPUTS_STATE["payload"] = payload
-        return payload
+            INPUTS_STATE["refreshing"] = True
+    if start and wait_for_result:
+        refresh_inputs()
+    elif start:
+        threading.Thread(target=refresh_inputs, daemon=True).start()
+    with INPUTS_LOCK:
+        return {**loaded_inputs(), "refreshing": INPUTS_STATE["refreshing"]}
 
 
 def mark_rejected(errors):
@@ -707,7 +731,7 @@ class Handler(BaseHTTPRequestHandler):
             return
         if path == "/api/inputs":
             payload = current_inputs()
-            self.send_json(200, {"ok": True, "source": payload.get("source"), "fetchedAt": payload.get("fetchedAt"), "inputs": payload.get("inputs", {})})
+            self.send_json(200, {"ok": True, "source": payload.get("source"), "fetchedAt": payload.get("fetchedAt"), "refreshing": payload.get("refreshing", False), "inputs": payload.get("inputs", {})})
             return
         if path == "/control/inputs":
             if not is_authorized(self):

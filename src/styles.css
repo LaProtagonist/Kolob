@@ -4376,3 +4376,24 @@ main {
     animation-iteration-count: 1 !important;
   }
 }
+
+/* Тихое уведомление: вводные калькулятора обновились из таблицы после открытия страницы. */
+.sheet-notice {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 40;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: var(--color-ink);
+  color: var(--color-kolobok);
+  font-size: 13px;
+  box-shadow: var(--shadow-soft);
+  pointer-events: none;
+  animation: sheet-notice-in 0.3s ease-out;
+}
+
+@keyframes sheet-notice-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}

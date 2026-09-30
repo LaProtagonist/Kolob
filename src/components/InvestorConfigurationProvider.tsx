@@ -10,9 +10,10 @@ import {
   type InvestorConfiguration,
   type InvestorScenarioId,
   type NetworkScalingConfiguration,
+  type SheetInputs,
 } from "../lib/investor-configuration";
 import { launchModel, restoreLaunchBudgetState, type LaunchBudgetState } from "../lib/launch-budget";
-import { loadSheetInputs, withoutScenarioTraffic } from "../lib/sheet-inputs";
+import { loadSheetInputs, sameSheetInputs, withoutScenarioTraffic } from "../lib/sheet-inputs";
 
 type InvestorConfigurationContextValue = {
   configuration: InvestorConfiguration;
@@ -54,18 +55,41 @@ export function InvestorConfigurationProvider({ children }: { children: ReactNod
   const sheetDefaultsRequested = useRef(false);
 
   // Only calculator pages ask for the sheet; the rest of the site never waits for it.
+  const [sheetNotice, setSheetNotice] = useState("");
+  const appliedSheetInputs = useRef<SheetInputs | null>(null);
+
+  // The backend answers from its copy at once and re-reads the sheet in the background;
+  // when it reports a refresh in progress, the page asks again and applies the newer values.
+  const applySheetAnswer = useCallback((answer: { inputs: SheetInputs; refreshing: boolean }, announce: boolean) => {
+    const inputs = withoutScenarioTraffic(answer.inputs);
+    const changed = !appliedSheetInputs.current || !sameSheetInputs(appliedSheetInputs.current, inputs);
+    if (changed) {
+      // A visitor who has not edited anything follows the sheet; saved edits win.
+      const untouched = investorConfigurationIsDefault(latestConfiguration.current);
+      appliedSheetInputs.current = inputs;
+      setSheetInputs(inputs);
+      if (untouched) setConfiguration(defaultInvestorConfiguration());
+      setSheetInputsVersion((version) => version + 1);
+      if (announce) setSheetNotice("Вводные обновлены из таблицы");
+    }
+    if (answer.refreshing) {
+      window.setTimeout(() => {
+        void loadSheetInputs().then((next) => next && applySheetAnswer(next, true));
+      }, 5_000);
+    }
+  }, []);
+
   const requestSheetDefaults = useCallback(() => {
     if (sheetDefaultsRequested.current) return;
     sheetDefaultsRequested.current = true;
-    void loadSheetInputs().then((inputs) => {
-      if (!inputs) return;
-      // A visitor who has not edited anything follows the sheet; saved edits win.
-      const untouched = investorConfigurationIsDefault(latestConfiguration.current);
-      setSheetInputs(withoutScenarioTraffic(inputs));
-      if (untouched) setConfiguration(defaultInvestorConfiguration());
-      setSheetInputsVersion((version) => version + 1);
-    });
-  }, []);
+    void loadSheetInputs().then((answer) => answer && applySheetAnswer(answer, false));
+  }, [applySheetAnswer]);
+
+  useEffect(() => {
+    if (!sheetNotice) return;
+    const timer = window.setTimeout(() => setSheetNotice(""), 6_000);
+    return () => window.clearTimeout(timer);
+  }, [sheetNotice]);
 
   useEffect(() => {
     try {
@@ -121,7 +145,12 @@ export function InvestorConfigurationProvider({ children }: { children: ReactNod
     requestSheetDefaults,
   }), [configuration, sheetInputsVersion, requestSheetDefaults]);
 
-  return <InvestorConfigurationContext.Provider value={value}>{children}</InvestorConfigurationContext.Provider>;
+  return (
+    <InvestorConfigurationContext.Provider value={value}>
+      {children}
+      {sheetNotice ? <div className="sheet-notice" role="status">{sheetNotice}</div> : null}
+    </InvestorConfigurationContext.Provider>
+  );
 }
 
 export function useInvestorConfiguration() {
