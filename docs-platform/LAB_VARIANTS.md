@@ -12,6 +12,10 @@
 | Список вариантов | `src/lab/variants.json`, `src/lab/variants/index.ts` | только общая работа |
 | Графика одного варианта | `src/lab/variants/<id>/` | автор варианта |
 
+Лаборатория — дополнение к сайту, а не его часть: расчёт она только читает, а сайт знает о ней в пяти местах. Граница описана в `docs-platform/CHANGES-SINCE-2026-09-18.md` и проверяется тестом `scripts/test-lab-boundary.test.ts`.
+
+В списке лаборатории стоят «Изометрия» и «Настольная игра». «Карта сети» и «Город в 3D» сняты со списка полем `"listed": false` в `src/lab/variants.json`: их код сохранён, страницы открываются по прямой ссылке. Вернуть вариант в список — поставить `"listed": true`.
+
 Вариант — это один файл `src/lab/variants/<id>/Variant.tsx` с экспортом по умолчанию и стили рядом с ним. Он получает `{ story, controls }` и больше ничего не читает: ни расчётные модули из `src/lib`, ни сеть.
 
 ## Что приходит в вариант
@@ -28,12 +32,22 @@
 | `openingMonth` | месяц открытия от старта программы |
 | `checksPerDay`, `monthlyRevenueRub`, `investmentRub` | поток, выручка, вложения в открытие |
 | `staffOnShift`, `staffTotal`, `staffRoles` | люди на смене, в штате, по ролям |
+| `districtId` | район точки из `story.districts`; у первой точки сети — `null` |
+| `inventory` | оснащение точки по группам (кухня, касса, бар, мойка, мебель, форма, стартовый запас): `name`, `amountRub`, `items` с названием и количеством |
 
 `story.months` — по одной записи на месяц: `openPoints`, `newOpenings`, `staffTotal`, `revenueRub`, `ebitdaRub`, `investedRub`, `cashFlowRub`, `cumulativeCashRub`.
 
 `story.totals` — `pointCount`, `investmentRub`, `paybackMonth`, `lastOpeningMonth`, `fullScaleMonth`, `horizonMonths`, `peakFundingRub`.
 
-`controls` — `scenarioId` и `setScenarioId`, `rolloutSize` и `setRolloutSize(4 | 8 | 12)`, `reset`. Состояние общее с калькулятором инвестора: изменённое здесь видно там.
+`story.districts` — районы, где сеть открывает точки, включая пустые (первая точка сети сюда не входит). Район — это группа одинаковых точек калькулятора: `id`, `title`, `place`, `format`, `formatTitle`, `locationType`, `openingMonths` (месяцы открытия точек по порядку), а также `checksPerDay`, `monthlyRevenueRub`, `investmentRub`, `staffTotal` одной точки района. По пустому району видно, что получит сеть, если поставить в нём точку.
+
+`story.rules` — `openingLeadMonths` (за сколько месяцев до открытия уходят вложения в точку) и `maxPointsPerDistrict` (больше точек на район расчётные планы не открывают).
+
+`controls` — `scenarioId` и `setScenarioId`, `rolloutSize` и `setRolloutSize(4 | 8 | 12)`, `setPlan`, `reset`. Состояние общее с калькулятором инвестора: изменённое здесь видно там.
+
+`controls.setPlan([{ districtId, openingMonths }])` — свой план открытий: для каждого названного района задаёт месяцы, в которые открываются его точки (пустой список — точек в районе нет). В калькуляторе у группы меняются только количество точек и месяцы открытия — те же поля, что правятся в разделе «Масштабирование»; формат, площадь, аренда и остальное остаются как были. После вызова `story` приходит пересчитанной калькулятором. Расчётный план возвращает `setRolloutSize`.
+
+Формат точки вариант не меняет: он задан районом. Свободная смена формата оставляет расчёт неполным — для зала в большинстве районов в модели нет площади и аренды.
 
 Готовые части из `src/lab/shared/`: `usePlayback` (текущий месяц и «пуск»), `Timeline`, `CashChart`, `ProfitChart`, `ControlsBar`. Форматирование денег и месяцев — `src/lab/format.ts`.
 
@@ -54,7 +68,7 @@
 npx tsc -b
 npm run theme:tones
 npm run theme:check
-node docs-platform/app/node_modules/tsx/dist/cli.mjs --test scripts/test-lab-story.test.ts
+node docs-platform/app/node_modules/tsx/dist/cli.mjs --test scripts/test-lab-story.test.ts scripts/test-lab-boundary.test.ts
 npm run dev
 ```
 

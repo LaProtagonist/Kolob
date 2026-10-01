@@ -20,6 +20,8 @@ function VariantStage({ id }: { id: string }) {
 export function LabPage({ path }: { path: string }) {
   const id = path.replace(/^\/lab\/?/, "");
   const current = variants.find((variant) => variant.id === id);
+  // Снятые со списка варианты видны в переключателе только на своей странице.
+  const shown = variants.filter((variant) => variant.listed || variant.id === id);
   return (
     <div className="lab-page" data-testid="lab-page">
       <header className="lab-header">
@@ -27,7 +29,7 @@ export function LabPage({ path }: { path: string }) {
         <h1>{current ? current.title : "Визуализация сети"}</h1>
         <p>{current ? current.summary : "Один расчёт — несколько способов его показать. Цифры общие с калькулятором инвестора и таблицей вводных."}</p>
         <nav className="lab-nav" aria-label="Варианты визуализации">
-          {variants.map((variant) => (
+          {shown.map((variant) => (
             <a key={variant.id} href={`/lab/${variant.id}`} className={variant.id === id ? "is-current" : ""}>{variant.title}</a>
           ))}
           <a href="/investor-terminal">Калькулятор</a>
@@ -37,7 +39,7 @@ export function LabPage({ path }: { path: string }) {
         <VariantStage id={current.id} />
       ) : (
         <div className="lab-index">
-          {variants.map((variant) => (
+          {shown.map((variant) => (
             <a key={variant.id} className="lab-index-card" href={`/lab/${variant.id}`}>
               <strong>{variant.title}</strong>
               <span>{variant.summary}</span>

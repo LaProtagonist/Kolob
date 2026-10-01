@@ -2,7 +2,8 @@ import { lazy, type ComponentType, type LazyExoticComponent } from "react";
 import type { VariantProps } from "../useNetworkStory";
 import list from "../variants.json";
 
-export type VariantInfo = { id: string; title: string; summary: string };
+/** listed: false — вариант снят со списка лаборатории, но открывается по прямой ссылке. */
+export type VariantInfo = { id: string; title: string; summary: string; listed: boolean };
 export const variants = list as VariantInfo[];
 
 /** Каждый вариант грузится отдельным файлом и только на своей странице. */
