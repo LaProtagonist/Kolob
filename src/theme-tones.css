@@ -273,6 +273,7 @@
   --tone-d5cec1: #d5cec1;
   --tone-d64545: #d64545;
   --tone-d6bbf7: #d6bbf7;
+  --tone-d6cdb8: #d6cdb8;
   --tone-d6cfc0: #d6cfc0;
   --tone-d7bf85: #d7bf85;
   --tone-d8d0bd: #d8d0bd;
@@ -746,6 +747,7 @@
   --tone-d5cec1: #4c463a;
   --tone-d64545: #d64545;
   --tone-d6bbf7: #2f1f42;
+  --tone-d6cdb8: #544c39;
   --tone-d6cfc0: #4d4739;
   --tone-d7bf85: #d7bf85;
   --tone-d8d0bd: #504937;
@@ -1046,6 +1048,7 @@
   .iso-legend-site,
   .iso-legend-staff,
   .iso-status.is-site,
+  .lab-game-list button,
   .lab-map-play,
   .lab-map-zoom button,
   .lab-nav a.is-current,
@@ -1420,6 +1423,7 @@
   --tone-d5cec1: #d5cec1;
   --tone-d64545: #d64545;
   --tone-d6bbf7: #d6bbf7;
+  --tone-d6cdb8: #d6cdb8;
   --tone-d6cfc0: #d6cfc0;
   --tone-d7bf85: #d7bf85;
   --tone-d8d0bd: #d8d0bd;
@@ -1942,6 +1946,7 @@
     --tone-d5cec1: #4c463a;
     --tone-d64545: #d64545;
     --tone-d6bbf7: #2f1f42;
+    --tone-d6cdb8: #544c39;
     --tone-d6cfc0: #4d4739;
     --tone-d7bf85: #d7bf85;
     --tone-d8d0bd: #504937;
@@ -2242,6 +2247,7 @@
     .iso-legend-site,
     .iso-legend-staff,
     .iso-status.is-site,
+    .lab-game-list button,
     .lab-map-play,
     .lab-map-zoom button,
     .lab-nav a.is-current,
@@ -2616,6 +2622,7 @@
     --tone-d5cec1: #d5cec1;
     --tone-d64545: #d64545;
     --tone-d6bbf7: #d6bbf7;
+    --tone-d6cdb8: #d6cdb8;
     --tone-d6cfc0: #d6cfc0;
     --tone-d7bf85: #d7bf85;
     --tone-d8d0bd: #d8d0bd;
