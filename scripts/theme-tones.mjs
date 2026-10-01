@@ -284,6 +284,8 @@ const accentIsland = (prefix) => (accentList.length
   ? `${prefix} :is(\n  ${accentList.join(",\n  ")}\n) {\n${lightRoot}\n}\n\n${prefix} :is(\n  ${accentInheriting.join(",\n  ")}\n) {\n  color: var(--fixed-ink);\n}`
   : "");
 const scoped = (prefix) => [...scopedTokens.entries()].map(([selector, entries]) => `${selector.split(",").map((part) => `${prefix} ${part.trim()}`).join(",\n")} {\n${entries.map(([name, value]) => `  ${name}: ${value};`).join("\n")}\n}`).join("\n\n");
+// Отступ получают только непустые строки: иначе внутри @media остаются строки из одних пробелов.
+const indent = (text) => text.replace(/^(?=.)/gm, "  ");
 
 const output = `/* Создано командой npm run theme:tones — руками не править.
    Светлые значения совпадают с цветами, которые раньше были записаны в стилях числом.
@@ -307,14 +309,14 @@ ${accentIsland(':root[data-theme="dark"]')}
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-${darkRoot.replace(/^/gm, "  ")}
-${darkTones.replace(/^/gm, "  ")}
+${indent(darkRoot)}
+${indent(darkTones)}
     color-scheme: dark;
   }
 
-${scoped(":root:not([data-theme=\"light\"])").replace(/^/gm, "  ")}
+${indent(scoped(":root:not([data-theme=\"light\"])"))}
 
-${accentIsland(":root:not([data-theme=\"light\"])").replace(/^/gm, "  ")}
+${indent(accentIsland(":root:not([data-theme=\"light\"])"))}
 }
 `;
 fs.writeFileSync(tonesFile, output);
