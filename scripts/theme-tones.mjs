@@ -28,7 +28,8 @@ function cssFiles(directory) {
 const files = cssFiles("src").sort();
 
 // Селекторы (или их начало), для которых автоматическое решение переопределено.
-const forceKeep = [];
+// Карты лаборатории в стиле плаката и картона — рисунок: одинаковы в обеих темах, как картинка.
+const forceKeep = [".is-cartoon", ".is-paper"];
 const forceFlip = [];
 
 const colorPattern = /#[0-9a-fA-F]{3,8}\b|rgba?\([^)]*\)/g;

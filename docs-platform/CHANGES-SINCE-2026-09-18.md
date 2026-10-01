@@ -31,15 +31,18 @@
 
 Лаборатория визуализаций живёт в папке `src/lab/`. Страницы `/lab/<вариант>` не стоят в меню и в карте сайта, поисковикам закрыты.
 
-**Сайт знает о лаборатории в пяти местах:**
+**Сайт знает о лаборатории в шести местах:**
 
 - маршрут в `src/App.tsx`, две строки;
 - список страниц в `src/content/site.ts`;
 - тип маршрута в `src/types.ts`, одна строка;
 - сборка статических страниц в `scripts/prerender-dist.cjs`, две строки;
-- список адресов для проверки ссылок в `scripts/audit-links.mjs`, одна строка.
+- список адресов для проверки ссылок в `scripts/audit-links.mjs`, одна строка: адреса берутся из списка вариантов;
+- список `forceKeep` в `scripts/theme-tones.mjs`: карты «Мультик» и «Картон» одинаковы в обеих темах.
 
 Кроме того, в `package.json` есть библиотека `three`. Она грузится только на странице `/lab/city3d`. Цвета стилей лаборатории попадают в общий файл `src/theme-tones.css`, который собирает команда `npm run theme:tones`.
+
+**Карта Петербурга** для лаборатории — небольшой файл `src/lab/shared/geo/spb-centre.json` из OpenStreetMap под лицензией ODbL. Его собирает `scripts/lab-map-data.mjs`; скачанное сырьё лежит в `.cache/osm/` и в git не попадает. Подпись «© участники OpenStreetMap» стоит в углу каждой карты. Карта грузится только на страницах лаборатории, главный файл сайта от неё не тяжелеет.
 
 **Расчёт лаборатория только читает.** Цифры приходят через `src/lab/story.ts`. Тест `scripts/test-lab-story.test.ts` сверяет их с калькулятором. Если расчёт в основном проекте изменится, лаборатория покажет новые цифры сама.
 
@@ -48,13 +51,13 @@
 **Граница проверяется автоматически** тестом `scripts/test-lab-boundary.test.ts`. Он падает, если сайт начнёт зависеть от лаборатории, если вариант обратится к расчёту в обход `story.ts` или если библиотека появится вне своего варианта.
 
 ```bash
-node docs-platform/app/node_modules/tsx/dist/cli.mjs --test scripts/test-lab-boundary.test.ts scripts/test-lab-story.test.ts
+node docs-platform/app/node_modules/tsx/dist/cli.mjs --test scripts/test-lab-boundary.test.ts scripts/test-lab-story.test.ts scripts/test-lab-map.test.ts
 ```
 
 ## Как удалить лабораторию целиком
 
-1. Удалить папку `src/lab/` и тесты `scripts/test-lab-*.test.ts`.
-2. Убрать строки о лаборатории в пяти местах из списка выше.
+1. Удалить папку `src/lab/`, тесты `scripts/test-lab-*.test.ts` и скрипт `scripts/lab-map-data.mjs`.
+2. Убрать строки о лаборатории в шести местах из списка выше и строку `.cache/osm/` из `.gitignore`.
 3. Убрать `three` из `package.json` и выполнить `npm install`.
 4. Выполнить `npm run theme:tones` и `npm run build`.
 

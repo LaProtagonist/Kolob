@@ -8,6 +8,9 @@ export const variants = list as VariantInfo[];
 
 /** Каждый вариант грузится отдельным файлом и только на своей странице. */
 export const variantComponents: Record<string, LazyExoticComponent<ComponentType<VariantProps>>> = {
+  cartoon: lazy(() => import("./cartoon/Variant")),
+  paper: lazy(() => import("./paper/Variant")),
+  tiles: lazy(() => import("./tiles/Variant")),
   map: lazy(() => import("./map/Variant")),
   iso: lazy(() => import("./iso/Variant")),
   toy: lazy(() => import("./toy/Variant")),
