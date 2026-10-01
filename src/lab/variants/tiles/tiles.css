@@ -1,0 +1,237 @@
+/*
+ * «Плитка»: изометрическое поле по настоящей маске города, цвета прежней изометрии.
+ * В тёмной теме поле становится ночным: цвета переводит npm run theme:tones.
+ * --lb увеличивает подписи на телефоне, --pb — фигурки.
+ */
+
+.is-tiles.lab-map {
+  --lb: 1;
+  --pb: 1;
+  background: var(--tone-e9e3d4);
+}
+
+@media (max-width: 720px) {
+  .is-tiles.lab-map { --lb: 1.45; --pb: 1.3; }
+}
+
+.is-tiles .tl-slab-l { fill: var(--tone-c9c1ae); }
+.is-tiles .tl-slab-r { fill: var(--tone-b8af9a); }
+.is-tiles .tl-water { fill: var(--tone-a9d3e6); }
+.is-tiles .tl-quay-l { fill: var(--tone-b9b2a2); }
+.is-tiles .tl-quay-r { fill: var(--tone-a59e8e); }
+.is-tiles .tl-block { fill: var(--tone-e4ddcd); }
+.is-tiles .tl-plaza { fill: var(--tone-f1ece0); }
+.is-tiles .tl-park { fill: var(--tone-c5e6a6); }
+.is-tiles .tl-road { fill: var(--tone-f1ece0); }
+.is-tiles .tl-bridge { fill: var(--tone-f6f2e8); }
+
+.is-tiles .tl-wall-l.is-t0 { fill: var(--tone-e6d3ae); }
+.is-tiles .tl-wall-r.is-t0 { fill: var(--tone-d0bd99); }
+.is-tiles .tl-roof.is-t0 { fill: var(--tone-f1e6cd); }
+.is-tiles .tl-wall-l.is-t1 { fill: var(--tone-dfbdb4); }
+.is-tiles .tl-wall-r.is-t1 { fill: var(--tone-cba89f); }
+.is-tiles .tl-roof.is-t1 { fill: var(--tone-f3e2dc); }
+.is-tiles .tl-wall-l.is-t2 { fill: var(--tone-bcd8c6); }
+.is-tiles .tl-wall-r.is-t2 { fill: var(--tone-a3c2b0); }
+.is-tiles .tl-roof.is-t2 { fill: var(--tone-e1efe6); }
+.is-tiles .tl-wall-l.is-t3 { fill: var(--tone-b8ccdc); }
+.is-tiles .tl-wall-r.is-t3 { fill: var(--tone-9fb5c6); }
+.is-tiles .tl-roof.is-t3 { fill: var(--tone-e0e9f0); }
+
+/* Окна видны только вблизи и проявляются плавно. */
+.is-tiles .tl-win {
+  fill: var(--tone-97aab7);
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+
+.is-tiles[data-zoom="near"] .tl-win { opacity: 1; }
+
+.is-tiles .tl-trunk { fill: var(--tone-9a7352); }
+.is-tiles .tl-crown { fill: var(--tone-92c48d); }
+.is-tiles .tl-crown-light { fill: var(--tone-abd6a6); }
+
+.is-tiles .tl-shadow { fill: var(--tone-3c321e-a18); }
+
+.is-tiles .tl-label {
+  font-family: inherit;
+  font-weight: 800;
+  paint-order: stroke;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+.is-tiles .tl-label.is-district {
+  font-size: calc(var(--map-z, 1) * var(--lb) * 92px);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  fill: var(--tone-8a7a5a);
+  stroke: var(--tone-f1ece0);
+  stroke-width: calc(var(--map-z, 1) * var(--lb) * 16px);
+}
+
+.is-tiles .tl-label.is-water,
+.is-tiles .tl-label.is-canal {
+  font-style: italic;
+  fill: var(--tone-4f7f95);
+  stroke: var(--tone-e3f2f9);
+}
+
+.is-tiles .tl-label.is-water {
+  font-size: calc(var(--map-z, 1) * var(--lb) * 76px);
+  stroke-width: calc(var(--map-z, 1) * var(--lb) * 14px);
+}
+
+.is-tiles .tl-label.is-canal {
+  font-size: calc(var(--map-z, 1) * var(--lb) * 58px);
+  stroke-width: calc(var(--map-z, 1) * var(--lb) * 11px);
+}
+
+.is-tiles .tl-lm-scale {
+  transform: scale(calc(var(--map-k, 1) * var(--pb) * 1.8));
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+.is-tiles .tl-lm-title {
+  font-family: inherit;
+  font-size: calc(var(--map-z, 1) * var(--lb) * 70px);
+  font-weight: 700;
+  fill: var(--tone-3a3020);
+  stroke: var(--tone-f1ece0);
+  stroke-width: calc(var(--map-z, 1) * var(--lb) * 14px);
+  paint-order: stroke;
+  dominant-baseline: hanging;
+  transform: translateY(calc(var(--map-k, 1) * 26px));
+  pointer-events: none;
+}
+
+.is-tiles .lm path { stroke: none; }
+.is-tiles .lm-wall { fill: var(--tone-efc96a); }
+.is-tiles .lm-wall-side { fill: var(--tone-ddb455); }
+.is-tiles .lm-roof { fill: var(--tone-9fb3a5); }
+.is-tiles .lm-white { fill: var(--tone-fff8e8); }
+.is-tiles .lm-window { fill: var(--tone-8a9aa8); }
+.is-tiles .lm-gold { fill: var(--tone-e8b923); }
+.is-tiles .lm-stone { fill: var(--tone-cfc8bb); }
+.is-tiles .lm-stone-dark { fill: var(--tone-b5ae9f); }
+.is-tiles .lm-accent { fill: var(--tone-d47a5c); }
+.is-tiles .lm-accent-2 { fill: var(--tone-8fc48d); }
+.is-tiles .lm-accent-3 { fill: var(--tone-7fb3d5); }
+.is-tiles .lm-accent-dark { fill: var(--tone-9c4a33); }
+.is-tiles .lm-flame { fill: var(--tone-f08a4b); }
+.is-tiles .lm-hull,
+.is-tiles .lm-mast { fill: var(--tone-5b6675); }
+.is-tiles .lm-flag { fill: var(--tone-d64545); }
+.is-tiles .lm-door { fill: var(--tone-b86a24); }
+
+.is-tiles .lm[data-kind="palace"] .lm-wall { fill: var(--tone-a9d8c0); }
+.is-tiles .lm[data-kind="palace"] .lm-wall-side { fill: var(--tone-8fc8ad); }
+.is-tiles .lm[data-kind="onion"] .lm-wall { fill: var(--tone-d47a5c); }
+.is-tiles .lm[data-kind="onion"] .lm-accent { fill: var(--tone-e88aa0); }
+.is-tiles .lm[data-kind="baroque"] .lm-accent { fill: var(--tone-9cc8ea); }
+.is-tiles .lm[data-kind="castle"] .lm-accent { fill: var(--tone-e09070); }
+.is-tiles .lm[data-kind="theatre"] .lm-accent { fill: var(--tone-a8d5cf); }
+
+.is-tiles .tl-boat-scale { transform: scale(calc(var(--map-k, 1) * var(--pb) * 1.6)); }
+.is-tiles .tl-boat-hull { fill: var(--tone-ffffff); }
+.is-tiles .tl-boat-cabin { fill: var(--tone-d64545); }
+
+/* Точки сети: участок-клетка и домик. */
+.is-tiles .tl-lot {
+  fill: var(--tone-f6e6b4);
+  stroke: var(--tone-e3a81e);
+  stroke-width: 1.5px;
+  vector-effect: non-scaling-stroke;
+}
+
+.is-tiles .tl-lot-ring {
+  fill: none;
+  stroke: var(--tone-e3a81e);
+  stroke-width: 2.5px;
+  vector-effect: non-scaling-stroke;
+}
+
+.is-tiles .tl-pt-scale {
+  transform: scale(calc(var(--map-k, 1) * var(--pb) * 3));
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+.is-tiles .pt path,
+.is-tiles .pt-site path { stroke: none; }
+.is-tiles .pt-wall { fill: var(--tone-fff6df); }
+.is-tiles .pt[data-look="base"] .pt-wall { fill: var(--tone-f3b27a); }
+.is-tiles .pt-roof { fill: var(--tone-f7b91e); }
+.is-tiles .pt-awning { fill: var(--tone-e85d4a); }
+.is-tiles .pt-window { fill: var(--tone-2b211a); }
+.is-tiles .pt-door { fill: var(--tone-b86a24); }
+.is-tiles .pt-chimney { fill: var(--tone-8a6a4a); }
+.is-tiles .pt-sign-face { fill: var(--tone-f7b91e); }
+.is-tiles .pt-sign-eyes { fill: var(--tone-2b211a); }
+.is-tiles .pt-sign-smile { fill: none; stroke: var(--tone-2b211a); stroke-width: 1.3px; }
+.is-tiles .pt-site-fence { fill: var(--tone-f7b91e); }
+.is-tiles .pt-site path.pt-site-frame { fill: none; stroke: var(--tone-8d8775); stroke-width: 1.2px; }
+.is-tiles .pt-site-crane { fill: var(--tone-f7b91e); }
+.is-tiles .pt-site-hook { fill: var(--tone-2b211a); }
+
+.is-tiles .pt-lot {
+  fill: var(--tone-ffffff-a50);
+  stroke: var(--tone-b86a24);
+  stroke-width: 1.4px;
+  stroke-dasharray: 4 3;
+  vector-effect: non-scaling-stroke;
+}
+
+.is-tiles .tl-pt-tag rect { fill: var(--tone-2b211a); }
+
+.is-tiles .tl-pt-tag text {
+  fill: var(--tone-ffffff);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.is-tiles .tl-pt-title {
+  font-family: inherit;
+  font-size: calc(var(--map-z, 1) * var(--lb) * 80px);
+  font-weight: 800;
+  fill: var(--tone-3a3020);
+  stroke: var(--tone-f1ece0);
+  stroke-width: calc(var(--map-z, 1) * var(--lb) * 18px);
+  paint-order: stroke;
+  stroke-linejoin: round;
+  dominant-baseline: hanging;
+  transform: translateY(calc(var(--map-k, 1) * var(--pb) * 20px));
+  pointer-events: none;
+}
+
+.is-tiles .tl-point.is-fresh .tl-pt-pop {
+  animation: tl-pop 0.7s cubic-bezier(0.2, 1.6, 0.4, 1) both;
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+@keyframes tl-pop {
+  from { transform: scale(0.15); }
+  to { transform: scale(1); }
+}
+
+.tl-key {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  transform: rotate(45deg) scale(0.8);
+}
+
+.tl-key.is-base { background: #f3b27a; }
+.tl-key.is-hall { background: #f7b91e; }
+.tl-key.is-kiosk { background: var(--tone-fff6df); border: 1.5px solid var(--tone-e3a81e); }
+.tl-key.is-site { background: var(--tone-e6d9bd); }
+.tl-key.is-lot { background: var(--tone-f6e6b4); border: 1.5px solid var(--tone-e3a81e); }
+
+@media (prefers-reduced-motion: reduce) {
+  .is-tiles .tl-point.is-fresh .tl-pt-pop { animation: none; }
+  .is-tiles .tl-win { transition: none; }
+}
