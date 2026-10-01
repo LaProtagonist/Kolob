@@ -4,7 +4,7 @@ import { configuredEconomicsScenario } from "../src/lib/configured-economics";
 import { applyNetworkRolloutPreset, defaultInvestorConfiguration } from "../src/lib/investor-configuration";
 import { networkFinancialProjection } from "../src/lib/network-financial-projection";
 import { baseObjectFinancialProjection } from "../src/lib/network-scaling";
-import { buildNetworkStory } from "../src/lab/story";
+import { applyStoryPlan, buildNetworkStory } from "../src/lab/story";
 import variants from "../src/lab/variants.json" with { type: "json" };
 
 function temporal(configuration = defaultInvestorConfiguration()) {
@@ -55,6 +55,48 @@ test("a bigger rollout adds points, staff and total investment", () => {
   // Later points are paid for by the cash of earlier ones, so the deepest funding need does not grow.
   assert.equal(large.totals.peakFundingRub, small.totals.peakFundingRub);
   assert.ok(large.months.at(-1)!.staffTotal > small.months.at(-1)!.staffTotal);
+});
+
+test("a player's plan changes only the number of points and their opening months", () => {
+  const base = defaultInvestorConfiguration();
+  const before = buildNetworkStory(base);
+  const [first, ...others] = before.districts;
+  const plan = [{ districtId: first.id, openingMonths: [30, 2, 2] }, ...others.map((district) => ({ districtId: district.id, openingMonths: [] }))];
+  const scaling = applyStoryPlan(base.networkScaling, plan);
+  const story = buildNetworkStory({ ...base, networkScaling: scaling });
+
+  assert.deepEqual(scaling.cohorts[0], base.networkScaling.cohorts[0], "the first point of the network is never touched");
+  scaling.cohorts.slice(1).forEach((cohort, index) => {
+    const { count, openingWaves, ...rest } = cohort;
+    const { count: _count, openingWaves: _waves, ...original } = base.networkScaling.cohorts[index + 1];
+    assert.deepEqual(rest, original, `${cohort.id} keeps every other setting`);
+    assert.equal(openingWaves.reduce((total, wave) => total + wave.count, 0), count);
+  });
+  assert.deepEqual(story.points.map((point) => point.openingMonth), [0, 2, 2, 30]);
+  assert.deepEqual(story.districts.map((district) => district.id), before.districts.map((district) => district.id), "empty districts stay listed");
+  assert.deepEqual(story.districts[0].openingMonths, [2, 2, 30]);
+  assert.equal(story.months.length, before.months.length);
+  assert.equal(story.isPartial, false);
+
+  const restored = buildNetworkStory({ ...base, networkScaling: applyNetworkRolloutPreset(scaling, base.launchBudget, 4) });
+  assert.deepEqual(restored.points.map((point) => point.openingMonth), before.points.map((point) => point.openingMonth), "the calculator's preset brings its own plan back");
+  assert.equal(restored.totals.paybackMonth, before.totals.paybackMonth);
+  assert.equal(restored.months.at(-1)!.cumulativeCashRub, before.months.at(-1)!.cumulativeCashRub);
+});
+
+test("every point knows its district and carries the calculator's equipment list", () => {
+  const story = buildNetworkStory(defaultInvestorConfiguration());
+  assert.equal(story.districts.length, 4);
+  assert.ok(story.rules.openingLeadMonths >= 0 && story.rules.maxPointsPerDistrict >= 1);
+  for (const point of story.points) {
+    assert.equal(point.districtId === null, point.isBase);
+    assert.ok(point.inventory.length > 0, `${point.title} has equipment`);
+    if (point.isBase) continue;
+    const district = story.districts.find((item) => item.id === point.districtId)!;
+    assert.ok(district.openingMonths.includes(point.openingMonth));
+    assert.equal(district.investmentRub, point.investmentRub);
+    assert.equal(district.monthlyRevenueRub, point.monthlyRevenueRub);
+  }
 });
 
 test("every listed variant has a folder with a Variant file", async () => {

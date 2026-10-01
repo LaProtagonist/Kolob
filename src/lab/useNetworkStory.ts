@@ -7,7 +7,7 @@ import {
   type InvestorScenarioId,
 } from "../lib/investor-configuration";
 import type { NetworkRolloutSize } from "../lib/network-planning";
-import { buildNetworkStory, type NetworkStory } from "./story";
+import { applyStoryPlan, buildNetworkStory, type NetworkStory, type StoryPlanEntry } from "./story";
 
 export type StoryControls = {
   /** Сколько дополнительных точек открывает сеть: 4, 8 или 12; "custom" — состав изменён в калькуляторе. */
@@ -16,6 +16,11 @@ export type StoryControls = {
   scenarioId: InvestorScenarioId;
   scenarioIds: readonly InvestorScenarioId[];
   setScenarioId: (scenarioId: InvestorScenarioId) => void;
+  /**
+   * Свой план открытий: для каждого названного района — месяцы, в которые открываются его точки.
+   * Расчётный план возвращает setRolloutSize.
+   */
+  setPlan: (plan: StoryPlanEntry[]) => void;
   /** Вернуть всё к значениям из таблицы вводных. */
   reset: () => void;
 };
@@ -32,6 +37,7 @@ export function useNetworkStory(): VariantProps {
   const controls = useMemo<StoryControls>(() => ({
     rolloutSize: currentNetworkRolloutSize(configuration.networkScaling),
     setRolloutSize: (size) => setNetworkScaling((current) => applyNetworkRolloutPreset(current, configuration.launchBudget, size)),
+    setPlan: (plan) => setNetworkScaling((current) => applyStoryPlan(current, plan)),
     scenarioId: configuration.scenarioId,
     scenarioIds: investorScenarioIds,
     setScenarioId: (scenarioId) => {
