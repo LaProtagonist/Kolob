@@ -3,11 +3,13 @@
  * линией, сверху — сочные силуэты достопримечательностей, лодки на Неве, облака и колобки на точках.
  * Цифры приходят из общей страницы карты; здесь только рисунок.
  */
-import { memo } from "react";
-import { MapPage, type MapScene, type ScenePoint, type SceneState } from "../../shared/MapPage";
+import { memo, useMemo } from "react";
+import { MapPage, type MapScene, type SceneLot, type ScenePoint, type SceneState } from "../../shared/MapPage";
 import {
   boatRoutePaths,
   city,
+  cityHouses,
+  housesClearOf,
   linePath,
   polygonPath,
   ringArea,
@@ -17,7 +19,7 @@ import {
   wobble,
   type Polygon,
 } from "../../shared/geo/geo";
-import { LandmarkShape, PointHouse, PointLot, PointSite } from "../../shared/geo/pieces";
+import { houseParts, LandmarkShape, PointHouse, PointLot, PointSite } from "../../shared/geo/pieces";
 import type { VariantProps } from "../../useNetworkStory";
 import "./cartoon.css";
 
@@ -51,7 +53,7 @@ function buildArt() {
 let cachedArt: ReturnType<typeof buildArt> | null = null;
 const getArt = () => (cachedArt ??= buildArt());
 
-/** Неподвижная часть плаката: строится один раз и не перерисовывается при смене месяца. */
+/** Земля плаката: лист, сады, вода, проспекты, мосты, деревья. Строится один раз. */
 const CartoonCity = memo(function CartoonCity() {
   const art = getArt();
   const { frame } = art;
@@ -66,22 +68,12 @@ const CartoonCity = memo(function CartoonCity() {
       </clipPath>
       <rect className="ct-poster" x={frame.x} y={frame.y} width={frame.w} height={frame.h} />
       <g clipPath="url(#ct-poster-clip)">
-        {/* Кварталы, полные домиков: узор лежит под садами, водой и улицами и виден только вблизи. */}
-        <rect className="ct-houses is-detail" x={frame.x} y={frame.y} width={frame.w} height={frame.h} fill="url(#ct-houses)" />
-        {city.landmarks.map((landmark) => (
-          <ellipse key={landmark.id} className="ct-plaza" cx={landmark.x} cy={landmark.y - 40} rx="210" ry="130" />
-        ))}
         {art.parks.map((polygon, index) => (
           <path key={index} className="ct-park" d={polygonPath(polygon)} fillRule="evenodd" />
         ))}
         {art.water.map((polygon, index) => (
           <path key={index} className="ct-water" d={polygonPath(polygon)} fillRule="evenodd" />
         ))}
-        <g className="ct-waves">
-          {art.waves.map(([x, y], index) => (
-            <path key={index} className="ct-wave" d={`M${x - 46} ${y}q23 -20 46 0q23 -20 46 0`} />
-          ))}
-        </g>
         <path className="ct-road-case is-minor" d={roadPath("s")} />
         <path className="ct-road-case" d={roadPath("p")} />
         <path className="ct-road is-minor" d={roadPath("s")} />
@@ -97,6 +89,45 @@ const CartoonCity = memo(function CartoonCity() {
           ))}
         </g>
       </g>
+    </g>
+  );
+});
+
+/** Участки точек и мест под новые точки — там домов нет. Ключ меняется только при новом плане сети. */
+const clearKey = (points: ScenePoint[], lots: SceneLot[]) =>
+  [...points.map((item) => `${Math.round(item.x)}:${Math.round(item.y)}`), ...lots.map((lot) => `${Math.round(lot.x)}:${Math.round(lot.y)}`)].sort().join(";");
+
+/**
+ * Дома в кварталах: отдельные фасады рядами вдоль Невского, по одному на 150 × 190 м, с тонкой светлой
+ * обводкой — фон, который не спорит с достопримечательностями и точками. Видны только при приближении.
+ */
+const CartoonHouses = memo(function CartoonHouses({ clear }: { clear: string }) {
+  const parts = useMemo(() => {
+    const spots = housesClearOf(cityHouses(), clear ? clear.split(";").map((pair) => pair.split(":").map(Number) as [number, number]) : []);
+    const body = ["", "", "", ""];
+    const roof = ["", "", "", ""];
+    let windows = "";
+    for (const spot of spots) {
+      const part = houseParts(spot.kind, spot.x, spot.y, spot.kind === 0 ? 1.25 : spot.kind === 1 ? 1.2 : 1.1);
+      body[spot.tone] += part.body;
+      roof[spot.tone] += part.roof;
+      windows += part.windows;
+    }
+    return { body, roof, windows };
+  }, [clear]);
+  return (
+    <g className="is-static ct-houses is-detail">
+      {parts.body.map((d, tone) => (d ? <path key={`b${tone}`} className={`ct-house ct-h-${tone}`} d={d} /> : null))}
+      {parts.roof.map((d, tone) => (d ? <path key={`r${tone}`} className={`ct-house ct-r-${tone}`} d={d} /> : null))}
+      <path className="ct-house-window" d={parts.windows} />
+    </g>
+  );
+});
+
+/** Подписи и силуэты достопримечательностей поверх домов. */
+const CartoonSights = memo(function CartoonSights() {
+  return (
+    <g className="is-static">
       {city.labels.map((label) => (
         <text key={label.text} className={`ct-label is-${label.kind}${label.kind === "district" ? " is-far-only" : ""}`} x={label.x} y={label.y} textAnchor="middle">
           {label.text}
@@ -115,7 +146,32 @@ const CartoonCity = memo(function CartoonCity() {
   );
 });
 
-/** Верхний слой: волны, живая обводка воды, лодки и облака. Их движение не перерисовывает город. */
+/** Средний слой: волны и живая обводка воды. Обводка меняется четыре раза в секунду и не трогает остальное. */
+const CartoonWater = memo(function CartoonWater() {
+  const art = getArt();
+  const { frame } = art;
+  return (
+    <g className="ct-water-life">
+      <clipPath id="ct-water-clip">
+        <rect x={frame.x} y={frame.y} width={frame.w} height={frame.h} />
+      </clipPath>
+      <g clipPath="url(#ct-water-clip)">
+        <g className="ct-waves">
+          {art.waves.map(([x, y], index) => (
+            <path key={index} className="ct-wave" d={`M${x - 46} ${y}q23 -20 46 0q23 -20 46 0`} />
+          ))}
+        </g>
+        <g className="ct-boil">
+          {art.outlines.map((d, index) => (
+            <path key={index} className="ct-water-line" d={d} />
+          ))}
+        </g>
+      </g>
+    </g>
+  );
+});
+
+/** Верхний слой: лодки и облака. Их движение не перерисовывает город. */
 const CartoonLife = memo(function CartoonLife() {
   const art = getArt();
   const { frame } = art;
@@ -126,11 +182,6 @@ const CartoonLife = memo(function CartoonLife() {
         <rect x={frame.x} y={frame.y} width={frame.w} height={frame.h} />
       </clipPath>
       <g clipPath="url(#ct-life-clip)">
-        <g className="ct-boil">
-          {art.outlines.map((d, index) => (
-            <path key={index} className="ct-water-line" d={d} />
-          ))}
-        </g>
         {art.boats.map((route, index) => (
           <g key={index} className="ct-boat">
             <g className="ct-boat-scale">
@@ -196,25 +247,6 @@ function CartoonPoint({ item, select }: { item: ScenePoint; select: SceneState["
   );
 }
 
-/** Узор кварталов: пять домиков разного цвета на плитке 240 × 240 м, повёрнутой вдоль Невского. */
-const housesPattern = (
-  <pattern id="ct-houses" width="240" height="240" patternUnits="userSpaceOnUse" patternTransform="rotate(-13)">
-    {[
-      { x: 18, y: 58, w: 46, h: 30, body: "ct-h-a", roof: "ct-r-a" },
-      { x: 112, y: 46, w: 58, h: 36, body: "ct-h-b", roof: "ct-r-b" },
-      { x: 40, y: 168, w: 50, h: 32, body: "ct-h-c", roof: "ct-r-c" },
-      { x: 138, y: 160, w: 42, h: 44, body: "ct-h-d", roof: "ct-r-d" },
-      { x: 186, y: 104, w: 30, h: 26, body: "ct-h-b", roof: "ct-r-a" },
-    ].map((house, index) => (
-      <g key={index} transform={`translate(${house.x} ${house.y})`}>
-        <path className={`ct-house ${house.body}`} d={`M0 0V${-house.h}H${house.w}V0Z`} />
-        <path className={`ct-house ${house.roof}`} d={`M-4 ${-house.h}L${house.w / 2} ${-house.h - 22}L${house.w + 4} ${-house.h}Z`} />
-        <path className="ct-house-window" d={`M8 ${-house.h + 9}h9v9h-9Z M${house.w - 17} ${-house.h + 9}h9v9h-9Z`} />
-      </g>
-    ))}
-  </pattern>
-);
-
 const scene: MapScene = {
   className: "is-cartoon",
   label: "Карта центра Петербурга в виде плаката: вода, сады, проспекты, достопримечательности и точки сети",
@@ -222,16 +254,24 @@ const scene: MapScene = {
   pad: 260,
   closeW: 900,
   toScene: (x, y) => [x, y],
-  defs: housesPattern,
-  render: () => <CartoonCity />,
-  overlay: ({ points, select }) => (
+  render: ({ points, lots }) => (
+    <>
+      <CartoonCity />
+      <CartoonHouses clear={clearKey(points, lots)} />
+      <CartoonSights />
+    </>
+  ),
+  middle: () => <CartoonWater />,
+  overlay: ({ points, select, life, topLayer }) => (
     <>
       <CartoonLife />
+      {life}
       <g className="ct-points">
         {[...points].sort((left, right) => left.sy - right.sy).map((item) => (
           <CartoonPoint key={item.point.id} item={item} select={select} />
         ))}
       </g>
+      {topLayer}
     </>
   ),
   legend: (

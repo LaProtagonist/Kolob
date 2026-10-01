@@ -3,10 +3,10 @@
  * стёжкой, проспекты — бумажная лента, здания и точки сети — вырезанные фигурки с тенью.
  * Цифры приходят из общей страницы карты; здесь только рисунок.
  */
-import { memo } from "react";
-import { MapPage, type MapScene, type ScenePoint, type SceneState } from "../../shared/MapPage";
-import { boatRoutePaths, city, linePath, polygonPath, simplify, smooth, type Polygon } from "../../shared/geo/geo";
-import { LandmarkShape, PointHouse, PointLot, PointSite } from "../../shared/geo/pieces";
+import { memo, useMemo } from "react";
+import { MapPage, type MapScene, type SceneLot, type ScenePoint, type SceneState } from "../../shared/MapPage";
+import { boatRoutePaths, city, cityHouses, housesClearOf, linePath, polygonPath, simplify, smooth, type Polygon } from "../../shared/geo/geo";
+import { houseParts, LandmarkShape, PointHouse, PointLot, PointSite } from "../../shared/geo/pieces";
 import type { VariantProps } from "../../useNetworkStory";
 import "./paper.css";
 
@@ -46,10 +46,6 @@ const PaperCity = memo(function PaperCity() {
       </clipPath>
       <rect className="pp-sheet" x={frame.x} y={frame.y} width={frame.w} height={frame.h} />
       <g clipPath="url(#pp-sheet-clip)">
-        <rect className="pp-houses is-detail" x={frame.x} y={frame.y} width={frame.w} height={frame.h} fill="url(#pp-houses)" />
-        {city.landmarks.map((landmark) => (
-          <ellipse key={landmark.id} className="pp-plaza" cx={landmark.x} cy={landmark.y - 40} rx="210" ry="130" />
-        ))}
         {art.parks.map((d, index) => (
           <path key={`shadow-${index}`} className="pp-park-shadow" d={d} transform="translate(14 20)" fillRule="evenodd" />
         ))}
@@ -80,6 +76,47 @@ const PaperCity = memo(function PaperCity() {
         <path className="pp-bridge-shadow" d={art.bridges} transform="translate(8 12)" />
         <path className="pp-bridge" d={art.bridges} />
       </g>
+    </g>
+  );
+});
+
+/** Участки точек и мест под новые точки — там домов нет. Ключ меняется только при новом плане сети. */
+const clearKey = (points: ScenePoint[], lots: SceneLot[]) =>
+  [...points.map((item) => `${Math.round(item.x)}:${Math.round(item.y)}`), ...lots.map((lot) => `${Math.round(lot.x)}:${Math.round(lot.y)}`)].sort().join(";");
+
+/** Бумажные фасады в кварталах: реже, без обводки, с лёгкой тенью. Видны только при приближении. */
+const PaperHouses = memo(function PaperHouses({ clear }: { clear: string }) {
+  const parts = useMemo(() => {
+    const spots = housesClearOf(cityHouses(), clear ? clear.split(";").map((pair) => pair.split(":").map(Number) as [number, number]) : []);
+    const body = ["", "", "", ""];
+    const roof = ["", "", "", ""];
+    let shadow = "";
+    let windows = "";
+    for (const spot of spots) {
+      const size = spot.kind === 0 ? 1.25 : spot.kind === 1 ? 1.2 : 1.1;
+      const part = houseParts(spot.kind, spot.x, spot.y, size);
+      const back = houseParts(spot.kind, spot.x + 10, spot.y + 8, size);
+      body[spot.tone] += part.body;
+      roof[spot.tone] += part.roof;
+      shadow += back.body + back.roof;
+      windows += part.windows;
+    }
+    return { body, roof, shadow, windows };
+  }, [clear]);
+  return (
+    <g className="is-static pp-houses is-detail">
+      <path className="pp-house-shadow" d={parts.shadow} />
+      {parts.body.map((d, tone) => (d ? <path key={`b${tone}`} className={`pp-house is-${tone}`} d={d} /> : null))}
+      {parts.roof.map((d, tone) => (d ? <path key={`r${tone}`} className={`pp-house-roof is-${tone}`} d={d} /> : null))}
+      <path className="pp-house-window" d={parts.windows} />
+    </g>
+  );
+});
+
+/** Подписи и вырезанные силуэты поверх домов. */
+const PaperSights = memo(function PaperSights() {
+  return (
+    <g className="is-static">
       {city.labels.map((label) => (
         <text key={label.text} className={`pp-label is-${label.kind}${label.kind === "district" ? " is-far-only" : ""}`} x={label.x} y={label.y} textAnchor="middle">
           {label.text}
@@ -177,24 +214,6 @@ function PaperPoint({ item, select }: { item: ScenePoint; select: SceneState["se
   );
 }
 
-/** Бумажные домики в кварталах: светлая и тёмная грань, как у сложенного листа. */
-const housesPattern = (
-  <pattern id="pp-houses" width="250" height="250" patternUnits="userSpaceOnUse" patternTransform="rotate(-13)">
-    {[
-      { x: 22, y: 64, w: 50, h: 30, tone: "a" },
-      { x: 120, y: 52, w: 60, h: 38, tone: "b" },
-      { x: 44, y: 176, w: 52, h: 34, tone: "c" },
-      { x: 150, y: 170, w: 44, h: 46, tone: "d" },
-    ].map((house, index) => (
-      <g key={index} transform={`translate(${house.x} ${house.y})`}>
-        <path className={`pp-house is-${house.tone}`} d={`M0 0V${-house.h}H${house.w}V0Z`} />
-        <path className={`pp-house-roof is-${house.tone}`} d={`M-3 ${-house.h}L${house.w / 2} ${-house.h - 20}L${house.w + 3} ${-house.h}Z`} />
-        <path className="pp-house-fold" d={`M${house.w / 2} ${-house.h - 20}L${house.w + 3} ${-house.h}H${house.w / 2}Z`} />
-      </g>
-    ))}
-  </pattern>
-);
-
 const scene: MapScene = {
   className: "is-paper",
   label: "Карта центра Петербурга из вырезанной бумаги: вода, сады, проспекты, достопримечательности и точки сети",
@@ -202,16 +221,23 @@ const scene: MapScene = {
   pad: 300,
   closeW: 900,
   toScene: (x, y) => [x, y],
-  defs: housesPattern,
-  render: () => <PaperCity />,
-  overlay: ({ points, select }) => (
+  render: ({ points, lots }) => (
+    <>
+      <PaperCity />
+      <PaperHouses clear={clearKey(points, lots)} />
+      <PaperSights />
+    </>
+  ),
+  overlay: ({ points, select, life, topLayer }) => (
     <>
       <PaperLife />
+      {life}
       <g className="pp-points">
         {[...points].sort((left, right) => left.sy - right.sy).map((item) => (
           <PaperPoint key={item.point.id} item={item} select={select} />
         ))}
       </g>
+      {topLayer}
     </>
   ),
   legend: (

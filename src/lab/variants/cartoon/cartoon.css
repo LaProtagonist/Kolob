@@ -23,7 +23,6 @@
   vector-effect: non-scaling-stroke;
 }
 
-.is-cartoon .ct-plaza,
 .is-cartoon .ct-pt-plaza { fill: #fff1c9; }
 
 .is-cartoon .ct-pt-halo {
@@ -32,16 +31,17 @@
   stroke-width: 2px;
 }
 
-.is-cartoon .ct-house { stroke: #1f2433; stroke-width: 2.4px; stroke-linejoin: round; }
-.is-cartoon .ct-h-a { fill: #ffc9a8; }
-.is-cartoon .ct-h-b { fill: #b8e0f0; }
-.is-cartoon .ct-h-c { fill: #f9e79f; }
-.is-cartoon .ct-h-d { fill: #d7c8f0; }
-.is-cartoon .ct-r-a { fill: #e85d4a; }
-.is-cartoon .ct-r-b { fill: #4a6fa5; }
-.is-cartoon .ct-r-c { fill: #8e5c3a; }
-.is-cartoon .ct-r-d { fill: #6a4c93; }
-.is-cartoon .ct-house-window { fill: #3b4a6b; }
+/* Дома кварталов — фон: светлая тонкая обводка и приглушённые цвета, чтобы не спорить с главным. */
+.is-cartoon .ct-house { stroke: #b49a7a; stroke-width: 2.2px; stroke-linejoin: round; }
+.is-cartoon .ct-h-0 { fill: #f6dcc4; }
+.is-cartoon .ct-h-1 { fill: #d7e8f0; }
+.is-cartoon .ct-h-2 { fill: #f4e7b5; }
+.is-cartoon .ct-h-3 { fill: #e3dbf0; }
+.is-cartoon .ct-r-0 { fill: #e4917a; }
+.is-cartoon .ct-r-1 { fill: #8fa9c6; }
+.is-cartoon .ct-r-2 { fill: #cfac68; }
+.is-cartoon .ct-r-3 { fill: #a898cc; }
+.is-cartoon .ct-house-window { fill: #8696ad; }
 
 .is-cartoon .ct-park {
   fill: #8fd16a;

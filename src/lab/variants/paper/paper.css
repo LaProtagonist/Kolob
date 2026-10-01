@@ -17,18 +17,19 @@
 .is-paper .pp-table { fill: #c9a27e; }
 .is-paper .pp-sheet { fill: #f6eedf; }
 .is-paper .pp-sheet-shadow { fill: rgba(60, 40, 20, 0.28); }
-.is-paper .pp-plaza,
 .is-paper .pp-pt-plaza { fill: #f6eedf; }
 
-.is-paper .pp-house.is-a { fill: #f4d6c3; }
-.is-paper .pp-house.is-b { fill: #cfe3ee; }
-.is-paper .pp-house.is-c { fill: #f1e3a8; }
-.is-paper .pp-house.is-d { fill: #dcd3ee; }
-.is-paper .pp-house-roof.is-a { fill: #d98c6a; }
-.is-paper .pp-house-roof.is-b { fill: #7f9fc0; }
-.is-paper .pp-house-roof.is-c { fill: #c9a35a; }
-.is-paper .pp-house-roof.is-d { fill: #9a88c4; }
-.is-paper .pp-house-fold { fill: rgba(40, 25, 10, 0.16); }
+/* Бумажные фасады кварталов: мягкие цвета без обводки, лёгкая тень — фон для главного. */
+.is-paper .pp-house.is-0 { fill: #f4dccb; }
+.is-paper .pp-house.is-1 { fill: #d5e5ee; }
+.is-paper .pp-house.is-2 { fill: #f1e5b9; }
+.is-paper .pp-house.is-3 { fill: #e0d8ee; }
+.is-paper .pp-house-roof.is-0 { fill: #dc9a80; }
+.is-paper .pp-house-roof.is-1 { fill: #8ea8c4; }
+.is-paper .pp-house-roof.is-2 { fill: #ccaa6a; }
+.is-paper .pp-house-roof.is-3 { fill: #a596c8; }
+.is-paper .pp-house-window { fill: #9aa8b8; }
+.is-paper .pp-house-shadow { fill: rgba(60, 40, 20, 0.14); }
 
 .is-paper .pp-park { fill: #a8cf8e; }
 .is-paper .pp-park-shadow { fill: rgba(60, 40, 20, 0.2); }
