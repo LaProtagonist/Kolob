@@ -290,3 +290,104 @@ export function PointSite() {
 export function PointLot() {
   return <path className="pt-lot" d="M-24 0V-24L0 -42L24 -24V0Z" />;
 }
+
+// --- Дома кварталов, жизнь города и места под новые точки ------------------------------------
+
+/**
+ * Дом квартала в виде фасада: 0 — длинный доходный дом с карнизом, 1 — дом со скатной крышей,
+ * 2 — дом с башенкой. Части отдаются строками путей, чтобы вариант мог склеить сотни домов
+ * в несколько путей по цвету: так город рисуется быстро.
+ */
+export function houseParts(kind: 0 | 1 | 2, x: number, y: number, size: number) {
+  const r = (value: number) => Math.round(value * 10) / 10;
+  const box = (x0: number, y0: number, w: number, h: number) => `M${r(x + x0 * size)} ${r(y + y0 * size)}h${r(w * size)}v${r(h * size)}h${r(-w * size)}Z`;
+  const windows = (x0: number, y0: number, columns: number, rows: number, stepX: number, stepY: number) => {
+    let path = "";
+    for (let row = 0; row < rows; row += 1) for (let column = 0; column < columns; column += 1) path += box(x0 + column * stepX, y0 + row * stepY, 4, 5);
+    return path;
+  };
+  if (kind === 0) {
+    return { body: box(-36, -30, 72, 30), roof: box(-38, -34, 76, 5), windows: windows(-30, -25, 6, 3, 10.6, 8.2) };
+  }
+  if (kind === 1) {
+    return {
+      body: box(-22, -24, 44, 24),
+      roof: `M${r(x - 26 * size)} ${r(y - 24 * size)}L${r(x)} ${r(y - 42 * size)}L${r(x + 26 * size)} ${r(y - 24 * size)}Z`,
+      windows: windows(-16, -19, 4, 2, 9.2, 9),
+    };
+  }
+  return {
+    body: box(-18, -36, 36, 36),
+    roof: `${box(-6, -48, 12, 12)}M${r(x - 9 * size)} ${r(y - 48 * size)}L${r(x)} ${r(y - 62 * size)}L${r(x + 9 * size)} ${r(y - 48 * size)}Z`,
+    windows: windows(-13, -31, 3, 3, 10, 9.5),
+  };
+}
+
+/** Фургон, который везёт заготовки из цеха на точки. */
+export function Van() {
+  return (
+    <g className="lf-van">
+      <path className="lf-van-body" d="M-14 -11h20v11h-20Z M6 -8h6l3 4v4h-9Z" />
+      <path className="lf-van-window" d="M8 -7h3l2 3h-5Z" />
+      <path className="lf-van-wheel" d="M-11 0a2.6 2.6 0 1 0 5.2 0a2.6 2.6 0 1 0 -5.2 0Z M5 0a2.6 2.6 0 1 0 5.2 0a2.6 2.6 0 1 0 -5.2 0Z" />
+      <path className="lf-van-logo" d="M-7 -5.5a2.6 2.6 0 1 0 5.2 0a2.6 2.6 0 1 0 -5.2 0Z" />
+    </g>
+  );
+}
+
+/** Монета выручки. */
+export function Coin() {
+  return (
+    <g className="lf-coin">
+      <path className="lf-coin-face" d="M-6 0a6 6 0 1 0 12 0a6 6 0 1 0 -12 0Z" />
+      <path className="lf-coin-mark" d="M-1.6 -3.4h3a2 2 0 0 1 0 4h-3Z M-1.6 -3.4v7 M-3 2.2h4.4" />
+    </g>
+  );
+}
+
+/** Прохожий: голова и туловище; tone меняет цвет куртки. */
+export function Walker({ tone }: { tone: number }) {
+  return (
+    <g className={`lf-walker is-t${tone % 4}`}>
+      <path className="lf-walker-body" d="M-3.4 0v-8a3.4 3.4 0 0 1 6.8 0v8Z" />
+      <path className="lf-walker-head" d="M-2.6 -13.5a2.6 2.6 0 1 0 5.2 0a2.6 2.6 0 1 0 -5.2 0Z" />
+    </g>
+  );
+}
+
+/** Сотрудник смены в фирменном колпаке. */
+export function Cook() {
+  return (
+    <g className="lf-cook">
+      <path className="lf-cook-body" d="M-3.4 0v-8a3.4 3.4 0 0 1 6.8 0v8Z" />
+      <path className="lf-cook-head" d="M-2.6 -13.5a2.6 2.6 0 1 0 5.2 0a2.6 2.6 0 1 0 -5.2 0Z" />
+      <path className="lf-cook-cap" d="M-3 -16.5h6v-3.4a2 2 0 0 0 -2 -1.6h-2a2 2 0 0 0 -2 1.6Z" />
+    </g>
+  );
+}
+
+/**
+ * Кольцо стройки: доля прошедших месяцев из срока до открытия и сколько месяцев осталось.
+ * share от 0 до 1.
+ */
+export function BuildTimer({ share, left }: { share: number; left: number }) {
+  const radius = 13;
+  const length = 2 * Math.PI * radius;
+  return (
+    <g className="lf-timer">
+      <circle className="lf-timer-track" r={radius} />
+      <circle className="lf-timer-done" r={radius} strokeDasharray={`${(length * Math.max(0.04, Math.min(1, share))).toFixed(1)} ${length.toFixed(1)}`} transform="rotate(-90)" />
+      <text className="lf-timer-text" y="4" textAnchor="middle">{left}</text>
+    </g>
+  );
+}
+
+/** Место под новую точку в своей игре: круг с плюсом. */
+export function LotMarker() {
+  return (
+    <g className="lf-lot">
+      <path className="lf-lot-ring" d="M-16 0a16 16 0 1 0 32 0a16 16 0 1 0 -32 0Z" />
+      <path className="lf-lot-plus" d="M-2 -9h4v7h7v4h-7v7h-4v-7h-7v-4h7Z" />
+    </g>
+  );
+}

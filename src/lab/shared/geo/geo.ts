@@ -195,8 +195,30 @@ export function insideRing(x: number, y: number, ring: Ring) {
 export const insidePolygon = (x: number, y: number, polygon: Polygon) =>
   insideRing(x, y, polygon[0]) && !polygon.slice(1).some((hole) => insideRing(x, y, hole));
 
-export const onWater = (x: number, y: number) => city.water.some((polygon) => insidePolygon(x, y, polygon));
-export const inPark = (x: number, y: number) => city.parks.some((park) => insidePolygon(x, y, park.rings));
+/** Многоугольники с рамками: точка вне рамки отсеивается без точной проверки. */
+function withBounds(polygons: Polygon[]) {
+  return polygons.map((polygon) => {
+    const outer = polygon[0];
+    let minX = Infinity;
+    let minY = Infinity;
+    let maxX = -Infinity;
+    let maxY = -Infinity;
+    for (let index = 0; index < outer.length; index += 2) {
+      minX = Math.min(minX, outer[index]);
+      maxX = Math.max(maxX, outer[index]);
+      minY = Math.min(minY, outer[index + 1]);
+      maxY = Math.max(maxY, outer[index + 1]);
+    }
+    return { polygon, minX, minY, maxX, maxY };
+  });
+}
+const waterIndex = withBounds(city.water);
+const parkIndex = withBounds(city.parks.map((park) => park.rings));
+const hit = (index: ReturnType<typeof withBounds>, x: number, y: number) =>
+  index.some((item) => x >= item.minX && x <= item.maxX && y >= item.minY && y <= item.maxY && insidePolygon(x, y, item.polygon));
+
+export const onWater = (x: number, y: number) => hit(waterIndex, x, y);
+export const inPark = (x: number, y: number) => hit(parkIndex, x, y);
 
 /** Повторяемые случайные точки внутри многоугольника — для деревьев, волн, лодок. */
 export function scatter(polygon: Polygon, count: number, seed: number): Array<[number, number]> {
@@ -243,21 +265,26 @@ export function placeOnMap(points: readonly StoryPoint[]): MapPoint[] {
     const [cx, cy] = project(point.place.lat, point.place.lon);
     const order = seen.get(point.place.id) ?? 0;
     seen.set(point.place.id, order + 1);
-    let spot: [number, number] = [cx, cy];
-    for (let attempt = 0; attempt < 48; attempt += 1) {
-      const ring = order + attempt;
-      const radius = ring === 0 ? 0 : 260 * Math.sqrt(ring);
-      const angle = ring * 2.39996;
-      const candidate: [number, number] = [cx + Math.cos(angle) * radius, cy + Math.sin(angle) * radius];
-      const crowded = taken.some(([x, y]) => Math.hypot(x - candidate[0], y - candidate[1]) < 180);
-      if (!onWater(candidate[0], candidate[1]) && !crowded) {
-        spot = candidate;
-        break;
-      }
-    }
+    const spot = findSpot(cx, cy, order, taken);
     taken.push(spot);
     return { point, x: spot[0], y: spot[1] };
   });
+}
+
+/**
+ * Свободное место у района: по спирали от его центра через 260 м, начиная с витка order,
+ * не в воде и не ближе 180 м к занятым местам.
+ */
+export function findSpot(cx: number, cy: number, order: number, taken: ReadonlyArray<readonly [number, number]>): [number, number] {
+  for (let attempt = 0; attempt < 48; attempt += 1) {
+    const ring = order + attempt;
+    const radius = ring === 0 ? 0 : 260 * Math.sqrt(ring);
+    const angle = ring * 2.39996;
+    const candidate: [number, number] = [cx + Math.cos(angle) * radius, cy + Math.sin(angle) * radius];
+    const crowded = taken.some(([x, y]) => Math.hypot(x - candidate[0], y - candidate[1]) < 180);
+    if (!onWater(candidate[0], candidate[1]) && !crowded) return candidate;
+  }
+  return [cx, cy];
 }
 
 /** Ближайшая вода к точке (поиск по спирали с шагом 20 м); null, если воды нет в пределах reach метров. */
@@ -288,3 +315,87 @@ export function boatRoutePaths(transform?: Transform): string[] {
     return linePath(smooth(snapped.flat(), 3, false), transform);
   });
 }
+
+// --- Дома в кварталах -------------------------------------------------------------------------
+
+/** Направление Невского (от Адмиралтейства к площади Восстания) — по нему выстраиваются ряды домов. */
+export const nevskyAngle = (() => {
+  const [ax, ay] = project(59.938, 30.30777);
+  const [bx, by] = project(59.9316, 30.3604);
+  return Math.atan2(by - ay, bx - ax);
+})();
+
+const roadSegments = (() => {
+  const segments: number[] = [];
+  for (const road of city.roads) {
+    for (const line of road.lines) {
+      for (let index = 0; index + 3 < line.length; index += 2) segments.push(line[index], line[index + 1], line[index + 2], line[index + 3]);
+    }
+  }
+  return Float64Array.from(segments);
+})();
+
+/** Расстояние от точки до ближайшего проспекта или моста, в метрах; дальше limit не уточняется. */
+export function distanceToRoad(x: number, y: number, limit = Infinity) {
+  let best = limit;
+  for (let index = 0; index < roadSegments.length; index += 4) {
+    const ax = roadSegments[index];
+    const ay = roadSegments[index + 1];
+    const bx = roadSegments[index + 2];
+    const by = roadSegments[index + 3];
+    // Отрезок, чья рамка дальше лучшего найденного, точку не приблизит.
+    if (x < Math.min(ax, bx) - best || x > Math.max(ax, bx) + best || y < Math.min(ay, by) - best || y > Math.max(ay, by) + best) continue;
+    const dx = bx - ax;
+    const dy = by - ay;
+    const length = dx * dx + dy * dy || 1;
+    const t = Math.max(0, Math.min(1, ((x - ax) * dx + (y - ay) * dy) / length));
+    best = Math.min(best, Math.hypot(x - (ax + dx * t), y - (ay + dy * t)));
+  }
+  return best;
+}
+
+/** Дом в квартале: где стоит, какой формы (0 — длинный доходный дом, 1 — дом со скатной крышей, 2 — дом с башенкой) и какого цвета. */
+export type HouseSpot = { x: number; y: number; kind: 0 | 1 | 2; tone: number };
+
+let houseCache: HouseSpot[] | null = null;
+
+/**
+ * Дома в кварталах: ряды вдоль Невского через 150 × 190 м с небольшим сдвигом, только на суше, вне садов,
+ * не ближе 45 м к проспекту и не на площадях у достопримечательностей. Их меньше, чем кварталов в городе:
+ * дома показывают, что здесь город, а не считают его.
+ */
+export function cityHouses(): HouseSpot[] {
+  if (houseCache) return houseCache;
+  const next = random(2026);
+  const ux = Math.cos(nevskyAngle);
+  const uy = Math.sin(nevskyAngle);
+  const vx = -uy;
+  const vy = ux;
+  const frame = city.frame;
+  const reach = Math.hypot(frame.w, frame.h);
+  const spots: HouseSpot[] = [];
+  const along = 150;
+  const across = 190;
+  for (let row = -Math.ceil(reach / across); row <= Math.ceil(reach / across); row += 1) {
+    for (let column = -Math.ceil(reach / along); column <= Math.ceil(reach / along); column += 1) {
+      const shift = row % 2 ? along / 2 : 0;
+      const a = column * along + shift + (next() - 0.5) * 50;
+      const b = row * across + (next() - 0.5) * 40;
+      const x = a * ux + b * vx;
+      const y = a * uy + b * vy;
+      const kindRoll = next();
+      const tone = Math.floor(next() * 4);
+      if (x < frame.x + 60 || x > frame.x + frame.w - 60 || y < frame.y + 60 || y > frame.y + frame.h - 60) continue;
+      if (onWater(x, y) || onWater(x - 40, y) || onWater(x + 40, y) || onWater(x, y - 30) || inPark(x, y)) continue;
+      if (city.landmarks.some((landmark) => Math.hypot(landmark.x - x, landmark.y - y) < 260)) continue;
+      if (distanceToRoad(x, y, 45) < 45) continue;
+      spots.push({ x, y, kind: kindRoll < 0.62 ? 0 : kindRoll < 0.9 ? 1 : 2, tone });
+    }
+  }
+  houseCache = spots.sort((left, right) => left.y - right.y);
+  return houseCache;
+}
+
+/** Дома, кроме тех, что стоят на участках точек сети и мест под новые точки. */
+export const housesClearOf = (spots: readonly HouseSpot[], clear: ReadonlyArray<readonly [number, number]>, radius = 170) =>
+  spots.filter((spot) => !clear.some(([x, y]) => Math.hypot(spot.x - x, spot.y - y) < radius));
