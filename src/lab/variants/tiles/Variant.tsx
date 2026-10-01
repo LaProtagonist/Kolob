@@ -23,7 +23,7 @@ const TilesGround = memo(function TilesGround() {
   const art = useMemo(() => {
     const board = getBoard();
     const { kindAt, i0, j0, cols, rows } = board;
-    const fill: Record<string, string[]> = { water: [], park: [], road: [], bridge: [], block: [], plaza: [] };
+    const fill: Record<string, string[]> = { water: [], park: [], road: [], bridge: [], block: [], plaza: [], yard: [] };
     const slabLeft: string[] = [];
     const slabRight: string[] = [];
     const quayLeft: string[] = [];
@@ -33,7 +33,7 @@ const TilesGround = memo(function TilesGround() {
       for (let i = i0; i < i0 + cols; i += 1) {
         const kind = kindAt(i, j);
         if (kind === Kind.Outside) continue;
-        const name = kind === Kind.Water ? "water" : kind === Kind.Park ? "park" : kind === Kind.Road ? "road" : kind === Kind.Bridge ? "bridge" : kind === Kind.Plaza ? "plaza" : "block";
+        const name = kind === Kind.Water ? "water" : kind === Kind.Park ? "park" : kind === Kind.Road ? "road" : kind === Kind.Bridge ? "bridge" : kind === Kind.Plaza ? "plaza" : kind === Kind.Yard ? "yard" : "block";
         fill[name].push(diamond(i, j, kind === Kind.Water ? -QUAY : 0));
         // Торцы доски по переднему краю поля.
         if (kindAt(i, j + 1) === Kind.Outside) slabLeft.push(`M${at(i, j + 1)}L${at(i + 1, j + 1)}L${at(i + 1, j + 1, -SLAB)}L${at(i, j + 1, -SLAB)}Z`);
@@ -57,6 +57,7 @@ const TilesGround = memo(function TilesGround() {
       bridge: join(fill.bridge),
       block: join(fill.block),
       plaza: join(fill.plaza),
+      yard: join(fill.yard),
     };
   }, []);
   return (
@@ -68,6 +69,7 @@ const TilesGround = memo(function TilesGround() {
       <path className="tl-quay-r" d={art.quayRight} />
       <path className="tl-block" d={art.block} />
       <path className="tl-plaza" d={art.plaza} />
+      <path className="tl-yard" d={art.yard} />
       <path className="tl-park" d={art.park} />
       <path className="tl-road" d={art.road} />
       <path className="tl-bridge" d={art.bridge} />
@@ -77,20 +79,38 @@ const TilesGround = memo(function TilesGround() {
 
 type Diagonal = { d: number; left: string[]; right: string[]; top: string[]; windows: string; trunks: string; crowns: string; lights: string };
 
-/** Клетка поля под точкой сети: там вместо дома участок. */
-const cellKey = (x: number, y: number) => {
+/** Клетка поля под точкой. */
+const cellOf = (x: number, y: number): [number, number] => {
   const [gi, gj] = toGrid(x, y);
-  return `${Math.floor(gi)}:${Math.floor(gj)}`;
+  return [Math.floor(gi), Math.floor(gj)];
+};
+
+/**
+ * Клетки без домов: под точками сети и местами под новые точки, а также перед ними (клетки,
+ * которые ближе к зрителю). Точка рисуется поверх поля, и дом перед ней иначе оказался бы «за» точкой.
+ */
+const reservedKey = (spots: Array<{ x: number; y: number }>) => {
+  const keys = new Set<string>();
+  for (const spot of spots) {
+    const [i, j] = cellOf(spot.x, spot.y);
+    for (const [di, dj] of [[0, 0], [1, 0], [0, 1], [1, 1]]) keys.add(`${i + di}:${j + dj}`);
+  }
+  return [...keys].sort().join(",");
 };
 
 /**
  * Дома и деревья по диагоналям поля, от дальней к ближней: ближний дом закрывает дальний.
- * reserved — клетки под точками сети через запятую: там домов нет.
+ * Квартал — один массив: стена рисуется только там, где рядом нет дома такой же высоты.
  */
 const TilesCity = memo(function TilesCity({ reserved }: { reserved: string }) {
   const diagonals = useMemo(() => {
     const board = getBoard();
     const free = new Set(reserved.split(","));
+    const height = new Map<string, number>();
+    for (const building of board.buildings) {
+      if (!free.has(`${building.i}:${building.j}`)) height.set(`${building.i}:${building.j}`, building.h);
+    }
+    const heightAt = (i: number, j: number) => height.get(`${i}:${j}`) ?? 0;
     const byDiagonal = new Map<number, Diagonal>();
     const slot = (d: number) => {
       let item = byDiagonal.get(d);
@@ -101,30 +121,25 @@ const TilesCity = memo(function TilesCity({ reserved }: { reserved: string }) {
       return item;
     };
     for (const building of board.buildings) {
-      const { i, j, h, inset } = building;
+      const { i, j, h } = building;
       if (free.has(`${i}:${j}`)) continue;
       const tone = building.tone % TONES;
-      const x0 = i + inset;
-      const y0 = j + inset;
-      const x1 = i + 1 - inset;
-      const y1 = j + 1 - inset;
-      const faces = box(x0, y0, x1, y1, h);
+      const faces = box(i, j, i + 1, j + 1, h);
       const item = slot(i + j);
-      item.left[tone] += faces.left;
-      item.right[tone] += faces.right;
+      // Левая стена смотрит на клетку (i, j+1), правая — на (i+1, j): видны, только если там ниже.
+      const leftOpen = heightAt(i, j + 1) < h;
+      const rightOpen = heightAt(i + 1, j) < h;
+      if (leftOpen) item.left[tone] += faces.left;
+      if (rightOpen) item.right[tone] += faces.right;
       item.top[tone] += faces.top;
-      // Окна: по два на этаж на каждой видимой стене.
-      const floors = Math.max(1, Math.floor(h / 10));
+      // Окна: ряд на каждый этаж, по три на видимой стене клетки.
+      const floors = Math.max(2, Math.floor(h / 8));
       for (let floor = 0; floor < floors; floor += 1) {
-        const z0 = 3 + floor * ((h - 4) / floors);
-        const z1 = z0 + Math.min(5, (h - 6) / floors);
-        for (const t of [0.22, 0.62]) {
-          const a = x0 + (x1 - x0) * t;
-          const b = a + (x1 - x0) * 0.18;
-          item.windows += `M${at(a, y1, z1)}L${at(b, y1, z1)}L${at(b, y1, z0)}L${at(a, y1, z0)}Z`;
-          const c = y0 + (y1 - y0) * t;
-          const e = c + (y1 - y0) * 0.18;
-          item.windows += `M${at(x1, c, z1)}L${at(x1, e, z1)}L${at(x1, e, z0)}L${at(x1, c, z0)}Z`;
+        const z0 = 3 + floor * ((h - 5) / floors);
+        const z1 = z0 + Math.min(4.5, (h - 8) / floors);
+        for (const t of [0.14, 0.44, 0.74]) {
+          if (leftOpen) item.windows += `M${at(i + t, j + 1, z1)}L${at(i + t + 0.12, j + 1, z1)}L${at(i + t + 0.12, j + 1, z0)}L${at(i + t, j + 1, z0)}Z`;
+          if (rightOpen) item.windows += `M${at(i + 1, j + t, z1)}L${at(i + 1, j + t + 0.12, z1)}L${at(i + 1, j + t + 0.12, z0)}L${at(i + 1, j + t, z0)}Z`;
         }
       }
     }
@@ -239,21 +254,23 @@ const scene: MapScene = {
   pad: 60,
   closeW: 520,
   toScene,
-  render: ({ points }) => (
+  render: ({ points, lots }) => (
     <>
       <TilesGround />
-      <TilesCity reserved={[...new Set(points.map((item) => cellKey(item.x, item.y)))].sort().join(",")} />
+      <TilesCity reserved={reservedKey([...points, ...lots])} />
       <TilesSights />
     </>
   ),
-  overlay: ({ points, select }) => (
+  overlay: ({ points, select, life, topLayer }) => (
     <>
       <TilesLife />
+      {life}
       <g className="tl-points">
         {[...points].sort((left, right) => left.sy - right.sy).map((item) => (
           <TilesPoint key={item.point.id} item={item} select={select} />
         ))}
       </g>
+      {topLayer}
     </>
   ),
   legend: (

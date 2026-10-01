@@ -56,10 +56,11 @@ export function noise(i: number, j: number, salt = 0) {
   return ((h ^ (h >>> 16)) >>> 0) / 4294967296;
 }
 
-export const Kind = { Outside: 0, Water: 1, Park: 2, Road: 3, Bridge: 4, Block: 5, Plaza: 6 } as const;
+export const Kind = { Outside: 0, Water: 1, Park: 2, Road: 3, Bridge: 4, Block: 5, Plaza: 6, Yard: 7 } as const;
 export type Kind = (typeof Kind)[keyof typeof Kind];
 
-export type Building = { i: number; j: number; h: number; tone: number; inset: number };
+/** Клетка дома: высота и цвет одни на весь квартал, поэтому квартал выглядит одним массивом. */
+export type Building = { i: number; j: number; h: number; tone: number };
 export type Tree = { gi: number; gj: number; size: number };
 
 export type Board = {
@@ -168,15 +169,51 @@ export function buildBoard(): Board {
     }
   }
 
-  // Площади вокруг достопримечательностей: дома не закрывают силуэты.
+  // Площади вокруг достопримечательностей, шире спереди: силуэт рисуется поверх города,
+  // и дом перед ним иначе оказался бы «за» силуэтом.
   for (const landmark of city.landmarks) {
     const [gi, gj] = toGrid(landmark.x, landmark.y);
-    for (let dj = -1; dj <= 1; dj += 1) {
-      for (let di = -1; di <= 1; di += 1) {
+    for (let dj = -1; dj <= 2; dj += 1) {
+      for (let di = -1; di <= 2; di += 1) {
         const i = Math.floor(gi) + di;
         const j = Math.floor(gj) + dj;
         if (kindAt(i, j) === Kind.Block || kindAt(i, j) === Kind.Road) set(i, j, Kind.Plaza);
       }
+    }
+  }
+
+  // Кварталы — связные куски клеток-домов между улицами, водой и садами. Высота и цвет на квартал одни:
+  // петербургская застройка ровная, и город читается массивами, а не россыпью кубиков.
+  const region = new Int32Array(cols * rows).fill(-1);
+  const regions: Array<{ cells: number; h: number; tone: number }> = [];
+  for (let j = j0; j < j0 + rows; j += 1) {
+    for (let i = i0; i < i0 + cols; i += 1) {
+      if (kindAt(i, j) !== Kind.Block || region[index(i, j)] >= 0) continue;
+      const id = regions.length;
+      const stack: Array<[number, number]> = [[i, j]];
+      region[index(i, j)] = id;
+      let cells = 0;
+      while (stack.length) {
+        const [ci, cj] = stack.pop()!;
+        cells += 1;
+        for (const [ni, nj] of [[ci + 1, cj], [ci - 1, cj], [ci, cj + 1], [ci, cj - 1]] as const) {
+          if (kindAt(ni, nj) === Kind.Block && region[index(ni, nj)] < 0) {
+            region[index(ni, nj)] = id;
+            stack.push([ni, nj]);
+          }
+        }
+      }
+      regions.push({ cells, h: 22 + Math.floor(noise(i, j, 11) * 3) * 6, tone: Math.floor(noise(i, j, 12) * 4) });
+    }
+  }
+  // Дворы-колодцы: клетка внутри большого квартала, окружённая домами со всех сторон, — двор.
+  for (let j = j0; j < j0 + rows; j += 1) {
+    for (let i = i0; i < i0 + cols; i += 1) {
+      if (kindAt(i, j) !== Kind.Block) continue;
+      const id = region[index(i, j)];
+      if (regions[id].cells < 9) continue;
+      const inner = [[i + 1, j], [i - 1, j], [i, j + 1], [i, j - 1]].every(([ni, nj]) => kindAt(ni, nj) === Kind.Block || kindAt(ni, nj) === Kind.Yard);
+      if (inner && noise(i, j, 13) < 0.55) set(i, j, Kind.Yard);
     }
   }
 
@@ -186,9 +223,10 @@ export function buildBoard(): Board {
     for (let i = i0; i < i0 + cols; i += 1) {
       const kind = kindAt(i, j);
       if (kind === Kind.Block) {
-        const n = noise(i, j);
-        if (n < 0.1) continue;
-        buildings.push({ i, j, h: 10 + Math.floor(noise(i, j, 1) * 4) * 6, tone: 1 + Math.floor(noise(i, j, 2) * 5), inset: 0.07 + noise(i, j, 3) * 0.05 });
+        const owner = regions[region[index(i, j)]];
+        buildings.push({ i, j, h: owner.h, tone: owner.tone });
+      } else if (kind === Kind.Yard) {
+        if (noise(i, j, 14) > 0.5) trees.push({ gi: i + 0.5, gj: j + 0.5, size: 0.7 });
       } else if (kind === Kind.Park) {
         trees.push({ gi: i + 0.3 + noise(i, j, 4) * 0.4, gj: j + 0.3 + noise(i, j, 5) * 0.4, size: 0.8 + noise(i, j, 6) * 0.4 });
         if (noise(i, j, 7) > 0.5) trees.push({ gi: i + 0.15 + noise(i, j, 8) * 0.7, gj: j + 0.15 + noise(i, j, 9) * 0.7, size: 0.6 + noise(i, j, 10) * 0.3 });

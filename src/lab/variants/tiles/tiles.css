@@ -7,6 +7,8 @@
 .is-tiles.lab-map {
   --lb: 1;
   --pb: 1;
+  --lf-s: 1.8;
+  --lot-s: 3;
   background: var(--tone-e9e3d4);
 }
 
@@ -21,6 +23,7 @@
 .is-tiles .tl-quay-r { fill: var(--tone-a59e8e); }
 .is-tiles .tl-block { fill: var(--tone-e4ddcd); }
 .is-tiles .tl-plaza { fill: var(--tone-f1ece0); }
+.is-tiles .tl-yard { fill: var(--tone-d6cdb8); }
 .is-tiles .tl-park { fill: var(--tone-c5e6a6); }
 .is-tiles .tl-road { fill: var(--tone-f1ece0); }
 .is-tiles .tl-bridge { fill: var(--tone-f6f2e8); }
