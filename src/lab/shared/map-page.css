@@ -9,6 +9,17 @@
   margin-bottom: 0;
 }
 
+.lab-mappage-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.lab-headline-game {
+  color: var(--tone-9a5b00);
+}
+
 .lab-headline {
   margin: 0;
   font-size: 1.02rem;
@@ -96,7 +107,8 @@
 
 /* Два слоя: неподвижный город и верхний слой с движением. Каждый — своя картинка для видеокарты. */
 .lab-map-svg { will-change: transform; }
-.lab-map-svg.is-overlay { pointer-events: none; }
+.lab-map-svg.is-overlay,
+.lab-map-svg.is-middle { pointer-events: none; }
 .lab-map-svg.is-overlay .is-point { pointer-events: auto; }
 
 .lab-map-hit { fill: transparent; }
@@ -212,6 +224,58 @@
 .lab-card ul { margin: 0 0 12px; padding-left: 18px; color: var(--tone-646464); font-size: 0.84rem; }
 .lab-card-note { font-size: 0.8rem; }
 
+.lab-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.lab-card-close:disabled { opacity: 0.45; cursor: default; }
+.lab-card-close.is-danger { border-color: var(--tone-b91f2b); color: var(--tone-b91f2b); }
+
+.lab-game-list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lab-game-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 0;
+  border-top: 1px solid var(--tone-171717-a08);
+}
+
+.lab-game-list li > div {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.lab-game-list strong { font-size: 0.92rem; }
+.lab-game-list span { color: var(--tone-646464); font-size: 0.76rem; line-height: 1.3; }
+
+.lab-game-list button {
+  flex: none;
+  min-height: 34px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 9px;
+  background: #f7b91e;
+  color: #171717;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.lab-game-list button:disabled { background: #ece7da; color: #8a8a8a; cursor: default; }
+
 .lab-card-close {
   min-height: 34px;
   padding: 0 12px;
@@ -223,6 +287,103 @@
   font-size: 0.84rem;
   font-weight: 700;
   cursor: pointer;
+}
+
+/* --- Жизнь сети: фургоны, монеты, прохожие, повара, часы стройки, места под точки ----------- */
+
+.lab-map { --lf-s: 5; }
+
+.lab-map .lf-scale {
+  transform: scale(calc(var(--map-k, 1) * var(--pb, 1) * var(--lf-s)));
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+.lab-map .lf-scale.is-coin,
+.lab-map .lf-scale.is-timer { transform-origin: 50% 50%; }
+
+/* Люди и фургоны крупнее остальной мелочи: их движение и есть «жизнь» сети. */
+.lab-map .lf-scale.is-walker,
+.lab-map .lf-scale.is-crew { transform: scale(calc(var(--map-k, 1) * var(--pb, 1) * var(--lf-s) * 1.6)); }
+.lab-map .lf-scale.is-van { transform: scale(calc(var(--map-k, 1) * var(--pb, 1) * var(--lf-s) * 1.4)); }
+
+/* Места под новые точки — главное в игре: крупнее остальной жизни. */
+.lab-map .lf-scale.is-lot {
+  transform: scale(calc(var(--map-k, 1) * var(--pb, 1) * var(--lot-s, 8)));
+  transform-origin: 50% 100%;
+}
+
+.lab-map .lf-far,
+.lab-map .lf-near { transition: opacity 0.5s ease; }
+.lab-map[data-zoom="near"] .lf-far { opacity: 0; }
+.lab-map[data-zoom="mid"] .lf-far { opacity: 0.75; }
+.lab-map[data-zoom="far"] .lf-near { opacity: 0; }
+.lab-map[data-zoom="mid"] .lf-near { opacity: 0.85; }
+
+.lab-map .lf-layer { pointer-events: none; }
+
+.lf-layer .lf-route {
+  fill: none;
+  stroke: #e3a81e;
+  stroke-width: 2.2px;
+  stroke-linecap: round;
+  stroke-dasharray: 2 7;
+  vector-effect: non-scaling-stroke;
+  animation: lf-flow 1.2s linear infinite;
+}
+
+@keyframes lf-flow {
+  to { stroke-dashoffset: -9; }
+}
+
+.lf-layer .lf-van-body { fill: #ffffff; stroke: #2b211a; stroke-width: 1.2px; stroke-linejoin: round; }
+.lf-layer .lf-van-window { fill: #9fd3ee; }
+.lf-layer .lf-van-wheel { fill: #2b211a; }
+.lf-layer .lf-van-logo { fill: #f7b91e; }
+.lf-layer .lf-coin-face { fill: #ffc83d; stroke: #9a5b00; stroke-width: 1.2px; }
+.lf-layer .lf-coin-mark { fill: none; stroke: #9a5b00; stroke-width: 1.2px; stroke-linecap: round; }
+
+.lf-layer .lf-walker-head,
+.lf-layer .lf-cook-head { fill: #f2c9a5; }
+.lf-layer .lf-walker.is-t0 .lf-walker-body { fill: #4f8fd6; }
+.lf-layer .lf-walker.is-t1 .lf-walker-body { fill: #e85d4a; }
+.lf-layer .lf-walker.is-t2 .lf-walker-body { fill: #48a463; }
+.lf-layer .lf-walker.is-t3 .lf-walker-body { fill: #8e6ac8; }
+.lf-layer .lf-cook-body { fill: #ffffff; stroke: #2b211a; stroke-width: 0.8px; }
+.lf-layer .lf-cook-cap { fill: #f7b91e; }
+
+.lab-map .lf-bob {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: lf-bob 1.6s ease-in-out infinite;
+}
+
+@keyframes lf-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2.5px); }
+}
+
+.lf-layer .lf-timer-track { fill: rgba(255, 255, 255, 0.92); stroke: #d9cfb8; stroke-width: 4px; }
+.lf-layer .lf-timer-done { fill: none; stroke: #e3a81e; stroke-width: 4px; stroke-linecap: round; }
+.lf-layer .lf-timer-text { fill: #2b211a; font-family: inherit; font-size: 13px; font-weight: 800; }
+
+.lf-lots .lf-lot-pin { cursor: pointer; }
+.lf-lots .lf-lot-hit { fill: transparent; }
+.lf-lots .lf-lot-ring { fill: #f7b91e; stroke: #2b211a; stroke-width: 1.6px; }
+.lf-lots .lf-lot-plus { fill: #2b211a; }
+.lf-lots .lf-lot-tag rect { fill: #2b211a; }
+.lf-lots .lf-lot-tag text { fill: #ffffff; font-family: inherit; font-size: 11px; font-weight: 800; }
+.lf-lots .lf-lot-tag text.is-price { fill: #ffd86b; font-weight: 700; }
+
+.lf-lots .lf-lot {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: lf-lot 1.8s ease-in-out infinite;
+}
+
+@keyframes lf-lot {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.12); }
 }
 
 .lab-charts {
@@ -242,5 +403,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .lab-change { animation: none; }
-  .lab-map .is-detail, .lab-map .is-far-only { transition: none; }
+  .lab-map .is-detail, .lab-map .is-far-only, .lab-map .lf-far, .lab-map .lf-near { transition: none; }
+  .lf-layer .lf-route, .lab-map .lf-bob, .lf-lots .lf-lot { animation: none; }
 }

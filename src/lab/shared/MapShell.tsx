@@ -32,6 +32,8 @@ type Props = {
    * отдельной картинкой поверх неподвижного города, и его анимация не перерисовывает город.
    */
   overlay?: ReactNode;
+  /** Средний слой: медленная анимация над городом (живая обводка, волны). Не перерисовывает ни город, ни верх. */
+  middle?: ReactNode;
 };
 
 export const levelOf = (view: Camera, home: Camera): ZoomLevel => {
@@ -43,10 +45,11 @@ export const levelOf = (view: Camera, home: Camera): ZoomLevel => {
  * Рамка карты для вариантов лаборатории: камера, кнопки «пуск» и масштаба, подпись OpenStreetMap.
  * Уровень масштаба стоит в data-zoom: по нему стиль варианта плавно показывает и прячет подробности.
  */
-export function MapShell({ className, label, world, home, closeW, aspect, focus, month, calendarMonth, playing, onToggle, onBackground, onView, defs, children, overlay }: Props) {
+export function MapShell({ className, label, world, home, closeW, aspect, focus, month, calendarMonth, playing, onToggle, onBackground, onView, defs, children, overlay, middle }: Props) {
   const surface = useRef<HTMLDivElement>(null);
   const svg = useRef<SVGSVGElement>(null);
   const top = useRef<SVGSVGElement>(null);
+  const mid = useRef<SVGSVGElement>(null);
   const [zoom, setZoom] = useState<ZoomLevel>("far");
   const viewHandler = useRef(onView);
   viewHandler.current = onView;
@@ -54,7 +57,7 @@ export function MapShell({ className, label, world, home, closeW, aspect, focus,
     setZoom(levelOf(view, home));
     viewHandler.current?.({ ...view });
   }, [home]);
-  const { view, flyTo, flyHome } = useCamera({ surface, layers: [svg, top], world, home, closeW, aspect, onSettle });
+  const { view, flyTo, flyHome } = useCamera({ surface, layers: [svg, mid, top], world, home, closeW, aspect, onSettle });
 
   const focusKey = focus ? `${Math.round(focus.x)}:${Math.round(focus.y)}` : "";
   const focusRef = useRef(focus);
@@ -83,6 +86,15 @@ export function MapShell({ className, label, world, home, closeW, aspect, focus,
         {defs ? <defs>{defs}</defs> : null}
         <rect className="lab-map-hit" x={home.x - home.w} y={home.y - home.h} width={home.w * 3} height={home.h * 3} onClick={onBackground} />
         {children}
+      </svg>
+      <svg
+        ref={mid}
+        className="lab-map-svg is-middle"
+        viewBox={`${home.x} ${home.y} ${home.w} ${home.h}`}
+        preserveAspectRatio="xMidYMid meet"
+        aria-hidden="true"
+      >
+        {middle}
       </svg>
       <svg
         ref={top}
