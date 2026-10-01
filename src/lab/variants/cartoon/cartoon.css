@@ -1,0 +1,365 @@
+/*
+ * «Мультик»: плакат с толстой живой обводкой и сочными цветами.
+ * Все правила начинаются с .is-cartoon: рисунок одинаков в светлой и тёмной теме (список forceKeep
+ * в scripts/theme-tones.mjs). --lb увеличивает подписи на телефоне, --pb — домики точек.
+ */
+
+.is-cartoon.lab-map {
+  --lb: 1;
+  --pb: 1;
+  background: #ffd166;
+}
+
+@media (max-width: 720px) {
+  .is-cartoon.lab-map { --lb: 1.45; --pb: 1.3; }
+}
+
+.is-cartoon .ct-table { fill: #ffd166; }
+
+.is-cartoon .ct-poster {
+  fill: #fff1c9;
+  stroke: #23314d;
+  stroke-width: 4px;
+  vector-effect: non-scaling-stroke;
+}
+
+.is-cartoon .ct-plaza,
+.is-cartoon .ct-pt-plaza { fill: #fff1c9; }
+
+.is-cartoon .ct-pt-halo {
+  fill: rgba(255, 210, 63, 0.55);
+  stroke: #ffb703;
+  stroke-width: 2px;
+}
+
+.is-cartoon .ct-house { stroke: #1f2433; stroke-width: 2.4px; stroke-linejoin: round; }
+.is-cartoon .ct-h-a { fill: #ffc9a8; }
+.is-cartoon .ct-h-b { fill: #b8e0f0; }
+.is-cartoon .ct-h-c { fill: #f9e79f; }
+.is-cartoon .ct-h-d { fill: #d7c8f0; }
+.is-cartoon .ct-r-a { fill: #e85d4a; }
+.is-cartoon .ct-r-b { fill: #4a6fa5; }
+.is-cartoon .ct-r-c { fill: #8e5c3a; }
+.is-cartoon .ct-r-d { fill: #6a4c93; }
+.is-cartoon .ct-house-window { fill: #3b4a6b; }
+
+.is-cartoon .ct-park {
+  fill: #8fd16a;
+  stroke: #2c5e2e;
+  stroke-width: 1.2px;
+  vector-effect: non-scaling-stroke;
+}
+
+.is-cartoon .ct-tree-crown {
+  fill: #4fa64a;
+  stroke: #2c5e2e;
+  stroke-width: 3px;
+}
+
+.is-cartoon .ct-tree-light { fill: #8ad66f; }
+
+.is-cartoon .ct-water { fill: #5cc8f0; }
+
+.is-cartoon .ct-water-line {
+  fill: none;
+  stroke: #1d3c6b;
+  stroke-width: 2.2px;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+/* Живая линия: три обводки по очереди, по четверти секунды каждая. */
+.is-cartoon .ct-boil path {
+  animation: ct-boil 0.9s steps(1, end) infinite;
+}
+
+.is-cartoon .ct-boil path:nth-child(2) { animation-delay: -0.3s; }
+.is-cartoon .ct-boil path:nth-child(3) { animation-delay: -0.6s; }
+
+@keyframes ct-boil {
+  0% { visibility: visible; }
+  33.33% { visibility: hidden; }
+  100% { visibility: hidden; }
+}
+
+.is-cartoon .ct-wave {
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 2px;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.is-cartoon .ct-road-case,
+.is-cartoon .ct-road,
+.is-cartoon .ct-bridge-case,
+.is-cartoon .ct-bridge {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.is-cartoon .ct-road-case { stroke: #2b2b40; stroke-width: 46px; }
+.is-cartoon .ct-road-case.is-minor { stroke-width: 27px; }
+.is-cartoon .ct-road { stroke: #ffffff; stroke-width: 32px; }
+.is-cartoon .ct-road.is-minor { stroke-width: 15px; }
+.is-cartoon .ct-bridge-case { stroke: #5a2e0e; stroke-width: 62px; stroke-linecap: butt; }
+.is-cartoon .ct-bridge { stroke: #f2b06a; stroke-width: 44px; stroke-linecap: butt; }
+
+.is-cartoon .ct-label {
+  font-family: inherit;
+  font-weight: 800;
+  paint-order: stroke;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+.is-cartoon .ct-label.is-district {
+  font-size: calc(var(--map-z, 1) * var(--lb) * 250px);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  fill: #8a4b0f;
+  stroke: #fff1c9;
+  stroke-width: calc(var(--map-z, 1) * var(--lb) * 40px);
+}
+
+.is-cartoon .ct-label.is-water,
+.is-cartoon .ct-label.is-canal {
+  font-style: italic;
+  fill: #ffffff;
+  stroke: #1d3c6b;
+}
+
+.is-cartoon .ct-label.is-water {
+  font-size: calc(var(--map-z, 1) * var(--lb) * 170px);
+  stroke-width: calc(var(--map-z, 1) * var(--lb) * 30px);
+}
+
+.is-cartoon .ct-label.is-canal {
+  font-size: calc(var(--map-z, 1) * var(--lb) * 120px);
+  stroke-width: calc(var(--map-z, 1) * var(--lb) * 24px);
+}
+
+.is-cartoon .ct-lm-scale {
+  transform: scale(calc(var(--map-k, 1) * var(--pb) * 4.2));
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+.is-cartoon .ct-lm-shadow,
+.is-cartoon .ct-pt-shadow { fill: rgba(35, 49, 77, 0.2); }
+
+.is-cartoon .ct-lm-title {
+  font-family: inherit;
+  font-size: calc(var(--map-z, 1) * var(--lb) * 115px);
+  font-weight: 700;
+  fill: #23314d;
+  stroke: #fff1c9;
+  stroke-width: calc(var(--map-z, 1) * var(--lb) * 22px);
+  paint-order: stroke;
+  dominant-baseline: hanging;
+  transform: translateY(calc(var(--map-k, 1) * 70px));
+  pointer-events: none;
+}
+
+/* Силуэты: общая форма, цвета плаката. */
+.is-cartoon .lm path {
+  stroke: #1f2433;
+  stroke-width: 1.6px;
+  stroke-linejoin: round;
+}
+
+.is-cartoon .lm .lm-window,
+.is-cartoon .lm .lm-white { stroke: none; }
+
+.is-cartoon .lm-wall { fill: #ffe08a; }
+.is-cartoon .lm-wall-side { fill: #f2c14e; }
+.is-cartoon .lm-roof { fill: #4a5c74; }
+.is-cartoon .lm-white { fill: #ffffff; }
+.is-cartoon .lm-window { fill: #3b4a6b; }
+.is-cartoon .lm-gold { fill: #ffc83d; }
+.is-cartoon .lm-stone { fill: #e3dccb; }
+.is-cartoon .lm-stone-dark { fill: #9aa7b4; }
+.is-cartoon .lm-accent { fill: #ff7a59; }
+.is-cartoon .lm-accent-2 { fill: #48c774; }
+.is-cartoon .lm-accent-3 { fill: #3fa9f5; }
+.is-cartoon .lm-accent-dark { fill: #8a2d1d; }
+.is-cartoon .lm-flame { fill: #ff7a2f; }
+.is-cartoon .lm-hull,
+.is-cartoon .lm-mast { fill: #3e4a5a; }
+.is-cartoon .lm-flag { fill: #e63946; }
+.is-cartoon .lm-door { fill: #8a4b0f; }
+
+.is-cartoon .lm[data-kind="palace"] .lm-wall { fill: #7fd3b0; }
+.is-cartoon .lm[data-kind="palace"] .lm-wall-side { fill: #5fbf9a; }
+.is-cartoon .lm[data-kind="castle"] .lm-accent { fill: #ff8a5b; }
+.is-cartoon .lm[data-kind="theatre"] .lm-accent { fill: #8fd0c8; }
+.is-cartoon .lm[data-kind="baroque"] .lm-accent { fill: #7cc4ff; }
+.is-cartoon .lm[data-kind="onion"] .lm-wall { fill: #d9534f; }
+.is-cartoon .lm[data-kind="onion"] .lm-accent { fill: #ff6b8b; }
+.is-cartoon .lm[data-kind="column"] .lm-accent { fill: #d17a6a; }
+.is-cartoon .lm[data-kind="rostral"] .lm-accent { fill: #c8553d; }
+.is-cartoon .lm[data-kind="station"] .lm-wall { fill: #ffe8a8; }
+.is-cartoon .lm[data-kind="fortress"] .lm-wall { fill: #f5d3a1; }
+
+/* Лодки на Неве. */
+.is-cartoon .ct-boat-scale {
+  transform: scale(calc(var(--map-k, 1) * var(--pb) * 3.2));
+}
+
+.is-cartoon .ct-boat path {
+  stroke: #1f2433;
+  stroke-width: 1.4px;
+  stroke-linejoin: round;
+}
+
+.is-cartoon .ct-boat-hull { fill: #ffffff; }
+.is-cartoon .ct-boat-cabin { fill: #ff7a59; }
+.is-cartoon .ct-boat-flag { fill: #e63946; }
+
+/* Облака плывут над городом, пока карта отдалена. */
+.is-cartoon .ct-clouds { pointer-events: none; }
+
+.is-cartoon .ct-cloud {
+  animation: ct-drift 180s linear infinite;
+}
+
+@keyframes ct-drift {
+  from { transform: translateX(-5200px); }
+  to { transform: translateX(5200px); }
+}
+
+.is-cartoon .ct-cloud-body {
+  fill: rgba(255, 255, 255, 0.72);
+  stroke: #1d3c6b;
+  stroke-width: 1.4px;
+  vector-effect: non-scaling-stroke;
+}
+
+.is-cartoon .ct-cloud-shadow { fill: rgba(35, 49, 77, 0.12); }
+
+/* Точки сети. */
+.is-cartoon .ct-pt-scale {
+  transform: scale(calc(var(--map-k, 1) * var(--pb) * 6.4));
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+.is-cartoon .pt path,
+.is-cartoon .pt circle,
+.is-cartoon .pt-site path {
+  stroke: #1f2433;
+  stroke-width: 1.6px;
+  stroke-linejoin: round;
+}
+
+.is-cartoon .pt-wall { fill: #ffd23f; }
+.is-cartoon .pt[data-look="base"] .pt-wall { fill: #ff9f43; }
+.is-cartoon .pt-roof { fill: #ff6b4a; }
+.is-cartoon .pt-awning { fill: #ff4d6d; }
+.is-cartoon .pt-window { fill: #bfe9ff; }
+.is-cartoon .pt-door { fill: #8a4b0f; }
+.is-cartoon .pt-chimney { fill: #9c5b3b; }
+.is-cartoon .pt-sign-face { fill: #ffd23f; }
+.is-cartoon .pt .pt-sign-eyes { fill: #1f2433; stroke: none; }
+.is-cartoon .pt .pt-sign-smile { fill: none; stroke-width: 1.4px; }
+
+.is-cartoon .pt-site-fence { fill: #ffb703; }
+.is-cartoon .pt-site-frame { fill: none; stroke: #6b7a8f; }
+.is-cartoon .pt-site-crane { fill: #ffb703; }
+.is-cartoon .pt-site-hook { fill: #23314d; animation: ct-hook 2.4s ease-in-out infinite; }
+
+@keyframes ct-hook {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+
+.is-cartoon .pt-lot {
+  fill: rgba(255, 255, 255, 0.6);
+  stroke: #8a4b0f;
+  stroke-width: 2px;
+  stroke-dasharray: 5 4;
+}
+
+.is-cartoon .ct-pt-tag rect { fill: #23314d; }
+
+.is-cartoon .ct-pt-tag text {
+  fill: #ffffff;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.is-cartoon .ct-pt-ring {
+  fill: rgba(255, 209, 102, 0.45);
+  stroke: #ff4d6d;
+  stroke-width: 3px;
+}
+
+.is-cartoon .ct-pt-title {
+  font-family: inherit;
+  font-size: calc(var(--map-z, 1) * var(--lb) * 150px);
+  font-weight: 800;
+  fill: #23314d;
+  stroke: #ffffff;
+  stroke-width: calc(var(--map-z, 1) * var(--lb) * 30px);
+  paint-order: stroke;
+  stroke-linejoin: round;
+  dominant-baseline: hanging;
+  transform: translateY(calc(var(--map-k, 1) * var(--pb) * 80px));
+  pointer-events: none;
+}
+
+.is-cartoon .ct-point.is-lot .ct-pt-title { fill: #6b5a3a; }
+
+.is-cartoon .ct-point.is-fresh .ct-pt-pop {
+  animation: ct-pop 0.7s cubic-bezier(0.2, 1.6, 0.4, 1) both;
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+@keyframes ct-pop {
+  from { transform: scale(0.15); }
+  to { transform: scale(1); }
+}
+
+.is-cartoon .ct-smoke circle {
+  fill: rgba(255, 255, 255, 0.92);
+  stroke: #1f2433;
+  stroke-width: 1.2px;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ct-smoke 3s ease-out infinite;
+}
+
+.is-cartoon .ct-smoke circle:nth-child(2) { animation-delay: -1s; }
+.is-cartoon .ct-smoke circle:nth-child(3) { animation-delay: -2s; }
+
+@keyframes ct-smoke {
+  0% { transform: translate(0, 0) scale(0.6); opacity: 0.95; }
+  100% { transform: translate(12px, -48px) scale(1.7); opacity: 0; }
+}
+
+/* Подпись к значкам под картой. */
+.ct-key {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid var(--tone-1f2433);
+  border-radius: 4px;
+}
+
+.ct-key.is-base { background: #ff9f43; }
+.ct-key.is-hall { background: #ffd23f; border-radius: 7px 7px 3px 3px; }
+.ct-key.is-kiosk { background: #ffd23f; }
+.ct-key.is-site { background: #ffb703; border-style: solid; }
+.ct-key.is-lot { background: transparent; border-style: dashed; border-color: var(--tone-8a4b0f); }
+
+@media (prefers-reduced-motion: reduce) {
+  .is-cartoon .ct-boil path,
+  .is-cartoon .ct-cloud,
+  .is-cartoon .pt-site-hook,
+  .is-cartoon .ct-smoke circle,
+  .is-cartoon .ct-point.is-fresh .ct-pt-pop { animation: none; }
+  .is-cartoon .ct-boil path:not(:first-child) { visibility: hidden; }
+}
