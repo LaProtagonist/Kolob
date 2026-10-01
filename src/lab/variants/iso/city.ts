@@ -107,21 +107,38 @@ function isLot(i: number, j: number) {
   return blockKind(i - mod(i, 3), j - mod(j, 3)) === "houses";
 }
 
+/** Квартал, которому принадлежит клетка: его северный угол. */
+const blockOf = (i: number, j: number) => `${i - mod(i, 3)},${j - mod(j, 3)}`;
+/** Насколько вторая и следующие точки района отходят от первой: один квартал. */
+const SPREAD = 3;
+
 /**
- * Каждая точка встаёт на ближайший свободный участок к своему месту на условной карте.
- * Точки одного района в данных лежат почти вплотную; на сетке они занимают соседние дома.
+ * Каждая точка встаёт на ближайший свободный участок к своему месту на условной карте; в одном квартале — не больше одной точки.
+ * Точки одного района в данных лежат почти вплотную. На сетке вторая и следующие уходят на квартал от первой —
+ * в ту же сторону, куда их сдвигает расчёт, — чтобы сеть из 9 и 13 точек не сливалась в одно пятно.
+ * Расстановка идёт по порядку открытия, поэтому уже стоящие точки не сдвигаются, когда сеть растёт.
  */
 export function placePoints(points: StoryPoint[]): Map<string, Cell> {
-  const taken = new Set<string>();
+  const takenBlocks = new Set<string>();
+  const firstOfDistrict = new Map<string, { gx: number; gy: number }>();
   const lots = new Map<string, Cell>();
   for (const point of points) {
-    const gx = point.place.x * GRID;
-    const gy = point.place.y * GRID;
+    let gx = point.place.x * GRID;
+    let gy = point.place.y * GRID;
+    const district = point.districtId ?? point.id;
+    const first = firstOfDistrict.get(district);
+    if (!first) {
+      firstOfDistrict.set(district, { gx, gy });
+    } else {
+      const length = Math.hypot(gx - first.gx, gy - first.gy) || 1;
+      gx = first.gx + ((gx - first.gx) / length) * SPREAD;
+      gy = first.gy + ((gy - first.gy) / length) * SPREAD;
+    }
     let best: Cell = { i: Math.floor(gx), j: Math.floor(gy) };
     let bestCost = Infinity;
-    for (let j = Math.floor(gy) - 7; j <= Math.floor(gy) + 7; j += 1) {
-      for (let i = Math.floor(gx) - 7; i <= Math.floor(gx) + 7; i += 1) {
-        if (!isLot(i, j) || taken.has(`${i},${j}`)) continue;
+    for (let j = Math.floor(gy) - 8; j <= Math.floor(gy) + 8; j += 1) {
+      for (let i = Math.floor(gx) - 8; i <= Math.floor(gx) + 8; i += 1) {
+        if (!isLot(i, j) || takenBlocks.has(blockOf(i, j))) continue;
         const cost = (i + 0.5 - gx) ** 2 + (j + 0.5 - gy) ** 2;
         if (cost < bestCost) {
           best = { i, j };
@@ -129,7 +146,7 @@ export function placePoints(points: StoryPoint[]): Map<string, Cell> {
         }
       }
     }
-    taken.add(`${best.i},${best.j}`);
+    takenBlocks.add(blockOf(best.i, best.j));
     lots.set(point.id, best);
   }
   return lots;
@@ -153,23 +170,43 @@ export function heightLimit(i: number, j: number, lots: Cell[]) {
   return limit;
 }
 
-/**
- * Кадр: все точки сети с запасом на высоту зданий и подписи.
- * Узкий экран получает почти квадратный кадр, широкий — панораму; если точки разошлись, кадр отъезжает.
- */
+/** Пропорции кадра: узкий экран получает почти квадратный кадр, широкий — панораму. */
+export const frameAspect = (compact: boolean) => (compact ? 1.02 : 1.72);
+/** Ширина кадра «одна точка вблизи», в единицах рисунка. */
+export const closeWidth = (compact: boolean) => (compact ? 230 : 330);
+
+/** Прямоугольник на экране вокруг клеток с запасом на высоту зданий и подписи. */
+function boundsOf(spots: Array<{ gx: number; gy: number }>) {
+  const xs = spots.map((spot) => screenX(spot.gx, spot.gy));
+  const ys = spots.map((spot) => screenY(spot.gx, spot.gy));
+  return { left: Math.min(...xs) - 60, right: Math.max(...xs) + 60, top: Math.min(...ys) - 116, bottom: Math.max(...ys) + 70 };
+}
+
+/** Кадр «сеть целиком»: все точки сети; если точки разошлись, кадр отъезжает. */
 export function frameCamera(lots: Cell[], compact: boolean): Camera {
-  const aspect = compact ? 1.02 : 1.72;
-  const minWidth = compact ? 400 : 700;
-  const xs = lots.map((lot) => screenX(lot.i + 0.5, lot.j + 0.5));
-  const ys = lots.map((lot) => screenY(lot.i + 0.5, lot.j + 0.5));
-  const left = Math.min(...xs) - 60;
-  const right = Math.max(...xs) + 60;
-  const top = Math.min(...ys) - 116;
-  const bottom = Math.max(...ys) + 70;
-  const w = Math.max(minWidth, right - left, (bottom - top) * aspect);
+  const aspect = frameAspect(compact);
+  const { left, right, top, bottom } = boundsOf(lots.map((lot) => ({ gx: lot.i + 0.5, gy: lot.j + 0.5 })));
+  const w = Math.max(compact ? 400 : 700, right - left, (bottom - top) * aspect);
   const h = w / aspect;
   return { x: Math.round((left + right) / 2 - w / 2), y: Math.round((top + bottom) / 2 - h / 2), w: Math.round(w), h: Math.round(h) };
 }
+
+/**
+ * Участок города, который нарисован и по которому можно двигать камеру: кадр сети с запасом по краям.
+ * Он только растёт — объединяется с прежним, — поэтому при смене размера сети камера отъезжает
+ * по уже нарисованному городу и по краям не бывает пустоты.
+ */
+export function worldFrame(home: Camera, previous: Camera | null): Camera {
+  const pad = Math.round(home.w * 0.14);
+  const x0 = Math.min(home.x - pad, previous?.x ?? Infinity);
+  const y0 = Math.min(home.y - pad / 2, previous?.y ?? Infinity);
+  const x1 = Math.max(home.x + home.w + pad, previous ? previous.x + previous.w : -Infinity);
+  const y1 = Math.max(home.y + home.h + pad / 2, previous ? previous.y + previous.h : -Infinity);
+  return { x: Math.round(x0), y: Math.round(y0), w: Math.round(x1 - x0), h: Math.round(y1 - y0) };
+}
+
+export const sameFrame = (left: Camera | null, right: Camera | null) =>
+  Boolean(left && right && left.x === right.x && left.y === right.y && left.w === right.w && left.h === right.h);
 
 /** Клетки, которые попадают в кадр, с запасом на высокие здания у нижнего края. */
 export function visibleCells(camera: Camera) {

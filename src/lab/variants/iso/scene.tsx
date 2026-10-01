@@ -3,7 +3,7 @@
  * Город (вода, кварталы, дома, знакомые здания) строится один раз на расклад точек и не зависит от месяца;
  * от месяца зависят только сами точки — стройплощадка или открытое здание.
  */
-import { memo, type KeyboardEvent, type ReactNode } from "react";
+import { memo, useEffect, useState, type CSSProperties, type KeyboardEvent, type ReactNode } from "react";
 import type { StoryPoint } from "../../story";
 import {
   at,
@@ -127,7 +127,10 @@ function fortress() {
   );
 }
 
-/** Трамвай и машина на Невском: едут навстречу друг другу. */
+/**
+ * Трамвай и машина на Невском стоят у остановки. Движущийся транспорт перерисовывал бы весь город на каждом кадре,
+ * а дома его заслоняют, поэтому в верхний слой его не перенести.
+ */
 function traffic() {
   const tram = box(-0.42, 0.34, 0.42, 0.52, 1.5, 9.5);
   const car = box(-0.2, 0.66, 0.2, 0.8, 1, 5);
@@ -140,7 +143,7 @@ function traffic() {
         <path className="iso-tram-t" d={tram.top} />
         <path className="iso-tram-glass" d={panesLeft(-0.4, 0.4, 0.52, 4.5, 9, 5, 1)} />
       </g>
-      <g className="iso-car">
+      <g className="iso-car" transform={`translate(${screenX(1.3, 0) - screenX(0, 0)} ${screenY(1.3, 0) - screenY(0, 0)})`}>
         <path className="iso-car-l" d={car.left + cabin.left} />
         <path className="iso-car-r" d={car.right + cabin.right} />
         <path className="iso-car-t" d={car.top + cabin.top} />
@@ -149,11 +152,12 @@ function traffic() {
   );
 }
 
-function boat() {
+/** Катер на Неве: перед ним ничего не стоит, поэтому он живёт в верхнем слое и не тревожит город. */
+export function Boat() {
   const hull = box(-0.34, -0.08, 0.34, 0.08, 0, 3);
   const cabin = box(-0.16, -0.055, 0.14, 0.055, 3, 6.5);
   return (
-    <g key="boat" transform={`translate(${screenX(5.6, 0.9)} ${screenY(5.6, 0.9)})`}>
+    <g transform={`translate(${screenX(5.6, 0.9)} ${screenY(5.6, 0.9)})`}>
       <g className="iso-boat">
         <path className="iso-boat-wake" d={line(at(-0.95, 0), at(-0.42, 0))} />
         <path className="iso-boat-hull" d={hull.left + hull.right + hull.top} />
@@ -298,7 +302,6 @@ export function buildCity(camera: Camera, lots: Cell[]): { ground: ReactNode; it
           .join("")}
       />
       <path className="iso-island" d={shape(at(6.25, -2.5), at(7.75, -2.5), at(8.15, -2.0), at(8.15, -1.15), at(7.7, -0.8), at(6.35, -0.8), at(5.95, -1.3), at(5.95, -2.05))} />
-      {boat()}
       <path className="iso-lane" d={line(at(gx0, NEVSKY_ROW + 0.5), at(gx1, NEVSKY_ROW + 0.5)) + line(at(LIGOVSKY_COL + 0.5, NEVA.to + 1), at(LIGOVSKY_COL + 0.5, gy1))} />
       <path className="iso-slab-side" d={slabSides.join("")} />
       <path className="iso-slab" d={slabTops.join("")} />
@@ -420,7 +423,10 @@ function kioskArt() {
   );
 }
 
-/** Стройплощадка: фундамент, каркас будущего здания, кран и ограждение. */
+/**
+ * Стройплощадка: фундамент, каркас будущего здания, кран и ограждение.
+ * Две части: кран и фундамент стоят за растущим зданием, каркас и ограждение — перед ним.
+ */
 function siteArt(height: number, inset: number) {
   const low = inset;
   const high = 1 - inset;
@@ -437,40 +443,60 @@ function siteArt(height: number, inset: number) {
     line(at(low, high, height / 2 + 2), at(high, high, height / 2 + 2)),
     line(at(high, low, height / 2 + 2), at(high, high, height / 2 + 2)),
   ].join("");
-  return (
+  const back = (
     <>
       <path className="iso-site-base-l" d={base.left} />
       <path className="iso-site-base-r" d={base.right} />
       <path className="iso-site-base-t" d={base.top} />
-      <path className="iso-site-frame" d={frame} />
       <path className="iso-site-crane" d={line(at(0.26, 0.26, 0), at(0.26, 0.26, 48)) + line(at(0.04, 0.26, 48), at(0.96, 0.26, 48)) + line(at(0.26, 0.26, 54), at(0.96, 0.26, 48)) + line(at(0.26, 0.26, 54), at(0.04, 0.26, 48)) + line(at(0.26, 0.26, 48), at(0.26, 0.26, 54))} />
       <path className="iso-site-cable" d={line(at(0.8, 0.26, 48), at(0.8, 0.26, 34))} />
       <path className="iso-site-load" d={load.left + load.right + load.top} />
+    </>
+  );
+  const front = (
+    <>
+      <path className="iso-site-frame" d={frame} />
       <path className="iso-k-roof" d={fenceEven + sideEven} />
       <path className="iso-site-fence" d={fenceOdd + sideOdd} />
     </>
   );
+  return { back, front };
 }
 
 type KindSpec = {
   title: string;
   art: ReactNode;
-  site: ReactNode;
+  site: { back: ReactNode; front: ReactNode };
   /** Высота здания над углом клетки: до неё тянется область нажатия и от неё отсчитывается стрелка выбора. */
   top: number;
   footprint: [number, number, number];
   coinsFrom: number;
   /** Область нажатия — силуэт здания, чтобы оно не перехватывало нажатия по соседям за ним. */
   hit: string;
+  /** Где встают люди смены: вдоль двух фасадов, обращённых к зрителю, не загораживая вход. */
+  staff: Spot[];
+  /** Вход или окно выдачи: сюда идут гости. */
+  door: Spot;
 };
+
+type Spot = [number, number];
 
 const silhouette = (low: number, high: number, height: number) =>
   shape(at(low, high), at(high, high), at(high, low), at(high, low, height), at(low, low, height), at(low, high, height));
 
 const kinds: Record<Kind, KindSpec> = {
-  works: { title: "цех и зал", art: worksArt(), site: siteArt(28, 0.1), top: 44, footprint: [0.04, 0.96, 34], coinsFrom: -46, hit: silhouette(0, 1, 46) },
-  hall: { title: "точка с залом", art: hallArt(), site: siteArt(30, 0.14), top: 48, footprint: [0.1, 0.9, 36], coinsFrom: -50, hit: silhouette(0.05, 0.95, 50) },
-  kiosk: { title: "киоск на вынос", art: kioskArt(), site: siteArt(20, 0.26), top: 26, footprint: [0.28, 0.72, 22], coinsFrom: -28, hit: silhouette(0.12, 0.88, 36) },
+  works: {
+    title: "цех и зал", art: worksArt(), site: siteArt(28, 0.1), top: 44, footprint: [0.04, 0.96, 34], coinsFrom: -46, hit: silhouette(0, 1, 46),
+    staff: [[0.14, 1.08], [1.08, 0.5], [0.34, 1.08], [1.08, 0.78], [0.54, 1.08], [1.08, 0.22]], door: [0.77, 1.0],
+  },
+  hall: {
+    title: "точка с залом", art: hallArt(), site: siteArt(30, 0.14), top: 48, footprint: [0.1, 0.9, 36], coinsFrom: -50, hit: silhouette(0.05, 0.95, 50),
+    staff: [[0.16, 1.08], [1.08, 0.5], [0.84, 1.08], [1.08, 0.78], [0.3, 1.08], [1.08, 0.22]], door: [0.5, 0.98],
+  },
+  kiosk: {
+    title: "киоск на вынос", art: kioskArt(), site: siteArt(20, 0.26), top: 26, footprint: [0.28, 0.72, 22], coinsFrom: -28, hit: silhouette(0.12, 0.88, 36),
+    staff: [[0.2, 1.04], [1.04, 0.5], [0.8, 1.04], [1.04, 0.76], [0.06, 1.04], [1.04, 0.24]], door: [0.5, 0.88],
+  },
 };
 /** Кран стройплощадки одинаков для всех форматов; табличка с месяцем висит над ним. */
 const SITE_TOP = 50;
@@ -486,25 +512,117 @@ export function pointShadow(point: StoryPoint, cell: Cell) {
 
 const lotPad = roofFlat(0.03, 0.03, 0.97, 0.97, 2);
 const lotRing = roofFlat(-0.05, -0.05, 1.05, 1.05, 2);
-// Сотрудники встают вдоль двух фасадов, обращённых к зрителю.
-const staffSpots: Array<[number, number]> = [[0.48, 1.08], [1.08, 0.48], [0.78, 1.08], [1.08, 0.78], [0.18, 1.08], [1.08, 0.18]];
 const coinDrift = [-9, 7, -2, 12, -13, 3];
+export const STAFF_SHOWN_MAX = 6;
 
-function Staff({ count }: { count: number }) {
+/** Фигурка человека; ноги стоят в начале координат. Сотрудник — в колпаке, гость с покупкой несёт свёрток. */
+function Person({ look, bag }: { look: string; bag?: boolean }) {
+  return (
+    <g transform="scale(1.12)">
+      <rect className="iso-fig-legs" x="-1.7" y="-3.4" width="3.4" height="3.4" />
+      <rect className={`iso-fig-body ${look}`} x="-2.9" y="-10.2" width="5.8" height="7.2" rx="2.2" />
+      <circle className="iso-fig-head" cy="-12.4" r="2.6" />
+      {look === "is-staff" ? <path className="iso-fig-hat" d="M-2.5 -14.2h5v-1.6a2.5 2.2 0 0 0 -5 0z" /> : null}
+      {bag ? <circle className="iso-fig-bag" cx="3.5" cy="-5.4" r="1.8" /> : null}
+    </g>
+  );
+}
+
+/** Люди смены: столько фигурок, сколько сотрудников на смене. Стоят на месте — движение на картинке отдано гостям. */
+function Staff({ spots, count }: { spots: Spot[]; count: number }) {
   return (
     <g className="iso-staff">
-      {staffSpots.slice(0, count).map(([gx, gy], index) => (
+      {spots.slice(0, count).map(([gx, gy], index) => (
         <g key={index} transform={`translate(${screenX(gx, gy)} ${screenY(gx, gy, 2)})`}>
-          <g className="iso-fig" style={{ animationDelay: `${-index * 0.37}s` }}>
-            <rect className="iso-fig-legs" x="-1.7" y="-3.4" width="3.4" height="3.4" />
-            <rect className="iso-fig-body" x="-2.9" y="-10.2" width="5.8" height="7.2" rx="2.2" />
-            <circle className="iso-fig-head" cy="-12.4" r="2.6" />
-            <path className="iso-fig-hat" d="M-2.5 -14.2h5v-1.6a2.5 2.2 0 0 0 -5 0z" />
-          </g>
+          <Person look="is-staff" />
         </g>
       ))}
     </g>
   );
+}
+
+const SIDEWALK = 1.27;
+const px = (value: number) => `${Math.round(value * 10) / 10}px`;
+
+/**
+ * Поток гостей: фигурки идут по тротуару ко входу и уходят с покупкой.
+ * Число фигурок задаёт вызывающий — пропорционально чекам в день; путь целиком описан в стиле, React при ходьбе не участвует.
+ */
+function Guests({ door, count }: { door: Spot; count: number }) {
+  return (
+    <g className="iso-guests" transform={`translate(${screenX(door[0], door[1])} ${screenY(door[0], door[1], 2)})`}>
+      {Array.from({ length: count }, (_, index) => {
+        const drift = ((index * 7) % 5) * 0.025;
+        const near = SIDEWALK + drift;
+        // Три подхода по очереди: по улице справа, по улице слева и из-за переднего угла.
+        const approach = index % 3;
+        const start: Spot = approach === 0 ? [1.95 - drift * 2, near] : approach === 1 ? [-0.95 + drift * 2, near] : [near, 1.95];
+        const front: Spot = [door[0], near];
+        const turn: Spot = approach === 2 ? [near, near] : [(start[0] + front[0]) / 2, near];
+        // Место на пути, где гость стоит, когда анимации выключены.
+        const share = 0.15 + ((index * 0.37) % 1) * 0.7;
+        const [from, to, part] = share < 0.5 ? [start, turn, share * 2] : [turn, front, share * 2 - 1];
+        const rest: Spot = [from[0] + (to[0] - from[0]) * part, from[1] + (to[1] - from[1]) * part];
+        const offset = (spot: Spot) => [px(screenX(spot[0], spot[1]) - screenX(door[0], door[1])), px(screenY(spot[0], spot[1]) - screenY(door[0], door[1]))];
+        const [x0, y0] = offset(start);
+        const [x1, y1] = offset(turn);
+        const [x2, y2] = offset(front);
+        const [xs, ys] = offset(rest);
+        const leaving = index % 2 === 1;
+        const style = {
+          "--x0": x0, "--y0": y0, "--x1": x1, "--y1": y1, "--x2": x2, "--y2": y2, "--xs": xs, "--ys": ys,
+          animationDuration: `${6.4 + (index % 3) * 0.9}s`,
+          animationDelay: `${-index * 2.3}s`,
+          animationDirection: leaving ? "reverse" : "normal",
+        } as CSSProperties;
+        return (
+          <g key={index} className="iso-guest" style={style}>
+            <Person look={`is-guest-${index % 3}`} bag={leaving} />
+          </g>
+        );
+      })}
+    </g>
+  );
+}
+
+const sparks: Spot[] = [[-24, -8], [-13, -21], [0, -27], [13, -21], [24, -8], [0, -13]];
+const BUILD_MS = 1500;
+
+/** Пыль у основания, пока здание растёт, и искры над крышей, когда оно готово. */
+function BuildFx({ top }: { top: number }) {
+  return (
+    <g className="iso-build-fx">
+      {[[-17, 23], [1, 31], [18, 22]].map(([x, y], index) => (
+        <circle key={index} className="iso-dust" cx={x} cy={y} r="4.6" style={{ animationDelay: `${index * 0.17}s` }} />
+      ))}
+      <g transform={`translate(0 ${-top + 8})`}>
+        {sparks.map(([dx, dy], index) => (
+          <path key={index} className="iso-spark" d="M0 -3.6L1.1 -1.1L3.6 0L1.1 1.1L0 3.6L-1.1 1.1L-3.6 0L-1.1 -1.1Z" style={{ "--dx": px(dx), "--dy": px(dy) } as CSSProperties} />
+        ))}
+      </g>
+    </g>
+  );
+}
+
+const prefersStillness = () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/**
+ * Идёт ли стройка: полторы секунды после того, как точка открылась на глазах у зрителя.
+ * При первой отрисовке уже открытая точка стройку не показывает.
+ */
+function useBuilding(open: boolean) {
+  const [wasOpen, setWasOpen] = useState(open);
+  const [building, setBuilding] = useState(false);
+  if (open !== wasOpen) {
+    setWasOpen(open);
+    setBuilding(open && !prefersStillness());
+  }
+  useEffect(() => {
+    if (!building) return;
+    const timer = window.setTimeout(() => setBuilding(false), BUILD_MS);
+    return () => window.clearTimeout(timer);
+  }, [building]);
+  return building;
 }
 
 function Coins({ count, from }: { count: number; from: number }) {
@@ -529,17 +647,20 @@ type PointSpriteProps = {
   point: StoryPoint;
   cell: Cell;
   open: boolean;
-  fresh: boolean;
   selected: boolean;
-  /** Сколько монет показывать: задаётся пропорционально выручке точки. */
-  coins: number;
+  /** Площадка появилась после смены сценария или размера сети: подсвечивается две секунды. */
+  isNew: boolean;
   onToggle: (id: string) => void;
 };
 
-/** Точка сети на своём участке: до открытия — стройплощадка с номером месяца, после — здание по формату. */
-export const PointSprite = memo(function PointSprite({ point, cell, open, fresh, selected, coins, onToggle }: PointSpriteProps) {
+/**
+ * Точка сети на своём участке: до открытия — стройплощадка с номером месяца, после — здание по формату.
+ * В момент открытия здание за полторы секунды «вырастает» внутри каркаса. Люди, монеты и дым — в верхнем слое (PointLife).
+ */
+export const PointSprite = memo(function PointSprite({ point, cell, open, selected, isNew, onToggle }: PointSpriteProps) {
   const kind = kindOf(point);
   const spec = kinds[kind];
+  const building = useBuilding(open);
   const label = open ? `${point.title}, ${spec.title}` : `${point.title}, откроется в ${point.openingMonth}-м месяце`;
   const onKeyDown = (event: KeyboardEvent<SVGGElement>) => {
     if (event.key !== "Enter" && event.key !== " ") return;
@@ -548,7 +669,7 @@ export const PointSprite = memo(function PointSprite({ point, cell, open, fresh,
   };
   return (
     <g
-      className={`iso-point is-${kind}${open ? " is-open" : " is-site"}${fresh ? " is-fresh" : ""}${selected ? " is-selected" : ""}`}
+      className={`iso-point is-${kind}${open ? " is-open" : " is-site"}${selected ? " is-selected" : ""}${isNew ? " is-new" : ""}`}
       transform={`translate(${screenX(cell.i, cell.j)} ${screenY(cell.i, cell.j)})`}
       role="button"
       tabIndex={0}
@@ -559,27 +680,22 @@ export const PointSprite = memo(function PointSprite({ point, cell, open, fresh,
     >
       <path className={open ? "iso-lot" : "iso-lot is-site"} d={lotPad} />
       {selected ? <path className="iso-ring" d={lotRing} /> : null}
+      {isNew ? <path className="iso-new-ring" d={lotRing} /> : null}
       {open ? (
         <>
-          <g className="iso-point-art">
-            {spec.art}
-            {kind === "works" ? (
-              <g transform="translate(0 -66)">
-                {[0, 1, 2].map((index) => <circle key={index} className="iso-smoke" r="4.5" style={{ animationDelay: `${-index * 1.1}s` }} />)}
-              </g>
-            ) : null}
-          </g>
-          <Staff count={Math.min(point.staffOnShift, staffSpots.length)} />
-          <Coins count={coins} from={spec.coinsFrom} />
+          {building ? <g className="iso-build-scaffold">{spec.site.back}</g> : null}
+          <g className={building ? "iso-point-art is-building" : "iso-point-art"}>{spec.art}</g>
+          {building ? (
+            <>
+              <g className="iso-build-scaffold">{spec.site.front}</g>
+              <BuildFx top={spec.top} />
+            </>
+          ) : null}
         </>
       ) : (
         <>
-          {spec.site}
-          <g className="iso-site-sign" transform={`translate(0 ${-SITE_TOP - 13})`}>
-            <path className="iso-site-board" d="M-4.5 7h9l-4.5 6.5z" />
-            <rect className="iso-site-board" x="-17" y="-8" width="34" height="16" rx="5.5" />
-            <text className="iso-site-month" y="4" textAnchor="middle">М{point.openingMonth}</text>
-          </g>
+          {spec.site.back}
+          {spec.site.front}
         </>
       )}
       <path className="iso-hit" d={open ? spec.hit : siteHit} />
@@ -587,24 +703,77 @@ export const PointSprite = memo(function PointSprite({ point, cell, open, fresh,
   );
 });
 
-/** Отметка выбранной точки: стрелка над зданием и подпись; рисуется поверх всего. Рамка участка лежит под самим зданием. */
+type PointLifeProps = {
+  point: StoryPoint;
+  cell: Cell;
+  open: boolean;
+  /** Сколько монет показывать: задаётся пропорционально выручке точки. */
+  coins: number;
+  /** Сколько гостей идёт к точке: задаётся пропорционально чекам в день. */
+  guests: number;
+};
+
+/**
+ * Жизнь у открытой точки — смена, гости, монеты и дым. Рисуется в верхнем слое и только когда камера близко:
+ * там бесконечные анимации перерисовывают несколько десятков фигур, а не весь город. Во время стройки её нет.
+ */
+export const PointLife = memo(function PointLife({ point, cell, open, coins, guests }: PointLifeProps) {
+  const kind = kindOf(point);
+  const spec = kinds[kind];
+  const building = useBuilding(open);
+  if (!open || building) return null;
+  return (
+    <g className="iso-life" transform={`translate(${screenX(cell.i, cell.j)} ${screenY(cell.i, cell.j)})`}>
+      {kind === "works" ? (
+        <g transform="translate(0 -66)">
+          {[0, 1, 2].map((index) => <circle key={index} className="iso-smoke" r="4.5" style={{ animationDelay: `${-index * 1.1}s` }} />)}
+        </g>
+      ) : null}
+      <Staff spots={spec.staff} count={Math.min(point.staffOnShift, STAFF_SHOWN_MAX)} />
+      <Coins count={coins} from={spec.coinsFrom} />
+      <Guests door={spec.door} count={guests} />
+    </g>
+  );
+});
+
+/**
+ * Табличка стройплощадки с месяцем открытия. Висит в верхнем слое — над людьми и монетами соседних точек —
+ * и нажимается так же, как сама площадка.
+ */
+export const SiteSign = memo(function SiteSign({ point, cell, onToggle }: { point: StoryPoint; cell: Cell; onToggle: (id: string) => void }) {
+  return (
+    <g
+      className="iso-site-sign"
+      transform={`translate(${screenX(cell.i, cell.j)} ${screenY(cell.i, cell.j) - SITE_TOP - 13})`}
+      onClick={() => onToggle(point.id)}
+    >
+      <path className="iso-site-board" d="M-4.5 7h9l-4.5 6.5z" />
+      <rect className="iso-site-board" x="-17" y="-8" width="34" height="16" rx="5.5" />
+      <text className="iso-site-month" y="4" textAnchor="middle">М{point.openingMonth}</text>
+    </g>
+  );
+});
+
+/**
+ * Отметка выбранной точки: подпись со стрелкой над зданием; рисуется поверх всего. Рамка участка лежит под самим зданием.
+ * camera — кадр «сеть целиком»: в нём подпись не уходит за край.
+ */
 export function Selection({ point, cell, open, camera }: { point: StoryPoint; cell: Cell; open: boolean; camera: Camera }) {
   const x = screenX(cell.i, cell.j);
-  const y = screenY(cell.i, cell.j);
   const kind = kindOf(point);
-  // У цеха стрелка встаёт над трубой, у стройплощадки — над табличкой с месяцем.
-  const top = !open ? SITE_TOP + 24 : kind === "works" ? 92 : kinds[kind].top;
-  const width = point.title.length * 6.6 + 18;
+  // У цеха подпись встаёт над трубой, у стройплощадки — над табличкой с месяцем.
+  const top = !open ? SITE_TOP + 24 : kind === "works" ? 70 : kinds[kind].top;
+  const width = point.title.length * 6.6 + 20;
   const tagX = Math.max(camera.x + 6 + width / 2, Math.min(camera.x + camera.w - 6 - width / 2, x));
-  const tagY = Math.min(camera.y + camera.h - 16, y + 52);
+  const y = Math.max(camera.y + 18, screenY(cell.i, cell.j) - top - 24);
   return (
     <g className="iso-selection">
-      <g transform={`translate(${x} ${Math.max(camera.y + 12, y - top - 12)})`}>
-        <path className="iso-pin" d="M-7 -5h14l-7 10z" />
-      </g>
-      <g transform={`translate(${tagX} ${tagY})`}>
-        <rect className="iso-tag" x={-width / 2} y="-10" width={width} height="20" rx="10" />
-        <text className="iso-tag-text" y="4.2" textAnchor="middle">{point.title}</text>
+      <g transform={`translate(0 ${y})`}>
+        <g className="iso-callout">
+          <path className="iso-tag" d={`M${Math.max(tagX - width / 2 + 10, Math.min(tagX + width / 2 - 10, x)) - 6} 9h12l-6 8z`} />
+          <rect className="iso-tag" x={tagX - width / 2} y="-10" width={width} height="20" rx="10" />
+          <text className="iso-tag-text" x={tagX} y="4.2" textAnchor="middle">{point.title}</text>
+        </g>
       </g>
     </g>
   );

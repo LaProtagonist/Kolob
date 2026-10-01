@@ -42,22 +42,138 @@
 
 .iso-stage {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 300px;
-  gap: 14px;
+  grid-template-columns: minmax(0, 1fr) 330px;
+  grid-template-areas: "change card" "screen card" "legend card";
+  gap: 10px 14px;
   align-items: start;
 }
 
-.iso-board { min-width: 0; }
+/* Рамка и скругление — у контейнера: так город и верхний слой совпадают до пикселя. */
+.iso-screen {
+  grid-area: screen;
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: 24px;
+  border: 1px solid var(--tone-171717-a10);
+  touch-action: pan-y;
+}
+
+/* Верхний слой: свой слой композиции, его анимации не перерисовывают город. */
+.iso-life-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Строка над сценой: точки, вложения, возврат; после смены сценария или размера сети — «было → стало». */
+.iso-change {
+  grid-area: change;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 14px;
+  min-height: 24px;
+  padding: 0 4px;
+  color: var(--tone-646464);
+  font-size: 0.86rem;
+  line-height: 1.35;
+}
+
+.iso-change-cause { color: var(--tone-171717); font-weight: 800; }
+.iso-change.is-changed .iso-change-cause { animation: iso-chip 0.35s ease-out; }
+.iso-change-fact b { color: var(--tone-171717); font-variant-numeric: tabular-nums; }
+.iso-change-fact.is-diff b { color: var(--tone-b86a24); animation: iso-flash 1.4s ease-out; }
+.iso-change-was { font-variant-numeric: tabular-nums; }
+
+/* Кнопки камеры: «одна точка вблизи» и «сеть целиком». */
+.iso-zoom {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  display: grid;
+  gap: 6px;
+}
+
+.iso-zoom button {
+  width: 40px;
+  height: 40px;
+  padding: 10px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(23, 23, 23, 0.84);
+  fill: #ffffff;
+  cursor: pointer;
+}
+
+.iso-zoom svg { display: block; width: 100%; height: 100%; }
+
+/* Подписи и «пуск» поверх картинки: одинаковы в обеих темах. */
+.iso-hud {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  max-width: calc(100% - 76px);
+  pointer-events: none;
+}
+
+.iso-hud-events {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  display: grid;
+  justify-items: start;
+  gap: 6px;
+  max-width: calc(100% - 76px);
+  pointer-events: none;
+}
+
+.iso-hud-chip {
+  padding: 6px 11px;
+  border-radius: 999px;
+  background: rgba(23, 23, 23, 0.84);
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.iso-hud-chip.is-date { display: flex; align-items: baseline; gap: 7px; font-variant-numeric: tabular-nums; }
+.iso-hud-chip.is-date strong { font-size: 0.92rem; }
+.iso-hud-chip.is-date span { font-weight: 400; opacity: 0.78; }
+.iso-hud-chip.is-event { background: #f7b91e; color: #171717; animation: iso-chip 0.3s ease-out; }
+.iso-hud-chip.is-payback { background: #2f6b3f; color: #ffffff; animation: iso-chip 0.3s ease-out; }
+
+.iso-hud-play {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 44px;
+  height: 44px;
+  padding: 12px;
+  border: 0;
+  border-radius: 50%;
+  background: #f7b91e;
+  fill: #171717;
+  cursor: pointer;
+}
+
+.iso-hud-play svg { display: block; width: 100%; height: 100%; }
 
 .iso-scene {
   display: block;
   width: 100%;
   height: auto;
-  border-radius: 24px;
-  border: 1px solid var(--tone-171717-a10);
   user-select: none;
   -webkit-tap-highlight-color: transparent;
 }
+
+.iso-screen.is-zoomed .iso-scene { cursor: grab; }
+.iso-screen.is-dragging .iso-scene { cursor: grabbing; }
+.iso-site-sign { cursor: pointer; pointer-events: auto; }
 
 .iso-backdrop,
 .iso-house,
@@ -132,8 +248,6 @@
 .iso-boat-cabin-r { fill: var(--tone-c63b3b); }
 .iso-boat-wake { fill: none; stroke: var(--tone-e3f2f9); stroke-width: 2; stroke-linecap: round; stroke-dasharray: 5 4; }
 
-.iso-tram { animation: iso-drive 34s linear infinite; }
-.iso-car { animation: iso-drive 27s linear infinite reverse; animation-delay: -9s; }
 .iso-boat { animation: iso-sail 46s ease-in-out infinite alternate; }
 
 /* Здания сети. */
@@ -172,11 +286,24 @@
   animation: iso-smoke 3.3s ease-out infinite;
 }
 
-.iso-fig { animation: iso-bob 1.5s ease-in-out infinite; }
+/* Люди: смена в жёлтой форме и колпаках стоит у фасадов, гости идут по тротуару ко входу и обратно. */
+.iso-life { animation: iso-arrive 0.4s ease-out; }
 .iso-fig-legs { fill: var(--tone-4a3a2c); }
 .iso-fig-body { fill: var(--tone-f7b91e); stroke: var(--tone-b86a24); stroke-width: 0.6; }
+.iso-fig-body.is-guest-0 { fill: var(--tone-4f8fd6); stroke: none; }
+.iso-fig-body.is-guest-1 { fill: var(--tone-d64545); stroke: none; }
+.iso-fig-body.is-guest-2 { fill: var(--tone-8e6fd0); stroke: none; }
 .iso-fig-head { fill: var(--tone-e0a878); }
 .iso-fig-hat { fill: var(--fixed-white); stroke: var(--tone-b9b2a2); stroke-width: 0.5; }
+.iso-fig-bag { fill: var(--tone-f7b91e); stroke: var(--tone-b86a24); stroke-width: 0.6; }
+
+.iso-guests { pointer-events: none; }
+.iso-guest {
+  transform: translate(var(--xs), var(--ys));
+  animation-name: iso-walk;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
 
 .iso-coin { fill: var(--tone-ffd34d); stroke: var(--tone-b86a24); stroke-width: 0.9; }
 .iso-coin-mark { fill: none; stroke: var(--tone-b86a24); stroke-width: 0.8; stroke-linecap: round; }
@@ -187,10 +314,22 @@
   animation: iso-coin 2.8s ease-out infinite;
 }
 
-.iso-point.is-fresh .iso-point-art {
+/* Открытие точки: здание растёт снизу вверх внутри каркаса, затем кран и ограждение уходят. */
+.iso-point-art.is-building { animation: iso-build 1.05s cubic-bezier(0.45, 0, 0.55, 1) both; }
+.iso-build-scaffold { animation: iso-scaffold-out 0.4s ease-in 1s both; }
+.iso-dust {
+  fill: var(--tone-d9d4c8);
+  opacity: 0;
   transform-box: fill-box;
-  transform-origin: 50% 100%;
-  animation: iso-pop 0.62s cubic-bezier(0.2, 1.4, 0.4, 1);
+  transform-origin: center;
+  animation: iso-dust 0.5s ease-out 2 both;
+}
+.iso-spark {
+  fill: var(--tone-ffd34d);
+  stroke: var(--tone-b86a24);
+  stroke-width: 0.6;
+  opacity: 0;
+  animation: iso-spark 0.5s ease-out 1s both;
 }
 
 /* Стройплощадка. */
@@ -206,26 +345,47 @@
 .iso-site-month { fill: var(--fixed-ink); font-size: 10.5px; font-weight: 900; font-variant-numeric: tabular-nums; }
 
 /* Выбранная точка. */
+.iso-new-ring {
+  fill: var(--tone-f7b91e-a30);
+  stroke: var(--tone-f7b91e);
+  stroke-width: 3;
+  stroke-linejoin: round;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: iso-new 0.5s ease-in-out 4 alternate both;
+}
+
 .iso-ring { fill: var(--tone-f7b91e-a22); stroke: var(--tone-b86a24); stroke-width: 2; stroke-dasharray: 6 4; stroke-linejoin: round; }
-.iso-pin { fill: var(--tone-f7b91e); stroke: var(--tone-b86a24); stroke-width: 1.4; stroke-linejoin: round; animation: iso-pin 1.1s ease-in-out infinite; }
+.iso-callout { animation: iso-pin 1.1s ease-in-out infinite; }
 .iso-tag { fill: var(--tone-171717); }
 .iso-tag-text { fill: var(--tone-ffffff); font-size: 11px; font-weight: 800; }
 
 .iso-legend {
+  grid-area: legend;
   display: flex;
   flex-wrap: wrap;
   gap: 6px 18px;
-  margin: 10px 2px 0;
+  margin: 0 2px;
   color: var(--tone-646464);
   font-size: 0.8rem;
 }
 
 .iso-legend span { display: inline-flex; align-items: center; gap: 7px; }
+.iso-legend .iso-legend-hint { flex-basis: 100%; color: var(--tone-171717); font-weight: 700; }
 .iso-legend i { flex: none; }
+.iso-legend-staff,
+.iso-legend-guest { position: relative; width: 9px; height: 10px; margin-top: 5px; border-radius: 4px 4px 2px 2px; }
+.iso-legend-staff { background: #f7b91e; }
+.iso-legend-guest { background: #4f8fd6; }
+.iso-legend-staff::before,
+.iso-legend-guest::before { content: ""; position: absolute; left: 1px; top: -6px; width: 7px; height: 7px; border-radius: 50%; }
+.iso-legend-staff::before { background: #ffffff; box-shadow: 0 0 0 1px #b9b2a2; }
+.iso-legend-guest::before { background: #e0a878; }
 .iso-legend-coin { width: 13px; height: 13px; border-radius: 50%; background: #ffd34d; border: 1.5px solid #b86a24; }
 .iso-legend-site { width: 22px; height: 13px; border-radius: 4px; background: #f7b91e; border: 1.5px solid #b86a24; }
 
 .iso-card {
+  grid-area: card;
   padding: 18px;
   border-radius: 18px;
   background: var(--tone-ffffff);
@@ -233,6 +393,16 @@
 }
 
 .iso-card h3 { margin: 0 0 4px; font-size: 1.2rem; }
+.iso-card h4 { margin: 0 0 6px; color: var(--tone-646464); font-size: 0.74rem; font-weight: 900; letter-spacing: 0.06em; text-transform: uppercase; }
+.iso-card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+.iso-status { flex: none; margin-top: 3px; padding: 3px 9px; border-radius: 999px; font-size: 0.72rem; font-weight: 800; }
+.iso-status.is-open { background: #2f6b3f; color: #ffffff; }
+.iso-status.is-site { background: #f7b91e; color: #171717; }
+.iso-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 0 0 14px; }
+.iso-facts > div { display: grid; align-content: start; gap: 1px; padding: 10px 11px; border-radius: 12px; background: var(--tone-171717-a08); }
+.iso-facts span { color: var(--tone-646464); font-size: 0.72rem; line-height: 1.25; }
+.iso-facts strong { font-size: 1rem; line-height: 1.25; font-variant-numeric: tabular-nums; }
+.iso-facts small { color: var(--tone-646464); font-size: 0.72rem; line-height: 1.25; }
 .iso-card p { margin: 0 0 12px; color: var(--tone-646464); font-size: 0.9rem; }
 .iso-card dl { display: grid; gap: 8px; margin: 0 0 12px; }
 .iso-card dl div { display: flex; justify-content: space-between; gap: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--tone-171717-a08); }
@@ -253,19 +423,9 @@
   gap: 14px;
 }
 
-@keyframes iso-drive {
-  from { transform: translate(-320px, -160px); }
-  to { transform: translate(320px, 160px); }
-}
-
 @keyframes iso-sail {
   from { transform: translate(-70px, -35px); }
   to { transform: translate(130px, 65px); }
-}
-
-@keyframes iso-bob {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-1.6px); }
 }
 
 @keyframes iso-coin {
@@ -281,10 +441,53 @@
   100% { transform: translate(9px, -24px) scale(1.7); opacity: 0; }
 }
 
-@keyframes iso-pop {
-  0% { transform: scale(0.25); opacity: 0; }
-  55% { transform: scale(1.1); opacity: 1; }
-  100% { transform: scale(1); }
+@keyframes iso-build {
+  from { clip-path: inset(100% -20% -20% -20%); }
+  to { clip-path: inset(-20% -20% -20% -20%); }
+}
+
+@keyframes iso-scaffold-out {
+  to { transform: translateY(-5px); opacity: 0; }
+}
+
+@keyframes iso-dust {
+  0% { transform: scale(0.4); opacity: 0; }
+  30% { opacity: 0.8; }
+  100% { transform: translateY(-4px) scale(1.6); opacity: 0; }
+}
+
+@keyframes iso-spark {
+  0% { transform: translate(0, 0) scale(0.3); opacity: 0; }
+  25% { opacity: 1; }
+  100% { transform: translate(var(--dx), var(--dy)) scale(1); opacity: 0; }
+}
+
+@keyframes iso-arrive {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes iso-walk {
+  0% { transform: translate(var(--x0), var(--y0)); opacity: 0; }
+  7% { opacity: 1; }
+  43% { transform: translate(var(--x1), var(--y1)); }
+  86% { transform: translate(var(--x2), var(--y2)); opacity: 1; }
+  100% { transform: translate(0, 0); opacity: 0; }
+}
+
+@keyframes iso-chip {
+  from { transform: translateY(-4px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes iso-new {
+  from { transform: scale(1.35); opacity: 0.25; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes iso-flash {
+  from { background: rgba(247, 185, 30, 0.45); }
+  to { background: transparent; }
 }
 
 @keyframes iso-pin {
@@ -292,18 +495,31 @@
   50% { transform: translateY(-4px); }
 }
 
-/* Без анимаций всё остаётся на местах: монеты сложены столбиком у здания, транспорт стоит. */
+/* Без анимаций всё остаётся на местах: монеты сложены столбиком у здания, гости стоят на тротуаре, транспорт стоит. */
 @media (prefers-reduced-motion: reduce) {
-  .iso-tram, .iso-car, .iso-boat, .iso-fig, .iso-smoke, .iso-coin-fly, .iso-pin, .iso-point.is-fresh .iso-point-art { animation: none; }
+  .iso-boat, .iso-smoke, .iso-coin-fly, .iso-callout, .iso-guest, .iso-life, .iso-hud-chip,
+  .iso-point-art.is-building, .iso-build-scaffold, .iso-dust, .iso-spark, .iso-new-ring,
+  .iso-change.is-changed .iso-change-cause, .iso-change-fact.is-diff b { animation: none; }
 }
 
 @media (max-width: 900px) {
   .iso-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .iso-stage, .iso-charts { grid-template-columns: 1fr; }
+  .iso-charts { grid-template-columns: 1fr; }
+  /* На узком экране карточка встаёт сразу под картинкой: после нажатия на здание она на виду. */
+  .iso-stage { grid-template-columns: minmax(0, 1fr); grid-template-areas: "change" "screen" "card" "legend"; gap: 12px; }
 }
 
 @media (max-width: 720px) {
-  .iso-scene { border-radius: 18px; }
+  .iso-screen { border-radius: 18px; }
+  .iso-hud { top: 8px; left: 8px; max-width: calc(100% - 64px); }
+  .iso-hud-events { left: 8px; bottom: 8px; gap: 5px; }
+  .iso-hud-chip { padding: 5px 9px; font-size: 0.72rem; }
+  .iso-hud-chip.is-date strong { font-size: 0.82rem; }
+  .iso-hud-play { top: 8px; right: 8px; }
+  .iso-hud-events { max-width: calc(100% - 64px); gap: 4px; }
+  .iso-hud-events .iso-hud-chip { padding: 4px 8px; font-size: 0.68rem; }
+  .iso-zoom { right: 8px; bottom: 8px; }
+  .iso-change { gap: 2px 12px; font-size: 0.8rem; }
   .iso-kpis > div { padding: 9px 10px; column-gap: 8px; }
   .iso-kpi-icon { width: 30px; height: 30px; padding: 6px; }
 }
