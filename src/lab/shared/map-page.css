@@ -1,0 +1,246 @@
+/* Общая страница карты лаборатории: строка «что происходит», цифры месяца, рамка карты, карточка точки. */
+
+.lab-mappage {
+  display: grid;
+  gap: 12px;
+}
+
+.lab-mappage .lab-controls {
+  margin-bottom: 0;
+}
+
+.lab-headline {
+  margin: 0;
+  font-size: 1.02rem;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--tone-171717);
+}
+
+.lab-change {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin: 0;
+  padding: 8px 14px;
+  border-radius: 12px;
+  background: var(--tone-fff3cf);
+  color: var(--tone-4a3a12);
+  font-size: 0.86rem;
+  animation: lab-change-in 0.35s ease-out;
+}
+
+.lab-change b {
+  color: var(--tone-9a5b00);
+}
+
+@keyframes lab-change-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: none; }
+}
+
+.lab-kpis {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.lab-kpis > div {
+  display: grid;
+  gap: 2px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: var(--tone-ffffff);
+  border: 1px solid var(--tone-171717-a10);
+}
+
+.lab-kpis span { color: var(--tone-646464); font-size: 0.74rem; }
+.lab-kpis strong { font-size: 1.08rem; font-variant-numeric: tabular-nums; }
+.lab-kpis .is-positive strong { color: var(--tone-2f6b3f); }
+.lab-kpis .is-negative strong { color: var(--tone-b91f2b); }
+
+.lab-mapgrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 14px;
+  align-items: start;
+}
+
+.lab-mapcol {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+/* Рамка карты. Пропорции совпадают с кадром камеры: 1,6 на широком экране, квадрат на телефоне. */
+.lab-map {
+  position: relative;
+  aspect-ratio: 1.6;
+  overflow: hidden;
+  border-radius: 22px;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: grab;
+}
+
+.lab-map.is-dragging { cursor: grabbing; }
+
+.lab-map-svg {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Два слоя: неподвижный город и верхний слой с движением. Каждый — своя картинка для видеокарты. */
+.lab-map-svg { will-change: transform; }
+.lab-map-svg.is-overlay { pointer-events: none; }
+.lab-map-svg.is-overlay .is-point { pointer-events: auto; }
+
+.lab-map-hit { fill: transparent; }
+.lab-map .is-static { pointer-events: none; }
+.lab-map .is-point { cursor: pointer; }
+
+/* Подробности, которые видны только вблизи, проявляются и тают плавно, без рывка. */
+.lab-map .is-detail {
+  opacity: 1;
+  transition: opacity 0.45s ease;
+}
+
+.lab-map[data-zoom="far"] .is-detail { opacity: 0; }
+
+.lab-map .is-far-only {
+  transition: opacity 0.45s ease;
+}
+
+.lab-map:not([data-zoom="far"]) .is-far-only { opacity: 0; }
+
+.lab-map-hud {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.lab-map-play,
+.lab-map-zoom button {
+  pointer-events: auto;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 50%;
+  background: #f7b91e;
+  color: #171717;
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 800;
+  box-shadow: 0 2px 8px rgba(23, 23, 23, 0.18);
+  cursor: pointer;
+}
+
+.lab-map-month {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(23, 23, 23, 0.78);
+  color: #ffffff;
+  font-size: 0.82rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.lab-map-zoom {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  display: grid;
+  gap: 6px;
+}
+
+.lab-map-zoom button {
+  width: 36px;
+  height: 36px;
+  background: #ffffff;
+  font-size: 1.1rem;
+}
+
+.lab-map-credit {
+  position: absolute;
+  right: 8px;
+  bottom: 6px;
+  padding: 2px 7px;
+  border-radius: 6px;
+  background: var(--tone-ffffff-a82);
+  color: var(--tone-3b3b3b);
+  font-size: 0.68rem;
+  text-decoration: none;
+}
+
+.lab-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  color: var(--tone-646464);
+  font-size: 0.8rem;
+}
+
+.lab-legend > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.lab-card {
+  padding: 18px;
+  border-radius: 18px;
+  background: var(--tone-ffffff);
+  border: 1px solid var(--tone-171717-a10);
+}
+
+.lab-card h3 { margin: 0 0 4px; font-size: 1.2rem; }
+.lab-card p { margin: 0 0 12px; color: var(--tone-646464); font-size: 0.9rem; }
+.lab-card dl { display: grid; gap: 8px; margin: 0 0 12px; }
+.lab-card dl div { display: flex; justify-content: space-between; gap: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--tone-171717-a08); }
+.lab-card dt { color: var(--tone-646464); font-size: 0.84rem; }
+.lab-card dd { margin: 0; font-weight: 700; text-align: right; font-variant-numeric: tabular-nums; }
+.lab-card ul { margin: 0 0 12px; padding-left: 18px; color: var(--tone-646464); font-size: 0.84rem; }
+.lab-card-note { font-size: 0.8rem; }
+
+.lab-card-close {
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid var(--tone-171717-a18);
+  border-radius: 9px;
+  background: transparent;
+  color: var(--tone-171717);
+  font: inherit;
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.lab-charts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.lab-mappage .lab-timeline { margin: 0; }
+
+@media (max-width: 720px) {
+  .lab-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .lab-mapgrid, .lab-charts { grid-template-columns: minmax(0, 1fr); }
+  .lab-map { aspect-ratio: 1; border-radius: 18px; }
+  .lab-headline { font-size: 0.94rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lab-change { animation: none; }
+  .lab-map .is-detail, .lab-map .is-far-only { transition: none; }
+}
