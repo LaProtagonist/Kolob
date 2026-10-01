@@ -1,0 +1,319 @@
+/*
+ * «Картон»: город из вырезанной бумаги — мягкие цвета, тени от слоёв, стёжка на садах.
+ * Все правила начинаются с .is-paper: рисунок одинаков в светлой и тёмной теме (список forceKeep
+ * в scripts/theme-tones.mjs). --lb увеличивает подписи на телефоне, --pb — фигурки.
+ */
+
+.is-paper.lab-map {
+  --lb: 1;
+  --pb: 1;
+  background: #c9a27e;
+}
+
+@media (max-width: 720px) {
+  .is-paper.lab-map { --lb: 1.45; --pb: 1.3; }
+}
+
+.is-paper .pp-table { fill: #c9a27e; }
+.is-paper .pp-sheet { fill: #f6eedf; }
+.is-paper .pp-sheet-shadow { fill: rgba(60, 40, 20, 0.28); }
+.is-paper .pp-plaza,
+.is-paper .pp-pt-plaza { fill: #f6eedf; }
+
+.is-paper .pp-house.is-a { fill: #f4d6c3; }
+.is-paper .pp-house.is-b { fill: #cfe3ee; }
+.is-paper .pp-house.is-c { fill: #f1e3a8; }
+.is-paper .pp-house.is-d { fill: #dcd3ee; }
+.is-paper .pp-house-roof.is-a { fill: #d98c6a; }
+.is-paper .pp-house-roof.is-b { fill: #7f9fc0; }
+.is-paper .pp-house-roof.is-c { fill: #c9a35a; }
+.is-paper .pp-house-roof.is-d { fill: #9a88c4; }
+.is-paper .pp-house-fold { fill: rgba(40, 25, 10, 0.16); }
+
+.is-paper .pp-park { fill: #a8cf8e; }
+.is-paper .pp-park-shadow { fill: rgba(60, 40, 20, 0.2); }
+
+.is-paper .pp-stitch {
+  fill: none;
+  stroke: #f6fbef;
+  stroke-width: 1.3px;
+  stroke-dasharray: 4 3;
+  vector-effect: non-scaling-stroke;
+}
+
+.is-paper .pp-water { fill: #8ec9e8; }
+
+.is-paper .pp-bank-shadow {
+  fill: none;
+  stroke: rgba(20, 50, 90, 0.22);
+  stroke-width: 22px;
+  stroke-linejoin: round;
+}
+
+.is-paper .pp-ripple {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.7);
+  stroke-width: 1.2px;
+  stroke-dasharray: 2 7;
+  vector-effect: non-scaling-stroke;
+}
+
+.is-paper .pp-tape,
+.is-paper .pp-tape-shadow,
+.is-paper .pp-bridge,
+.is-paper .pp-bridge-shadow {
+  fill: none;
+  stroke-linejoin: round;
+}
+
+.is-paper .pp-tape { stroke: #fffaf0; stroke-width: 30px; stroke-linecap: round; }
+.is-paper .pp-tape-shadow { stroke: rgba(60, 40, 20, 0.16); stroke-width: 30px; stroke-linecap: round; }
+.is-paper .pp-tape.is-minor,
+.is-paper .pp-tape-shadow.is-minor { stroke-width: 15px; }
+.is-paper .pp-bridge { stroke: #e9c27f; stroke-width: 42px; stroke-linecap: butt; }
+.is-paper .pp-bridge-shadow { stroke: rgba(60, 40, 20, 0.22); stroke-width: 42px; stroke-linecap: butt; }
+
+.is-paper .pp-label {
+  font-family: inherit;
+  font-weight: 800;
+  paint-order: stroke;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+.is-paper .pp-label.is-district {
+  font-size: calc(var(--map-z, 1) * var(--lb) * 240px);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  fill: #7a5230;
+  stroke: #f6eedf;
+  stroke-width: calc(var(--map-z, 1) * var(--lb) * 40px);
+}
+
+.is-paper .pp-label.is-water,
+.is-paper .pp-label.is-canal {
+  font-style: italic;
+  fill: #ffffff;
+  stroke: #3d7fae;
+}
+
+.is-paper .pp-label.is-water {
+  font-size: calc(var(--map-z, 1) * var(--lb) * 165px);
+  stroke-width: calc(var(--map-z, 1) * var(--lb) * 28px);
+}
+
+.is-paper .pp-label.is-canal {
+  font-size: calc(var(--map-z, 1) * var(--lb) * 118px);
+  stroke-width: calc(var(--map-z, 1) * var(--lb) * 22px);
+}
+
+.is-paper .pp-lm-scale {
+  transform: scale(calc(var(--map-k, 1) * var(--pb) * 4.2));
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+.is-paper .pp-lm-title {
+  font-family: inherit;
+  font-size: calc(var(--map-z, 1) * var(--lb) * 115px);
+  font-weight: 700;
+  fill: #4a3524;
+  stroke: #f6eedf;
+  stroke-width: calc(var(--map-z, 1) * var(--lb) * 22px);
+  paint-order: stroke;
+  dominant-baseline: hanging;
+  transform: translateY(calc(var(--map-k, 1) * 70px));
+  pointer-events: none;
+}
+
+/* Вырезанные силуэты: без обводки, с тонкой белой кромкой среза. */
+.is-paper .lm path,
+.is-paper .pt path,
+.is-paper .pt-site path {
+  stroke: rgba(255, 255, 255, 0.85);
+  stroke-width: 1.1px;
+  stroke-linejoin: round;
+}
+
+.is-paper .lm .lm-window { stroke: none; }
+
+.is-paper .lm-wall { fill: #f7e2b0; }
+.is-paper .lm-wall-side { fill: #ead09a; }
+.is-paper .lm-roof { fill: #8a9bb0; }
+.is-paper .lm-white { fill: #fffdf7; }
+.is-paper .lm-window { fill: #6d7f99; }
+.is-paper .lm-gold { fill: #e8b84a; }
+.is-paper .lm-stone { fill: #e6dfd1; }
+.is-paper .lm-stone-dark { fill: #b3bcc6; }
+.is-paper .lm-accent { fill: #f19b7c; }
+.is-paper .lm-accent-2 { fill: #8fcf9a; }
+.is-paper .lm-accent-3 { fill: #8cc4ec; }
+.is-paper .lm-accent-dark { fill: #a35a43; }
+.is-paper .lm-flame { fill: #f08a4b; }
+.is-paper .lm-hull,
+.is-paper .lm-mast { fill: #5b6675; }
+.is-paper .lm-flag { fill: #e06c75; }
+.is-paper .lm-door { fill: #a0724a; }
+
+.is-paper .lm[data-kind="palace"] .lm-wall { fill: #9fdcc4; }
+.is-paper .lm[data-kind="palace"] .lm-wall-side { fill: #84cdb1; }
+.is-paper .lm[data-kind="castle"] .lm-accent { fill: #f2a27f; }
+.is-paper .lm[data-kind="theatre"] .lm-accent { fill: #a8dbd5; }
+.is-paper .lm[data-kind="baroque"] .lm-accent { fill: #a5d0f5; }
+.is-paper .lm[data-kind="onion"] .lm-wall { fill: #e07b6f; }
+.is-paper .lm[data-kind="onion"] .lm-accent { fill: #f59fb2; }
+.is-paper .lm[data-kind="column"] .lm-accent { fill: #d99b8b; }
+.is-paper .lm[data-kind="rostral"] .lm-accent { fill: #d07a62; }
+.is-paper .lm[data-kind="station"] .lm-wall { fill: #f7e8be; }
+.is-paper .lm[data-kind="fortress"] .lm-wall { fill: #f4dcb4; }
+
+/* Бумажные кораблики покачиваются на волне. */
+.is-paper .pp-boat-scale { transform: scale(calc(var(--map-k, 1) * var(--pb) * 3.4)); }
+
+.is-paper .pp-boat-rock {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: pp-rock 2.6s ease-in-out infinite;
+}
+
+@keyframes pp-rock {
+  0%, 100% { transform: rotate(-6deg); }
+  50% { transform: rotate(6deg); }
+}
+
+.is-paper .pp-boat-hull { fill: #f3efe6; }
+.is-paper .pp-boat-sail { fill: #ffffff; }
+.is-paper .pp-boat-sail-2 { fill: #e8e2d4; }
+.is-paper .pp-boat-shadow { fill: rgba(20, 50, 90, 0.25); }
+
+.is-paper .pp-clouds { pointer-events: none; }
+
+.is-paper .pp-cloud { animation: pp-drift 220s linear infinite; }
+
+@keyframes pp-drift {
+  from { transform: translateX(-5200px); }
+  to { transform: translateX(5200px); }
+}
+
+.is-paper .pp-cloud-body { fill: rgba(255, 255, 255, 0.86); }
+.is-paper .pp-cloud-shadow { fill: rgba(60, 40, 20, 0.12); }
+
+/* Точки сети: раскладные домики. */
+.is-paper .pp-pt-scale {
+  transform: scale(calc(var(--map-k, 1) * var(--pb) * 6.4));
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+.is-paper .pt-wall { fill: #ffd86b; }
+.is-paper .pt[data-look="base"] .pt-wall { fill: #f6a96b; }
+.is-paper .pt-roof { fill: #ee8466; }
+.is-paper .pt-awning { fill: #f27a8a; }
+.is-paper .pt-window { fill: #d9eef8; }
+.is-paper .pt-door { fill: #a0724a; }
+.is-paper .pt-chimney { fill: #b07b5c; }
+.is-paper .pt-sign-face { fill: #ffd86b; }
+.is-paper .pt .pt-sign-eyes { fill: #3b3226; stroke: none; }
+.is-paper .pt .pt-sign-smile { fill: none; stroke: #3b3226; stroke-width: 1.3px; }
+
+.is-paper .pt-site-fence { fill: #f2c14e; }
+.is-paper .pt-site path.pt-site-frame { fill: none; stroke: #8b97a6; stroke-width: 1.2px; }
+.is-paper .pt-site-crane { fill: #f2c14e; }
+.is-paper .pt-site-hook { fill: #3b3226; }
+
+.is-paper .pt-lot {
+  fill: rgba(255, 255, 255, 0.55);
+  stroke: #a0724a;
+  stroke-width: 2px;
+  stroke-dasharray: 4 4;
+}
+
+.is-paper .pp-pt-tag rect {
+  fill: #fffaf0;
+  stroke: #a0724a;
+  stroke-width: 1px;
+  vector-effect: non-scaling-stroke;
+}
+
+.is-paper .pp-pt-tag text {
+  fill: #7a5230;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.is-paper .pp-pt-ring {
+  fill: rgba(255, 216, 107, 0.45);
+  stroke: #e06c75;
+  stroke-width: 2.5px;
+  stroke-dasharray: 6 4;
+  vector-effect: non-scaling-stroke;
+}
+
+.is-paper .pp-pt-title {
+  font-family: inherit;
+  font-size: calc(var(--map-z, 1) * var(--lb) * 150px);
+  font-weight: 800;
+  fill: #4a3524;
+  stroke: #f6eedf;
+  stroke-width: calc(var(--map-z, 1) * var(--lb) * 30px);
+  paint-order: stroke;
+  stroke-linejoin: round;
+  dominant-baseline: hanging;
+  transform: translateY(calc(var(--map-k, 1) * var(--pb) * 80px));
+  pointer-events: none;
+}
+
+/* Открылась — раскрылась, как страница книжки-раскладушки. */
+.is-paper .pp-point.is-fresh .pp-pt-pop {
+  animation: pp-popup 0.8s cubic-bezier(0.2, 1.5, 0.4, 1) both;
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+@keyframes pp-popup {
+  from { transform: scaleY(0.05); }
+  to { transform: scaleY(1); }
+}
+
+.is-paper .pp-smoke circle {
+  fill: rgba(255, 255, 255, 0.95);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pp-smoke 3.4s ease-out infinite;
+}
+
+.is-paper .pp-smoke circle:nth-child(2) { animation-delay: -1.7s; }
+
+@keyframes pp-smoke {
+  0% { transform: translate(0, 0) scale(0.6); opacity: 0.95; }
+  100% { transform: translate(12px, -44px) scale(1.6); opacity: 0; }
+}
+
+/* Тень вырезанной фигурки: копия силуэта, сдвинутая вправо и вниз. Стоит последней, чтобы перекрыть цвета частей. */
+.is-paper .pp-cutout-shadow path,
+.is-paper .pp-cutout-shadow circle {
+  fill: rgba(60, 40, 20, 0.22);
+  stroke: none;
+}
+
+.pp-key {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  box-shadow: 2px 2px 0 rgba(60, 40, 20, 0.25);
+}
+
+.pp-key.is-base { background: #f6a96b; }
+.pp-key.is-hall { background: #ffd86b; border-radius: 7px 7px 2px 2px; }
+.pp-key.is-kiosk { background: #ffd86b; }
+.pp-key.is-site { background: #f2c14e; }
+.pp-key.is-lot { background: transparent; border: 1.5px dashed var(--tone-a0724a); box-shadow: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .is-paper .pp-boat-rock,
+  .is-paper .pp-cloud,
+  .is-paper .pp-smoke circle,
+  .is-paper .pp-point.is-fresh .pp-pt-pop { animation: none; }
+}
