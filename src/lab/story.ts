@@ -17,8 +17,11 @@ import {
 } from "../lib/network-planning";
 import { baseObjectFinancialProjection, type NetworkPointCohortProjection, type NetworkScalingItem } from "../lib/network-scaling";
 
-/** Координаты района на условной карте центра Петербурга, в долях от 0 до 1. */
-export type StoryPlace = { id: string; title: string; x: number; y: number };
+/**
+ * Где стоит район. x и y — место на условной карте центра Петербурга в долях от 0 до 1
+ * (прежние варианты); lat и lon — та же точка на настоящей карте (широта и долгота).
+ */
+export type StoryPlace = { id: string; title: string; x: number; y: number; lat: number; lon: number };
 
 export type StoryStaffRole = { name: string; count: number };
 
@@ -125,18 +128,23 @@ export type NetworkStory = {
   isPartial: boolean;
 };
 
+// Настоящие места районов выбраны по смыслу их названий в калькуляторе: Лиговский 21 — по адресу,
+// Невский — у Гостиного двора, ресторанный центр — улица Рубинштейна, исторический центр — Сенная,
+// Коломна — у Никольского собора. Поправить место района — поменять lat и lon здесь.
 const places: Record<string, StoryPlace> = {
-  "ligovsky-21-flagship": { id: "ligovsky-21-flagship", title: "Лиговский 21", x: 0.74, y: 0.52 },
-  "nevsky-premium": { id: "nevsky-premium", title: "Невский", x: 0.5, y: 0.4 },
-  "central-high-traffic": { id: "central-high-traffic", title: "Ресторанный центр", x: 0.62, y: 0.66 },
-  "historic-center-core": { id: "historic-center-core", title: "Исторический центр", x: 0.42, y: 0.58 },
-  "historic-center-value": { id: "historic-center-value", title: "Коломна", x: 0.2, y: 0.7 },
+  "ligovsky-21-flagship": { id: "ligovsky-21-flagship", title: "Лиговский 21", x: 0.74, y: 0.52, lat: 59.9346, lon: 30.3626 },
+  "nevsky-premium": { id: "nevsky-premium", title: "Невский", x: 0.5, y: 0.4, lat: 59.9341, lon: 30.3318 },
+  "central-high-traffic": { id: "central-high-traffic", title: "Ресторанный центр", x: 0.62, y: 0.66, lat: 59.9297, lon: 30.3447 },
+  "historic-center-core": { id: "historic-center-core", title: "Исторический центр", x: 0.42, y: 0.58, lat: 59.9268, lon: 30.3178 },
+  "historic-center-value": { id: "historic-center-value", title: "Коломна", x: 0.2, y: 0.7, lat: 59.9228, lon: 30.2985 },
 };
+// Районы, которых нет в списке выше (группа, собранная в калькуляторе вручную): Петроградка,
+// Васильевский, Чернышевская, Технологический институт.
 const spare: StoryPlace[] = [
-  { id: "spare-1", title: "Новый район", x: 0.3, y: 0.3 },
-  { id: "spare-2", title: "Новый район", x: 0.84, y: 0.3 },
-  { id: "spare-3", title: "Новый район", x: 0.86, y: 0.78 },
-  { id: "spare-4", title: "Новый район", x: 0.12, y: 0.44 },
+  { id: "spare-1", title: "Новый район", x: 0.3, y: 0.3, lat: 59.9588, lon: 30.3128 },
+  { id: "spare-2", title: "Новый район", x: 0.84, y: 0.3, lat: 59.9446, lon: 30.3592 },
+  { id: "spare-3", title: "Новый район", x: 0.86, y: 0.78, lat: 59.9168, lon: 30.3186 },
+  { id: "spare-4", title: "Новый район", x: 0.12, y: 0.44, lat: 59.9407, lon: 30.2826 },
 ];
 
 const number = (value: number | null | undefined) => (typeof value === "number" && Number.isFinite(value) ? value : 0);

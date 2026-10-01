@@ -12,3 +12,4 @@ reference
 runtime-data
 .cache/verification/
 .cache/prerender-review/
+.cache/osm/
