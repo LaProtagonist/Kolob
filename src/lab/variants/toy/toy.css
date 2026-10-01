@@ -1,5 +1,21 @@
 /* Вариант «Настольная игра»: касса, поле с дорожкой месяцев и районами, фишки-домики, карточки точки. */
 
+/* ---- Режим: просмотр расчётного плана или своя игра ------------------------------------------ */
+.toy-mode {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  margin-bottom: 14px;
+}
+
+.toy-mode p {
+  flex: 1 1 260px;
+  margin: 0;
+  color: var(--tone-6b6152);
+  font-size: 0.82rem;
+}
+
 /* ---- Касса --------------------------------------------------------------------------------- */
 .toy-bank {
   margin-bottom: 14px;
@@ -69,7 +85,9 @@
 .toy-stage {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 330px;
-  grid-template-areas: "table hand" "time hand";
+  grid-template-areas: "table hand" "time hand" "charts hand";
+  /* Колонка с ходом и карточками бывает выше поля: лишняя высота уходит под графики, а не между полем и шкалой. */
+  grid-template-rows: auto auto 1fr;
   align-items: start;
   column-gap: 16px;
 }
@@ -77,6 +95,7 @@
 .toy-table { grid-area: table; min-width: 0; }
 .toy-time { grid-area: time; min-width: 0; }
 .toy-hand { grid-area: hand; min-width: 0; }
+.toy-charts { grid-area: charts; min-width: 0; align-self: start; }
 
 .toy-board {
   display: block;
@@ -145,6 +164,12 @@
 .toy-slot path { fill: none; stroke: var(--tone-8d7f66); stroke-width: 2.6; stroke-dasharray: 6 5; stroke-linejoin: round; stroke-linecap: round; }
 .toy-slot text { fill: var(--tone-4b4032); font-size: 17px; font-weight: 800; text-anchor: middle; }
 
+/* Свободное место в районе: в игре сюда ставится новая точка */
+.toy-add .toy-slot path { stroke: var(--tone-d99a00); stroke-width: 3.2; }
+.toy-add .toy-slot text { fill: var(--tone-b86a24); font-size: 28px; }
+.toy-add:hover .toy-token-ring,
+.toy-add:focus-visible .toy-token-ring { opacity: 1; }
+
 .toy-pawn-place { transition: transform 0.36s cubic-bezier(0.3, 1.3, 0.5, 1); }
 
 .toy-piece { background: #f7b91e; }
@@ -169,6 +194,7 @@
 .toy-piece.toy-stack .is-format { fill: #f2a65a; }
 .toy-piece.toy-stack .is-team { fill: #4f9be8; }
 .toy-piece.toy-stack .is-guests { fill: #3fbf62; }
+.toy-piece.toy-stack .is-inventory { fill: #ae7bf2; }
 
 .toy-piece .toy-pawn-body { fill: #f7b91e; }
 .toy-piece .toy-pawn-shade { fill: #e79f12; }
@@ -258,6 +284,7 @@
 
 .toy-card:nth-child(2) { transform: rotate(0.5deg); }
 .toy-card:nth-child(3) { transform: rotate(-0.3deg); }
+.toy-card:nth-child(4) { transform: rotate(0.4deg); }
 
 .toy-card-band {
   margin: 0;
@@ -272,6 +299,7 @@
 
 .toy-card.is-team .toy-card-band { background: #4f9be8; color: #2b2118; }
 .toy-card.is-guests .toy-card-band { background: #3fbf62; color: #2b2118; }
+.toy-card.is-inventory .toy-card-band { background: #ae7bf2; color: #2b2118; }
 
 .toy-card-body { padding: 12px 16px 14px; }
 .toy-card-lead { display: block; font-size: 1.05rem; line-height: 1.2; }
@@ -290,6 +318,119 @@
 
 .toy-flow { height: 12px; margin-top: 10px; border-radius: 6px; background: var(--tone-171717-a08); overflow: hidden; }
 .toy-flow i { display: block; height: 100%; border-radius: 6px; background: #3fbf62; }
+
+.toy-inventory { display: grid; gap: 7px; margin: 10px 0 0; padding: 0; list-style: none; font-size: 0.86rem; }
+.toy-inventory summary,
+.toy-inventory-row { display: flex; justify-content: space-between; gap: 12px; }
+.toy-inventory summary { cursor: pointer; list-style: none; }
+.toy-inventory summary::-webkit-details-marker { display: none; }
+.toy-inventory summary span { padding-left: 1.1em; text-indent: -1.1em; }
+.toy-inventory summary span::before { content: "▸"; display: inline-block; width: 1.1em; text-indent: 0; }
+.toy-inventory details[open] summary span::before { content: "▾"; }
+.toy-inventory-row span { padding-left: 1.1em; }
+.toy-inventory b { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.toy-inventory details ul { display: grid; gap: 3px; margin: 6px 0 4px; padding-left: 2.1em; color: var(--tone-6b6152); font-size: 0.8rem; }
+
+/* ---- Своя игра: ход, районы на выбор, итог партии --------------------------------------------- */
+.toy-game {
+  margin-bottom: 16px;
+  padding: 14px 16px 16px;
+  border: 1px solid var(--tone-171717-a10);
+  border-radius: 18px;
+  background: var(--tone-fffdf7);
+}
+
+.toy-game-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
+.toy-game-head h3 { margin: 0; font-size: 1.15rem; }
+.toy-game-actions,
+.toy-move { display: flex; flex-wrap: wrap; gap: 6px; }
+
+.toy-game-actions button,
+.toy-move button {
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1px solid var(--tone-171717-a18);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--tone-171717);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.toy-move { justify-content: center; margin-bottom: 12px; }
+.toy-move button.is-remove { color: var(--tone-c2412d); }
+.toy-move-note,
+.toy-game-note { margin: 0 0 12px; color: var(--tone-6b6152); font-size: 0.8rem; text-align: center; }
+.toy-game-note { margin: 12px 0 0; text-align: left; }
+
+.toy-game button:disabled,
+.toy-move button:disabled { opacity: 0.4; cursor: default; }
+
+.toy-game-when {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 4px 12px;
+  margin-top: 12px;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.toy-game-when small { grid-column: 1 / -1; color: var(--tone-6b6152); font-size: 0.76rem; font-weight: 400; }
+.toy-stepper { display: inline-flex; align-items: center; gap: 8px; }
+.toy-stepper strong { min-width: 3.2em; font-size: 1.1rem; text-align: center; font-variant-numeric: tabular-nums; }
+
+.toy-stepper button {
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 50%;
+  background: #f7b91e;
+  color: #171717;
+  font: inherit;
+  font-size: 1.3rem;
+  font-weight: 900;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.toy-offers { display: grid; margin: 12px 0 0; padding: 0; list-style: none; }
+
+.toy-offers li {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-top: 1px solid var(--tone-171717-a08);
+}
+
+.toy-offers svg { width: 38px; height: 38px; }
+.toy-offers li > div { display: grid; gap: 1px; min-width: 0; }
+.toy-offers strong { font-size: 0.95rem; }
+.toy-offers span { color: var(--tone-6b6152); font-size: 0.76rem; line-height: 1.3; }
+
+.toy-offers button {
+  min-height: 40px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 12px;
+  background: #f7b91e;
+  color: #171717;
+  font: inherit;
+  font-size: 0.84rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.toy-score { display: grid; gap: 6px; margin: 4px 0 0; padding-top: 12px; border-top: 1px solid var(--tone-171717-a08); }
+.toy-score div { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.toy-score dt { color: var(--tone-6b6152); font-size: 0.8rem; }
+.toy-score dd { margin: 0; font-weight: 800; text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.toy-score .is-minus dd { color: var(--tone-c2412d); }
+.toy-score .is-plus dd { color: var(--tone-2f7d4a); }
 
 .toy-hand-total { margin: 12px 4px 0; color: var(--tone-6b6152); font-size: 0.8rem; text-align: center; }
 
@@ -325,7 +466,7 @@
 }
 
 @media (max-width: 1000px) {
-  .toy-stage { grid-template-columns: minmax(0, 1fr); grid-template-areas: "table" "time" "hand"; }
+  .toy-stage { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; grid-template-areas: "table" "time" "hand" "charts"; }
   .toy-charts { grid-template-columns: 1fr; }
   .toy-hand { margin-bottom: 16px; }
 }
@@ -334,6 +475,7 @@
   .toy-board .toy-cell-number,
   .toy-board .toy-slot text,
   .toy-board .toy-payback-label { font-size: 16px; }
+  .toy-board .toy-add .toy-slot text { font-size: 24px; }
   .toy-board .toy-district-label { font-size: 20px; }
 }
 

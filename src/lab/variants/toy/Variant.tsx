@@ -1,24 +1,45 @@
 import { useMemo, useState, useSyncExternalStore } from "react";
-import { formatMoneyShort, formatMonth, formatRub, yearOf } from "../../format";
+import { formatMoneyShort, formatMonth, yearOf } from "../../format";
 import { ControlsBar } from "../../shared/ControlsBar";
 import { CashChart, ProfitChart } from "../../shared/Charts";
 import { Timeline } from "../../shared/Timeline";
 import { usePlayback } from "../../shared/usePlayback";
-import type { StoryPoint } from "../../story";
+import type { StoryPlanEntry, StoryPoint } from "../../story";
 import type { VariantProps } from "../../useNetworkStory";
 import { buildBoard, districtStroke, type Board, type TrackCell } from "./board";
-import { BanknotesIcon, CardStack, ChestIcon, CoinsIcon, Flag, House, HouseSlot, Meeple, Pawn, type HouseKind } from "./pieces";
+import { PointCards } from "./cards";
+import { GamePanel } from "./game";
+import { houseKind } from "./labels";
+import { BanknotesIcon, CardStack, ChestIcon, CoinsIcon, Flag, House, HouseSlot, Pawn } from "./pieces";
 import "./toy.css";
 
-const locationTitles: Record<StoryPoint["locationType"], string> = {
-  street: "Улица",
-  foodhall: "Фудхолл",
-  creative_cluster: "Креативный кластер",
-  foodtruck: "Фудтрак",
-};
+/** Выбранная точка: район и номер точки в нём по порядку открытия; у первой точки сети района нет. */
+type Picked = { districtId: string | null; index: number };
 
-/** Вид домика: первая точка с производством, точка с залом или точка на вынос. */
-const houseKind = (point: StoryPoint): HouseKind => (point.isBase ? "base" : point.format === "with_seating" ? "seating" : "takeaway");
+/**
+ * Пометка «в этом браузере идёт своя игра» и расчётный план, с которого она началась.
+ * План игрока хранит калькулятор; пометка нужна, чтобы после перезагрузки страница открылась
+ * в игре и кнопка «Как в расчёте» знала, что возвращать.
+ */
+const gameKey = "kolobochnaya.lab.toy.game";
+
+function storedGameSize(): 4 | 8 | 12 | null {
+  try {
+    const value = Number(window.localStorage.getItem(gameKey));
+    return value === 4 || value === 8 || value === 12 ? value : null;
+  } catch {
+    return null;
+  }
+}
+
+function storeGameSize(size: 4 | 8 | 12 | null) {
+  try {
+    if (size === null) window.localStorage.removeItem(gameKey);
+    else window.localStorage.setItem(gameKey, String(size));
+  } catch {
+    // Хранилище недоступно — игра работает, но после перезагрузки откроется просмотр.
+  }
+}
 
 const narrowQuery = "(max-width: 720px)";
 
@@ -33,12 +54,6 @@ function useNarrowScreen() {
     () => window.matchMedia(narrowQuery).matches,
     () => false,
   );
-}
-
-function plural(count: number, one: string, few: string, many: string) {
-  const tail = Math.abs(count) % 100;
-  if (tail >= 11 && tail <= 14) return many;
-  return tail % 10 === 1 ? one : tail % 10 >= 2 && tail % 10 <= 4 ? few : many;
 }
 
 /** Подпись в полосе между дорожкой и районами, рядом с клеткой возврата вложений. */
@@ -60,71 +75,34 @@ function PaybackLabel({ board, cell }: { board: Board; cell: TrackCell }) {
   );
 }
 
-/** Три карточки выбранной точки: формат, команда по ролям, поток гостей. */
-function PointCards({ point, busiestChecks }: { point: StoryPoint; busiestChecks: number }) {
-  const checks = point.checksPerDay;
-  return (
-    <div className="toy-cards" key={point.id}>
-      <article className="toy-card is-format">
-        <h4 className="toy-card-band">Формат</h4>
-        <div className="toy-card-body">
-          <strong className="toy-card-lead">{point.formatTitle}</strong>
-          {point.isBase ? <p>Первая точка сети и заготовочное производство</p> : null}
-          <dl>
-            <div><dt>Место</dt><dd>{locationTitles[point.locationType]}</dd></div>
-            <div><dt>Площадь</dt><dd>{point.areaM2 ? `${point.areaM2} м²` : "по договору"}</dd></div>
-            {point.seats !== null ? <div><dt>Мест в зале</dt><dd>{point.seats}</dd></div> : null}
-            <div><dt>Бар</dt><dd>{point.barEnabled ? "есть" : "нет"}</dd></div>
-          </dl>
-        </div>
-      </article>
-
-      <article className="toy-card is-team">
-        <h4 className="toy-card-band">Команда</h4>
-        <div className="toy-card-body">
-          <strong className="toy-card-lead">{point.staffTotal} в штате · {point.staffOnShift} на смене</strong>
-          <ul className="toy-roles">
-            {point.staffRoles.map((role, index) => (
-              <li key={role.name}>
-                <span>{role.name}</span>
-                <span className="toy-meeples" aria-hidden="true">
-                  {Array.from({ length: Math.min(role.count, 8) }, (_, copy) => <Meeple key={copy} tone={index} />)}
-                </span>
-                <b>{role.count}</b>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </article>
-
-      <article className="toy-card is-guests">
-        <h4 className="toy-card-band">Гости</h4>
-        <div className="toy-card-body">
-          <strong className="toy-card-lead">{checks === null ? "Поток не задан" : `${checks} ${plural(checks, "чек", "чека", "чеков")} в день`}</strong>
-          {checks !== null && busiestChecks > 0 ? (
-            <>
-              <div className="toy-flow" role="img" aria-label="Поток гостей в сравнении с самой людной точкой сети">
-                <i style={{ width: `${Math.round((checks / busiestChecks) * 100)}%` }} />
-              </div>
-              <p>Полоса — поток рядом с самой людной точкой сети</p>
-            </>
-          ) : null}
-          <dl>
-            <div><dt>Выручка в месяц</dt><dd>{formatRub(point.monthlyRevenueRub)}</dd></div>
-            <div><dt>Вложения в открытие</dt><dd>{formatRub(point.investmentRub)}</dd></div>
-          </dl>
-        </div>
-      </article>
-    </div>
-  );
-}
+const onActivate = (action: () => void) => (event: React.KeyboardEvent) => {
+  if (event.key !== "Enter" && event.key !== " ") return;
+  event.preventDefault();
+  action();
+};
 
 export default function Variant({ story, controls }: VariantProps) {
   const last = story.months.length - 1;
   const { month, setMonth, playing, toggle } = usePlayback(last, Math.min(story.totals.lastOpeningMonth ?? 12, last));
-  const [pickedId, setPickedId] = useState<string | null>(null);
+  const [picked, setPicked] = useState<Picked | null>(null);
+  /** «Как в расчёте» — просмотр плана калькулятора; «Своя игра» — игрок сам ставит точки. */
+  const [mode, setMode] = useState<"view" | "game">(() => (storedGameSize() === null ? "view" : "game"));
+  /** На сколько месяцев позже самого раннего открыть следующую точку. */
+  const [delay, setDelay] = useState(0);
+  /** Планы до каждого хода — для «Отменить ход». */
+  const [history, setHistory] = useState<StoryPlanEntry[][]>([]);
+  /** Расчётный план, с которого началась игра: к нему возвращает «Как в расчёте». */
+  const [entrySize, setEntrySize] = useState<4 | 8 | 12>(() => storedGameSize() ?? 4);
+  /** Игрок уже менял план: при выходе из игры расчётный план нужно вернуть. */
+  const [dirty, setDirty] = useState(() => storedGameSize() !== null);
   const portrait = useNarrowScreen();
-  const board = useMemo(() => buildBoard(story, portrait), [story, portrait]);
+  const game = mode === "game";
+  const current = Math.min(month, last);
+  // Вложения уходят раньше открытия, поэтому новая точка встаёт не раньше этого месяца.
+  const earliestMonth = current + story.rules.openingLeadMonths;
+  const canPlace = game && earliestMonth <= last;
+  const targetMonth = Math.min(last, earliestMonth + delay);
+  const board = useMemo(() => buildBoard(story, portrait, canPlace), [story, portrait, canPlace]);
 
   const facts = useMemo(() => {
     let invested = 0;
@@ -140,21 +118,91 @@ export default function Variant({ story, controls }: VariantProps) {
     };
   }, [story]);
 
-  const current = Math.min(month, last);
   const now = story.months[current];
   const payback = story.totals.paybackMonth;
   const paybackCell = payback !== null && payback <= last ? board.cells[payback] : null;
   const opened = story.points.filter((point) => point.openingMonth <= current);
   // Пока точку не выбрали, карточки показывают последнюю поставленную на поле.
-  const selected: StoryPoint | undefined = story.points.find((point) => point.id === pickedId) ?? opened[opened.length - 1] ?? story.points[0];
+  const inDistrict = (districtId: string | null) => story.points.filter((point) => point.districtId === districtId);
+  const pickOf = (point: StoryPoint): Picked => ({ districtId: point.districtId, index: inDistrict(point.districtId).indexOf(point) });
+  const pickedPoint = picked ? inDistrict(picked.districtId)[picked.index] : undefined;
+  const selected: StoryPoint | undefined = pickedPoint ?? opened[opened.length - 1] ?? story.points[0];
   const selectedIndex = selected ? story.points.indexOf(selected) : 0;
-  const step = (shift: number) => setPickedId(story.points[(selectedIndex + shift + story.points.length) % story.points.length].id);
+  const step = (shift: number) => setPicked(pickOf(story.points[(selectedIndex + shift + story.points.length) % story.points.length]));
+
+  // Ход игрока — это новый план открытий. Он уходит в калькулятор, и вся касса приходит оттуда пересчитанной.
+  const plan: StoryPlanEntry[] = story.districts.map((district) => ({ districtId: district.id, openingMonths: district.openingMonths }));
+  const commit = (next: StoryPlanEntry[]) => {
+    setHistory((steps) => [...steps, plan]);
+    setDirty(true);
+    storeGameSize(entrySize);
+    controls.setPlan(next);
+  };
+  const withMonths = (districtId: string, openingMonths: number[]) => plan.map((entry) => (entry.districtId === districtId ? { districtId, openingMonths } : entry));
+  const monthsOf = (districtId: string) => plan.find((entry) => entry.districtId === districtId)?.openingMonths ?? [];
+  const place = (districtId: string) => {
+    const months = monthsOf(districtId);
+    commit(withMonths(districtId, [...months, targetMonth]));
+    setPicked({ districtId, index: months.filter((value) => value <= targetMonth).length });
+  };
+  const selectedPick = selected ? pickOf(selected) : null;
+  const moveSelected = (delta: number) => {
+    if (!selected || !selectedPick || selectedPick.districtId === null) return;
+    const next = Math.max(earliestMonth, Math.min(last, selected.openingMonth + delta));
+    if (next === selected.openingMonth) return;
+    const others = monthsOf(selectedPick.districtId).filter((_, index) => index !== selectedPick.index);
+    commit(withMonths(selectedPick.districtId, [...others, next]));
+    setPicked({ districtId: selectedPick.districtId, index: others.filter((value) => value < next).length });
+  };
+  const removeSelected = () => {
+    if (!selectedPick || selectedPick.districtId === null) return;
+    commit(withMonths(selectedPick.districtId, monthsOf(selectedPick.districtId).filter((_, index) => index !== selectedPick.index)));
+    setPicked(null);
+  };
+  const newGame = () => {
+    commit(plan.map((entry) => ({ districtId: entry.districtId, openingMonths: [] })));
+    setMonth(0);
+    setDelay(0);
+    setPicked(null);
+  };
+  const undo = () => {
+    controls.setPlan(history[history.length - 1]);
+    setHistory((steps) => steps.slice(0, -1));
+    setPicked(null);
+  };
+  const enterGame = () => {
+    if (game) return;
+    // Если состав сети уже изменён в калькуляторе, расчётным считается его стандартный план.
+    setEntrySize(controls.rolloutSize === "custom" ? 4 : controls.rolloutSize);
+    setMode("game");
+  };
+  const leaveGame = () => {
+    if (dirty) controls.setRolloutSize(entrySize);
+    storeGameSize(null);
+    setDirty(false);
+    setHistory([]);
+    setDelay(0);
+    setPicked(null);
+    setMode("view");
+  };
   const tokens = useMemo(() => board.districts.flatMap((district) => district.tokens).sort((left, right) => left.y - right.y), [board]);
   const pawn = board.cells[current];
 
   return (
     <div className="toy-variant">
       <ControlsBar controls={controls} />
+
+      <div className="toy-mode">
+        <div className="lab-segment" role="group" aria-label="Режим">
+          <button type="button" className={game ? "" : "is-selected"} onClick={leaveGame}>Как в расчёте</button>
+          <button type="button" className={game ? "is-selected" : ""} onClick={enterGame}>Своя игра</button>
+        </div>
+        <p>
+          {game
+            ? "Вы сами ставите точки на поле. Ходы меняют план сети и в калькуляторе; «Как в расчёте» возвращает расчётный план."
+            : "Точки открываются по плану из калькулятора. В «Своей игре» месяц и район каждой новой точки выбираете вы."}
+        </p>
+      </div>
 
       <section className="toy-bank" aria-label="Касса сети">
         <div className="toy-bank-head">
@@ -179,9 +227,11 @@ export default function Variant({ story, controls }: VariantProps) {
             <span>Накоплено</span>
             <strong>{formatMoneyShort(now.cumulativeCashRub)}</strong>
             <small>
-              {payback === null
-                ? "возврат вложений за горизонтом расчёта"
-                : current < payback ? `вложения вернутся на ${payback}-м месяце` : `вложения вернулись на ${payback}-м месяце`}
+              {game && now.cumulativeCashRub < 0
+                ? payback === null ? "играем в долг до конца расчёта" : `играем в долг: касса выйдет в плюс на ${payback}-м месяце`
+                : payback === null
+                  ? "возврат вложений за горизонтом расчёта"
+                  : current < payback ? `вложения вернутся на ${payback}-м месяце` : `вложения вернулись на ${payback}-м месяце`}
             </small>
           </div>
         </div>
@@ -244,24 +294,42 @@ export default function Variant({ story, controls }: VariantProps) {
               {paybackCell ? <PaybackLabel board={board} cell={paybackCell} /> : null}
             </g>
 
-            {tokens.map(({ point, x, y, scale }) => {
+            {tokens.map(({ point, districtId, x, y, scale }) => {
+              const transform = `translate(${x.toFixed(1)} ${y.toFixed(1)}) scale(${scale})`;
+              if (!point) {
+                // Свободное место в районе: нажатие ставит сюда точку на выбранный месяц.
+                if (districtId === null) return null;
+                const district = story.districts.find((item) => item.id === districtId);
+                return (
+                  <g
+                    key={`add-${districtId}`}
+                    className="toy-token toy-add"
+                    transform={transform}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`Поставить точку: ${district?.title ?? "район"}, месяц ${targetMonth}`}
+                    onClick={() => place(districtId)}
+                    onKeyDown={onActivate(() => place(districtId))}
+                  >
+                    <rect className="toy-token-hit" x="-33" y="-60" width="74" height="70" rx="14" />
+                    <ellipse className="toy-token-ring" cx="0" cy="1" rx="35" ry="11" />
+                    <HouseSlot label="+" />
+                  </g>
+                );
+              }
               const open = point.openingMonth <= current;
-              const pick = () => setPickedId(point.id === pickedId ? null : point.id);
+              const pick = () => setPicked(pickedPoint === point ? null : pickOf(point));
               return (
                 <g
                   key={point.id}
-                  className={`toy-token${point.id === selected?.id ? " is-selected" : ""}`}
-                  transform={`translate(${x.toFixed(1)} ${y.toFixed(1)}) scale(${scale})`}
+                  className={`toy-token${point === selected ? " is-selected" : ""}`}
+                  transform={transform}
                   role="button"
                   tabIndex={0}
-                  aria-pressed={point.id === selected?.id}
+                  aria-pressed={point === selected}
                   aria-label={`${point.title}: ${open ? "точка открыта" : `откроется на ${point.openingMonth}-м месяце`}. Показать карточки`}
                   onClick={pick}
-                  onKeyDown={(event) => {
-                    if (event.key !== "Enter" && event.key !== " ") return;
-                    event.preventDefault();
-                    pick();
-                  }}
+                  onKeyDown={onActivate(pick)}
                 >
                   <rect className="toy-token-hit" x="-33" y="-60" width="74" height="70" rx="14" />
                   <ellipse className="toy-token-ring" cx="0" cy="1" rx="35" ry="11" />
@@ -270,7 +338,7 @@ export default function Variant({ story, controls }: VariantProps) {
                       <g transform="translate(18 -3)"><CardStack /></g>
                       <House kind={houseKind(point)} />
                     </g>
-                  ) : <HouseSlot month={point.openingMonth} />}
+                  ) : <HouseSlot label={point.openingMonth} />}
                 </g>
               );
             })}
@@ -289,7 +357,11 @@ export default function Variant({ story, controls }: VariantProps) {
             <li><svg viewBox="-28 -52 56 56" aria-hidden="true"><House kind="takeaway" /></svg>точка на вынос</li>
             <li><svg viewBox="-28 -52 56 56" aria-hidden="true"><HouseSlot /></svg>место под точку и месяц открытия</li>
           </ul>
-          <p className="toy-hint">Нажмите на домик — раскроется его стопка карточек. Клетка дорожки переносит на свой месяц.</p>
+          <p className="toy-hint">
+            {game
+              ? "Нажмите «+» в районе — точка встанет на выбранный месяц. Прошлое можно переиграть: передвиньте время назад."
+              : "Нажмите на домик — раскроется его стопка карточек. Клетка дорожки переносит на свой месяц."}
+          </p>
         </div>
 
         <div className="toy-time">
@@ -300,36 +372,59 @@ export default function Variant({ story, controls }: VariantProps) {
             playing={playing}
             onToggle={() => {
               // На «пуск» карточки снова следуют за новой точкой.
-              if (!playing) setPickedId(null);
+              if (!playing) setPicked(null);
               toggle();
             }}
           />
         </div>
 
-        {selected ? (
-          <aside className="toy-hand" aria-live="polite">
-            <div className="toy-hand-head">
-              <button type="button" onClick={() => step(-1)} aria-label="Предыдущая точка">‹</button>
-              <div>
-                <h3>{selected.title}</h3>
-                <p>
-                  точка {selectedIndex + 1} из {story.points.length} ·{" "}
-                  {selected.openingMonth > current
-                    ? `встанет на поле на ${selected.openingMonth}-м месяце`
-                    : selected.isBase ? "на поле со старта" : `на поле с ${selected.openingMonth}-го месяца`}
-                </p>
+        <aside className="toy-hand">
+          {game ? (
+            <GamePanel
+              story={story}
+              targetMonth={targetMonth}
+              earliestMonth={earliestMonth}
+              lastMonth={last}
+              onShiftTarget={(delta) => setDelay(Math.max(0, targetMonth + delta - earliestMonth))}
+              onPlace={place}
+              onUndo={history.length ? undo : null}
+              onNewGame={newGame}
+            />
+          ) : null}
+          {selected ? (
+            <div aria-live="polite">
+              <div className="toy-hand-head">
+                <button type="button" onClick={() => step(-1)} aria-label="Предыдущая точка">‹</button>
+                <div>
+                  <h3>{selected.title}</h3>
+                  <p>
+                    точка {selectedIndex + 1} из {story.points.length} ·{" "}
+                    {selected.openingMonth > current
+                      ? `встанет на поле на ${selected.openingMonth}-м месяце`
+                      : selected.isBase ? "на поле со старта" : `на поле с ${selected.openingMonth}-го месяца`}
+                  </p>
+                </div>
+                <button type="button" onClick={() => step(1)} aria-label="Следующая точка">›</button>
               </div>
-              <button type="button" onClick={() => step(1)} aria-label="Следующая точка">›</button>
+              {game && selected.districtId !== null ? (
+                selected.openingMonth > current ? (
+                  <div className="toy-move">
+                    <button type="button" onClick={() => moveSelected(-1)} disabled={selected.openingMonth <= earliestMonth}>Раньше</button>
+                    <button type="button" onClick={() => moveSelected(1)} disabled={selected.openingMonth >= last}>Позже</button>
+                    <button type="button" className="is-remove" onClick={removeSelected}>Убрать</button>
+                  </div>
+                ) : <p className="toy-move-note">Точка уже работает. Чтобы переиграть, передвиньте время назад — до её открытия.</p>
+              ) : null}
+              <PointCards point={selected} busiestChecks={facts.busiestChecks} />
+              <p className="toy-hand-total">В командах открытых точек: {now.staffTotal}</p>
             </div>
-            <PointCards point={selected} busiestChecks={facts.busiestChecks} />
-            <p className="toy-hand-total">В командах открытых точек: {now.staffTotal}</p>
-          </aside>
-        ) : null}
-      </div>
+          ) : null}
+        </aside>
 
-      <div className="toy-charts">
-        <CashChart story={story} month={month} onMonth={setMonth} />
-        <ProfitChart story={story} month={month} onMonth={setMonth} />
+        <div className="toy-charts">
+          <CashChart story={story} month={month} onMonth={setMonth} />
+          <ProfitChart story={story} month={month} onMonth={setMonth} />
+        </div>
       </div>
     </div>
   );

@@ -168,6 +168,7 @@
   --tone-8d651b: #8d651b;
   --tone-8d7f66: #8d7f66;
   --tone-8d8775: #8d8775;
+  --tone-8e6fd0: #8e6fd0;
   --tone-8f7430: #8f7430;
   --tone-91421f: #91421f;
   --tone-924629: #924629;
@@ -610,6 +611,7 @@
   --tone-8d651b: #dcb874;
   --tone-8d7f66: #988e7d;
   --tone-8d8775: #8c887c;
+  --tone-8e6fd0: #8e6fd0;
   --tone-8f7430: #c3a24d;
   --tone-91421f: #dc9474;
   --tone-924629: #ca6843;
@@ -971,9 +973,14 @@
   .iso-formats .is-hall,
   .iso-formats .is-kiosk,
   .iso-formats .is-works,
+  .iso-hud-chip.is-event,
+  .iso-hud-play,
   .iso-kpi-icon,
   .iso-legend-coin,
+  .iso-legend-guest,
   .iso-legend-site,
+  .iso-legend-staff,
+  .iso-status.is-site,
   .lab-nav a.is-current,
   .lab-play,
   .lab-segment button.is-selected,
@@ -1004,12 +1011,15 @@
   .timeline-year,
   .toy-card-band,
   .toy-card.is-guests .toy-card-band,
+  .toy-card.is-inventory .toy-card-band,
   .toy-card.is-team .toy-card-band,
   .toy-cell-past,
   .toy-flow i,
   .toy-hand-head button,
   .toy-legend-cell,
-  .toy-piece
+  .toy-offers button,
+  .toy-piece,
+  .toy-stepper button
 ) {
   --color-ink: #171717;
   --color-black: #050505;
@@ -1232,6 +1242,7 @@
   --tone-8d651b: #8d651b;
   --tone-8d7f66: #8d7f66;
   --tone-8d8775: #8d8775;
+  --tone-8e6fd0: #8e6fd0;
   --tone-8f7430: #8f7430;
   --tone-91421f: #91421f;
   --tone-924629: #924629;
@@ -1511,9 +1522,12 @@
   .iso-formats .is-hall,
   .iso-formats .is-kiosk,
   .iso-formats .is-works,
+  .iso-hud-play,
   .iso-kpi-icon,
   .iso-legend-coin,
+  .iso-legend-guest,
   .iso-legend-site,
+  .iso-legend-staff,
   .lab-nav a.is-current,
   .lab-segment button.is-selected,
   .lab-timeline-marks i,
@@ -1709,6 +1723,7 @@
     --tone-8d651b: #dcb874;
     --tone-8d7f66: #988e7d;
     --tone-8d8775: #8c887c;
+    --tone-8e6fd0: #8e6fd0;
     --tone-8f7430: #c3a24d;
     --tone-91421f: #dc9474;
     --tone-924629: #ca6843;
@@ -1982,13 +1997,13 @@
     --capex-green: #85cbac;
     --capex-red: #ce6f58;
   }
-  
+
   :root:not([data-theme="light"]) .economics-page {
     --economics-green: #86cbb3;
     --economics-soft-green: #252826;
     --economics-warm: #2d2a21;
   }
-  
+
   :root:not([data-theme="light"]) .franchise-page {
     --franchise-ink: #e1e1e1;
     --franchise-muted: #a2a09a;
@@ -1998,13 +2013,13 @@
     --franchise-card: #1d1a15;
     --franchise-green: #84ccad;
   }
-  
+
   :root:not([data-theme="light"]) .investor-terminal {
     --terminal-control-background: #1c1b14;
     --terminal-control-border: #5b5548;
     --terminal-control-focus: #dcb04c;
   }
-  
+
   :root:not([data-theme="light"]) .launch-budget-page {
     --launch-ink: #e3e3e1;
     --launch-muted: #a09d95;
@@ -2012,11 +2027,11 @@
     --launch-card: #1d1a15;
     --launch-line: rgba(227, 227, 225, 0.14);
   }
-  
+
   :root:not([data-theme="light"]) .revenue-model-page {
     --revenue-blue: #252828;
   }
-  
+
   :root:not([data-theme="light"]) .city3d-stage {
     --city-land: #312f2b;
     --city-soil: #615840;
@@ -2070,9 +2085,14 @@
     .iso-formats .is-hall,
     .iso-formats .is-kiosk,
     .iso-formats .is-works,
+    .iso-hud-chip.is-event,
+    .iso-hud-play,
     .iso-kpi-icon,
     .iso-legend-coin,
+    .iso-legend-guest,
     .iso-legend-site,
+    .iso-legend-staff,
+    .iso-status.is-site,
     .lab-nav a.is-current,
     .lab-play,
     .lab-segment button.is-selected,
@@ -2103,12 +2123,15 @@
     .timeline-year,
     .toy-card-band,
     .toy-card.is-guests .toy-card-band,
+    .toy-card.is-inventory .toy-card-band,
     .toy-card.is-team .toy-card-band,
     .toy-cell-past,
     .toy-flow i,
     .toy-hand-head button,
     .toy-legend-cell,
-    .toy-piece
+    .toy-offers button,
+    .toy-piece,
+    .toy-stepper button
   ) {
     --color-ink: #171717;
     --color-black: #050505;
@@ -2331,6 +2354,7 @@
     --tone-8d651b: #8d651b;
     --tone-8d7f66: #8d7f66;
     --tone-8d8775: #8d8775;
+    --tone-8e6fd0: #8e6fd0;
     --tone-8f7430: #8f7430;
     --tone-91421f: #91421f;
     --tone-924629: #924629;
@@ -2593,7 +2617,7 @@
     --tone-ffffff-a84: rgba(255, 255, 255, 0.84);
     --tone-ffffff-a88: rgba(255, 255, 255, 0.88);
   }
-  
+
   :root:not([data-theme="light"]) :is(
     .capex-chart-track i,
     .capex-chart-track i.tone-2,
@@ -2610,9 +2634,12 @@
     .iso-formats .is-hall,
     .iso-formats .is-kiosk,
     .iso-formats .is-works,
+    .iso-hud-play,
     .iso-kpi-icon,
     .iso-legend-coin,
+    .iso-legend-guest,
     .iso-legend-site,
+    .iso-legend-staff,
     .lab-nav a.is-current,
     .lab-segment button.is-selected,
     .lab-timeline-marks i,

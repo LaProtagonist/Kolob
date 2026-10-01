@@ -47,22 +47,23 @@ export function House({ kind }: { kind: HouseKind }) {
   );
 }
 
-/** Место под домик, который ещё не поставлен: пунктир и месяц открытия. */
-export function HouseSlot({ month }: { month?: number }) {
+/** Место под домик, который ещё не поставлен: пунктир и подпись — месяц открытия или «+» для нового хода. */
+export function HouseSlot({ label }: { label?: number | string }) {
   return (
     <g className="toy-slot">
       <path d="M-19 -2 V-27 L0 -43 L19 -27 V-2 Z" />
-      {month === undefined ? null : <text y="-10">{month}</text>}
+      {label === undefined ? null : <text y="-10">{label}</text>}
     </g>
   );
 }
 
-/** Стопка из трёх карточек рядом с домиком: формат, команда, гости. */
+/** Стопка карточек рядом с домиком: формат, команда, гости, инвентарь. */
 export function CardStack() {
   return (
     <g className="toy-piece toy-stack">
-      <rect className="is-guests" x="0" y="-22" width="15" height="22" rx="4" transform="rotate(30)" />
-      <rect className="is-team" x="0" y="-22" width="15" height="22" rx="4" transform="rotate(15)" />
+      <rect className="is-inventory" x="0" y="-22" width="15" height="22" rx="4" transform="rotate(42)" />
+      <rect className="is-guests" x="0" y="-22" width="15" height="22" rx="4" transform="rotate(28)" />
+      <rect className="is-team" x="0" y="-22" width="15" height="22" rx="4" transform="rotate(14)" />
       <rect className="is-format" x="0" y="-22" width="15" height="22" rx="4" />
     </g>
   );

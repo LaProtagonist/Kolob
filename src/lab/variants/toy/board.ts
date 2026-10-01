@@ -21,7 +21,8 @@ const tokenScales = [2, 1.85, 1.7, 1.55, 1.4, 1.25, 1.1, 1, 0.9];
 /** Сторона поля, на которой лежит клетка: 0 — верх, 1 — право, 2 — низ, 3 — лево. */
 export type TrackSide = 0 | 1 | 2 | 3;
 export type TrackCell = { index: number; x: number; y: number; side: TrackSide };
-export type BoardToken = { point: StoryPoint; x: number; y: number; scale: number };
+/** Фишка на поле; point === null — свободное место, куда в игре можно поставить точку района. */
+export type BoardToken = { point: StoryPoint | null; districtId: string | null; x: number; y: number; scale: number };
 export type BoardDistrict = {
   id: string;
   /** Название района, разбитое на строки. */
@@ -145,12 +146,12 @@ function titleLines(title: string) {
 }
 
 /** Название района и фишки под ним: в один ряд, если район широкий, иначе в несколько. */
-function arrange(polygon: Vec[], points: StoryPoint[], lines: string[], tokenScale: number) {
+function arrange(polygon: Vec[], districtId: string | null, points: Array<StoryPoint | null>, lines: string[], tokenScale: number) {
   const ys = polygon.map((vertex) => vertex[1]);
   const top = Math.min(...ys) - ROUND + 8;
   const bottom = Math.max(...ys) + ROUND - 8;
   const centre = centroid(polygon, polygon[0] ?? [0, 0]);
-  const scales = points.map((point) => tokenScale * (point.isBase ? 1.2 : 1));
+  const scales = points.map((point) => tokenScale * (point?.isBase ? 1.2 : 1));
   const labelHeight = lines.length * LABEL_LINE + 6;
   const spanAt = (y: number) => chord(polygon, clamp(y, top + ROUND, bottom - ROUND)) ?? [centre[0], centre[0]];
   // Общая ширина района на нескольких высотах: у скошенного района она уже, чем в середине.
@@ -164,7 +165,7 @@ function arrange(polygon: Vec[], points: StoryPoint[], lines: string[], tokenSca
   for (let rows = 1; rows <= points.length; rows += 1) {
     const perRow = Math.ceil(points.length / rows);
     // Первой точке нужен запас сверху под трубу с дымом.
-    const rowHeights = Array.from({ length: rows }, (_, row) => Math.max(...points.slice(row * perRow, (row + 1) * perRow).map((point, index) => (point.isBase ? 84 : 60) * scales[row * perRow + index])));
+    const rowHeights = Array.from({ length: rows }, (_, row) => Math.max(...points.slice(row * perRow, (row + 1) * perRow).map((point, index) => (point?.isBase ? 84 : 60) * scales[row * perRow + index])));
     const blockHeight = labelHeight + rowHeights.reduce((total, value) => total + value, 0);
     const blockTop = clamp(centre[1] - blockHeight / 2, top, Math.max(top, bottom - blockHeight));
     const tokens: BoardToken[] = [];
@@ -183,7 +184,7 @@ function arrange(polygon: Vec[], points: StoryPoint[], lines: string[], tokenSca
       rowPoints.forEach((point, index) => {
         const slot = 70 * rowScales[index] * squeeze;
         // Стопка карточек выглядывает справа от домика, поэтому сам домик чуть левее середины места.
-        tokens.push({ point, x: cursor + slot / 2 - 7 * rowScales[index], y: baseY, scale: rowScales[index] });
+        tokens.push({ point, districtId, x: cursor + slot / 2 - 7 * rowScales[index], y: baseY, scale: rowScales[index] });
         cursor += slot;
       });
       rowTop += rowHeights[row];
@@ -196,19 +197,23 @@ function arrange(polygon: Vec[], points: StoryPoint[], lines: string[], tokenSca
   return { fits: true, tokens: [], labelX: centre[0], labelY: centre[1] };
 }
 
-export function buildBoard(story: NetworkStory, portrait: boolean): Board {
+/** addSlots — в каждом районе, где ещё есть место, оставить свободное место под новую точку. */
+export function buildBoard(story: NetworkStory, portrait: boolean, addSlots: boolean): Board {
   const track = trackCells(story.months.length, portrait);
   const fieldOffset = EDGE + CELL + RING;
   const field = { x: fieldOffset, y: fieldOffset, w: track.width - fieldOffset * 2, h: track.height - fieldOffset * 2 };
 
-  // Районы: точки с одним и тем же местом на карте стоят в одном районе.
-  const groups = new Map<string, StoryPoint[]>();
-  for (const point of story.points) {
-    const group = groups.get(point.place.id);
-    if (group) group.push(point);
-    else groups.set(point.place.id, [point]);
+  // Участки поля: первая точка сети и районы из расчёта, включая пустые, — так поле не перестраивается от хода к ходу.
+  const first = story.points.filter((point) => point.districtId === null);
+  const districts: Array<{ id: string; districtId: string | null; title: string; anchor: { x: number; y: number }; points: Array<StoryPoint | null> }> = [];
+  if (first.length) districts.push({ id: first[0].place.id, districtId: null, title: first[0].title, anchor: first[0].place, points: first });
+  for (const district of story.districts) {
+    const points: Array<StoryPoint | null> = story.points.filter((point) => point.districtId === district.id);
+    if (addSlots && points.length < story.rules.maxPointsPerDistrict) points.push(null);
+    // Районы с одним и тем же местом на карте чуть раздвигаются, иначе их участки совпадут.
+    const twins = districts.filter((other) => Math.abs(other.anchor.x - district.place.x) < 1e-6 && Math.abs(other.anchor.y - district.place.y) < 1e-6).length;
+    districts.push({ id: district.id, districtId: district.id, title: district.title, anchor: { x: district.place.x + 0.04 * twins, y: district.place.y + 0.03 * twins }, points });
   }
-  const districts = [...groups.entries()].map(([id, points]) => ({ id, points, anchor: points[0].place }));
 
   // Взаимное расположение районов берётся с карты и растягивается на всё поле.
   const xs = districts.map((district) => district.anchor.x);
@@ -234,18 +239,18 @@ export function buildBoard(story: NetworkStory, portrait: boolean): Board {
   const regions = districts.map((district, index) => ({
     ...district,
     polygon: regionOf(sites, index, inset, GAP / 2 + ROUND),
-    lines: titleLines(district.points[0].title),
+    lines: titleLines(district.title),
   }));
   // Домики одного размера на всём поле — самого крупного, при котором они помещаются в каждом районе.
-  const tokenScale = tokenScales.find((scale) => regions.every((region) => arrange(region.polygon, region.points, region.lines, scale).fits)) ?? tokenScales[tokenScales.length - 1];
+  const tokenScale = tokenScales.find((scale) => regions.every((region) => arrange(region.polygon, region.districtId, region.points, region.lines, scale).fits)) ?? tokenScales[tokenScales.length - 1];
   return {
     width: track.width,
     height: track.height,
     cells: track.cells,
     ringOffset: EDGE + CELL + RING / 2,
     inner: { left: fieldOffset, top: fieldOffset, right: track.width - fieldOffset, bottom: track.height - fieldOffset },
-    districts: regions.map(({ id, polygon, points, lines }, index) => {
-      const { tokens, labelX, labelY } = arrange(polygon, points, lines, tokenScale);
+    districts: regions.map(({ id, districtId, polygon, points, lines }, index) => {
+      const { tokens, labelX, labelY } = arrange(polygon, districtId, points, lines, tokenScale);
       return {
         id,
         lines,
